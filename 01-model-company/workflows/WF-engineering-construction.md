@@ -1,0 +1,485 @@
+# Engineering & Construction Workflows
+
+> Site development, new store construction, store renovations, and facility engineering standards.
+>
+> Back to [Workflow Index](README.md)
+
+---
+
+## Workflows in This Domain
+
+- [W223. New Store Design & Engineering Standards](#w223-new-store-design-engineering-standards)
+- [W224. Construction Bidding & Contractor Selection](#w224-construction-bidding-contractor-selection)
+- [W225. Store Construction Management & Supervision](#w225-store-construction-management-supervision)
+- [W226. Store Renovation & Retrofitting (CAPEX)](#w226-store-renovation-retrofitting-capex)
+- [W227. Commissioning & Operational Handover](#w227-commissioning-operational-handover)
+- [W789. Construction Safety Management & DOLE DO 13 Compliance](#w789-construction-safety-management-dole-do-13-compliance)
+- [W790. Construction Quality Assurance, Milestone Inspection & Material Testing](#w790-construction-quality-assurance-milestone-inspection-material-testing)
+- [W791. Construction Document Control, Drawing Revision & As-Built Management](#w791-construction-document-control-drawing-revision-as-built-management)
+
+---
+
+## W223. New Store Design & Engineering Standards
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Approved Site Selection (W116) |
+| **Frequency** | 10–15 times per year (per growth target) |
+| **Volume** | Standard store sizes (8k, 12k, 15k sqm) |
+| **Owner** | VP for Engineering & Construction |
+| **Participants** | Design Team, Architects, MEP Engineers, Store Ops |
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Schematic Design**: Adapt standard "BuildRight Prototype" to specific site lot | Architect | VP Engineering | 2 weeks |
+| 2 | **Engineering Review**: Structural, Electrical, Plumbing (MEP), and HVAC design | MEP Engineer | VP Engineering | 2 weeks |
+| 3 | **Permit Drawings**: Prepare documentation for Building Permit and BFP (Fire) clearance | Architect | — | 1 week |
+| 4 | **BOM/BOQ**: Generate detailed Bill of Quantities (BOQ) for materials and labor | Estimator | VP Engineering | 1 week |
+| 5 | **Stakeholder Review**: Store Ops review for warehouse flow, POS placement, and yard access | Store Ops Dir | COO | 3 days |
+
+### System Touchpoints
+- CAD / BIM integration for prototype adaptation and revision control
+- BOQ module linked to procurement (W224) and CAPEX budget (W21)
+- Permit tracking dashboard for LGU Building Permit and BFP clearance status
+- Document Management System (W210) for drawing version control and approvals
+
+### Pain Points / Risks
+- LGU building permit delays: Philippine municipal building offices often take 4–8 weeks versus statutory 15-day target; schedules must buffer 3–4 weeks extra
+- BFP (Bureau of Fire Protection) clearance requirements add sequential dependency; fire safety plan review can take 2–4 weeks and requires separate submission after building permit
+- Philippine Seismic Code compliance (National Structural Code of the Philippines, NSCP 2015): building in earthquake zone requires detailed seismic analysis; provincial sites may lack geotechnical data, forcing conservative (costlier) assumptions
+- Contractor quality and availability in provincial areas: limited pool of qualified general contractors outside Metro Manila, Cebu, and Davao
+- Construction material price volatility: steel and cement prices fluctuate 10–20% annually in Philippines; BOQ estimates can become stale between design completion and bid award
+- Occupational safety during construction (DOLE compliance): DOLE Department Order No. 13 requires construction safety and health program; non-compliance risks stop-work orders
+- LGU Certificate of Occupancy timeline uncertainty: final inspection scheduling depends on municipal engineer availability
+
+### Staffing Implication
+- **1 Architect**: handles schematic design and permit drawings across 10–15 projects/year at ~8 weeks each; staggered pipeline allows single architect with peak overlap managed by external consultant
+- **1 MEP Engineer**: structural, electrical, plumbing, and HVAC design review for all projects; concurrent reviews feasible since execution phase is outsourced to contractors
+- **1 Estimator**: BOQ generation for 10–15 designs/year at ~1 week each; absorbed into Engineering team with off-peak capacity supporting renovation estimates (W226)
+- Dedicated engineering team of ~3 FTEs; additional draftsmen on contract during peak growth periods (3+ simultaneous design phases)
+
+### Time Estimate
+- Schematic Design: 2 weeks
+- Engineering Review: 2 weeks
+- Permit Drawings: 1 week
+- BOQ Generation: 1 week
+- Stakeholder Review: 3 days
+- **Total per store design**: ~6–7 weeks (sequential); can compress to 5 weeks with parallel Engineering Review + Permit Drawings
+- **LGU permit processing (external dependency)**: add 4–8 weeks after permit drawing submission
+
+---
+
+## W224. Construction Bidding & Contractor Selection
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Finalized Design & BOQ (W223) |
+| **Frequency** | Per new store or major renovation project |
+| **Volume** | ~15–20 major construction contracts/year |
+| **Owner** | Procurement Manager (Construction) |
+| **Participants** | Engineering Team, Finance, Bidders |
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **RFP Issuance**: Send BOQ and specs to accredited general contractors | Procurement | VP Engineering | 1 day |
+| 2 | **Pre-bid Conference**: Site visit and Q&A with bidders | Project Mgr | — | 1 day |
+| 3 | **Bid Submission**: Contractors submit technical and financial proposals | Bidders | — | 2 weeks |
+| 4 | **Bid Evaluation**: Reconcile bids against internal estimate; check contractor capacity | Engineering | Procurement | 1 week |
+| 5 | **Award**: Select winner and execute Construction Agreement (W230) | Procurement | CEO | 1 week |
+
+### System Touchpoints
+- Vendor Management System for accredited contractor list and performance history
+- e-Procurement module for RFP issuance, bid submission, and bid tabulation
+- Contract Management module (W230) for Construction Agreement execution
+- CAPEX budget integration (W21) to validate bid amounts against approved budget
+
+### Pain Points / Risks
+- Limited accredited contractor pool in provincial areas: may receive only 1–2 bids for provincial sites, reducing competitive pressure on pricing
+- Construction material price volatility: bids valid for 30–60 days may need price escalation clauses; steel and cement price spikes between bid and NTP can trigger contractor disputes
+- Contractor capacity constraints: top-tier Philippine contractors (EEI, Megawide, etc.) may decline smaller provincial store projects in favor of larger developments
+- Collusion risk in small contractor markets: limited bidders in provincial areas increases risk of bid rigging; mitigated by expanding accredited list and rotating invitations
+- LGU-specific requirements: some municipalities require locally-registered contractors or impose local labor hiring quotas, limiting contractor selection
+- BFP clearance dependency: fire safety design changes requested by BFP after bid award can trigger change orders
+
+### Staffing Implication
+- **Procurement Manager (Construction)**: 15–20 contracts/year at ~4 weeks each; staggered pipeline means typically 2–3 concurrent bids; absorbed into existing Procurement team with dedicated construction focus
+- **Engineering support**: bid evaluation and technical review requires ~3–5 days per bid cycle; absorbed by VP Engineering and Project Managers as part of project oversight
+- No additional FTEs required; peak periods (3+ concurrent bids) may require temporary support from Corporate Procurement analysts
+
+### Time Estimate
+- RFP Issuance: 1 day
+- Pre-bid Conference: 1 day
+- Bid Submission Period: 2 weeks
+- Bid Evaluation: 1 week
+- Award & Contract Execution: 1 week
+- **Total per bid cycle**: ~4–5 weeks
+- **With re-bid (if all bids exceed budget)**: add 2–3 weeks
+
+---
+
+## W225. Store Construction Management & Supervision
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Notice to Proceed (NTP) issued to contractor |
+| **Frequency** | Ongoing per active project |
+| **Volume** | Typically 5–8 stores under construction simultaneously |
+| **Owner** | Project Manager (Construction) |
+| **Participants** | General Contractor, Safety Officer, Quality Inspector |
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Mobilization**: Contractor sets up site office, temporary utilities, and safety fencing | Contractor | Project Mgr | 1 week |
+| 2 | **Execution**: Foundation, Framing, Shell, and Interiors per project schedule (Gantt) | Contractor | — | 6–9 months |
+| 3 | **Supervision**: Weekly site inspections; progress monitoring vs. milestones | Project Mgr | VP Engineering | Weekly |
+| 4 | **Progress Billing**: Contractor submits billing based on percentage of completion (W165 linkage) | Contractor | Project Mgr | Monthly |
+| 5 | **Change Orders**: Review and approve any deviations from original BOQ | Project Mgr | VP Engineering | Ad-hoc |
+| 6 | **Safety Audit**: Weekly HSE check (W52) to ensure zero-accident site | Safety Officer | — | Weekly |
+
+### System Touchpoints
+- Project Management Module (Gantt chart, milestones, document storage)
+- CAPEX tracking integrated with Finance (W21) for budget vs. actual monitoring
+- Contractor Progress Billing workflow linked to AP (W165)
+- Fixed Asset Module (W39) for capitalization of construction-in-progress costs
+- HSE Incident reporting (W52) integrated with safety audit checklist
+- Change Order module with approval routing and budget impact analysis
+
+### Pain Points / Risks
+- LGU building permit delays: construction cannot begin until permits are issued; late permits compress construction timeline and may force overtime labor costs
+- Philippine Seismic Code compliance during construction: structural inspections at foundation and framing stages must be certified by licensed structural engineer; delays in certification block subsequent work
+- Contractor quality and availability in provincial areas: provincial contractors may lack experience with large-format retail construction; quality issues discovered late (tiling, roofing, MEP) are costly to remediate
+- Construction material price volatility: change orders triggered by material cost increases are the #1 source of budget overruns; steel and cement are most volatile
+- Occupational safety during construction (DOLE compliance): DOLE inspections can result in stop-work orders if safety program is inadequate; each stop-work day directly delays store opening and adds carrying cost
+- Wet season construction delays: Philippine rainy season (June–November) causes 20–30% productivity loss on exterior works; scheduling must prioritize shell completion before wet season
+- Progress billing disputes: contractors may overstate percentage of completion; requires diligent site verification by PM before approving payment
+
+### Staffing Implication
+- **3–4 Project Manager FTEs**: 5–8 concurrent projects at 6–9 months each; 1 PM per 2–3 active sites; PMs travel between sites weekly for inspections; provincial sites require longer travel time (1–2 days per visit)
+- **1 Safety Officer (shared)**: conducts weekly HSE audits across all active sites; rotates through sites on a weekly schedule; absorbed into Engineering team
+- **1 Quality Inspector (contract)**: structural and finishes inspection at key milestones (foundation pouring, framing completion, final finishes); typically hired on per-project contract basis
+- Total construction management team: ~4–5 FTEs plus contract inspectors
+
+### Time Estimate
+- Mobilization: 1 week
+- Construction Execution: 6–9 months (standard 8k sqm store = ~7 months; 15k sqm = ~9 months)
+- Weekly supervision: ongoing throughout construction
+- Progress Billing cycle: monthly
+- Change Orders: ad-hoc, typically 3–5 per project
+- **Total per store**: 7–10 months from NTP to substantial completion
+- **With wet season buffer**: add 1–2 months if construction starts April–June
+
+---
+
+## W226. Store Renovation & Retrofitting (CAPEX)
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Facility audit finding; or strategic re-layout (Merchandising) |
+| **Frequency** | ~5–10 major renovations/year |
+| **Volume** | HVAC replacement, floor re-tiling, LED conversion |
+| **Owner** | Maintenance Manager |
+| **Participants** | Store Manager, Engineering, Finance |
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Scope Definition**: Identify required repairs or upgrades; estimate CAPEX budget | Maint Mgr | VP Engineering | 1 week |
+| 2 | **Store Manager Sign-off**: Store Manager reviews proposed scope against operational impact (trading hours disruption, customer access, safety zones); confirms go/no-go and preferred execution windows | Store Mgr | VP Engineering | 3 days |
+| 3 | **Budget Approval**: Submit for CAPEX approval per W21 (Finance) | VP Engineering | CFO | 1 week |
+| 4 | **Contractor Bidding & Selection**: Issue mini-RFP to accredited renovation contractors; evaluate bids per W224 process (abbreviated — 3–5 bidders, 1-week turnaround) | Maint Mgr | Procurement | 1 week |
+| 5 | **Phased Execution Plan**: Develop phased work schedule that maintains store operating hours; define zones and off-hours work windows (typically 9 PM–6 AM); coordinate with Store Manager on customer impact | Maint Mgr | Store Mgr | 3 days |
+| 6 | **Execution**: Manage contractors during off-hours to minimize store disruption; daily progress check against phased plan | Maint Mgr | Store Mgr | 2–8 weeks |
+| 7 | **Punch List Inspection**: Walk-through of completed work with Store Manager to identify defects, incomplete items, and cleanup requirements; issue punch list to contractor for correction before final handover | Maint Mgr | Store Mgr | 2 days |
+| 8 | **Validation & Close-out**: Inspect punch list corrections; update Fixed Asset register for "Major Improvement" (W39); close CAPEX project in Finance (W21) | Maint Mgr | VP Engineering | 2 days |
+
+### System Touchpoints
+- CAPEX request and approval workflow (W21) for budget authorization
+- Work Order module for renovation project tracking and task assignment
+- Fixed Asset Module (W39) for capitalization of major improvements and asset life extension
+- Vendor Management System for accredited renovation contractor list
+- Document Management System (W210) for as-built drawings and completion certificates
+- Store operations calendar for scheduling execution around peak trading periods
+
+### Pain Points / Risks
+- Store operations disruption: even with off-hours execution, noise, dust, and restricted areas impact customer experience; Store Manager pushback on scope and timing is common
+- Contractor quality and availability in provincial areas: limited pool of specialized renovation contractors (HVAC, flooring) outside Metro Manila; may need to bring Manila-based contractors to provincial sites at higher cost
+- Construction material price volatility: renovation BOQs are smaller and more sensitive to material price changes; 10% cost overrun on a small project has larger relative budget impact
+- Occupational safety during construction (DOLE compliance): renovating in an occupied building requires strict safety barriers, signage, and fire watch; failure risks DOLE citation and store closure
+- Phased execution complexity: maintaining store operations during renovation requires careful zone management; HVAC shutdowns during Philippine summer (March–May) are extremely disruptive
+- Punch list completion delays: contractors may deprioritize punch list items once bulk payment is received; retainage (typically 10%) helps enforce completion
+- HVAC and MEP system unknowns: existing building systems may have undocumented modifications; scope changes during execution are common when walls are opened
+
+### Staffing Implication
+- **Maintenance Manager**: 5–10 renovations/year at 2–8 weeks each; staggered pipeline means typically 1–2 concurrent projects; absorbed into existing Maintenance Manager role with support from regional maintenance coordinators
+- **Store Manager (per renovation)**: provides sign-off on scope (Step 2) and phased execution plan (Step 5); participates in punch list inspection (Step 7); adds ~2–4 hours/week during active renovation period; absorbed into existing role
+- **Engineering support**: scope review and validation absorbed by VP Engineering and project managers between new-store assignments
+- No additional FTEs required; peak periods (2+ concurrent renovations) may require temporary assignment of a Project Manager from the construction team
+
+### Time Estimate
+- Scope Definition: 1 week
+- Store Manager Sign-off: 3 days
+- Budget Approval: 1 week
+- Contractor Bidding & Selection: 1 week
+- Phased Execution Plan: 3 days
+- Execution: 2–8 weeks (HVAC replacement = 4–6 weeks; floor re-tiling = 2–3 weeks; LED conversion = 1–2 weeks)
+- Punch List Inspection: 2 days
+- Validation & Close-out: 2 days
+- **Total per renovation**: 5–12 weeks from scope to close-out (excluding budget approval queue)
+- **With procurement delay**: add 1–2 weeks if re-bid required
+
+---
+
+## W227. Commissioning & Operational Handover
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Construction completion (95%) |
+| **Frequency** | Per new store |
+| **Volume** | All new facilities |
+| **Owner** | Store Manager (incoming) |
+| **Participants** | Engineering, Store Ops, IT, HR, Marketing |
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Punch Listing**: Identify minor defects (snags) for contractor correction | Project Mgr | VP Engineering | 1 week |
+| 2 | **Equipment Testing**: Test HVAC, Fire Sprinklers, Elevators, and Generator Sets | MEP Engineer | — | 3 days |
+| 3 | **IT Setup**: Install POS, Servers, CCTV, and Network per W48 | IT Field Team | CIO | 1 week |
+| 4 | **Inventory Load**: Initial stock delivery and shelving per W16 | DC / Store Team | Store Mgr | 2 weeks |
+| 5 | **Certificate of Occupancy**: Obtain final LGU clearances | Project Mgr | — | 2 weeks |
+| 6 | **Handover**: Engineering signs off to Store Ops; "Grand Opening" (W16) | VP Engineering | Store Ops Dir | 1 day |
+
+### System Touchpoints
+- Project Management Module for punch list tracking and defect resolution status
+- Equipment Testing checklists integrated with asset registration (W39)
+- IT asset deployment module for POS, server, and network equipment provisioning (W48)
+- Inventory Management System (W16) for initial stock load and shelf allocation
+- LGU permit tracking for Certificate of Occupancy status
+- Store Operations checklist for grand opening readiness validation
+
+### Pain Points / Risks
+- LGU Certificate of Occupancy timeline uncertainty: the single biggest risk to grand opening date; municipal engineers schedule inspections on their own timeline; delays of 1–4 weeks are common
+- BFP final inspection: Bureau of Fire Protection conducts separate fire safety inspection before Certificate of Occupancy is issued; scheduling depends on BFP regional office availability
+- Contractor punch list completion: contractors may be reluctant to return for minor defects once primary payment is received; retainage (typically 10–15%) is key enforcement mechanism
+- Equipment commissioning failures: HVAC, elevators, and generator sets require manufacturer-certified technicians for testing; scheduling these technicians (often imported from Manila or abroad) can delay commissioning
+- Inventory load timing: initial stock must arrive after Certificate of Occupancy but before grand opening; DC scheduling and truck availability must align precisely
+- IT setup dependencies: telecom provider internet activation is often delayed in provincial areas; POS systems cannot go live without network connectivity
+- Philippine Seismic Code final certification: structural engineer must issue final certification before LGU issues Certificate of Occupancy; any outstanding structural documentation blocks this
+
+### Staffing Implication
+- **Incoming Store Manager**: dedicated to commissioning ~4 weeks per new store; arrives before handover to oversee IT setup, inventory load, and staff training; this is the primary pre-opening responsibility and is absorbed into the Store Manager onboarding period
+- **Engineering team (shared)**: punch listing and equipment testing absorbed by Project Manager and MEP Engineer as final phase of construction assignment; ~1–2 weeks of effort per store
+- **IT Field Team**: 2–3 technicians for ~1 week per store for POS, server, CCTV, and network installation; shared resource across all new store openings
+- **HR**: staff hiring and training runs in parallel with commissioning; not counted in engineering staffing but critical to grand opening timeline
+
+### Time Estimate
+- Punch Listing: 1 week
+- Equipment Testing: 3 days
+- IT Setup: 1 week
+- Inventory Load: 2 weeks
+- Certificate of Occupancy: 2 weeks (external LGU dependency; may take longer)
+- Handover: 1 day
+- **Total commissioning**: ~4–5 weeks (if Certificate of Occupancy is obtained on schedule)
+- **With LGU delays**: add 2–4 weeks
+- **Grand Opening target**: 4–6 weeks after 95% construction completion
+
+---
+
+## W789. Construction Safety Management & DOLE DO 13 Compliance
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Notice to Proceed (NTP) issued to contractor for new store construction or major renovation |
+| **Frequency** | Per active construction project (5-8 concurrent) |
+| **Volume** | 10-15 construction projects/year; each project requires continuous safety management |
+| **Owner** | Construction Safety Officer |
+| **Participants** | General Contractor Safety Officer, Project Manager, DOLE, Store Safety Officer (for renovations) |
+
+### Background
+
+DOLE Department Order No. 13 (DO 13), also known as the "Guidelines Governing Occupational Safety and Health in the Construction Industry," requires all Philippine construction projects to have a Construction Safety and Health Program (CSHP), a dedicated Safety Officer, and compliance with DOLE registration requirements. Non-compliance risks stop-work orders, fines up to PHP 100,000 per day, and criminal liability for project managers. This workflow ensures all BuildRight construction projects maintain continuous DOLE DO 13 compliance from mobilization through completion.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **CSHP Development**: Before mobilization, General Contractor submits Construction Safety and Health Program (CSHP) to BuildRight Safety Officer for review: includes hazard identification, risk assessment, safety rules, emergency procedures, PPE requirements, safety training schedule, accident/incident reporting procedures; must comply with DOLE DO 13 format requirements | Contractor Safety Officer | Construction Safety Officer | 3-5 days |
+| 2 | **DOLE Registration**: Construction Safety Officer registers the construction project with DOLE Regional Office per DO 13 Section 4: submits CSHP, project duration, estimated workforce, contractor details; DOLE issues Construction Safety Registration Certificate; construction cannot legally begin without this registration | Construction Safety Officer | VP Engineering | 1-2 weeks |
+| 3 | **Safety Mobilization**: Contractor establishes safety infrastructure at site: first aid station with trained first aider, fire extinguishers, safety signage (English and Filipino), PPE dispensing station, safety bulletin board with emergency contacts, toilet and washing facilities per DOLE standards, scaffold tags, confined space permits | Contractor Safety Officer | Project Manager | 3-5 days |
+| 4 | **Daily Toolbox Talks**: Each workday begins with 10-15 minute toolbox talk covering: task-specific hazards for the day, PPE requirements, weather alerts (typhoon, extreme heat), recent incidents or near-misses from other BuildRight sites; attendance logged in system | Contractor Safety Officer | Project Manager | 15 min/day |
+| 5 | **Weekly Safety Inspection**: Construction Safety Officer conducts weekly walk-through: verify PPE usage, scaffolding integrity, electrical safety (temporary wiring), fall protection, excavation safety, crane/lift operations, housekeeping, fire prevention, first aid station readiness; findings documented in safety inspection checklist | Construction Safety Officer | VP Engineering | 2-3 hours/week |
+| 6 | **Incident Reporting & Investigation**: If safety incident occurs: (a) immediate first aid and area isolation; (b) incident report within 24 hours per W140; (c) DOLE notification within 48 hours if serious injury or fatality; (d) root cause analysis within 7 days; (e) corrective actions implemented and tracked to closure | Construction Safety Officer | VP Engineering | 2-8 hours per incident |
+| 7 | **Monthly Safety Review**: Construction Safety Officer compiles monthly safety report: total work hours, incident rate, near-miss reports, safety training hours, open corrective actions, safety inspection findings; submitted to VP Engineering and VP HR for chain-wide safety trend analysis | Construction Safety Officer | VP Engineering | 4 hours/month |
+| 8 | **Project Safety Closeout**: At substantial completion: (a) final safety inspection; (b) consolidate all incident records into project safety file; (c) safety lessons learned documented for W227 handover; (d) DOLE project safety registration closed; (e) contractor safety performance score for W224 bid evaluation database | Construction Safety Officer | VP Engineering | 1 day |
+
+### System Touchpoints
+
+- Construction Project Management module with safety milestone tracking
+- DOLE DO 13 compliance checklist template per W687
+- Incident reporting module (W140) with construction-specific incident types
+- Safety inspection checklist mobile app with photo capture
+- Contractor safety scorecard integration per W224 bid evaluation
+- Training record module per W655 for contractor safety certifications
+- Safety analytics dashboard for chain-wide construction safety trends
+
+### Pain Points / Risks
+
+- **DOLE stop-work orders**: non-compliance with DO 13 can result in immediate project shutdown; each stop-work day delays store opening by 1 day and adds carrying cost of ~PHP 50,000-100,000/day in idle contractor costs and delayed revenue
+- **Contractor safety culture gaps**: many Philippine construction contractors, especially provincial subcontractors, have weak safety cultures; BuildRight Safety Officer must actively enforce compliance rather than rely on contractor self-governance
+- **Multi-employer worksite liability**: BuildRight as project owner has joint liability for contractor safety violations under Philippine law; even if the violation is by a subcontractor, BuildRight may be cited
+- **Seasonal weather hazards**: Philippine rainy season (June-November) creates mud, lightning, flooding, and scaffold instability risks; typhoons require site securing and evacuation procedures
+- **Temporary worker safety**: construction projects use daily-hire workers ("pakyaw" labor) who may lack safety training; CSHP must address transient workforce safety
+- **Crane and heavy equipment operations**: steel erection and roof installation require crane operations with fall protection; DOLE requires licensed crane operators and regular equipment inspection certificates
+
+### Staffing Implication
+
+- **1 Construction Safety Officer (dedicated)**: 5-8 concurrent projects require weekly site visits; 1 FTE rotates through sites; provincial sites require travel (1-2 days per visit); absorbed into Engineering team with dedicated construction safety focus
+- **Contractor Safety Officers**: provided by each General Contractor per DOLE DO 13 requirement; not BuildRight headcount but supervised by BuildRight Construction Safety Officer
+- **No incremental BuildRight FTEs** beyond the Construction Safety Officer already recommended in W225
+
+### Time Estimate
+
+- CSHP development and review: 3-5 days per project
+- DOLE registration: 1-2 weeks (external DOLE processing)
+- Daily toolbox talks: 15 min/day ongoing
+- Weekly safety inspection: 2-3 hours/week per active project
+- Monthly safety review: 4 hours/month
+- Project safety closeout: 1 day per project
+- **Ongoing per project**: ~8-10 hours/week of Construction Safety Officer time during active construction
+
+---
+
+## W790. Construction Quality Assurance, Milestone Inspection & Material Testing
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Construction milestone reached (foundation, structural framing, MEP rough-in, finishes) per project schedule |
+| **Frequency** | Per construction milestone (typically 4-6 milestone inspections per project) |
+| **Volume** | 10-15 projects/year × 4-6 milestones = 40-90 milestone inspections/year |
+| **Owner** | Quality Assurance Engineer |
+| **Participants** | Project Manager, General Contractor, Third-Party Testing Laboratory, Structural Engineer, LGU Building Official |
+
+### Background
+
+Philippine construction quality is governed by the National Building Code (PD 1096), the National Structural Code of the Philippines (NSCP 2015), and LGU building inspection requirements. BuildRight's large-format retail buildings (8,000-15,000 sqm) require structural certification at key milestones before subsequent work can proceed. Material testing (concrete cylinder tests, steel tensile tests, soil bearing capacity) must be performed by DOLE-accredited third-party laboratories. This workflow ensures construction quality meets BuildRight engineering standards and Philippine regulatory requirements.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **QA Plan Development**: At project start, Quality Assurance Engineer develops project-specific Quality Assurance Plan (QAP): defines inspection hold points (foundation, framing, MEP, fire protection, finishes), required material tests per NSCP 2015, acceptance criteria, third-party laboratory requirements, documentation standards | QA Engineer | VP Engineering | 2-3 days |
+| 2 | **Material Testing at Source**: Before critical materials arrive on site: (a) concrete mix design approved by third-party laboratory; (b) reinforcing steel (rebar) samples tested for tensile strength and bend per PNS 49; (c) structural steel certificates of mill test reviewed; (d) cement certificates of compliance per PNS 07 verified; (e) all test results filed in project QA documentation | QA Engineer / Third-Party Lab | VP Engineering | 1-2 days per material batch |
+| 3 | **Foundation Milestone Inspection**: After foundation excavation and before concrete pouring: (a) verify soil bearing capacity matches geotechnical report; (b) verify rebar spacing, cover, and lap length per engineering drawings; (c) verify formwork alignment and dimensions; (d) concrete cylinder sample taken during pour for 7-day and 28-day strength test; (e) structural engineer signs off before pouring proceeds | QA Engineer / Structural Engineer | VP Engineering | 1 day |
+| 4 | **Structural Framing Milestone Inspection**: After steel or concrete frame erection: (a) verify column and beam alignment per engineering tolerances; (b) verify weld quality (visual inspection, magnetic particle testing for critical connections); (c) verify bolt torque per specifications; (d) verify roof truss installation and bracing; (e) structural engineer issues interim structural certification | QA Engineer / Structural Engineer | VP Engineering | 1-2 days |
+| 5 | **MEP Rough-In Inspection**: After mechanical, electrical, and plumbing rough-in: (a) verify electrical conduit and wiring per Philippine Electrical Code; (b) verify plumbing pressure test results; (c) verify HVAC ductwork installation and insulation; (d) verify fire sprinkler pipe installation and hydrostatic test results; (e) MEP engineer signs off before wall closing | QA Engineer / MEP Engineer | VP Engineering | 1 day |
+| 6 | **Finishes & Final Inspection**: Before substantial completion: (a) verify floor flatness and levelness per specification; (b) verify wall finishes, paint quality, and tile installation; (c) verify door and window installation, weatherproofing; (d) verify ADA/PWD accessibility per BP 344 compliance; (e) verify fire safety equipment installation per BFP requirements | QA Engineer | VP Engineering | 1-2 days |
+| 7 | **Defect Rectification & Re-Inspection**: Contractor corrects defects identified at each milestone; QA Engineer re-inspects and signs off; defects not rectified within agreed timeline trigger retainage withholding per construction agreement | QA Engineer | Project Manager | 1-5 days per milestone |
+| 8 | **QA Documentation & Closeout**: At project completion: (a) compile all material test results, inspection reports, structural certifications, and laboratory certificates into project QA file; (b) QA file submitted to LGU Building Official for Certificate of Occupancy application; (c) QA file archived in Document Management System per W255 for 15-year retention (structural warranty period) | QA Engineer | VP Engineering | 2-3 days |
+
+### System Touchpoints
+
+- Construction Project Management module with milestone hold-point tracking
+- Material test result repository linked to BOQ and PO per W2
+- Quality inspection checklist mobile app with photo capture and deficiency tracking
+- Third-party laboratory integration for test result upload
+- Defect rectification tracking with retainage hold integration per W165
+- Document Management System per W255 for QA file archival
+- LGU permit tracking dashboard for Certificate of Occupancy milestone
+
+### Pain Points / Risks
+
+- **Third-party laboratory delays**: DOLE-accredited testing laboratories in provincial areas may have 2-3 week backlogs for concrete cylinder test results; construction must proceed at risk or wait for results
+- **Contractor shortcuts on material quality**: substituting specified materials with lower-grade alternatives (e.g., lower-grade rebar, insufficient cement mix) to save costs; mitigated by source testing and random site sampling
+- **Geotechnical surprises**: foundation excavation revealing soil conditions worse than geotechnical report predicted; requires engineering redesign and delays project 2-4 weeks
+- **NSCP compliance for provincial buildings**: some provincial LGU building officials may not enforce structural code rigorously; BuildRight must self-enforce higher standards to protect brand reputation and liability
+- **Material testing cost**: third-party testing adds 1-2% to construction cost; some contractors may resist testing requirements to protect margins
+- **Weld quality in structural steel**: poor weld quality is a common defect in Philippine construction; magnetic particle testing for critical connections adds cost but is essential for seismic zone compliance
+
+### Staffing Implication
+
+- **1 Quality Assurance Engineer**: 10-15 projects/year × 4-6 milestones = 40-90 inspections; each inspection requires 1-2 days on-site plus 1 day documentation; staggered project timelines allow 1 FTE with peak support from contracted QA inspectors
+- **Third-Party Testing Laboratory**: outsourced service per project; ~PHP 200,000-400,000 per project for full material testing suite; not BuildRight headcount
+- **Structural Engineer (contracted)**: per-project engagement for foundation and framing milestone sign-off; typically the original design engineer; not BuildRight headcount
+- **Peak support**: when 3+ projects reach milestone simultaneously, temporary QA inspector contracted for 1-2 weeks
+
+### Time Estimate
+
+- QA Plan development: 2-3 days per project
+- Material testing at source: 1-2 days per material batch (overlapping with construction)
+- Foundation milestone: 1 day
+- Structural framing milestone: 1-2 days
+- MEP rough-in milestone: 1 day
+- Finishes/final inspection: 1-2 days
+- Defect rectification: 1-5 days per milestone
+- QA documentation closeout: 2-3 days
+- **Total QA effort per project**: 10-20 days spread over 6-9 month construction period
+
+---
+
+## W791. Construction Document Control, Drawing Revision & As-Built Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Design completion (W223) and NTP issuance; drawing revision request during construction; project completion triggering as-built documentation |
+| **Frequency** | Continuous during active construction; as-built at project completion |
+| **Volume** | 10-15 projects/year; each generates 100-200 drawing sheets and 500-1,000 construction documents |
+| **Owner** | Project Document Controller |
+| **Participants** | Architect, MEP Engineers, General Contractor, Project Manager, VP Engineering, LGU Building Official |
+
+### Background
+
+BuildRight constructs 10-15 new stores per year, each requiring extensive construction documentation: architectural drawings, structural engineering plans, MEP plans, fire safety plans, BOQs, specifications, RFIs (Requests for Information), submittals, change orders, inspection reports, and as-built drawings. Without structured document control, construction teams work from outdated drawings, change orders are lost, LGU submissions are delayed by missing documents, and as-built records are incomplete — creating long-term maintenance and safety risks. This workflow governs the lifecycle of construction documents from design through as-built delivery.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Baseline Document Set**: At NTP, Project Document Controller receives the "Issued for Construction" (IFC) document set from W223: architectural drawings, structural plans, MEP plans, fire safety plans, BOQ, specifications, geotechnical report; registers all documents in construction document management system with version 0 status; distributes controlled copies to General Contractor and Project Manager | Document Controller | VP Engineering | 2-3 days |
+| 2 | **Drawing Revision Control**: During construction, design changes require formal revision: (a) change initiator (Architect, MEP Engineer, Contractor, or Store Ops) submits Change Request with reason and impact assessment; (b) VP Engineering approves or rejects; (c) if approved, design team issues revised drawing with new revision number (Rev 1, Rev 2, etc.); (d) Document Controller distributes revised drawing to all holders of superseded version; (e) superseded versions stamped "SUPERSEDED" and archived; (f) system maintains full revision history with change descriptions | Document Controller / Design Team | VP Engineering | 2-5 days per revision |
+| 3 | **RFI Management**: Contractor submits Request for Information when construction documents are unclear or conflicting: (a) RFI logged in system with unique number, discipline (architectural, structural, MEP), and urgency (standard 5-day response, urgent 2-day, critical 1-day); (b) RFI routed to appropriate design professional; (c) response issued with drawing reference if applicable; (d) RFI response may trigger drawing revision per Step 2; (e) monthly RFI log review identifies recurring design issues for future prototype improvement | Document Controller / Design Team | Project Manager | 30 min per RFI |
+| 4 | **Submittal Management**: Contractor submits material/equipment submittals for approval: (a) submittal logged with specification section reference; (b) routed to appropriate reviewer (Architect for finishes, MEP Engineer for equipment, QA Engineer for materials); (c) reviewer approves, approves with exceptions, or rejects with comments; (d) approved submittal becomes the standard for that material/equipment on the project; (e) rejected submittals returned with specific non-compliance reasons | Document Controller / Reviewers | VP Engineering | 5-10 days per submittal |
+| 5 | **LGU Document Submission**: For building permit, BFP clearance, and Certificate of Occupancy applications: (a) Document Controller assembles required document package per LGU checklist; (b) VP Engineering reviews completeness; (c) Document Controller submits to LGU and tracks status; (d) responds to LGU queries and additional document requests; (e) receives and files LGU-issued permits and certificates | Document Controller | VP Engineering | 1-2 weeks per submission |
+| 6 | **As-Built Documentation**: At substantial completion: (a) Contractor marks up construction drawings to reflect actual field conditions (deviations from design); (b) design team reviews and incorporates contractor markups into formal as-built drawings; (c) as-built drawings registered in Document Management System per W255; (d) as-built set becomes the basis for W227 operational handover and future W226 renovation scope definition; (e) as-builts retained for building lifetime (minimum 25 years per Philippine Building Code) | Contractor / Design Team / Document Controller | VP Engineering | 2-3 weeks |
+| 7 | **Project Document Archive**: After handover: (a) all construction documents organized into project archive: design drawings, revised drawings, RFIs, submittals, change orders, inspection reports, QA test results, permits, as-built drawings; (b) archive stored in Document Management System per W256 retention policy (construction documents: lifetime of building); (c) physical copies of critical documents (signed permits, notarized contracts) archived in Engineering file room | Document Controller | VP Engineering | 3-5 days |
+
+### System Touchpoints
+
+- Construction Document Management System with version control and revision tracking
+- Drawing viewer (CAD/BIM integration) for markups and as-built overlay
+- RFI and submittal management module with routing and approval workflow per W686
+- Change order tracking integrated with CAPEX budget per W21
+- LGU permit tracking dashboard with document checklist
+- Document Management System per W255 for permanent archive
+- Mobile app for field document access and photo documentation
+
+### Pain Points / Risks
+
+- **Outdated drawings causing rework**: contractors building from superseded drawings is the #1 cause of construction rework; each rework event costs PHP 200,000-2,000,000 and delays schedule 1-2 weeks
+- **Drawing revision cascades**: a structural design change may trigger MEP and architectural revisions, creating a cascade of 10-20 drawing revisions; each revision cycle takes 2-5 days
+- **RFI backlog**: during peak construction, RFIs can accumulate faster than design team can respond; standard 5-day response target becomes 10-15 days, causing contractor delays
+- **LGU document format requirements**: each LGU has unique document submission requirements, formats, and authentication requirements; standardizing across 200+ LGU jurisdictions is impractical
+- **As-built completeness**: contractors often provide incomplete as-built markups (missing minor field changes); incomplete as-builts create maintenance and renovation risks for years
+- **Physical document chain of custody**: some documents require wet-ink signatures and notarization (LGU permits, construction agreements); physical document tracking across multiple sites is error-prone
+
+### Staffing Implication
+
+- **1 Project Document Controller**: 10-15 projects/year, each generating 100-200 drawing sheets; daily RFI and submittal management across 5-8 concurrent projects; absorbed into Engineering team as dedicated role
+- **Peak support**: during periods with 3+ projects in active construction, temporary document controller contracted for 2-3 months
+- **Design team (shared)**: RFI and submittal review absorbed by Architect and MEP Engineer as part of construction administration services
+
+### Time Estimate
+
+- Baseline document set: 2-3 days per project
+- Drawing revision cycle: 2-5 days per revision (typically 10-20 revisions per project)
+- RFI response: 1-5 days per RFI (typically 50-100 RFIs per project)
+- Submittal review: 5-10 days per submittal (typically 30-50 submittals per project)
+- As-built documentation: 2-3 weeks per project
+- Project archive: 3-5 days per project
