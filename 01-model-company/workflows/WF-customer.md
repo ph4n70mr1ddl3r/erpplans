@@ -38,6 +38,10 @@
 - [W904. Store-Level Contractor Referral & Customer-Contractor Matchmaking Service](#w904-store-level-contractor-referral--customer-contractor-matchmaking-service)
 - [W911. Customer Digital Warranty Vault & Multi-Vendor Warranty Claim Aggregation](#w911-customer-digital-warranty-vault--multi-vendor-warranty-claim-aggregation)
 - [W914. Customer Project Completion Celebration & Review Incentive Program](#w914-customer-project-completion-celebration--review-incentive-program)
+- [W928. Customer Price Protection & Price Adjustment Policy Processing](#w928-customer-price-protection--price-adjustment-policy-processing)
+- [W933. Customer Loyalty Account Deceased Member Processing & Points Estate Transfer](#w933-customer-loyalty-account-deceased-member-processing--points-estate-transfer)
+- [W936. Customer B2B Self-Service Portal Order Management & Account Access](#w936-customer-b2b-self-service-portal-order-management--account-access)
+- [W942. Customer Loyalty Family/Household Account Linking & Shared Benefits Management](#w942-customer-loyalty-familyhousehold-account-linking--shared-benefits-management)
 - **[Project-Based B2B & Trade Sales Workflows (W162–W166)](./WF-project-sales.md)**
 
 ---
@@ -2445,3 +2449,270 @@ BuildRight's customers invest significant time and money in home improvement pro
 - Content amplification: 2–3 hours/week
 - Monthly analytics: 4–6 hours
 - **Total per review**: ~15–25 min of staff time (moderation + publishing)
+
+---
+
+## W928. Customer Price Protection & Price Adjustment Policy Processing
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W928 |
+| **Name** | Customer Price Protection & Price Adjustment Policy Processing |
+| **Trigger** | Customer requests price adjustment for an item purchased within the price protection window (7 days) that is now available at a lower price at BuildRight (same store or any store) or on buildright.com.ph |
+| **Frequency** | ~500–800 requests/month chain-wide; ~3–4 per store per month; spikes during promotional transitions (W583) and markdown events (W93) |
+| **Volume** | Average adjustment amount PHP 150–300; ~70% valid, ~20% outside window, ~10% fraudulent/repeat |
+| **Owner** | Customer Service Rep (in-store) / Call Center Agent (online/phone) |
+| **Participants** | CSR, Call Center Agent, Department Supervisor, CS Manager, Pricing Analyst |
+
+### User Story
+
+> **As a** loyal BuildRight customer,
+> **I want to** receive a refund of the price difference when an item I purchased goes on sale within 7 days,
+> **So that** I feel confident buying when I need to without fear of missing a promotion.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Customer requests price adjustment: presents original receipt (paper or e-receipt per W528) and identifies the lower price (current shelf tag, promotional flyer, or buildright.com.ph screenshot); requests can be made in-store (CSR counter), by phone (call center), or via the BuildRight mobile app (upload receipt photo + lower price evidence) | Customer | — | — |
+| 2 | CSR / Call Center Agent retrieves original transaction from POS/ERP by receipt number; system displays: transaction date, SKU, original price paid, payment method, loyalty account (if linked) | CSR / Call Center Agent | CS Manager | 2 min |
+| 3 | System automatically validates price protection eligibility: (a) transaction date within 7-calendar-day window from current date; (b) item is identical SKU (barcode match); (c) lower price is currently active at BuildRight (any store or online — not competitor price, which is W61); (d) customer has not already received a price adjustment for this transaction/SKU; (e) item is not a clearance/final-sale item (W532); (f) price drop is not due to DTI price freeze (W468); (g) loyalty member in good standing (no fraudulent adjustment history) | System | — | Automated |
+| 4 | If eligible: system calculates price difference (original price − current price × quantity); displays difference, applicable VAT adjustment, and net refund amount; CSR confirms with customer | CSR / System | CS Manager | 2 min |
+| 5 | CSR processes refund of price difference using original payment method: cash refund for cash purchases; card refund to original card for card/e-wallet purchases; loyalty points credit (at standard earn rate) as alternative if customer prefers | CSR | CS Manager | 5 min |
+| 6 | System posts financial entries: Dr. Revenue / Cr. Cash (or AR for card refund); VAT adjustment (Dr. Output VAT / Cr. Revenue for VAT-exclusive portion); loyalty points adjustment if points were originally earned on the higher amount (deduct proportional points) | System | — | Automated |
+| 7 | System generates BIR-compliant credit note referencing original sales invoice per POS-052; customer receives credit note via e-receipt (email/SMS) or printed copy | System | — | Automated |
+| 8 | If ineligible: CSR explains reason to customer (outside window, non-matching SKU, clearance item, etc.); offers alternatives if applicable (return and repurchase if within return window per W12, or loyalty points gesture at CS Manager discretion up to PHP 500) | CSR | CS Manager | 3 min |
+| 9 | CS Manager reviews price adjustment pattern analytics weekly: adjustment volume by store, SKU category, promotional event, and customer; flags stores with >2× chain-average adjustment rate for pricing sync investigation (W553) | CS Manager | Store Ops Director | 1 hour/week |
+| 10 | Monthly: Pricing Analyst reviews price adjustment data to identify systemic issues — promotions launched too close to regular price periods, markdown timing conflicts, POS price sync delays causing customer friction; feeds into promotional planning (W13) and markdown strategy (W93) | Pricing Analyst | VP Merchandising | 2 hours/month |
+
+### System Touchpoints
+- Original transaction retrieval by receipt number with line-item detail (W928.2)
+- Automated eligibility validation against configurable rules: 7-day window, identical SKU match, no prior adjustment on same transaction, exclusion list (clearance, price freeze items), fraud history check (W928.3)
+- Price difference calculation with VAT-aware adjustment (W928.4)
+- Refund processing via original payment method with BIR-compliant credit note (W928.5–7)
+- Loyalty points proportional deduction on adjusted amount (W928.6)
+- Price adjustment analytics dashboard: volume, amount, by store/category/promo/customer (W928.9)
+- Mobile app self-service price adjustment request with receipt photo upload and auto-validation (W928.1)
+
+### Pain Points / Risks
+- **Promotional transition spikes**: Major promotional events (6 bi-monthly sales) trigger a surge of price adjustment requests from customers who purchased 3–6 days before the sale launch; each event may generate 200–400 requests chain-wide within the first 3 days, stranding CSR capacity
+- **Clearance vs. price protection ambiguity**: Customers may demand price adjustments to clearance prices (which are explicitly excluded); frontline staff need clear guidance and system enforcement to prevent inconsistent application
+- **Fraud and repeat exploitation**: Sophisticated customers may attempt repeated price adjustments across stores, use forged receipts, or exploit timing of price changes; requires pattern detection and customer-level tracking
+- **Mobile app receipt fraud**: Uploaded receipt photos could be edited or reused; system needs OCR-based validation against POS transaction database to verify authenticity
+
+### Time Estimate
+- CSR validation and processing (eligible): ~10 min/request
+- CSR explanation (ineligible): ~5 min/request
+- Weekly pattern review: 1 hour/week
+- Monthly pricing analysis: 2 hours/month
+- **Total per store per month**: ~30–40 min of CSR time
+
+### Staffing Implication
+- **CSR (stores)**: 3–4 requests/store/month × 10 min = ~30–40 min/store/month. Absorbed within existing CSR role alongside returns and BOPIS pickup.
+- **Call Center**: 100–200 phone/app requests/month ÷ 30 agents = ~4–7 requests/agent/month. Minimal incremental load.
+- **Pricing Analyst**: 2 hours/month for pattern analysis. Absorbed within existing Pricing Analyst role.
+
+---
+
+## W933. Customer Loyalty Account Deceased Member Processing & Points Estate Transfer
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W933 |
+| **Name** | Customer Loyalty Account Deceased Member Processing & Points Estate Transfer |
+| **Trigger** | Family member, estate executor, or authorized representative notifies BuildRight of a loyalty member's death |
+| **Frequency** | ~20–50 cases/year chain-wide; ~1–2 per month |
+| **Volume** | Average points balance per deceased account: PHP 500–2,000 equivalent |
+| **Owner** | Customer Service Manager |
+| **Participants** | CS Manager, Loyalty Program Administrator, Legal & Compliance Officer, Finance Analyst |
+
+### User Story
+
+> **As a** surviving family member of a deceased BuildRight loyalty member,
+> **I want to** transfer my deceased family member's loyalty points to my own account or receive their value,
+> **So that** my family is not deprived of the benefits my family member earned.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Family member or authorized representative contacts BuildRight (in-store CSR, call center, or email) to report member's death; provides deceased member's name, mobile number, or loyalty card number | Family Member | — | — |
+| 2 | CSR creates a sensitive case ticket classified as "Deceased Member — Sensitive"; ticket routed to CS Manager with high-priority flag; standard SLA: acknowledgment within 24 hours, resolution within 10 business days | CSR | CS Manager | 5 min |
+| 3 | CS Manager contacts family member with condolences and explains documentation requirements: (a) certified true copy of death certificate; (b) valid government-issued ID of the requesting party; (c) proof of relationship (marriage certificate, birth certificate, or legal document showing executor/administrator appointment); (d) written request specifying desired action (points transfer or account closure) | CS Manager | — | 15 min |
+| 4 | Family member submits required documents via email (scanned copies), in-person at any store, or via registered mail; CS Manager verifies documents for authenticity and completeness | CS Manager | Legal & Compliance | 30 min |
+| 5 | Legal & Compliance Officer reviews documentation for legal sufficiency per Philippine law: confirms identity of requesting party, validates proof of relationship or legal authority, ensures RA 10173 compliance (data privacy of deceased); provides clearance within 3 business days | Legal & Compliance Officer | — | 30 min |
+| 6 | Upon legal clearance, CS Manager processes the requested action: **Option A — Points Transfer**: family member is an existing BuildRight loyalty member; system transfers full points balance from deceased account to family member's account with transaction code "ESTATE-TRANSFER"; **Option B — Points Redemption**: family member is not a BuildRight member and does not wish to enroll; system redeems points for store credit (at standard redemption rate: 1 point = PHP 1.00) issued to the requesting party as store credit per W28; **Option C — Account Closure**: points balance is below minimum transfer threshold (PHP 100 equivalent) or no family claim; system forfeits remaining points with deferred revenue recognition per PFRS 15 (DR Loyalty Deferred Revenue / CR Loyalty Points Forfeited) | CS Manager | Loyalty Program Admin | 15 min |
+| 7 | System updates deceased member account status to "Deceased — Closed"; flags account for permanent deactivation; retains account data per RA 10173 retention requirements (5 years post-closure for data privacy compliance) but prevents any future transactions; suppresses all marketing communications immediately | System | — | Automated |
+| 8 | CS Manager sends confirmation letter to requesting party documenting the action taken, points transferred or redeemed, and account closure confirmation | CS Manager | — | 15 min |
+| 9 | Loyalty Program Administrator updates deceased member register; quarterly: reviews deceased member processing metrics (volume, average balance, transfer vs. closure ratio, processing time vs. SLA) | Loyalty Program Admin | VP Marketing | 30 min/quarter |
+| 10 | Annual: Loyalty Program Administrator includes deceased account processing in loyalty financial governance review (W104) — deferred revenue impact, breakage estimation update, and points liability adjustment | Loyalty Program Admin | CFO | Part of W104 |
+
+### System Touchpoints
+- Sensitive case ticket classification with high-priority routing and restricted access (W933.2)
+- Document upload and verification workflow for death certificate, ID, and proof of relationship (W933.4)
+- Points transfer between loyalty accounts with estate transfer transaction code (W933.6)
+- Store credit issuance for points redemption to non-member requesting party (W933.6)
+- Account status change to "Deceased — Closed" with communication suppression (W933.7)
+- Data retention compliance: 5-year post-closure retention with restricted access per RA 10173 (W933.7)
+- Deceased member register with quarterly reporting (W933.9)
+
+### Pain Points / Risks
+- **Sensitivity and empathy**: Staff handling these cases must demonstrate empathy and sensitivity; CSRs need training to handle bereaved family members appropriately; insensitive handling risks significant brand damage and social media backlash
+- **Document fraud risk**: Death certificates and proof of relationship documents could be forged to fraudulently claim loyalty points; requires Legal & Compliance review to validate authenticity
+- **Legal complexity for estates**: When the deceased has a substantial points balance (>PHP 10,000 equivalent) and multiple potential claimants, estate law in the Philippines may require court-appointed administrator documentation; this can extend processing to 30+ days
+- **Data privacy of deceased**: RA 10173 does not explicitly address deceased persons' data; BuildRight must balance family access requests with privacy obligations; legal review required for each case
+
+### Time Estimate
+- Case intake and ticket creation: 5 min
+- Family member contact and document request: 15 min
+- Document verification: 30 min
+- Legal & Compliance review: 30 min (within 3 business days)
+- Action processing (transfer/redemption/closure): 15 min
+- Confirmation letter: 15 min
+- Quarterly register update: 30 min/quarter
+- **Total per case**: ~2 hours of staff time over 10 business days
+
+### Staffing Implication
+- **CS Manager**: 20–50 cases/year × 2 hours = 40–100 hours/year. ~1–2 hours/month. Absorbed within existing CS Manager role.
+- **Legal & Compliance Officer**: 30 min per case × 20–50/year = 10–25 hours/year. Minimal incremental load.
+- **Loyalty Program Administrator**: 30 min/quarter for register review. Absorbed within existing role.
+
+---
+
+## W936. Customer B2B Self-Service Portal Order Management & Account Access
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W936 |
+| **Name** | Customer B2B Self-Service Portal Order Management & Account Access |
+| **Trigger** | Trade or corporate account customer accesses the BuildRight B2B portal (b2b.buildright.com.ph) to place orders, view account status, or manage account information |
+| **Frequency** | ~2,000–3,000 portal sessions/month; ~5,200 active trade accounts + 200 corporate accounts |
+| **Volume** | ~800–1,200 orders placed via portal/month; average order value PHP 15,000–25,000 |
+| **Owner** | B2B Portal Administrator (IT) / Sales Rep (account management) |
+| **Participants** | Trade/Corporate Customer, B2B Portal Administrator, Sales Rep, AR Supervisor, IT Support |
+
+### User Story
+
+> **As a** trade professional or corporate buyer,
+> **I want to** place repeat orders, check real-time inventory and pricing, download invoices, and manage my account online at any time,
+> **So that** I can efficiently procure materials without waiting for business hours or sales rep availability.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Customer navigates to b2b.buildright.com.ph and logs in with registered email and password (two-factor authentication via SMS OTP); first-time users activate account via email invitation from Sales Rep linked to their trade/corporate account (W24) | Customer | — | 2 min |
+| 2 | Portal displays personalized dashboard: account summary (credit limit, available credit, outstanding AR), recent orders, favorite/reorder lists, promotional offers applicable to their pricing tier, and assigned Sales Rep contact | System | — | Automated |
+| 3 | Customer browses product catalog with trade-specific pricing displayed (trade price tier per CRM-003); searches by keyword, category, or SKU; views real-time inventory availability at their default store/DC; filters by in-stock only, brand, or specification | Customer | — | 5–10 min |
+| 4 | Customer adds items to cart with quantity entry; system validates quantity against available ATP at serving location and applies quantity break pricing (POS-010) automatically; displays per-line margin savings vs. SRP for transparency | System | — | Automated |
+| 5 | Customer proceeds to checkout: selects delivery option (pickup at designated store, scheduled delivery from DC, or project site delivery per W5D); selects delivery date from available calendar slots; system calculates delivery fee by zone; confirms order total including VAT | Customer | — | 3 min |
+| 6 | System validates order against customer credit limit: available credit = credit limit − outstanding AR − open order commitments; if order exceeds available credit, system blocks checkout and displays message to contact Sales Rep for credit limit review (W328); if within limit, system creates Sales Order with project reference (if applicable per W58) | System | — | Automated |
+| 7 | Customer receives order confirmation via email with Sales Order number, expected delivery/pickup date, and order summary; Sales Rep receives copy of order notification | System | — | Automated |
+| 8 | Customer tracks order status through portal: Confirmed → Processing → Ready for Pickup / Shipped → Delivered / Picked Up → Invoiced; real-time status from ERP order management (W536) | Customer | — | On demand |
+| 9 | Customer downloads invoices and statements from portal: BIR-compliant sales invoices (per DOC-002), account statements (per W892), and credit notes (per POS-052); 7-year document archive accessible per NFR-006 | Customer | — | On demand |
+| 10 | Customer manages account information: update contact person, delivery address, billing email; request credit limit increase (triggers W328 workflow); view payment history and outstanding balance | Customer | Sales Rep | 5 min |
+| 11 | Customer creates and manages reorder lists (favorites): save frequently ordered item lists for one-click reorder; share lists with team members within same corporate account | Customer | — | 5 min/creation |
+| 12 | IT Support monitors portal health: uptime, page load time, error rates, login success rate, order submission success rate; weekly analytics dashboard with adoption metrics (active users, order volume, feature utilization) | IT Support | B2B Portal Admin | 2 hours/week |
+| 13 | Monthly: Sales Rep reviews portal adoption for assigned accounts; contacts non-adopting trade accounts to offer portal training and onboarding; reports portal feedback and enhancement requests to IT per W616 | Sales Rep | VP Sales | 1 hour/month |
+| 14 | Quarterly: B2B Portal Administrator reviews portal analytics — order volume trend, average order value (portal vs. phone/email), customer satisfaction (NPS from portal), feature request backlog, and competitive benchmarking; presents to VP Sales and CIO | B2B Portal Admin | VP Sales / CIO | 4 hours/quarter |
+
+### System Touchpoints
+- B2B portal with secure authentication (email + SMS OTP) linked to trade/corporate customer master (W936.1)
+- Personalized dashboard with credit status, order history, and pricing tier (W936.2)
+- Real-time inventory ATP and trade-specific pricing per customer tier (W936.3–4)
+- Credit limit validation at checkout with blocking for over-limit orders (W936.6)
+- Order creation in ERP with fulfillment routing (pickup/delivery) per W536 (W936.6–7)
+- Real-time order status tracking from ERP (W936.8)
+- Document self-service: invoice, statement, credit note download with 7-year archive (W936.9)
+- Account self-service: contact updates, credit limit requests, payment history (W936.10)
+- Reorder list creation and team sharing (W936.11)
+- Portal health monitoring and analytics (W936.12)
+
+### Pain Points / Risks
+- **Credit limit blocking friction**: Trade accounts that frequently operate near their credit limit will be blocked at checkout with no self-service override; every blocked order becomes a Sales Rep or AR Supervisor phone call, negating the portal's efficiency purpose
+- **ATP accuracy for trade pricing**: The portal must display the same real-time ATP that the POS and ecommerce channels see; if inventory data is stale (e.g., during POS nightly reconciliation per W525), customers may place orders for items that are actually out of stock, requiring post-order cancellation and frustration
+- **Adoption resistance from traditional trade customers**: Many Filipino contractors and trade professionals are not digitally savvy and may resist portal adoption; the Sales Rep remains their preferred ordering channel; portal adoption targets should be realistic (30–40% of trade order volume within Year 1)
+- **Portal-ERP data latency**: Any latency between the portal's product catalog cache and the ERP item master (price changes, new items, discontinued items per W315) creates order failures; requires near-real-time sync (same architecture as ecommerce per POS-047)
+
+### Time Estimate
+- Customer login and order placement: 10–15 min/order
+- Order confirmation and tracking: automated
+- IT portal monitoring: 2 hours/week
+- Sales Rep adoption review: 1 hour/month
+- Quarterly analytics review: 4 hours/quarter
+- **Total IT support per month**: ~10 hours
+- **Total Sales Rep per month**: ~1 hour per Sales Rep for portal accounts
+
+### Staffing Implication
+- **B2B Portal Administrator (IT)**: New role or absorbed by existing ecommerce/IT team; ~10 hours/month for monitoring, analytics, and vendor coordination.
+- **Sales Reps**: 1 hour/month each for portal account adoption outreach; absorbed within existing role.
+- **IT Support**: Portal health monitoring absorbed within existing IT helpdesk (W48) with escalation path.
+
+---
+
+## W942. Customer Loyalty Family/Household Account Linking & Shared Benefits Management
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W942 |
+| **Name** | Customer Loyalty Family/Household Account Linking & Shared Benefits Management |
+| **Trigger** | Loyalty member requests to link their account with family/household members for combined spend tracking toward tier qualification |
+| **Frequency** | ~500–1,000 linking requests/month; seasonal spikes during holiday season and promotional events |
+| **Volume** | ~2,500 active household groups at any time; average 2–3 members per household |
+| **Owner** | Customer Service Manager |
+| **Participants** | CS Manager, Loyalty Program Administrator, Family Members (customers), Data Privacy Officer |
+
+### User Story
+
+> **As a** BuildRight loyalty member renovating my home,
+> **I want to** link my loyalty account with my spouse's and adult children's accounts so our combined spending qualifies us for a higher loyalty tier,
+> **So that** my entire household enjoys better benefits and rewards from our collective BuildRight purchases.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Primary member initiates household linking request via BuildRight mobile app (self-service) or in-store at CSR counter; provides own loyalty account number and mobile numbers of family members to be linked (up to 4 additional members per household; all must be existing loyalty members or enroll first per W263) | Primary Member | — | 5 min |
+| 2 | System sends SMS/app notification to each invited family member with link to accept or decline household linking; notification includes: name of inviting member, explanation of household benefits (combined spend tracking, shared tier status), data sharing implications per RA 10173, and 7-day acceptance deadline | System | — | Automated |
+| 3 | Each invited member reviews request and accepts (with RA 10173 consent for household data sharing) or declines; if a member declines, they are excluded from household but do not block other members from joining; consent is granular: member can opt in to (a) combined spend tracking, (b) shared tier benefits, (c) household transaction visibility | Family Member | — | 3 min |
+| 4 | Once all invitations are resolved (accepted or declined or expired), system creates household group: assigns unique household ID; designates primary member as household administrator; links accepted members; calculates combined 12-month rolling spend from individual purchase histories | System | — | Automated |
+| 5 | System evaluates household group for tier qualification based on combined 12-month rolling spend against tier thresholds (Bronze/Silver/Gold/Platinum per CRM-005); if combined spend qualifies for a higher tier than any individual member, system upgrades all household members to the household tier; if any individual member already holds a higher tier, they retain their individual tier (household tier = max of combined tier, individual tiers) | System | Loyalty Program Admin | Automated |
+| 6 | All household members receive tier upgrade notification (if applicable) with new benefits explanation; household members continue to earn individual points on their own purchases but benefit from the household tier status for tier-specific perks (bonus points rates, exclusive offers, priority service) | System | — | Automated |
+| 7 | Ongoing: system aggregates monthly spend across all household members for tier re-evaluation during quarterly tier processing (W515); each member's individual points remain separate and redeemable only by the earning member; only tier qualification uses combined spend | System | — | Automated |
+| 8 | Primary member (household administrator) can manage household via app: add new member (up to household max of 5), remove member (removed member retains individual tier based on their own spend), view combined household spend and tier progress, revoke household (all members revert to individual tier status) | Primary Member | CS Manager | 5 min |
+| 9 | CS Manager handles exceptions: disputed removals, deceased member removal (per W933), household split due to separation/divorce (requires written request and ID verification for both parties), member exceeding household limit; exceptions resolved within 5 business days | CS Manager | Loyalty Program Admin | 15 min |
+| 10 | Quarterly: Loyalty Program Administrator reviews household program analytics: number of active households, average household size, tier upgrade rate due to household linking, incremental revenue from household-linked members vs. non-linked, household dissolution rate; adjusts household program parameters (max size, tier thresholds) per W104 | Loyalty Program Admin | VP Marketing | 2 hours/quarter |
+| 11 | Annual: Data Privacy Officer audits household data sharing consent compliance per RA 10173; verifies all active household members have current granular consent; revokes household linking for members with expired or withdrawn consent; annual consent refresh notification sent to all household members | Data Privacy Officer | VP Legal | 4 hours/year |
+
+### System Touchpoints
+- Self-service household linking initiation via mobile app and in-store CSR (W942.1)
+- SMS/app notification to invited members with acceptance link and consent interface (W942.2)
+- Granular RA 10173 consent management for household data sharing (W942.3)
+- Household group creation with unique household ID and primary member designation (W942.4)
+- Combined 12-month rolling spend calculation and tier evaluation (W942.5)
+- Quarterly tier re-evaluation with household aggregation per W515 (W942.7)
+- Household self-service management: add/remove members, view progress, revoke (W942.8)
+- Exception handling workflow for disputes and household splits (W942.9)
+- Household analytics dashboard for Loyalty Program Administrator (W942.10)
+
+### Pain Points / Risks
+- **Household definition ambiguity**: Philippine family structures often extend beyond the nuclear family (multi-generational households, extended family); the 5-member household limit may exclude legitimate family members and cause frustration; the definition of "household" vs. "family" needs clear policy
+- **Tier dilution risk**: If too many members link for tier upgrade benefits without genuinely shared household purchasing, the exclusivity and cost of higher tiers is diluted; combined spend must genuinely represent a single household's purchasing
+- **Divorce/separation complexity**: When linked members separate, untangling the household requires careful handling — which member retains the household tier based on their individual spend? How are pending tier evaluations handled mid-separation?
+- **Consent withdrawal cascading effect**: If one member withdraws data sharing consent mid-quarter, the household's combined spend calculation changes retroactively; tier status may need to be re-evaluated and potentially downgraded, causing friction with remaining members
+- **Data privacy regulatory risk**: Linking purchasing behavior across individuals is sensitive under RA 10173; the NPC may scrutinize household data sharing if consent mechanisms are inadequate; requires granular, informed, and refreshable consent
+
+### Time Estimate
+- Self-service linking initiation: 5 min (customer)
+- Per-member acceptance: 3 min (family member)
+- System household creation and tier evaluation: automated
+- Exception handling: 15 min per case
+- Quarterly analytics review: 2 hours/quarter
+- Annual consent audit: 4 hours/year
+- **Total CS Manager per month**: ~2–3 hours for exceptions and inquiries
+- **Total Loyalty Program Admin per quarter**: 2 hours
+
+### Staffing Implication
+- **CS Manager**: ~2–3 hours/month for household exception handling and inquiries; absorbed within existing role.
+- **Loyalty Program Administrator**: 2 hours/quarter for analytics; absorbed within W104 review.
+- **Data Privacy Officer**: 4 hours/year for consent audit; absorbed within existing data privacy operations.

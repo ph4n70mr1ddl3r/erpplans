@@ -68,6 +68,8 @@
 - [W712. Financial Restatement & Prior-Year Adjustment Processing](#w712-financial-restatement--prior-year-adjustment-processing)
 - [W713. Corporate Credit Card Program Management & Expense Reconciliation](#w713-corporate-credit-card-program-management--expense-reconciliation)
 - [W714. Store-Level Daily Financial Summary Reporting & Flash P&L](#w714-store-level-daily-financial-summary-reporting--flash-pl)
+- [W919. Intercompany Inventory Movement Accounting & Goods-in-Transit Reconciliation](#w919-intercompany-inventory-movement-accounting--goods-in-transit-reconciliation)
+- [W939. Customer Store Credit Expiration Management & Unclaimed Credit Processing](#w939-customer-store-credit-expiration-management--unclaimed-credit-processing)
 
 ---
 
@@ -4861,3 +4863,67 @@ BuildRight's corporate structure creates a unique inventory accounting challenge
 - Month-end reconciliation: 8–12 hours
 - Quarterly audit support: 20–30 hours/quarter
 - **Total per month**: ~30–40 hours
+
+---
+
+## W939. Customer Store Credit Expiration Management & Unclaimed Credit Processing
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W939 |
+| **Name** | Customer Store Credit Expiration Management & Unclaimed Credit Processing |
+| **Trigger** | Scheduled monthly batch process identifying store credits approaching expiration or past expiration |
+| **Frequency** | Monthly batch; ~3,000–5,000 active store credit records at any time; ~200–400 new credits issued per month (from returns per W12, refunds per W101, damaged item compensation per W549) |
+| **Volume** | Average store credit value: PHP 500–3,000; ~15–20% of store credits expire unclaimed; annual unclaimed credit value: ~PHP 1.5–3M |
+| **Owner** | AR Supervisor |
+| **Participants** | AR Supervisor, CS Manager, Finance Controller, Customer |
+
+### User Story
+
+> **As a** Finance Controller,
+> **I want to** systematically manage store credit expiration with customer notifications and compliant accounting for unclaimed balances,
+> **So that** we maintain accurate liability records, comply with Philippine regulations, and give customers fair opportunity to use their credits.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | System issues store credit when triggered by: customer return (W12) where customer selects store credit over refund; customer complaint resolution (W41) where CS Manager issues credit as compensation; damaged/open-box item discount residual (W549); store credit gift card (W28); each credit issuance creates a record: credit ID, customer ID (loyalty account or guest name + mobile), issuance date, original amount, expiration date (configurable per credit type: returns = 12 months, compensation = 6 months, gift = no expiry per Philippine gift card law), source transaction reference | System | CS Manager | Automated |
+| 2 | Monthly batch (1st of each month): system identifies store credits in three categories: (a) credits approaching expiration in 60 days — "Expiring Soon" list; (b) credits approaching expiration in 30 days — "Final Notice" list; (c) credits past expiration date with no activity — "Expired" list | System | — | Automated |
+| 3 | For "Expiring Soon" credits (T-60 days): system sends customer notification via SMS (primary), email (secondary), and app push notification (loyalty members): "You have a store credit of PHP [amount] expiring on [date]. Use it at any BuildRight store or online. View your credits: [link]"; notification includes loyalty app deep link to credit balance page | System | — | Automated |
+| 4 | For "Final Notice" credits (T-30 days): system sends final customer notification with urgency messaging: "FINAL NOTICE: Your store credit of PHP [amount] expires in 30 days on [date]. Visit any BuildRight store or buildright.com.ph to redeem"; if customer has no valid contact (guest with no mobile/email), CS Manager attempts contact via receipt lookup | System / CS Manager | AR Supervisor | Automated + 30 min |
+| 5 | For "Expired" credits (past expiration): system auto-sets credit status to "Expired"; expired credits remain visible in customer's loyalty profile (grayed out) for 12 months for reference but are not redeemable; system generates BIR-compliant credit note adjustment referencing original credit note | System | — | Automated |
+| 6 | AR Supervisor reviews monthly expiration batch report: total credits expired, total value expired, customer notification delivery success rate, credit utilization rate (credits used vs. issued); identifies anomalies (unusually high expiration rate, same customer repeatedly losing credits, credits > PHP 10,000 expiring) | AR Supervisor | Finance Controller | 1 hour/month |
+| 7 | Finance Controller reviews unclaimed credit accounting: system posts journal entry for expired credits — Dr. Store Credit Liability (deferred revenue) / Cr. Other Income (breakage income); breakage income recognized per PFRS 15 (store credit with no obligation to refund cash, expected breakage based on historical pattern); monthly breakage estimate vs. actual reconciliation | System / Finance Controller | CFO | 30 min/month |
+| 8 | Quarterly: AR Supervisor generates store credit program analytics — issuance volume by source (returns, complaints, compensation), utilization rate, average days to redemption, expiration rate by value band, customer contact success rate, breakage rate trend; Finance Controller reviews breakage accounting adequacy with external auditor per W487 (revenue recognition) | AR Supervisor / Finance Controller | CFO | 2 hours/quarter |
+| 9 | Annual: Finance Controller reviews store credit expiration policy for regulatory compliance — Philippine Consumer Act (RA 7394) does not explicitly regulate store credit expiry; however, DTO consumer protection guidelines and best practices recommend reasonable expiration periods; Finance Controller recommends policy adjustments (e.g., extending returns credit from 12 to 18 months, or eliminating expiration for credits > PHP 5,000) for CFO approval | Finance Controller | CFO | 4 hours/year |
+
+### System Touchpoints
+- Store credit issuance from multiple source transactions with configurable expiration per credit type (W939.1)
+- Monthly batch expiration processing with three-tier categorization (T-60, T-30, Expired) (W939.2)
+- Multi-channel customer notifications (SMS, email, app push) with delivery tracking (W939.3–4)
+- Auto-expiration with credit status change and BIR-compliant credit note adjustment (W939.5)
+- Breakage accounting automation: Dr. Liability / Cr. Other Income per PFRS 15 (W939.7)
+- Monthly expiration batch report with anomaly flagging (W939.6)
+- Quarterly and annual store credit analytics (W939.8–9)
+
+### Pain Points / Risks
+- **Customer dissatisfaction on expiration**: Customers who lose store credits (especially high-value credits from returns) may feel cheated and complain publicly (social media, DTI); the 60-day and 30-day pre-expiry notifications are critical for customer goodwill, but SMS delivery in the Philippines is unreliable (~85–90% delivery rate)
+- **PFRS 15 breakage estimation complexity**: Breakage income must be estimated based on historical redemption patterns and recognized over the credit life; if actual redemption rates differ significantly from estimates, prior-period adjustments may be required; the annual policy review (step 9) helps calibrate estimates
+- **Guest credit recovery difficulty**: Store credits issued to non-loyalty customers (guests) are tracked by name and mobile number only; if the guest doesn't save the credit receipt or SMS, they may never return to claim the credit; guest credits have higher expiration rates (~30–40% vs. ~10% for loyalty members)
+- **Regulatory risk**: While Philippine law does not currently mandate gift card/store credit terms, evolving consumer protection regulations (modeled after US and EU gift card laws) could impose minimum or no-expiry requirements; annual policy review should monitor regulatory developments
+
+### Time Estimate
+- Monthly batch notification review: 30 min
+- Guest customer contact attempts: 30 min
+- Monthly expiration report review: 1 hour
+- Monthly breakage accounting: 30 min
+- Quarterly analytics: 2 hours/quarter
+- Annual policy review: 4 hours/year
+- **Total per month**: ~3–4 hours (AR Supervisor + Finance Controller)
+
+### Staffing Implication
+- **AR Supervisor**: ~2 hours/month for store credit expiration management; absorbed within existing AR role.
+- **Finance Controller**: ~1 hour/month for breakage accounting review; absorbed within existing role.
+- **CS Manager**: ~30 min/month for guest customer contact attempts; absorbed within existing role.
+

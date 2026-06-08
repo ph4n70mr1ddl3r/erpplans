@@ -39,6 +39,8 @@
 - [W706. Supplier Performance Scorecard & Quarterly Business Review](#w706-supplier-performance-scorecard-quarterly-business-review)
 - [W901. Vendor Seasonal Buy-Back & Stock Return Agreement Execution](#w901-vendor-seasonal-buy-back--stock-return-agreement-execution)
 - [W915. Vendor Product Packaging Sustainability Assessment & Compliance Management](#w915-vendor-product-packaging-sustainability-assessment--compliance-management)
+- [W932. Vendor Catalog Price Change Intake, Assessment & ERP Synchronization](#w932-vendor-catalog-price-change-intake-assessment--erp-synchronization)
+- [W938. Vendor Managed Inventory (VMI) Periodic Data Accuracy Audit & Reconciliation](#w938-vendor-managed-inventory-vmi-periodic-data-accuracy-audit--reconciliation)
 
 ---
 
@@ -2282,3 +2284,132 @@ BuildRight's ESG strategy (W192–W195, W800–W801) includes a commitment to re
 - EPR compliance tracking: 6–8 hours/quarter
 - Annual program review: 8–10 hours
 - **Total per vendor per year**: ~1–2 hours of staff time (assessment + monitoring)
+
+---
+
+## W932. Vendor Catalog Price Change Intake, Assessment & ERP Synchronization
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W932 |
+| **Name** | Vendor Catalog Price Change Intake, Assessment & ERP Synchronization |
+| **Trigger** | Vendor submits a price list update, price increase notification, or new product pricing communication to BuildRight's buying team |
+| **Frequency** | ~50–100 vendor price change notifications/month; ~20–30 vendors submit regular (quarterly/semi-annual) catalog updates; ~5–10 vendors submit ad-hoc price increase notices (commodity-linked items: cement, steel, copper wire) |
+| **Volume** | Average 100–500 SKU price changes per vendor catalog update; ~10,000–50,000 SKU price updates/year across all vendors |
+| **Owner** | Buyer |
+| **Participants** | Buyer, Category Manager, Pricing Analyst, Vendor, AP Clerk |
+
+### User Story
+
+> **As a** BuildRight Buyer,
+> **I want to** systematically process vendor price change notifications and assess their impact on our retail pricing, margins, and existing purchase orders,
+> **So that** I can negotiate where possible, update our pricing strategy promptly, and ensure our ERP reflects accurate costs.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Vendor submits price change notification to Buyer via email (standard communication), vendor portal (W868 self-service catalog management), or in-person during business review (W44); notification includes: effective date, affected SKUs, new wholesale price(s), reason for change (raw material cost increase, currency fluctuation, new product introduction, annual catalog update) | Vendor | — | — |
+| 2 | Buyer logs price change notification in ERP: vendor ID, notification date, effective date, total number of affected SKUs, vendor-stated reason, and attaches vendor's price list document; system creates a Price Change Request (PCR) record with unique PCR number | Buyer | Category Manager | 10 min |
+| 3 | System performs automated impact analysis on the PCR: (a) identifies all affected SKUs in BuildRight's item master linked to this vendor; (b) calculates cost change per SKU (current purchase price vs. proposed price, absolute and percentage); (c) calculates margin impact per SKU (current gross margin % vs. new gross margin % at current SRP); (d) flags SKUs where margin falls below category floor (configurable per category, default 15%); (e) identifies affected open purchase orders (POs not yet received where PO price < proposed price); (f) estimates annualized COGS impact (based on trailing 12-month purchase volume per SKU) | System | — | Automated |
+| 4 | Buyer reviews automated impact analysis: evaluates total annualized cost impact (categorized as: <PHP 100K = Low, PHP 100K–1M = Medium, >PHP 1M = High); identifies SKUs falling below margin floor; reviews open PO exposure | Buyer | Category Manager | 30–60 min |
+| 5 | **If price increase**: Buyer evaluates negotiation options — (a) negotiate volume discount to offset increase; (b) request extended effective date to sell through existing stock at old cost; (c) propose alternative product specifications to maintain price point; (d) compare with alternative vendors per W631 (strategic sourcing); Buyer documents negotiation outcome in PCR | Buyer | Category Manager | 1–4 hours |
+| 6 | **If negotiated reduction or vendor insists on increase**: Buyer recommends retail price action per SKU: (a) absorb cost change (maintain SRP — margin decreases, acceptable if still above floor); (b) pass through to SRP (adjust SRP to maintain target margin — requires pricing approval per W40); (c) promotional strategy (launch promo to soften customer impact during transition); (d) assortment action (discontinue SKU per W68 if margin unacceptable and no alternative source, recommend substitute per W279) | Buyer / Pricing Analyst | Category Manager | 1–2 hours |
+| 7 | Category Manager approves or modifies price action recommendation: Low-impact PCRs (<PHP 100K) approved by Category Manager; Medium-impact (PHP 100K–1M) requires VP Merchandising approval; High-impact (>PHP 1M) requires COO/CFO approval; approval documented in PCR with timestamp | Category Manager / VP Merchandising / COO | — | 30 min |
+| 8 | Upon approval: system updates purchase price in vendor-item master (MDM) effective on the vendor's stated effective date; for approved SRP changes: system updates retail price master per W289 (pricing master governance) and schedules price change execution per W40; for open POs affected by price increase: system flags for AP Clerk review — POs confirmed before effective date honor old price; POs confirmed after effective date use new price | System | — | Automated |
+| 9 | AP Clerk reviews flagged open POs: confirms which POs the vendor will honor at old price vs. new price based on agreement terms; updates PO line prices where applicable; ensures 3-way match (W7) will reflect correct pricing on future invoices | AP Clerk | Finance Manager | 30 min |
+| 10 | Monthly: Buyer generates vendor price change summary report — number of PCRs processed, total annualized cost impact, negotiation success rate (price increases reduced or deferred), margin impact by category, retail price pass-through rate; Category Manager reviews with VP Merchandising for vendor relationship management and category margin strategy | Buyer / Category Manager | VP Merchandising | 2 hours/month |
+
+### System Touchpoints
+- Price Change Request (PCR) record creation with vendor documentation attachment (W932.2)
+- Automated impact analysis: SKU matching, cost change, margin impact, margin floor breach flagging, open PO exposure, annualized COGS impact (W932.3)
+- PCR workflow with tiered approval matrix (Low/Medium/High impact) (W932.7)
+- Automated purchase price update in vendor-item master on effective date (W932.8)
+- Integration with pricing master governance (W289) for SRP changes (W932.8)
+- Open PO flagging for AP review and 3-way match alignment (W932.9)
+- Monthly vendor price change analytics dashboard (W932.10)
+
+### Pain Points / Risks
+- **Commodity price volatility**: Cement, steel, and copper wire prices can fluctuate monthly in the Philippine market; vendors may submit frequent price changes that overwhelm the buying team's capacity for thorough assessment; commodity-linked items need streamlined processing per W671
+- **Margin erosion from absorbed increases**: If Buyers absorb too many vendor price increases to maintain SRP stability (competitive pressure), category margins erode silently; the automated margin floor flagging is critical but requires enforcement discipline
+- **Open PO pricing disputes**: Vendors may ship at new prices against POs placed at old prices, creating AP invoice matching failures (W7); clear contractual terms on price change effective dates and AP Clerk diligence are essential
+- **Catalog update volume**: Large vendor catalog updates (hundreds of SKU price changes) create significant data entry and review workload; vendor portal self-service (W868) with structured price list upload and automated matching reduces manual effort
+
+### Time Estimate
+- PCR logging: 10 min
+- Impact analysis review: 30–60 min
+- Negotiation (price increases): 1–4 hours
+- Price action recommendation: 1–2 hours
+- Approval: 30 min
+- AP PO review: 30 min
+- Monthly summary report: 2 hours/month
+- **Total per PCR**: ~3–7 hours (highly variable based on number of affected SKUs and negotiation complexity)
+
+### Staffing Implication
+- **Buyers (10–12)**: 50–100 PCRs/month ÷ 10–12 Buyers = ~5–10 PCRs/Buyer/month × 3–7 hours = ~15–70 hours/Buyer/month. Large catalog updates may dominate a Buyer's month; prioritization by impact level is essential.
+- **Category Managers (5)**: Approval and strategic review for Medium/High impact PCRs; ~2–4 hours/week.
+- **Pricing Analysts (3)**: Price action modeling and SRP impact analysis; ~4–6 hours/week.
+- **AP Clerk**: 30 min per PCR for open PO review; ~25–50 hours/month spread across AP team.
+
+---
+
+## W938. Vendor Managed Inventory (VMI) Periodic Data Accuracy Audit & Reconciliation
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W938 |
+| **Name** | Vendor Managed Inventory (VMI) Periodic Data Accuracy Audit & Reconciliation |
+| **Trigger** | Monthly reconciliation cycle (scheduled) or triggered by significant discrepancy detected in VMI sell-through data (W621 daily monitoring) |
+| **Frequency** | Monthly reconciliation for all 12 VMI vendors; ~300 VMI SKUs across 200 stores + 4 DCs |
+| **Volume** | ~300 SKUs × 204 locations = ~61,200 VMI stock records reconciled per monthly cycle; typical discrepancy rate ~3–5% of records |
+| **Owner** | Supply Planner |
+| **Participants** | Supply Planner, Vendor VMI Coordinator, Category Manager, Inventory Analyst |
+
+### User Story
+
+> **As a** Supply Planner managing VMI relationships,
+> **I want to** periodically reconcile VMI inventory data between BuildRight's ERP and the vendor's system,
+> **So that** both BuildRight and the vendor have accurate inventory records for replenishment decisions and consignment settlement.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | System generates monthly VMI reconciliation extract per vendor: for each VMI SKU at each location, extract current ERP on-hand quantity (vendor-owned consignment stock per W23),累计 sell-through quantity for the month, and cumulative replenishment receipts for the month | System | — | Automated |
+| 2 | Vendor provides their monthly VMI inventory report: for each VMI SKU at each location, vendor's recorded on-hand quantity, vendor's recorded sell-through (from sell-through data shared per W422), and vendor's recorded replenishment shipments | Vendor | — | — |
+| 3 | Supply Planner performs automated comparison (system-assisted): line-by-line match of ERP quantities vs. vendor quantities for on-hand, sell-through, and receipts; system flags discrepancies exceeding configurable threshold (default: ±5 units or ±10% of on-hand, whichever is greater) | Supply Planner / System | Category Manager | 1 hour/vendor |
+| 4 | For flagged discrepancies, Supply Planner investigates root cause: (a) timing difference (shipment in transit between systems); (b) unreported shrinkage (theft/damage in BuildRight's inventory not yet communicated to vendor); (c) receiving discrepancy (goods received at DC/store but not confirmed in vendor system); (d) sell-through data transmission failure (POS transactions not synced per W533/W525); (e) system error (duplicate transaction, incorrect SKU mapping) | Supply Planner | — | 2–4 hours/vendor |
+| 5 | Supply Planner resolves discrepancies with Vendor VMI Coordinator: shares BuildRight evidence (goods receipts, POS sell-through logs, cycle count results per W6); vendor shares their evidence (shipment manifests, ASN records); both parties agree on adjusted quantities and root cause classification | Supply Planner / Vendor VMI Coord. | Category Manager | 1–2 hours/vendor |
+| 6 | System adjusts VMI inventory records per agreed reconciliation: BuildRight ERP updated for BuildRight-caused discrepancies; vendor adjusts their system for vendor-caused discrepancies; adjustments documented with reason code and reconciliation reference number; inventory adjustments flow to GL per W92 (adjustment authorization) | Supply Planner / System | Category Manager | 30 min/vendor |
+| 7 | Reconciliation impacts consignment settlement: adjusted sell-through quantities determine vendor payment per FIN-018 (consignment settlement); Supply Planner confirms reconciled sell-through figures to AP Clerk for monthly consignment payment processing | Supply Planner | Finance Manager | 15 min/vendor |
+| 8 | Monthly: Supply Planner generates VMI data accuracy scorecard per vendor — record match rate (target: ≥97%), discrepancy rate by root cause, average discrepancy resolution time, adjustment volume and financial impact; shares with Category Manager for quarterly vendor business review (W672) | Supply Planner | Category Manager | 1 hour/month |
+| 9 | Quarterly: Category Manager reviews VMI program data accuracy in quarterly vendor business review (W672); persistent accuracy issues (>5% discrepancy rate for 2+ consecutive months) trigger corrective action: vendor system integration review, increased cycle count frequency for VMI SKUs (W6), or renegotiation of VMI terms; vendors with ≥99% accuracy recognized in scorecard (W44) | Category Manager | VP Merchandising | 30 min/vendor/quarter |
+
+### System Touchpoints
+- Monthly VMI reconciliation extract generation per vendor (W938.1)
+- Automated line-by-line comparison with configurable discrepancy threshold (W938.3)
+- Discrepancy investigation workflow with evidence attachment (W938.4)
+- VMI inventory record adjustment with reason code and GL posting (W938.6)
+- Consignment settlement integration with reconciled sell-through (W938.7)
+- VMI data accuracy scorecard per vendor (W938.8)
+
+### Pain Points / Risks
+- **Data synchronization latency**: VMI accuracy depends on near-real-time sell-through data sharing (W422); if POS-to-ERP sync is delayed (POS offline per W535, nightly reconciliation failures per W525), vendor system records diverge from BuildRight's actual inventory; Philippine internet connectivity in provincial stores exacerbates this risk
+- **Dispute resolution friction**: When discrepancies involve financial impact (vendor overpaid or underpaid on consignment settlement), both parties have incentive to favor their own data; reconciliation may require escalation to Category Manager and vendor management, extending resolution time
+- **Volume at scale**: 61,200 VMI stock records reconciled monthly across 12 vendors generates significant operational workload; automated comparison and threshold-based flagging are essential to prevent manual line-by-line review of every record
+- **VMI program trust erosion**: Persistent data accuracy issues erode vendor confidence in the VMI program, potentially leading vendors to withdraw VMI arrangements and revert to traditional PO-based procurement (increasing BuildRight's planning workload)
+
+### Time Estimate
+- System extract and vendor report receipt: 1 day (vendor-dependent)
+- Automated comparison: automated
+- Discrepancy investigation: 2–4 hours/vendor
+- Vendor reconciliation discussion: 1–2 hours/vendor
+- Record adjustment: 30 min/vendor
+- Settlement confirmation: 15 min/vendor
+- Monthly scorecard: 1 hour/month (all vendors)
+- **Total per month**: ~60–90 hours (12 vendors × 5–7 hours each + 1 hour consolidated)
+
+### Staffing Implication
+- **Supply Planner (1 dedicated to VMI)**: ~60–90 hours/month = 1.5–2.5 hours/vendor/month. At 12 VMI vendors, this is a significant portion of one Supply Planner's monthly capacity; may require a dedicated VMI planner role or shared responsibility with 2 Supply Planners.
+- **Category Manager**: 30 min/vendor/quarter for quarterly review = 6 hours/quarter for all VMI vendors; absorbed within existing quarterly review workload.
+

@@ -122,6 +122,11 @@
 - [W721. Store-Level Vendor Promodizer Floor Activity Coordination & Compliance](#w721-store-level-vendor-promodizer-floor-activity-coordination--compliance)
 - [W722. Store-Level Exterior Display & Garden Center Daily Operations](#w722-store-level-exterior-display--garden-center-daily-operations)
 - [W723. Store-Level Loading Bay Traffic & Truck Queue Management](#w723-store-level-loading-bay-traffic--truck-queue-management)
+- [W929. Store-Level Lost & Found Item Management](#w929-store-level-lost--found-item-management)
+- [W931. Store-Level Customer Comfort Room & Amenity Daily Operations](#w931-store-level-customer-comfort-room--amenity-daily-operations)
+- [W935. Customer Product Registration at POS for Vendor Extended Warranty](#w935-customer-product-registration-at-pos-for-vendor-extended-warranty)
+- [W937. Store-Level Customer Wheelchair & PWD Mobility Assistance Service](#w937-store-level-customer-wheelchair--pwd-mobility-assistance-service)
+- [W941. Store-Level Customer Baggage Hold & Parcel Custody Service](#w941-store-level-customer-baggage-hold--parcel-custody-service)
 
 ---
 
@@ -8559,3 +8564,314 @@ Modern big-box retail increasingly deploys self-service kiosks to enhance the cu
 - Quarterly content refresh: 4–6 hours (centralized)
 - Monthly analytics: 2–3 hours (consolidated)
 - **Total per store per month**: ~1–2 hours of staff time (startup + cleaning + minor issues)
+
+---
+
+## W929. Store-Level Lost & Found Item Management
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W929 |
+| **Name** | Store-Level Lost & Found Item Management |
+| **Trigger** | Customer or staff member finds an unattended personal item in the store (sales floor, restroom, parking lot, lumber yard, receiving dock) or customer reports a lost item |
+| **Frequency** | ~50–100 items found/store/month; ~30–50 lost item inquiries/store/month |
+| **Volume** | Categories: mobile phones (20%), wallets/purses (15%), keys (15%), shopping bags with personal items (15%), tools/hardware (10%), umbrellas/rain gear (10%), IDs/cards (5%), other (10%); ~40% claimed by owner, ~60% unclaimed |
+| **Owner** | Customer Service Rep |
+| **Participants** | CSR, Store Manager, Stock Associate, LP Officer (for high-value items) |
+
+### User Story
+
+> **As a** customer who accidentally left my phone in the lumber aisle,
+> **I want to** be able to quickly report and recover my lost item at the Customer Service counter,
+> **So that** I don't lose something valuable during my shopping trip.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Staff member or customer finds unattended item in store; finder brings item to Customer Service counter (or notifies CSR who retrieves it); if item is a suspicious/unattended package, staff follows store security protocol (W471) instead | Staff / Customer | CSR | 5 min |
+| 2 | CSR logs found item in ERP Lost & Found register: date/time found, location found (zone + aisle if applicable), item description, item category (electronics, wallet, keys, bag, ID, other), finder name (staff ID or "customer"), estimated value category (under PHP 1,000 / PHP 1,000–10,000 / over PHP 10,000), and photo (mandatory for items estimated over PHP 1,000) | CSR | Store Manager | 3 min |
+| 3 | For electronics (phones, tablets) and wallets: CSR secures item in locked cabinet at Customer Service counter; does NOT attempt to unlock or access the device's contents per RA 10173; for all other items: CSR places in labeled container in the locked cabinet with the found-item log number | CSR | Store Manager | 3 min |
+| 4 | If customer reports a lost item at CSR counter or by phone: CSR searches Lost & Found register by date, item category, description, and location; if match found, CSR verifies ownership by asking customer to describe specific details (phone case color, wallet contents, key fob type) not visible in the log description | CSR | Store Manager | 5 min |
+| 5 | If ownership verified: customer signs the Found Item Release Log with government-issued ID number; CSR records release date, customer name, ID type and number, and signature; item released to customer | CSR | Store Manager | 5 min |
+| 6 | If no match found: CSR takes customer's contact information (name, mobile, email) and lost item details; creates a Lost Item record in the register; system sends automated SMS/email to customer if a matching item is logged within 30 days | CSR | — | 3 min |
+| 7 | For unclaimed high-value items (estimated > PHP 10,000 — electronics, jewelry): after 30 days with no claim, LP Officer reviews for potential theft or police investigation connection; LP Officer determines disposition (secure storage for additional 60 days, turn over to barangay per local protocol, or donate to charity per company policy) | LP Officer | Store Manager | 15 min/item |
+| 8 | For unclaimed items (estimated < PHP 10,000): after 30 days with no claim, system auto-flags for Store Manager disposition — reusable items (umbrellas, bags) donated to local charity per W444; personal documents (IDs, cards) turned over to barangay or issuing agency; perishable or valueless items disposed | System / Store Manager | Store Manager | 10 min/batch |
+| 9 | System enforces retention periods: items not claimed within 90 days are automatically flagged for mandatory disposition; Store Manager reviews and executes disposition with witness documentation; found cash (if any) is turned over to store cash office per W541 and held for 90 days before remittance to company revenue | System | Store Manager | Automated |
+| 10 | Monthly: CSR generates Lost & Found summary report — items found, items claimed, claim rate, average time to claim, unclaimed items pending disposition, high-value items requiring LP review; Store Manager reviews for patterns (frequent theft locations, repeat lost-item locations) | CSR | Store Manager | 30 min/month |
+
+### System Touchpoints
+- ERP Lost & Found register with structured item logging (date, location, category, photo) (W929.2)
+- Found Item Release Log with ID verification and digital signature (W929.5)
+- Lost Item record creation with automated customer notification if matching item found (W929.6)
+- Automated 30-day and 90-day retention period alerts for disposition (W929.8–9)
+- Monthly Lost & Found summary report with claim rate analytics (W929.10)
+
+### Pain Points / Risks
+- **Liability for high-value items**: Stores holding found phones, laptops, or large amounts of cash face liability for loss, damage, or accusations of theft; secure storage and chain-of-custody documentation are critical
+- **Privacy concerns**: Staff must not access personal data on found electronics (phones, USB drives) per RA 10173; however, customers may expect staff to "call the last number" to help identify the owner; clear policy needed
+- **Disposition disputes**: Customers returning after the 90-day retention period demanding their item may cause confrontations; clear signage at Customer Service counter and website FAQ needed to communicate retention policy
+- **Fraud risk**: Individuals may falsely claim found items; ownership verification questions must be specific enough to prevent false claims but not so specific that they violate privacy
+
+### Time Estimate
+- Found item logging and secure storage: 6 min/item
+- Lost item inquiry and search: 5 min/inquiry
+- Item release with verification: 5 min/release
+- High-value item LP review: 15 min/item (30-day mark)
+- Monthly batch disposition: 10 min/batch
+- Monthly summary report: 30 min/month
+- **Total per store per month**: ~6–8 hours of CSR time
+
+### Staffing Implication
+- **CSR**: 50–100 found items + 30–50 inquiries/store/month × 5–6 min each = ~6–8 hours/month. Absorbed within existing CSR role alongside returns and BOPIS pickup. The locked cabinet at the CSR counter provides convenient physical control.
+
+---
+
+## W931. Store-Level Customer Comfort Room & Amenity Daily Operations
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W931 |
+| **Name** | Store-Level Customer Comfort Room & Amenity Daily Operations |
+| **Trigger** | Daily (morning store opening per W5A) |
+| **Frequency** | Daily, 200 stores |
+| **Volume** | 1–3 customer comfort rooms per store (sales floor, lumber yard area if separate); PWD-accessible comfort room per BP 344 required per location |
+| **Owner** | Maintenance / Utility Staff |
+| **Participants** | Maintenance Staff, Department Supervisor, Store Manager |
+
+### User Story
+
+> **As a** customer shopping at BuildRight Depot for renovation materials,
+> **I want to** have access to clean, well-stocked, and PWD-accessible comfort rooms during my shopping visit,
+> **So that** I can comfortably spend more time in the store selecting the right products for my project.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Maintenance Staff performs morning comfort room opening checklist (before store opening per W5A): verify door locks functional, PWD-accessible door auto-opener working, lights and exhaust fan operational, water supply running, toilet and sink functional, no leaks or plumbing issues; any critical failure (no water, broken toilet) triggers immediate facility maintenance work order (W47) with "urgent" priority | Maintenance Staff | Store Manager | 10 min/room |
+| 2 | Maintenance Staff stocks consumables to par level: toilet paper (minimum 2 rolls per stall), hand soap (dispenser > 25% full), paper towels or hand dryer functional, sanitary supplies (covered bin with liner), floor mat; stocks PWD-specific supplies: grab rail stability verified, emergency pull cord functional | Maintenance Staff | Dept. Supervisor | 5 min/room |
+| 3 | Maintenance Staff performs morning deep clean: toilet bowl and seat disinfection, sink and counter cleaning, mirror wipe, floor mopping with disinfectant, trash removal and liner replacement, air freshener/ventilation check; cleaning chemical inventory deducted from store supplies inventory | Maintenance Staff | Dept. Supervisor | 15 min/room |
+| 4 | System logs morning checklist completion with Maintenance Staff ID and timestamp; incomplete items auto-generate facility maintenance work order per W47; checklist stored for LGU sanitary permit compliance documentation (W448) | System | — | Automated |
+| 5 | Mid-day (12:00–1:00 PM): Maintenance Staff performs mid-day restocking and spot clean of high-traffic comfort rooms; check consumables, wipe surfaces, remove trash if >75% full; quick check per zone (sales floor + lumber yard if applicable) | Maintenance Staff | Dept. Supervisor | 5 min/room |
+| 6 | Afternoon (3:00–4:00 PM): Maintenance Staff performs afternoon spot check and restock per mid-day protocol | Maintenance Staff | Dept. Supervisor | 5 min/room |
+| 7 | End-of-day (after store closing per W574): Maintenance Staff performs closing deep clean per morning protocol (step 3); stocks to par level for next morning; locks comfort room doors; system logs closing checklist | Maintenance Staff | Store Manager | 15 min/room |
+| 8 | Weekly (Saturday): Maintenance Staff performs weekly deep maintenance — grout cleaning, drain check and clearing, exhaust fan dust removal, tile scrubbing, PWD grab rail tightening, mirror re-polishing; logs completion | Maintenance Staff | Store Manager | 30 min/room |
+| 9 | Monthly: Store Manager conducts comfort room inspection using LGU sanitary permit standards checklist (W448); rates cleanliness, supply availability, PWD accessibility, and fixture condition; scores below 80% trigger corrective action plan within 7 days | Store Manager | Regional Manager | 15 min/store |
+| 10 | Monthly: Department Supervisor reviews comfort room supply consumption report — toilet paper, soap, paper towel, cleaning chemical usage per room vs. par level benchmarks; flags stores with >20% over-consumption for investigation (waste, theft, or higher-than-expected traffic) | Dept. Supervisor | Store Manager | 30 min/month |
+
+### System Touchpoints
+- Digital comfort room checklist on Maintenance Staff mobile device with itemized checks (W931.4)
+- Auto-generation of facility maintenance work orders (W47) for failed checklist items (W931.4)
+- Cleaning supply inventory deduction linked to store supplies PO (W931.3)
+- LGU sanitary permit compliance documentation storage (W448) (W931.9)
+- Monthly supply consumption analytics (W931.10)
+
+### Pain Points / Risks
+- **Big-box store traffic volume**: Hardware/DIY stores have longer average dwell times (45–90 min) than grocery stores, increasing comfort room usage; lumber yard and outdoor areas may require separate facilities that are harder to maintain
+- **PWD accessibility compliance**: BP 344 requires specific dimensions, grab rails, and emergency features; non-compliance risks LGU fines and NCDA complaints; Store Manager must verify PWD features monthly
+- **Cleaning chemical hazards**: Maintenance staff handling cleaning chemicals in customer-accessible areas must follow DOLE chemical handling protocols; SDS sheets must be accessible per W698; residue from cleaning must not create slip hazards
+- **Supply theft**: Consumable supplies (toilet paper, soap) are susceptible to pilferage; par-level tracking and over-consumption monitoring needed
+
+### Time Estimate
+- Morning opening checklist and deep clean: 30 min/store (2–3 rooms)
+- Mid-day spot check: 10 min/store
+- Afternoon spot check: 10 min/store
+- Closing deep clean: 30 min/store
+- Weekly deep maintenance: 30 min/store
+- Monthly inspection: 15 min/store
+- **Total per store per day**: ~90 min of Maintenance Staff time
+
+### Staffing Implication
+- **Maintenance / Utility Staff (1 per store)**: Comfort room maintenance is part of the broader store maintenance role (W47). ~90 min/day dedicated to comfort rooms out of an 8-hour shift. Absorbed within existing Maintenance/Utility role. No additional headcount needed.
+
+---
+
+## W935. Customer Product Registration at POS for Vendor Extended Warranty
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W935 |
+| **Name** | Customer Product Registration at POS for Vendor Extended Warranty |
+| **Trigger** | Customer purchases a warranty-eligible product (power tools, appliances, electrical equipment) at POS and opts for product registration |
+| **Frequency** | ~8,000–12,000 eligible transactions/month chain-wide; ~60% opt-in rate; ~5,000–7,000 registrations/month |
+| **Volume** | Warranty-eligible categories: power tools (~1,750 SKUs), home appliances (~1,750 SKUs), select electrical equipment (~500 SKUs); registration includes customer details, purchase date, serial number, and vendor warranty terms |
+| **Owner** | Cashier (at POS) / Customer (self-service via app) |
+| **Participants** | Cashier, Customer, Warranty Claims Team, Vendor |
+
+### User Story
+
+> **As a** customer buying a DeWalt power drill at BuildRight,
+> **I want to** automatically register my product for the manufacturer's warranty at checkout,
+> **So that** I don't have to keep track of receipts and fill out separate warranty cards — it's all handled digitally.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Cashier scans warranty-eligible product at POS; system identifies item as warranty-eligible via item master flag (warranty registration required = Yes/No); system prompts cashier: "Warranty Registration — Scan serial number or skip" | Cashier / System | Store Manager | 30 sec |
+| 2 | If product has a serial number: cashier scans serial number barcode on product packaging or manually enters serial number; system validates serial number format per vendor-specific patterns stored in item master (e.g., DeWalt: 12-digit alphanumeric, Bosch: 10-digit numeric); if invalid format, cashier re-prompts customer | Cashier | — | 1 min |
+| 3 | Customer-facing display shows warranty registration prompt: "Register for manufacturer warranty? Benefits: extended coverage, repair tracking, recall notifications"; customer selects Register or Skip; if Register: display shows privacy notice per RA 10173 with consent checkbox (data shared with manufacturer for warranty purposes) | Customer | — | 30 sec |
+| 4 | If customer registers and is a loyalty member: system auto-fills customer name, email, phone, and address from loyalty profile; customer confirms or updates on customer-facing display; if guest: customer enters name, email, and phone on customer-facing display | Customer | — | 1 min |
+| 5 | System creates warranty registration record: registration ID, customer details, product SKU, serial number, purchase date, purchase receipt number, vendor ID, vendor warranty terms (months, coverage type) from item master; registration record linked to original POS transaction for warranty claim verification (W33) | System | — | Automated |
+| 6 | System transmits registration to vendor via vendor API integration (for connected vendors) or queues for batch email/file transmission (for non-connected vendors); transmission includes customer details, product serial number, purchase date, and retailer reference number | System | — | Automated |
+| 7 | Customer receives warranty confirmation via email/SMS within 24 hours: product name, serial number, warranty period (start and end date), coverage summary, claim instructions, and BuildRight warranty claim link; registration stored in customer's loyalty profile for future access | System | — | Automated |
+| 8 | System stores registration in digital warranty vault per customer per W911; customer can view all registered products and warranty statuses via BuildRight mobile app; system sends warranty expiry reminder notification at T-30 days and T-7 days before warranty expiration | System | — | Automated |
+| 9 | For loyalty members: system awards bonus loyalty points for product registration (configurable, default: 50 points per registration); points posted immediately as part of the transaction | System | — | Automated |
+| 10 | Weekly: Warranty Claims Team reviews registration transmission queue — vendor API failures, bounced emails, incomplete registrations; resolves exceptions and resubmits within 3 business days | Warranty Claims Team | CS Manager | 2 hours/week |
+| 11 | Monthly: Warranty Claims Team generates registration analytics — registration rate by category, vendor API success rate, customer opt-in rate, serial number capture rate, bonus points liability; shares with Category Managers for vendor warranty program discussions | Warranty Claims Team | VP Merchandising | 2 hours/month |
+
+### System Touchpoints
+- POS warranty-eligible item identification via item master flag (W935.1)
+- Serial number scanning with vendor-specific format validation (W935.2)
+- Customer-facing warranty registration prompt with RA 10173 consent (W935.3)
+- Auto-fill from loyalty profile for member customers (W935.4)
+- Warranty registration record creation linked to POS transaction (W935.5)
+- Vendor API integration or batch transmission for registration (W935.6)
+- Digital warranty vault integration per W911 (W935.8)
+- Warranty expiry reminder notifications (W935.8)
+- Bonus loyalty points for registration (W935.9)
+- Registration transmission exception queue (W935.10)
+
+### Pain Points / Risks
+- **Checkout time impact**: Adding serial number scanning and customer registration to the POS checkout adds 2–3 minutes per warranty-eligible transaction; during peak hours, this creates queues and cashier frustration; the opt-in model and customer-facing display reduce but don't eliminate the time impact
+- **Vendor API reliability**: Not all vendors have API-capable warranty registration systems; non-connected vendors require batch email/file processing, which delays registration confirmation and increases exception handling workload; fallback processing needs clear SLAs
+- **Serial number capture accuracy**: Cashier-entered serial numbers have ~5–8% error rate (transposed digits, missed characters); system validation per vendor format catches some but not all errors; incorrect serial numbers cause warranty claim rejections later (W33)
+- **Customer opt-in rate variability**: Registration rates vary significantly by category (power tools: 70%, small appliances: 40%); low opt-in categories may not justify the checkout time investment; Category Managers should evaluate program value per category annually
+
+### Time Estimate
+- Serial number scanning: 30 sec
+- Customer registration consent: 30 sec
+- Customer data entry (guest): 1 min
+- Auto-fill confirmation (member): 15 sec
+- Weekly exception review: 2 hours/week
+- Monthly analytics: 2 hours/month
+- **Added POS checkout time per registration**: 2–3 min
+- **Total per store per month**: ~15–20 min added cashier time; ~60 registrations × 2.5 min = 2.5 hours/month
+
+### Staffing Implication
+- **Cashiers (stores)**: ~2.5 additional hours/store/month for warranty registrations; spread across 3 cashiers = ~50 min/cashier/month. Absorbed within existing cashier role.
+- **Warranty Claims Team (HQ)**: New small team (2–3 people) or absorbed by existing CS team; ~10 hours/week for exception handling and analytics across 200 stores. Role may be combined with W33 (warranty claim processing).
+
+---
+
+## W937. Store-Level Customer Wheelchair & PWD Mobility Assistance Service
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W937 |
+| **Name** | Store-Level Customer Wheelchair & PWD Mobility Assistance Service |
+| **Trigger** | PWD customer enters store and requests mobility assistance, or store staff identifies a customer who appears to need assistance |
+| **Frequency** | ~50–100 PWD customers/store/month (~1% of foot traffic); ~10–20 request wheelchair or dedicated assistance |
+| **Volume** | Store maintains 2–3 wheelchairs (including 1 motorized if space permits); dedicated Sales Associate assigned during peak hours |
+| **Owner** | Customer Service Rep / Department Supervisor |
+| **Participants** | CSR, Sales Associate, Department Supervisor, Store Manager |
+
+### User Story
+
+> **As a** PWD customer visiting BuildRight Depot for bathroom renovation materials,
+> **I want to** receive mobility assistance and have an accessible shopping experience with someone helping me navigate the large store and load materials,
+> **So that** I can independently complete my home improvement project just like any other customer.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | PWD customer arrives at store entrance; store entrance has wheelchair-accessible ramp (per BP 344 compliance per W497) and wheelchair available at entrance area; entrance greeter or CSR offers assistance and PWD discount eligibility check per W170 | CSR / Greeter | Store Manager | 2 min |
+| 2 | Customer requests wheelchair: CSR provides store wheelchair from entrance storage; logs wheelchair issuance in system (wheelchair ID, time out, customer loyalty number or guest); adjusts wheelchair to customer's comfort; explains store layout and accessible pathways | CSR | Dept. Supervisor | 3 min |
+| 3 | CSR or assigned Sales Associate provides dedicated shopping assistance: accompanies PWD customer through store; assists with product location and selection in customer's preferred department; assists with reading shelf labels at lower heights; helps with reaching products on higher shelves; provides product information and specifications verbally | Sales Associate | Dept. Supervisor | 30–60 min |
+| 4 | For customers purchasing heavy or bulky materials (cement, tiles, lumber): Sales Associate coordinates with Stock Associate for vehicle loading assistance per W438; ensures customer's vehicle is brought to the designated loading zone; assists with securing materials safely in customer's vehicle | Sales Associate / Stock Associate | Dept. Supervisor | 10–15 min |
+| 5 | At POS checkout: cashier applies PWD discount per W170 (20% discount + VAT exemption for eligible items); ensures POS terminal is accessible (lower counter if available); processes transaction with PWD discount and ID verification; bags items and offers carry-out assistance | Cashier | Store Manager | 5 min |
+| 6 | Customer returns wheelchair at exit; CSR logs wheelchair return (time in); inspects wheelchair for damage or cleanliness; cleans wheelchair per sanitation protocol before returning to storage | CSR | — | 3 min |
+| 7 | If customer arrives with own wheelchair or mobility aid: CSR ensures accessible pathway from parking to entrance is clear (no pallets, displays, or merchandise blocking per BP 344); offers shopping assistance without wheelchair provision | CSR | Dept. Supervisor | 2 min |
+| 8 | Weekly: Department Supervisor verifies wheelchair inventory and condition — 2–3 wheelchairs per store, tires inflated, brakes functional, seat clean, armrests secure; schedules maintenance per W47 for any damage; verifies wheelchair storage area at entrance is clearly marked, accessible, and stocked | Dept. Supervisor | Store Manager | 15 min/week |
+| 9 | Monthly: Store Manager reviews PWD customer interaction log — number of PWD customers served, wheelchair utilization, assistance requests, PWD discount transactions per W170; identifies PWD accessibility issues (blocked pathways, non-functional ramps, insufficient assistance) for remediation | Store Manager | Regional Manager | 30 min/month |
+| 10 | Quarterly: Store Manager includes PWD accessibility assessment in quarterly store facilities audit per W497; evaluates wheelchair availability, ramp condition, accessible restroom functionality (W931), parking space signage, and checkout counter accessibility; scores compliance and submits corrective action plan if below 90% | Store Manager | Regional Manager | Part of W497 |
+
+### System Touchpoints
+- Wheelchair issuance and return logging with time tracking (W937.2, W937.6)
+- PWD customer interaction log for monthly review (W937.9)
+- PWD discount integration at POS per W170 (W937.5)
+- Weekly wheelchair inventory and condition checklist (W937.8)
+- PWD accessibility assessment integrated into quarterly store audit per W497 (W937.10)
+
+### Pain Points / Risks
+- **Big-box store navigation challenge**: BuildRight stores are 8,000–15,000 sqm with narrow aisles in hardware sections, outdoor lumber yards with uneven surfaces, and tile galleries with display obstacles; wheelchair navigation is significantly more difficult than in typical retail formats; pathway design must prioritize accessibility per BP 344
+- **Wheelchair availability**: With only 2–3 wheelchairs per store, peak periods (weekends, payday) may exhaust supply; customers arriving to find no wheelchair available face a poor experience
+- **Staff training and awareness**: Not all Sales Associates are trained in PWD etiquette and assistance techniques (e.g., speaking directly to the PWD customer, not their companion; asking before touching or pushing wheelchair); dedicated training per W51 needed
+- **Lumber yard accessibility**: Outdoor lumber and building materials yards present the greatest accessibility challenge — uneven ground, loose materials, forklift traffic; PWD customers seeking lumber may need alternative service (bring samples to customer, arrange delivery)
+
+### Time Estimate
+- Wheelchair provision and briefing: 5 min
+- Dedicated shopping assistance: 30–60 min
+- Checkout with PWD discount: 5 min
+- Wheelchair return and sanitation: 3 min
+- Weekly wheelchair verification: 15 min/week
+- Monthly review: 30 min/month
+- **Total per PWD customer interaction**: ~45–75 min of Sales Associate time
+
+### Staffing Implication
+- **Sales Associates (stores)**: 10–20 dedicated assistance requests/store/month × 45–75 min = ~7.5–25 hours/store/month. This is significant; during peak hours, a dedicated Sales Associate may need to be assigned for PWD assistance, reducing floor coverage by 1 associate temporarily. Absorbed by rotating assignment across 12 Sales Associates.
+- **CSR**: Wheelchair management adds ~30 min/day. Absorbed within existing role.
+- **Wheelchair inventory**: 2–3 per store at ~PHP 5,000–15,000 each. Capital expenditure per store: PHP 10,000–45,000. Maintenance per W47.
+
+---
+
+## W941. Store-Level Customer Baggage Hold & Parcel Custody Service
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W941 |
+| **Name** | Store-Level Customer Baggage Hold & Parcel Custody Service |
+| **Trigger** | Customer who has made a purchase requests to leave items at the store while continuing to shop or running errands, or customer entering the store requests to leave personal bags/items for convenience |
+| **Frequency** | ~100–200 requests/store/month; higher during holiday season and sale events |
+| **Volume** | Average 2–3 items per hold; ~70% are purchased items awaiting pickup, ~30% are personal bags left by entering customers |
+| **Owner** | Customer Service Rep |
+| **Participants** | CSR, Stock Associate (for heavy/bulky items), Customer |
+
+### User Story
+
+> **As a** contractor shopping for a full bathroom renovation at BuildRight,
+> **I want to** leave my purchased tiles and fixtures at the Customer Service counter while I continue shopping for plumbing parts in another department,
+> **So that** I don't have to push a heavy cart through the entire store while browsing.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Customer requests baggage/parcel hold at Customer Service counter: presents purchased items with receipt (post-checkout), or requests to leave personal bags before shopping (pre-shopping); CSR accepts items and creates hold record in system: date/time, customer name, mobile number, loyalty account (if member), item description and quantity, estimated pickup time (default: same day; maximum hold: until store closing per W574) | CSR | Store Manager | 3 min |
+| 2 | CSR issues numbered baggage hold tag to customer: tag number, date, store name, pickup deadline (store closing time); duplicate tag attached to held items; for loyalty members, hold record linked to customer account for digital tag (SMS with QR code) | CSR | — | 1 min |
+| 3 | CSR secures items in designated baggage hold area at Customer Service counter (locked cage or secure shelving behind counter); heavy/bulky items (cement bags, lumber, tile boxes) moved to receiving area staging zone with Stock Associate assistance; system logs storage location | CSR / Stock Associate | Dept. Supervisor | 3 min |
+| 4 | Customer returns to collect items: presents physical hold tag or digital QR (loyalty member); CSR verifies tag number against hold record; customer signs release log with name and timestamp | Customer / CSR | CSR | 2 min |
+| 5 | CSR retrieves items from baggage hold area; for heavy/bulky items in receiving area: CSR coordinates with Stock Associate to bring items to customer's vehicle at loading zone per W438 | CSR / Stock Associate | — | 3 min |
+| 6 | System closes hold record with release timestamp; calculates hold duration; if items collected before store closing: record closed normally | System | — | Automated |
+| 7 | If items not collected by store closing (W574): CSR contacts customer by mobile (call or SMS) to confirm pickup next day; items remain secured overnight; if not collected within 24 hours of original hold: Store Manager authorizes disposition — purchased items returned to inventory with refund processing per return policy (W12); personal bags transferred to Lost & Found (W929) for 30-day retention | CSR / Store Manager | Store Manager | 5 min |
+| 8 | Weekly: CSR reviews baggage hold analytics — hold volume, average hold duration, uncollected rate, peak times; Store Manager adjusts staffing at Customer Service counter during peak hold periods (weekends, sale events) | CSR | Store Manager | 30 min/week |
+
+### System Touchpoints
+- Baggage hold record creation with customer details and item description (W941.1)
+- Numbered baggage hold tag issuance (physical + digital QR for members) (W941.2)
+- Storage location tracking (counter cage vs. receiving area) (W941.3)
+- Hold release verification with tag matching and signature (W941.4)
+- Auto-close hold record with duration tracking (W941.6)
+- Uncollected item escalation workflow with customer notification (W941.7)
+- Weekly baggage hold analytics dashboard (W941.8)
+
+### Pain Points / Risks
+- **Limited secure storage space**: Customer Service counters in big-box hardware stores are not designed for extensive baggage storage; during peak periods, hold requests may exceed available secure space, forcing staff to refuse holds
+- **High-value item liability**: Held items may include expensive power tools or appliances; if a held item is damaged, lost, or stolen while in BuildRight custody, the store faces liability and customer dissatisfaction; secure storage is essential
+- **Uncollected item accumulation**: Items left overnight and beyond accumulate quickly during busy periods; each uncollected item requires staff time for follow-up, restocking, or refund processing
+- **Personal bag security concerns**: Customers leaving personal bags expect secure custody; if a customer claims an item was missing from their bag upon return, it becomes a trust and liability issue; clear policy (BuildRight not responsible for personal items left for convenience) needed
+
+### Time Estimate
+- Hold creation and tagging: 4 min/request
+- Item release: 5 min/request
+- Uncollected item follow-up: 5 min/occurrence
+- Weekly analytics: 30 min/week
+- **Total per store per month**: ~15–20 hours of CSR time
+
+### Staffing Implication
+- **CSR**: 100–200 requests/store/month × 5 min = ~8–17 hours/month. Absorbed within existing CSR role during non-peak hours. During holiday season (W577), temporary CSR support may be needed.
+- **Stock Associate**: Occasional assistance with heavy items (~20% of holds). ~2–4 hours/month absorbed within existing role.
+- **Physical infrastructure**: Secure cage/shelving at CSR counter: ~PHP 10,000–20,000 per store (one-time).
+

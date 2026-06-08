@@ -32,6 +32,9 @@
 - [W899. Customer Bulk/Project Delivery Scheduling & Multi-Drop Coordination (B2C)](#w899-customerbulkproject-delivery-scheduling--multi-drop-coordination-b2c)
 - [W905. Customer Project Photo Gallery & Social Proof/Inspiration Platform](#w905-customer-project-photo-gallery--social-proofinspiration-platform)
 - [W907. Customer Consumables Subscription & Auto-Replenishment Service](#w907-customer-consumables-subscription--auto-replenishment-service)
+- [W930. Customer Back-in-Stock Notification Subscription & Alert Management](#w930-customer-back-in-stock-notification-subscription--alert-management)
+- [W934. Ecommerce Customer Wishlist, Save-for-Later & Price Drop Alert](#w934-ecommerce-customer-wishlist-save-for-later--price-drop-alert)
+- [W940. Ecommerce Customer Product Comparison Tool & Buying Guide Content Management](#w940-ecommerce-customer-product-comparison-tool--buying-guide-content-management)
 
 ---
 
@@ -1883,3 +1886,186 @@ BuildRight sells many products that require professional installation: air condi
 - Post-installation verification: automated (customer survey)
 - Monthly analytics: 4–6 hours
 - **Total per installation order**: ~10–15 min of staff time (coordination) + Installation Partner time
+
+---
+
+## W930. Customer Back-in-Stock Notification Subscription & Alert Management
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W930 |
+| **Name** | Customer Back-in-Stock Notification Subscription & Alert Management |
+| **Trigger** | Customer views an out-of-stock product on buildright.com.ph or the mobile app and subscribes to be notified when it becomes available |
+| **Frequency** | ~8,000–12,000 subscriptions/month; ~3,000–5,000 unique SKUs with active subscriptions at any time |
+| **Volume** | Average ~2–3 subscriptions per unique customer; ~15–20% of subscriptions trigger a notification within 30 days; ~8–12% convert to a purchase |
+| **Owner** | Ecommerce Merchandiser |
+| **Participants** | Customer, Ecommerce Merchandiser, Supply Planner, Category Manager |
+
+### User Story
+
+> **As a** homeowner planning a bathroom renovation,
+> **I want to** be notified when the specific tile design I want is back in stock at my nearest BuildRight store,
+> **So that** I can purchase it before it sells out again and delay my project.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Customer views out-of-stock product page on buildright.com.ph or mobile app; product page displays "Out of Stock" with "Notify Me When Available" button; customer clicks button; system prompts login (loyalty member) or email/mobile entry (guest) | Customer | — | 1 min |
+| 2 | System creates back-in-stock subscription: SKU, customer identifier (loyalty account or guest email/mobile), preferred store location (for BOPIS) or "Any Location", subscription date; RA 10173 consent captured (marketing notification opt-in for guests; loyalty members use existing consent preferences) | System | — | Automated |
+| 3 | System aggregates subscriptions per SKU: maintains count of active subscribers per SKU across all locations; Ecommerce Merchandiser views top-subscribed out-of-stock SKUs on daily dashboard — identifies high-demand items for priority replenishment | System | Ecommerce Merchandiser | Automated |
+| 4 | Weekly: Ecommerce Merchandiser shares top-20 subscribed out-of-stock SKUs with Supply Planner for replenishment prioritization; Supply Planner checks if replenishment is already in pipeline (open PO, in-transit transfer per W22); if not, evaluates expedited procurement per W4 or W596 | Ecommerce Merchandiser / Supply Planner | Category Manager | 30 min/week |
+| 5 | When inventory becomes available at any location (DC goods receipt per W3, store receiving per W109, or inter-store transfer per W22): system detects positive ATP change from 0 to >0 for a SKU with active subscriptions | System | — | Automated |
+| 6 | System matches available inventory against subscriber preferences: prioritizes subscribers by subscription date (first-in-first-out); checks preferred store ATP for BOPIS subscribers; allocates notification capacity based on available stock (e.g., if 50 units available and 200 subscribers, notifies first 200 — expecting ~10–15% conversion rate) | System | — | Automated |
+| 7 | System sends back-in-stock notification to matched subscribers: email with product image, price, "Add to Cart" button, and direct link to product page; push notification via mobile app (loyalty members); SMS for subscribers who chose SMS notification; notification includes urgency messaging ("Limited stock — shop now") and estimated ATP at preferred store | System | — | Automated |
+| 8 | Customer clicks notification link → lands on product page with real-time ATP displayed; customer can add to cart and checkout (BOPIS or home delivery per W11/W19); system tracks click-through and conversion per notification | Customer | — | Variable |
+| 9 | Subscription lifecycle management: subscription auto-expires after 90 days if no stock becomes available; system sends "still interested?" reconfirmation at T-60 days for active subscriptions; expired subscriptions removed from queue; customer can unsubscribe anytime via notification link or app settings | System | — | Automated |
+| 10 | Monthly: Ecommerce Merchandiser reviews back-in-stock program analytics: subscription volume by category, notification-to-click rate, click-to-purchase conversion rate, average time from subscription to notification, subscription expiry rate, top-20 never-restocked SKUs (potential assortment review per W679); feeds findings into demand planning (W31) and assortment review (W1) | Ecommerce Merchandiser | VP Ecommerce | 2 hours/month |
+
+### System Touchpoints
+- Out-of-stock product page with "Notify Me" button (W930.1)
+- Subscription creation with customer identifier, preferred store, and RA 10173 consent (W930.2)
+- SKU-level subscription aggregation dashboard for Ecommerce Merchandiser (W930.3)
+- Automated ATP monitoring triggering notification dispatch on positive inventory change (W930.5–6)
+- Multi-channel notification dispatch: email, push notification, SMS (W930.7)
+- Click-through and conversion tracking per notification (W930.8)
+- 90-day subscription auto-expiry with T-60 reconfirmation (W930.9)
+- Monthly analytics dashboard: volume, click rate, conversion rate, time-to-notification, expiry rate (W930.10)
+
+### Pain Points / Risks
+- **Notification disappointment loop**: If a popular item repeatedly goes out of stock, the same customers receive multiple notifications only to find the item sold out again (by the time they click); this erodes trust in the notification system; rate limiting (max 3 notifications per SKU per customer) needed
+- **ATP accuracy dependency**: Notifications depend on real-time ATP accuracy; if ATP shows available stock but physical stock is zero (shrinkage, receiving error), customers click through to an "out of stock" message, causing frustration and eroding trust in the notification program
+- **High subscription volume for seasonal/fad items**: Seasonal items (Christmas décor, flood control items) can generate thousands of subscriptions that expire unfulfilled when the season ends; these create noise in the analytics and inflate subscription counts
+- **Notification fatigue**: Customers subscribing to many SKUs may feel overwhelmed by notifications; frequency capping (max 5 notifications per customer per day) and preference management needed
+
+### Time Estimate
+- Customer subscription: 1 min (automated)
+- Weekly replenishment coordination: 30 min/week
+- Monthly analytics review: 2 hours/month
+- **Total Ecommerce Merchandiser per month**: ~4 hours
+
+### Staffing Implication
+- **Ecommerce Merchandiser**: ~4 hours/month absorbed within existing role. The subscription dashboard automates most of the operational work; Merchandiser role is to interpret data and coordinate with Supply Planning.
+- **Supply Planner**: ~30 min/week reviewing prioritized SKUs; absorbed within existing replenishment workflow (W4).
+
+---
+
+## W934. Ecommerce Customer Wishlist, Save-for-Later & Price Drop Alert
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W934 |
+| **Name** | Ecommerce Customer Wishlist, Save-for-Later & Price Drop Alert |
+| **Trigger** | Customer adds a product to their wishlist or saves an item from their cart for later on buildright.com.ph or the mobile app |
+| **Frequency** | ~60,000–100,000 wishlist items added/month; ~25,000–40,000 unique customers with active wishlists |
+| **Volume** | Average 3–5 items per wishlist; ~15% of wishlist items purchased within 90 days |
+| **Owner** | Ecommerce Merchandiser |
+| **Participants** | Customer, Ecommerce Merchandiser, Pricing Analyst |
+
+### User Story
+
+> **As a** homeowner planning a kitchen renovation over the next few months,
+> **I want to** save products I'm interested in to a wishlist and get notified when their prices drop,
+> **So that** I can time my purchases to get the best deals on all my renovation materials.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Customer browses buildright.com.ph or mobile app and adds products to wishlist by clicking the heart/save icon on product cards or product detail pages; customer can also save items from their shopping cart ("Save for Later" button) which moves the item from cart to wishlist | Customer | — | 15 sec/item |
+| 2 | System creates wishlist entry: SKU, customer identifier (loyalty account or guest session), added date, added price (current price at time of saving), preferred store/location (for ATP display); wishlist stored in customer's account (loyalty members) or session (guests, expires with session) | System | — | Automated |
+| 3 | Customer's wishlist page displays all saved items with: current price, price at time of saving (with visual indicator if price has changed — green if lower, red if higher), real-time ATP at preferred store, "Add to Cart" button, "Remove" button, and "Share Wishlist" button | System | — | On demand |
+| 4 | When a price change is applied to a SKU that exists on active wishlists (regular price change per W40, promotional activation per W13, or markdown per W93): system identifies affected wishlists and queues price drop notifications | System | — | Automated |
+| 5 | System sends price drop notification to affected customers (within 24 hours of price change): email with product image, original saved price vs. new price, savings amount, "Add to Cart" button, and direct link; push notification via mobile app for loyalty members; notifications batched per customer (max 1 email per day with all price drops consolidated) | System | — | Automated |
+| 6 | Customer shares wishlist via "Share Wishlist" button: generates a shareable link (view-only) or sends directly via email, SMS, or messaging app (Viber, WhatsApp, Messenger — popular in Philippines); shared wishlist displays products with current prices but no customer account information; useful for home renovation projects where family members or contractors need to see the material list | Customer | — | 1 min |
+| 7 | Monthly: Ecommerce Merchandiser reviews wishlist analytics dashboard — top wishlisted SKUs (demand signal), wishlist-to-purchase conversion rate, average wishlist age, price drop notification click-through rate, share rate, category distribution of wishlisted items; identifies high-wishlist-low-purchase SKUs for pricing or availability investigation | Ecommerce Merchandiser | VP Ecommerce | 2 hours/month |
+| 8 | Quarterly: Ecommerce Merchandiser shares top wishlisted out-of-stock items with Supply Planning for demand signal; shares high-wishlist-low-conversion items with Pricing Analyst for competitive price review (W130); incorporates wishlist data into seasonal buying plan (W32) as forward demand indicator | Ecommerce Merchandiser | Category Manager | 2 hours/quarter |
+
+### System Touchpoints
+- Wishlist add/remove functionality on product cards, detail pages, and cart (W934.1)
+- Wishlist entry creation with price-at-save tracking (W934.2)
+- Wishlist page with current vs. saved price comparison and real-time ATP (W934.3)
+- Automated price change detection on wishlisted SKUs (W934.4)
+- Price drop notification dispatch (email + push) with batching (max 1/day per customer) (W934.5)
+- Wishlist sharing via link or messaging apps (W934.6)
+- Monthly wishlist analytics dashboard (W934.7)
+
+### Pain Points / Risks
+- **Price drop fatigue**: If BuildRight runs frequent promotions (6 bi-monthly sales, monthly hot deals), wishlist customers may receive excessive price drop notifications; notification fatigue leads to ignores and unsubscribes; batching (1 email/day) and minimum drop threshold (notify only if price drops ≥ 5% or ≥ PHP 100) help manage frequency
+- **Wishlist as phantom demand signal**: High wishlist counts for an item don't guarantee purchases — customers may be window-shopping or comparing with competitors; wishlist data must be weighted lower than actual purchase data in demand forecasting (W31)
+- **Guest session wishlist loss**: Guest wishlists expire with the browser session; customers who don't log in may lose their wishlists, causing frustration; prompting guest users to register or log in to save their wishlist permanently improves both wishlist retention and loyalty enrollment
+- **Share wishlist privacy**: Shared wishlists must not expose customer personal information (name, email, address, loyalty tier); view-only shared link with product details and current prices only
+
+### Time Estimate
+- Customer wishlist actions: 15 sec/item (customer time)
+- Monthly analytics review: 2 hours/month
+- Quarterly demand signal sharing: 2 hours/quarter
+- **Total Ecommerce Merchandiser per month**: ~3 hours
+
+### Staffing Implication
+- **Ecommerce Merchandiser**: ~3 hours/month for wishlist analytics; absorbed within existing role. The wishlist is primarily a self-service feature with automated notifications; Merchandiser role is analytics and demand signal interpretation.
+
+---
+
+## W940. Ecommerce Customer Product Comparison Tool & Buying Guide Content Management
+
+| Field | Detail |
+|---|---|
+| **Workflow ID** | W940 |
+| **Name** | Ecommerce Customer Product Comparison Tool & Buying Guide Content Management |
+| **Trigger** | Customer uses the product comparison feature on buildright.com.ph, or Content Team creates/updates buying guides |
+| **Frequency** | ~15,000–25,000 comparison sessions/month; ~2,000–3,000 buying guide views/month |
+| **Volume** | ~50–80 active buying guides covering key categories; ~20–30 new guides or major updates per year |
+| **Owner** | Ecommerce Merchandiser / Content Writer |
+| **Participants** | Customer, Content Writer, Ecommerce Merchandiser, Category Manager, SEO Specialist |
+
+### User Story
+
+> **As a** first-time homeowner choosing between different tile options,
+> **I want to** compare tiles side-by-side on price, material, durability, and water resistance,
+> **So that** I can make an informed decision without having to visit the store multiple times.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | Customer selects 2–4 products on buildright.com.ph and clicks "Compare"; system generates side-by-side comparison table displaying: product image, price (including current promo), brand, key specifications (from item attributes per MDM-002), average customer rating, availability at preferred store, and "Add to Cart" button per product | Customer / System | — | On demand |
+| 2 | System auto-highlights the best-value option (lowest price per specification unit) and notable differences between products (e.g., "Product A is waterproof; Product B is water-resistant"); highlights are generated from attribute comparison logic configured per category in MDM | System | — | Automated |
+| 3 | Customer clicks through from comparison to a category buying guide (e.g., "How to Choose Tiles for Your Bathroom"); buying guide content includes: educational material (material types, durability ratings, installation considerations), product recommendations by use case (budget, mid-range, premium), project calculators (tiles per sqm, adhesive quantity), and links to related services (installation per W138, design consultation per W148) | Customer | — | On demand |
+| 4 | Content Writer creates buying guide per category: researches product category with Category Manager (technical specifications, common customer questions, decision factors); writes guide in SEO-optimized format (H1/H2/H3 structure, target keywords per W563, 800–1,500 words); embeds product recommendation widgets (dynamic, reflecting current top sellers and ratings); includes project calculator tool (configurable formula per category); submits for review | Content Writer | Ecommerce Merchandiser | 8–12 hours/guide |
+| 5 | Ecommerce Merchandiser and Category Manager review guide for technical accuracy, product recommendation appropriateness, and alignment with current assortment; approve or request revisions; approved guide published to website with category page cross-link | Ecommerce Merchandiser / Category Manager | VP Ecommerce | 1 hour/review |
+| 6 | Monthly: SEO Specialist reviews buying guide performance — organic traffic, average time on page, bounce rate, comparison-to-cart conversion rate, guide-to-purchase attribution; identifies underperforming guides for content refresh; identifies keyword gaps for new guide creation | SEO Specialist | Ecommerce Merchandiser | 4 hours/month |
+| 7 | Quarterly: Content Writer updates existing buying guides for accuracy: verifies product recommendations still in assortment (per W315 lifecycle status), updates pricing context (if significant), incorporates new customer FAQ from W258 ticket analysis, refreshes product images per W316 digital asset standards | Content Writer | Ecommerce Merchandiser | 2 hours/guide/quarter |
+| 8 | Quarterly: Ecommerce Merchandiser reviews comparison tool analytics — most compared categories, most compared SKU pairs, comparison-to-purchase conversion rate, average comparison session duration; identifies categories where comparison tool drives highest conversion for prioritization in content investment | Ecommerce Merchandiser | VP Ecommerce | 2 hours/quarter |
+
+### System Touchpoints
+- Side-by-side product comparison page with attribute comparison from item master (MDM-002) (W940.1)
+- Auto-highlighted best-value and notable differences per category logic (W940.2)
+- Buying guide content management system with SEO optimization fields (W940.4)
+- Dynamic product recommendation widgets embedded in guides (W940.4)
+- Project calculator tool with configurable per-category formulas (W940.4)
+- Content review and approval workflow (W940.5)
+- Buying guide analytics: traffic, engagement, conversion, attribution (W940.6)
+- Comparison tool analytics: categories, SKU pairs, conversion (W940.8)
+
+### Pain Points / Risks
+- **Attribute data quality**: The comparison tool is only as good as the item master attributes (MDM-002); incomplete or inaccurate attributes (missing dimensions, wrong material type, no water resistance rating) produce misleading comparisons; MDM data quality monitoring (W291) is critical
+- **Content freshness**: Buying guides become outdated as products are discontinued (W68) and new products are introduced (W564); without quarterly refresh discipline, guides display unavailable products and erode customer trust
+- **Comparison overload**: For customers unfamiliar with technical specifications (first-time DIYers), side-by-side attribute tables can be overwhelming without interpretive guidance ("What does PEI 3 rating mean?"); buying guides must bridge the gap between raw comparison and informed decision
+- **SEO competition**: Buying guides compete with independent review sites, YouTube channels, and competitor websites; BuildRight guides must offer unique value (e.g., Philippine-specific advice, local pricing, local availability) to rank and attract organic traffic
+
+### Time Estimate
+- Comparison tool usage: automated (customer-driven)
+- Buying guide creation: 8–12 hours/guide
+- Guide review: 1 hour/guide
+- Monthly SEO review: 4 hours/month
+- Quarterly guide refresh: 2 hours/guide × 50 guides = 100 hours/quarter (rotating subset of 10–15 guides/quarter)
+- Quarterly analytics review: 2 hours/quarter
+- **Total Content Writer per month**: ~25–30 hours (new guides + refresh rotation)
+- **Total Ecommerce Merchandiser per month**: ~6 hours (review + analytics)
+
+### Staffing Implication
+- **Content Writer**: ~25–30 hours/month dedicated to buying guide content; may be a dedicated digital content role or outsourced to a content agency with Category Manager technical review. 1 FTE Content Writer can manage 50–80 active guides with quarterly rotation.
+- **Ecommerce Merchandiser**: ~6 hours/month absorbed within existing role.
+- **SEO Specialist**: ~4 hours/month absorbed within existing SEO role (W563).
+
