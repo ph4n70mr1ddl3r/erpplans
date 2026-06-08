@@ -44,6 +44,8 @@ erpplans/
 │   │   ├── WF-innovation.md                  5 workflows (W200–W203, W208)
 │   │   ├── WF-master-data.md                 41 workflows (W252–W254, W287–W316, W399–W406)
 │   │   ├── WF-document-management.md         2 workflows (W255, W256)
+│   │   ├── WF-additional-workflows.md       Batch 2: 20 additional cross-functional workflows
+│   │   ├── WF-additional-workflows-batch3.md Batch 3: 20 additional cross-functional workflows
 │   │   ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── WF-regulatory-permits.md          3 workflows (W447, W448, W467)
@@ -82,7 +84,7 @@ erpplans/
 | Metric | Value |
 |---|---|
 | Requirements | **482** across 20 categories |
-| Workflows | **962** across 38 functional domains |
+| Workflows | **982** across 38 functional domains + 2 cross-functional batches |
 | Internal Controls | 67 (31 preventive, 36 detective) |
 | Must Have Requirements | — any scored 0 is a disqualifier |
 
