@@ -1821,3 +1821,64 @@ BuildRight's customers frequently purchase groups of related items together: a c
 - Monthly performance monitoring: 2–3 hours
 - Quarterly portfolio review: 8–10 hours
 - **Total per bundle lifecycle**: ~25–40 hours of staff time from creation to annual review
+
+## W925. Vendor Consignment Shelf Space Performance Monitoring & Optimization
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Monthly consignment performance review cycle; also triggered by consignment contract renewal per W23; or new consignment vendor onboarding per W36 |
+| **Frequency** | Monthly review; ~300 consignment SKUs from ~20–30 consignment vendors across 200 stores |
+| **Volume** | Consignment inventory value: ~PHP 50–80M across all stores at any time |
+| **Owner** | Category Manager |
+| **Participants** | Category Manager, Merchandise Planner, Vendor (consignment partner), Store Operations (display compliance), Finance (consignment settlement per W23) |
+
+### Background
+
+Consignment inventory — goods owned by the vendor until sold by BuildRight — represents a significant portion of BuildRight's assortment in categories like major appliances, select tiles, and premium power tools. The model company profile (Section 6.4) identifies consignment as a distinct item type, and W23 handles the operational aspects of consignment inventory (receipt, sell-through, settlement). However, consignment creates a unique challenge: BuildRight commits valuable shelf space to products it does not own, earning margin only when the item sells. If consignment items sell slowly, they occupy shelf space that could be used for faster-moving owned inventory with higher turns. Conversely, well-performing consignment items provide BuildRight with zero-inventory-cost revenue and deeper assortment breadth. This workflow monitors consignment shelf space performance, optimizes the consignment assortment, and ensures that every square meter of consignment shelf space earns its keep. With ~300 consignment SKUs across 200 stores, the consignment portfolio requires active management to maximize return on shelf space.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Monthly Consignment Performance Dashboard**: (a) system generates monthly consignment performance report by vendor, category, and SKU: (i) sell-through rate: units sold ÷ units available (target: ≥ 70% monthly sell-through for consignment); (ii) inventory turns: annualized sell-through vs. average on-hand (target: ≥ 8x for consignment vs. 6–8x for owned inventory — consignment should turn faster to justify shelf space); (iii) revenue per square meter: consignment revenue ÷ allocated shelf/display space (benchmark against owned-inventory revenue per sqm in same category); (iv) margin contribution: consignment margin % (typically 15–20% vs. 28–32% for owned — lower margin must be offset by zero inventory cost); (v) days on shelf: average days from receipt to sale (target: < 30 days); (vi) shelf space utilization: % of allocated space occupied vs. empty; (b) color-coded performance: Green (meets all targets), Amber (1–2 metrics below target), Red (3+ metrics below target or sell-through < 50%); (c) dashboard distributed to Category Managers and Merchandise Planners for review | System / Merchandise Planner | Category Manager | 2–3 hours/month |
+| 2 | **Underperforming Consignment SKU Review**: (a) for all Red-rated consignment SKUs: Category Manager reviews root cause — (i) pricing issue: consignment price not competitive with owned alternatives; (ii) assortment issue: product does not match local market demand (varies by region — provincial stores may need different consignment assortment than metro stores); (iii) display issue: poor shelf position, inadequate signage, missing demo unit; (iv) vendor issue: product quality, availability, or support problems; (b) action options for underperformers: (i) reposition/re-display in store per W262 with better signage and prominence; (ii) adjust consignment assortment — replace slow mover with different SKU from same vendor; (iii) reduce shelf allocation (shrink from 4 to 2 facings); (iv) remove from consignment — return unsold inventory to vendor per W88 and reallocate shelf space to owned inventory or higher-performing consignment; (v) vendor notification: formal performance discussion with vendor per W44 with improvement plan and timeline; (c) decision documented with expected impact on revenue and shelf space | Category Manager / Store Operations | VP Merchandising | 4–6 hours/month |
+| 3 | **Shelf Space Opportunity Cost Analysis**: (a) Merchandise Planner calculates opportunity cost of consignment shelf space: if this shelf space were allocated to the best-performing owned SKU in the same category, what would the revenue and margin be?; (b) comparison: consignment revenue per sqm vs. top-quartile owned SKU revenue per sqm; (c) if consignment opportunity cost exceeds consignment value (owned SKU would generate more revenue and margin): recommendation to convert shelf space to owned inventory; (d) if consignment value exceeds opportunity cost (consignment generates more revenue per sqm despite lower margin, because zero inventory cost means higher ROIC): recommendation to expand consignment allocation or add more consignment SKUs from the vendor; (e) analysis feeds into assortment review per W1 and space planning per W314 planogram template governance | Merchandise Planner / Category Manager | VP Merchandising | 6–8 hours/month |
+| 4 | **Vendor Consignment Business Review**: (a) quarterly: Category Manager conducts business review with each consignment vendor (top 10 vendors by revenue; remaining vendors reviewed semi-annually): (i) performance summary: sell-through, turns, revenue, margin; (ii) benchmark vs. other consignment vendors and vs. owned inventory in same category; (iii) assortment optimization: which SKUs to keep, replace, or add; (iv) display and merchandising improvement plan; (v) pricing review: is consignment pricing competitive? Should margin structure be renegotiated?; (vi) new product introduction: vendor proposes new consignment items for upcoming season; (b) annual contract renewal review per W23: based on 12-month performance, decide to: (i) renew with current terms, (ii) renew with modified terms (higher margin, better display support), (iii) reduce consignment assortment, or (iv) terminate consignment agreement and return to standard purchasing | Category Manager / Vendor | VP Merchandising | 4–6 hours/quarter |
+| 5 | **Consignment-to-Owned Conversion Trigger Management**: (a) system monitors consignment SKUs that consistently sell above threshold (sell-through > 90% for 3 consecutive months); (b) these high-demand consignment items are candidates for conversion to owned inventory — BuildRight purchases directly at vendor cost + standard margin, earning higher margin (28–32% vs. 15–20%) on proven demand; (c) Category Manager evaluates conversion: (i) demand predictability — is demand stable enough to warrant owned inventory commitment?; (ii) vendor relationship — does vendor want to remain consignment? Some vendors prefer consignment to avoid credit risk; (iii) working capital impact — converting to owned inventory ties up cash in stock; (d) if conversion approved: consignment SKU deactivated, standard purchase SKU created per W252, and procurement plan established per W2; (e) conversion tracked as KPI: successful conversions indicate improved margin on proven products | Category Manager / Procurement / Finance | VP Merchandising | 2–3 hours/month |
+
+### System Touchpoints
+
+- Inventory management (INV-001, INV-009, INV-017) for consignment stock tracking
+- POS system (W543) for consignment sell-through transaction data
+- Planogram/space planning system (W314) for shelf space allocation
+- Consignment settlement system (W23) for sell-through reporting
+- Vendor management system (W44) for vendor performance tracking
+- Assortment management (W1) for SKU lifecycle decisions
+- Item master (W252) for consignment vs. owned SKU classification
+- BI dashboard for consignment performance analytics
+- Pricing system for consignment vs. owned price comparison
+- Store operations reporting for display compliance
+
+### Pain Points / Risks
+
+- **Vendor relationship damage**: removing underperforming consignment SKUs may strain vendor relationships; mitigated by data-driven performance discussion, improvement plan before removal, and offering alternative arrangements (standard purchase order, vendor-funded display)
+- **Inaccurate sell-through data**: consignment settlement discrepancies (W23) may understate or overstate actual sell-through; mitigated by monthly consignment inventory reconciliation and POS consignment transaction tracking per W543
+- **Regional variation**: a consignment SKU may perform well in metro stores but poorly in provincial stores (or vice versa); mitigated by store-cluster-level analysis per W299 assortment cluster master, not chain-wide averages
+- **Display compliance**: consignment vendors may not maintain displays to BuildRight standards; mitigated by monthly store visit per W624 competitor visit cadence adapted for internal display audit, and vendor-funded merchandiser per W269 promodizer management
+- **Conversion disrupts vendor economics**: converting high-performing consignment to owned removes the vendor's incentive to provide favorable terms; mitigated by negotiating comparable or better purchase pricing as part of conversion, and maintaining vendor relationship through other collaborations per W155
+
+### Staffing Implication
+
+- **Category Manager**: ~4–6 hours/month on consignment performance review and vendor management; absorbed by existing role
+- **Merchandise Planner**: ~6–8 hours/month on opportunity cost analysis and reporting; absorbed by existing role
+- **Store Operations**: ~1 hour/month per store on consignment display compliance; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Monthly dashboard: 2–3 hours
+- Underperformer review: 4–6 hours/month
+- Opportunity cost analysis: 6–8 hours/month
+- Quarterly vendor review: 4–6 hours/quarter
+- Conversion management: 2–3 hours/month
+- **Total per month**: ~16–22 hours (consolidated)

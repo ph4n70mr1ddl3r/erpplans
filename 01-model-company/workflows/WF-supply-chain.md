@@ -1267,3 +1267,129 @@ Absorbed by Supply Planning Analyst team; ~40-60 hours/month. Supply Planning An
 ### Time Estimate
 
 Per store review: 30-60 min. Per month: 200 stores reviewed (mostly automated flagging) + 20-30 problem stores deep-dive (1-2 hours each) = ~40-60 hours/month. Quarterly calibration: 20-30 hours.
+
+## W921. Store-Level Emergency Local Sourcing & Alternative Vendor Activation
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Store stock-out of critical/must-have items with DC replenishment unavailable within required timeframe; typhoon/disaster supply chain disruption per W848; port congestion affecting import container release per W728; or sudden demand spike exceeding forecast per W31 |
+| **Frequency** | ~100–200 emergency sourcing events/month across 200 stores (~0.5–1 per store per month) |
+| **Volume** | Average emergency PO value: PHP 20,000–80,000; ~150 events/month = ~PHP 5–10M/month in emergency purchases |
+| **Owner** | Store Manager |
+| **Participants** | Store Manager, Department Supervisor, Procurement Team (HQ approval), Local Vendor, Receiving Clerk, Finance (AP processing) |
+
+### Background
+
+The Philippines' geographic and infrastructure realities create frequent supply chain disruptions that are beyond the control of even the best-planned replenishment system. Typhoons close ports and flood roads, shutting down DC-to-store delivery for days. Port congestion in Manila delays import container release by 2–4 weeks. Provincial stores, distant from DCs, face longer replenishment lead times (3–5 days vs. 1–2 days for metro stores). During these disruptions, stores cannot simply wait — customers expect BuildRight to have essential items in stock, especially during the very events that cause supply chain disruptions (e.g., waterproofing supplies during rainy season, construction materials during post-typhoon rebuilding). This workflow formalizes emergency local sourcing — the practice of stores purchasing from nearby local suppliers, hardware wholesalers, or authorized distributors when normal DC replenishment is unavailable. It provides guardrails: pre-approved local vendor lists, spending authority limits, quality standards, and reconciliation with HQ procurement. This complements the centralized procurement workflows (W2, W2A, W60) by providing a structured decentralized alternative for exceptional circumstances.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Emergency Sourcing Need Identification**: (a) Department Supervisor or Sales Associate identifies stock-out of a critical item with: (i) customer requests exceeding available stock, (ii) DC replenishment not available within required timeframe (checked via W4 ATP), (iii) item classified as A-item (top 20% by revenue) or critical seasonal item (e.g., waterproofing during rainy season, tarps during typhoon preparation); (b) Store Manager assesses urgency: (i) Level 1 (Standard Emergency): item out of stock, DC can deliver within 5 days, non-critical category → do not emergency-source, wait for DC; (ii) Level 2 (Urgent): item out of stock, DC cannot deliver within 5 days, A-item or high customer demand → emergency source locally; (iii) Level 3 (Critical): typhoon/disaster scenario, multiple critical items unavailable, community need → emergency source locally with expanded authority; (c) Store Manager logs emergency sourcing request in system with: item(s), quantity needed, urgency level, reason (DC stock-out, transport disruption, demand spike), and suggested local vendor | Department Supervisor / Store Manager | Store Manager | 10–15 min |
+| 2 | **Local Vendor Identification & Pre-Approval Check**: (a) system displays pre-approved local vendor list for the store's geographic area: vendors vetted by Procurement during annual local vendor registration per W36 with: business name, TIN, authorized product categories, pricing agreement (if any), and quality certification status; (b) if suggested vendor is on pre-approved list: proceed to step 3; (c) if vendor is not on pre-approved list: (i) Level 2 urgency — Store Manager may use unlisted vendor with real-time Procurement Team approval via phone/chat (Procurement verifies vendor TIN against BIR database per W732); (ii) Level 3 urgency — Store Manager may use any available vendor with post-event Procurement review within 5 business days; (d) vendor quality: for critical items (cement, electrical, structural materials), only vendors with DTI-BPS certification per W447 or equivalent quality documentation may be used; non-critical items (decorative, garden, seasonal) may be sourced from any available vendor at Store Manager's discretion | Store Manager / System | Procurement Team (for unlisted vendors) | 10–15 min |
+| 3 | **Emergency Purchase Execution**: (a) Store Manager contacts local vendor by phone/visit: confirms availability, quantity, price, and delivery timeline; (b) price verification: system displays BuildRight's current purchase price from primary vendor (from PO history per W2); emergency local purchase price should not exceed 110% of primary vendor price for Level 2, or 125% for Level 3; (c) if price exceeds threshold: Store Manager justifies in system (e.g., only vendor with stock, community need) and seeks Procurement Team approval for Level 2, or self-approves for Level 3; (d) Store Manager creates emergency PO in system: emergency PO type (distinct from standard PO per W2 and emergency procurement per W60 — this is store-level local sourcing, not HQ-level emergency procurement); PO includes: vendor, items, quantities, agreed price, delivery instructions, and urgency level; (e) PO approval: Level 2 — auto-approved if within spending authority (Store Manager authority: up to PHP 50,000 per PO; Regional Manager authority: PHP 50,000–200,000); Level 3 — auto-approved up to PHP 200,000 per PO with post-event review; (f) vendor delivers to store or Store Manager arranges pickup using store vehicle | Store Manager / Local Vendor | Regional Manager (if over authority) | 20–30 min |
+| 4 | **Receiving & Quality Verification**: (a) Receiving Clerk processes goods receipt per W18 (DSD receiving) against emergency PO; (b) quality check: Department Supervisor verifies: correct product specification (grade, size, brand), packaging integrity, expiration date (where applicable), and DTI-BPS ICC sticker per W447; (c) if quality fails: items refused and vendor notified; Store Manager sources from alternative vendor; (d) if quality passes: goods received into store inventory and available for sale immediately; (e) goods receipt triggers AP invoice expectation per W7 (3-way match: emergency PO → GR → vendor invoice) | Receiving Clerk / Department Supervisor | Store Manager | 15–30 min |
+| 5 | **Post-Event Reconciliation & Procurement Review**: (a) within 5 business days of emergency purchase: Store Manager completes post-event documentation: final cost vs. standard cost, vendor performance (delivery timeliness, quality, pricing), and estimated revenue from maintained sales; (b) Procurement Team reviews: (i) were pre-approved vendors used? (ii) were prices reasonable? (iii) is the local vendor worth adding to the pre-approved list for future emergencies? (iv) should the item's safety stock or ROP be adjusted per W312 to prevent future emergency sourcing?; (c) Finance processes vendor invoice via AP per W7C (non-PO invoice path) or W7 (PO-based path) depending on invoice matching; (d) monthly: emergency sourcing report — count, value, urgency level, vendor usage, and price premium vs. standard procurement per W633 PPV analysis; (e) quarterly: Procurement Team reviews pre-approved local vendor lists for all 200 stores — add/remove vendors based on performance, expand vendor networks in underserved areas, and negotiate pre-positioned emergency supply agreements with key local vendors | Store Manager / Procurement Team / Finance | VP Supply Chain | 3–4 hours/month |
+
+### System Touchpoints
+
+- Store operations mobile app for emergency sourcing request and PO creation
+- Inventory/ATP system for stock-out identification and DC availability check
+- Vendor master (W287) for pre-approved local vendor list by store area
+- PO system for emergency PO creation with distinct PO type
+- DSD receiving system (W18) for goods receipt
+- AP system (W7/W7C) for invoice processing
+- Procurement pricing database for primary vendor price comparison
+- BIR TIN validation (W732) for unlisted vendor verification
+- BI dashboard for emergency sourcing analytics
+- Replenishment parameter system (W312) for post-event ROP adjustment
+
+### Pain Points / Risks
+
+- **Price gouging**: local vendors may charge inflated prices during emergencies (especially during typhoons when demand spikes); mitigated by price threshold enforcement (110%/125% of standard) and DTI price freeze per W468 for calamity-declared areas
+- **Quality risk**: locally sourced products may not meet BuildRight quality standards; mitigated by mandatory quality check at receiving, DTI-BPS ICC sticker verification per W447, and approved-vendor preference
+- **Unauthorized purchasing**: Store Managers may use emergency sourcing as a shortcut to bypass standard procurement; mitigated by distinct emergency PO type with audit trail, post-event Procurement review, and monthly analytics flagging stores with abnormally high emergency sourcing frequency
+- **Vendor consolidation complexity**: many small local vendors create AP processing overhead; mitigated by monthly settlement consolidation where possible and pre-approved vendor list management
+- **Inventory accounting**: emergency purchases at different costs affect WAC per INV-003; system handles automatically but may cause margin variance in reporting per W85
+
+### Staffing Implication
+
+- **Store Manager**: ~30–45 min per emergency sourcing event; 0.5–1 events/month = ~15–45 min/month; absorbed by existing role
+- **Department Supervisor**: ~15 min per quality check; absorbed by existing role
+- **Procurement Team**: ~4–6 hours/month on post-event reviews and vendor list management; absorbed by existing team
+- **No incremental headcount**
+
+### Time Estimate
+
+- Need identification and vendor check: 10–15 min
+- Purchase execution: 20–30 min
+- Receiving and quality check: 15–30 min
+- Post-event documentation: 15–20 min
+- Monthly Procurement review: 3–4 hours (consolidated)
+- **Total per event**: ~60–95 min of staff time
+
+## W927. Store-Level Rainy Season Emergency Product Deployment & Rapid Stock Replenishment
+
+| Field | Detail |
+|---|---|
+| **Trigger** | PAGASA tropical cyclone advisory (Signal No. 1+); monsoon enhanced rainfall advisory; DC urgent push allocation for rainy season critical items; or store-level rainy season demand spike detected by POS data per W533 |
+| **Frequency** | June–November (rainy season): ~5–8 deployment events per store per season; ~1,000–1,600 events chain-wide per season |
+| **Volume** | ~15–25 rainy season critical SKUs per store per event; ~PHP 150,000–300,000 incremental inventory per store per season |
+| **Owner** | Regional Manager |
+| **Participants** | Supply Planning, DC Operations, Store Manager, Receiving Clerk, Merchandising (rainy season assortment), Category Manager |
+
+### Background
+
+The Philippine rainy season (June–November, peaking July–September) creates sudden, dramatic demand spikes for specific product categories: waterproofing sealants, tarps and plastic sheeting, flood control items (sandbags, water pumps, hoses), umbrellas and rainwear, paint (for post-rain repainting), and electrical supplies (extension cords, generators for brownout periods). A single typhoon or monsoon event can cause a 300–500% demand surge for these items within hours. BuildRight's standard replenishment cycle (2–3 DC deliveries per week per store) cannot respond fast enough to these demand spikes — by the time a store orders and receives additional stock, the event has passed and the window has closed. This workflow establishes a proactive rainy season deployment protocol that pre-positions critical items before forecast events and enables rapid replenishment during active events. It leverages PAGASA weather advisory integration, pre-negotiated rainy season vendor agreements, DC surge capacity per W652, and store-level rapid receiving procedures. This is distinct from typhoon preparedness (W576, which covers store safety) and supply chain disruption response (W729, which covers supply chain contingency) — this workflow focuses specifically on rapid product deployment to capture demand during weather events.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Pre-Season Rainy Season Assortment Planning**: (a) April (pre-season): Category Manager and Supply Planning define rainy season critical SKU list: ~40–60 SKUs across waterproofing, tarps, flood control, rainwear, electrical emergency, and paint categories; (b) historical analysis: POS data from prior rainy seasons per W533 analyzed to identify: top-selling rainy season items by region (Mindanao and Visayas have different typhoon patterns than Luzon), demand multiplier during typhoon events (average 3–5x for critical items), and stock-out frequency by SKU during prior seasons; (c) per-store rainy season safety stock overlay: additional safety stock for rainy season critical items added to replenishment parameters per W312 (e.g., tarp safety stock increased from 2-week to 4-week demand during June–November); (d) vendor pre-positioning agreements: Procurement secures pre-positioning agreements with key vendors per W513 — vendors commit to holding safety stock of raw materials and finished goods for rapid BuildRight replenishment during rainy season; (e) DC surge capacity activated per W652: temporary additional storage space allocated for rainy season critical items at each DC | Category Manager / Supply Planning / Procurement | VP Supply Chain | 20–30 hours/pre-season |
+| 2 | **Event-Triggered Rapid Deployment**: (a) PAGASA advisory: Tropical Cyclone Warning Signal No. 1 or Monsoon Enhanced Rainfall Advisory issued for a region covering BuildRight stores; (b) Supply Planning triggers rapid deployment: system identifies all stores in affected region and generates emergency push allocation orders — additional quantities of rainy season critical items pushed from DC to stores (not waiting for store-initiated replenishment per W4); (c) deployment prioritization: (i) Priority 1 stores: directly in typhoon path or flood-prone areas (identified from historical flood data and LGU advisories) — receive maximum allocation; (ii) Priority 2 stores: in affected region but less exposed — receive standard rainy season allocation; (iii) Priority 3 stores: adjacent regions that may experience indirect demand (customers stocking up preemptively) — receive moderate allocation; (d) DC operations picks and loads rainy season deployment orders on priority basis per W106, loading deployment orders before standard replenishment orders; (e) delivery ETA communicated to stores: Priority 1 stores receive delivery within 24 hours, Priority 2 within 48 hours, Priority 3 within 72 hours | Supply Planning / DC Operations / System | Regional Manager | 4–6 hours/event |
+| 3 | **Store Rapid Receiving & Emergency Display**: (a) store receives emergency deployment delivery with expedited receiving per W109: rapid count (box count verification, not piece count for non-fragile items), staged directly to sales floor (bypassing backroom storage to maximize selling time); (b) Department Supervisor creates emergency end-cap or front-of-store display for rainy season critical items — prominent placement visible from store entrance; (c) promotional signage applied: "Rainy Season Essentials" or "Typhoon Preparedness Kit" per W262 visual merchandising; (d) if DTI price freeze is declared for the area per W468: system enforces price freeze immediately at POS and ecommerce — no price increase allowed on frozen SKUs regardless of demand; (e) Sales Associates briefed during shift huddle per W739: focus on assisting customers with rainy season product selection, bundle offers (complete waterproofing kit, emergency preparedness kit) per W910, and installation service upsell per W923 | Receiving Clerk / Department Supervisor / Store Manager | Store Manager | 2–3 hours/delivery |
+| 4 | **Active Event Demand Monitoring & Replenishment**: (a) during active weather event: real-time POS sales monitoring per W533 for rainy season critical items — system alerts when store inventory drops below 2-day supply for any critical SKU; (b) if store runs low during event: emergency replenishment options: (i) transfer from nearest BuildRight store with excess stock per W214 (inter-store expedited transfer); (ii) emergency local sourcing per W921 if DC delivery unavailable; (iii) DC emergency dispatch — dedicated truck loaded with rainy season critical items held on standby at each DC during active events per W652; (c) ecommerce integration: rainy season critical items flagged on website with real-time store availability per ECOM-001; "rainy season essentials" landing page activated with BOPIS option per W11; (d) post-event demand: demand surge continues 3–7 days after typhoon (post-disaster rebuilding and repair); replenishment maintained at elevated levels per W596 during post-event period | Store Manager / Supply Planning / System | Regional Manager | Continuous during event |
+| 5 | **Post-Season Review & Season Wind-Down**: (a) December (post-season): comprehensive review: rainy season sales vs. target, demand forecast accuracy per W31, stock-out frequency, emergency deployment response time, price premium paid for emergency sourcing, and customer satisfaction; (b) excess inventory disposition: remaining rainy season items transitioned to standard inventory (most items are year-round sellers) or marked down per W93 if season-specific (e.g., branded typhoon kits); (c) vendor performance: rainy season vendors rated on: delivery reliability during events, product availability, and pricing adherence; results feed into vendor scorecard per W706; (d) DC surge capacity deactivated per W652; rainy season safety stock overlays removed from replenishment parameters per W312; (e) lessons learned: what sold well, what didn't, which stores were under/over-deployed, and recommendations for next season incorporated into seasonal calendar master per W306 | Supply Planning / Category Manager / Procurement / DC Operations | VP Supply Chain | 15–20 hours/post-season |
+
+### System Touchpoints
+
+- PAGASA weather advisory API integration for automated event triggering
+- Replenishment system (W4) modified for push allocation during events
+- DC warehouse management (W106) for priority pick/load
+- Store receiving system (W109) for expedited receiving
+- POS system (W5B) for real-time sales monitoring of critical items
+- Inventory/ATP system for stock level alerts
+- Inter-store transfer system (W214) for emergency stock sharing
+- Emergency local sourcing workflow (W921) for backup procurement
+- DTI price freeze enforcement (W468) at POS and ecommerce
+- Ecommerce platform for rainy season landing page activation
+- Seasonal calendar master (W306) for seasonal planning integration
+- Replenishment parameter system (W312) for seasonal safety stock overlay
+- DC surge capacity planning (W652) for warehouse space allocation
+- BI dashboard for rainy season analytics
+
+### Pain Points / Risks
+
+- **Over-deployment**: pushing too much inventory to stores that don't need it, resulting in excess stock post-season; mitigated by region-specific allocation based on historical demand and storm path forecasting, and post-season markdown protocol per W93
+- **PAGASA forecast inaccuracy**: forecast tracks change frequently; stores pre-loaded for a typhoon that misses may have excess stock; mitigated by deploying items that sell year-round (waterproofing, paint) rather than event-only items
+- **DC capacity constraint**: all DCs pushing deployment orders simultaneously during widespread events may exceed pick/load capacity; mitigated by pre-positioning rainy season items in easily accessible forward-pick locations per W784 slotting optimization
+- **Customer hoarding**: customers may buy more than needed during events, depleting stock for others; mitigated by per-customer quantity limits at POS (configurable per SKU during declared emergencies) and DTI price freeze enforcement per W468
+- **Post-event inventory carrying cost**: excess rainy season inventory ties up working capital; mitigated by seasonal inventory build-down per W588 and rapid transition to standard replenishment post-season
+
+### Staffing Implication
+
+- **Supply Planning**: ~20–30 hours during active events (4–6 events/season); absorbed by existing team with seasonal workload adjustment
+- **DC Operations**: surge picking/loading adds ~10–20% labor during events; absorbed with overtime per W602 and seasonal staffing per W555
+- **Store Receiving**: additional receiving events (1–2 extra deliveries per event); ~2–3 hours per event; absorbed by existing Receiving Clerk with shift adjustment
+- **No incremental headcount**
+
+### Time Estimate
+
+- Pre-season planning: 20–30 hours (one-time)
+- Event-triggered deployment: 4–6 hours per event (centralized)
+- Store rapid receiving: 2–3 hours per delivery
+- Active event monitoring: continuous (automated + exceptions)
+- Post-season review: 15–20 hours (one-time)
+- **Total per season**: ~80–120 hours centralized + ~15–25 hours per store

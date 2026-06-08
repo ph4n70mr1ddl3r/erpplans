@@ -1754,3 +1754,132 @@ Many BuildRight customers purchase the same consumable products repeatedly: pain
 - Monthly analytics: 4–6 hours
 - Quarterly optimization: 8–10 hours
 - **Total per subscription lifecycle**: ~20–30 min of staff time over 12 months (enrollment + modifications + cancellation handling)
+
+## W917. Ecommerce Live Commerce & Social Selling Operations
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Scheduled live commerce session on social media platform (Facebook Live, TikTok Live); flash product launch; seasonal campaign event |
+| **Frequency** | 4–6 live sessions/week chain-wide (2–3 on Facebook Live, 1–2 on TikTok Live, 1 on buildright.com.ph); ~20–24 sessions/month |
+| **Volume** | Average 500–2,000 live viewers per session; ~200–500 orders per session; average order value PHP 2,500–4,000 |
+| **Owner** | Digital Commerce Manager |
+| **Participants** | Marketing Host/Presenter, Category Manager (product expert), Ecommerce Fulfillment Team (W19, W11), Social Media Manager (W142), Customer Service (W258) |
+
+### Background
+
+Live commerce (selling products through live video streaming on social media) has exploded in the Philippines — the country ranks among the highest in Southeast Asia for social media engagement and live commerce adoption. Facebook Live and TikTok Live are dominant platforms, with Filipino consumers actively purchasing during live streams through integrated checkout (TikTok Shop) or comment-to-order (Facebook Live). For BuildRight, live commerce presents a unique opportunity: (a) demonstrate products in real-time — show how a power drill handles concrete, how paint colors look on actual walls, how tiles appear under different lighting; (b) answer customer questions live — technical advice on product selection for specific projects; (c) drive urgency through limited-time live-only promotions and flash discounts; (d) reach customers in areas without a nearby BuildRight store; (e) build community and trust through authentic, unscripted product demonstrations. Home improvement is particularly suited to live commerce because products are tactile and benefit from visual demonstration. This workflow covers the full live commerce cycle from session planning to order fulfillment and analytics.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Live Commerce Session Planning**: (a) weekly: Digital Commerce Manager and Category Manager select products for upcoming live sessions based on: seasonal calendar per W264 (rainy season = waterproofing products; ber months = holiday décor), trending products from POS data per W522, new product launches per W569, and vendor co-sponsorship availability per W513; (b) session format selection: (i) product demo + Q&A (30–45 min), (ii) flash sale with countdown (15–20 min), (iii) DIY tutorial + product selling (45–60 min), (iv) contractor pro-tips session (30 min, targeting B2B); (c) product selection criteria: visually demonstrable, available ATP at fulfillment DC per W536, live-only promotional pricing approved per W300, and inventory depth sufficient for expected demand (minimum 200 units per featured SKU); (d) promotional pricing: live-only discount (10–20% off SRP) or bundle offer per W910; discount approved by Category Manager per discount authority matrix; (e) session logistics: host/presenter assigned, product samples prepared for studio/staging area, backdrop and lighting set up in ecommerce studio at HQ | Digital Commerce Manager / Category Manager | VP Marketing | 4–6 hours/week |
+| 2 | **Pre-Live Promotion & Audience Building**: (a) 48 hours before session: promotional posts on Facebook page, Instagram stories, and TikTok teaser video per W142 announcing date/time, featured products, and live-only discount; (b) email notification to loyalty members in relevant segment per W673 (e.g., DIY enthusiasts for tool demos, contractors for pro-tips sessions); (c) push notification via BuildRight mobile app per W615; (d) session event page created on Facebook with RSVP; (e) product page on buildright.com.ph updated with "Watch Live" badge linking to stream; (f) inventory pre-reservation: system reserves minimum expected quantity for live session orders (released after session if unsold) | Social Media Manager / Digital Commerce Manager | — | 2–3 hours/session |
+| 3 | **Live Session Execution**: (a) host goes live on scheduled platform; (b) session flow: introduction and agenda (2 min), product demonstration with close-up camera work (15–20 min), live Q&A from viewer comments (10 min), flash sale announcement with countdown timer (5 min), closing with next session teaser (2 min); (c) purchasing mechanism: (i) TikTok Shop: direct purchase via TikTok Shop integration with real-time inventory check; (ii) Facebook Live: comment-to-order (customer comments "ORDER [product code] [quantity]") → system captures order from comment feed and creates ecommerce order → customer receives DM with payment link; (iii) buildright.com.ph: embedded live stream with "Buy Now" button synced to ecommerce checkout; (d) Category Manager monitors comments and provides technical answers to host via earpiece; (e) Customer Service team monitors order queue and handles payment failures or customer inquiries in real-time; (f) system enforces live-only pricing with automatic price revert when session ends | Marketing Host / Category Manager / Customer Service / System | Digital Commerce Manager | 30–60 min/session |
+| 4 | **Post-Session Order Processing & Fulfillment**: (a) within 1 hour of session end: all live commerce orders compiled and batch-processed in unified order management per W536; (b) orders routed to fulfillment: DC pick/pack/ship per W19 for home delivery, or BOPIS per W11; (c) fulfillment SLA: live commerce orders shipped within 24 hours (priority flag over standard ecommerce orders); (d) customer notifications: order confirmation (within 1 hour), shipping confirmation with tracking (within 24 hours), delivery notification per W592; (e) payment reconciliation: all live session payments reconciled against order records per W611; (f) unfilled orders (stock-out from higher-than-expected demand): customer notified with apology and offered: (i) backorder with expected ship date, (ii) substitute product per W279, or (iii) refund per W101 | Ecommerce Fulfillment Team / System / Customer Service | Digital Commerce Manager | 2–3 hours post-session |
+| 5 | **Live Commerce Analytics & Optimization**: (a) per session: viewership metrics (peak concurrent viewers, average view duration, total unique viewers), engagement rate (comments, reactions, shares), conversion rate (viewers → orders), average order value, total GMV, top-selling products, cart abandonment rate during session; (b) weekly: session comparison — which format, time slot, and product category performs best; audience growth trend; repeat live-commerce shopper rate; (c) monthly: live commerce as % of total ecommerce revenue, customer acquisition cost via live commerce vs. other channels, return rate for live commerce orders (indicative of product expectation vs. reality), and host/presenter performance rating; (d) quarterly: platform mix optimization (Facebook vs. TikTok vs. own site), vendor co-sponsorship ROI per W513, and live commerce content calendar for next quarter aligned with seasonal calendar per W306; (e) annual: live commerce program ROI, investment in studio equipment and talent, and expansion plan (new platforms, new session formats, regional-language sessions for VisMin markets) | Digital Commerce Manager / Social Media Manager / System | VP Marketing | 4–6 hours/month |
+
+### System Touchpoints
+
+- Ecommerce platform with TikTok Shop and Facebook Live integration
+- Unified order management (W536) for live commerce order routing
+- Inventory/ATP system for real-time stock reservation and availability check
+- Payment gateway (W611) for payment link generation and reconciliation
+- Social media management system (W142) for pre-live promotion and session management
+- Customer communication module (W708) for order notifications
+- Loyalty system (W17) for segment-based email targeting
+- Mobile app (W615) for push notification delivery
+- Product catalog (W50) for product page "Watch Live" integration
+- Promotional pricing system (W300) for live-only discount configuration with automatic expiry
+- BI dashboard for live commerce analytics
+- CDP (W156) for audience targeting and repeat shopper tracking
+
+### Pain Points / Risks
+
+- **Technical failure during live stream**: internet outage, camera malfunction, or platform crash disrupts session; mitigated by backup internet (mobile hotspot), backup camera, and platform-specific contingency (switch to alternate platform mid-stream); session rescheduled if unrecoverable
+- **Higher-than-expected demand**: stock-outs during live session create customer disappointment visible to all viewers; mitigated by inventory pre-reservation, real-time inventory display on product overlay during stream, and immediate backorder communication
+- **Negative live comments**: dissatisfied customers may post negative comments visible to all viewers; mitigated by Category Manager monitoring comments and flagging to host for live response; Customer Service immediate follow-up per W258; negative comment pattern triggers session pause
+- **Host performance inconsistency**: not all hosts are equally engaging or knowledgeable; mitigated by host training, Category Manager earpiece support, and monthly host performance rating per W31
+- **Payment failures**: comment-to-order customers may not complete payment; mitigated by 24-hour payment deadline with automated reminder, and 2 payment reminders before order cancellation
+- **Regulatory compliance**: DTI Sales Promotion Permit required for live-only promotions per W427; prices displayed must comply with Consumer Act per W731; "live-only" claims must be genuine (price available only during live session, not simultaneously on website)
+
+### Staffing Implication
+
+- **Marketing Host/Presenter**: 1 dedicated FTE at HQ for live commerce hosting (4–6 sessions/week × 1 hour + preparation = ~20–25 hours/week); new role or absorbed by existing Marketing staff with live commerce aptitude
+- **Digital Commerce Manager**: ~4–6 hours/week on planning and analytics; absorbed by existing role
+- **Category Manager**: ~1–2 hours/week providing product expertise during sessions; absorbed by existing role
+- **Customer Service**: ~2–3 hours/session on live order processing; absorbed by existing call center capacity per W259
+- **Ecommerce Fulfillment Team**: live commerce orders integrated into standard fulfillment with priority flag; absorbed with incremental volume
+- **Net new**: 1 Marketing Host (PHP 360–480K/year) or absorbed by existing Marketing team
+
+### Time Estimate
+
+- Session planning: 4–6 hours/week (consolidated)
+- Pre-live promotion: 2–3 hours/session
+- Live session execution: 30–60 min/session
+- Post-session processing: 2–3 hours/session
+- Monthly analytics: 4–6 hours
+- **Total per session**: ~6–9 hours of staff time (planning + execution + post-session)
+
+## W923. Ecommerce Assembly & Installation Service Upsell at Online Checkout
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer adds eligible product to ecommerce cart (appliances, ceiling fans, water heaters, light fixtures, bathroom fixtures, kitchen sinks, air conditioning units) |
+| **Frequency** | ~12,000–15,000 eligible transactions/month (products in installation-eligible categories) |
+| **Volume** | ~15–20% service attachment rate target; ~1,800–3,000 installation service upsells/month |
+| **Owner** | Digital Commerce Manager |
+| **Participants** | Customer, Ecommerce Platform, Service Operations Team (W138), Installation Partners (W213), Customer Service (W258) |
+
+### Background
+
+BuildRight sells many products that require professional installation: air conditioning units, ceiling fans, water heaters, light fixtures, kitchen sinks, bathroom fixtures, and built-in appliances. In-store, Sales Associates can recommend installation services during the sales conversation (per W544 POS service work order creation). However, online customers purchasing these products have no equivalent touchpoint — they buy the product, receive it, and then must independently find an installer. This creates a gap: (a) lost service revenue for BuildRight (installation margins are 30–40% vs. 28–32% on merchandise); (b) poor customer experience (customer must coordinate delivery + installation separately); (c) competitive disadvantage (competitors offering bundled installation win the sale); and (d) warranty risk (improper self-installation voids manufacturer warranty, leading to returns and complaints per W33). This workflow adds an automated installation service upsell at online checkout for eligible products, integrating service scheduling, pricing, and fulfillment into the ecommerce purchase flow. It leverages BuildRight's existing installation service infrastructure (W138 home installation, W213 partner quality audit) and service SKU catalog (W794).
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Eligibility Detection & Service Presentation**: (a) when customer adds an installation-eligible product to cart, system displays service upsell module on product page and at checkout: "Add Professional Installation for PHP [X,XXX]"; (b) service pricing dynamically calculated based on: product category (each category has a base installation fee in service SKU master per W794), product complexity (e.g., split-type AC installation > window-type), customer location (metro vs. provincial — provincial surcharge for installer travel), and any active service promotions per W13; (c) service module displays: installation description (what's included), estimated timeline ("Installation within 3–5 business days after delivery"), installer资质 ("Certified BuildRight Installation Partner"), warranty information ("90-day installation warranty"), and customer reviews/ratings per W510; (d) customer can select: (i) product only (no installation), (ii) product + standard installation, (iii) product + premium installation (includes old unit removal, additional materials, extended warranty) | System / Customer | — | Automated |
+| 2 | **Service Order Creation at Checkout**: (a) if customer selects installation: service SKU added to cart as a line item alongside the product; (b) cart shows: product price + installation price as separate line items (transparency per Consumer Act RA 7394 per W731); (c) at checkout: customer selects delivery date from available slots; system displays available installation dates (starting 1–2 days after delivery to allow for product arrival); (d) customer confirms delivery address and installation address (may differ — e.g., customer buys at home, installs at rental property); (e) payment: total amount (product + installation) charged as single payment; installation revenue deferred per PFRS 15 until service completion per W487; (f) order confirmation sent to customer with: product delivery schedule, installation appointment date/time window, installer contact information, and preparation checklist ("Please ensure old unit is removed and electrical/plumbing connections are accessible") | System / Customer | — | Automated |
+| 3 | **Service Fulfillment Coordination**: (a) order splits into: (i) merchandise fulfillment (DC pick/pack/ship per W19 or BOPIS per W11) and (ii) service fulfillment (installation work order created per W544); (b) installation work order assigned to certified Installation Partner per W213 based on: geographic coverage, product specialization, partner rating, and current workload; (c) Installation Partner receives work order via partner mobile app with: customer details, product details, installation address, scheduled date/time, installation instructions, and any special requirements noted by customer; (d) merchandise delivery triggers installation scheduling confirmation to customer: "Your [product] has been delivered. Your installation is confirmed for [date] between [time window]"; (e) if merchandise delivery is delayed: installation date auto-rescheduled and customer notified per W708 | System / Service Operations Team / Installation Partner | Digital Commerce Manager | 5–10 min (system-automated) |
+| 4 | **Installation Execution & Quality Verification**: (a) Installation Partner arrives at customer location on scheduled date; (b) partner verifies: product delivered matches work order, installation area is prepared per checklist, and customer is present; (c) installation completed per manufacturer specifications and BuildRight quality standards per W213; (d) partner captures: before/after photos (uploaded to work order), time spent, materials used beyond standard kit, and customer sign-off on work order completion via partner mobile app; (e) customer receives post-installation survey per W756 (3 questions: installation quality, installer professionalism, overall satisfaction); (f) if customer reports issue: service complaint processed per W795 with 48-hour resolution SLA | Installation Partner / Customer | Service Operations Team | Varies by installation |
+| 5 | **Revenue Recognition & Partner Settlement**: (a) installation completion confirmed by partner sign-off + customer satisfaction = service revenue recognized per PFRS 15 per W487; (b) Installation Partner payment: partner invoice generated against work order; 3-way match (work order → completion confirmation → partner invoice); payment per partner agreement terms (typically net 15) per W7; (c) monthly: installation attachment rate by product category, average installation revenue per order, customer satisfaction score, partner performance scorecard per W213; (d) quarterly: installation pricing review (are prices competitive with independent installers?), attachment rate optimization (improve upsell copy, add product photos showing installation), and partner capacity planning (hire more partners in underserved areas); (e) annual: installation service program ROI — service revenue, merchandise revenue uplift from bundled offers, customer retention improvement for installed-product buyers, and warranty claim rate comparison (installed vs. self-installed) | Finance / Service Operations Team / System | VP Services | 4–6 hours/month |
+
+### System Touchpoints
+
+- Ecommerce platform checkout module with service upsell integration
+- Service SKU catalog (W794) for installation pricing and product eligibility
+- Unified order management (W536) for order splitting (merchandise + service)
+- Service work order system (W544) for installation scheduling
+- Installation partner mobile app for work order management and completion
+- Payment gateway (W611) for combined payment processing
+- Revenue recognition module (W487) for deferred installation revenue
+- Customer communication module (W708) for scheduling notifications
+- Customer satisfaction module (W756) for post-installation survey
+- Installation partner quality system (W213) for partner rating and assignment
+- AP system (W7) for partner payment processing
+- BI dashboard for attachment rate and revenue analytics
+
+### Pain Points / Risks
+
+- **Low attachment rate**: customers may skip installation to save cost or because they have their own installer; mitigated by competitive pricing (benchmark against independent installers), convenience messaging, and "protect your warranty" communication
+- **Installation scheduling conflicts**: customer not home at scheduled time, or product not yet delivered; mitigated by delivery tracking integration, automated reminders per W708, and rescheduling via customer service per W258
+- **Installer quality inconsistency**: some partners deliver poor workmanship; mitigated by W213 quality audit program, customer satisfaction survey, and partner scorecard with minimum rating threshold (partners below 4.0/5.0 for 2 consecutive quarters placed on probation)
+- **Liability for installation defects**: BuildRight bears liability for partner-installed work; mitigated by installation warranty (90-day BuildRight warranty), partner liability insurance requirement per W818, and product liability insurance per W185
+- **Cannibalization of DIY customers**: some customers who would self-install may opt for paid installation, reducing the DIY brand positioning; mitigated by keeping DIY tutorials freely available per W147 and positioning installation as an option (not default) at checkout
+
+### Staffing Implication
+
+- **Service Operations Team**: ~2–3 hours/day on installation coordination for ecommerce orders; absorbed by existing team per W138
+- **Customer Service**: ~1–2 hours/day on installation scheduling inquiries; absorbed by existing capacity per W259
+- **Digital Commerce Manager**: ~2–3 hours/week on upsell optimization and analytics; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Service presentation at checkout: automated
+- Service order creation: automated
+- Fulfillment coordination: 5–10 min (system-automated)
+- Post-installation verification: automated (customer survey)
+- Monthly analytics: 4–6 hours
+- **Total per installation order**: ~10–15 min of staff time (coordination) + Installation Partner time

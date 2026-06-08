@@ -486,3 +486,66 @@ BuildRight's project-based B2B sales complete 20-30 large projects per year (con
 - Performance review: 2-4 hours
 - Record archive: 1 day
 - **Total per project**: 2-6 weeks from last delivery to full close-out (punch list resolution is the variable)
+
+## W918. Customer Project Budget Tracking & Material Cost Variance Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Project quotation acceptance (W162); staged delivery call-off (W164); or monthly project billing cycle for active B2B projects |
+| **Frequency** | ~80–120 active B2B projects at any time; ~40–60 monthly budget reviews |
+| **Volume** | Average active project value: PHP 500,000–10M; total active project portfolio: ~PHP 200–400M |
+| **Owner** | Trade Sales Manager |
+| **Participants** | Trade Sales Manager, Customer (project owner/contractor), Category Manager (pricing), Supply Planning (material availability), Finance (billing/collection), Project Coordinator |
+
+### Background
+
+BuildRight's B2B project customers (30% trade + 10% corporate = 40% of revenue) purchase materials for construction, renovation, and fit-out projects spanning weeks to months. Unlike walk-in retail purchases where the transaction is instantaneous, project sales involve: (a) initial quotation with material list (BOM) and estimated quantities per W162; (b) staged deliveries over the project duration per W164; (c) progressive billing and milestone payments per W165; and (d) project close-out with retention release per W793. Throughout this lifecycle, material costs may deviate from the original quotation due to: price changes (vendor price increases, FX fluctuations on imported items), quantity changes (customer adds scope, site waste exceeds estimate, measurement errors), product substitutions (specified item unavailable, customer upgrades), and delivery logistics (split deliveries, urgent requests). Without formal budget tracking, these variances accumulate invisibly — the project that was quoted at PHP 3M may ultimately cost PHP 3.5M, eroding both BuildRight's margin and the customer's budget. This workflow establishes real-time project budget tracking with variance alerts, margin monitoring, and proactive customer communication, ensuring project profitability for BuildRight and budget predictability for the customer.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Project Budget Establishment**: (a) upon quotation acceptance per W162, system creates project budget record from the approved quotation: line items with quoted quantities, quoted unit prices, quoted line totals, and quoted project total; (b) budget categorized by: material categories (lumber, cement, tiles, plumbing, electrical, paint, fixtures), delivery stages (stage 1, 2, 3 per W164), and cost types (materials, delivery fees, installation services, taxes); (c) margin structure: system stores both the quoted sell price and BuildRight's cost (from standard cost per W85 or negotiated purchase price per W163) for real-time margin tracking; (d) project budget shared with customer via project portal or email: itemized material list with quoted prices, delivery schedule, payment schedule, and terms; (e) project budget linked to: customer credit limit per W24 (total project value counts against credit exposure), customer account per W8 (project invoices feed AR), and replenishment planning per W31 (material requirements for active projects factor into demand forecast) | Trade Sales Manager / System | — | 30–60 min per project |
+| 2 | **Real-Time Budget Consumption & Variance Tracking**: (a) every project-related transaction automatically updates budget consumption: call-off delivery per W164 (quantity delivered × current sell price), product substitution per W279 (new item price vs. original), additional scope per W792 (change order with revised budget), and credit notes per W101 (returns reduce consumption); (b) system maintains running budget status: total budget, consumed budget (delivered × price), committed budget (confirmed future orders), remaining budget, and margin % (consumed revenue vs. consumed cost); (c) variance types tracked: (i) price variance: actual sell price differs from quoted price (due to price changes, substitutions, upgrades); (ii) quantity variance: actual quantity differs from quoted quantity (due to scope changes, waste, measurement errors); (iii) mix variance: different products purchased than originally quoted; (d) automated variance alerts: (i) Amber: total project variance > 5% or individual line variance > 10% → Trade Sales Manager notification; (ii) Red: total project variance > 10% or margin dropping below minimum threshold → Trade Sales Manager + Finance Manager notification; (iii) Black: total project value exceeding credit limit → automatic order block per W888 until credit limit increased per W229 | System / Trade Sales Manager | Trade Sales Manager | Automated |
+| 3 | **Monthly Project Budget Review & Customer Communication**: (a) monthly (or per delivery stage): Trade Sales Manager reviews project budget status with customer: original budget vs. current consumption, remaining budget, known variances and explanations, upcoming deliveries and expected costs, and any anticipated price changes from BuildRight or vendor; (b) if variance is favorable (under budget): customer appreciates transparency and BuildRight strengthens relationship; (c) if variance is unfavorable (over budget): (i) Trade Sales Manager explains root cause (price increase from vendor per W633, quantity increase from scope change, substitution due to unavailability); (ii) options presented to customer: accept variance and adjust project budget, substitute lower-cost alternatives per W279, reduce scope, or negotiate revised pricing per W163; (d) revised budget documented as formal change order per W792 with customer sign-off; (e) margin recovery: if project margin has dropped below target, Trade Sales Manager works with Category Manager to identify: bulk discount renegotiation with vendors per W631, alternative product sourcing, or price adjustment for remaining deliveries (if contract permits); (f) review documented in project file and transmitted to Finance for AR billing accuracy | Trade Sales Manager / Customer / Category Manager | VP Store Operations | 30–60 min per project per review |
+| 4 | **Project Margin Monitoring & Intervention**: (a) Finance tracks project margin in real-time: revenue recognized per delivery (PFRS 15 over-time or point-in-time per W487) vs. cost of goods delivered (standard cost or actual cost per W85); (b) weekly margin flash report for top 20 active projects by value; (c) margin intervention triggers: (i) project margin < 20% (below target): Finance Manager review with Trade Sales Manager — identify cause and recovery plan; (ii) project margin < 15% (minimum floor): VP Store Operations escalation — no further deliveries without margin recovery plan approved; (iii) project margin negative: CFO escalation — immediate review, potential contract renegotiation per W792; (d) margin analysis shared with: Merchandising (for pricing strategy per W107), Procurement (for vendor cost negotiation per W631), and Supply Planning (for demand forecast accuracy per W31); (e) at project close-out per W793: final margin calculated and compared to original quotation margin — variance analysis feeds into pricing accuracy improvement for future quotations per W162 | Finance / Trade Sales Manager | CFO | 4–6 hours/week |
+| 5 | **Project Budget Analytics & Process Improvement**: (a) monthly: active project portfolio summary — total value, average margin, variance distribution (favorable vs. unfavorable), and average project duration; (b) quarterly: completed project analysis — quotation accuracy (% of projects completed within 5% of original budget), margin achievement rate (% of projects achieving target margin), variance root cause Pareto analysis (top 5 causes of budget overruns), and customer satisfaction correlation (are projects with accurate budgets rated higher?); (c) semi-annual: pricing calibration — adjust quotation pricing models per W162 based on actual project cost data; update material waste factors (e.g., tile breakage allowance) based on actual project data; and refine delivery cost estimates based on actual logistics data per W680; (d) annual: project sales program ROI — revenue, margin, customer retention for project customers vs. non-project customers, and quotation-to-close conversion rate | Trade Sales Manager / Finance / Merchandising / System | VP Store Operations | 6–8 hours/month |
+
+### System Touchpoints
+
+- Project quotation module (W162) for budget establishment from quotation
+- Call-off order system (W164) for delivery tracking against budget
+- POS/order management for project transaction recording
+- Pricing system (W163) for current sell price and margin calculation
+- Cost accounting (W85) for real-time margin tracking
+- Change order system (W792) for budget revision documentation
+- Credit management (W24/W888) for credit limit monitoring
+- AR billing (W8/W165) for invoice generation aligned to budget
+- Product substitution system (W279) for substitute tracking
+- Supply planning (W31) for material availability
+- Customer communication module (W708) for budget review notifications
+- BI dashboard for project portfolio analytics
+- Revenue recognition module (W487) for PFRS 15 compliance
+
+### Pain Points / Risks
+
+- **Customer disputes over variances**: customers may dispute charges that exceed original quotation; mitigated by transparent real-time budget tracking accessible to customer, proactive communication at each variance event, and formal change order documentation per W792
+- **Margin erosion from untracked substitutions**: Sales Associates substituting products without updating project budget; mitigated by system-enforced substitution flagging (any substitution on a project-linked order triggers budget update) and Trade Sales Manager review
+- **Complexity for small projects**: full budget tracking is overkill for PHP 50,000 projects; mitigated by tiered approach — projects > PHP 500,000 receive full budget tracking, projects PHP 100,000–500,000 receive simplified tracking, projects < PHP 100,000 use standard POS per W5B
+- **Data quality**: inaccurate project budgets from poorly prepared quotations; mitigated by quotation accuracy KPI and semi-annual pricing calibration
+- **Credit exposure accumulation**: multiple active projects for the same customer may exceed credit limit; mitigated by portfolio-level credit monitoring per W572 and cross-project credit exposure dashboard
+
+### Staffing Implication
+
+- **Trade Sales Manager**: ~4–6 hours/week on budget reviews and customer communication across ~80–120 active projects; absorbed by existing role
+- **Finance Analyst (Project)**: ~4–6 hours/week on margin monitoring and intervention; absorbed by existing team
+- **Project Coordinator**: ~2–3 hours/week on data entry and documentation; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Budget establishment: 30–60 min per project
+- Monthly budget review: 30–60 min per project
+- Weekly margin monitoring: 4–6 hours/week (consolidated)
+- Monthly analytics: 6–8 hours
+- **Total per active project per month**: ~60–90 min of staff time

@@ -4801,3 +4801,63 @@ Per chargeback: notification and matching (15-25 min) + evidence compilation (20
 ### Staffing Implication
 
 1 dedicated Finance Analyst (Payments) with primary responsibility for chargeback and settlement exception management. Supported by Store Managers for evidence collection (approximately 2-3 evidence requests/store/month = ~30 min/store/month). Finance Analyst role also supports W537 and W99 reconciliation activities. Position: Finance Analyst (Payments), annual salary ~PHP 420K-540K. No additional headcount required for stores — absorbed within existing Store Manager administrative time.
+
+## W919. Intercompany Inventory Movement Accounting & Goods-in-Transit Reconciliation
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Goods movement between BuildRight Depot, Inc. (inventory owner) and BuildRight Logistics, Inc. (DC operator); inter-DC transfer; or store replenishment order dispatch from DC |
+| **Frequency** | ~5,000 store replenishment orders/month + ~30–40 inter-DC transfers/month + ~600 DSD receipts/month = ~5,640–6,640 IC inventory movements/month |
+| **Volume** | ~PHP 3.5–4.0B/month in inventory value moving through IC supply chain |
+| **Owner** | Logistics Finance Analyst |
+| **Participants** | DC Operations (BuildRight Logistics), Supply Planning, Logistics Finance Analyst, Intercompany Accountant, AP/AR Team |
+
+### Background
+
+BuildRight's corporate structure creates a unique inventory accounting challenge: BuildRight Depot, Inc. owns all merchandise inventory throughout the supply chain (at DCs and in stores), but the DCs are operated by BuildRight Logistics, Inc. under a service fee arrangement. This means every inventory movement — DC receiving, DC putaway, DC picking, DC-to-store shipment, inter-DC transfer — involves goods owned by one entity physically handled by another. While the intercompany service fee billing is handled by W435 (IC SLA fee billing) and W752 (IC management fee allocation), the inventory movement itself requires precise accounting treatment: (a) goods-in-transit accounting — when inventory leaves DC but has not yet been received at store, it must be tracked as "in-transit" inventory (still owned by Depot Inc., in the custody of Logistics Inc.); (b) IC custody transfer documentation — every movement must be documented for transfer pricing compliance per W235; (c) damage/loss accountability — goods damaged or lost while in Logistics Inc. custody must be charged to Logistics Inc. per W500; (d) inventory valuation reconciliation — Depot Inc.'s inventory subledger must reconcile with Logistics Inc.'s warehouse management system at month-end. This workflow ensures accurate intercompany inventory accounting across 4 DCs, 200 stores, and ~5,000+ monthly movements, supporting consolidation per W765 and external audit per W351.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **DC Outbound Dispatch & Goods-in-Transit Creation**: (a) DC picks and dispatches store replenishment order per W106 (outbound dispatch); (b) at dispatch confirmation, system creates goods-in-transit (GIT) record: DR number, departure DC, destination store, SKU list, quantities, inventory value (WAC per INV-003), dispatch timestamp, and carrier/vehicle ID; (c) accounting entries in BuildRight Depot, Inc. books: Dr. Inventory – In-Transit / Cr. Inventory – DC [location]; no entry in BuildRight Logistics, Inc. books (Logistics Inc. does not own inventory — it handles physical movement); (d) custody acknowledgment: DC dispatches goods with electronic proof of dispatch (ePDD) signed by truck driver; Logistics Inc. acknowledges custody transfer of physical goods; (e) GIT inventory visible in supply chain control tower per W250 with estimated arrival date; (f) average GIT duration: 1–3 days (DC to store); GIT value at any point: ~PHP 150–250M (2–3 days of inventory in transit across 200 stores) | DC Operations / System | Logistics Finance Analyst | Automated per dispatch |
+| 2 | **Store Receiving & GIT Clearance**: (a) store receives goods and processes goods receipt per W109; (b) at GR confirmation, system clears GIT record and posts: Dr. Inventory – Store [location] / Cr. Inventory – In-Transit; (c) receiving discrepancy handling: (i) quantity shortage: GIT partially cleared — shortage quantity remains in GIT as "pending investigation"; (ii) damaged goods: GIT cleared to store inventory, damage claim created against Logistics Inc. or carrier per W500; (iii) wrong items: GIT not cleared — items returned to DC via W22B; (d) all GIT records must be cleared within 7 days of dispatch; uncleared GIT aged > 7 days flagged for investigation; aged > 14 days escalated to VP Supply Chain per W250; (e) daily GIT aging report transmitted to Logistics Finance Analyst | Receiving Clerk / System | Logistics Finance Analyst | Automated per receipt |
+| 3 | **Inter-DC Transfer Accounting**: (a) inter-DC transfer orders initiated by Supply Planning per W22; (b) since all inventory is owned by BuildRight Depot, Inc., inter-DC transfers are purely physical movements within the same entity — no IC accounting entries required for inventory ownership; (c) however, custody transfer between DCs (both operated by Logistics Inc.) is documented for: (i) warehouse management reconciliation, (ii) DC performance KPI tracking per W586 (inventory at each DC), and (iii) insurance coverage verification per W857 (which DC's insurance covers goods in transit); (d) inter-DC GIT tracked similarly to DC-to-store GIT with same clearing SLA; (e) monthly: inter-DC transfer volume, value, and average GIT duration reported in supply chain analytics per W680 | Supply Planning / DC Operations / System | Logistics Finance Analyst | Automated per transfer |
+| 4 | **Month-End GIT Reconciliation & IC Inventory Verification**: (a) at month-end per W9A, Logistics Finance Analyst reconciles: (i) BuildRight Depot, Inc. inventory subledger (by location: DC1, DC2, DC3, DC4, Store 1–200, In-Transit) vs. (ii) BuildRight Logistics, Inc. WMS physical inventory records (by DC); (iii) any discrepancy investigated and resolved before close per W514; (b) GIT balance verification: sum of all uncleared GIT records must equal the "Inventory – In-Transit" GL balance; discrepancy indicates unprocessed receipts, system errors, or timing differences; (c) IC custody reconciliation: Logistics Inc. provides certificate of physical inventory held at each DC as of month-end; reconciled against Depot Inc.'s DC inventory balances; (d) damage/loss reconciliation: accumulated damage claims per W500 reconciled against Logistics Inc. monthly service fee deduction per W435; (e) GIT provisions: uncleared GIT aged > 30 days provisioned as potential loss per W92; (f) reconciliation sign-off: Logistics Finance Analyst + Intercompany Accountant + DC Operations Manager | Logistics Finance Analyst / Intercompany Accountant / DC Operations | CFO | 8–12 hours/month |
+| 5 | **Quarterly IC Inventory Audit & Annual Compliance**: (a) quarterly: Internal Audit per W342 selects 2–3 stores and 1 DC for surprise IC inventory count; physical count reconciled against Depot Inc. subledger and Logistics Inc. WMS; (b) annual: full IC inventory reconciliation as part of year-end close per W9B; external auditor observes IC inventory reconciliation per W351; (c) transfer pricing documentation: inventory movement patterns between Depot Inc. and Logistics Inc. documented for BIR per W235 and PAS 24 related party disclosure per W486; (d) annual IC inventory movement analysis: volume, value, GIT duration trends, damage rates, and reconciliation accuracy; (e) process improvement recommendations from Internal Audit findings per W333 | Internal Audit / Logistics Finance Analyst / CFO | CFO | 20–30 hours/quarter |
+
+### System Touchpoints
+
+- ERP inventory management (INV-001) for perpetual inventory by location with GIT tracking
+- WMS integration (WMS-008) for DC inventory and dispatch confirmation
+- Store receiving system (W109) for GR processing and GIT clearing
+- Supply chain control tower (W250) for GIT visibility
+- Transfer order system (W22) for inter-DC movements
+- GL system for IC inventory accounting entries
+- Intercompany module (IC-001 through IC-005) for IC reconciliation
+- Damage claim system (W500) for GIT loss/damage tracking
+- Consolidation module (W765) for IC elimination
+- BI dashboard for GIT aging and IC inventory analytics
+
+### Pain Points / Risks
+
+- **GIT accumulation**: uncleared GIT records accumulate when stores delay GR processing; mitigated by 7-day clearing SLA with daily aging report and Store Manager escalation for GIT > 14 days
+- **Reconciliation complexity**: reconciling Depot Inc. subledger against Logistics Inc. WMS across 205 locations is time-intensive; mitigated by automated reconciliation system that matches WMS quantities to ERP balances daily, flagging exceptions for manual review
+- **Damage accountability disputes**: Logistics Inc. may dispute damage claims (arguing damage occurred after store receipt); mitigated by photographic evidence requirement at DC dispatch and store receiving, and independent LP investigation per W843
+- **Month-end timing pressure**: IC inventory reconciliation is on the critical path for 5-day close per W9A; mitigated by daily reconciliation throughout the month (reducing month-end workload to exception resolution only) and dedicated Logistics Finance Analyst role
+- **Audit complexity**: external auditors must understand the Depot/Logistics inventory ownership structure; mitigated by clear documentation in IC memo and process walkthrough during audit planning per W351
+
+### Staffing Implication
+
+- **Logistics Finance Analyst**: primary owner of this workflow; ~20–25 hours/month on daily monitoring, reconciliation, and month-end close; dedicated role at HQ per model company profile
+- **Intercompany Accountant**: ~4–6 hours/month on IC reconciliation support; absorbed by existing role
+- **DC Operations**: reconciliation support ~2–3 hours/month per DC; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Daily GIT monitoring: 30–60 min/day
+- GIT clearing exception resolution: 30–60 min/day
+- Month-end reconciliation: 8–12 hours
+- Quarterly audit support: 20–30 hours/quarter
+- **Total per month**: ~30–40 hours

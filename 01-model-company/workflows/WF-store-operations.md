@@ -8317,3 +8317,245 @@ Philippine electricity reliability varies significantly across BuildRight's 200-
 - Monthly fuel analytics: 2–3 hours (consolidated)
 - Annual DOE compliance: 2–3 hours
 - **Total per store per month**: ~3–4 hours of staff time (monitoring + deliveries)
+
+## W916. Customer Trade-In & Used Power Tool Buy-Back Program
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer brings used power tool to store for trade-in evaluation; or customer requests trade-in quote via ecommerce/app |
+| **Frequency** | ~150–250 trade-in transactions/month across 200 stores (~1–2 per store per week) |
+| **Volume** | Average trade-in value: PHP 1,500–8,000 per unit; ~200 units/month |
+| **Owner** | Store Manager |
+| **Participants** | Sales Associate (power tools department), Department Supervisor (Tools/Hardware), Store Manager, Merchandising (used equipment pricing), Finance (store credit issuance) |
+
+### Background
+
+Power tools represent ~5% of active SKUs (1,750 SKUs) and are among the highest-value items BuildRight sells. Customers — especially professional contractors and serious DIYers — frequently upgrade to newer models, creating a secondary market for their used equipment. A trade-in/buy-back program serves multiple strategic purposes: (a) it incentivizes new power tool purchases by reducing the effective cost through trade-in credit; (b) it creates a "certified pre-owned" revenue stream from refurbished units sold at a discount to price-sensitive customers; (c) it drives foot traffic and positions BuildRight as a full-lifecycle partner for tool owners; and (d) it differentiates BuildRight from competitors who do not offer such programs. The program covers power drills, grinders, circular saws, sanders, impact drivers, and compressors from major brands (Bosch, Makita, DeWalt, Milwaukee). Hand tools are excluded (low residual value). Each store processes 1–2 trade-ins per week, with the refurbished inventory sold through the store's "certified pre-owned tools" display section.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Trade-In Request & Initial Assessment**: (a) customer brings used power tool to Tools/Hardware department with proof of purchase (if available) or identification; (b) Sales Associate performs initial assessment: brand, model, age (estimated), cosmetic condition (A/B/C/D grade), functional test (power on, run for 30 seconds, check for unusual noise/vibration), accessories included (case, charger, batteries, blades); (c) system lookup: tool brand/model registered in item master; system displays original SRP, current new price, and estimated trade-in value range based on condition matrix (A: 30–40% of current new price; B: 20–30%; C: 10–20%; D: 0–10% or declined); (d) if tool is not in item master (obscure/discontinued brand), Sales Associate manually estimates condition and flags for Department Supervisor review; (e) safety check: tool inspected for damaged cords, cracked housings, missing guards — tools failing safety check are declined for trade-in and customer advised on proper disposal per W502 | Sales Associate | Department Supervisor | 10–15 min |
+| 2 | **Trade-In Valuation & Offer**: (a) Department Supervisor confirms condition assessment and verifies trade-in value against system-recommended range; (b) for trade-in values > PHP 5,000: Store Manager approval required; (c) customer presented with trade-in offer: "Your [tool] has been assessed at [condition grade]. Trade-in value: PHP [X,XXX]. This value can be applied as store credit toward any new power tool purchase today"; (d) customer options: (i) accept trade-in credit toward new purchase immediately (most common — 70% of cases); (ii) accept trade-in as store credit voucher valid for 30 days; (iii) decline trade-in and retain tool; (e) if customer accepts: system generates trade-in receipt (non-BIR sales invoice — it is a goods receipt for used inventory) documenting tool description, serial number, condition grade, and trade-in value; (f) store credit or discount applied to new purchase transaction at POS per W5B | Department Supervisor / Store Manager | Store Manager | 5–10 min |
+| 3 | **Used Tool Intake & Inventory Registration**: (a) traded-in tool registered in ERP as "certified pre-owned" inventory with: original SKU reference, condition grade, serial number, trade-in value (carrying cost), date received, store location; (b) non-valuated receipt — tool is carried at trade-in value (not original SRP) in a separate "pre-owned" inventory pool per store; (c) tool tagged with pre-owned barcode label and moved to backroom staging area; (d) if tool requires refurbishment (cleaning, blade/bit replacement, cord repair, accessory kit addition): Service Work Order created per W544 for in-store minor refurbishment or flagged for DC-level refurbishment per W440 (power tool service center); (e) refurbished cost = trade-in value + refurbishment labor/parts cost; system updates carrying cost accordingly | Sales Associate / System | Department Supervisor | 10–15 min |
+| 4 | **Certified Pre-Owned Pricing & Display**: (a) Merchandising sets pre-owned selling price: condition A = 50–60% of new SRP; condition B = 40–50%; condition C = 30–40%; (b) margin target: minimum 25% gross margin over refurbished cost; system validates pricing against margin floor; (c) pre-owned tool listed on ecommerce with "Certified Pre-Owned" badge, condition description, warranty terms (90-day BuildRight warranty vs. standard manufacturer warranty on new), and photos; (d) in-store: pre-owned tools displayed in dedicated section within Tools/Hardware department with clear "Certified Pre-Owned — Inspected & Tested" signage; (e) price tag includes condition grade, original SRP comparison, and pre-owned price per W181 | Department Supervisor / Merchandising | VP Merchandising | 15–20 min per unit |
+| 5 | **Pre-Owned Tool Sale & Warranty Processing**: (a) pre-owned tool sold through standard POS flow per W5B with pre-owned SKU; (b) POS applies standard VAT (12%) on pre-owned selling price; (c) customer receives: sales receipt, 90-day warranty card, condition assessment report, and return policy (7-day return for functional defects, no cosmetic returns); (d) warranty claims processed per W33 with pre-owned warranty pool fund; (e) if pre-owned tool is unsold after 90 days: markdown to 70% of current price per W93; after 180 days: clearance at cost recovery or donate to vocational school per W135 CSR program | Sales Associate / Store Manager | Store Manager | Standard POS transaction |
+| 6 | **Program Analytics & Inventory Management**: (a) monthly: trade-in count, average trade-in value, new tool attachment rate (what % of trade-ins result in new purchase), pre-owned sell-through rate, pre-owned inventory aging, margin analysis (new tool margin + pre-owned margin vs. standalone new tool sale); (b) quarterly: program ROI analysis — incremental new tool revenue generated by trade-in program vs. trade-in credits issued + refurbishment costs + display space opportunity cost; (c) brand-level analysis: which brands have highest trade-in volume (indicates upgrade cycle) and which pre-owned brands sell fastest (indicates secondary market demand); (d) annual: program expansion review — eligible categories (garden power tools, pressure washers), pricing matrix calibration, and vendor partnership (major brands co-funding trade-in promotions) | Store Manager / Merchandising / System | VP Merchandising | 4–6 hours/month |
+
+### System Touchpoints
+
+- POS system (W5B) for trade-in receipt generation and store credit application
+- Inventory management for pre-owned inventory pool with separate carrying cost
+- Item master (W252) for pre-owned SKU creation with condition-grade variants
+- Service work order system (W544) for refurbishment tracking
+- Pricing system for pre-owned pricing matrix and margin validation
+- Ecommerce platform for "Certified Pre-Owned" listing with condition details
+- Loyalty system (W17) for points earning on pre-owned purchases
+- Warranty system (W33) for 90-day pre-owned warranty claims
+- Markdown/clearance system (W93) for aged pre-owned inventory
+- BI dashboard for program analytics
+
+### Pain Points / Risks
+
+- **Valuation disputes**: customers may disagree with trade-in value; mitigated by system-generated value range based on condition matrix, and escalation to Store Manager for discretionary adjustment up to 10% above recommended range
+- **Safety liability**: pre-owned tools may have latent defects not caught during assessment; mitigated by mandatory functional test, 90-day warranty with clear exclusion of consequential damages, and product liability insurance per W185
+- **Refurbishment cost overrun**: repair costs may exceed margin; mitigated by refurbishment cost cap at 50% of trade-in value — tools exceeding cap are recycled/disposed per W502
+- **Channel conflict with vendors**: major brands may object to pre-owned sales cannibalizing new tool sales; mitigated by vendor communication that trade-in program drives new tool purchases (70% attachment rate) and builds brand loyalty
+- **Inventory shrinkage**: high-value pre-owned tools may be theft targets; mitigated by EAS tagging per W844, locked display case for tools > PHP 5,000, and CCTV coverage per W838
+
+### Staffing Implication
+
+- **Sales Associate (Tools/Hardware)**: ~15–20 min per trade-in assessment; 1–2 per week = ~30–40 min/week per store; absorbed by existing role
+- **Department Supervisor**: ~10 min per trade-in confirmation; absorbed by existing role
+- **Store Manager**: ~5 min per high-value trade-in approval; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Trade-in assessment and valuation: 15–25 min
+- Inventory registration and tagging: 10–15 min
+- Refurbishment: 30 min–2 hours (varies by condition)
+- Pricing and display: 15–20 min
+- Monthly program analytics: 2–3 hours (consolidated)
+- **Total per trade-in**: ~45–60 min of staff time (excluding refurbishment)
+
+## W920. Store-Level Vendor-Led Product Knowledge Training & Staff Certification Program
+
+| Field | Detail |
+|---|---|
+| **Trigger** | New product introduction (W564); seasonal category transition (W264); new vendor onboarding (W36); quarterly training calendar cycle; or store-level skill gap identified via W567 cross-training assessment |
+| **Frequency** | ~4–6 vendor training sessions per store per month; 200 stores × 5 sessions = ~800–1,000 sessions/month chain-wide |
+| **Volume** | Average 8–12 store staff per session; ~6,400–12,000 staff-training-hours/month |
+| **Owner** | Department Supervisor (host) |
+| **Participants** | Department Supervisors, Sales Associates, Vendor Representative/Trainer, HR Training Coordinator, Category Manager (content approval) |
+
+### Background
+
+BuildRight carries 35,000 active SKUs across highly technical categories: electrical wiring and circuit breakers, plumbing fixtures and pipe specifications, paint chemistry and color matching, power tool features and safety, tile material science (ceramic vs. porcelain vs. granite), and lumber grades and treatment specifications. Unlike grocery or fashion retail where product knowledge is intuitive, hardware/DIY retail demands deep technical understanding — a customer asking "what wire gauge for a 20-amp circuit?" or "which tile adhesive for outdoor use in a rainy climate?" needs an informed answer. Incorrect advice can cause safety hazards (electrical fire, structural failure) and product liability exposure per W185. Vendor-led product training leverages the technical expertise of BuildRight's ~800–1,000 vendor partners: each vendor knows their products best and can train staff on features, specifications, application, installation, safety, and common customer questions. This workflow formalizes vendor-led training at store level, tracks staff certification per product category, and ensures training coverage across all departments.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Quarterly Training Calendar Planning**: (a) Category Manager identifies training priorities for the quarter based on: new product launches (W564), seasonal transitions (W264), low-scoring categories from previous quarter's mystery shopping (W566), and skill gap analysis from W567 cross-training matrix; (b) HR Training Coordinator invites vendors to schedule training sessions via vendor portal (W865); (c) training calendar created per store cluster: sessions scheduled during off-peak hours (weekday mornings 8:00–9:00 AM before store opening, or during the 2:00–3:00 PM lull); (d) each session allocated 30–60 minutes; (e) calendar distributed to all 200 stores via daily communication system (W571); (f) vendor training materials (product guides, FAQ cards, demonstration units) shipped to stores 1 week before scheduled session | Category Manager / HR Training Coordinator | VP Merchandising | 8–10 hours/quarter |
+| 2 | **Vendor Training Session Execution**: (a) Vendor Representative arrives at store per W581 vendor access management; (b) Department Supervisor gathers scheduled staff in training area (breakroom or department floor); (c) Vendor Representative conducts training: product features and benefits (10 min), technical specifications and application scenarios (10 min), demonstration and hands-on practice (15 min), common customer questions and objections (5 min), competitor product comparison (5 min), safety and handling notes (5 min); (d) Sales Associates practice customer interaction using role-play scenarios provided by vendor; (e) Department Supervisor takes attendance in training log (system records: date, vendor, category, topic, attendee list, duration); (f) vendor provides quick-reference cards for department posting | Vendor Representative / Department Supervisor | Department Supervisor | 30–60 min |
+| 3 | **Post-Training Knowledge Assessment**: (a) within 48 hours of training session, Sales Associates complete 10-question assessment via store mobile app: multiple choice and scenario-based questions covering product features, specification selection, and customer advisory; (b) passing score: 80%; (c) associates scoring < 80% assigned supplementary self-paced review and re-test within 1 week; (d) assessment results recorded in employee skill matrix per W567 with certification status update; (e) Department Supervisor reviews results and identifies associates needing additional coaching; (f) assessment data aggregated for Category Manager quarterly review | Sales Associate / System | Department Supervisor | 10 min per associate |
+| 4 | **Category Certification & Skill Progression**: (a) associates completing all required training sessions for a product category and passing all assessments earn "Category Certified" status; (b) certification levels: Bronze (basic product knowledge — completed foundational training), Silver (advanced — passed all quarterly updates + mystery shopping score ≥ 85%), Gold (expert — can train other associates + consistent 90%+ assessment scores + zero customer complaints on product advice); (c) certified associates identified by category badge on uniform name tag per W780; (d) certification status linked to: shift scheduling preference (certified associates scheduled during peak hours for their category), performance evaluation per W72, and eligibility for higher-level cross-training per W567; (e) certification expires after 6 months without re-certification (quarterly training sessions maintain active status); (f) annual recognition: top "Gold" certified associates per region recognized in company awards per W630 | Department Supervisor / HR Training Coordinator | Store Manager | 2–3 hours/month |
+| 5 | **Vendor Training Effectiveness & Compliance Monitoring**: (a) monthly: training completion rate by store (target: ≥ 95% of scheduled sessions conducted), assessment pass rate, category certification coverage rate; (b) quarterly: correlation analysis between training completion and: (i) customer satisfaction scores per W608 for trained categories, (ii) sales conversion rate in trained departments, (iii) product return rate for trained categories (lower returns indicate better product recommendations); (c) vendor training quality rating: stores rate vendor trainer effectiveness (1–5 scale) after each session; low-rated vendors (< 3.0 average) receive feedback from Category Manager; (d) compliance: training attendance tracked per DOLE-mandated training hours for safety-related categories (electrical, hazmat, power tools); (e) annual: program ROI analysis — training investment (vendor time, staff time, materials) vs. sales improvement and return reduction | HR Training Coordinator / Category Manager / System | VP HR | 4–6 hours/month |
+
+### System Touchpoints
+
+- Vendor portal (W865) for training session scheduling and material distribution
+- Store operations mobile app for assessment delivery and attendance logging
+- Employee skill matrix (W567) for certification status tracking
+- Training management module linked to HR system (W51) for training history
+- Employee master (W292) for certification badge and scheduling preference
+- Daily communication system (W571) for training calendar distribution
+- BI dashboard for training analytics and effectiveness measurement
+- Mystery shopping system (W566) for validation of training impact
+- Performance management system (W72) for certification-linked evaluation
+
+### Pain Points / Risks
+
+- **Vendor no-show**: vendor representative fails to arrive for scheduled training; mitigated by backup self-paced training module (pre-recorded video accessible on store tablet) and vendor SLA penalty in vendor agreement per W669
+- **Peak-hour disruption**: pulling sales associates off the floor during peak hours reduces customer service; mitigated by scheduling training during off-peak hours and limiting session size to avoid full department depopulation
+- **Assessment fatigue**: staff may resent frequent testing; mitigated by gamification (leaderboards, team competitions, small rewards per W630), keeping assessments short (10 questions), and linking certification to tangible benefits (scheduling preference, recognition)
+- **Knowledge decay**: staff forget training content over time; mitigated by quarterly refresher sessions, quick-reference cards posted in departments, and just-in-time product info accessible via mobile app during customer interactions
+- **Training quality inconsistency**: some vendor trainers are excellent, others are poor; mitigated by vendor training effectiveness rating system, Category Manager feedback loop, and standardized training outline provided to vendors
+
+### Staffing Implication
+
+- **Department Supervisor**: ~2–3 hours/month hosting and administering training sessions; absorbed by existing role
+- **Sales Associates**: ~30–60 min/month attending training + 10 min assessment per session = ~1–2 hours/month; absorbed within scheduled shift hours
+- **HR Training Coordinator**: ~8–10 hours/quarter on calendar planning + 4–6 hours/month on monitoring; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Calendar planning: 8–10 hours/quarter (consolidated)
+- Training session: 30–60 min per session
+- Assessment: 10 min per associate per session
+- Certification management: 2–3 hours/month (consolidated)
+- Analytics: 4–6 hours/month (consolidated)
+- **Total per store per month**: ~8–12 hours of staff time (training + assessment + administration)
+
+## W922. Customer Walk-In Bulk Purchase Negotiation & Volume Pricing Approval
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Walk-in customer (typically contractor, small builder, or institutional buyer) requests volume discount on a multi-unit or high-value purchase at store |
+| **Frequency** | ~600–800 bulk negotiation transactions/month across 200 stores (~3–4 per store per week) |
+| **Volume** | Average bulk transaction value: PHP 15,000–150,000; ~700 transactions/month |
+| **Owner** | Store Manager |
+| **Participants** | Sales Associate, Department Supervisor, Store Manager (pricing approval), Finance (for credit terms if applicable) |
+
+### Background
+
+BuildRight's customer mix includes 30% trade professionals (contractors, builders, interior designers) and 10% corporate/institutional buyers. Many of these customers walk into stores to purchase materials for active projects and expect volume pricing — a standard practice in the Philippine construction supply industry where negotiated pricing is the norm rather than the exception. A contractor buying 200 bags of cement, 500 hollow blocks, or 50 sheets of plywood for a project expects a discount commensurate with the volume. Currently, these negotiations happen informally and inconsistently — some Sales Associates offer discounts without authorization, others turn away customers by rigidly adhering to SRP, and the lack of a structured workflow creates margin leakage and customer experience inconsistency. This workflow formalizes walk-in bulk purchase negotiation with tiered discount authority, minimum volume thresholds, real-time margin verification, and post-sale analytics to balance revenue optimization with customer satisfaction. It complements the existing trade account pricing (W163) and corporate account pricing (W58) workflows by handling ad-hoc, walk-in bulk transactions that are not covered by pre-negotiated contracts.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 2 | **Volume Threshold & Discount Matrix Verification**: (a) system displays bulk discount matrix for the requested SKU(s): minimum quantity for discount eligibility (typically 10+ units for A-items, 20+ for B-items, 50+ for C-items), tiered discount rates (e.g., 10–49 units: 5%; 50–99 units: 8%; 100+ units: 12%), and margin floor (minimum acceptable margin — typically 15% for building materials, 20% for tools/hardware); (b) Sales Associate enters requested quantity and proposed discount into POS quotation module per W542; (c) system calculates: discounted price, resulting margin %, total transaction value, and margin impact vs. SRP; (d) if proposed discount is within Sales Associate authority (≤ 3% and margin > margin floor): Sales Associate approves on the spot; (e) if discount exceeds Sales Associate authority: escalation to Department Supervisor (≤ 8%) or Store Manager (≤ 15%); (f) discounts > 15% or margin below floor require Regional Manager approval per W67 — customer asked to wait or quoted a callback time | Sales Associate / System | Department Supervisor / Store Manager | 5–10 min |
+| 1 | **Bulk Purchase Request Identification**: (a) customer approaches Sales Associate or Pro Desk (W112) with bulk purchase intent — either a specific product list ("I need 200 bags of cement") or a project description ("I'm building a 2-story house, what do I need?"); (b) Sales Associate assesses request: product(s), quantities, project type (residential, commercial, renovation), customer type (walk-in, loyalty member, trade account holder); (c) if customer is a trade account holder: existing trade discount per W163 applies first; bulk discount applies on top only if volume exceeds trade agreement threshold; (d) Sales Associate enters request into POS quotation module per W542 as a bulk quotation request; (e) customer identified: loyalty card scanned for purchase history and customer tier, or new customer registration offered per W551 | Sales Associate | Department Supervisor | 5–10 min |
+| 3 | **Negotiation & Deal Closure**: (a) Store Manager (or authorized approver) reviews quotation with real-time margin data and inventory availability at store and nearby DCs per W4; (b) negotiation considerations: customer purchase history (repeat buyers may warrant higher discount), inventory position (overstock items may warrant deeper discount to clear), competitive intelligence per W130 (is customer price-shopping against competitor?), project potential (will this project generate repeat visits?); (c) Store Manager approves final discount within authority matrix; (d) quotation finalized with: item list, quantities, discounted unit price, total value, delivery option (if applicable per W5D), validity period (24 hours for bulk quotes); (e) customer accepts: quotation converts to sales order at POS; (f) payment: cash, card, or — if customer has trade account — charge to account per W5B.4c; (g) if customer requests delivery of bulky items: delivery scheduling per W5D with delivery fee waived for transactions > PHP 50,000 as bulk purchase benefit | Store Manager / Sales Associate / Customer | Store Manager | 10–20 min |
+| 4 | **Bulk Order Fulfillment & Delivery**: (a) if items are in stock at store: immediate fulfillment from floor stock or backroom; (b) if partial stock: Sales Associate checks DC availability per W4 and offers: (i) partial fulfillment now + DC delivery within 2–3 days, or (ii) full DC delivery within 2–3 days; (c) for DC delivery: store replenishment order created with priority flag for customer order; (d) customer notified of delivery schedule per W708; (e) delivery executed per W5D with proof of delivery; (f) if customer is a trade account holder: invoice generated per W8 with agreed payment terms | Sales Associate / Receiving Clerk / System | Store Manager | Varies by fulfillment |
+| 5 | **Bulk Transaction Analytics & Margin Monitoring**: (a) daily: Store Manager reviews bulk transactions from previous day — discount depth, margin impact, customer type; (b) weekly: bulk transaction summary — count, average discount, average transaction value, margin dilution vs. SRP, conversion rate (quotes generated vs. closed); (c) monthly: bulk discount analysis by category and customer segment — are certain categories being over-discounted? Are walk-in bulk customers converting to trade account holders?; (d) quarterly: discount matrix calibration — adjust thresholds and rates based on competitive landscape per W130, inventory turns per category, and margin targets per W489; (e) annual: bulk pricing strategy review with Merchandising and Finance | Store Manager / Finance / Merchandising | VP Store Operations | 4–6 hours/month |
+
+### System Touchpoints
+
+- POS quotation module (W542) for bulk quotation generation and conversion to sale
+- POS system (W5B) for transaction processing with volume discount application
+- Inventory/ATP system for stock availability at store and DC
+- Pricing system for bulk discount matrix and margin floor validation
+- Customer master (W253) for loyalty/trade account lookup
+- Replenishment system (W4) for DC delivery scheduling
+- Customer communication module (W708) for delivery notifications
+- Trade account billing (W8) for charge-to-account transactions
+- Competitor intelligence system (W130) for competitive pricing context
+- BI dashboard for bulk transaction analytics
+- Store KPI dashboard (W665) for margin and discount monitoring
+
+### Pain Points / Risks
+
+- **Margin erosion**: excessive discounting reduces profitability; mitigated by margin floor enforcement in system (transaction blocked if below margin floor without Regional Manager override), discount authority matrix, and monthly margin dilution monitoring
+- **Inconsistent pricing**: different stores offer different discounts for the same product and volume, creating customer dissatisfaction if they discover the discrepancy; mitigated by standardized discount matrix chain-wide and POS-enforced discount limits
+- **Stock-out on bulk orders**: customer negotiates a deal but store cannot fulfill the full quantity; mitigated by real-time ATP check before quotation finalization and DC delivery option per W5D
+- **Quotation abuse**: customer uses BuildRight quotation to negotiate a better price at a competitor; mitigated by 24-hour quotation validity and competitive pricing intelligence per W130
+- **Staff gaming the discount system**: Sales Associates offering discounts to friends/family without legitimate bulk purchase; mitigated by POS override logging per W538, minimum quantity enforcement, and exception-based reporting per W837
+
+### Staffing Implication
+
+- **Sales Associate**: ~10–15 min per bulk negotiation; 3–4 per week = ~45–60 min/week; absorbed by existing role
+- **Store Manager**: ~10 min per escalated negotiation (50% of bulk transactions); ~25–30 min/week; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Request identification and quotation: 5–10 min
+- Discount verification and approval: 5–10 min
+- Negotiation and closure: 10–20 min
+- Fulfillment arrangement: 5–10 min
+- **Total per bulk transaction**: ~25–50 min of staff time
+
+## W924. Store-Level Self-Service Kiosk & Interactive Product Information Station Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Daily kiosk startup as part of store opening (W5A); customer-initiated kiosk interaction; system health monitoring alert |
+| **Frequency** | Daily operations; 1–2 kiosks per store × 200 stores = ~300 kiosks chain-wide |
+| **Volume** | ~50–100 customer interactions per kiosk per day; ~15,000–30,000 daily interactions chain-wide |
+| **Owner** | Store Manager |
+| **Participants** | Sales Associate (kiosk assistance), IT Helpdesk (W48, technical support), Department Supervisor (content accuracy) |
+
+### Background
+
+Modern big-box retail increasingly deploys self-service kiosks to enhance the customer experience while reducing staff workload. For BuildRight, self-service kiosks serve multiple purposes: (a) product information lookup — customers can search for products by category, barcode scan, or keyword and see specifications, pricing, stock availability, and aisle location; (b) project calculators — customers can input room dimensions to calculate tile quantity, paint coverage, lumber requirements, or electrical wiring needs; (c) tutorial access — short video tutorials on common DIY projects (how to install a faucet, how to mix paint, how to lay tiles); (d) ecommerce integration — customers can browse the full 35,000 SKU catalog online (store only stocks ~35,000 but not all at each location), check online-only products, and place endless aisle orders per W273; (e) loyalty account management — check points balance, view purchase history, redeem rewards; (f) store navigation — interactive store map showing product locations and current promotions. Each store has 1–2 kiosks positioned in high-traffic areas (entrance, tools department, tile gallery). This workflow covers daily kiosk operations, content management, health monitoring, and customer usage analytics.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Daily Kiosk Startup & Health Check**: (a) during store opening per W5A, Sales Associate powers on kiosks and verifies: touchscreen responsiveness, barcode scanner function, receipt printer (if equipped), network connectivity (ping test to ERP), and display brightness; (b) system performs automated health check: application version verification, content sync confirmation (latest prices, promotions, stock levels synced from ERP), payment module status (if kiosk supports endless aisle ordering); (c) health check result displayed on kiosk admin screen: Green (all systems operational), Yellow (non-critical issue — e.g., receipt printer low paper), Red (critical failure — kiosk taken offline); (d) Yellow issues resolved by Sales Associate (restock printer paper, clean scanner glass); (e) Red issues: IT Helpdesk ticket created per W48 with kiosk ID, error code, and store location; kiosk displays "Out of Service" screen with direction to nearest Sales Associate; (f) health check log transmitted to IT dashboard per W733 | Sales Associate / System | Store Manager | 5 min per kiosk |
+| 2 | **Customer Interaction Management**: (a) customer approaches kiosk and selects function: product search, project calculator, tutorial video, endless aisle ordering, loyalty management, or store map; (b) product search: customer scans barcode or types product name → system displays: product image, description, specifications, price (including any active promotions), stock availability at this store, aisle/shelf location, and related products; (c) project calculator: customer inputs room/area dimensions → system calculates required quantity of tiles (including 10% waste factor), paint (liters based on coverage rate), lumber (board feet), or cement (bags based on area and thickness); customer can email or print the calculated material list or share to Project Vault per W894; (d) tutorial access: short (2–5 min) how-to videos categorized by project type; videos sourced from vendor content library per W316 digital asset master; (e) endless aisle ordering per W273: customer selects product not available in-store → order placed via ecommerce → home delivery or BOPIS; (f) loyalty management: customer scans loyalty card → displays points balance, tier status, available rewards, and recent transactions; (g) if customer needs assistance: kiosk has "Call Associate" button triggering notification on nearest Department Supervisor's mobile device | Customer / System | — | Self-service |
+| 3 | **Content Management & Synchronization**: (a) kiosk content managed centrally by Merchandising and IT: product catalog, pricing (synced from ERP near-real-time per POS-013), promotional content (synced from promotional rule master per W300), tutorial videos (updated quarterly by vendor), project calculator parameters (updated when product specifications change); (b) nightly content sync: kiosk downloads updated price file, new products, discontinued items, new promotions, and refreshed tutorial content from central server; (c) emergency content update: price changes, product recalls (W29), or safety alerts pushed immediately to all kiosks via real-time event stream per W533; (d) quarterly content refresh: new seasonal tutorials (rainy season waterproofing guide, summer garden project), updated product photos per W316, and new project calculator templates based on trending DIY projects per W563 SEO data; (e) localization: kiosk displays store-specific inventory (not chain-wide) and local delivery options | System / Merchandising / IT | VP Merchandising | Automated (daily) + 4–6 hours/quarter |
+| 4 | **Kiosk Hardware Maintenance & Lifecycle**: (a) weekly: Sales Associate cleans kiosk touchscreen, barcode scanner glass, and exterior housing; checks receipt paper supply; (b) monthly: IT Helpdesk remote diagnostics — disk space, memory usage, application response time, error logs; (c) quarterly: on-site preventive maintenance per W265 POS hardware maintenance — cable check, touchscreen calibration, internal cleaning, component wear assessment; (d) hardware lifecycle: kiosk units replaced every 5 years per IT asset lifecycle per W131; new units provisioned per W152 with store-specific configuration; (e) peripheral replacement: barcode scanner, receipt printer, and touchscreen components replaced as needed from IT spare parts inventory per W265 | Sales Associate / IT Helpdesk / System | Store Manager | 15 min/week (cleaning) + 30 min/month (remote diagnostics) |
+| 5 | **Usage Analytics & Optimization**: (a) daily: kiosk interaction count, most-used features (product search, calculator, tutorials), average session duration, conversion rate (product lookup → purchase or endless aisle order); (b) weekly: top searched products by store and region (indicates customer interest that may not translate to sales — stocking opportunity per W4B), calculator usage by project type (indicates trending projects for merchandising per W1), tutorial view counts (identifies which DIY topics are most in-demand for workshop planning per W147); (c) monthly: kiosk uptime (target: ≥ 98%), customer satisfaction rating (optional post-session 1–5 star rating), interaction-to-sale conversion rate; (d) quarterly: feature roadmap review — new calculator templates, new tutorial content, potential new features (e.g., augmented reality tile/visualizer, paint color preview on uploaded room photo); (e) annual: kiosk ROI analysis — hardware and maintenance cost vs. incremental revenue from endless aisle orders, improved customer satisfaction, and reduced Sales Associate product lookup time | Store Manager / IT / Merchandising / System | VP Store Operations | 2–3 hours/month |
+
+### System Touchpoints
+
+- ERP inventory system for real-time stock and pricing data
+- Ecommerce platform for endless aisle ordering per W273
+- Loyalty system (W17) for customer account lookup
+- Digital asset management (W316) for tutorial video and product image delivery
+- IT monitoring dashboard (W733) for kiosk health monitoring
+- POS hardware management (W265) for peripheral maintenance
+- IT asset management (W131) for kiosk lifecycle tracking
+- Store operations mobile app for "Call Associate" notification
+- BI dashboard for usage analytics
+- Project Vault (W894) for material list sharing
+
+### Pain Points / Risks
+
+- **Hardware vandalism/wear**: kiosks in high-traffic areas are subject to rough handling; mitigated by ruggedized enclosures, weekly cleaning, and quarterly preventive maintenance; vandalism covered by store insurance per W857
+- **Stale content**: outdated pricing or promotions erode customer trust; mitigated by nightly sync with emergency push capability and daily price verification per W667
+- **Low adoption**: customers may not notice or use kiosks; mitigated by prominent placement, clear signage ("Scan to find your product!"), Sales Associate encouragement, and loyalty points incentive for kiosk-originated endless aisle orders
+- **Network dependency**: kiosk loses value during network outage; mitigated by local cache of product catalog (last-known prices, product info) and offline project calculators; "Call Associate" button triggers local notification during outage per W535 offline capability
+- **Accessibility**: elderly or less tech-savvy customers may struggle with touchscreen; mitigated by large-font mode, simple navigation, and Sales Associate availability to assist per W604
+
+### Staffing Implication
+
+- **Sales Associate**: ~10 min/day on kiosk startup and cleaning; absorbed by existing role
+- **IT Helpdesk**: ~2–3 hours/month on remote diagnostics per 50 stores; absorbed by existing role
+- **No incremental headcount at store level**
+
+### Time Estimate
+
+- Daily startup: 5 min per kiosk
+- Weekly cleaning: 15 min per kiosk
+- Monthly diagnostics: 30 min (remote)
+- Quarterly content refresh: 4–6 hours (centralized)
+- Monthly analytics: 2–3 hours (consolidated)
+- **Total per store per month**: ~1–2 hours of staff time (startup + cleaning + minor issues)

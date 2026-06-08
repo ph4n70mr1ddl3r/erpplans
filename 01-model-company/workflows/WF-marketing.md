@@ -1329,3 +1329,64 @@ BuildRight's 600,000+ loyalty members accumulate points across their household p
 - Monthly fraud review: 2–3 hours
 - Monthly analytics: 2–3 hours
 - **Total per transfer**: ~5 min of staff time for assisted transfers; automated for self-service
+
+## W926. Customer Loyalty Reward Physical Fulfillment & Partner Logistics Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer redeems loyalty points for physical reward item; monthly reward catalog fulfillment cycle; quarterly partner reward reconciliation |
+| **Frequency** | ~8,000–12,000 reward redemptions/month across 600,000 loyalty members; ~500–700 physical reward items shipped/month |
+| **Volume** | Average reward fulfillment cost: PHP 200–1,500 per item; ~PHP 300K–700K/month in reward fulfillment costs |
+| **Owner** | Loyalty Program Manager |
+| **Participants** | Customer, Loyalty Program Manager, Reward Fulfillment Partner (3PL/warehouse), Marketing Coordinator, Finance (loyalty liability management per W104), Partner Brands (co-branded rewards) |
+
+### Background
+
+BuildRight's loyalty program has 600,000 registered members earning 1 point per PHP 100 spent, with points redeemable for rewards. The loyalty program (W17) handles points earning and redemption at POS and ecommerce, while W104 manages the financial governance (points liability on the balance sheet). However, when members redeem points for physical reward items ( branded merchandise, partner products, gift items, home improvement kits, partner brand vouchers), these physical items must be sourced, stored, picked, packed, and delivered — a logistics operation that is distinct from BuildRight's core merchandise fulfillment. This workflow covers the physical fulfillment of loyalty rewards, including: reward catalog curation and procurement, warehousing and inventory management, pick-pack-ship operations, delivery tracking, and partner brand reconciliation. With 600,000 members and a growing program, efficient reward fulfillment is critical to member satisfaction and program ROI. Poor fulfillment (slow delivery, wrong items, damaged goods) directly erodes loyalty — the opposite of the program's intent.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Reward Catalog Curation & Procurement**: (a) quarterly: Loyalty Program Manager curates reward catalog with: (i) BuildRight branded merchandise (t-shirts, tool bags, tumblers, tape measures — sourced from promotional merchandise vendor per W136 indirect procurement); (ii) home improvement starter kits (paint starter kit, basic tool set, garden starter pack — assembled from BuildRight inventory per W910 bundle management); (iii) partner brand rewards (co-branded items from major vendors — Bosch drill bits, Makita accessories, Boysen paint samples — sourced from vendor per W513 co-op advertising); (iv) experiential rewards (DIY workshop vouchers per W147, installation service credits per W138); (v) third-party gift cards and vouchers; (b) each reward assigned a points value based on: item procurement cost + fulfillment cost + 20% margin buffer, calibrated to points earning rate (1 point = PHP 1.00 redemption value per profile Section 9.2); (c) catalog published on: ecommerce loyalty rewards page, mobile app (W615), and in-store loyalty kiosk per W924; (d) procurement: physical rewards ordered from vendors and delivered to dedicated reward fulfillment warehouse (3PL partner or BuildRight DC reserved section) | Loyalty Program Manager / Marketing Coordinator / Procurement | VP Marketing | 8–10 hours/quarter |
+| 2 | **Reward Inventory Management**: (a) physical reward items stored in dedicated bins/section at reward fulfillment warehouse with separate inventory pool from merchandise; (b) inventory tracked in ERP with reward SKU classification: reward item, points cost, procurement cost, quantity on hand, reorder point; (c) reorder triggers: when reward inventory drops below 2-week supply, auto-generated replenishment order to vendor per W2; (d) seasonal rewards (Christmas gift items, back-to-school kits) managed with seasonal inventory build-down per W588; (e) obsolete/discontinued rewards: removed from catalog, remaining inventory donated per W135 CSR or liquidated per W443 salvage; (f) monthly reward inventory reconciliation: physical count vs. system count, shrinkage investigation per W6 | Fulfillment Partner / System | Loyalty Program Manager | 2–3 hours/month |
+| 3 | **Reward Redemption & Fulfillment Processing**: (a) customer selects reward from catalog and redeems points via: ecommerce, mobile app, or in-store customer service counter; (b) system validates: sufficient points balance, reward item in stock, delivery address valid; (c) points deducted from customer balance immediately upon redemption; points deduction creates loyalty liability reduction per W104; (d) fulfillment order generated and transmitted to reward fulfillment warehouse: customer name, delivery address, reward item, quantity, special instructions; (e) warehouse picks, packs, and ships reward within 3 business days (SLA with fulfillment partner); (f) delivery via 3PL (PhilPost for provincial, LBC/JRS Express for metro) with tracking number; (g) customer receives tracking notification per W708; (h) delivery confirmation updates fulfillment order status | System / Fulfillment Partner / Customer | Loyalty Program Manager | Automated + 10–15 min/exception |
+| 4 | **Partner Brand Reward Reconciliation**: (a) monthly: Loyalty Program Manager reconciles partner brand rewards: (i) rewards issued to members (points redeemed, items shipped) vs. (ii) partner brand invoices received (items procured) vs. (iii) fulfillment partner shipping records (items dispatched); (b) reconciliation ensures: (i) partner brands are paid correctly for rewards procured, (ii) fulfillment partner is paid correctly for items shipped, (iii) loyalty liability per W104 is reduced by the correct amount for rewards fulfilled; (c) discrepancies investigated: lost shipments (reshipped to customer + claim against carrier), damaged rewards (replacement shipped + vendor claim per W88), and points disputes (customer claims non-receipt); (d) quarterly partner settlement: total partner brand rewards procured × agreed cost reconciled against partner invoices; payment per W7 per partner terms | Loyalty Program Manager / Finance / Fulfillment Partner | VP Marketing | 4–6 hours/month |
+| 5 | **Reward Program Analytics & Optimization**: (a) monthly: redemption rate (% of earned points redeemed), most popular rewards, average fulfillment time, delivery success rate, customer satisfaction with rewards (post-delivery survey per W756), and reward cost per active member; (b) quarterly: catalog refresh based on analytics — remove unpopular rewards, add new items, adjust points values; A/B testing of reward descriptions and images on catalog page; (c) semi-annual: reward program cost analysis — total fulfillment cost vs. loyalty program revenue impact (incremental sales from loyalty members vs. non-members per W104), reward procurement cost optimization (volume discounts from reward vendors), and fulfillment cost optimization (batch shipping, carrier renegotiation); (d) annual: reward catalog strategic review aligned with loyalty tier structure per W313, partner brand portfolio expansion per W674, and program ROI per W565 marketing campaign ROI | Loyalty Program Manager / Marketing Coordinator / System | VP Marketing | 4–6 hours/month |
+
+### System Touchpoints
+
+- Loyalty system (W17) for points balance, redemption, and liability management
+- Reward catalog module on ecommerce platform and mobile app (W615)
+- Inventory management (INV-001) for reward item stock tracking
+- Order management for fulfillment order creation and tracking
+- Customer communication module (W708) for tracking notifications
+- Finance module (W104) for loyalty liability accounting
+- AP system (W7) for partner and vendor payment
+- Fulfillment partner API for warehouse management integration
+- Delivery partner API for shipping tracking
+- BI dashboard for reward program analytics
+- CSR module (W135) for obsolete reward donations
+
+### Pain Points / Risks
+
+- **Fulfillment delays**: 3PL warehouse may delay shipping during peak periods (Christmas, double points events); mitigated by 3 business day SLA with penalty, backup fulfillment capacity at DC, and proactive customer communication per W708
+- **Reward inventory stock-outs**: popular rewards sell out, disappointing members who saved points; mitigated by demand forecasting based on redemption patterns, safety stock buffers, and "temporarily out of stock" display with estimated restock date on catalog
+- **Delivery losses/damage**: 3PL carrier loses or damages reward shipments; mitigated by carrier SLA with replacement commitment, customer re-shipment within 5 business days, and carrier claim per W859 fleet insurance
+- **Points liability management**: unredeemed points accumulate as liability on balance sheet per W104; mitigated by points expiry policy per W570 (points expire after 24 months of inactivity) and active catalog promotion to encourage redemption
+- **Partner brand disputes**: partner brands may dispute redemption counts or pricing; mitigated by monthly reconciliation and contractual terms defining cost and settlement schedule
+
+### Staffing Implication
+
+- **Loyalty Program Manager**: ~8–10 hours/month on catalog curation, analytics, and partner management; absorbed by existing role
+- **Marketing Coordinator**: ~4–6 hours/month on catalog updates and fulfillment monitoring; absorbed by existing role
+- **Fulfillment Partner**: outsourced 3PL handles pick/pack/ship; cost included in program budget
+- **No incremental BuildRight headcount**
+
+### Time Estimate
+
+- Quarterly catalog curation: 8–10 hours
+- Monthly inventory management: 2–3 hours
+- Monthly reconciliation: 4–6 hours
+- Monthly analytics: 4–6 hours
+- **Total per month**: ~14–18 hours of staff time
