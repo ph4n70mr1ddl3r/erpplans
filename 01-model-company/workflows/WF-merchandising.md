@@ -1,6 +1,6 @@
 # Merchandising & Pricing Workflows
 
-> Assortment planning, promotions, pricing, product lifecycle, PIM, vendor rebate management, markdown & clearance pricing, sample & demo inventory management, category performance review & P&L ownership, pricing hierarchy governance, private label development, competitor intelligence, store-level price tag printing & verification, store promotional setup & visual merchandising, seasonal merchandise transition & display rotation, loyalty tier re-evaluation & migration processing, competitor store visit program & market intelligence operations, product quality lab testing & certification management, markdown optimization & analytics operations, and vendor trade fund management & promotional budget tracking.
+> Assortment planning, promotions, pricing, product lifecycle, PIM, vendor rebate management, markdown & clearance pricing, sample & demo inventory management, category performance review & P&L ownership, pricing hierarchy governance, private label development, competitor intelligence, store-level price tag printing & verification, store promotional setup & visual merchandising, seasonal merchandise transition & display rotation, loyalty tier re-evaluation & migration processing, competitor store visit program & market intelligence operations, product quality lab testing & certification management, markdown optimization & analytics operations, vendor trade fund management & promotional budget tracking, and vendor new product in-store launch event & demonstration coordination.
 >
 > Back to [Workflow Index](README.md)
 
@@ -33,6 +33,7 @@
 - [W625. Product Quality Lab Testing & Certification Management](#w625-product-quality-lab-testing--certification-management)
 - [W737. Markdown Optimization & Analytics Operations](#w737-markdown-optimization--analytics-operations)
 - [W738. Vendor Trade Fund Management & Promotional Budget Tracking](#w738-vendor-trade-fund-management--promotional-budget-tracking)
+- [W900. Vendor New Product In-Store Launch Event & Demonstration Coordination](#w900-vendor-new-product-in-store-launch-event--demonstration-coordination)
 
 ---
 
@@ -1612,3 +1613,74 @@ Absorbed by Merchandise Planners and Category Managers; ~20-30 hours/week. Merch
 ### Time Estimate
 
 Per SKU: planning (30-60 min) + execution monitoring (15 min/week × 6-8 weeks) + close-out (15 min) = ~4-6 hours. Monthly: ~100-200 SKUs = 400-1,200 hours across merchandise planning team.
+
+---
+
+## W900. Vendor New Product In-Store Launch Event & Demonstration Coordination
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Vendor or Category Manager plans an in-store product launch event for a new SKU or product line entering BuildRight's assortment |
+| **Frequency** | ~15–25 vendor launch events/month chain-wide (varying scope: 1 store to nationwide) |
+| **Volume** | Avg 3–5 SKUs launched per event; events at 1–50 stores |
+| **Owner** | Category Manager |
+| **Participants** | Vendor Representative, Category Manager, Store Manager, Marketing Coordinator, Sales Associates, IT (AV/digital signage), Merchandise Planner |
+
+### Background
+
+BuildRight introduces ~1,750–2,800 new SKUs annually (5–8% SKU growth on 35,000 active base per model company profile). While W564 (New Product Introduction & Full Store Rollout) covers the analytical and planning aspects of NPI (assortment decisions, store clustering, planogram allocation), and W569 covers ecommerce new product launch, there is a gap in coordinating physical in-store launch events — a critical merchandising tool in big-box hardware retail where product demonstration drives conversion. Power tool vendors (DeWalt, Makita, Bosch) want in-store demo days where customers test tools; paint brands want color-of-the-season launch events with free sample mixing; appliance vendors want live product showcases. These events require coordination between the vendor (providing demonstrators, promo staff, product samples, co-op funding per W513), BuildRight's Category Manager (selecting stores, timing, promotional pricing), Store Manager (floor space allocation, staff coordination), and Marketing (in-store signage, digital promotion, social media per W142). A well-executed vendor launch event can drive 2–5x normal sales velocity for featured SKUs in the launch week. This workflow formalizes the cross-functional coordination process.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Launch Event Proposal**: (a) Vendor submits launch event proposal to Category Manager: (i) product/SKU(s) being launched; (ii) proposed event format (demo day, product showcase, hands-on workshop, celebrity endorsement appearance); (iii) proposed store selection (nationwide, regional, or flagship-only); (iv) proposed timing (must align with seasonal calendar per model company profile — e.g., power tools pre-summer, paint pre-renovation season); (v) vendor investment: demo units, promodizer staffing per W269, product samples, promotional giveaways, co-op advertising budget per W513; (vi) expected incremental sales; (b) OR Category Manager identifies new product suitable for launch event based on NPI pipeline (W564) and proactively invites vendor to participate | Vendor / Category Manager | VP Merchandising | 1–2 hours (proposal prep) |
+| 2 | **Event Planning & Approval**: (a) Category Manager evaluates proposal: (i) strategic fit with category strategy (W631); (ii) margin impact — event pricing should maintain ≥25% gross margin after vendor co-op funding; (iii) store selection: prioritize stores with (a) high category sell-through, (b) adequate floor space for demo area, (c) strong Store Manager engagement; (iv) timing: check for conflicts with other events, promotions (W13), or seasonal peaks; (v) vendor funding adequacy — vendor should cover ≥60% of event cost (promodizer wages, demo materials, giveaways); (b) if approved: Category Manager creates event plan: (i) event dates (typically Thursday–Saturday for 3-day event, or Saturday-only); (ii) participating stores (1–50 stores); (iii) promotional pricing for event duration (per W13 promotional pricing rules); (iv) floor space allocation: demo area location in store (power aisle, tool section, outdoor area, or front-of-store); (v) staffing: vendor promodizers (W269) + BuildRight Sales Associates; (vi) marketing support: in-store signage per W262, social media posts per W142, SMS blast to loyalty members per W673; (c) VP Merchandising approves events > 20 stores or with margin below 25% | Category Manager | VP Merchandising | 2–4 hours |
+| 3 | **Pre-Event Logistics**: (a) **Stock positioning**: Merchandise Planner ensures participating stores have adequate stock of featured SKUs per W57 promotional stock allocation — event buffer stock (2–3x normal week's supply) positioned 3–5 days before event; (b) **Demo materials**: Vendor ships demo units, display fixtures, product samples to participating stores — received and staged per W109 store receiving; (c) **Digital signage**: Marketing Coordinator schedules event content on store digital signage (W504) and ecommerce banner per W563; (d) **Staff briefing**: Store Manager briefs Sales Associates on featured products, event pricing, and sales targets 1–2 days before event; (e) **Promodizer coordination**: Vendor promodizers scheduled per W269 — verified DOLE 174 compliance, BuildRight uniform issued, store access arranged per W581; (f) **Loyalty integration**: system configures double/triple loyalty points for featured SKUs during event period per W17 | Merchandise Planner / Store Manager / Marketing Coordinator / Vendor | Category Manager | 3–5 days lead time |
+| 4 | **Event Execution**: During event days: (a) vendor promodizers and BuildRight Sales Associates operate demo stations; (b) customers test products, receive product information, and are offered event-only promotional pricing; (c) POS processes event sales with promotional pricing auto-applied per POS-014; (d) if demo unit sold: POS processes as demo/display unit sale per W524 with appropriate discount; (e) Stock Associates monitor shelf stock levels and replenish from backroom buffer; (f) Store Manager monitors event sales vs. target via real-time KPI dashboard (W665); (g) for safety: vendor tools/equipment demonstrated per safety protocols — age-restricted product prompts (W520), power tool safety acknowledgment (W749); (h) end-of-day: Store Manager records event day sales, customer traffic count, and feedback | Sales Associates / Vendor Promodizers / Store Manager | Category Manager | Event duration (1–3 days) |
+| 5 | **Post-Event Analysis & Settlement**: (a) **Sales analysis**: Category Manager reviews event performance: (i) featured SKU sales lift (vs. baseline week); (ii) event-day store traffic vs. normal; (iii) conversion rate of demo participants to purchasers; (iv) halo effect — did event drive sales in adjacent categories?; (v) per-store performance variance; (b) **Inventory reconciliation**: Merchandise Planner reconciles event buffer stock — unsold units returned to regular shelf stock or DC redistribution per W22; unsold demo units returned to vendor per W88 RTV process or retained as permanent demo units per W97; (c) **Vendor settlement**: (i) vendor co-op advertising share calculated per W513; (ii) promodizer labor cost shared per agreement; (iii) demo unit cost: vendor-owned demos returned; BuildRight-purchased demos capitalized per W39; (iv) Category Manager submits settlement report to Finance per W770 vendor debit memo; (d) **Lessons learned**: Category Manager documents event performance for vendor scorecard per W44 and future event planning — what worked, what didn't, store-level execution quality | Category Manager / Merchandise Planner / Finance | VP Merchandising | 4–8 hours post-event |
+
+### System Touchpoints
+
+- NPI pipeline (W564) for new product launch coordination
+- Promotional pricing engine (W13) for event pricing
+- Promotional stock allocation (W57) for buffer stock positioning
+- Store receiving (W109) for demo material receipt
+- Digital signage management (W504) for in-store event promotion
+- Ecommerce banner management (W563) for online cross-promotion
+- Social media management (W142) for event marketing
+- Loyalty points engine (W17) for bonus points configuration
+- POS promotional pricing auto-apply (POS-014)
+- Demo/display unit sale processing (W524)
+- Store KPI dashboard (W665) for real-time event monitoring
+- Vendor scorecard (W44) for event performance documentation
+- Vendor co-op advertising management (W513) for cost sharing
+- RTV processing (W88) for unsold demo unit returns
+- Vendor debit memo (W770) for vendor settlement
+- BI analytics for post-event sales lift analysis
+
+### Pain Points / Risks
+
+- **Vendor overpromising demo support**: vendors may commit to providing 5 promodizers per store but deliver only 2 on event day, understaffing demo stations and frustrating customers; contractual penalty clause per W62 vendor agreement mitigates
+- **Demo area space conflicts**: in 8,000–15,000 sqm stores, allocating 20–40 sqm for a demo area during peak shopping hours may congest adjacent aisles and displace regular merchandise display; timing demo area to non-peak hours or using outdoor/yard area mitigates
+- **Event stock sell-out**: if featured product sells out during Day 1 of a 3-day event, Days 2–3 have nothing to sell — damaging customer perception; buffer stock must be generous, and emergency replenishment plan (DC rush order) must be in place
+- **Promodizer no-shows**: vendor-provided promodizers may not show up at provincial stores; Store Manager must have backup plan (reassign Sales Associates)
+- **Cannibalization of regular-priced sales**: event promotional pricing may shift demand from regular-priced purchases to event purchases without incremental volume — net margin decline without sales lift; post-event analysis must assess true incremental revenue
+- **Multiple vendor events competing for same dates/space**: 2 vendors wanting the same weekend at the same store; Category Manager must prioritize based on strategic importance and vendor investment level
+
+### Staffing Implication
+
+- **Category Manager**: ~8–12 hours per event (planning + execution oversight + post-event analysis); 15–25 events/month across 5 category managers = ~3–5 events/manager/month = 24–60 hours/manager/month; absorbed by existing category management team
+- **Store Manager**: ~2–3 hours per event for coordination and monitoring; absorbed by existing role
+- **Sales Associates**: absorbed into normal selling duties with event demo station rotation
+- **Marketing Coordinator**: ~2–3 hours per event for signage and social media; absorbed by existing role
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Launch event proposal: 1–2 hours
+- Event planning and approval: 2–4 hours
+- Pre-event logistics: 3–5 days lead time (ongoing coordination)
+- Event execution: 1–3 days
+- Post-event analysis and settlement: 4–8 hours
+- **Total Category Manager time per event**: 15–24 hours across all phases

@@ -1,6 +1,6 @@
 # Marketing Campaign Operations
 
-> Campaign planning, creative production, multi-channel execution, budget tracking, performance measurement, loyalty program financial governance, crisis communication & brand reputation, CSR program execution, social media & influencer management, PR & corporate communications, bank & credit card partnership management, retail media network operations, referral program & brand ambassador management, in-house design & creative production, marketing budget management & spend analytics, and marketing data platform daily operations & campaign analytics.
+> Campaign planning, creative production, multi-channel execution, budget tracking, performance measurement, loyalty program financial governance, crisis communication & brand reputation, CSR program execution, social media & influencer management, PR & corporate communications, bank & credit card partnership management, retail media network operations, referral program & brand ambassador management, in-house design & creative production, marketing budget management & spend analytics, marketing data platform daily operations & campaign analytics, and customer loyalty partner reward catalog management & fulfillment.
 >
 > Back to [Workflow Index](README.md)
 
@@ -25,6 +25,7 @@
 - [W570. Loyalty Points Expiry Management & Annual Liability Cleanup](#w570-loyalty-points-expiry-management-annual-liability-cleanup)
 - [W677. Marketing Budget Management & Spend Analytics](#w677-marketing-budget-management--spend-analytics)
 - [W736. Marketing Data Platform Daily Operations & Campaign Analytics](#w736-marketing-data-platform-daily-operations--campaign-analytics)
+- [W902. Customer Loyalty Partner Reward Catalog Management & Fulfillment](#w902-customer-loyalty-partner-reward-catalog-management--fulfillment)
 
 ---
 
@@ -1135,3 +1136,67 @@ Per major campaign: Legal review (2-4 hours) + Compliance review (1-2 hours) + r
 ### Staffing Implication
 
 Absorbed by Legal Counsel and Compliance Officer; ~20-30 hours/month. No incremental headcount — compliance review is part of existing legal and compliance function.
+
+---
+
+## W902. Customer Loyalty Partner Reward Catalog Management & Fulfillment
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Loyalty member redeems accumulated points for a partner reward (non-BuildRight merchandise or service — e.g., airline miles, hotel discount, home insurance premium discount, restaurant voucher, partner retailer gift card); or Marketing reviews/updates the partner reward catalog |
+| **Frequency** | ~15,000–20,000 partner reward redemptions/month; catalog review quarterly |
+| **Volume** | Avg 1–2 reward items per redemption; avg 500–1,500 points per reward |
+| **Owner** | Loyalty Program Manager |
+| **Participants** | Customer (Loyalty Member), Loyalty Program Manager, Marketing Coordinator, Partner Vendor, Finance (AP), IT (system integration) |
+
+### Background
+
+BuildRight's loyalty program (600,000 members per model company profile) operates on a points-based system: 1 point per PHP 100 spent; redemption value PHP 1.00 per point; four tiers (Bronze, Silver, Gold, Platinum). While W17 manages core loyalty operations, W550 handles points-as-payment at POS, and W570 manages points expiry, the partner reward catalog — where members redeem points for non-BuildRight rewards provided by external partners — is a distinct operational workflow. Partner rewards are a critical loyalty program tool: they increase the perceived value of points (beyond the PHP 1.00/point in-store value), differentiate the program from competitors, and drive partnerships with complementary brands (airlines for OFW families, hotels for business customers, home insurance for new homeowners, appliance brands for renovation customers). This workflow manages the full lifecycle: partner reward catalog curation, digital fulfillment, partner settlement, catalog performance analytics, and quarterly catalog refresh.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Partner Reward Catalog Curation**: (a) Loyalty Program Manager curates partner reward catalog based on: (i) member demographic analysis from CDP (W156) — BuildRight's customers are homeowners, DIYers, and contractors; relevant partners include home insurance, furniture stores, airlines/hotels (for contractor travel), restaurants, fuel stations, appliance brands, garden centers; (ii) partner ROI analysis — cost of reward to BuildRight vs. incremental engagement/revenue driven; (iii) partner willingness to offer exclusive rates to BuildRight members; (iv) seasonal relevance — aircon service vouchers pre-summer, flood insurance pre-rainy season; (b) each partner reward defined in system: (i) reward description and image; (ii) points required for redemption; (iii) BuildRight's cost per reward (wholesale rate negotiated with partner); (iv) reward validity period after issuance (typically 90 days); (v) fulfillment method (digital voucher code, physical card mail-out, partner API direct redemption); (vi) partner settlement terms (monthly, per-redemption, or prepaid block); (c) catalog structured in tiers: Bronze-accessible (100–500 points), Silver-accessible (501–1,500), Gold-accessible (1,501–5,000), Platinum-exclusive (5,001+) | Loyalty Program Manager | Marketing Manager | 20–30 hours/quarter |
+| 2 | **Member Redemption**: (a) loyalty member browses partner reward catalog in: (i) mobile app "Rewards" section (W615); (ii) website loyalty page; (iii) quarterly rewards catalog mailer (physical, for Gold/Platinum members); (b) member selects reward and confirms redemption; (c) system validates: (i) sufficient points balance; (ii) reward availability (not out of stock); (iii) member tier eligibility; (d) system deducts points from member balance; (e) system generates reward fulfillment per type: (i) **digital voucher code**: system generates unique code + barcode; delivered via email and app notification; code activated in partner system via API or manual upload; (ii) **physical card/certificate**: system creates fulfillment order to Marketing Coordinator; card/certificate mailed to member's registered address via LBC/2GO; (iii) **direct partner redemption**: system sends member's loyalty ID to partner via API; member presents loyalty ID at partner outlet for instant redemption | Customer / System | — | 3–5 min (digital); 5–7 days (physical mail) |
+| 3 | **Partner Fulfillment Verification**: (a) for digital vouchers: system tracks voucher status — Issued, Redeemed (partner confirms usage), Expired (validity period passed); (b) for physical cards: system tracks delivery status via courier integration; (c) monthly: system reconciles issued rewards vs. partner-confirmed redemptions; unredeemed/expired rewards flagged; (d) if digital voucher not received: member contacts call center (W259); agent resends voucher code; (e) if physical card not delivered within 10 days: agent initiates replacement shipment | System / Call Center Agent | Loyalty Program Manager | ~2 hours/month reconciliation |
+| 4 | **Partner Settlement**: (a) monthly: Finance processes partner settlement per agreement terms: (i) **per-redemption**: system calculates total rewards redeemed × BuildRight cost per reward; AP issues payment or offset against partner's BuildRight purchases (if partner is also a vendor); (ii) **prepaid block**: BuildRight prepurchases block of rewards at wholesale rate; system deducts from prepaid balance per redemption; replenishment when balance < 20%; (iii) **contra arrangement**: partner provides rewards at no cost in exchange for BuildRight marketing exposure (in-store signage, app placement); no financial settlement; (b) Finance reconciles: (i) rewards issued vs. partner invoices; (ii) unredeemed rewards — liability treatment: unredeemed digital vouchers are not a liability (points already deducted); expired physical cards are breakage; (iii) settlement accuracy — discrepancies > 5% investigated with partner | Finance (AP) / Loyalty Program Manager | Finance Manager | 4–6 hours/month |
+| 5 | **Quarterly Catalog Performance Review & Refresh**: (a) quarterly: Loyalty Program Manager reviews catalog performance: (i) redemption rate by reward — top 10 most redeemed rewards, bottom 10 (candidates for removal); (ii) points consumption vs. program liability — are partner rewards accelerating points redemption (reducing BuildRight's loyalty liability) or cannibalizing in-store redemption (W550, which drives incremental sales)?; (iii) partner settlement cost vs. incremental member engagement (purchases by members who redeemed partner rewards vs. those who didn't); (iv) fulfillment success rate — digital delivery success, physical delivery timeliness; (v) member satisfaction — CSAT score on partner rewards from post-redemption survey per W65; (b) catalog refresh actions: (i) remove rewards with < 10 redemptions/quarter; (ii) adjust points requirements based on cost changes; (iii) add new partners based on member demographic trends; (iv) negotiate better rates with high-volume partners; (v) introduce seasonal/limited-time rewards to create urgency; (c) updated catalog published in app and website | Loyalty Program Manager | Marketing Manager | 10–15 hours/quarter |
+
+### System Touchpoints
+
+- Loyalty points engine (W17) for balance deduction and redemption processing
+- Customer CDP (W156) for member demographic analysis and segmentation
+- Mobile app (W615) for catalog browsing and redemption
+- Ecommerce platform for web-based catalog access
+- Partner API integration for digital voucher generation and direct redemption
+- Email/SMS notification system (W708) for reward delivery
+- Courier integration for physical reward fulfillment tracking
+- AP settlement module for partner payment processing
+- BI dashboard for catalog performance analytics (redemption rates, cost per reward, member engagement lift)
+- Loyalty financial governance module (W104) for liability tracking
+
+### Pain Points / Risks
+
+- **Partner redemption friction**: if partner's system doesn't recognize BuildRight voucher codes (API failure, partner staff unawareness), members have poor experience and blame BuildRight, not the partner; SLA with partners for issue resolution < 48 hours is essential
+- **Points liability management**: partner rewards redeem at PHP 1.00/point face value but cost BuildRight less (wholesale rate); however, if too many members shift from in-store redemption (W550, which drives PHP 1.00 in sales) to partner rewards (which costs BuildRight PHP 0.50–0.80 net), program economics shift — must monitor mix quarterly
+- **Physical card fulfillment delays**: Philippine postal/courier reliability in provincial areas (Visayas, Mindanao) means physical rewards may take 10–14 days; digital-first catalog strategy mitigates
+- **Partner dropping out mid-period**: if a partner ceases operations or withdraws from the program, already-issued rewards become unfulfillable; system must have partner financial health monitoring (similar to W491 for suppliers) and backup fulfillment plan
+- **Reward catalog staleness**: if catalog isn't refreshed quarterly, members lose interest in earning points ("nothing worth redeeming"); catalog refresh discipline is critical
+- **Digital voucher fraud**: unique voucher codes could be shared, screenshotted, or resold; single-use enforcement via partner API and barcode scanning at partner outlet mitigates
+
+### Staffing Implication
+
+- **Loyalty Program Manager**: ~20–30 hours/quarter on catalog curation and performance review + ~2–4 hours/month on settlement oversight and issue resolution; absorbed by existing role
+- **Marketing Coordinator**: ~5–8 hours/month on catalog content management and physical fulfillment; absorbed by existing role
+- **Finance (AP)**: ~4–6 hours/month on partner settlement processing; absorbed by existing AP team
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Catalog curation: 20–30 hours/quarter
+- Per-member redemption: 3–5 min (digital); 5–7 days (physical)
+- Monthly reconciliation: 2 hours
+- Monthly partner settlement: 4–6 hours
+- Quarterly review and refresh: 10–15 hours
+- **Total ongoing**: ~40–60 hours/quarter + 6–8 hours/month

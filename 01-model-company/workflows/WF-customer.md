@@ -1,6 +1,6 @@
 # Customer Experience Workflows
 
-> Complaint resolution, corporate/project accounts, price matching, satisfaction measurement, account reactivation, feedback-to-action loop, trade sales pipeline & territory management, trade counter / pro desk operations, customer data platform, omni-channel customer ticketing & support, call center daily operations, loyalty member enrollment & onboarding, customer complaint root cause analysis & systemic improvement, customer account maintenance & B2B information update, customer complaint escalation matrix & resolution SLA tracking, B2B customer success & quarterly business review operations, customer churn prediction & proactive retention management, customer account merge & deduplication request processing, service recovery & customer retention program, and customer onboarding journey management & first-90-day engagement.
+> Complaint resolution, corporate/project accounts, price matching, satisfaction measurement, account reactivation, feedback-to-action loop, trade sales pipeline & territory management, trade counter / pro desk operations, customer data platform, omni-channel customer ticketing & support, call center daily operations, loyalty member enrollment & onboarding, customer complaint root cause analysis & systemic improvement, customer account maintenance & B2B information update, customer complaint escalation matrix & resolution SLA tracking, B2B customer success & quarterly business review operations, customer churn prediction & proactive retention management, customer account merge & deduplication request processing, service recovery & customer retention program, customer onboarding journey management & first-90-day engagement, customer project material list save/share/reorder ("Project Vault"), and store-level pro desk appointment scheduling & priority service queue management.
 >
 > Back to [Workflow Index](README.md)
 
@@ -33,6 +33,8 @@
 - [W707. Omnichannel Returns & Refund Orchestration](#w707-omnichannel-returns-refund-orchestration)
 - [W708. Customer Communication Management & Proactive Notification Operations](#w708-customer-communication-management-proactive-notification-operations)
 - [W735. Customer Onboarding Journey Management & First-90-Day Engagement](#w735-customer-onboarding-journey-management--first-90-day-engagement)
+- [W894. Customer Project Material List (BOM) Save, Share & Reorder Service ("Project Vault")](#w894-customer-project-material-list-bom-save-share--reorder-service-project-vault)
+- [W895. Store-Level Pro Desk Appointment Scheduling & Priority Service Queue Management](#w895-store-level-pro-desk-appointment-scheduling--priority-service-queue-management)
 - **[Project-Based B2B & Trade Sales Workflows (W162–W166)](./WF-project-sales.md)**
 
 ---
@@ -2102,3 +2104,142 @@ Per event: mostly automated. Physical card production: batch process 2 hours/wee
 ### Staffing Implication
 
 Absorbed by Loyalty Program Manager and Marketing Coordinator; ~10-15 hours/week. No incremental headcount.
+
+---
+
+## W894. Customer Project Material List (BOM) Save, Share & Reorder Service ("Project Vault")
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer completes a project material list/BOM via in-store consultation (W820), online room planner (W211), or DIY workshop (W147); or customer requests saving of a completed purchase for future reorder |
+| **Frequency** | ~3,000–4,000 project lists saved/month chain-wide |
+| **Volume** | Avg 8–15 items per project list |
+| **Owner** | Loyalty Program Manager |
+| **Participants** | Customer, Sales Associate / Pro Desk Staff (W112), Digital Commerce Manager, Loyalty Program Manager |
+
+### Background
+
+BuildRight's customers — both DIY homeowners and professional contractors — frequently undertake multi-visit, multi-project renovation and construction work. A typical bathroom renovation involves 20–30 SKUs (tiles, adhesive, grout, fixtures, plumbing fittings, paint, accessories) purchased across 3–5 store visits over 2–4 weeks. Without a persistent project material list, customers must manually track their purchases, remember product specifications (tile model, paint color code, pipe diameter), and risk purchasing incorrect items on subsequent visits. Professional contractors managing 3–5 concurrent projects need to recall exact material specifications per project site for reorder and for quoting new similar projects. This workflow enables customers to save, share, and reorder complete project material lists — a "Project Vault" — linked to their loyalty account. This is distinct from W820 (initial BOM estimation) which creates the list; this workflow manages the persistent lifecycle of saved lists including recall, modification, sharing, reorder, and archival.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Project List Creation**: Customer completes a project material list via: (a) in-store consultation with Sales Associate or Pro Desk (W112, W820) — associate creates list in system linked to customer's loyalty account; (b) online room planner / 3D design tool (W211) — system saves design output as a project list linked to customer account; (c) DIY workshop (W147) — post-workshop, attendee receives a pre-populated project list for the workshop project; (d) purchase history conversion — customer or associate converts a past transaction (or series of transactions) into a saved project list; (e) manual entry — customer creates list on website/app by browsing and adding items | Sales Associate / Customer / System | Loyalty Program Manager | 10–30 min |
+| 2 | **List Metadata & Enrichment**: System captures: (a) project name (customer-assigned, e.g., "Master Bathroom Renovation"); (b) project type (tag: bathroom, kitchen, outdoor, electrical, plumbing, general renovation, new construction); (c) project room/area photo (optional — customer uploads); (d) estimated total cost (auto-calculated from current SRP × quantity); (e) creation date; (f) linked loyalty account; (g) store of origin (where list was created, for default fulfillment location) | System | — | Automated |
+| 3 | **Persistent Storage & Recall**: (a) Project list stored in customer's loyalty account profile in CDP (W156); (b) accessible via: mobile app "My Projects", website "Saved Projects", in-store POS/associate terminal via loyalty lookup (W551); (c) system tracks list version history — if customer modifies quantities or swaps items, prior version retained; (d) list displays real-time pricing and stock availability per store; (e) customer can create up to 25 active project lists; (f) lists auto-archive after 18 months of inactivity (no views, edits, or orders) | System / Customer | — | Automated |
+| 4 | **Share Functionality**: Customer shares project list via: (a) share link (read-only) — recipient can view list with current prices but cannot modify; (b) share to contractor — customer grants contractor's trade account view access for material pickup; (c) share to spouse/co-owner — grants edit access to linked loyalty account holder; (d) social media share (public, condensed summary with total cost) — drives awareness and foot traffic; (e) shared lists track view count and conversion (did viewer make a purchase?) for marketing analytics (W565) | Customer / System | — | 2–5 min |
+| 5 | **Reorder & Partial Reorder**: Customer reorders from saved project list: (a) full reorder — adds all items to cart (online) or generates pick list (in-store); system checks current ATP across all fulfillment locations per W536; if any items unavailable, offers substitution per W279; (b) partial reorder — customer selects specific items from list to reorder; (c) reorder with modification — customer adjusts quantities, swaps items, or adds new items before confirming; (d) in-store reorder — Sales Associate pulls up project list at POS or Pro Desk; generates picking list; picks items from shelves; processes as standard transaction per W5B; (e) BOPIS reorder — customer reorders online for store pickup per W11; (f) home delivery reorder — customer reorders online for delivery per W19; (g) system logs reorder against project list for analytics (reorder rate, basket size comparison) | Customer / Sales Associate / System | Loyalty Program Manager | 5–15 min |
+| 6 | **Duplicate & Clone for New Project**: Customer duplicates an existing project list as starting point for new project: (a) "Clone Project" creates identical copy with new project name; (b) customer modifies cloned list for new project specs; (c) common use case: contractor completes one bathroom renovation and clones the list for next bathroom with different tile/fixtures; (d) system tracks clone lineage (original → clones) for product affinity analytics | Customer / System | — | 2 min |
+| 7 | **Project List Analytics & Marketing Integration**: (a) weekly: system identifies popular project templates (most-saved lists, most-reordered items); (b) Marketing uses popular project templates for campaign content ("Build This Bathroom for ₱45,000") per W83; (c) abandoned project lists (>30 days old, no reorder) trigger email/app notification with incentive per W557 abandoned cart recovery logic; (d) project completion rate tracking: lists where ≥80% of items were purchased are marked "Likely Completed"; (e) contractor project lists: if contractor's trade account has ≥5 active project lists, Pro Desk offers dedicated project support per W58; (f) monthly: Loyalty Program Manager reviews Project Vault engagement metrics (saves, shares, reorders, conversion) | System / Loyalty Program Manager | Digital Commerce Manager | 4–6 hours/month |
+| 8 | **Project List Expiry & Cleanup**: (a) lists inactive for 18 months auto-archive; customer notified 30 days before archival; (b) archived lists retained for 3 years (decoration trend analytics); (c) customer can restore archived lists within 3-year window; (d) after 3 years, archived lists purged per RA 10173 data retention; (e) seasonal project lists (Christmas, rainy season) receive seasonal reminder notifications ("Your flood control project from last year — restock now?") | System | Loyalty Program Manager | Automated + 2 hours/month |
+
+### System Touchpoints
+
+- Loyalty account system for project list storage and retrieval (W17)
+- CDP (W156) for customer project profile enrichment
+- POS terminal for in-store project list lookup and reorder (W551)
+- Ecommerce platform for online project list management
+- Mobile app for "My Projects" feature (W615)
+- ATP / inventory availability system (W536) for real-time stock checks
+- Product substitution engine (W279) for unavailable item alternatives
+- BOPIS order flow (W11) for store pickup reorders
+- Home delivery flow (W19) for delivery reorders
+- Marketing campaign platform (W83) for project template promotions
+- Abandoned cart / retargeting engine (W557) for inactive list notifications
+- 3D room planner (W211) for design-to-project-list conversion
+- Pro Desk system (W112) for trade customer project support
+
+### Pain Points / Risks
+
+- **Price volatility between save and reorder**: saved project lists display estimated costs at current SRP; lumber, cement, and steel prices fluctuate frequently; customers may be frustrated if reorder cost is significantly higher than original estimate — clear "estimated price, actual price at checkout" disclaimers required
+- **Product discontinuation between save and reorder**: items on saved lists may be discontinued per W68; system must proactively flag discontinued items and offer replacements before customer attempts reorder
+- **Low customer awareness of feature**: many customers don't know Project Vault exists; requires in-store signage, associate training, and post-purchase email prompts to drive adoption
+- **Share link abuse**: shared project links could be scraped for pricing intelligence by competitors; rate limits and login walls for detailed item views mitigate this
+- **Project list clutter**: customers creating many lists without completing projects reduces the value of abandonment analytics; 25-list cap with auto-archive manages this
+- **Contractor list portability**: contractors may want to export project lists as PDF/Excel for client proposals; system should support export with BuildRight branding
+
+### Staffing Implication
+
+- **Loyalty Program Manager**: ~6–8 hours/month on Project Vault analytics and marketing integration; absorbed by existing role
+- **Sales Associates**: ~2–3 min per in-store project list creation; minimal incremental load
+- **Digital Commerce Manager**: ~2–3 hours/month on online Project Vault feature optimization; absorbed by existing role
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Project list creation: 10–30 min (customer/associate-driven)
+- List storage and metadata enrichment: automated (instant)
+- Recall and view: < 5 seconds
+- Share: 2–5 min
+- Reorder (full): 5–10 min for customer, then standard checkout flow
+- Duplicate/clone: 2 min
+- Monthly analytics review: 4–6 hours
+- Quarterly cleanup: 2 hours
+- **Total per customer interaction**: 15–45 min from save to first reorder
+
+---
+
+## W895. Store-Level Pro Desk Appointment Scheduling & Priority Service Queue Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Trade customer (registered trade account) requests dedicated Pro Desk appointment via phone, app, or walk-in; or system auto-schedules appointment based on project order pipeline (W162) |
+| **Frequency** | ~500–700 appointments/month chain-wide (~2.5–3.5/store/day) |
+| **Volume** | 1–3 trade customers per appointment slot; avg 30–45 min per appointment |
+| **Owner** | Pro Desk Coordinator (Department Supervisor role) |
+| **Participants** | Trade Customer, Pro Desk Staff / Department Supervisor, Store Manager (escalation), Merchandising (special pricing), Supply Planning (availability) |
+
+### Background
+
+BuildRight's trade customers (contractors, builders, interior designers, architects — 30% of revenue per model company profile) require a fundamentally different service model than walk-in DIY customers. A trade customer planning a PHP 2M residential project needs 30–60 minutes of dedicated consultation: reviewing project BOMs (W820/W894), negotiating pricing (W163), arranging staged deliveries (W164), and confirming stock availability. The existing Trade Counter / Pro Desk (W112) handles walk-in trade customers, but high-value trade customers are frequently delayed by walk-in traffic, especially during peak hours (Saturday mornings, payday weekends). This workflow formalizes an appointment scheduling and priority queue system for the Pro Desk, ensuring trade customers receive dedicated, uninterrupted service — directly supporting the 30% revenue contribution from this segment.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Appointment Request**: Trade customer requests appointment via: (a) mobile app "Book Pro Desk" — customer selects store, preferred date/time, and meeting purpose (project consultation, material review, delivery scheduling, account review); (b) phone call to store — Department Supervisor or CSR books appointment; (c) walk-in scheduling — for future appointment; (d) auto-scheduled by system — when new project quote (W162) is generated for customer, system suggests Pro Desk appointment within 3 days | Trade Customer / System | Pro Desk Coordinator | 3–5 min |
+| 2 | **Appointment Confirmation & Preparation**: (a) system sends confirmation via SMS/email/app notification with date, time, store location, and Pro Desk contact; (b) system auto-prepares for appointment: (i) pulls customer's trade account profile — credit status (W888), recent orders (W782), open project quotes (W162); (ii) identifies customer's active Project Vault lists (W894); (iii) flags any items on customer's recent quotes with low ATP at store; (iv) checks for pending deliveries and outstanding invoices; (c) Pro Desk Coordinator reviews prep file 30 min before appointment; (d) if pricing negotiation expected: Coordinator pre-approves discount range with Store Manager per W163 authorization matrix | System / Pro Desk Coordinator | Store Manager | 15–30 min prep |
+| 3 | **Priority Queue Management**: (a) Pro Desk operates a dual-queue system: Priority Queue (appointments) and Walk-In Queue; (b) appointments take precedence over walk-ins; walk-in trade customers queued with estimated wait time displayed; (c) if Pro Desk staff occupied with appointment and walk-in queue exceeds 3 customers, Department Supervisor assists from floor; (d) system displays real-time queue status on Pro Desk tablet; (e) walk-in queue customers with estimated wait > 15 min offered: (i) appointment booking for later, (ii) self-service via mobile app for standard reorders (W894 step 5), (iii) express lane for known-specification reorders (< 5 min) | Pro Desk Coordinator | Store Manager | Ongoing |
+| 4 | **Appointment Execution**: Dedicated 30–45 min session covering: (a) project BOM review — walk through saved project lists (W894), confirm specifications, update quantities; (b) stock availability check — real-time ATP at store and nearby DC (W596); if items unavailable, discuss substitution (W279) or transfer timeline (W22); (c) pricing negotiation — for qualified projects, apply project pricing (W163) with pre-approved discount range; (d) delivery scheduling — arrange staged deliveries for large orders per W164; (e) order placement — convert project list to sales order or project quote per W162; (f) credit check — verify credit limit sufficiency for projected order value per W888; (g) next steps — schedule follow-up appointment if needed, set reminders for delivery dates | Pro Desk Coordinator / Trade Customer | Store Manager | 30–45 min |
+| 5 | **Appointment Follow-Up**: (a) system logs appointment outcome: converted to order, follow-up needed, no decision, cancelled; (b) if follow-up needed: system schedules next appointment and sets task for Pro Desk Coordinator; (c) if converted to order: order enters fulfillment pipeline (W19, W164); (d) customer satisfaction survey sent via app/email within 24 hours per W65; (e) monthly: Store Manager reviews Pro Desk appointment metrics (conversion rate, avg appointment duration, queue wait times, repeat appointments) | System / Pro Desk Coordinator | Store Manager | 5–10 min post-appointment |
+| 6 | **No-Show & Late Arrival Management**: (a) if customer no-shows after 15 min grace period: slot released to walk-in queue; system sends "missed appointment" notification with reschedule link; (b) if customer arrives late: remaining slot time used; if < 10 min remaining, offered reschedule or express service; (c) chronic no-shows (3+ in 90 days): customer flagged for call-ahead confirmation for future appointments; (d) no penalty for no-shows — maintaining trade customer relationship is priority | Pro Desk Coordinator / System | Store Manager | 5 min per occurrence |
+
+### System Touchpoints
+
+- Appointment scheduling module integrated with trade account system (W24, W112)
+- Customer trade account profile and credit status (W888, W890)
+- Project Vault (W894) for saved project list retrieval
+- Real-time ATP/inventory availability (W536, W596)
+- Project quote and pricing module (W162, W163)
+- Staged delivery scheduling (W164)
+- Customer communication module (W708) for confirmations and reminders
+- Mobile app (W615) for customer self-service booking
+- POS system for in-store order placement
+- Queue management display at Pro Desk
+- BI dashboard for appointment analytics and conversion tracking
+
+### Pain Points / Risks
+
+- **Appointment no-shows wasting Pro Desk capacity**: a 45-min no-show slot could have served 3–4 walk-in trade customers; 15-min grace period with automatic slot release mitigates
+- **Walk-in trade customer dissatisfaction with queue**: walk-in trade customers generating PHP 50K+ orders may be frustrated waiting behind a PHP 5K appointment; consider minimum order threshold for appointment priority or tiered queue
+- **Pro Desk Coordinator availability**: if Department Supervisor is the Coordinator, conflicting responsibilities (floor management, receiving, LP) may cause appointment delays; dedicated Pro Desk hours (e.g., 8 AM–12 PM) mitigate
+- **Over-preparation cost**: spending 30 min prepping for an appointment that no-shows or results in no order; prep time investment must be balanced against conversion benefit
+- **Multi-store trade customers**: contractors operating across multiple BuildRight stores may book appointments at different locations; central trade account visibility ensures consistent pricing and service regardless of store
+- **Peak-hour scheduling conflicts**: Saturday mornings and payday weekends have highest trade customer traffic; appointment slots during these periods fill quickly, leaving walk-in customers with long waits
+
+### Staffing Implication
+
+- **Pro Desk Coordinator role**: absorbed by Department Supervisor (1 of 4 per store) during dedicated Pro Desk hours; ~2–3 hours/day on Pro Desk duty including appointments and walk-ins; no incremental headcount
+- **Store Manager**: ~1–2 hours/week on Pro Desk oversight, pricing pre-approvals, and metrics review
+- **No incremental headcount** — appointment scheduling formalizes existing Pro Desk operations (W112) with better time management
+
+### Time Estimate
+
+- Appointment booking: 3–5 min
+- Pre-appointment preparation: 15–30 min
+- Appointment execution: 30–45 min
+- Post-appointment follow-up: 5–10 min
+- No-show handling: 5 min
+- Monthly metrics review: 2 hours/store
+- **Total per appointment**: ~55–90 min of staff time (prep + execution + follow-up)

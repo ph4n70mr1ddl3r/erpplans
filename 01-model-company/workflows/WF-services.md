@@ -1,6 +1,6 @@
 # Installation & Value-Added Services Workflows
 
-> Home installation, tool rental, DIY workshops & in-store events, design consultancy, custom paint mixing & tinting, lumber & board cutting, in-store 3D kitchen/bathroom design rendering, installation service partner quality audit, and service contractor accreditation & onboarding management.
+> Home installation, tool rental, DIY workshops & in-store events, design consultancy, custom paint mixing & tinting, lumber & board cutting, in-store 3D kitchen/bathroom design rendering, installation service partner quality audit, service contractor accreditation & onboarding management, and store-level custom paint formula save, recall & reorder service.
 >
 > Back to [Workflow Index](README.md)
 
@@ -21,6 +21,7 @@
 - [W600. Service Contractor Accreditation & Onboarding Management](#w600-service-contractor-accreditation--onboarding-management)
 - [W794. Service SKU Catalog Management, Pricing & Material Linkage](#w794-service-sku-catalog-management-pricing--material-linkage)
 - [W795. Service Customer Complaint, Rework & Warranty Claim Management](#w795-service-customer-complaint-rework--warranty-claim-management)
+- [W898. Store-Level Custom Paint Formula Save, Recall & Reorder Service](#w898-store-level-custom-paint-formula-save-recall--reorder-service)
 
 ---
 
@@ -662,3 +663,67 @@ BuildRight's value-added services — particularly home installation (W138) and 
 - Customer compensation processing: 1-3 days
 - Monthly service improvement review: 2-4 hours
 - **Total per complaint**: 2-15 days from receipt to close-out (severity-dependent)
+
+---
+
+## W898. Store-Level Custom Paint Formula Save, Recall & Reorder Service
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer requests to reorder previously mixed custom paint color at store; or customer requests to save a newly mixed paint formula for future reorder |
+| **Frequency** | ~8,000–10,000 paint formula saves/month chain-wide; ~3,000–4,000 formula recalls/month |
+| **Volume** | Avg 2–4 liters per reorder; ~40–50 formula recalls/store/month |
+| **Owner** | Paint Mixing Station Operator (Sales Associate) |
+| **Participants** | Customer, Paint Mixing Station Operator, System (formula database) |
+
+### Background
+
+BuildRight's paint mixing operations (W168) enable custom color tinting at the store level — a key value-added service differentiating BuildRight from competitors. The model company profile identifies paint as 8% of active SKUs (~2,800 items) including base paints, colorants, and finishes. A typical residential renovation customer uses custom-mixed paint across multiple rooms and multiple visits: they may purchase 4 liters of "Davao Sunset" custom color for the living room on their first visit, realize they need 2 more liters for touch-ups a week later, then order another 8 liters of the same color for an adjacent room a month later. Without a formula recall system, the customer must bring a physical paint sample or remember the color code — frequently resulting in color mismatch that generates returns (W12), customer dissatisfaction, and paint waste. For professional painters managing 5–10 active projects, each with different custom colors, formula recall is essential for business continuity. This workflow creates a persistent formula database linked to the customer's loyalty account, enabling exact-color reorder across any BuildRight store.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Formula Save at Initial Mixing**: During paint mixing per W168: (a) system automatically saves every custom paint formula: base paint SKU, colorant SKUs with exact milliliter quantities per liter, number of coats specification, finish type (matte, semi-gloss, gloss); (b) Paint Mixing Operator asks customer: "Would you like to save this color for future reorder?"; (c) if yes: formula linked to customer's loyalty account (scanned via W551); customer assigns a name (e.g., "Master Bedroom Accent Wall"); (d) if customer declines or is unregistered: formula saved anonymously in store-level database with sequential formula ID printed on paint can label — customer can reorder using formula ID at any BuildRight store; (e) system generates 6-digit alphanumeric formula code (e.g., "BR-4K7M2") printed on paint can label alongside mixing date and store code | Paint Mixing Operator / System | — | 2–3 min (added to W168 process) |
+| 2 | **Formula Database Storage**: (a) all formulas (named and anonymous) stored in centralized paint formula database; (b) named formulas: linked to loyalty account, accessible across all 200 stores; (c) anonymous formulas: identified by formula code + store code, accessible at originating store first; cross-store lookup available via formula code; (d) formula metadata: creation date, store of origin, base paint SKU, colorant recipe, customer name (if named), reorder count, last reorder date; (e) formulas retained indefinitely while loyalty account is active; anonymous formulas auto-purge after 24 months of no reorder; (f) system supports ~55,000 accumulated formulas at any time (based on ~20,000 new formulas/month ÷ 12 months active + historical) | System | — | Automated |
+| 3 | **Customer-Initiated Formula Recall**: Customer requests reorder of previously mixed color: (a) **via loyalty account lookup**: Paint Mixing Operator scans customer's loyalty card/app (W551); system displays customer's saved paint formulas by name and date; customer selects formula; system retrieves exact recipe; (b) **via formula code**: customer presents paint can label with formula code (BR-4K7M2); Operator enters code in system; system retrieves recipe; (c) **via physical sample**: customer brings physical paint sample (dried chip, painted object); Operator uses in-store color matching spectrophotometer to scan sample; system generates closest-match formula; Operator confirms match visually under store lighting; customer confirms; (d) **via mobile app**: customer opens "My Paint Colors" in BuildRight app (W615); selects saved formula; system checks base paint and colorant ATP at customer's selected store; customer confirms quantity and places BOPIS order (W11) or visits store | Paint Mixing Operator / Customer / System | — | 3–5 min (loyalty/code lookup); 10–15 min (spectrophotometer matching) |
+| 4 | **Formula Reorder Execution**: (a) system retrieves exact recipe: base paint SKU × quantity + colorant SKU × ml per liter; (b) system checks ATP of base paint and all required colorants at store; if any item unavailable: (i) suggest alternative base paint with adjusted colorant formula; (ii) check ATP at nearest store for transfer (W22); (iii) offer to hold order until replenishment (W56); (c) Operator mixes paint per recipe — system guides colorant dispensing per W168; (d) quality check: Operator applies small amount to test strip; compares to original formula's standard color chip (stored in store's formula reference book); if customer present, customer approves; (e) new can labeled with same formula code + new mix date + batch number; (f) transaction processed per standard POS flow (W5B) | Paint Mixing Operator / System | Dept. Supervisor | 10–15 min |
+| 5 | **Cross-Store Formula Portability**: (a) if customer reordered at different store than original: system retrieves formula from central database; mixing parameters identical (base paint + colorant recipe); (b) minor color variation risk: different mixing machine calibration, colorant batch variation, base paint lot difference — typically < 5% ΔE (color difference); (c) for mission-critical color consistency (large project, visible single-wall application): system flags "precision match recommended" — Operator mixes test batch and compares to customer's physical sample before full batch; (d) system logs cross-store reorder for calibration analytics | Paint Mixing Operator / System | — | Standard + 5 min for precision match |
+| 6 | **Analytics & Inventory Integration**: (a) monthly: system generates paint formula analytics — most popular custom colors, average reorder rate, top colorant consumption, base paint usage by formula; (b) colorant inventory planning: formula database enables demand forecasting for individual colorant SKUs — if "gray tones" are trending, increase black/white colorant stock; (c) seasonal color trends: system identifies emerging color preferences (e.g., earth tones pre-summer, cool whites post-holiday) and feeds to Marketing for campaign content (W83); (d) base paint replenishment: formula-linked demand improves ROP accuracy for base paint SKUs per W4 auto-replenishment | System / Category Manager (Paint) | VP Merchandising | 4–6 hours/month |
+
+### System Touchpoints
+
+- Paint mixing station system (W168) — formula generation and storage
+- Loyalty account system (W17, W551) for named formula linkage
+- Mobile app (W615) for "My Paint Colors" feature
+- Ecommerce BOPIS flow (W11) for online paint reorder
+- Centralized paint formula database (new module or CDP extension per W156)
+- ATP/inventory system for base paint and colorant availability check
+- POS system for transaction processing
+- Color matching spectrophotometer integration (hardware)
+- BI dashboard for formula analytics and colorant demand forecasting
+
+### Pain Points / Risks
+
+- **Color inconsistency across stores**: different mixing machine calibration at 200 stores means the same formula may produce slightly different results; quarterly calibration protocol needed per W650 equipment maintenance
+- **Colorant batch variation**: colorant from different manufacturing batches may produce subtle color differences; formula must record colorant lot number for traceability but cannot guarantee exact match across lots
+- **Low customer awareness of formula save**: customers may not know their paint color is saved; proactive offer by Paint Mixing Operator at every mixing event is critical for adoption
+- **Physical sample degradation**: customers bringing aged/faded paint samples for spectrophotometer matching — UV exposure changes color over time, producing mismatch; system should warn customer of aged-sample risk
+- **Base paint discontinuation**: if base paint SKU used in original formula is discontinued (W68), formula cannot be exactly replicated; system must auto-map to nearest equivalent base paint with adjusted colorant recipe — requires R&D support from paint supplier
+- **High storage volume**: ~240,000 formulas/year accumulating indefinitely creates database performance considerations; auto-purge of anonymous inactive formulas mitigates
+
+### Staffing Implication
+
+- **Paint Mixing Operator**: ~2–3 min added per initial mixing for formula save; ~3–5 min per recall; absorbed by existing Sales Associate role
+- **Category Manager (Paint)**: ~4–6 hours/month on formula analytics and colorant planning; absorbed by existing role
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Formula save (added to initial mixing): 2–3 min
+- Formula recall (loyalty/code lookup): 3–5 min
+- Formula recall (spectrophotometer matching): 10–15 min
+- Reorder mixing execution: 10–15 min
+- Cross-store precision match: standard + 5 min
+- Monthly analytics: 4–6 hours
+- **Total per recall event**: 15–25 min of staff time

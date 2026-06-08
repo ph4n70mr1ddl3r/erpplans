@@ -1,6 +1,6 @@
 # Ecommerce Workflows
 
-> BOPIS order fulfillment, home delivery fulfillment, ship-from-store, ecommerce order exception & cancellation management, marketplace integration (Lazada/Shopee), dark store operations, home delivery reverse logistics (returns), drop-ship vendor fulfillment, BOPIS smart locker & queue management, ecommerce product return inspection, grading & disposition, ecommerce product review & rating management, ecommerce platform incident management, marketplace channel daily operations & order management, ecommerce platform daily health monitoring & performance dashboard, and ecommerce product content enrichment & catalog daily operations.
+> BOPIS order fulfillment, home delivery fulfillment, ship-from-store, ecommerce order exception & cancellation management, marketplace integration (Lazada/Shopee), dark store operations, home delivery reverse logistics (returns), drop-ship vendor fulfillment, BOPIS smart locker & queue management, ecommerce product return inspection, grading & disposition, ecommerce product review & rating management, ecommerce platform incident management, marketplace channel daily operations & order management, ecommerce platform daily health monitoring & performance dashboard, ecommerce product content enrichment & catalog daily operations, and customer bulk/project delivery scheduling & multi-drop coordination (B2C).
 >
 > Back to [Workflow Index](README.md)
 
@@ -29,6 +29,7 @@
 - [W724. Marketplace Channel Daily Operations & Order Management (Lazada/Shopee)](#w724-marketplace-channel-daily-operations-order-management-lazadashopee)
 - [W725. Ecommerce Platform Daily Health Monitoring & Performance Dashboard](#w725-ecommerce-platform-daily-health-monitoring-performance-dashboard)
 - [W726. Ecommerce Product Content Enrichment & Catalog Daily Operations](#w726-ecommerce-product-content-enrichment-catalog-daily-operations)
+- [W899. Customer Bulk/Project Delivery Scheduling & Multi-Drop Coordination (B2C)](#w899-customerbulkproject-delivery-scheduling--multi-drop-coordination-b2c)
 
 ---
 
@@ -1557,3 +1558,69 @@ Absorbed by Ecommerce Operations Specialist and Customer Service team; ~25-30 ho
 ### Time Estimate
 
 Mostly automated. Exception handling: ~30 min/case × ~200 exceptions/month = 100 hours/month. Monthly analytics: 3 hours.
+
+---
+
+## W899. Customer Bulk/Project Delivery Scheduling & Multi-Drop Coordination (B2C)
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Individual B2C customer (non-trade, non-corporate) places a large home renovation or construction order requiring: (a) delivery of bulky/heavy items (cement, lumber, tiles, steel) exceeding standard parcel delivery; (b) staged delivery across multiple dates as construction progresses; (c) delivery to multiple addresses (e.g., contractor's warehouse + project site); (d) delivery requiring special equipment (boom truck, flatbed) |
+| **Frequency** | ~800–1,200 bulk/project delivery orders/month chain-wide |
+| **Volume** | Avg order value PHP 30,000–150,000; avg 3–5 delivery stages per project |
+| **Owner** | Store Logistics Coordinator (Receiving Clerk role) |
+| **Participants** | Customer, Store Logistics Coordinator, Delivery Partner (3PL or own fleet), Sales Associate/Pro Desk, Supply Planning |
+
+### Background
+
+BuildRight's standard home delivery (W19) handles ecommerce orders averaging PHP 3,500 with 3–4 items fulfilled from DC via parcel carrier or 3PL. However, a significant segment of walk-in B2C customers — homeowners undertaking major renovations ("building a house," "remodeling the kitchen," "landscaping the garden") — place large orders (PHP 30K–150K) involving cement, lumber, tiles, fixtures, and appliances that require fundamentally different logistics: flatbed or boom truck delivery, multi-drop scheduling aligned with construction phases, and delivery to construction sites (not residential porches). These orders are typically placed in-store with Sales Associate assistance, not online. While W164 handles staged project deliveries for B2B corporate/institutional projects, and W19 handles standard ecommerce home delivery, there is no workflow for B2C project delivery coordination — a gap that affects an estimated 5–8% of B2C walk-in revenue (PHP 150M–250M/month × 5–8% = PHP 7.5M–20M/month in project delivery orders). Poor execution here — late deliveries damaging construction schedules, wrong items delaying masonry work, split deliveries confusing contractors — directly impacts customer satisfaction and repeat business.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Project Delivery Needs Assessment**: During large in-store purchase consultation: (a) Sales Associate or Pro Desk identifies customer needs project delivery based on: (i) order contains bulky items (cement bags, lumber, plywood sheets, tile pallets, steel bars); (ii) order total exceeds PHP 15,000; (iii) customer mentions renovation/construction project; (b) Associate interviews customer on logistics needs: (i) delivery address (residential, construction site, contractor warehouse); (ii) site accessibility (narrow road, high-rise, gated community, rural); (iii) delivery timing constraints (construction schedule, barangay truck ban per W431); (iv) staging preference (single delivery vs. phased delivery aligned with construction stages); (v) unloading requirements (manual carry, crane/boom truck, forklift); (vi) contact person at delivery site (customer, contractor, caretaker) | Sales Associate / Pro Desk | Store Manager | 15–20 min |
+| 2 | **Delivery Plan Creation**: Based on needs assessment: (a) system generates delivery plan options: (i) **Single Delivery**: all items in one trip — suitable for accessible site, available storage at destination; (ii) **Phased Delivery**: items grouped by construction phase — (example: Phase 1: cement, sand, gravel, rebar for foundation; Phase 2: hollow blocks, lumber for framing; Phase 3: tiles, adhesives, grout for finishing; Phase 4: fixtures, paint, accessories for installation); each phase scheduled per customer's construction timeline; (iii) **Multi-Address Delivery**: items split across addresses (e.g., heavy materials to site, fixtures to residence for safekeeping); (b) system calculates delivery cost per option based on: distance from store/DC, vehicle type required, number of trips, special equipment; (c) customer selects preferred option; (d) delivery fee: free for orders > PHP 20,000 within 15 km of store; distance-based fee beyond 15 km per W19 delivery fee structure; special equipment surcharge for boom truck/crane | Sales Associate / System | Store Logistics Coordinator | 10–15 min |
+| 3 | **Order Splitting & Fulfillment Routing**: (a) system splits order into delivery stages per customer's selection; (b) each stage creates a separate fulfillment order with: (i) assigned items and quantities; (ii) scheduled delivery date/time window; (iii) assigned vehicle type; (iv) assigned delivery partner (own fleet for within-city, 3PL for long-distance); (c) for items stocked at DC: system generates transfer request to ship items to store for consolidated delivery (if store doesn't stock item); (d) for items stocked at store: items pulled from shelf or yard and staged in backroom delivery holding area; (e) system reserves ATP for all staged items across all delivery phases — preventing stock diversion to other orders; (f) if any item unavailable: Sales Associate contacts customer to discuss substitution (W279) or delay affected phase | System / Store Logistics Coordinator | — | 15–30 min |
+| 4 | **Delivery Execution per Stage**: For each delivery stage: (a) day before scheduled delivery: system sends reminder to customer (SMS/app) with delivery window, driver name, vehicle plate, and contact number; (b) delivery team loads vehicle at store — Store Logistics Coordinator verifies items against delivery manifest; (c) driver departs with delivery manifest and customer contact; (d) upon arrival: driver contacts customer/site contact; unloads items per agreed method; (e) customer/site contact signs delivery receipt with quantity verification — notes any discrepancies or damage on receipt; (f) driver photographs delivered items at site as proof of delivery; (g) system updates delivery stage status: Delivered, Partially Delivered (with discrepancy notes), or Failed (customer unavailable, site inaccessible) | Delivery Partner / Store Logistics Coordinator | Store Manager | 2–6 hours per delivery trip |
+| 5 | **Discrepancy & Issue Resolution**: (a) if delivery discrepancy noted on receipt (wrong item, short quantity, damage): (i) Store Logistics Coordinator contacts customer within 4 hours; (ii) for wrong/short items: schedule corrective delivery within 24–48 hours from store stock or DC replenishment; (iii) for damage: initiate damage claim against delivery partner per W500 transfer order in-transit damage process; (iv) customer issued store credit per W781 for inconvenience if BuildRight-caused; (b) if failed delivery (customer not home, site inaccessible): (i) driver attempts phone contact; (ii) if unreachable: return items to store; (iii) Store Logistics Coordinator contacts customer to reschedule within 24 hours; (iv) second failed delivery attempt: customer responsible for re-delivery fee | Store Logistics Coordinator / Delivery Partner | Store Manager | 1–4 hours per issue |
+| 6 | **Project Delivery Completion & Record**: (a) after final delivery stage completed: system marks project delivery order as "Completed"; (b) system generates project delivery summary: total items delivered, delivery stages completed, any outstanding discrepancies; (c) customer satisfaction survey sent per W65 within 48 hours; (d) system logs project delivery record against customer's loyalty account for future reference; (e) if customer has Project Vault (W894): delivery completion updates project list status | System / Store Logistics Coordinator | — | 10–15 min post-completion |
+
+### System Touchpoints
+
+- In-store POS/order management for large order creation
+- Delivery planning module with phased scheduling capability
+- ATP reservation system across delivery phases (W536)
+- Transfer order system for DC-to-store stock replenishment (W4)
+- Fleet/3PL dispatch management (W52, W196)
+- Customer notification module (W708) for delivery reminders
+- Proof-of-delivery capture (mobile app for driver)
+- Delivery discrepancy and claims module (W500)
+- Store credit issuance (W781) for service recovery
+- BI dashboard for project delivery analytics (delivery accuracy, cost per delivery, customer satisfaction by region)
+- LGU truck ban compliance module (W431) for delivery time windows
+
+### Pain Points / Risks
+
+- **Construction schedule delays cascading**: if customer's construction is delayed (common in the Philippines due to weather, permit delays, contractor availability), pre-scheduled deliveries must be rescheduled; flexible rescheduling without penalty is essential for customer retention
+- **Last-mile site accessibility**: Philippine construction sites in dense urban areas (narrow alleys in Metro Manila, hillside lots in Baguio/Cebu, island locations in Visayas) often cannot accommodate standard 10-wheeler trucks; requires smaller vehicles or manual carry-in — adding cost and time
+- **ATP reservation across multiple delivery stages**: reserving stock for a Phase 3 delivery that is 4 weeks out ties up inventory that could be sold to walk-in customers; dynamic ATP allocation with safety stock buffer needed
+- **Customer changing mind mid-project**: customer may swap tile selection or add fixtures after initial order; modifying a multi-stage delivery plan mid-execution is operationally complex
+- **Delivery partner reliability for project orders**: 3PL partners used to parcel delivery may not handle flatbed/boom truck requirements or construction-site delivery protocols; dedicated project delivery partners needed
+- **Cash-on-delivery risk for large orders**: PHP 100K+ orders delivered COD carry risk of customer refusal at delivery point; for project orders > PHP 50K: require at least 50% deposit at order placement per W546
+
+### Staffing Implication
+
+- **Store Logistics Coordinator**: role absorbed by Receiving Clerk (1 of 2 per store) with expanded delivery coordination duties; ~2–3 hours/day on project delivery coordination during peak; existing Receiving Clerk handles inbound receiving and outbound delivery coordination
+- **Sales Associates**: ~15–20 min per large order for delivery needs assessment; absorbed by existing floor staff
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Needs assessment: 15–20 min
+- Delivery plan creation: 10–15 min
+- Order splitting and routing: 15–30 min
+- Per-stage delivery execution: 2–6 hours (driver + loading + transit + unloading)
+- Discrepancy resolution: 1–4 hours per issue
+- Post-completion record: 10–15 min
+- **Total project coordination**: ~3–6 hours of staff time across all stages (excluding driver time)

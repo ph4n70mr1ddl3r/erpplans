@@ -1,6 +1,6 @@
 # Procurement & Vendor Management Workflows
 
-> Purchase orders, vendor onboarding, VMI, special orders, vendor performance, contracts, vendor-funded promotional activity & co-op advertising management, vendor portal content management & self-service operations, vendor due diligence & onboarding site visit management, vendor-managed inventory (VMI) daily performance monitoring, strategic sourcing & category strategy, competitive bidding & tender management, and purchase price variance (PPV) analysis & cost management.
+> Purchase orders, vendor onboarding, VMI, special orders, vendor performance, contracts, vendor-funded promotional activity & co-op advertising management, vendor portal content management & self-service operations, vendor due diligence & onboarding site visit management, vendor-managed inventory (VMI) daily performance monitoring, strategic sourcing & category strategy, competitive bidding & tender management, purchase price variance (PPV) analysis & cost management, and vendor seasonal buy-back & stock return agreement execution.
 >
 > Back to [Workflow Index](README.md)
 
@@ -37,6 +37,7 @@
 - [W633. Purchase Price Variance (PPV) Analysis & Cost Management](#w633-purchase-price-variance-ppv-analysis--cost-management)
 - [W705. Vendor Self-Service Portal Operations & Supplier Collaboration](#w705-vendor-self-service-portal-operations-supplier-collaboration)
 - [W706. Supplier Performance Scorecard & Quarterly Business Review](#w706-supplier-performance-scorecard-quarterly-business-review)
+- [W901. Vendor Seasonal Buy-Back & Stock Return Agreement Execution](#w901-vendor-seasonal-buy-back--stock-return-agreement-execution)
 
 ---
 
@@ -2143,3 +2144,77 @@ Per failure: inspection (10-20 min) + classification (15-30 min) + MRB if needed
 ### Staffing Implication
 
 1 QA Analyst per DC (4 total, absorbed into existing DC quality roles) + 1 centralized QA Manager. No incremental headcount beyond existing quality team structure.
+
+---
+
+## W901. Vendor Seasonal Buy-Back & Stock Return Agreement Execution
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Seasonal merchandise period ends (per seasonal calendar — Christmas décor, flood control items, garden/summer items); or vendor seasonal buy-back agreement clause is triggered by unsold inventory exceeding threshold |
+| **Frequency** | ~20–30 seasonal buy-back executions/year (aligned with 6 major seasonal transitions per model company profile) |
+| **Volume** | Avg 200–800 units per vendor per seasonal transition; ~15–25 participating vendors |
+| **Owner** | Category Manager |
+| **Participants** | Category Manager, Merchandise Planner, Store Manager, Vendor, Finance (AP/AR), DC Operations, Procurement |
+
+### Background
+
+BuildRight's seasonal merchandise (Christmas lights/décor, flood control items, garden/summer items) represents a significant inventory risk due to the Philippine seasonal calendar defined in the model company profile. After the Christmas season (November–December), unsold Christmas décor has zero demand until the following year; after rainy season (June–August), unsold flood control items become dead stock. While W68 (Product Lifecycle & Discontinuation) and W830 (Product Phase-Out Inventory Disposition Planning) cover general product discontinuation, and W88 (Return to Vendor) covers defective/wrong-item returns, there is a specific workflow gap for contractual seasonal buy-back agreements where vendors agree to repurchase unsold seasonal inventory at a pre-agreed percentage of cost. These agreements are common in Philippine retail — vendors offer seasonal buy-back terms (typically 50–80% of cost) as an incentive for BuildRight to commit to larger seasonal buys (W32). This workflow manages the end-to-end execution of seasonal buy-back agreements: identifying eligible inventory, negotiating return quantities with vendors, coordinating physical return logistics, and processing vendor settlement.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Seasonal Period End Trigger**: (a) per seasonal calendar, system identifies seasonal SKUs approaching end-of-season: (i) Christmas/holiday items — trigger January 15; (ii) summer/garden items — trigger June 1; (iii) rainy season/flood control items — trigger September 1; (iv) back-to-school/construction items — trigger June 15; (b) system generates "Seasonal Inventory Exposure Report" per seasonal category: (i) total units on-hand across all locations (stores + DCs); (ii) units sold during season vs. units bought; (iii) sell-through rate %; (iv) remaining inventory at cost value; (v) days of inventory at current run-rate (typically near-zero demand post-season); (c) system flags SKUs with buy-back clause in vendor agreement (W62) — identified at seasonal buy planning (W32) | System / Merchandise Planner | Category Manager | Automated report generation |
+| 2 | **Buy-Back Eligibility Assessment**: Category Manager reviews each seasonal vendor's agreement: (a) **Buy-back terms** (negotiated at W32 seasonal buy planning): (i) eligible items: specific seasonal SKUs listed in agreement; (ii) buy-back rate: % of original cost vendor will pay (typically 50–80%); (iii) maximum quantity: cap on units vendor will repurchase (e.g., up to 20% of original order quantity); (iv) condition requirements: items must be in saleable condition — no damage, original packaging, no price stickers on product; (v) return window: deadline for physical return (typically 30–45 days post-season end); (vi) return shipping cost: borne by BuildRight or vendor per agreement; (b) Category Manager calculates per vendor: (i) eligible units: min(on-hand units, max buy-back quantity per agreement); (ii) units in saleable condition (exclude damaged per W91, opened per W549); (iii) expected recovery: eligible units × buy-back rate × original cost; (iv) compare recovery vs. alternative disposition: (a) markdown clearance (W93) — likely recovery 20–50% of SRP; (b) carry to next season — storage cost + risk of obsolescence; (c) donate per W444 — no recovery but CSR benefit; (d) recommend buy-back if recovery > best alternative | Category Manager | VP Merchandising | 4–8 hours per seasonal transition |
+| 3 | **Vendor Return Negotiation**: (a) Category Manager contacts vendor with buy-back proposal: (i) total units proposed for return; (ii) condition certification (store-level inspection per W91); (iii) proposed return logistics plan (consolidation at DC vs. direct store-to-vendor); (iv) expected settlement timeline; (b) vendor may: (i) accept full proposed quantity at agreed rate; (ii) negotiate reduced quantity (if exceeding max cap or condition disputes); (iii) offer credit note instead of cash refund — Category Manager evaluates: credit note acceptable if (a) vendor is strategic partner with ongoing orders, (b) credit note has no expiry or ≥ 12-month validity; (iv) refuse buy-back (if BuildRight missed return window or condition requirements not met) — escalate to VP Merchandising; (c) Category Manager and vendor agree on: final return quantity, unit price, total settlement amount, return logistics plan, settlement method (cash refund or credit note) | Category Manager | VP Merchandising | 2–5 days (vendor-dependent) |
+| 4 | **Physical Return Execution**: (a) **Store-level consolidation**: (i) Store Managers at all stores with eligible seasonal inventory receive return instructions from Category Manager; (ii) store staff pulls eligible items from shelves and backroom; (iii) items inspected for condition compliance per W91 — damaged/non-saleable items excluded; (iv) eligible items packed and labeled with return authorization number; (v) items shipped to designated consolidation DC per W22B store-to-DC return process; (b) **DC consolidation**: (i) DC receives store returns and adds DC-held seasonal inventory; (ii) DC Quality Inspector verifies condition compliance for all items; (iii) non-compliant items separated and dispositioned per W91 damaged goods; (iv) compliant items palletized and staged for vendor pickup or BuildRight-arranged shipment; (c) **Vendor pickup/shipment**: (i) if vendor pickup: DC schedules dock appointment per W585; vendor collects pallets; DC issues goods issue against return authorization; (ii) if BuildRight ships: DC dispatches per W106 outbound dispatch; freight cost allocated per agreement (Step 2); (d) system updates inventory: items in transit to vendor deducted from on-hand; return authorization tracked to settlement | Store Manager / DC Operations / Category Manager | — | 1–2 weeks |
+| 5 | **Financial Settlement**: (a) Finance processes vendor buy-back settlement: (i) AP creates vendor debit memo (W770) for return quantity × buy-back rate × original cost; (ii) if vendor issues credit note: AP records credit note against vendor account — applied to future PO invoices per W62; (iii) if vendor issues cash refund: AR records incoming payment against debit memo; (iv) system reverses inventory value at original WAC; (v) any difference between book value and buy-back recovery recognized as seasonal markdown loss in P&L; (b) for items returned but rejected by vendor (condition dispute): Category Manager determines final disposition — markdown per W93, donate per W444, or write-off per W587; (c) Finance reports seasonal buy-back financial impact in monthly category P&L per W102 | Finance (AP) / Category Manager | Finance Manager | 3–5 business days post-return |
+| 6 | **Post-Season Buy-Back Review**: (a) per seasonal transition, Category Manager documents: (i) seasonal sell-through rate by vendor and SKU; (ii) buy-back execution: units returned, recovery rate, logistics cost, settlement timeline; (iii) financial impact: markdown loss avoided, net recovery after freight; (iv) vendor performance: responsiveness, condition disputes, settlement timeliness; (b) review feeds into: (i) next year's seasonal buy planning (W32) — adjust buy quantities based on actual sell-through; (ii) vendor agreement renegotiation (W62) — adjust buy-back terms based on vendor cooperation; (iii) seasonal assortment review (W679) — drop seasonal SKUs with consistently poor sell-through even with buy-back | Category Manager | VP Merchandising | 4–6 hours per seasonal transition |
+
+### System Touchpoints
+
+- Seasonal calendar master (W306) for automatic period-end triggers
+- Seasonal inventory exposure report (new BI report)
+- Vendor agreement/buy-back terms module (W62)
+- Store-to-DC return process (W22B)
+- DC receiving for store return consolidation (W3)
+- DC quality inspection (W681)
+- DC outbound dispatch for vendor shipment (W106)
+- RTV processing (W88) for return authorization and tracking
+- AP vendor debit memo (W770) for settlement
+- AR credit note processing (W70)
+- Inventory write-off (W587) for rejected/damaged items
+- Markdown management (W93) for alternative disposition
+- Category P&L reporting (W102)
+- Vendor scorecard (W44) for buy-back performance documentation
+- Seasonal buy planning (W32) for feed-forward into next season
+
+### Pain Points / Risks
+
+- **Vendor refusing buy-back despite contractual agreement**: vendors may cite condition issues, missed deadlines, or financial distress to avoid repurchasing; clear contractual language with penalty clause per W62 is essential; Category Manager must escalate firmly
+- **Store-level condition compliance inconsistency**: 200 stores inspecting items for buy-back eligibility with varying standards; centralized DC re-inspection (Step 4b) catches non-compliant items but creates return logistics waste
+- **Logistics cost exceeding recovery value**: for low-value seasonal items (Christmas lights at PHP 150/ea), freight cost to consolidate at DC and ship to vendor may exceed 50% buy-back recovery; local store-level markdown (W93) may be more economical — cost-benefit analysis at Step 2 is critical
+- **Seasonal inventory "leaking" before buy-back execution**: high-demand seasonal items (e.g., inflatable pools in a heat wave) may sell through, leaving no buy-back inventory; conversely, slow-moving items flood the buy-back process — the system should track real-time sell-through to adjust buy-back estimates
+- **Credit note expiry and utilization risk**: vendor-issued credit notes that expire before BuildRight places next seasonal order with same vendor = lost recovery; Finance must monitor credit note aging per W766
+- **Tax implications of buy-back returns**: vendor buy-backs are not standard sales returns; BIR may require specific documentation (debit memo, cargo transfer document) to justify VAT adjustment — Finance must ensure compliance per W90
+
+### Staffing Implication
+
+- **Category Manager**: ~8–14 hours per seasonal transition on buy-back assessment, negotiation, and review; 6 transitions/year = 48–84 hours/year; absorbed by existing category management team
+- **Merchandise Planner**: ~4–6 hours per transition on exposure reporting and stock reconciliation; absorbed by existing role
+- **Store Managers**: ~1–2 hours per store per transition on item pulling and packing; absorbed by existing role
+- **DC Operations**: ~4–8 hours per transition on consolidation and vendor shipment; absorbed by existing DC team
+- **Finance**: ~2–3 hours per transition on settlement processing; absorbed by existing AP team
+- **No incremental headcount**.
+
+### Time Estimate
+
+- System trigger and report generation: automated
+- Buy-back eligibility assessment: 4–8 hours
+- Vendor return negotiation: 2–5 days (vendor response-dependent)
+- Physical return execution: 1–2 weeks
+- Financial settlement: 3–5 business days
+- Post-season review: 4–6 hours
+- **Total elapsed time per seasonal transition**: 3–5 weeks
+- **Total staff time per seasonal transition**: 20–35 hours

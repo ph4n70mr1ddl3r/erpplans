@@ -1,6 +1,6 @@
 # Store Operations Workflows
 
-> Daily store selling, POS, returns, loyalty, DSD receiving, gift cards, new store opening/closure, warranty, facility maintenance, performance review, planogram compliance, solo parent discount compliance, yard loading operations, rotational brownout management, security incident reporting, first aid & medical emergency response, non-hazardous waste management, pest control & sanitation management, digital signage & content management, self-checkout daily operations, cashier shift handover, cashier training & certification, suspicious transaction & AML reporting, age-restricted product verification, transaction suspend/park/recall, daily transaction review & cashier performance audit, promotional terminal setup & verification, demo/display unit selling, continuous near-real-time sync & nightly reconciliation, customer queue management, tax exemption processing, digital receipt delivery, void & refund tiered authorization, high-value transaction documentation, bagging & bag fee compliance, clearance & final sale processing, real-time event streaming & continuous sync, multi-origin/mixed-basket fulfillment orchestration, offline capability scope & local operations, unified order management & cross-channel fulfillment routing, card terminal & acquirer settlement, real-time LP exception monitoring, coupon & voucher processing, BIR invoice reprint & credit note, cash office operations & bank deposit, quotation & estimate generation, consignment sell-through processing, service work order creation, special order processing, deposit & progress payment collection, scan & go / mobile self-scan, third-party on-demand delivery, damaged item discount processing, loyalty points as payment tender, on-the-spot loyalty enrollment, charity round-up processing, pricing error immediate correction, daily shelf replenishment & restocking, non-emergency incident & hazard reporting, loss prevention daily routine, daily communication & memo acknowledgment, daily planogram execution & shelf compliance check, store-level daily closing procedure, weekly sales & operations review, typhoon & severe weather preparedness, holiday season operational ramp-up, payday weekend operational readiness, daily equipment safety check, emergency manual operations protocol, vendor representative access management, fire drill execution & documentation, seasonal promotional transition & display reset, store-level daily HR operations & people management, store-level labor cost monitoring & overtime budget control, store-level employee disciplinary process & DOLE due process compliance, store-level customer experience standards & daily service operations, return fraud detection & serial returner management, store-level water & utility conservation operations, store-level product demo & trial station daily operations, store-level customer feedback collection & daily CX pulse monitoring, store-level new employee buddy system & first-week onboarding, store-level daily safety briefing & toolbox talk, store-level vendor promodizer floor activity coordination & compliance, store-level exterior display & garden center daily operations, and store-level loading bay traffic & truck queue management.
+> Daily store selling, POS, returns, loyalty, DSD receiving, gift cards, new store opening/closure, warranty, facility maintenance, performance review, planogram compliance, solo parent discount compliance, yard loading operations, rotational brownout management, security incident reporting, first aid & medical emergency response, non-hazardous waste management, pest control & sanitation management, digital signage & content management, self-checkout daily operations, cashier shift handover, cashier training & certification, suspicious transaction & AML reporting, age-restricted product verification, transaction suspend/park/recall, daily transaction review & cashier performance audit, promotional terminal setup & verification, demo/display unit selling, continuous near-real-time sync & nightly reconciliation, customer queue management, tax exemption processing, digital receipt delivery, void & refund tiered authorization, high-value transaction documentation, bagging & bag fee compliance, clearance & final sale processing, real-time event streaming & continuous sync, multi-origin/mixed-basket fulfillment orchestration, offline capability scope & local operations, unified order management & cross-channel fulfillment routing, card terminal & acquirer settlement, real-time LP exception monitoring, coupon & voucher processing, BIR invoice reprint & credit note, cash office operations & bank deposit, quotation & estimate generation, consignment sell-through processing, service work order creation, special order processing, deposit & progress payment collection, scan & go / mobile self-scan, third-party on-demand delivery, damaged item discount processing, loyalty points as payment tender, on-the-spot loyalty enrollment, charity round-up processing, pricing error immediate correction, daily shelf replenishment & restocking, non-emergency incident & hazard reporting, loss prevention daily routine, daily communication & memo acknowledgment, daily planogram execution & shelf compliance check, store-level daily closing procedure, weekly sales & operations review, typhoon & severe weather preparedness, holiday season operational ramp-up, payday weekend operational readiness, daily equipment safety check, emergency manual operations protocol, vendor representative access management, fire drill execution & documentation, seasonal promotional transition & display reset, store-level daily HR operations & people management, store-level labor cost monitoring & overtime budget control, store-level employee disciplinary process & DOLE due process compliance, store-level customer experience standards & daily service operations, return fraud detection & serial returner management, store-level water & utility conservation operations, store-level product demo & trial station daily operations, store-level customer feedback collection & daily CX pulse monitoring, store-level new employee buddy system & first-week onboarding, store-level daily safety briefing & toolbox talk, store-level vendor promodizer floor activity coordination & compliance, store-level exterior display & garden center daily operations, and store-level loading bay traffic & truck queue management, customer gift card corporate & bulk purchase processing, store-level trade professional verification & pro badge issuance for discount program, and store-level customer material sample loan & return management.
 >
 > Back to [Workflow Index](README.md)
 
@@ -8060,3 +8060,196 @@ Per advisory: 5-15 min (2 min threshold identification + 2 min project scope inq
 - Quarterly refresher training on advisory protocol and reference tool updates — 30 min per session
 - No incremental headcount — advisory is a liability protection measure integrated into standard selling process
 - Engineering referral network: each store maintains a list of 3-5 licensed civil engineers in the trade area; updated semi-annually by Department Supervisor
+
+---
+
+## W896. Customer Gift Card Corporate & Bulk Purchase Processing
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Corporate customer, institution, or business partner requests bulk purchase of gift cards (≥20 units or ≥PHP 100,000 total value) for employee rewards, customer incentives, project milestone gifts, or promotional giveaways |
+| **Frequency** | ~30–50 bulk gift card orders/month chain-wide |
+| **Volume** | Avg 50–200 cards per bulk order; avg order value PHP 100,000–500,000 |
+| **Owner** | Store Manager (in-store) / Marketing Coordinator (HQ) |
+| **Participants** | Corporate Customer, Store Manager, Finance (AR), Marketing Coordinator, IT (card provisioning) |
+
+### Background
+
+BuildRight's gift card program (W28) handles individual gift card lifecycle (issuance, reload, redemption, balance inquiry, expiry, breakage). However, corporate and bulk gift card purchases represent a distinct workflow requiring volume pricing negotiation, custom denomination requests, branded card customization, bulk activation, tax invoicing (VAT), and dedicated fulfillment. Corporate customers include: (a) real estate developers purchasing PHP 500K in gift cards as buyer move-in gifts; (b) construction companies rewarding project teams; (c) LGU/institutional partners using gift cards for community assistance programs; (d) corporate HR departments for employee recognition. At ~30–50 bulk orders/month averaging PHP 200K, this represents ~PHP 6–10M/month in gift card sales (1.2–1.9% of total revenue) — a meaningful revenue stream requiring specialized processing distinct from W28.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Bulk Order Request**: Corporate customer contacts: (a) Store Manager at preferred store; (b) Marketing Coordinator via corporate inquiry channel; (c) Pro Desk during trade account visit (W112); specifies: (i) quantity of cards; (ii) denomination per card (standard: PHP 500, 1,000, 2,000, 5,000; or custom amount); (iii) delivery deadline; (iv) any customization (custom message, corporate logo overlay, branded sleeve); (v) invoicing entity and VAT treatment | Corporate Customer | Store Manager / Marketing Coordinator | 15–30 min |
+| 2 | **Pricing & Discount Approval**: (a) standard bulk discount tiers: 20–49 cards: no discount; 50–99 cards: 3% bonus value (e.g., PHP 103,000 value for PHP 100,000 payment); 100–499 cards: 5% bonus value; 500+ cards: 7% bonus value + custom card design; (b) discount is applied as bonus value loaded on cards (not as price reduction) — customer pays face value, cards loaded with bonus amount; (c) orders exceeding PHP 500K or requesting >7% bonus: escalate to Marketing Manager and Finance Manager for approval; (d) VAT: gift card sales are VAT-exempt at point of sale (VAT recognized when card is redeemed for merchandise per BIR rules); bulk purchase invoice issued at face value with "VAT-Exempt — Gift Card" notation | Store Manager / Marketing Coordinator | Finance Manager (if > PHP 500K) | 15–30 min |
+| 3 | **Order Processing & Card Provisioning**: (a) Store Manager or Marketing Coordinator creates bulk gift card order in system; (b) system generates sequential card numbers in reserved range for bulk order; (c) for custom denominations: system creates unique load amount per card or uniform load per specification; (d) for bonus value: system loads face value + bonus value on each card; (e) for branded/custom cards: IT provisions custom card design for physical card printing (5–7 day lead time for custom print; standard cards available in-store); (f) system places hold on gift card liability account for total value + bonus | Store Manager / IT | Finance Manager | 30–60 min |
+| 4 | **Payment Processing**: (a) corporate customer issues payment: check, bank transfer, or corporate card; (b) Finance processes payment against bulk order; (c) for trade account customers: payment can be charged to account per standard terms (Net 30) — system creates AR invoice; (d) payment confirmation triggers card activation; (e) cards remain inactive until payment clears (fraud prevention) | Finance (AR) / Corporate Customer | Finance Manager | 1–2 business days |
+| 5 | **Card Activation & Fulfillment**: (a) upon payment confirmation, system activates all cards in batch; (b) system generates activation confirmation with card numbers and balances; (c) for physical cards: Store Manager or Marketing Coordinator packages cards with corporate customer's requested presentation (branded sleeves, custom message cards, etc.); (d) fulfillment: (i) customer picks up at store; (ii) HQ courier delivery for Metro Manila corporate clients; (iii) LBC/2GO delivery for provincial clients; (e) customer signs delivery receipt; system logs fulfillment | Store Manager / Marketing Coordinator | — | 1–3 business days |
+| 6 | **Post-Sale Tracking & Reporting**: (a) system tracks bulk gift card redemption rate by order: % of total value redeemed, avg time to first redemption, avg time to full redemption; (b) monthly: Finance reports gift card liability aging per bulk order; (c) breakage (unredeemed balance after 5-year expiry per W28): recognized as revenue per PFRS/IAS 32; (d) quarterly: Marketing Coordinator reviews bulk gift card program performance — volume trends, top corporate clients, redemption rates, breakage; (e) annual: Marketing reviews bulk discount tiers against program profitability | System / Finance / Marketing Coordinator | Finance Manager / Marketing Manager | 4–6 hours/month |
+
+### System Touchpoints
+
+- Gift card management module (W28) extended for bulk order processing
+- Customer master for corporate/trade account lookup (W24, W253)
+- AR invoicing for account-based purchases (W8)
+- Payment processing and bank reconciliation (W89, W99)
+- Gift card liability GL account for breakage accounting
+- Card activation and batch provisioning engine
+- Delivery management integration (W19 carriers)
+- BI dashboard for bulk gift card analytics and redemption tracking
+- Marketing campaign module for corporate gift card promotional outreach
+
+### Pain Points / Risks
+
+- **Gift card fraud in bulk orders**: large-volume orders are attractive targets for payment fraud (bounced checks, fake transfer confirmations); cards must remain inactive until payment clears definitively
+- **Custom card printing lead time**: 5–7 day lead time for custom-branded cards may not meet tight corporate deadlines; rush printing (2–3 days) at premium cost should be available
+- **Breakage estimation for financial reporting**: bulk gift cards to institutions may have lower redemption rates than individual consumer cards, affecting gift card liability estimates and PFRS compliance
+- **Corporate client demanding post-expiry redemption**: some institutional clients may request card balance recovery after 5-year expiry; policy must be clear upfront — no post-expiry redemption per W28 terms
+- **Bulk activation errors**: activating wrong denomination on 200+ cards is costly to remediate; batch activation requires verification step before final commit
+- **Seasonal demand spikes**: December (corporate gifts) and March (graduation/company anniversary season) create 3–4x normal volume; Marketing must pre-order blank card stock
+
+### Staffing Implication
+
+- **Store Manager**: ~30–60 min per bulk order for in-store processing; ~15–25 hours/month total across bulk orders; absorbed by existing role
+- **Marketing Coordinator**: ~4–6 hours/month on corporate gift card program management, outreach, and reporting; absorbed by existing role
+- **Finance**: ~2–3 hours/month on bulk gift card payment processing and liability reporting; absorbed by existing AR team
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Order intake and pricing: 15–30 min
+- Order processing and provisioning: 30–60 min
+- Payment processing: 1–2 business days (customer-dependent)
+- Card activation and fulfillment: 1–3 business days
+- Post-sale tracking: automated + 4–6 hours/month
+- **Total staff time per order**: ~2–4 hours
+
+---
+
+## W897. Store-Level Trade Professional Verification & Pro Badge Issuance for Discount Program
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Trade professional (contractor, electrician, plumber, interior designer, architect, carpenter) applies for BuildRight Pro discount program at store Pro Desk or online |
+| **Frequency** | ~200–300 new Pro badge applications/month chain-wide; ~1,500–2,000 badge renewals/year |
+| **Volume** | 1 applicant per verification session |
+| **Owner** | Pro Desk Coordinator (Department Supervisor) |
+| **Participants** | Applicant (Trade Professional), Pro Desk Coordinator, Store Manager, HR (PCAB/PRC license verification), Loyalty Program Manager |
+
+### Background
+
+BuildRight's trade customers (30% of revenue) receive 5–15% trade discount per the pricing structure in the model company profile. While W24 covers trade account credit applications and W112 covers trade counter operations, the initial verification that a walk-in customer genuinely qualifies as a trade professional — and the issuance of a physical/digital Pro Badge that unlocks trade pricing at POS — is a distinct gap. Currently, trade pricing is tied to the credit/trade account (W24), but many legitimate trade professionals (especially sole-proprietor electricians, freelance carpenters, small-time masons) may not want or qualify for a full credit account — they pay cash or card but still expect trade pricing. This workflow establishes a "Pro Badge" program: a verified credential (physical card + digital wallet pass) that any qualified trade professional can obtain, which automatically triggers trade pricing at POS without requiring a credit account. Distinct from: (a) W24 trade credit application (financial product), (b) W696 contractor safety badge (site safety), (c) W263 loyalty enrollment (consumer program). The Pro Badge is a discount credential, not a credit instrument or safety badge.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Application Intake**: Trade professional presents at Pro Desk (W112) or applies online: (a) full name, contact number, email; (b) trade category: contractor, electrician, plumber, mason, carpenter, painter, welder, interior designer, architect, landscape professional, other; (c) employment type: sole proprietor, small business (1–5 employees), medium business (6–20 employees), large business (20+); (d) primary project type: residential renovation, commercial construction, institutional, general; (e) government-issued ID presented (in-store) or uploaded (online) | Applicant / Pro Desk Coordinator | Pro Desk Coordinator | 10–15 min |
+| 2 | **Professional Credential Verification**: Pro Desk Coordinator verifies applicant qualifies as a trade professional: (a) **PCAB (Philippine Contractors Accreditation Board) license**: for contractors — verify license number via PCAB online portal; (b) **PRC (Professional Regulation Commission) license**: for engineers, architects, interior designers — verify license number and status (active/inactive) via PRC online verification; (c) **TESDA NC (National Certificate)**: for electricians, plumbers, welders, carpenters, masons — verify NC II/III certificate number via TESDA registry; (d) **DTI Business Registration**: for sole proprietors and small businesses — verify DTI registration; (e) **Alternative verification** (if no license/certificate): (i) present 3 recent project photos with business card or company signage visible; (ii) provide 2 supplier invoices from other hardware/building material suppliers showing trade purchases; (iii) provide barangay business clearance; (f) verification result: Approved (valid credential), Conditionally Approved (alternative verification — 6-month provisional badge), or Rejected (insufficient evidence) | Pro Desk Coordinator | Store Manager | 10–20 min |
+| 3 | **Badge Issuance**: Upon approval: (a) system creates Pro Badge record linked to loyalty account (new or existing); (b) Pro Badge level assigned: (i) **Blue Badge** — standard trade professional: 5% trade discount on eligible categories; (ii) **Silver Badge** — licensed professional (PCAB, PRC, TESDA NC III): 10% trade discount; (iii) **Gold Badge** — large contractor/business with PCAB Specialty license or A category: 15% trade discount; (c) physical Pro Badge card printed in-store (standard template — name, badge level, expiry date, barcode); (d) digital Pro Badge issued to mobile app wallet (Apple Wallet / Google Pay integration via W615); (e) badge expiry: 1 year from issuance; (f) system activates trade pricing for the badge level in POS; (g) applicant receives welcome kit: Pro Badge card, trade pricing guide by category, Pro Desk contact card, loyalty enrollment if not already member (W263) | Pro Desk Coordinator / System | Store Manager | 10–15 min |
+| 4 | **POS Integration & Usage**: At checkout: (a) cashier scans Pro Badge barcode or customer presents digital badge; (b) system automatically applies trade discount per badge level to eligible categories (trade discount does not apply to: appliances, clearance items, services, gift cards); (c) trade discount stacks with quantity break pricing (POS-010) but NOT with promotional pricing — system applies best price for customer; (d) if customer also has a trade credit account (W24): Pro Badge is linked to trade account for consolidated statements and credit limit management; (e) transaction logged against Pro Badge for purchase analytics | Cashier / System | — | Automated at POS |
+| 5 | **Annual Renewal**: (a) system sends renewal reminder 30 days before badge expiry via SMS/email/app; (b) trade professional visits any BuildRight store with updated credentials; (c) Pro Desk Coordinator re-verifies: (i) license/registration still active; (ii) purchase activity in prior year (minimum: 1 purchase in last 12 months to maintain active status); (d) badge renewal assessment: (i) if purchase volume ≥ PHP 100K/year: eligible for badge level upgrade; (ii) if purchase volume < PHP 100K/year: maintain current badge level; (iii) if no purchases in 12 months: badge downgraded to Blue (5%) or not renewed; (e) renewed badge printed/digital updated; new expiry date set | Pro Desk Coordinator | Store Manager | 10–15 min |
+| 6 | **Program Analytics & Abuse Prevention**: (a) monthly: Loyalty Program Manager reviews Pro Badge analytics — active badges, new issuances, renewal rates, avg transaction value by badge level, discount impact on margin; (b) system flags anomalies: (i) Pro Badge used by different individual (photo mismatch at POS via W538 LP monitoring); (ii) unusually high transaction volume suggesting badge sharing; (iii) trade discount applied to personal-use items (appliances, seasonal décor); (c) LP team investigates flagged badges per W837/W839; (d) badge suspension for verified abuse: Store Manager notifies badge holder; badge deactivated in system; holder may reapply after 6-month suspension | Loyalty Program Manager / LP Team | Marketing Manager | 4–6 hours/month |
+
+### System Touchpoints
+
+- Pro Badge master data module (badge number, level, linked loyalty account, expiry date, credential references)
+- POS discount engine for automatic trade pricing application
+- Loyalty system integration for badge-to-account linkage (W17)
+- PCAB online portal for contractor license verification
+- PRC online verification system for professional license validation
+- TESDA registry for National Certificate verification
+- Mobile app wallet integration (W615) for digital badge
+- Customer CDP (W156) for trade professional profile
+- LP exception monitoring (W837, W838) for badge abuse detection
+- BI dashboard for Pro Badge program analytics
+
+### Pain Points / Risks
+
+- **Credential verification burden**: manually verifying PCAB, PRC, and TESDA credentials for 200–300 applications/month is time-consuming; online portal availability is inconsistent for Philippine government systems
+- **Alternative verification subjectivity**: the alternative verification pathway (project photos, supplier invoices) requires judgment by Pro Desk Coordinator — inconsistent standards across 200 stores may lead to ineligible badge holders
+- **Badge sharing and lending**: a single Pro Badge shared among multiple workers on a construction site dilutes program intent and margin impact; photo verification at POS mitigates but adds checkout time
+- **Margin erosion from generous discount tiers**: 15% trade discount on already-thin-margin categories (lumber, cement) may reduce category profitability; discount levels must be reviewed annually against category margin
+- **Pro Badge vs. trade account confusion**: customers may not understand the distinction between a Pro Badge (discount credential, no credit) and a trade account (credit facility with pricing); store staff must clearly explain
+- **Renewal non-compliance**: trade professionals with expired credentials (e.g., PCAB license not renewed) continuing to use Pro Badge; automated credential re-verification at renewal is essential
+
+### Staffing Implication
+
+- **Pro Desk Coordinator**: ~20–30 min per application (intake + verification + issuance); ~100–150 hours/month chain-wide (~30–45 min/store/month); absorbed by Department Supervisor
+- **Loyalty Program Manager**: ~4–6 hours/month on program analytics and oversight; absorbed by existing role
+- **Store Manager**: ~1–2 hours/month on application approvals and renewal reviews
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Application intake: 10–15 min
+- Credential verification: 10–20 min (online portal) to 1–2 days (manual verification for alternative pathway)
+- Badge issuance: 10–15 min
+- POS usage: automated (< 5 sec added to checkout)
+- Annual renewal: 10–15 min
+- Monthly analytics: 4–6 hours
+- **Total per application**: 30–50 min of staff time (standard pathway)
+
+---
+
+## W903. Store-Level Customer Material Sample Loan & Return Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer requests to take a material sample (tile, wood, countertop, laminate, paint color chip, fabric swatch, carpet piece) home for color/texture matching against their existing décor or under their home lighting conditions |
+| **Frequency** | ~2,000–3,000 sample loans/month chain-wide; ~10–15 per store/month |
+| **Volume** | 1–3 samples per loan request |
+| **Owner** | Department Supervisor (Tiles/Flooring or Lumber/Building Materials) |
+| **Participants** | Customer, Department Supervisor, Stock Associate, System (sample tracking) |
+
+### Background
+
+BuildRight's model company profile identifies tiles & flooring (12% of SKUs, ~4,200 items), lumber & building materials (14%, ~4,900 items), and home décor (5%, ~1,750 items) as major categories. A common customer need in home improvement retail is taking material samples home before committing to a large purchase — a homeowner needs to see how a specific tile looks in their bathroom lighting, how a wood stain matches their existing cabinets, or how a countertop material complements their wall color. W746 covers in-store material sample management (customer selection assistance), but the physical act of loaning a sample for off-site use — with accountability, return tracking, and loss prevention — is a distinct workflow. Competitors like Home Depot and Lowe's in the US have formalized sample loan programs because they directly drive conversion: customers who take samples home are 3–5x more likely to complete the purchase at that retailer. Without a formal process, customers either: (a) cannot take samples (driving them to competitors who allow it), (b) take samples informally (theft/shrinkage per W37), or (c) purchase small quantities as "samples" and return them per W12 (abusing the return policy). This workflow creates a structured sample loan program that balances customer service with inventory accountability.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Sample Loan Request**: Customer at the Tiles/Flooring Gallery, Lumber section, or Home Décor area requests to take a sample home: (a) Department Supervisor identifies the item: (i) **pre-cut sample SKUs** (cataloged sample items, ~200 SKUs across categories — tile sample pieces, wood sample blocks, countertop sample chips, paint color cards, carpet swatches): these are purpose-made samples, not regular merchandise; (ii) **regular merchandise used as sample** (customer wants to take an actual tile, piece of lumber, or laminate sheet): system treats this as a loan from sellable inventory; (b) Supervisor explains loan terms: (i) loan period: 7 days for standard samples, 14 days for high-value items; (ii) return condition: undamaged; (iii) deposit: none for pre-cut sample SKUs; for regular merchandise used as sample: credit card hold or cash deposit equal to item value (fully refundable on return); (iv) limit: 3 samples per customer per visit | Customer / Department Supervisor | — | 5–10 min |
+| 2 | **Loan Transaction Processing**: (a) Supervisor scans sample item barcode and customer's loyalty card (W551) or government ID; (b) system creates Sample Loan record: (i) sample item SKU and description; (ii) customer name and loyalty ID; (iii) loan date and due date; (iv) deposit amount (if applicable — recorded as customer deposit per W94); (v) loan status: Active; (c) system tags the inventory: (i) for pre-cut sample SKUs: deducted from sample inventory pool (not regular merchandise inventory); (ii) for regular merchandise: item moved from "Available" to "On Loan" in ATP — excluded from ecommerce and store-level ATP; (d) customer receives loan receipt with: item description, due date, return instructions, deposit amount, and store contact number; (e) system sends due date reminder via SMS/app notification 2 days before due date | Department Supervisor / System | — | 5 min |
+| 3 | **Sample Return**: (a) customer returns sample to originating store within loan period: (i) Department Supervisor inspects returned sample for damage; (ii) if undamaged: system closes loan record; (iii) for pre-cut samples: returned to sample inventory pool; (iv) for regular merchandise: item moved from "On Loan" back to "Available" in ATP; (v) deposit refunded per W94 customer deposit process (cash refund or credit card hold release); (b) if damaged: (i) customer does not receive deposit refund; (ii) damaged regular merchandise dispositioned per W91 damaged goods; (iii) damaged pre-cut sample: discarded; (iv) system logs damage incident for analytics; (c) return confirmation sent to customer via SMS/app | Department Supervisor / System | — | 5 min |
+| 4 | **Overdue Sample Management**: (a) day after due date: system flags overdue loans; sends follow-up SMS/app notification to customer; (b) 7 days overdue: Department Supervisor calls customer to arrange return; (c) 14 days overdue: loan converted to sale — system processes: (i) customer deposit applied as payment; (ii) for regular merchandise: inventory permanently deducted from store stock; (iii) for pre-cut samples: sample inventory adjusted; (iv) system records as "Sample Loan — Converted to Sale" for analytics; (v) loyalty points earned on converted sale credited to customer's account per W17; (d) customer returning sample after conversion: treated as merchandise return per W12 (with receipt — loan receipt serves as proof of purchase) | System / Department Supervisor | Store Manager | ~30 min/month total per store |
+| 5 | **Sample Loan Analytics**: (a) monthly: system generates sample loan analytics per store and chain-wide: (i) loans issued by category; (ii) return rate and conversion-to-sale rate; (iii) average loan duration; (iv) damage rate; (v) top loaned samples; (b) conversion correlation: system correlates sample loans with subsequent large purchases (did the customer who borrowed a tile sample buy 50 sqm of that tile within 30 days?); (c) Category Manager uses analytics for: (i) pre-cut sample SKU assortment optimization — which sample SKUs drive the most conversions?; (ii) sample inventory planning — pre-cut sample replenishment per W4; (iii) vendor negotiation — vendors whose samples drive high conversions may co-fund sample production; (d) Store Manager reviews sample loan-to-sale conversion rate as a KPI per W665 store dashboard | System / Department Supervisor / Category Manager | Category Manager | 2–3 hours/month |
+
+### System Touchpoints
+
+- Sample loan tracking module (new module or extension of W22 transfer order system)
+- Loyalty account system (W17, W551) for customer identification
+- Customer deposit management (W94) for deposit collection and refund
+- ATP/inventory system for "On Loan" inventory status
+- SMS/app notification system (W708) for due date reminders
+- Damaged goods disposition (W91) for damaged returned samples
+- Returns processing (W12) for post-conversion returns
+- POS system for converted-to-sale transactions
+- Store KPI dashboard (W665) for loan-to-sale conversion rate
+- BI analytics for sample program performance
+
+### Pain Points / Risks
+
+- **Low return rate for regular merchandise samples**: customers may "borrow" expensive tile or wood pieces with no intention of returning — effectively a free acquisition; credit card hold requirement for regular merchandise samples mitigates, but may deter legitimate customers
+- **Sample inventory pool depletion**: pre-cut samples are a finite resource; high-demand samples (popular tile colors, trending wood finishes) may be perpetually on loan, unavailable for other customers; maintain 2–3 units per popular sample SKU
+- **Store-to-store inconsistency**: some stores may be strict about deposits and due dates while others are lenient, creating inconsistent customer experience; system-enforced loan periods (hard due dates) mitigate
+- **Damage disputes**: customer claims sample was already chipped/scratched when received; pre-loan condition inspection with photo documentation mitigates
+- **Regular merchandise ATP distortion**: items on loan reduce visible ATP for online shoppers; if a tile sample is on loan for 7 days, ecommerce shows one fewer unit available — may trigger unnecessary replenishment
+- **Seasonal demand spikes for samples**: pre-summer (tiling projects) and pre-holiday (home renovation) periods see 2–3x sample loan volume; sample inventory must be pre-stocked
+
+### Staffing Implication
+
+- **Department Supervisor**: ~5 min per loan/return transaction × 10–15/month = ~1–1.5 hours/month; absorbed by existing role
+- **Stock Associate**: ~30 min/month on sample inventory maintenance and re-stocking; absorbed by existing role
+- **No incremental headcount**.
+
+### Time Estimate
+
+- Loan transaction processing: 5–10 min per loan
+- System processing: automated
+- Return processing: 5 min per return
+- Overdue management: ~30 min/month total per store
+- Monthly analytics: 2–3 hours chain-wide
+- **Total per loan cycle**: ~15–20 min of staff time (issuance + return)
