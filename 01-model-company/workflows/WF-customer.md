@@ -1,6 +1,6 @@
 # Customer Experience Workflows
 
-> Complaint resolution, corporate/project accounts, price matching, satisfaction measurement, account reactivation, feedback-to-action loop, trade sales pipeline & territory management, trade counter / pro desk operations, customer data platform, omni-channel customer ticketing & support, call center daily operations, loyalty member enrollment & onboarding, customer complaint root cause analysis & systemic improvement, customer account maintenance & B2B information update, customer complaint escalation matrix & resolution SLA tracking, B2B customer success & quarterly business review operations, customer churn prediction & proactive retention management, customer account merge & deduplication request processing, service recovery & customer retention program, customer onboarding journey management & first-90-day engagement, customer project material list save/share/reorder ("Project Vault"), and store-level pro desk appointment scheduling & priority service queue management.
+> Complaint resolution, corporate/project accounts, price matching, satisfaction measurement, account reactivation, feedback-to-action loop, trade sales pipeline & territory management, trade counter / pro desk operations, customer data platform, omni-channel customer ticketing & support, call center daily operations, loyalty member enrollment & onboarding, customer complaint root cause analysis & systemic improvement, customer account maintenance & B2B information update, customer complaint escalation matrix & resolution SLA tracking, B2B customer success & quarterly business review operations, customer churn prediction & proactive retention management, customer account merge & deduplication request processing, service recovery & customer retention program, customer onboarding journey management & first-90-day engagement, customer project material list save/share/reorder ("Project Vault"), store-level pro desk appointment scheduling & priority service queue management, store-level contractor referral & customer-contractor matchmaking service, customer digital warranty vault & multi-vendor warranty claim aggregation, and customer project completion celebration & review incentive program.
 >
 > Back to [Workflow Index](README.md)
 
@@ -35,6 +35,9 @@
 - [W735. Customer Onboarding Journey Management & First-90-Day Engagement](#w735-customer-onboarding-journey-management--first-90-day-engagement)
 - [W894. Customer Project Material List (BOM) Save, Share & Reorder Service ("Project Vault")](#w894-customer-project-material-list-bom-save-share--reorder-service-project-vault)
 - [W895. Store-Level Pro Desk Appointment Scheduling & Priority Service Queue Management](#w895-store-level-pro-desk-appointment-scheduling--priority-service-queue-management)
+- [W904. Store-Level Contractor Referral & Customer-Contractor Matchmaking Service](#w904-store-level-contractor-referral--customer-contractor-matchmaking-service)
+- [W911. Customer Digital Warranty Vault & Multi-Vendor Warranty Claim Aggregation](#w911-customer-digital-warranty-vault--multi-vendor-warranty-claim-aggregation)
+- [W914. Customer Project Completion Celebration & Review Incentive Program](#w914-customer-project-completion-celebration--review-incentive-program)
 - **[Project-Based B2B & Trade Sales Workflows (W162–W166)](./WF-project-sales.md)**
 
 ---
@@ -2243,3 +2246,202 @@ BuildRight's trade customers (contractors, builders, interior designers, archite
 - No-show handling: 5 min
 - Monthly metrics review: 2 hours/store
 - **Total per appointment**: ~55–90 min of staff time (prep + execution + follow-up)
+
+---
+
+## W904. Store-Level Contractor Referral & Customer-Contractor Matchmaking Service
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer (DIY or homeowner) requests contractor recommendation for an installation, renovation, or construction project at store Pro Desk, customer service counter, or via mobile app/website |
+| **Frequency** | ~1,500–2,000 referral requests/month chain-wide (~7–10/store/day) |
+| **Volume** | 1 contractor recommended per request; avg 3–5 follow-up projects per contractor per month |
+| **Owner** | Pro Desk Coordinator (Department Supervisor) |
+| **Participants** | Customer, Pro Desk Staff, Accredited Contractor (W600), Store Manager (escalation), Service Operations Manager |
+
+### Background
+
+BuildRight's value proposition extends beyond selling materials — customers frequently need qualified contractors for installation, renovation, and construction projects. A customer purchasing PHP 150,000 worth of bathroom tiles, fixtures, and plumbing materials typically also needs a qualified tile setter and plumber. Currently, customers rely on word-of-mouth or unverified online listings, often leading to poor workmanship, project delays, and cost overruns — which erode customer satisfaction with the entire project including BuildRight-sourced materials. BuildRight has a pool of ~200 accredited contractors (W600) who have been vetted for credentials, insurance, and quality. This workflow formalizes the contractor referral process, creating a matchmaking service that connects customers with the right contractor while driving material sales and service revenue. The contractor benefits from a steady pipeline of qualified leads; the customer benefits from a trusted referral; BuildRight benefits from higher project attach rates and customer loyalty.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Referral Request Intake**: Customer requests contractor via: (a) in-store Pro Desk — customer describes project scope, location, timeline, and budget range; (b) customer service counter — same information captured by CSR; (c) mobile app/website — customer submits project form with project type, location (city/municipality), preferred schedule, and approximate budget; (d) post-purchase trigger — system suggests contractor referral when customer purchases project-type SKUs exceeding PHP 50,000 in a single transaction (tiles + adhesive + grout = bathroom project; lumber + cement + rebar = construction project); (e) Project Vault (W894) conversion — customer with saved project list requests contractor to execute the project | Pro Desk Staff / Customer / System | Pro Desk Coordinator | 5–10 min |
+| 2 | **Project Scope Classification**: System classifies the referral request: (a) project type (bathroom renovation, kitchen renovation, electrical, plumbing, roofing, fencing, decking, painting, flooring, general construction, solar installation, landscape/garden); (b) project size tier (Small < PHP 50K, Medium PHP 50K–200K, Large PHP 200K–1M, Enterprise > PHP 1M); (c) location matching — system filters accredited contractors by service area coverage (province/city/municipality per W600); (d) skill matching — system matches project type to contractor specializations (e.g., PRC-licensed engineer for structural, TESDA NC-II tile setter for tiling); (e) availability matching — contractor calendar integration showing next available start date; (f) customer preference (price-oriented vs. quality-oriented vs. fastest availability) | System / Pro Desk Staff | — | Automated + 3 min |
+| 3 | **Contractor Recommendation & Customer Selection**: (a) system generates ranked list of 3 matching accredited contractors per request showing: contractor name, accreditation tier (Gold/Silver/Bronze per W600 quality score), specialization, years of experience, BuildRight project count, customer rating (from W821 warranty reviews and post-project surveys per W65), sample project photos (with customer permission), estimated response time, and service area; (b) Pro Desk Staff reviews recommendations with customer; (c) customer selects preferred contractor or requests alternatives; (d) if no accredited contractor available for the area/project type: Pro Desk Staff informs customer, offers DIY guidance (W147 workshop referral), or requests Service Operations Manager to accelerate contractor accreditation for the area per W600 | Pro Desk Staff / Customer | Pro Desk Coordinator | 10–15 min |
+| 4 | **Lead Notification & Contractor Response**: (a) system sends lead notification to selected contractor via mobile app + SMS with: customer first name, project type, project size tier, location (city/municipality only — full address shared after contractor acceptance), estimated material scope from Project Vault if available (W894), and requested timeline; (b) contractor responds within 24 hours (accept, decline with reason, or request more information); (c) if contractor accepts: system shares customer contact information with contractor and contractor contact information with customer; (d) if contractor declines or no response within 24 hours: system routes to next-ranked contractor on the recommendation list; (e) customer receives notification of contractor acceptance with contractor profile, contact details, and BuildRight's role clarification ("BuildRight provides referral only; contract is between customer and contractor") | System / Contractor | Service Operations Manager | 24-hour SLA |
+| 5 | **Project Follow-Up & Feedback Loop**: (a) at project milestone (estimated by project size: Small 2 weeks, Medium 4 weeks, Large 8 weeks, Enterprise 12 weeks): system sends follow-up survey to customer via app/SMS; (b) customer rates contractor (1–5 stars) and provides optional text feedback; (c) if customer rating < 3 stars: Service Operations Manager investigates — if quality issue confirmed, contractor receives quality flag per W600 accreditation review; (d) if customer reports unresolved dispute with contractor: Pro Desk offers mediation assistance with documented complaint; (e) contractor rating and project count updated in accreditation system per W600; (f) post-project material purchase analysis — did the customer purchase all project materials from BuildRight? If partial, identify gaps for assortment improvement per W679 | System / Customer / Pro Desk Staff | Service Operations Manager | 5–10 min per follow-up |
+| 6 | **Contractor Performance & Referral Analytics**: (a) monthly: Pro Desk Coordinator reviews referral metrics per store (requests, match rate, contractor acceptance rate, customer satisfaction rating, material attach rate); (b) quarterly: Service Operations Manager reviews contractor referral program analytics — referral-to-project conversion rate, average project value, BuildRight material share per referred project, contractor quality score trend; (c) annual: contractor referral program ROI analysis (incremental material revenue from referred projects vs. program operating cost including referral incentive per W630); (d) top-performing contractors recognized per W630; (e) underperforming contractors (acceptance rate < 70% or average rating < 3.5) placed on probation per W600 | Service Operations Manager / Pro Desk Coordinator | VP Store Operations | 4–6 hours/quarter |
+
+### System Touchpoints
+
+- Accredited contractor database (W600) for credential, specialization, and service area matching
+- Customer loyalty/CDP system (W156) for customer identification and purchase history
+- Project Vault (W894) for project material list retrieval and scope estimation
+- Service work order system (W544) for project tracking linkage
+- Mobile app (W615) for customer self-service contractor request and rating
+- Customer communication module (W708) for notifications
+- Contractor mobile app for lead acceptance and calendar management
+- Customer feedback system (W65/W507) for post-project ratings
+- Appointment scheduling (W895) for Pro Desk contractor consultation booking
+- BI dashboard for referral analytics and contractor performance
+
+### Pain Points / Risks
+
+- **Liability exposure**: BuildRight must clearly communicate that the referral is a matchmaking service, not an endorsement or guarantee of contractor workmanship — legal disclaimer required on all referral communications and in contractor acceptance flow; customer must acknowledge disclaimer before receiving contractor contact
+- **Contractor quality drift**: a contractor accredited at Gold tier may deliver declining quality over time; continuous post-project rating collection and quarterly review per W600 mitigates; 2 consecutive ratings < 3 stars triggers probation
+- **Uneven geographic coverage**: BuildRight's 200 stores span diverse Philippine geographies; some areas may have limited accredited contractor availability; acceleration of W600 onboarding in underserved areas is critical
+- **Contractor cherry-picking**: contractors may accept only high-value leads and decline small projects; acceptance rate monitoring with minimum threshold (70%) in accreditation criteria mitigates
+- **Customer expectation mismatch**: customer may expect BuildRight to mediate or resolve contractor disputes; clear scope of BuildRight's role (referral facilitator, not project manager) must be communicated; optional mediation offered as goodwill, not obligation
+- **Data privacy**: sharing customer contact with contractor requires RA 10173 consent; customer must explicitly opt-in to contact sharing at referral creation per W647
+
+### Staffing Implication
+
+- **Pro Desk Coordinator**: ~15–20 min/referral request; with ~7–10 requests/store/day, this represents ~2–3 hours/day absorbed within existing Pro Desk duties (W112); no incremental headcount
+- **Service Operations Manager**: ~4–6 hours/quarter on analytics and contractor program review; absorbed by existing role
+- **No incremental headcount** — workflow formalizes existing ad-hoc contractor recommendation process into a structured, trackable, and quality-controlled service
+
+### Time Estimate
+
+- Customer referral request: 5–10 min
+- Project scope classification: automated + 3 min
+- Contractor recommendation and customer selection: 10–15 min
+- Contractor response: 24-hour SLA
+- Post-project follow-up: 5–10 min
+- Monthly analytics: 2 hours/store
+- Quarterly program review: 4–6 hours
+- **Total per referral**: ~25–40 min of staff time (intake + matching + follow-up)
+
+---
+
+## W911. Customer Digital Warranty Vault & Multi-Vendor Warranty Claim Aggregation
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer purchases items with manufacturer warranty (auto-triggered at POS for eligible items), or customer manually registers a warranty for items purchased elsewhere that are covered by a BuildRight-extended warranty plan |
+| **Frequency** | ~25,000–35,000 warranty registrations/month chain-wide |
+| **Volume** | Average 2–4 warranty items per qualifying transaction |
+| **Owner** | Customer Service Manager |
+| **Participants** | Customer, Sales Associate (POS registration), Customer Service Counter (manual registration), Vendor (warranty claims), Warranty Administrator (HQ) |
+
+### Background
+
+BuildRight sells products from ~800–1,000 vendors, many of which carry manufacturer warranties ranging from 6 months (power tool accessories) to 25 years (select roofing materials). A typical BuildRight customer accumulates 10–30 warranty-covered items across multiple purchases over several years. Currently, warranty management is fragmented: customers store paper receipts in envelopes, forget which items have active warranties, and struggle to identify the correct vendor or process when a product fails. For trade customers managing multiple projects, the problem is multiplied — tracking warranties across dozens of purchased items per project. BuildRight's warranty claim process (W33) handles individual claims well, but there is no centralized digital vault where customers can view all their warranties, check coverage status, initiate claims, and track resolutions. This workflow creates a "Digital Warranty Vault" within the customer's loyalty account — automatically populating warranty records from POS transactions, enabling manual registration for items purchased elsewhere with BuildRight extended warranties, and aggregating multi-vendor warranty claims through a single interface. This directly supports customer retention (a customer whose failed product is seamlessly warrantied returns for future purchases) and drives extended warranty program sales.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Automatic Warranty Registration at POS**: (a) at transaction completion, system identifies items with manufacturer warranty defined in item master (W252) — warranty duration, warranty type (repair, replacement, refund), vendor warranty contact, and BuildRight extended warranty availability; (b) for loyalty members: warranty record auto-created in Digital Warranty Vault linked to customer account with: purchase date, store, transaction number, item description, serial number (if applicable per INV-008), warranty start date, warranty end date, coverage type, and vendor name; (c) for non-loyalty customers: Sales Associate offers loyalty enrollment per W551 with warranty vault as key benefit; if customer declines, warranty registration is transaction-based (accessible via receipt number); (d) extended warranty SKU purchase triggers extended warranty record with extended coverage terms and PFRS 15 deferred revenue posting per W487 | System / Sales Associate | Customer Service Manager | Automated |
+| 2 | **Manual Warranty Registration**: Customer registers warranty for: (a) items purchased at BuildRight but not auto-registered (e.g., purchased before loyalty enrollment, non-loyalty transaction); (b) items with BuildRight extended warranty purchased elsewhere (e.g., competitor-purchased appliance with BuildRight-extended warranty plan); (c) registration via: customer service counter (in-store with receipt/proof of purchase), mobile app (photo of receipt + item barcode scan), or website (form submission with photo upload); (d) system validates: BuildRight receipt lookup (transaction number + item barcode), or competitor receipt + extended warranty plan verification; (e) manual registration subject to verification (1–3 business days for non-BuildRight purchases); (f) PFRS 15 extended warranty deferred revenue recognition per W487 for BuildRight-extended plans | Customer / Customer Service Counter / System | Customer Service Manager | 5–10 min per item |
+| 3 | **Warranty Vault Dashboard & Proactive Alerts**: (a) customer accesses Digital Warranty Vault via mobile app, website, or in-store kiosk showing: all registered warranties sorted by expiration date, category, or project (linked to Project Vault W894); (b) each warranty card displays: product image, description, serial number, purchase date, warranty period, coverage status (Active ✅, Expiring Soon ⚠️, Expired ❌), claim history, and vendor contact; (c) proactive alerts: (i) warranty expiring in 90 days — push notification suggesting extended warranty purchase; (ii) warranty expired — notification with product replacement suggestion from current assortment; (iii) product recall affecting registered item — immediate notification per W776; (d) trade customers: warranty dashboard filterable by project site for contractor warranty management per W821 | System / Customer | — | Automated |
+| 4 | **Warranty Claim Initiation from Vault**: (a) customer selects item in Warranty Vault and clicks "File Claim"; (b) system pre-populates claim form: item details, purchase date, warranty terms, and vendor; (c) customer describes issue, uploads photos/video of defect, and selects preferred resolution (repair, replacement, refund); (d) system validates warranty is active and issue type is covered; (e) for BuildRight-extended warranty claims: claim routed to BuildRight Warranty Administrator for direct processing per W33; (f) for manufacturer warranty claims: system provides customer with pre-filled claim form for vendor submission, or customer can opt for BuildRight to facilitate the claim on their behalf (value-added service); (g) claim status tracking in Vault: Submitted → Under Review → Approved/Denied → Resolution (repair scheduled, replacement shipped, refund processed) | Customer / System | Customer Service Manager | 5–15 min |
+| 5 | **Multi-Vendor Claim Aggregation & Facilitation**: (a) for customers opting for BuildRight facilitation: Warranty Administrator submits claim to vendor on customer's behalf with documentation package (proof of purchase, photos, defect description); (b) vendor responds within SLA (standardized per vendor agreement: 5 business days for standard, 2 days for safety-critical); (c) system tracks vendor response SLA and escalates overdue claims; (d) for customers with multiple active claims: system provides unified claim tracker showing all claims across vendors with status; (e) resolution execution: vendor ships replacement to BuildRight store for customer pickup, or BuildRight processes refund/credit per W101; (f) claim resolution logged in Vault with resolution date and customer satisfaction rating per W65 | Warranty Administrator / Vendor / System | Customer Service Manager | 15–30 min per claim |
+| 6 | **Warranty Analytics & Program Optimization**: (a) monthly: claim rate analysis by vendor, category, and SKU — high-claim-rate items (>5% claim rate) flagged for merchandising review per W625; (b) quarterly: vendor warranty performance scorecard — claim resolution time, claim approval rate, customer satisfaction with warranty process; integrated into vendor scorecard per W706; (c) semi-annually: extended warranty program ROI analysis — sales revenue vs. claim costs vs. deferred revenue release per PFRS 15; (d) annually: warranty vault adoption rate (registered warranties as % of eligible purchases), customer satisfaction correlation analysis (customers using warranty vault vs. non-users), and program improvement recommendations | Warranty Administrator / Customer Service Manager | VP Store Operations | 6–8 hours/quarter |
+
+### System Touchpoints
+
+- POS system for automatic warranty registration at transaction completion (W5B)
+- Item master (W252) for warranty duration, type, and vendor contact
+- Loyalty account system for Digital Warranty Vault storage (W17)
+- CDP (W156) for customer warranty profile enrichment
+- Mobile app (W615) for customer self-service warranty access
+- Warranty claim processing module (W33) for claim lifecycle management
+- PFRS 15 deferred revenue module (W487) for extended warranty accounting
+- Project Vault (W894) for project-linked warranty grouping
+- Product recall notification (W776) for recall-affected warranty items
+- Vendor portal (W705) for manufacturer warranty claim submission
+- Customer communication module (W708) for proactive warranty alerts
+- BI dashboard for warranty analytics and vendor scorecard
+
+### Pain Points / Risks
+
+- **Vendor warranty process fragmentation**: each vendor has different claim processes, forms, and response times; BuildRight facilitation standardizes the customer experience but requires vendor cooperation — vendor contract terms should include warranty cooperation SLAs per W669
+- **Warranty fraud**: customers may attempt to file claims for items not purchased at BuildRight or for damage caused by misuse; photo evidence review, serial number matching (INV-008), and purchase verification mitigate; repeat fraud flagging per W605
+- **PFRS 15 complexity**: extended warranty deferred revenue accounting requires actuarial estimation of claim rates; Finance must review assumptions quarterly per W487
+- **Low digital adoption**: customers accustomed to paper receipts may not engage with Digital Warranty Vault; in-store associate training to explain benefits at checkout and prominent vault features in mobile app onboarding drive adoption
+- **Data volume**: 25,000–35,000 warranty registrations/month across 600,000+ customers accumulating over years; scalable cloud storage with 10-year warranty retention (exceeding BIR 7-year requirement for supporting documentation) required
+- **Manufacturer warranty changes**: vendors may change warranty terms after purchase; system must store warranty terms at time of purchase, not current terms, to ensure accurate coverage
+
+### Staffing Implication
+
+- **Customer Service Counter**: ~5–10 min per manual warranty registration; ~10–15 registrations/store/week; absorbed by existing Customer Service staff
+- **Warranty Administrator (HQ)**: 1 dedicated role managing multi-vendor claim facilitation, vendor warranty SLA tracking, and program analytics; ~40–50 active claims/week; annual salary ~PHP 420K–540K
+- **No incremental store-level headcount** — automatic registration and customer self-service minimize in-store workload
+
+### Time Estimate
+
+- Automatic warranty registration: instantaneous at POS
+- Manual registration: 5–10 min per item
+- Warranty claim initiation: 5–15 min per claim
+- Claim facilitation: 15–30 min per claim (Warranty Administrator)
+- Monthly analytics: 2–3 hours
+- Quarterly program review: 6–8 hours
+- **Total per customer interaction**: 5–25 min depending on activity
+
+---
+
+## W914. Customer Project Completion Celebration & Review Incentive Program
+
+| Field | Detail |
+|---|---|
+| **Trigger** | System detects high-probability project completion based on purchase pattern analysis from Project Vault (W894) or transaction history; or customer self-reports project completion via app/website |
+| **Frequency** | ~3,000–5,000 project completions detected/month chain-wide |
+| **Volume** | Average 1 photo review per completed project |
+| **Owner** | Digital Commerce Manager |
+| **Participants** | Customer, Loyalty Program Manager, Marketing Coordinator, Customer Service Manager |
+
+### Background
+
+BuildRight's customers invest significant time and money in home improvement projects — a typical bathroom renovation involves PHP 50,000–200,000 in materials and 2–6 weeks of work. When completed, these projects represent powerful social proof: a satisfied customer's before-and-after photos and review are more compelling than any marketing campaign. Currently, the post-purchase engagement loop is weak — customers complete projects and quietly move on, or share their results on personal social media without tagging BuildRight. This workflow formalizes a "Project Completion Celebration" program that detects project completion, incentivizes customers to share their results, and amplifies user-generated content across BuildRight's channels. This drives customer engagement, provides authentic marketing content, improves Project Vault (W894) analytics by confirming project completion status, and generates product-specific social proof that helps future customers make purchasing decisions.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Project Completion Detection**: System identifies likely project completions using: (a) Project Vault (W894) analysis — saved project list where ≥80% of items have been purchased and last purchase was >14 days ago; (b) transaction pattern analysis — customer made 3+ purchases in a project-related category cluster (tiles + adhesive + grout + fixtures) over a 30–60 day period with no purchases in that cluster for 14+ days; (c) warranty registration trigger (W911) — customer registered a warranty for a major appliance or fixture, indicating installation completion; (d) customer self-report — customer marks project as "Completed" in Project Vault or app; (e) service work order completion (W544) — installation service completed for customer's project | System / Customer | Digital Commerce Manager | Automated |
+| 2 | **Celebration Notification & Review Invitation**: (a) system sends "Congratulations on completing your project!" notification via mobile app push, email, and/or SMS per customer communication preference (W708); (b) notification includes: personalized project summary (category, estimated spend based on purchase history, project duration), "Share Your Project" CTA with incentive (500 bonus loyalty points = PHP 50 value for photo + review submission; 1,000 bonus points for video walkthrough); (c) social sharing prompt: one-tap share to Facebook/Instagram/TikTok with BuildRight hashtag and auto-generated caption template ("Just finished my [project type] with materials from @BuildRightDepot!"); (d) before-and-after photo upload: customer uploads before and after photos via app or website with optional project story text; (e) if customer does not respond within 7 days: second reminder with increased incentive (double points offer valid for 7 more days); if no response after 14 days: project marked as completed silently, no further prompts | System / Customer | Loyalty Program Manager | Automated + 3 min review |
+| 3 | **Review Content Moderation & Enrichment**: (a) customer-submitted review content enters moderation queue: (i) automated check for inappropriate content (profanity filter, image quality verification); (ii) Marketing Coordinator reviews for brand appropriateness and factual accuracy; (iii) approved within 2 business days; (b) content enrichment: system tags review with product SKUs from customer's purchase history (customer can confirm/edit product list), project type, estimated budget range (customer-selected range, not exact amount for privacy), and store location; (c) customer receives bonus loyalty points upon content approval — points posted per W550 with event source "Project Completion Review" | Marketing Coordinator / System | Digital Commerce Manager | 5–10 min per review |
+| 4 | **Content Amplification & Channel Distribution**: (a) approved project reviews published to: (i) BuildRight website "Customer Projects" gallery — searchable by project type, budget range, and products used; (ii) product detail pages — "See this product in a customer's project" link for each tagged SKU; (iii) social media channels — weekly "Project of the Week" featuring best submissions (with customer permission); (iv) in-store digital signage (W504) — rotating display of local store customer projects; (v) Project Vault (W894) — available as inspiration for other customers planning similar projects; (b) customer whose project is selected as "Project of the Week" receives additional 2,000 bonus points and BuildRight merchandise | Marketing Coordinator / System | Digital Commerce Manager | 2–3 hours/week |
+| 5 | **Review-to-Purchase Attribution & Analytics**: (a) system tracks click-through from customer project reviews to product views and purchases; (b) review attribution analytics: which project types drive most engagement, which products get the most "inspired purchases," average time from review view to purchase; (c) monthly: Digital Commerce Manager reviews project completion celebration metrics — detection rate, response rate, content quality rate, social engagement, attributed revenue, loyalty points cost; (d) quarterly: program ROI analysis (attributed revenue + marketing content value vs. loyalty points cost + moderation labor); (e) content performance feed into assortment decisions per W679 — products featured in successful projects get promotional priority | Digital Commerce Manager / System | VP Marketing | 4–6 hours/month |
+
+### System Touchpoints
+
+- Project Vault (W894) for project completion detection and inspiration gallery
+- Loyalty points engine (CRM-001/W550) for bonus points issuance
+- CDP (W156) for customer transaction pattern analysis
+- Customer communication module (W708) for celebration notifications
+- Mobile app (W615) for photo upload and social sharing
+- Content management system for review moderation and publishing
+- Product detail pages (ecommerce) for project review integration
+- Digital signage system (W504) for in-store display
+- Social media management platform (W142) for amplification
+- BI dashboard for attribution and ROI analytics
+- POS system for purchase pattern analysis
+
+### Pain Points / Risks
+
+- **Low response rate**: customers may not engage with post-project notifications; incentive design (bonus points + social recognition) and timing (14–21 days after last purchase, when project is likely completed) are critical; A/B testing of notification copy and incentive levels per quarter
+- **Content quality variability**: customer-submitted photos may be low quality, poorly lit, or not visually compelling; content guidelines and photo tips in the submission flow help; Marketing Coordinator curation for public-facing content ensures quality
+- **Privacy concerns**: customers may not want their home renovation photos publicly associated with their name; privacy controls (anonymous reviews, face-blurring option, private-by-default with opt-in for public sharing) per RA 10173
+- **Incentive abuse**: customers may submit fake or low-effort reviews to earn bonus points; content moderation (step 3), minimum photo quality requirements, and purchase verification mitigate; points clawback policy for confirmed abuse
+- **Attribution complexity**: linking a product view from a project review to an eventual purchase requires multi-touch attribution modeling per W565; last-click attribution undervalues the program
+- **Project detection inaccuracy**: not all purchase clusters indicate projects; some customers buy related items over time without a single project; customer self-report option (step 1d) and Project Vault integration improve detection accuracy
+
+### Staffing Implication
+
+- **Marketing Coordinator**: ~10–15 hours/week on content moderation, curation, and social amplification; absorbed by existing role with reallocation from generic content creation to user-generated content management
+- **Digital Commerce Manager**: ~4–6 hours/month on analytics and program optimization; absorbed by existing role
+- **Loyalty Program Manager**: ~2–3 hours/month on points issuance and program alignment with W104 financial governance
+- **No incremental headcount**
+
+### Time Estimate
+
+- Project completion detection: automated
+- Celebration notification: automated
+- Customer review submission: 5–15 min (customer time)
+- Content moderation: 5–10 min per review
+- Content amplification: 2–3 hours/week
+- Monthly analytics: 4–6 hours
+- **Total per review**: ~15–25 min of staff time (moderation + publishing)

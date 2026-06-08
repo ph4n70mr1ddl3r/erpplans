@@ -1,6 +1,6 @@
 # Installation & Value-Added Services Workflows
 
-> Home installation, tool rental, DIY workshops & in-store events, design consultancy, custom paint mixing & tinting, lumber & board cutting, in-store 3D kitchen/bathroom design rendering, installation service partner quality audit, service contractor accreditation & onboarding management, and store-level custom paint formula save, recall & reorder service.
+> Home installation, tool rental, DIY workshops & in-store events, design consultancy, custom paint mixing & tinting, lumber & board cutting, in-store 3D kitchen/bathroom design rendering, installation service partner quality audit, service contractor accreditation & onboarding management, store-level custom paint formula save, recall & reorder service, and store-level community workshop space booking & DIY event management.
 >
 > Back to [Workflow Index](README.md)
 
@@ -22,6 +22,7 @@
 - [W794. Service SKU Catalog Management, Pricing & Material Linkage](#w794-service-sku-catalog-management-pricing--material-linkage)
 - [W795. Service Customer Complaint, Rework & Warranty Claim Management](#w795-service-customer-complaint-rework--warranty-claim-management)
 - [W898. Store-Level Custom Paint Formula Save, Recall & Reorder Service](#w898-store-level-custom-paint-formula-save-recall--reorder-service)
+- [W906. Store-Level Community Workshop Space Booking & DIY Event Management](#w906-store-level-community-workshop-space-booking--diy-event-management)
 
 ---
 
@@ -727,3 +728,70 @@ BuildRight's paint mixing operations (W168) enable custom color tinting at the s
 - Cross-store precision match: standard + 5 min
 - Monthly analytics: 4–6 hours
 - **Total per recall event**: 15–25 min of staff time
+
+---
+
+## W906. Store-Level Community Workshop Space Booking & DIY Event Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer, community group, or vendor requests booking of BuildRight's in-store workshop/meeting space; or store team schedules a DIY workshop (W147), product demonstration, or community event |
+| **Frequency** | ~800–1,200 events/month chain-wide (~4–6 events/store/month) |
+| **Volume** | 10–30 attendees per event; 2–4 hour event duration |
+| **Owner** | Store Manager |
+| **Participants** | Customer/Community Group, Store Manager, Department Supervisor (event host), Marketing Coordinator (HQ), Vendor Representative (vendor events), accredited contractor (W600, contractor-led workshops) |
+
+### Background
+
+BuildRight's stores feature dedicated workshop/demo areas (2–4 per store per W607) that serve as community hubs for DIY education, product demonstrations, contractor seminars, and community events. These spaces are a key differentiator — they transform BuildRight from a transactional retailer into a knowledge center that builds customer loyalty and drives sales. However, workshop space scheduling is currently ad-hoc, leading to conflicts between DIY workshops (W147), vendor demonstrations (W900), contractor training, and community requests. This workflow formalizes the booking and management of workshop spaces, covering both BuildRight-organized events (DIY workshops, product demos, safety seminars) and external bookings (community group meetings, contractor association seminars, school field trips, local government skills training). A well-managed workshop program drives foot traffic (attendees purchase materials after workshops), builds brand affinity, supports the contractor ecosystem (W904), and generates positive community relations (W209).
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Booking Request & Availability Check**: Event request via: (a) mobile app "Book Workshop" — customer/community group selects store, date, time, event type, and estimated attendees; (b) store walk-in — Customer Service Counter takes booking request; (c) HQ Marketing push — Marketing Coordinator schedules DIY workshop (W147) or vendor event (W900) via centralized calendar; (d) vendor request — vendor requests product demo slot via W705 vendor portal; (e) system checks space availability against: existing bookings, store operating hours, staffing availability, equipment requirements (projector, workbenches, tool sets, paint mixing station), and material requirements for hands-on workshops; (f) conflict resolution: if requested slot unavailable, system suggests alternative dates/times; Store Manager approves or redirects high-priority events | Customer / Marketing Coordinator / Vendor / System | Store Manager | 5–10 min |
+| 2 | **Event Preparation**: (a) system generates event preparation checklist: (i) materials and supplies — workshop kit materials (wood, paint, tiles, tools) from store inventory or vendor-provided samples; (ii) equipment setup — workbenches, power tools, safety equipment (goggles, gloves, ear protection), projector, seating; (iii) staffing — Department Supervisor or designated event host, Stock Associate for setup/teardown; (iv) safety preparation — first aid kit check per W501, PPE inventory per W780, emergency exit clearance per W758; (v) promotional materials — event flyers, social media posts per W142, in-store signage per W504; (b) for vendor events: vendor provides products, demo materials, and trained demonstrators per W900 agreement; (c) for community events: community group provides agenda and any external materials; BuildRight provides space, basic A/V, and refreshments (optional, per store budget per W489) | Department Supervisor / Stock Associate / System | Store Manager | 2–4 hours prep |
+| 3 | **Event Execution**: (a) pre-event setup: workshop space configured per event type (classroom layout for seminar, workstation layout for hands-on DIY, demo counter for product demo); (b) attendee registration: walk-in registration with name and mobile number for loyalty enrollment follow-up (W551); loyalty member check-in with app QR scan for attendance tracking; (c) event delivery: (i) DIY workshops (W147) — hands-on guided project (e.g., "Build a Shelf in 2 Hours") with material take-home; (ii) product demos — vendor representative demonstrates product features and use cases; (iii) contractor seminars — accredited contractor or BuildRight expert presents techniques (e.g., waterproofing, tiling, electrical wiring); (iv) community events — community group or local government leads event; BuildRight provides space and optional product introduction; (d) safety compliance: event host ensures PPE usage for hands-on activities, age restrictions for power tool workshops (18+ per W520), and emergency protocol awareness per W695; (e) event photography: Stock Associate captures photos for social media (W142) and gallery (W905) with attendee consent per RA 10173 | Department Supervisor / Event Host / Vendor / System | Store Manager | 2–4 hours |
+| 4 | **Post-Event Follow-Up & Conversion**: (a) attendee follow-up within 24 hours via W708: (i) thank-you message with event photos; (ii) satisfaction survey (3 questions per W608); (iii) loyalty points for attendance (100 points = PHP 10 for verified loyalty members); (iv) related product recommendations with current promotions; (v) Project Vault (W894) template for workshop project materials; (b) for DIY workshops: attendee receives pre-populated Project Vault list with workshop project materials for future reorder; (c) sales conversion tracking: system monitors attendee purchase behavior for 14 days post-event vs. non-attendee control group; (d) vendor events: attendee product interest data shared with vendor per W900 agreement; (e) community events: community relationship logged per W209 | System / Department Supervisor / Marketing Coordinator | Store Manager | 15–30 min post-event |
+| 5 | **Workshop Program Analytics & Optimization**: (a) monthly per store: event count by type, attendance rate, attendee satisfaction, post-event conversion rate, material cost, and revenue attribution; (b) quarterly per region: best-performing event types, top stores by attendance and conversion, vendor event ROI, community engagement metrics; (c) semi-annually: workshop curriculum refresh based on attendee feedback, seasonal demand (summer: outdoor projects; rainy season: indoor electrical/plumbing; Q4: holiday decorations), and new product launches (W564); (d) annual: program ROI analysis (revenue attribution + community engagement value vs. material cost + staffing cost + space opportunity cost) | Store Manager / Marketing Coordinator / System | VP Store Operations | 2–3 hours/month |
+
+### System Touchpoints
+
+- Workshop space booking module integrated with store calendar
+- Mobile app (W615) for customer self-service booking and event discovery
+- POS system for attendee registration and check-in
+- Loyalty system for attendance points and member identification
+- Customer communication module (W708) for event reminders and follow-up
+- Project Vault (W894) for workshop project material lists
+- Social media platform (W142) for event promotion and post-event content
+- Digital signage (W504) for in-store event promotion
+- Vendor portal (W705) for vendor event booking
+- Product demo station equipment (W607) for demo space management
+- Safety compliance systems (W695, W520) for event safety
+- BI dashboard for event analytics and conversion tracking
+- Community relations module (W209) for community event documentation
+
+### Pain Points / Risks
+
+- **Space utilization vs. selling floor**: workshop space占用 valuable selling floor area; events must generate sufficient foot traffic and sales conversion to justify the space; monthly utilization rate monitoring (target ≥ 60% of available slots booked)
+- **No-shows reducing event ROI**: free events have high no-show rates; loyalty points for attendance (issued at check-in, not registration) incentivize actual attendance; overbooking by 20% for popular events
+- **Safety liability for hands-on workshops**: power tool and chemical workshops carry injury risk; mandatory safety briefing per W695, PPE enforcement per W780, liability waiver signing, and accredited instructor presence per W600 mitigate; BuildRight liability insurance per W863 provides coverage
+- **Vendor event quality inconsistency**: vendor demonstrators may not meet BuildRight customer service standards; vendor event guidelines (maximum pitch-to-demo ratio, customer service protocol) enforced per W900 agreement; Store Manager or Department Supervisor present at all vendor events
+- **Community event scope creep**: community groups may request events outside BuildRight's brand (political rallies, religious services); Store Manager guidelines for acceptable event types with Regional Manager escalation for edge cases
+- **Staffing pressure on weekends**: peak workshop demand on weekends (Saturday mornings) when store is already busy; weekend event hosting assigned to Department Supervisor with Stock Associate support; maximum 2 events per weekend per store
+
+### Staffing Implication
+
+- **Department Supervisor**: ~4–6 hours/week on workshop hosting (2–3 events × 2 hours including setup/teardown); absorbed by existing role with schedule coordination per W34
+- **Stock Associate**: ~2–3 hours/week on setup/teardown support; absorbed by existing role
+- **Marketing Coordinator (HQ)**: ~4–6 hours/week on centralized workshop calendar management, curriculum development, and analytics; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Booking request: 5–10 min
+- Event preparation: 2–4 hours
+- Event execution: 2–4 hours
+- Post-event follow-up: 15–30 min
+- Monthly analytics: 2–3 hours/store
+- **Total per event**: ~5–9 hours of staff time (prep + execution + follow-up)

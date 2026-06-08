@@ -1,6 +1,6 @@
 # Marketing Campaign Operations
 
-> Campaign planning, creative production, multi-channel execution, budget tracking, performance measurement, loyalty program financial governance, crisis communication & brand reputation, CSR program execution, social media & influencer management, PR & corporate communications, bank & credit card partnership management, retail media network operations, referral program & brand ambassador management, in-house design & creative production, marketing budget management & spend analytics, marketing data platform daily operations & campaign analytics, and customer loyalty partner reward catalog management & fulfillment.
+> Campaign planning, creative production, multi-channel execution, budget tracking, performance measurement, loyalty program financial governance, crisis communication & brand reputation, CSR program execution, social media & influencer management, PR & corporate communications, bank & credit card partnership management, retail media network operations, referral program & brand ambassador management, in-house design & creative production, marketing budget management & spend analytics, marketing data platform daily operations & campaign analytics, customer loyalty partner reward catalog management & fulfillment, customer trade account co-branded credit card program management, and store-level customer loyalty points gifting & transfer between members.
 >
 > Back to [Workflow Index](README.md)
 
@@ -26,6 +26,8 @@
 - [W677. Marketing Budget Management & Spend Analytics](#w677-marketing-budget-management--spend-analytics)
 - [W736. Marketing Data Platform Daily Operations & Campaign Analytics](#w736-marketing-data-platform-daily-operations--campaign-analytics)
 - [W902. Customer Loyalty Partner Reward Catalog Management & Fulfillment](#w902-customer-loyalty-partner-reward-catalog-management--fulfillment)
+- [W909. Customer Trade Account Co-Branded Credit Card Program Management](#w909-customer-trade-account-co-branded-credit-card-program-management)
+- [W912. Store-Level Customer Loyalty Points Gifting & Transfer Between Members](#w912-store-level-customer-loyalty-points-gifting--transfer-between-members)
 
 ---
 
@@ -1200,3 +1202,130 @@ BuildRight's loyalty program (600,000 members per model company profile) operate
 - Monthly partner settlement: 4–6 hours
 - Quarterly review and refresh: 10–15 hours
 - **Total ongoing**: ~40–60 hours/quarter + 6–8 hours/month
+
+---
+
+## W909. Customer Trade Account Co-Branded Credit Card Program Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Annual bank partnership review cycle; or new bank partner opportunity identified; or existing co-branded card program requires modification |
+| **Frequency** | Annual program review; ~500–800 new card applications/month; ~10,000–15,000 active cardholders |
+| **Volume** | ~PHP 200M–400M annual co-branded card spend |
+| **Owner** | Marketing Director (Partnership) |
+| **Participants** | Bank Partner, Marketing Director, Finance Manager (settlement), Legal Counsel, VP Sales, Credit Manager (W572 integration) |
+
+### Background
+
+BuildRight's trade customers (contractors, builders, interior designers — ~5,200 trade accounts contributing ~30% of revenue) require purchasing flexibility. Many operate on project-based cash flow: they buy materials on credit, complete the project, receive payment, then settle their accounts. A co-branded credit card with a partner bank offers extended payment terms (30–60 days vs. standard Net 30), BuildRight-specific rewards (2x loyalty points on BuildRight purchases, 1x on other spend), and a revolving credit facility that smooths project cash flow. For BuildRight, a co-branded card increases average transaction value (cardholders spend 15–25% more per transaction per industry benchmarks), improves customer retention (cardholders have higher lifetime value), and generates interchange revenue sharing from the bank. For the bank, BuildRight's trade customer base represents a lucrative segment with predictable spend patterns. This workflow manages the co-branded credit card program lifecycle, from bank partnership negotiation through card issuance, transaction processing, settlement, and program optimization.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Bank Partnership Negotiation & Program Design**: (a) Marketing Director identifies potential bank partners (top Philippine banks with strong card issuance: BDO, BPI, Metrobank, Security Bank); (b) program design parameters: (i) card branding (BuildRight logo + bank logo); (ii) credit limits — tiered by BuildRight trade account tier (Bronze: PHP 50K, Silver: PHP 100K, Gold: PHP 200K, Platinum: PHP 500K); (iii) interest rates — competitive vs. market (target: 2–2.5% per month); (iv) BuildRight rewards: 2x loyalty points on BuildRight purchases, 1x on other spend; (v) promotional offers: 0% installment for 3/6 months on BuildRight purchases >PHP 10K; (vi) annual fee waiver for first year for BuildRight referrals; (c) revenue sharing: interchange revenue split, marketing fund contribution from bank, and data sharing terms; (d) Legal Counsel reviews agreement for BSP compliance, RA 10173 data sharing, and PCI-DSS requirements; (e) CEO approves partnership per DOA matrix | Marketing Director / Legal Counsel / Bank Partner | CEO | 40–60 hours per negotiation |
+| 2 | **Card Application & Issuance**: (a) application channels: (i) in-store Pro Desk (W112) — Sales Associate assists trade customer with paperless application via bank API; (ii) mobile app — pre-filled application from trade account data (W508) with bank API integration; (iii) bank branch — BuildRight referral code for fee waiver; (b) bank performs credit assessment (independent of BuildRight credit limit per W572 — card limit set by bank, BuildRight credit limit set by BuildRight); (c) approval/rejection within 5–7 business days; (d) card issuance: physical card mailed to customer + digital card in BuildRight mobile app (W615) and bank app; (e) activation: customer activates card; BuildRight loyalty system linked to card number for automatic 2x points on BuildRight purchases; (f) monthly: ~500–800 applications, ~60–70% approval rate | Sales Associate / Customer / Bank / System | Marketing Director | 10–15 min per application |
+| 3 | **Transaction Processing & Loyalty Integration**: (a) co-branded card used at BuildRight POS (600 terminals) and non-BuildRight merchants; (b) BuildRight POS identifies co-branded card at swipe/tap and triggers: (i) 2x loyalty points earning per W550; (ii) installment offer prompt for eligible transactions (POS-071); (iii) co-branded card promotional pricing (if active); (c) transaction data flows: (i) bank → cardholder statement and payment collection; (ii) bank → BuildRight settlement file (interchange revenue share, promotional subsidy reconciliation); (iii) BuildRight POS → loyalty system (2x points); (d) monthly reconciliation: Finance Manager reconciles bank settlement against POS transaction data per W99 and interchange revenue share per agreement | System / Finance Manager / Bank | Marketing Director | Automated + 4–6 hours/month reconciliation |
+| 4 | **Program Performance Monitoring & Optimization**: (a) monthly: active cardholders, new applications, approval rate, card usage rate (% of cardholders with ≥1 BuildRight purchase/month), average transaction value (cardholder vs. non-cardholder), BuildRight spend share (what % of cardholder's total spend is at BuildRight), loyalty points earned, and promotional uptake; (b) quarterly: program ROI analysis — incremental revenue from cardholders (higher ATV + increased frequency) vs. program costs (rewards, bank fees, marketing, operational); cardholder retention rate; bank partner performance (approval rate, customer service, settlement accuracy); (c) annually: contract renewal negotiation with performance-based terms; cardholder segment analysis (top spenders, dormant, churned); competitive benchmark against other retail co-branded cards in Philippines; program enhancements (new benefits, updated tiering, digital features) | Marketing Director / Finance Manager / System | CEO | 4–6 hours/quarter |
+| 5 | **Cardholder Lifecycle & Retention**: (a) new cardholder onboarding: welcome kit with card benefits guide, BuildRight loyalty tier integration (W822), and first-purchase bonus (1,000 points for first BuildRight purchase within 30 days); (b) engagement: monthly "Cardholder Exclusive" promotions (extra discount day, early access to sales per W568 flash sale), targeted product recommendations per W748; (c) dormant cardholder reactivation: cardholders with no BuildRight purchase in 60 days receive re-engagement campaign per W618 with bonus points offer; (d) cardholder escalation: disputes, lost cards, fraud handled by bank per card network rules; BuildRight Customer Service Counter assists with basic inquiries and routes complex issues to bank; (e) cardholder churn prevention: annual fee renewal cycle — Marketing Director negotiates fee waiver or benefits enhancement for at-risk cardholders with bank | Marketing Director / System / Bank | VP Marketing | 2–3 hours/month |
+
+### System Touchpoints
+
+- Bank API for card application processing and real-time approval
+- POS system for co-branded card identification and promotional trigger (POS-071)
+- Loyalty points engine (W550) for 2x earning on BuildRight purchases
+- Mobile app (W615) for digital card display and application
+- Trade account system for pre-filled application data (W508)
+- Settlement reconciliation system (W99) for bank revenue share
+- Customer communication module (W708) for cardholder communications
+- Credit monitoring system (W572) for trade account credit status (independent)
+- Vendor portal (W705) for vendor co-branded promotional coordination
+- BI dashboard for program analytics and ROI tracking
+- CRM system for cardholder lifecycle management
+
+### Pain Points / Risks
+
+- **Credit risk concentration**: co-branded card extends credit to trade customers independently of BuildRight's credit assessment (W572); a cardholder may default on their bank card while maintaining good standing with BuildRight or vice versa; clear separation of credit decisions between bank and BuildRight; data sharing agreement for mutual risk alerting
+- **Low cardholder activation**: approved customers may not activate or use the card; first-purchase bonus (1,000 points) and in-store activation campaign drive activation; 30-day activation follow-up per W708
+- **Bank partnership dependency**: program success depends on bank partner's service quality (approval speed, customer service, statement accuracy); contractual SLAs with penalty clauses per W688; annual competitive benchmarking with alternative bank partners
+- **Cannibalization of existing payment methods**: co-branded card may cannibalize trade account credit (Net 30) which has lower cost for BuildRight (no interchange fee); monitor trade account vs. co-branded card payment mix; position co-branded card as supplement (for extended terms beyond Net 30 or for personal spending by trade account owners)
+- **Data privacy**: bank requires customer transaction data for credit assessment; RA 10173-compliant data sharing agreement with clear scope, consent, and retention terms required; customer consent at application
+- **Promotional cost sharing**: 0% installment promotional interest subsidies shared between BuildRight and bank per W750; clear cost allocation rules in partnership agreement with monthly reconciliation
+
+### Staffing Implication
+
+- **Marketing Director (Partnership)**: ~8–10 hours/month on program management and bank relationship; absorbed by existing role with bank partnership portfolio
+- **Finance Manager**: ~4–6 hours/month on settlement reconciliation; absorbed by existing role
+- **Sales Associate (Pro Desk)**: ~10–15 min per card application; ~5–10 applications/store/month; absorbed by existing Pro Desk duties
+- **No incremental headcount**
+
+### Time Estimate
+
+- Bank partnership negotiation: 40–60 hours (one-time per partner)
+- Card application: 10–15 min per application
+- Monthly reconciliation: 4–6 hours
+- Quarterly program review: 4–6 hours
+- Annual contract renewal: 15–20 hours
+- **Total ongoing**: ~20–25 hours/month across all roles
+
+---
+
+## W912. Store-Level Customer Loyalty Points Gifting & Transfer Between Members
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Loyalty member initiates points transfer or gift via mobile app, website, or customer service counter; or system suggests gift during seasonal/family events |
+| **Frequency** | ~15,000–20,000 transfer/gift transactions/month chain-wide |
+| **Volume** | Average transfer: 500–2,000 points (PHP 50–200 value); gift: 1,000–5,000 points |
+| **Owner** | Loyalty Program Manager |
+| **Participants** | Sender (loyalty member), Recipient (loyalty member or non-member), Customer Service Counter, Loyalty Program Manager |
+
+### Background
+
+BuildRight's 600,000+ loyalty members accumulate points across their household purchases. In the Philippine cultural context, gift-giving is deeply embedded — birthdays, fiestas, Christmas, weddings, and housewarming celebrations all involve gifts. A "gift of home improvement" (loyalty points that the recipient can use for their own BuildRight purchase) is a natural extension of this cultural behavior. Additionally, family members often pool resources for household projects: a parent renovating their home may receive points contributions from adult children working abroad (a common Philippine diaspora scenario — ~10M Overseas Filipino Workers). This workflow enables loyalty members to transfer points to other members or gift points to anyone (including non-members who receive a digital gift card that doubles as loyalty enrollment). Points gifting drives viral acquisition (non-member recipients must enroll to redeem), increases program engagement, and strengthens the emotional connection between BuildRight and the Filipino family. PFRS 15 deferred revenue implications are managed through the existing loyalty financial governance (W104).
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Transfer/Gift Initiation**: Sender initiates via: (a) mobile app "Send Points" — selects recipient (from contacts, by loyalty card number, by mobile number, or creates gift link for non-members); (b) website "Gift Points" — same options; (c) in-store customer service counter — assisted transfer with sender and recipient identification; (d) seasonal promotion trigger — system suggests "Gift Home Improvement Points" during Christmas, Mother's Day, Father's Day, housewarming season per W83 campaign calendar; (e) sender specifies: points amount, optional personal message, and gift occasion (birthday, Christmas, housewarming, wedding, thank you, other) | Sender / Customer Service Counter | — | 2–5 min |
+| 2 | **Validation & Fraud Prevention**: (a) system validates: sender has sufficient points balance, sender account is in good standing (not frozen per W496 fraud investigation, not dormant per W560), transfer amount within daily/monthly limits (max 10,000 points/day, 30,000 points/month per sender), and recipient is not on fraud watchlist; (b) anti-fraud checks: velocity monitoring (>3 transfers to same recipient in 24 hours flagged), structured transfer detection (multiple small transfers to avoid limits), and points-laundering prevention (transfer → immediate redemption at high-value item → return for cash refund); (c) for non-member recipients: system creates gift link with unique redemption code; no account validation needed until redemption | System | Loyalty Program Manager | Automated |
+| 3 | **Transfer Execution**: (a) member-to-member transfer: points deducted from sender balance and added to recipient balance in real-time per W550; deferred revenue remains in liability (no PFRS 15 impact — points liability transfers between members, not extinguished); (b) member-to-non-member gift: points deducted from sender; gift code generated with 90-day expiry; deferred revenue remains until gift is redeemed by recipient (who enrolls as loyalty member at redemption) or expires (points return to sender at expiry); (c) both parties receive notification per W708: sender receives "Points Sent" confirmation, recipient receives "You Received Points!" with sender's message and redemption instructions; (d) PFRS 15 accounting: no change to total deferred revenue liability for member-to-member transfers; member-to-non-member gifts tracked separately with expiry-based breakage estimation per W570 | System | — | Automated |
+| 4 | **Non-Member Redemption & Enrollment**: (a) non-member recipient receives gift notification (SMS/email) with BuildRight loyalty enrollment link and points redemption code; (b) recipient enrolls as loyalty member per W551 (minimum data: mobile number, first name, last name, RA 10173 consent); (c) upon enrollment, gifted points credited to new member's account; (d) new member can immediately use points for purchase at POS or ecommerce per W550; (e) enrollment-to-first-purchase conversion tracked as program acquisition metric; (f) if gift not redeemed within 90 days: points return to sender with "Gift Expired" notification | System / Recipient | Loyalty Program Manager | 3–5 min enrollment |
+| 5 | **Program Analytics & Fraud Monitoring**: (a) weekly: transfer volume, average transfer amount, member-to-member vs. member-to-non-member ratio, gift redemption rate, acquisition rate (new members from gifts); (b) monthly: fraud review — flagged transactions from step 2 investigated by Loyalty Program Manager; confirmed fraud: points clawback and account action per W496; (c) quarterly: gift/transfer program financial analysis — points liability movement, deferred revenue impact, acquisition cost per new member via gifting vs. other channels; (d) annually: program enhancement review — adjust transfer limits, introduce seasonal gift promotions (e.g., "12 Days of Christmas Points Gifting" with bonus points for sender), and integration with Project Vault (W894) for "contribute points to a family member's project" | Loyalty Program Manager / System | Digital Commerce Manager | 4–6 hours/month |
+
+### System Touchpoints
+
+- Loyalty points engine (W550) for balance management and transfer execution
+- Mobile app (W615) for self-service transfer and gift functionality
+- Customer communication module (W708) for transfer/gift notifications
+- Loyalty fraud detection system (W496) for anti-fraud checks
+- Customer enrollment system (W551) for non-member enrollment at redemption
+- PFRS 15 deferred revenue module (W104/W570) for accounting
+- CDP (W156) for gifting behavior analytics and viral acquisition tracking
+- Customer service counter POS terminal for assisted transfers
+- BI dashboard for program analytics
+
+### Pain Points / Risks
+
+- **Points laundering for cash**: fraudsters may use transfers to launder points through multiple accounts and redeem for high-value items, then return for cash refund; fraud detection rules (step 2) and return restriction on points-redemption purchases per W12 mitigate
+- **PFRS 15 liability complexity**: member-to-non-member gifts create contingent liability (points may return to sender at expiry); Finance must track gift liability separately from standard points liability per W570
+- **Recipient spam**: aggressive gifting campaigns may create unwanted notifications for non-members; RA 10173 consent for marketing communications separate from gift redemption consent; gift notifications exempted as transactional communication but limited to 1 gift notification per sender per recipient per 30 days
+- **Transfer limit gaming**: fraudsters may attempt multiple small transfers to avoid daily/monthly limits; aggregate monitoring across sender's linked accounts (same mobile number, same household address) detects gaming
+- **Cultural sensitivity**: not all Filipino families are comfortable with financial gifting within families; marketing tone should emphasize "sharing" and "contributing to a family project" rather than "giving money"
+- **Technology barrier for OFW senders**: overseas Filipino workers may have limited app access; web-based and SMS-based transfer options ensure accessibility; low-bandwidth mobile web version of gift feature
+
+### Staffing Implication
+
+- **Loyalty Program Manager**: ~4–6 hours/month on program analytics and fraud review; absorbed by existing role
+- **Customer Service Counter**: ~5 min per assisted transfer; ~3–5 assisted transfers/store/week; absorbed by existing CSR capacity
+- **No incremental headcount**
+
+### Time Estimate
+
+- Transfer initiation: 2–5 min (customer time)
+- Validation and execution: automated
+- Non-member enrollment at redemption: 3–5 min
+- Monthly fraud review: 2–3 hours
+- Monthly analytics: 2–3 hours
+- **Total per transfer**: ~5 min of staff time for assisted transfers; automated for self-service

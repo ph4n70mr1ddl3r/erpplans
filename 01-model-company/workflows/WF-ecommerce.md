@@ -1,6 +1,6 @@
 # Ecommerce Workflows
 
-> BOPIS order fulfillment, home delivery fulfillment, ship-from-store, ecommerce order exception & cancellation management, marketplace integration (Lazada/Shopee), dark store operations, home delivery reverse logistics (returns), drop-ship vendor fulfillment, BOPIS smart locker & queue management, ecommerce product return inspection, grading & disposition, ecommerce product review & rating management, ecommerce platform incident management, marketplace channel daily operations & order management, ecommerce platform daily health monitoring & performance dashboard, ecommerce product content enrichment & catalog daily operations, and customer bulk/project delivery scheduling & multi-drop coordination (B2C).
+> BOPIS order fulfillment, home delivery fulfillment, ship-from-store, ecommerce order exception & cancellation management, marketplace integration (Lazada/Shopee), dark store operations, home delivery reverse logistics (returns), drop-ship vendor fulfillment, BOPIS smart locker & queue management, ecommerce product return inspection, grading & disposition, ecommerce product review & rating management, ecommerce platform incident management, marketplace channel daily operations & order management, ecommerce platform daily health monitoring & performance dashboard, ecommerce product content enrichment & catalog daily operations, customer bulk/project delivery scheduling & multi-drop coordination (B2C), customer project photo gallery & social proof/inspiration platform, and customer consumables subscription & auto-replenishment service.
 >
 > Back to [Workflow Index](README.md)
 
@@ -30,6 +30,8 @@
 - [W725. Ecommerce Platform Daily Health Monitoring & Performance Dashboard](#w725-ecommerce-platform-daily-health-monitoring-performance-dashboard)
 - [W726. Ecommerce Product Content Enrichment & Catalog Daily Operations](#w726-ecommerce-product-content-enrichment-catalog-daily-operations)
 - [W899. Customer Bulk/Project Delivery Scheduling & Multi-Drop Coordination (B2C)](#w899-customerbulkproject-delivery-scheduling--multi-drop-coordination-b2c)
+- [W905. Customer Project Photo Gallery & Social Proof/Inspiration Platform](#w905-customer-project-photo-gallery--social-proofinspiration-platform)
+- [W907. Customer Consumables Subscription & Auto-Replenishment Service](#w907-customer-consumables-subscription--auto-replenishment-service)
 
 ---
 
@@ -1624,3 +1626,131 @@ BuildRight's standard home delivery (W19) handles ecommerce orders averaging PHP
 - Discrepancy resolution: 1–4 hours per issue
 - Post-completion record: 10–15 min
 - **Total project coordination**: ~3–6 hours of staff time across all stages (excluding driver time)
+
+---
+
+## W905. Customer Project Photo Gallery & Social Proof/Inspiration Platform
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer-submitted project photos are approved via W914 review program, or ecommerce team creates curated project inspiration content from vendor partnerships; also triggered by customer browsing behavior indicating project research |
+| **Frequency** | ~1,000–1,500 new project gallery entries/month |
+| **Volume** | Average 4–8 product photos per gallery entry; ~50,000–80,000 gallery views/month |
+| **Owner** | Digital Commerce Manager |
+| **Participants** | Customer, Marketing Coordinator (content curation), Category Manager (product tagging), Digital Commerce Manager |
+
+### Background
+
+Home improvement purchases are highly visual and research-driven. Before starting a bathroom renovation, a typical BuildRight customer browses 20–30 project images online for inspiration, then researches specific products. BuildRight's ecommerce platform currently has product-centric pages but lacks a dedicated project inspiration gallery — a gap that competitors (both local hardware chains and international platforms like Houzz/Pinterest) exploit to capture the customer early in the purchase journey. This workflow manages the ecommerce "Project Gallery" — a browsable, searchable collection of customer-completed projects and curated inspiration boards, each linked to specific BuildRight products. It serves as both a customer acquisition tool (SEO traffic from project searches) and a conversion tool (project-to-product-to-cart journey). The gallery integrates with Project Vault (W894) for one-click "Get This Look" project list creation and with the Project Completion Celebration program (W914) for user-generated content sourcing.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Content Sourcing & Creation**: Project gallery content sourced from: (a) W914 program — customer-submitted project photos with product tags and reviews (primary source, ~60% of content); (b) vendor co-created content — vendor provides professional project photos featuring their products sold at BuildRight, with co-branding per W513 co-op advertising agreements; (c) BuildRight in-house creative — professional photoshoot of model rooms using BuildRight products for seasonal campaigns (W83); (d) DIY workshop output (W147) — attendee project photos from workshops with consent; (e) social media user-generated content — BuildRight social media team identifies high-quality customer posts tagged with #BuildRightDepot and requests permission for gallery inclusion per RA 10173 | Marketing Coordinator / Vendor / System | Digital Commerce Manager | 10–20 hours/week |
+| 2 | **Product Tagging & Enrichment**: (a) each gallery entry tagged with: project type, room/area, style (modern, industrial, minimalist, tropical Filipino, Mediterranean), estimated budget range, difficulty level (DIY-friendly, intermediate, professional recommended), and products used; (b) product tagging: Marketing Coordinator or Category Manager identifies specific SKUs from gallery photos and links to active product pages; if a product is discontinued, system links to current alternative per W279; (c) project metadata: store location where materials were purchased (if known from loyalty data), contractor who executed (if from W904 referral), and related Project Vault templates (W894); (d) SEO optimization: project title, description, and alt-text optimized per W563 SEO strategy for project-related search queries ("small bathroom renovation Philippines", "concrete fence design ideas") | Marketing Coordinator / Category Manager / System | Digital Commerce Manager | 15–20 min per entry |
+| 3 | **Gallery Publication & Browsing Experience**: (a) published on BuildRight ecommerce site as dedicated "Project Ideas" section with: (i) category filter (bathroom, kitchen, outdoor, living room, fencing, roofing, electrical, plumbing, flooring, paint); (ii) budget filter (under PHP 20K, PHP 20K–50K, PHP 50K–100K, PHP 100K–500K, above PHP 500K); (iii) difficulty filter; (iv) style filter; (v) search bar for natural language queries; (b) each project entry displays: hero image, project description, before-and-after (if available), product carousel with linked SKUs and current prices, estimated total project cost, "Save to My Projects" button (W894), "Get This Look" button (creates project list in W894), customer rating, and social share buttons; (c) mobile-first design with swipeable image carousels optimized for Philippine market (80%+ mobile traffic per W615) | System / Digital Commerce Manager | — | Ongoing platform feature |
+| 4 | **Conversion Path & Attribution**: (a) "Get This Look" flow: customer clicks button → system creates project list in Project Vault (W894) pre-populated with tagged products → customer reviews, modifies quantities, checks ATP → adds items to cart or saves for later; (b) individual product click-through: customer clicks a tagged product in gallery photo → navigates to product detail page with "As seen in [Project Name]" badge → standard product page conversion flow; (c) conversion attribution: system tracks gallery entry → product view → cart → purchase with multi-touch attribution per W565; (d) gallery entries with high conversion rates (>2% gallery-to-purchase) featured on homepage and in marketing campaigns per W83 | System / Customer | Digital Commerce Manager | Automated |
+| 5 | **Gallery Performance Analytics & Optimization**: (a) weekly: gallery traffic, top-viewed projects, top-clicked products, conversion rate by project type; (b) monthly: SEO performance (organic traffic from project-related keywords, click-through rate from search results), gallery-to-cart conversion funnel, most-saved projects to Project Vault, social engagement (shares, saves, comments); (c) quarterly: content gap analysis — project types with high search volume but low gallery coverage identified for content creation priority; vendor content contribution review; A/B testing of gallery layout and CTA placement; (d) annual: gallery revenue attribution and ROI analysis | Digital Commerce Manager / System | VP Marketing | 4–6 hours/month |
+
+### System Touchpoints
+
+- Ecommerce platform with dedicated Project Gallery section
+- Project Vault (W894) for "Get This Look" project list creation
+- Product catalog and detail pages for linked SKU display
+- Inventory/ATP system for real-time stock status on tagged products
+- Loyalty/CDP system (W156) for customer identification and personalization
+- SEO tools (W563) for organic traffic optimization
+- Social media management platform (W142) for UGC sourcing
+- Content management system for gallery curation and moderation
+- BI dashboard for gallery analytics and attribution
+- Digital signage (W504) for in-store project inspiration display
+
+### Pain Points / Risks
+
+- **Content freshness**: outdated project photos with discontinued products reduce credibility; automated product availability check on gallery entries with "Last verified" date stamp mitigates; quarterly content audit required
+- **Low "Get This Look" conversion**: customers may browse for inspiration but purchase elsewhere; competitive pricing, real-time availability, and seamless cart integration reduce friction; exclusive "Gallery Price" promotions for project bundles tested quarterly
+- **Photo quality inconsistency**: user-generated content varies in quality; gallery design with consistent framing (border, overlay text) and curation standards maintain professional appearance
+- **Vendor content bias**: vendor-provided content may feature products not available at BuildRight or at non-competitive prices; product tag verification against active assortment per W252 required before publication
+- **SEO competition**: competing against established platforms (Houzz, Pinterest) for project-related search traffic; Philippine-specific content and local project context provides differentiation
+
+### Staffing Implication
+
+- **Marketing Coordinator**: ~10–15 hours/week on content sourcing, tagging, and gallery curation; absorbed by existing role
+- **Category Manager**: ~3–5 hours/month on product tagging verification; absorbed by existing role
+- **Digital Commerce Manager**: ~4–6 hours/month on analytics and optimization; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Content sourcing and creation: 10–20 hours/week
+- Product tagging per entry: 15–20 min
+- Gallery publication: automated
+- Monthly analytics: 4–6 hours
+- Quarterly optimization: 8–10 hours
+- **Total ongoing**: ~20–30 hours/week across all participants
+
+---
+
+## W907. Customer Consumables Subscription & Auto-Replenishment Service
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Customer enrolls eligible SKUs in auto-replenishment subscription via ecommerce, mobile app, or in-store; or system suggests subscription based on repeat purchase pattern analysis |
+| **Frequency** | ~2,000–3,000 active subscriptions at steady state; ~500–800 subscription orders/month |
+| **Volume** | Average 3–5 SKUs per subscription; monthly or bi-monthly delivery cadence |
+| **Owner** | Digital Commerce Manager |
+| **Participants** | Customer, Ecommerce Fulfillment Team (W19), Supply Planning (replenishment), Marketing Coordinator (subscription analytics) |
+
+### Background
+
+Many BuildRight customers purchase the same consumable products repeatedly: painters who buy the same paint brand monthly, contractors who restock adhesive and screws bi-weekly, hotels and property managers who need cleaning supplies and lightbulbs on a regular schedule, and DIY enthusiasts who maintain their homes with seasonal supplies. Currently, these customers re-order manually each time — a friction point that competitors with subscription models exploit. A subscription/auto-replenishment service allows customers to set up recurring deliveries of their regular-use items at a discounted price (5–10% subscription discount), with flexible delivery frequency and easy modification. This drives predictable recurring revenue, increases customer lifetime value, reduces customer acquisition cost (subscriber retention is higher than one-time buyer retention), and provides BuildRight with valuable demand forecasting data for replenishment planning (W31). This is especially relevant for the Philippine market where sari-sari stores have traditionally provided informal "running tab" regularity for household consumables — BuildRight's subscription service digitizes this behavior for the home improvement segment.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Subscription Enrollment**: Customer enrolls via: (a) ecommerce product page — "Subscribe & Save" button with frequency selection (weekly, bi-weekly, monthly, bi-monthly, quarterly) and discount display; (b) mobile app — "Auto-Replenish" feature on product detail or from purchase history; (c) in-store Pro Desk or customer service counter — Sales Associate sets up subscription for customer via POS/associate terminal; (d) system-suggested subscription — system identifies repeat purchase patterns (same SKU purchased 3+ times in 6 months) and sends personalized subscription offer via W708 with one-click enrollment; (e) enrollment captures: SKU(s), quantity, frequency, delivery address, payment method (stored card or e-wallet), subscription discount (5% standard, 10% for 5+ SKUs), and preferred delivery day of week | Customer / Sales Associate / System | Digital Commerce Manager | 5–10 min |
+| 2 | **Subscription Order Generation**: (a) system auto-generates order based on frequency and last delivery date; (b) 3 days before order generation: customer receives "Upcoming Order" notification with current order details and option to modify (change quantity, skip, add items, change delivery date); (c) system checks ATP at fulfillment location per W536; if any item unavailable: (i) auto-substitute per W279 if customer pre-approved substitution; (ii) customer notification with alternative options; (iii) partial shipment with backorder if customer consents; (d) order created in unified order management system per POS-045 with subscription flag and discount applied; (e) payment authorization attempted on stored payment method; if declined: customer notified with 48-hour resolution window before order cancellation | System / Customer | — | Automated |
+| 3 | **Subscription Fulfillment**: (a) subscription orders enter standard fulfillment pipeline: DC pick/pack/ship per W19 for home delivery, or store pick per W11 for BOPIS; (b) subscription orders flagged for priority picking (subscription customers are high-value, high-retention — SLA priority over one-time orders); (c) delivery executed per standard home delivery process (W19) or BOPIS (W11); (d) customer receives tracking notification per W592; (e) delivery confirmation triggers next delivery date calculation and subscription calendar update | Ecommerce Fulfillment Team / System | — | Standard fulfillment time |
+| 4 | **Subscription Modification & Management**: Customer modifies subscription via: (a) mobile app "My Subscriptions" dashboard — change items, quantities, frequency, delivery address, payment method, skip next delivery, pause (up to 90 days), or cancel; (b) customer service counter — assisted modification; (c) customer service hotline — CSR modifies subscription in system; (d) cancellation analytics: system captures cancellation reason (price, quality, delivery, no longer needed, competitor) and triggers retention offer for price/competitor cancellations (one-time discount or free shipping for 3 months); (e) subscription reactivation: cancelled subscriptions with reactivation potential flagged at 60 days for re-engagement campaign per W618 | Customer / System / CSR | Digital Commerce Manager | 3–5 min per modification |
+| 5 | **Subscription Analytics & Optimization**: (a) weekly: active subscription count, new enrollments, cancellations (churn rate), average items per subscription, average order value; (b) monthly: subscriber cohort analysis (enrollment month → retention rate by month), subscriber vs. non-subscriber LTV comparison, subscription revenue as % of ecommerce revenue, popular subscription SKUs and categories; (c) quarterly: discount profitability analysis (subscription discount cost vs. margin from predictable demand and reduced acquisition cost), subscription program ROI, A/B testing of discount levels and frequency options, supply planning integration for subscription demand forecasting (W31); (d) annual: program expansion plan — new eligible SKU categories, tiered subscription program (Silver/Gold/Platinum with escalating benefits), and partnership subscriptions (e.g., paint manufacturer co-branded subscription with color-of-the-month delivery) | Digital Commerce Manager / Supply Planning / System | VP Marketing | 4–6 hours/month |
+
+### System Touchpoints
+
+- Ecommerce platform with subscription management module
+- Mobile app (W615) with "My Subscriptions" dashboard
+- POS system for in-store subscription enrollment
+- Unified order management (POS-045/W536) for subscription order routing
+- Inventory/ATP system for availability checking
+- Payment gateway (W611) for stored payment processing and auto-authorization
+- Home delivery fulfillment (W19) and BOPIS (W11)
+- Customer communication module (W708) for upcoming order notifications
+- CDP (W156) for repeat purchase pattern analysis and subscription suggestions
+- Supply planning/demand forecasting (W31) for subscription demand integration
+- BI dashboard for subscription analytics and cohort analysis
+
+### Pain Points / Risks
+
+- **Payment method expiry/failure**: stored credit cards expire or are declined; pre-authorization check 3 days before order with customer notification for payment update; 2 failed attempts triggers subscription pause with customer alert
+- **Cannibalization of full-price sales**: customers who would have purchased at full price subscribe at a discount; mitigate by limiting subscription to designated "subscription-eligible" SKUs (consumables, replacement items, seasonal maintenance products) and excluding new/seasonal items
+- **Subscription fatigue**: customers accumulate too many subscriptions and cancel in frustration; recommended maximum of 10 SKUs per subscription with clear per-SKU cost transparency
+- **Inventory allocation conflict**: subscription orders competing with one-time orders for limited stock; subscription allocation buffer (5% of safety stock reserved for subscriptions) with dynamic adjustment based on subscriber count
+- **Delivery cost erosion**: frequent small subscription orders increase per-order delivery cost; minimum subscription order value (PHP 1,500 for free delivery) or combined delivery batching for customers with multiple subscriptions
+- **Data privacy for stored payment**: PCI-DSS compliance for stored card data per POS-049; RA 10173 consent for auto-charging required at enrollment with clear cancellation rights
+
+### Staffing Implication
+
+- **Digital Commerce Manager**: ~4–6 hours/month on program strategy and analytics; absorbed by existing role
+- **Ecommerce Fulfillment Team**: subscription orders integrated into standard fulfillment with priority flag; ~10–15% increase in regular orders at steady state; absorbed with incremental volume
+- **CSR Team**: ~2–3 subscription modification calls/day chain-wide; absorbed by existing call center capacity (W259)
+- **No incremental headcount at store level**
+
+### Time Estimate
+
+- Subscription enrollment: 5–10 min (customer time)
+- Order generation: automated
+- Subscription modification: 3–5 min
+- Monthly analytics: 4–6 hours
+- Quarterly optimization: 8–10 hours
+- **Total per subscription lifecycle**: ~20–30 min of staff time over 12 months (enrollment + modifications + cancellation handling)

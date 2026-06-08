@@ -1,6 +1,6 @@
 # Merchandising & Pricing Workflows
 
-> Assortment planning, promotions, pricing, product lifecycle, PIM, vendor rebate management, markdown & clearance pricing, sample & demo inventory management, category performance review & P&L ownership, pricing hierarchy governance, private label development, competitor intelligence, store-level price tag printing & verification, store promotional setup & visual merchandising, seasonal merchandise transition & display rotation, loyalty tier re-evaluation & migration processing, competitor store visit program & market intelligence operations, product quality lab testing & certification management, markdown optimization & analytics operations, vendor trade fund management & promotional budget tracking, and vendor new product in-store launch event & demonstration coordination.
+> Assortment planning, promotions, pricing, product lifecycle, PIM, vendor rebate management, markdown & clearance pricing, sample & demo inventory management, category performance review & P&L ownership, pricing hierarchy governance, private label development, competitor intelligence, store-level price tag printing & verification, store promotional setup & visual merchandising, seasonal merchandise transition & display rotation, loyalty tier re-evaluation & migration processing, competitor store visit program & market intelligence operations, product quality lab testing & certification management, markdown optimization & analytics operations, vendor trade fund management & promotional budget tracking, vendor new product in-store launch event & demonstration coordination, store-level barangay & local fiesta merchandising calendar management, and customer product bundle assembly & pre-packaged solution kit management.
 >
 > Back to [Workflow Index](README.md)
 
@@ -34,6 +34,8 @@
 - [W737. Markdown Optimization & Analytics Operations](#w737-markdown-optimization--analytics-operations)
 - [W738. Vendor Trade Fund Management & Promotional Budget Tracking](#w738-vendor-trade-fund-management--promotional-budget-tracking)
 - [W900. Vendor New Product In-Store Launch Event & Demonstration Coordination](#w900-vendor-new-product-in-store-launch-event--demonstration-coordination)
+- [W908. Store-Level Barangay & Local Fiesta Merchandising Calendar Management](#w908-store-level-barangay--local-fiesta-merchandising-calendar-management)
+- [W910. Customer Product Bundle Assembly & Pre-Packaged Solution Kit Management](#w910-customer-product-bundle-assembly--pre-packaged-solution-kit-management)
 
 ---
 
@@ -1684,3 +1686,138 @@ BuildRight introduces ~1,750–2,800 new SKUs annually (5–8% SKU growth on 35,
 - Event execution: 1–3 days
 - Post-event analysis and settlement: 4–8 hours
 - **Total Category Manager time per event**: 15–24 hours across all phases
+
+---
+
+## W908. Store-Level Barangay & Local Fiesta Merchandising Calendar Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Annual calendar planning cycle (January); also triggered by new store opening, barangay fiesta date announcement, or local government event schedule release |
+| **Frequency** | Annual planning with monthly updates; ~5–8 local events per store per year (varies by location) |
+| **Volume** | 1 barangay per store × 200 stores; additional municipal/city/provincial events vary |
+| **Owner** | Category Manager (Seasonal & Local) |
+| **Participants** | Store Manager, Category Manager, Marketing Coordinator, Department Supervisor, Barangay/Local Government Liaison |
+
+### Background
+
+The Philippines has one of the richest festival cultures in Southeast Asia. Every barangay (the smallest local government unit) celebrates an annual fiesta honoring its patron saint, and municipalities/cities host larger festivals (Sinulog in Cebu, Kadayawan in Davao, Ati-Atihan in Kalibo, Dinagyang in Iloilo, Panagbenga in Baguio). These events drive significant community activity: home renovation, decoration, and improvement spending spikes before local fiestas as families prepare homes for visitors. A BuildRight store in Cebu experiences different local demand patterns than a store in Davao or Pampanga, yet the current merchandising calendar is predominantly national. This workflow creates a store-level local event merchandising calendar that integrates barangay fiestas, municipal festivals, school opening dates, harvest seasons, and local construction cycles into merchandising, replenishment, and promotional planning. A store in a fishing community might stock up on marine-grade materials before the local fishing festival; a store near a university town adjusts for dormitory renovation season. This localized approach increases sales relevance and deepens community integration per W209.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Local Event Data Collection**: (a) Store Manager compiles local event calendar: (i) barangay fiesta date and duration (typically 1–3 days, with preparation period 2–4 weeks before); (ii) municipal/city festival dates and expected crowd volume; (iii) school opening dates (June, August for college) and enrollment periods; (iv) local government infrastructure project timelines (road construction, public building renovation — source from barangay captain/municipal planning office); (v) agricultural harvest seasons (rice, coconut, sugarcane — affects rural store demand for fencing, storage, and farm maintenance materials); (vi) local election periods (campaign materials, tarpaulin, paint for campaign headquarters); (vii) religious construction seasons (church renovation before Holy Week or local patronal feast); (b) Store Manager enters event data into centralized merchandising calendar module with: event name, type, date range, estimated community participation, and expected demand impact on BuildRight categories | Store Manager | Category Manager (Seasonal & Local) | 4–6 hours/year + 30 min/month updates |
+| 2 | **Demand Impact Assessment & Category Mapping**: (a) Category Manager maps each local event type to affected merchandise categories: (i) barangay fiesta → paint (interior/exterior), tiles, plumbing fixtures, lighting, curtains/blinds, cleaning supplies; (ii) school opening → storage solutions, shelving, lighting, paint (dormitory renovation); (iii) harvest season → fencing wire, cement, storage bins, tarps; (iv) festival/construction → lumber, cement, rebar, roofing, electrical; (v) local government projects → construction materials, hardware, plumbing, electrical; (b) system estimates demand uplift factor per category per event type based on historical sales data (prior year same event) and event size; (c) Category Manager validates uplift factors and adjusts for local context (e.g., first fiesta after a typhoon may have higher renovation demand) | Category Manager / System | VP Merchandising | 6–8 hours/year |
+| 3 | **Localized Replenishment & Inventory Pre-Positioning**: (a) system adjusts replenishment parameters (W312) per store per event: safety stock increase for affected categories starting T-4 weeks before event, return to standard at T+1 week; (b) store-specific allocation: DC pre-positions event-specific inventory during T-4 to T-2 window; (c) for high-impact events (Davao Kadayawan, Cebu Sinulog — stores in host cities): dedicated event allocation with separate safety stock buffer; (d) slow-moving post-event inventory disposition plan: remaining event-specific stock marked for markdown per W93 if not sold within 30 days post-event, or transferred to store with upcoming similar event per W22 | Supply Planning / System / DC | Category Manager | Automated + 2–3 hours/event |
+| 4 | **Local Event Promotional Activation**: (a) Marketing Coordinator creates localized promotional content for high-impact local events: (i) event-themed displays per W262 (e.g., "Handa na ba ang bahay mo para sa fiesta?" — "Is your home ready for the fiesta?"); (ii) event-specific bundle offers per W910 (e.g., "Fiesta Home Makeover Bundle" — paint + brushes + rollers + cleaning supplies at 15% discount); (iii) social media posts per W142 targeting store-local audience with geo-targeted ads; (iv) in-store signage per W504 with event-themed messaging; (b) for barangay fiestas: Store Manager offers community discount code (5% off) distributed through barangay captain office — drives foot traffic and strengthens barangay relationship per W209; (c) event-specific promotional pricing configured in POS with start/end dates per store location | Marketing Coordinator / Store Manager / System | Category Manager | 4–6 hours/event |
+| 5 | **Post-Event Performance Review & Calendar Optimization**: (a) within 2 weeks post-event: Store Manager reports actual vs. expected sales uplift by category; (b) Category Manager reviews demand forecast accuracy per event type and refines uplift factors for next year; (c) monthly: merchandising calendar dashboard showing upcoming events by store/region with preparation status; (d) annual: comprehensive local event merchandising ROI analysis — sales uplift vs. incremental inventory cost vs. promotional cost; top-performing event types and stores recognized; underperforming event strategies revised or discontinued | Store Manager / Category Manager / System | VP Merchandising | 2–3 hours/month + 8–10 hours/year |
+
+### System Touchpoints
+
+- Merchandising calendar module with store-level event entries
+- Replenishment parameter management (W312) for event-driven safety stock adjustment
+- DC allocation and pre-positioning system (W4)
+- Promotional pricing engine with location-specific configuration
+- Social media management platform (W142) with geo-targeted advertising
+- Digital signage system (W504) for store-specific event messaging
+- Product bundle management (W910) for event-specific kits
+- Location master (W254) with barangay/municipality linkage per MDM-019
+- BI dashboard for event performance analytics
+- Community relations module (W209) for barangay relationship tracking
+
+### Pain Points / Risks
+
+- **Event date variability**: barangay fiesta dates may shift; some events are moveable feasts tied to religious calendars; system must support date override with notification to Category Manager and DC
+- **Limited data for new stores**: stores open less than 1 year have no historical event sales data; default uplift factors from nearest comparable store applied until store-specific data accumulates
+- **Overlapping events**: a store may have barangay fiesta and school opening in the same month; demand stacking requires combined uplift calculation, not simple addition
+- **Local political sensitivity**: event-related promotions must be non-partisan and community-positive; no political campaign material sales tie-ins; Store Manager guidelines provided per W209
+- **Post-event inventory overhang**: overestimation of event demand leads to excess inventory; conservative uplift factors (start low, increase based on actual data) and 30-day markdown trigger mitigate
+- **Coordination complexity**: 200 stores × 5–8 events each = 1,000–1,600 local events/year; automated calendar management with exception-based Category Manager intervention required
+
+### Staffing Implication
+
+- **Category Manager (Seasonal & Local)**: dedicated role or absorbed by existing Category Manager with seasonal portfolio; ~10–15 hours/month on local event merchandising management; annual salary ~PHP 600K–800K for dedicated role
+- **Store Manager**: ~4–6 hours/year on local event data collection + 30 min/month updates + 2–3 hours/event on community coordination; absorbed by existing role
+- **Marketing Coordinator**: ~4–6 hours/event on localized promotional content creation; absorbed by existing role for top events, templated content for smaller events
+- **No incremental store-level headcount**
+
+### Time Estimate
+
+- Annual calendar data collection: 4–6 hours/store
+- Demand impact assessment: 6–8 hours/year (Category Manager)
+- Per-event replenishment adjustment: 2–3 hours
+- Per-event promotional activation: 4–6 hours
+- Monthly calendar review: 30 min/store
+- Post-event review: 2–3 hours/event
+- **Total per event**: ~8–12 hours of combined staff time (planning + execution + review)
+
+---
+
+## W910. Customer Product Bundle Assembly & Pre-Packaged Solution Kit Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Category Manager identifies bundle opportunity from sales data analysis; vendor proposes co-packaged kit; or customer feedback/project data (W894, W905) reveals frequently co-purchased item clusters |
+| **Frequency** | ~20–30 new bundle creations/year; ~100–150 active bundles at any time; ~8,000–12,000 bundle units sold/month chain-wide |
+| **Volume** | Average 3–7 SKUs per bundle; bundle price PHP 500–50,000 |
+| **Owner** | Category Manager |
+| **Participants** | Category Manager, Pricing Analyst, DC Operations (kit assembly), Merchandising Director, Marketing Coordinator, Vendor (co-branded kits) |
+
+### Background
+
+BuildRight's customers frequently purchase groups of related items together: a customer tiling a bathroom needs tiles + adhesive + grout + spacers + trowel + sponge + tile cutter; a customer doing electrical work needs wire + circuit breaker + outlets + switch + electrical tape + junction box. Purchasing these items individually requires knowledge of what's needed, navigating multiple aisles, and calculating quantities — a friction point especially for DIY customers. Product bundles (pre-packaged solution kits with all required materials for a specific project) simplify the purchase decision, increase average basket size, improve customer experience, and drive incremental sales. A "Complete Bathroom Tile Kit (5 sqm)" or "Home Electrical Repair Starter Kit" removes complexity and accelerates checkout. Bundles also create vendor co-branding opportunities (e.g., a paint manufacturer co-branded "Room Makeover Kit" with their paint + BuildRight brushes/rollers/tarps) with shared promotional funding per W513. This workflow manages the lifecycle of product bundles from creation through assembly, pricing, merchandising, and performance review.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Bundle Opportunity Identification**: Sources: (a) market basket analysis — system identifies frequently co-purchased item clusters from POS transaction data (items bought together in ≥15% of transactions containing the anchor item); (b) Project Vault data (W894) — most-saved project lists reveal common material combinations; (c) Project Gallery data (W905) — products tagged in customer project photos; (d) customer feedback — "I wish there was a kit for..." sentiment from W608 surveys; (e) vendor proposal — vendor suggests co-branded kit with shared promotional funding per W513; (f) competitor gap — competitor does not offer bundled kits in a category where BuildRight can differentiate; (g) seasonal event — barangay fiesta or holiday bundle per W908 | Category Manager / System / Vendor | Merchandising Director | 4–6 hours/opportunity |
+| 2 | **Bundle Design & Pricing**: (a) bundle composition: Category Manager selects 3–7 items covering the complete project requirement (e.g., "Complete Wall Paint Kit" = 1 gal paint + roller frame + roller cover + paint tray + 2" brush + painter's tape + drop cloth); (b) quantity sizing: bundle sized for standard project scope (e.g., 5 sqm tile kit, 10 sqm paint kit, 1-room electrical kit); (c) pricing: (i) bundle price set at 10–15% discount vs. individual item sum; (ii) margin floor validation per category threshold per W598; (iii) if vendor co-funded, vendor promotional contribution per W513 reduces net cost; (d) Pricing Analyst runs margin simulation per W85 confirming bundle meets minimum margin; (e) Merchandising Director approves bundle for pilot (limited to 20–30 stores initially) or national rollout based on projected volume and margin impact | Category Manager / Pricing Analyst | Merchandising Director | 4–8 hours per bundle |
+| 3 | **Bundle SKU Creation & Assembly**: (a) Kit/BOM master (W302) updated with bundle structure: parent bundle SKU + child component SKUs with quantities; (b) bundle SKU created in item master (W252) with dedicated barcode, description, and lifecycle status per W315; (c) assembly location decision: (i) DC kitting (W46) for complex bundles requiring assembly — DC picks components and assembles into branded packaging; (ii) vendor-assembled — vendor provides pre-assembled kit in BuildRight-branded packaging; (iii) virtual bundle (no physical assembly) — items scanned individually at POS but presented as bundle with bundle discount applied automatically; (d) for DC-assembled kits: DC WMS receives kitting work order per W46, picks components, assembles, applies bundle barcode label, and places in finished goods location; (e) inventory valuation: bundle cost = sum of component costs + assembly labor (if DC-assembled); individual component ATP reduced upon kit assembly | Category Manager / DC Operations / System | Merchandising Director | 2–4 hours setup per bundle |
+| 4 | **Bundle Merchandising & Promotion**: (a) planogram placement per W314: bundle displayed as single unit in project-relevant section (e.g., "Tile Kit" displayed in tile aisle, not scattered across aisles); (b) POS configuration: bundle barcode scans as single item with single price, or virtual bundle triggers component-level scan with auto-applied discount; (c) ecommerce listing per W726: bundle page with "Complete Solution" badge, component breakdown with individual prices for comparison, "Everything you need for [project type]" messaging, and project gallery link (W905); (d) promotional activation per W13: bundle featured in campaign with "Save 10–15% vs. buying individually" messaging; vendor co-branded bundles featured in vendor-funded campaigns per W513; (e) mobile app (W615) bundle suggestion in "Frequently Bought Together" and "Complete Your Project" recommendation modules | Marketing Coordinator / Category Manager / System | Merchandising Director | 4–6 hours per bundle launch |
+| 5 | **Bundle Performance Monitoring & Lifecycle Management**: (a) monthly: bundle sales velocity (units/store/month), bundle vs. individual component sales cannibalization analysis, margin contribution, and customer satisfaction (from product reviews W510); (b) quarterly: bundle portfolio review — top/bottom performers, seasonality adjustment (add summer bundles, remove holiday bundles), vendor co-brand ROI; (c) annual: bundle rationalization per W679 — underperforming bundles discontinued per W315 lifecycle, components returned to individual sale or repurposed into new bundles; (d) bundle lifecycle status per W315: New (pilot, 20–30 stores) → Active (national, 200 stores) → Seasonal (active only during specific months) → EOL (clearance, components sold individually) → Discontinued | Category Manager / System | Merchandising Director | 2–3 hours/month |
+
+### System Touchpoints
+
+- Item master (W252) for bundle SKU creation with component linkage
+- Kit/BOM master (W302) for bundle structure definition
+- POS system for bundle barcode scanning and virtual bundle processing
+- Ecommerce platform for bundle listing and pricing display
+- DC WMS kitting module (W46) for physical assembly
+- Inventory/ATP system for component and bundle availability
+- Promotional pricing engine (W13) for bundle discount configuration
+- Planogram system (W314) for bundle shelf placement
+- Market basket analysis engine for co-purchase identification
+- Project Vault (W894) and Project Gallery (W905) for bundle ideation
+- Vendor co-op advertising module (W513) for co-branded bundle funding
+- Mobile app (W615) for bundle recommendations
+- Product lifecycle management (W315) for bundle status transitions
+- BI dashboard for bundle performance analytics
+
+### Pain Points / Risks
+
+- **Component availability mismatch**: if one component is out of stock, the entire bundle is unavailable; virtual bundles (no physical assembly) mitigate — POS applies discount even if one item is substituted per W279; DC-assembled kits require all components in stock for assembly
+- **Cannibalization of individual item sales**: customers who would have bought items individually may switch to discounted bundle, reducing margin; bundle sizing (targeting specific project scope rather than commodity items) and margin floor validation per W85 mitigate; monitor bundle vs. individual sales ratio
+- **Bundle inventory aging**: if bundle doesn't sell, component inventory is locked in kit form; virtual bundles avoid this issue; DC-assembled kits with slow velocity should be disassembled and components returned to saleable stock per W46
+- **Pricing complexity at POS**: cashier must distinguish between physical bundle (single barcode) and virtual bundle (multiple barcodes with auto-discount); POS training per W518 and clear bundle labeling mitigate
+- **Vendor dependency for co-branded kits**: vendor may discontinue a component or change specifications, breaking the bundle; vendor contract terms per W669 should include advance notice of discontinuation with bundle impact assessment
+- **Bundle scope creep**: too many active bundles (200+) confuse customers and dilute the "complete solution" value proposition; portfolio cap of 100–150 active bundles with quarterly rationalization
+
+### Staffing Implication
+
+- **Category Manager**: ~10–15 hours/month on bundle lifecycle management (creation, monitoring, rationalization); absorbed by existing role with seasonal portfolio
+- **Pricing Analyst**: ~4–6 hours/bundle on margin simulation; absorbed by existing role
+- **DC Operations**: kitting labor for DC-assembled bundles; ~50–100 kits/week across 4 DCs absorbed within existing kitting capacity per W46
+- **Marketing Coordinator**: ~4–6 hours/bundle launch on promotional activation; absorbed by existing role
+- **No incremental headcount**
+
+### Time Estimate
+
+- Bundle opportunity identification: 4–6 hours
+- Bundle design and pricing: 4–8 hours
+- SKU creation and assembly setup: 2–4 hours
+- Merchandising and promotion: 4–6 hours per launch
+- Monthly performance monitoring: 2–3 hours
+- Quarterly portfolio review: 8–10 hours
+- **Total per bundle lifecycle**: ~25–40 hours of staff time from creation to annual review

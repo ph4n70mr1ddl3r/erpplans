@@ -1,6 +1,6 @@
 # Procurement & Vendor Management Workflows
 
-> Purchase orders, vendor onboarding, VMI, special orders, vendor performance, contracts, vendor-funded promotional activity & co-op advertising management, vendor portal content management & self-service operations, vendor due diligence & onboarding site visit management, vendor-managed inventory (VMI) daily performance monitoring, strategic sourcing & category strategy, competitive bidding & tender management, purchase price variance (PPV) analysis & cost management, and vendor seasonal buy-back & stock return agreement execution.
+> Purchase orders, vendor onboarding, VMI, special orders, vendor performance, contracts, vendor-funded promotional activity & co-op advertising management, vendor portal content management & self-service operations, vendor due diligence & onboarding site visit management, vendor-managed inventory (VMI) daily performance monitoring, strategic sourcing & category strategy, competitive bidding & tender management, purchase price variance (PPV) analysis & cost management, vendor seasonal buy-back & stock return agreement execution, and vendor product packaging sustainability assessment & compliance management.
 >
 > Back to [Workflow Index](README.md)
 
@@ -38,6 +38,7 @@
 - [W705. Vendor Self-Service Portal Operations & Supplier Collaboration](#w705-vendor-self-service-portal-operations-supplier-collaboration)
 - [W706. Supplier Performance Scorecard & Quarterly Business Review](#w706-supplier-performance-scorecard-quarterly-business-review)
 - [W901. Vendor Seasonal Buy-Back & Stock Return Agreement Execution](#w901-vendor-seasonal-buy-back--stock-return-agreement-execution)
+- [W915. Vendor Product Packaging Sustainability Assessment & Compliance Management](#w915-vendor-product-packaging-sustainability-assessment--compliance-management)
 
 ---
 
@@ -2218,3 +2219,66 @@ BuildRight's seasonal merchandise (Christmas lights/décor, flood control items,
 - Post-season review: 4–6 hours
 - **Total elapsed time per seasonal transition**: 3–5 weeks
 - **Total staff time per seasonal transition**: 20–35 hours
+
+---
+
+## W915. Vendor Product Packaging Sustainability Assessment & Compliance Management
+
+| Field | Detail |
+|---|---|
+| **Trigger** | Annual vendor scorecard cycle; new vendor onboarding (W36); new product introduction (W564); or regulatory change in packaging requirements |
+| **Frequency** | Annual assessment for top 200 vendors; continuous monitoring for new products |
+| **Volume** | ~200 vendor assessments/year; ~5,000–8,000 product packaging reviews/year |
+| **Owner** | Category Manager (Sustainability) |
+| **Participants** | Category Manager, Vendor, ESG Manager, Quality Assurance, Merchandising Director |
+
+### Background
+
+BuildRight's ESG strategy (W192–W195, W800–W801) includes a commitment to reducing packaging waste across the supply chain. With ~400–600 TEUs of imports per month and ~800–1,000 active vendors, BuildRight's packaging footprint is significant: wooden pallets, cardboard boxes, plastic shrink wrap, styrofoam inserts, and individual product packaging contribute to the waste stream. Philippine regulations are tightening — the Extended Producer Responsibility (EPR) Act of 2022 (RA 11898) mandates large enterprises to recover and divert plastic packaging waste, with penalties for non-compliance. BuildRight, as a large enterprise, must comply. Beyond compliance, sustainable packaging is a competitive differentiator: environmentally-conscious customers (a growing segment in the Philippine market) prefer vendors with eco-friendly packaging, and sustainable sourcing per W195 is an ESG commitment. This workflow establishes a structured vendor packaging sustainability assessment program that evaluates, scores, and incentivizes vendors to adopt sustainable packaging, while ensuring BuildRight's compliance with RA 11898 EPR requirements.
+
+### Steps
+
+| # | Activity | Role (R) | Role (A) | Duration |
+|---|---|---|---|---|
+| 1 | **Packaging Sustainability Assessment Framework**: (a) ESG Manager and Category Manager define assessment criteria per vendor: (i) packaging material composition (% recyclable, % biodegradable, % single-use plastic, % recycled content); (ii) packaging-to-product ratio (weight of packaging as % of product weight); (iii) pallet utilization efficiency (% of pallet space used — under-packed pallets waste transport capacity and increase carbon emissions per W192); (iv) labeling compliance (recyclability symbols, material identification per DENR guidelines); (v) hazardous packaging materials (styrofoam, PVC, non-recyclable multi-layer packaging — flagged for phase-out); (b) scoring model: 100-point scale — Material Sustainability (40 pts), Efficiency (25 pts), Compliance (20 pts), Innovation (15 pts); (c) tier classification: Green (≥80 pts), Yellow (60–79), Orange (40–59), Red (<40); (d) Merchandising Director approves framework | Category Manager / ESG Manager | Merchandising Director | 20–30 hours (one-time framework development) |
+| 2 | **Vendor Packaging Data Collection**: (a) for top 200 vendors (by spend): vendor submits packaging data via W705 vendor portal: (i) packaging material breakdown per SKU category; (ii) packaging weight per unit; (iii) pallet configuration (units per pallet, layers, stack pattern); (iv) recyclability certification (if available); (v) sustainable packaging improvement roadmap; (b) for import vendors: Category Manager requests packaging samples at DC receiving for physical assessment; (c) for new vendor onboarding (W36): packaging sustainability questionnaire integrated into onboarding checklist; (d) system validates data completeness and flags incomplete submissions for vendor follow-up per W870 compliance document tracking | Vendor / Category Manager / System | ESG Manager | 15–20 min per vendor |
+| 3 | **Assessment Scoring & Vendor Feedback**: (a) system calculates packaging sustainability score per vendor based on submitted data; (b) Category Manager reviews scores, validates against physical samples (for top 50 vendors), and assigns final tier; (c) vendor receives scorecard via W705 portal with: overall score, tier classification, category-level performance, comparison to industry average (anonymized peer benchmark per W871), and improvement recommendations; (d) vendor improvement roadmap request: Orange and Red tier vendors must submit a 12-month improvement plan with specific milestones (e.g., "Replace styrofoam inserts with corrugated cardboard by Q3"); (e) Green tier vendors receive BuildRight "Sustainable Packaging Partner" badge for marketing use and preferential consideration for new product listings per W788 | Category Manager / System / Vendor | Merchandising Director | 30–45 min per vendor |
+| 4 | **EPR Compliance & Waste Diversion Tracking**: (a) BuildRight's EPR obligation per RA 11898: annual plastic packaging waste diversion target (starting 30%, increasing to 80% by 2030); (b) system aggregates packaging waste data from: DC receiving (inbound packaging per vendor), store operations (outbound packaging per W502 non-hazardous waste management), and ecommerce (shipping packaging per W19); (c) ESG Manager tracks: total packaging waste generated (by material type), % diverted (recycled, reused, returned to vendor), and EPR compliance status; (d) vendor-specific packaging waste contribution identifies high-waste vendors for targeted improvement; (e) quarterly EPR compliance report prepared for DENR per W433 SMR/CMR reporting; (f) annual: EPR compliance audit per W362 internal audit | ESG Manager / System | VP Supply Chain | 6–8 hours/quarter |
+| 5 | **Sustainable Packaging Improvement Incentives**: (a) Green tier vendors: (i) featured in BuildRight sustainability marketing per W694 ESG report; (ii) eligible for vendor co-op advertising funding per W513 with "Sustainable Choice" branding; (iii) preferential shelf placement per W86 planogram; (b) vendor improvement funding: BuildRight allocates annual sustainability improvement fund (PHP 2–5M) to co-invest with Orange/Red tier vendors in packaging redesign; (c) packaging innovation awards: annual BuildRight Sustainable Packaging Award for most improved vendor per W630 recognition program; (d) vendor contract clause per W688: new contracts require packaging sustainability improvement commitment; existing contracts amended at renewal per W704; (e) annual: program effectiveness review — overall packaging waste reduction, vendor tier migration (Orange/Red → Yellow/Green), EPR compliance status, and ROI of sustainable packaging program | Category Manager / ESG Manager / Merchandising Director | VP Merchandising | 8–10 hours/year |
+
+### System Touchpoints
+
+- Vendor portal (W705) for packaging data submission and scorecard access
+- Item master (W252) with packaging attributes per SKU (weight, material, recyclability)
+- DC WMS receiving module (W3) for inbound packaging tracking
+- Store waste management module (W502) for outbound packaging tracking
+- ESG metrics master (W406) for sustainability scoring framework
+- Vendor scorecard system (W706) for packaging sustainability KPI integration
+- EPR compliance tracking module integrated with DENR SMR/CMR reporting (W433)
+- Contract management system (W688) for packaging sustainability clause enforcement
+- BI dashboard for packaging waste analytics and vendor sustainability scoring
+- ESG reporting module (W694) for annual sustainability report data
+
+### Pain Points / Risks
+
+- **Vendor resistance**: many vendors, especially MSMEs, lack resources for sustainable packaging; improvement timeline must be realistic with BuildRight co-investment support; tiered approach (improvement plan vs. immediate compliance) maintains vendor relationships
+- **Data quality**: vendor-submitted packaging data may be inaccurate or incomplete; physical sample verification for top vendors and random spot-checks for others mitigate; data quality monitoring per W734
+- **Cost pass-through**: sustainable packaging may cost more; vendors may increase prices to cover packaging redesign costs; BuildRight's co-investment fund and volume commitment incentive offset vendor cost
+- **Regulatory complexity**: RA 11898 EPR requirements evolving; DENR implementing rules may change; regulatory change management per W657 ensures BuildRight stays ahead of requirements
+- **Import vendor control**: BuildRight has less influence over import vendor packaging (packed at origin country); Category Manager works with freight forwarder per W144 to optimize container loading (reducing packaging needs) and requests import vendor participation in program
+- **Measurement consistency**: packaging sustainability scoring requires consistent methodology; annual framework calibration with external sustainability consultant ensures accuracy and credibility
+
+### Staffing Implication
+
+- **Category Manager (Sustainability)**: absorbed by existing Category Manager with ESG portfolio; ~8–10 hours/month on vendor packaging assessments; no incremental headcount
+- **ESG Manager**: ~6–8 hours/quarter on EPR compliance tracking and reporting; absorbed by existing role
+- **No incremental headcount** — program managed within existing merchandising and ESG team capacity
+
+### Time Estimate
+
+- Framework development: 20–30 hours (one-time)
+- Vendor data collection: 15–20 min per vendor
+- Assessment scoring: 30–45 min per vendor
+- EPR compliance tracking: 6–8 hours/quarter
+- Annual program review: 8–10 hours
+- **Total per vendor per year**: ~1–2 hours of staff time (assessment + monitoring)
