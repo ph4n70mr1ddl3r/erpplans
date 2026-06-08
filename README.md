@@ -11,9 +11,9 @@ erpplans/
 ├── README.md                    ← You are here
 ├── 01-model-company/            ← Complete model company profile, requirements & workflows
 │   ├── model-company-profile.md       Company profile, operations, financials
-│   ├── erp-requirements.md            482 requirements across 20 categories
+│   ├── erp-requirements.md            730 requirements across 32 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map
-│   ├── workflows/                      1,042 workflows organized by 38 functional domains
+│   ├── workflows/                      1,063 workflows organized by 43 workflow domain files
 │   │   ├── README.md                         Workflow index & format guide
 │   │   ├── WF-merchandising.md               19 workflows (W1, W13, W27, W40, W50, W63, W64, W68, W93, W97, W102, W107, W129, W130, W181, W262, W264, W279, W329)
 │   │   ├── WF-procurement.md                 22 workflows (W2, W20, W36, W38, W44, W60, W62, W88, W110, W115, W136, W150, W155, W160, W161, W244, W245, W422, and sub-variants)
@@ -86,9 +86,11 @@ erpplans/
 
 | Metric | Value |
 |---|---|
-| Requirements | **482** across 20 categories |
-| Workflows | **1,042** across 38 functional domains + 5 cross-functional batches |
+| Requirements | **730** across 32 categories |
+| Workflows | **1,063** across 43 workflow domain files |
 | Internal Controls | 67 (31 preventive, 36 detective) |
-| Must Have Requirements | — any scored 0 is a disqualifier |
+| Must Have Requirements | 429 |
+| Should Have Requirements | 295 |
+| Nice to Have Requirements | 6 |
 
 

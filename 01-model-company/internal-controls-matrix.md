@@ -154,4 +154,4 @@
 
 ---
 
-*Date: 2026-06-06 (v7 — added C8 Master Data Governance Controls (CTL-50 to CTL-58, 9 controls) and C9 Treasury & Corporate Finance Controls (CTL-59 to CTL-67, 9 controls). Total controls: 67 (31P/36D))*
+*Date: 2026-06-09 (v7 — added C8 Master Data Governance Controls (CTL-50 to CTL-58, 9 controls) and C9 Treasury & Corporate Finance Controls (CTL-59 to CTL-67, 9 controls). Total controls: 67 (31P/36D))*

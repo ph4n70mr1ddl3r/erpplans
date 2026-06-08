@@ -514,7 +514,7 @@ BuildRight Holdings, Inc.
 | Sales Associates | 12 | Floor coverage, customer assistance |
 | Cashiers | 3 | Covers 3 POS terminals |
 | Receiving Clerk | 2 | Inbound goods processing |
-| Stockroom / Stock Associate | 3 | Replenishment, inventory counts |
+| Stockroom / Stock Associate | 4 | Replenishment, inventory counts |
 | Customer Service Rep | 1 | Returns, BOPIS pickup, special orders |
 | Maintenance / Utility | 1 | Store upkeep |
 

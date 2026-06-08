@@ -1,6 +1,6 @@
 # Workflow Criticality Classification
 
-> Classifies all 483 operational workflows into operational criticality tiers.
+> Classifies all 1,063 operational workflows into operational criticality tiers.
 > Supports resource prioritization and operational focus.
 >
 > Back to [Workflow Index](README.md)
@@ -17,8 +17,8 @@
 
 ### Classification Rules
 
-1. **Must Have requirements** (155) are overwhelmingly Tier 1, with exceptions for requirements that only apply at scale (e.g., across all 200 stores rather than pilot 5)
-2. **Should Have requirements** (122) are split between Tier 1 (operational necessities) and Tier 2
+1. **Must Have requirements** (429) are overwhelmingly Tier 1, with exceptions for requirements that only apply at scale (e.g., across all 200 stores rather than pilot 5)
+2. **Should Have requirements** (295) are split between Tier 1 (operational necessities) and Tier 2
 3. **Nice to Have requirements** (6) are Tier 3
 4. Domain-specific workflows (governance, audit, ESG, innovation) are classified by their operational impact
 5. Master data governance workflows are classified by dependency — foundational masters (item, customer, vendor, location) are Tier 1; advanced masters (planogram, loyalty config, digital assets) are Tier 2
