@@ -13,7 +13,7 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            482 requirements across 20 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map
-│   ├── workflows/                      1,002 workflows organized by 38 functional domains
+│   ├── workflows/                      1,042 workflows organized by 38 functional domains
 │   │   ├── README.md                         Workflow index & format guide
 │   │   ├── WF-merchandising.md               19 workflows (W1, W13, W27, W40, W50, W63, W64, W68, W93, W97, W102, W107, W129, W130, W181, W262, W264, W279, W329)
 │   │   ├── WF-procurement.md                 22 workflows (W2, W20, W36, W38, W44, W60, W62, W88, W110, W115, W136, W150, W155, W160, W161, W244, W245, W422, and sub-variants)
@@ -47,6 +47,8 @@ erpplans/
 │   │   ├── WF-additional-workflows.md       Batch 2: 20 additional cross-functional workflows
 │   │   ├── WF-additional-workflows-batch3.md Batch 3: 20 additional cross-functional workflows
 │   │   ├── WF-additional-workflows-batch4.md Batch 4: 20 additional cross-functional workflows
+│   │   ├── WF-additional-workflows-batch5.md Batch 5: 20 additional cross-functional workflows
+│   │   ├── WF-additional-workflows-batch6.md Batch 6: 20 additional cross-functional workflows
 │   │   ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── WF-regulatory-permits.md          3 workflows (W447, W448, W467)
@@ -85,7 +87,7 @@ erpplans/
 | Metric | Value |
 |---|---|
 | Requirements | **482** across 20 categories |
-| Workflows | **1,002** across 38 functional domains + 3 cross-functional batches |
+| Workflows | **1,042** across 38 functional domains + 5 cross-functional batches |
 | Internal Controls | 67 (31 preventive, 36 detective) |
 | Must Have Requirements | — any scored 0 is a disqualifier |
 
