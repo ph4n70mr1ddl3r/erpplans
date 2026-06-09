@@ -10,6 +10,7 @@
 | Document | Description |
 |---|---|
 | [technical-guidelines.md](technical-guidelines.md) | POS hardware specs, infrastructure & deployment reference, integration architecture, security requirements |
+| [validate-repo.sh](validate-repo.sh) | Cross-reference validation script — checks workflow counts, requirement IDs, and cross-references |
 
 ## Future Additions (Post-Platform Selection)
 

@@ -9,7 +9,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 91 Process Areas
+8 Families · 30 Value Streams · 91 Process Areas · 1,149 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -32,10 +32,10 @@
 |  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 3 | 23 |
 | | | | **Subtotal** | **475** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 39 |
-|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 17 |
+|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 23 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 53 |
 |  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 22 |
-| | | | **Subtotal** | **131** |
+| | | | **Subtotal** | **137** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 60 |
 | | | | **Subtotal** | **60** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 23 |
@@ -52,7 +52,7 @@
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 41 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 13 |
 | | | | **Subtotal** | **118** |
-| | | | **Grand Total** | **1143** |
+| | | | **Grand Total** | **1149** |
 
 ---
 
@@ -97,7 +97,7 @@
 
 - **PA-06.1** [Outbound Distribution](./VS-06-logistics-fleet/PA-06.1-outbound-distribution.md) — 2 workflows
 - **PA-06.2** [Fleet & Driver Management](./VS-06-logistics-fleet/PA-06.2-fleet-and-driver-management.md) — 6 workflows
-- **PA-06.3** Last-Mile & Delivery Partners — *(no workflows yet — tracked for future addition)*
+- **PA-06.3 | Last-Mile & Delivery Partners — *(no workflows yet; last-mile delivery operations are covered under VS-10 PA-10.2 and W268)*
 
 ### Sell & Serve
 
@@ -157,10 +157,10 @@
 - **PA-15.1** [Invoice Processing & Matching](./VS-15-procure-to-pay/PA-15.1-invoice-processing-and-matching.md) — 17 workflows
 - **PA-15.2** [Vendor Payment & Reconciliation](./VS-15-procure-to-pay/PA-15.2-vendor-payment-and-reconciliation.md) — 22 workflows
 
-**[VS-16: Order-to-Cash](./VS-16-order-to-cash/README.md)** (17 workflows)
+**[VS-16: Order-to-Cash](./VS-16-order-to-cash/README.md)** (23 workflows)
 
 - **PA-16.1** [Credit Application & Scoring](./VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md) — 13 workflows
-- **PA-16.2** AR & Collections — *(no workflows yet — tracked for future addition)*
+- **PA-16.2** [AR & Collections](./VS-16-order-to-cash/PA-16.2-ar-and-collections.md) — 6 workflows
 - **PA-16.3** [Customer Payment & Settlement](./VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md) — 4 workflows
 
 **[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (53 workflows)
@@ -287,4 +287,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1143 workflows across 30 value streams · Date: 2026-06-09*
+*Total: 1149 workflows across 30 value streams · Date: 2026-06-09*

@@ -7,9 +7,9 @@
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-16.1](PA-16.1-credit-application-and-scoring.md) | Credit Application & Scoring | 13 |
-| [PA-16.2](PA-16.2-ar-and-collections.md) | AR & Collections | 0 |
+| [PA-16.2](PA-16.2-ar-and-collections.md) | AR & Collections | 6 |
 | [PA-16.3](PA-16.3-customer-payment-and-settlement.md) | Customer Payment & Settlement | 4 |
-| | **Total** | **17** |
+| | **Total** | **23** |
 
 ---
 

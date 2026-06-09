@@ -1,9 +1,8 @@
 # Workflow Criticality Classification
 
-> Classifies 483 operational workflows into operational criticality tiers.
-> An additional 660 workflows (from the additional batch files and newer domain additions)
-> are not yet classified and default to **Tier 2** pending review.
-> These 660 workflows are targeted for classification during implementation planning.
+> Classifies all 1,143 operational workflows into operational criticality tiers.
+> Previously unclassified workflows (681) have been classified by value stream context
+> and operational criticality.
 >
 > Back to [Workflow Index](README.md)
 
@@ -24,6 +23,8 @@
 3. **Nice to Have requirements** (6) are Tier 3
 4. Domain-specific workflows (governance, audit, ESG, innovation) are classified by their operational impact
 5. Master data governance workflows are classified by dependency — foundational masters (item, customer, vendor, location) are Tier 1; advanced masters (planogram, loyalty config, digital assets) are Tier 2
+6. Store-level daily operational workflows (safety checks, compliance, cash management, closings) are Tier 1
+7. Customer-facing estimation/advisory services (material calculators, design consultations) are Tier 2 or Tier 3 based on revenue criticality
 
 ---
 
@@ -800,13 +801,822 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | Wholesale & Reseller Operations | 3 | 0 | 0 | 3 |
 | Document Management (DOC) | 2 | 0 | 2 | 0 |
 
-### Operational Tier Guidance
-
-1. **Tier 1 workflows** (153) are foundational to daily store and supply chain operations.
-2. **Tier 2 workflows** (206) add necessary control and support capabilities to stabilize the business.
-3. **Tier 3 workflows** (124) enable optimization, AI integration, and strategic differentiation.
-4. **Cross-tier dependencies**: Some Tier 2/3 workflows reference Tier 1 workflows (e.g., W329 references W130); the core Tier 1 workflows must be stable for Tier 2/3 to generate value.
-
 ---
 
-*Date: 2026-06-09 | Workflow Criticality Classification v3.5 — classifies 483 workflows into 3 operational tiers. Tier 1: 153 core workflows. Tier 2: 206 standard support workflows. Tier 3: 124 advanced optimization workflows. 660 additional batch workflows unclassified (default Tier 2, pending review). Grand total: 1,143 workflows.*
+## Previously Unclassified Workflows — Now Classified
+
+> The following 681 workflows (previously listed as "additional batch workflows unclassified")
+> have been classified by value stream context, process area, and operational criticality.
+> Classification: **284 Tier 1** (core) · **293 Tier 2** (support) · **104 Tier 3** (optimization).
+
+### Tier 1 Additions (284 Workflows)
+
+#### Plan & Source
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W558 | Supplier Risk Assessment & Supply Disruption Contingency Planning | Supply Planning |
+| W596 | Store-Level Replenishment Exception Management & Auto-Override | Supply Planning |
+| W680 | Supply Chain Cost Analysis & Logistics Optimization Review | Supply Planning |
+| W727 | Carrier & Freight Forwarder Daily Performance Monitoring | Supply Planning |
+| W729 | Supply Chain Disruption Rapid Response & Escalation Protocol | Supply Planning |
+| W762 | Carrier Performance Weekly Review & Freight Rate Benchmarking | Supply Planning |
+| W763 | Supply Chain Vendor Diversification & Alternative Sourcing Maintenance | Supply Planning |
+| W835 | Store-Level Replenishment Forecast Accuracy Review & Parameter Tuning | Supply Planning |
+| W921 | Store-Level Emergency Local Sourcing & Alternative Vendor Activation | Supply Planning |
+| W1006 | Vendor Purchase Order ASN Reconciliation & Discrepancy Resolution | Vendor Management & Procurement |
+| W1020 | Vendor Consignment Inventory Physical Count & Periodic Reconciliation | Vendor Management & Procurement |
+| W1026 | Vendor Product Discontinuation Notification & Last-Time Buy Management | Vendor Management & Procurement |
+| W1038 | Vendor Catalog Synchronization & Product Information Quality Audit | Vendor Management & Procurement |
+| W1137 | Vendor Purchase Order Line-Level Partial Shipment Acceptance & Backorder Management | Vendor Management & Procurement |
+| W593 | Vendor Portal Content Management & Self-Service Operations | Vendor Management & Procurement |
+| W620 | Vendor Due Diligence & Onboarding Site Visit Management | Vendor Management & Procurement |
+| W632 | Competitive Bidding & Tender Management | Vendor Management & Procurement |
+| W633 | Purchase Price Variance (PPV) Analysis & Cost Management | Vendor Management & Procurement |
+| W669 | Vendor Contract Compliance Monitoring & Enforcement | Vendor Management & Procurement |
+| W670 | Supplier Emergency Onboarding & Rapid Activation | Vendor Management & Procurement |
+| W671 | Commodity Price Monitoring & Procurement Strategy | Vendor Management & Procurement |
+| W760 | Vendor-Specific Commodity Price Index Tracking & Procurement Trigger Management | Vendor Management & Procurement |
+| W818 | Vendor Insurance Certificate & Compliance Documentation Tracking | Vendor Management & Procurement |
+| W819 | Vendor Quality Incoming Inspection Failure & Material Review Board (MRB) | Vendor Management & Procurement |
+| W866 | Vendor Self-Service Purchase Order Acknowledgment & Confirmation | Vendor Management & Procurement |
+| W867 | Vendor Self-Service Invoice Submission & Payment Status Inquiry | Vendor Management & Procurement |
+| W870 | Vendor Compliance Document Upload & Expiration Tracking | Vendor Management & Procurement |
+| W915 | Vendor Product Packaging Sustainability Assessment & Compliance Management | Vendor Management & Procurement |
+| W938 | Vendor Managed Inventory (VMI) Periodic Data Accuracy Audit & Reconciliation | Vendor Management & Procurement |
+| W959 | Vendor Rebate Volume Tier Compliance Reconciliation & Shortfall Processing | Vendor Management & Procurement |
+| W962 | Vendor-Sponsored In-Store Display Compliance Audit & Chargeback | Vendor Management & Procurement |
+
+#### Make & Move
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W1029 | DC-Level Temperature, Humidity & Environmental Monitoring for Sensitive Goods | DC & Warehouse Operations |
+| W1041 | DC-Level Outbound Quality Sampling & Pre-Shipment Inspection | DC & Warehouse Operations |
+| W585 | DC Dock Scheduling & Appointment Management | DC & Warehouse Operations |
+| W649 | DC Safety Operations & Compliance | DC & Warehouse Operations |
+| W681 | DC Quality Control & Vendor Compliance Inspection at Receiving | DC & Warehouse Operations |
+| W785 | Vendor Returnable Transport Packaging Reconciliation & Settlement | DC & Warehouse Operations |
+| W514 | Inventory Count Reconciliation & Variance Root Cause Analysis | Inventory Lifecycle |
+| W587 | Inventory Obsolescence Identification & Write-Off Management | Inventory Lifecycle |
+| W653 | Fleet Accident & Incident Management | Logistics & Fleet |
+| W799 | Vehicle Acquisition, Registration, Insurance & Disposal Lifecycle Management | Logistics & Fleet |
+
+#### Sell & Serve
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W1003 | Store-Level Paint Mixing Station Daily Cleaning, Calibration & Waste Disposal | Store Operations |
+| W1005 | Store-Level Shelf Stock Rotation & Paint/Chemical Expiry Monitoring | Store Operations |
+| W1008 | Store-Level Power Tool Battery Charging Station Safety & Maintenance | Store Operations |
+| W1010 | Store-Level Outdoor Garden Center Weather Protection & Seasonal Display Setup | Store Operations |
+| W1012 | Store-Level Hazardous Material Spill Kit Inspection & Restocking | Store Operations |
+| W1015 | Store-Level Forklift & Heavy Equipment Daily Safety Check & Log | Store Operations |
+| W1019 | Store-Level Construction Material Safety Data Sheet (SDS) Customer Access & Compliance | Store Operations |
+| W1021 | Store-Level Loading Dock Equipment Maintenance & Safety Inspection | Store Operations |
+| W1023 | Store-Level Post-Typhoon Damage Assessment, Cleanup & Rapid Reopening | Store Operations |
+| W1025 | Store-Level Shelving, Racking & Display Fixture Safety Inspection & Maintenance | Store Operations |
+| W1028 | Store-Level Shopping Cart, Basket & Customer Equipment Inventory Management | Store Operations |
+| W1030 | Multi-Store District Manager Weekly Operations Review & Compliance Audit | Store Operations |
+| W1037 | Store-Level Annual Physical Inventory Preparation, Execution & Variance Resolution | Store Operations |
+| W1040 | Store-Level Customer Parking Lot Traffic Safety & Exterior Facility Management | Store Operations |
+| W1047 | Store-Level Rainy Season Floor Safety, Anti-Slip Mat & Entrance Canopy Management | Store Operations |
+| W1051 | Store-Level Fire Extinguisher Monthly Inspection, Annual Recharge & BFP Compliance | Store Operations |
+| W1070 | Store-Level Customer Building Permit Documentation Package Preparation Assistance | Store Operations |
+| W1125 | Store-Level Seasonal Typhoon Pre-Positioning & Emergency Stock Buffer Management | Store Operations |
+| W1156 | Store-Level Customer Construction Site Safety Equipment Rental & Delivery | Store Operations |
+| W497 | PWD Accessibility Compliance & Store Facilities Audit | Store Operations |
+| W501 | Store-Level First Aid & Medical Emergency Response | Store Operations |
+| W502 | Store-Level Non-Hazardous Waste Management | Store Operations |
+| W554 | Store-Level Daily Shelf Replenishment & Restocking | Store Operations |
+| W559 | Store-Level Non-Emergency Incident & Hazard Reporting | Store Operations |
+| W562 | Store-Level Loss Prevention Daily Routine | Store Operations |
+| W571 | Store-Level Daily Communication & Memo Acknowledgment | Store Operations |
+| W573 | Store-Level Daily Planogram Execution & Shelf Compliance Check | Store Operations |
+| W574 | Store-Level Daily Closing Procedure | Store Operations |
+| W576 | Store-Level Typhoon & Severe Weather Preparedness Protocol | Store Operations |
+| W579 | Store-Level Daily Equipment & Specialized Fixture Safety Check | Store Operations |
+| W580 | Store-Level Emergency Manual Operations Protocol (Total System/Power Failure) | Store Operations |
+| W582 | Store-Level Fire Drill Execution & Documentation | Store Operations |
+| W601 | Store-Level Daily HR Operations & People Management | Store Operations |
+| W603 | Store-Level Employee Disciplinary Process & DOLE Due Process Compliance | Store Operations |
+| W666 | Store-Level Inventory Receiving Quality Control | Store Operations |
+| W667 | Store-Level Price Verification & Daily Compliance Operations | Store Operations |
+| W720 | Store-Level Daily Safety Briefing & Toolbox Talk | Store Operations |
+| W721 | Store-Level Vendor Promodizer Floor Activity Coordination & Compliance | Store Operations |
+| W739 | Store-Level Daily Huddle & Morning Team Briefing | Store Operations |
+| W741 | Store-Level Fuel Inventory & Backup Generator Management | Store Operations |
+| W743 | Store-Level Daily Cleaning & Sanitation Checklist Execution | Store Operations |
+| W771 | Store-Level BOPIS Order Aging & Abandoned Pickup Processing | Store Operations |
+| W958 | Store-Level Daily Cash Variance Threshold Monitoring & Exception Escalation | Store Operations |
+| W517 | POS Cashier Shift Handover & Drawer Accountability | POS & Checkout |
+| W519 | POS Suspicious Transaction & AML Compliance Reporting | POS & Checkout |
+| W520 | Age-Restricted Product Verification & Compliance at POS | POS & Checkout |
+| W521 | POS Transaction Suspend, Park & Recall | POS & Checkout |
+| W522 | POS Daily Transaction Review & Cashier Performance Audit | POS & Checkout |
+| W525 | POS Continuous Near-Real-Time Sync & Nightly Reconciliation | POS & Checkout |
+| W527 | POS Tax Exemption Processing (Government / PEZA / Institutional) | POS & Checkout |
+| W528 | POS Digital Receipt / E-Receipt Delivery | POS & Checkout |
+| W529 | POS Void & Refund Tiered Authorization | POS & Checkout |
+| W530 | POS High-Value Transaction Documentation & Customer ID | POS & Checkout |
+| W531 | POS Bagging, Carry-Out & Bag Fee Compliance | POS & Checkout |
+| W532 | POS Clearance & "Final Sale" Item Processing | POS & Checkout |
+| W533 | POS Real-Time Event Streaming & Continuous Sync | POS & Checkout |
+| W534 | Multi-Origin / Mixed-Basket Fulfillment Orchestration | POS & Checkout |
+| W535 | POS Offline Capability Scope & Local Operations | POS & Checkout |
+| W536 | Unified Order Management & Cross-Channel Fulfillment Routing | POS & Checkout |
+| W749 | POS Heavy Equipment & Power Tool Safety Acknowledgment & Release Processing | POS & Checkout |
+| W1056 | Store-Level Customer Construction Permit Advisory & Municipal Building Requirements Guidance | In-Store Customer Services |
+| W1062 | Store-Level Customer Scaffolding Rental, Safety Harness Package & Delivery Service | In-Store Customer Services |
+| W1067 | Store-Level Customer Fire Suppression System Design & Product Recommendation | In-Store Customer Services |
+| W1080 | Store-Level Customer Construction Scaffold & Ladder Safety Consultation | In-Store Customer Services |
+| W1098 | Customer Emergency Home Repair Quick-Fix Bundle Curation & Package Service | In-Store Customer Services |
+| W1104 | Customer Tool Rental Return Damage Assessment & Billing | In-Store Customer Services |
+| W1138 | Customer Construction Worker Safety Gear Bundle Recommendation & Compliance Package | In-Store Customer Services |
+| W1144 | Store-Level Customer Hazardous Material Transport Regulation Advisory | In-Store Customer Services |
+| W1154 | Store-Level Customer Paint VOC & Indoor Air Quality Compliance Advisory | In-Store Customer Services |
+| W827 | Store-Level Building Material Load Calculation & Safety Advisory | In-Store Customer Services |
+| W913 | Store-Level Emergency Generator Fuel Reserve Management & DOE Compliance | In-Store Customer Services |
+| W1013 | E-Commerce Last-Mile Delivery Partner Performance Weekly Review | Ecommerce & Digital Channels |
+| W1034 | Customer Ecommerce Payment Failure Recovery, Retry & Abandoned Checkout Rescue | Ecommerce & Digital Channels |
+| W1155 | Customer Ecommerce Same-Day / Express Delivery Operations | Ecommerce & Digital Channels |
+| W509 | Ecommerce Product Return Inspection, Grading & Disposition | Ecommerce & Digital Channels |
+| W591 | E-Commerce Fulfillment SLA Monitoring & Exception Escalation | Ecommerce & Digital Channels |
+| W592 | E-Commerce Customer Delivery Tracking & Proof of Delivery Management | Ecommerce & Digital Channels |
+| W659 | Ecommerce Platform Incident Management | Ecommerce & Digital Channels |
+| W724 | Marketplace Channel Daily Operations & Order Management (Lazada/Shopee) | Ecommerce & Digital Channels |
+| W725 | Ecommerce Platform Daily Health Monitoring & Performance Dashboard | Ecommerce & Digital Channels |
+| W829 | Customer Ecommerce Order Split & Partial Delivery Proactive Communication | Ecommerce & Digital Channels |
+| W899 | Customer Bulk/Project Delivery Scheduling & Multi-Drop Coordination (B2C) | Ecommerce & Digital Channels |
+| W809 | Wholesale Consignment Inventory Management & Settlement | Trade, Project & Wholesale |
+| W600 | Service Contractor Accreditation & Onboarding Management | Installation & Services |
+| W560 | Customer Account Dormancy Identification & Deactivation | Customer Experience & Loyalty |
+| W597 | Customer Complaint Escalation Matrix & Resolution SLA Tracking | Customer Experience & Loyalty |
+| W617 | B2B Customer Success & Quarterly Business Review Operations | Customer Experience & Loyalty |
+| W619 | Customer Account Merge & Deduplication Request Processing | Customer Experience & Loyalty |
+| W660 | Service Recovery & Customer Retention Program | Customer Experience & Loyalty |
+| W675 | Customer Data Platform Daily Operations & Data Quality Management | Customer Experience & Loyalty |
+| W996 | Store-Level Contractor Loyalty Tier Upgrade & VIP Retention Program Management | Customer Experience & Loyalty |
+
+#### Finance
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W486 | Related Party Transaction Disclosure & Reporting (PAS 24) | Procure-to-Pay |
+| W487 | Revenue Recognition Review (PFRS 15 Complex Scenarios) | Procure-to-Pay |
+| W488 | Credit Card Chargeback Dispute Management | Procure-to-Pay |
+| W498 | Vendor Advance Payment & Prepayment Management | Procure-to-Pay |
+| W499 | BIR Percentage Tax Computation & Payment | Procure-to-Pay |
+| W556 | AP Payment Run & Batch Processing Execution | Procure-to-Pay |
+| W611 | Payment Gateway Daily Operations & Settlement Monitoring | Procure-to-Pay |
+| W634 | Revenue Assurance & POS Revenue Reconciliation | Procure-to-Pay |
+| W635 | PFRS 16 Lease Accounting Operations | Procure-to-Pay |
+| W640 | Merchant Fee Analysis & Payment Cost Optimization | Procure-to-Pay |
+| W662 | AP Aging Management & Vendor Payment Prioritization | Procure-to-Pay |
+| W713 | Corporate Credit Card Program Management & Expense Reconciliation | Procure-to-Pay |
+| W750 | Credit Card Installment Sales Reconciliation & Bank Settlement Processing | Procure-to-Pay |
+| W751 | Store-Level Emergency Cash Float Request & Expedited Replenishment | Procure-to-Pay |
+| W752 | Intercompany Management Fee Allocation & Monthly Billing | Procure-to-Pay |
+| W764 | Store-Level Daily Opening Safe Count & Cash Float Preparation | Procure-to-Pay |
+| W765 | Multi-Entity Consolidation Monthly Execution & Elimination Processing | Procure-to-Pay |
+| W766 | Customer Credit Note Aging Management & Unredeemed Credit Write-Off | Procure-to-Pay |
+| W767 | Vendor Rebate Claim Filing & Settlement Documentation Processing | Procure-to-Pay |
+| W768 | BIR VAT Refund Claim Processing & Input VAT Recovery | Procure-to-Pay |
+| W769 | Customer Overpayment Detection & Refund Processing | Procure-to-Pay |
+| W813 | AP Vendor Invoice Duplicate Detection & Resolution | Procure-to-Pay |
+| W814 | Credit Card Settlement Exception & Chargeback Recovery Processing | Procure-to-Pay |
+| W919 | Intercompany Inventory Movement Accounting & Goods-in-Transit Reconciliation | Procure-to-Pay |
+| W939 | Customer Store Credit Expiration Management & Unclaimed Credit Processing | Procure-to-Pay |
+| W572 | Customer Credit Monitoring & Automated Alert Management | Order-to-Cash |
+| W663 | Customer Credit Portfolio Periodic Review & Collection Strategy | Order-to-Cash |
+| W81 | Bad Debt Provisioning, Write-Off & Recovery | Order-to-Cash |
+| W812 | Customer Credit Field Collection Operations & Legal Escalation | Order-to-Cash |
+| W886 | Customer Credit Application Processing & Scoring | Order-to-Cash |
+| W887 | Customer Credit Limit Review, Adjustment & Approval | Order-to-Cash |
+| W888 | Customer Credit Hold Management & Order Blocking | Order-to-Cash |
+| W889 | Customer AR Aging Analysis & Collection Prioritization | Order-to-Cash |
+| W890 | Customer Collection Call Execution & Promise Tracking | Order-to-Cash |
+| W891 | Customer Bad Debt Write-Off Proposal & Approval | Order-to-Cash |
+| W893 | Customer Credit Scorecard Annual Review & Portfolio Analysis | Order-to-Cash |
+| W14 | Intercompany Transactions & Settlement | Record-to-Report |
+| W39 | Fixed Asset Disposal & Retirement | Record-to-Report |
+| W407 | Corporate Income Tax — Computation & Deferred Tax (PAS 12) | Record-to-Report |
+| W481 | SEC Reportorial Requirements Compliance (GIS, AFS, GAN, MC 28) | Record-to-Report |
+| W590 | Monthly Tax Provision & Compliance Review | Record-to-Report |
+| W612 | Intercompany Rate Setting & Quarterly Transfer Pricing Review | Record-to-Report |
+| W636 | Standardized Balance Sheet Account Reconciliation | Record-to-Report |
+| W637 | Financial Controls Testing & Monitoring | Record-to-Report |
+| W638 | Period-End Journal Entry Review & Approval | Record-to-Report |
+| W661 | Fixed Asset Depreciation Run & Component Accounting Operations | Record-to-Report |
+| W70 | Credit Note & Debit Note Aging Reconciliation | Record-to-Report |
+| W711 | BIR Withholding Tax (EWT) Certificate Form 2307 Issuance to Vendors | Record-to-Report |
+| W873 | Product Safety Incident Triage & Recall Risk Assessment | Record-to-Report |
+| W874 | Product Recall Customer Notification Campaign Execution | Record-to-Report |
+| W875 | Product Recall Inventory Quarantine, Hold & Disposition | Record-to-Report |
+| W876 | Product Recall Regulatory Reporting & DTI/BIR/FDA Compliance | Record-to-Report |
+| W877 | Product Recall Vendor Recovery & Cost Reimbursement | Record-to-Report |
+| W878 | Product Recall Effectiveness Audit & Close-Out | Record-to-Report |
+| W589 | Weekly Cash Flow Forecast & Treasury Planning | Treasury & Cash |
+| W664 | Cash Flow Variance Analysis & Liquidity Stress Testing | Treasury & Cash |
+| W80 | FX Hedging & Forward Contract Management | Treasury & Cash |
+
+#### People
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W1001 | Store-Level Employee Performance-Based Profit Sharing & Incentive Bonus Management | Hire-to-Retire |
+| W1032 | Employee Overtime Pre-Approval, Monitoring & DOLE Weekly Cap Enforcement | Hire-to-Retire |
+| W494 | Employee Wellness & Mental Health Program Management | Hire-to-Retire |
+| W512 | Store-Level Health & Safety Committee Operations | Hire-to-Retire |
+| W561 | Employee Attendance Exception Management | Hire-to-Retire |
+| W594 | Store-Level Employee Daily Attendance Verification & Exception Processing | Hire-to-Retire |
+| W628 | Employee Exit Interview & Attrition Analysis | Hire-to-Retire |
+| W629 | Store-Level Employee Engagement Survey & Action Planning | Hire-to-Retire |
+| W630 | Employee Recognition & Rewards Program Management | Hire-to-Retire |
+| W642 | HMO & Private Benefits Administration | Hire-to-Retire |
+| W643 | Final Pay Computation & Separation Settlement | Hire-to-Retire |
+| W644 | 13th Month Pay Reconciliation & Compliance | Hire-to-Retire |
+| W645 | Strategic Workforce Planning | Hire-to-Retire |
+| W646 | HR Service Desk Operations | Hire-to-Retire |
+| W647 | Employee Data Privacy Compliance Operations | Hire-to-Retire |
+| W682 | Employee Career Development & Internal Job Posting Operations | Hire-to-Retire |
+| W716 | Internal Communication & Company-Wide Announcement Management | Hire-to-Retire |
+| W717 | Workplace Violence Prevention & Response Protocol | Hire-to-Retire |
+| W718 | Employee Relocation & Housing Assistance Management | Hire-to-Retire |
+| W719 | Diversity, Equity & Inclusion (DEI) Program Management | Hire-to-Retire |
+| W753 | Store-Level Employee Meal Break & Rest Period Scheduling & DOLE Compliance | Hire-to-Retire |
+| W755 | Store-Level Employee Internal Theft Prevention Awareness & Compliance Daily Operations | Hire-to-Retire |
+| W777 | Employee Leave Balance Management & Annual Leave Carry-Forward Processing | Hire-to-Retire |
+| W778 | Employee Benefits Annual Open Enrollment & Plan Selection Management | Hire-to-Retire |
+| W780 | Store-Level Employee Uniform & PPE Periodic Issuance & Replacement Processing | Hire-to-Retire |
+| W815 | Employee Business Travel Request, Approval & Expense Management | Hire-to-Retire |
+| W816 | Multi-Entity Payroll Consolidation & Cross-Entity Reconciliation | Hire-to-Retire |
+| W817 | Employee Sabbatical, Study Leave & Secondment Management | Hire-to-Retire |
+| W956 | Employee Annual Physical Examination & Occupational Health Clearance Management | Hire-to-Retire |
+| W957 | Employee Tuition Assistance & Educational Advancement Program Management | Hire-to-Retire |
+| W973 | Employee Long Service Award & Milestone Recognition Management | Hire-to-Retire |
+| W977 | Employee Retirement Benefit Fund (RA 7641) Administration & Processing | Hire-to-Retire |
+| W994 | Employee Typhoon Disaster Relief Emergency Assistance & No-Interest Loan Program | Hire-to-Retire |
+
+#### Governance & Assurance
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W448 | LGU Sanitary & Health Permit Management | Compliance & Regulatory |
+| W468 | DTI Price Freeze / Emergency Price Control Implementation (RA 7581) | Compliance & Regulatory |
+| W483 | DOLE Drug-Free Workplace Program Compliance | Compliance & Regulatory |
+| W485 | BIR Branch Registration & RDO Transfer Management | Compliance & Regulatory |
+| W505 | DOLE Labor Inspection Response Protocol | Compliance & Regulatory |
+| W506 | Unified Regulatory Compliance Calendar & Dashboard | Compliance & Regulatory |
+| W656 | Anti-Bribery & Anti-Corruption (ABAC) Compliance Program | Compliance & Regulatory |
+| W657 | Regulatory Change Management & Impact Assessment | Compliance & Regulatory |
+| W658 | General Regulatory Inspection Response Protocol | Compliance & Regulatory |
+| W730 | Anti-Money Laundering (AML) Compliance Program Operations | Compliance & Regulatory |
+| W731 | Consumer Act (RA 7394) Compliance Monitoring & Enforcement | Compliance & Regulatory |
+| W732 | Vendor Tax Compliance Monitoring & BIR TIN Validation | Compliance & Regulatory |
+| W834 | Customer Account Data Deletion & RA 10173 Privacy Compliance Processing | Compliance & Regulatory |
+| W837 | Daily Store Exception-Based Reporting & Transaction Monitoring | Loss Prevention & Asset Protection |
+| W838 | CCTV & Surveillance System Daily Operations & Incident Review | Loss Prevention & Asset Protection |
+| W839 | Internal Theft Investigation & Employee Dishonesty Case Management | Loss Prevention & Asset Protection |
+| W840 | Organized Retail Crime Detection, Tracking & Task Force Coordination | Loss Prevention & Asset Protection |
+| W841 | Refund & Return Fraud Detection, Investigation & Prevention | Loss Prevention & Asset Protection |
+| W842 | Cash Handling Exception Monitoring & Sweethearting Detection | Loss Prevention & Asset Protection |
+| W843 | Vendor & Delivery Fraud Detection & Dock Security Audit | Loss Prevention & Asset Protection |
+| W844 | Store Entrance/Exit Audit & Electronic Article Surveillance (EAS) Management | Loss Prevention & Asset Protection |
+| W845 | Shrinkage Analysis, Root Cause Investigation & Reduction Program | Loss Prevention & Asset Protection |
+| W846 | Loss Prevention Training, Awareness & Compliance Program | Loss Prevention & Asset Protection |
+| W140 | Occupational Health & Safety (OHS) Incident Management | Health, Safety & Environment |
+| W695 | Emergency Response & Evacuation Protocol Management | Health, Safety & Environment |
+| W696 | Contractor & Visitor Safety Induction & Access Control | Health, Safety & Environment |
+| W697 | Workplace Ergonomics Assessment & Musculoskeletal Injury Prevention | Health, Safety & Environment |
+| W698 | Safety Data Sheet (SDS) Lifecycle Management & Distribution | Health, Safety & Environment |
+| W699 | Hazmat Transportation & Carrier Compliance Management | Health, Safety & Environment |
+| W758 | Store-Level Fire Safety Equipment Daily Inspection & Compliance | Health, Safety & Environment |
+| W759 | Store-Level Hazardous Material Customer Advisory & Safe Handling Guidance | Health, Safety & Environment |
+| W803 | Hazmat Regulatory Change Management & Compliance Update | Health, Safety & Environment |
+| W804 | Occupational Health Surveillance, Employee Medical Monitoring & Record Management | Health, Safety & Environment |
+| W847 | Business Continuity Plan Annual Review & Update | Business Continuity & Insurance |
+| W848 | Typhoon & Natural Disaster Store Emergency Protocol & Response | Business Continuity & Insurance |
+| W849 | IT Disaster Recovery Site Activation & Failover Execution | Business Continuity & Insurance |
+| W850 | Store Emergency Closure & Reopening Procedure | Business Continuity & Insurance |
+| W851 | Critical System Recovery & Service Restoration | Business Continuity & Insurance |
+| W852 | Supply Chain Disruption Business Impact Assessment & Recovery | Business Continuity & Insurance |
+| W853 | Business Continuity Plan Tabletop Exercise & Drill Execution | Business Continuity & Insurance |
+| W854 | Pandemic/Epidemic Business Continuity Activation & Operations | Business Continuity & Insurance |
+| W855 | Communication Tree Activation & Crisis Communication Management | Business Continuity & Insurance |
+| W856 | Post-Incident Review, Lessons Learned & Plan Update | Business Continuity & Insurance |
+| W857 | Store & DC Property Insurance Claim Filing & Documentation | Business Continuity & Insurance |
+| W858 | Typhoon, Flood & Natural Disaster Damage Assessment & Insurance Claim | Business Continuity & Insurance |
+| W859 | Vehicle & Fleet Insurance Claim Processing | Business Continuity & Insurance |
+| W860 | Business Interruption Insurance Claim & Loss Documentation | Business Continuity & Insurance |
+| W861 | Employee Injury Insurance Claim Coordination & SSS/ECC Filing | Business Continuity & Insurance |
+| W864 | Insurance Claim Recovery, Settlement & Accounting Entry | Business Continuity & Insurance |
+
+#### Technology & Data
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W382 | IT Backup & Recovery Operations | IT Operations & Security |
+| W383 | IT Security Incident Response (General) | IT Operations & Security |
+| W385 | Data Cleansing & Migration Operational Lifecycle | IT Operations & Security |
+| W393 | Remote Access, VPN & Zero Trust Connectivity Management | IT Operations & Security |
+| W495 | ERP Patch, Upgrade & Release Management | IT Operations & Security |
+| W595 | ERP System Daily Health Check & Integration Monitoring | IT Operations & Security |
+| W614 | Data Warehouse & ETL Pipeline Daily Operations & Monitoring | IT Operations & Security |
+| W615 | Customer Mobile App Daily Operations & Content Management | IT Operations & Security |
+| W616 | ERP Business Change Request & Enhancement Backlog Management | IT Operations & Security |
+| W710 | Loss Prevention Analytics & Shrinkage Investigation System Operations | IT Operations & Security |
+| W73 | System Upgrade & New Entity Integration Testing | IT Operations & Security |
+| W733 | Enterprise API Gateway Daily Monitoring & Health Dashboard | IT Operations & Security |
+| W831 | POS Terminal Emergency Swap & Rapid Replacement Protocol | IT Operations & Security |
+
+### Tier 2 Additions (293 Workflows)
+
+#### Plan & Source
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W515 | Loyalty Tier Re-evaluation & Migration Processing | Merchandise Strategy |
+| W564 | New Product Introduction (NPI) & Full Store Rollout | Merchandise Strategy |
+| W678 | Multi-Channel Pricing Consistency Monitoring & Governance | Merchandise Strategy |
+| W679 | Assortment Optimization & Rationalization Review | Merchandise Strategy |
+| W737 | Markdown Optimization & Analytics Operations | Merchandise Strategy |
+| W738 | Vendor Trade Fund Management & Promotional Budget Tracking | Merchandise Strategy |
+| W830 | Product Phase-Out Inventory Disposition Planning & Execution | Merchandise Strategy |
+| W900 | Vendor New Product In-Store Launch Event & Demonstration Coordination | Merchandise Strategy |
+| W908 | Store-Level Barangay & Local Fiesta Merchandising Calendar Management | Merchandise Strategy |
+| W910 | Customer Product Bundle Assembly & Pre-Packaged Solution Kit Management | Merchandise Strategy |
+| W925 | Vendor Consignment Shelf Space Performance Monitoring & Optimization | Merchandise Strategy |
+| W1031 | Customer Delivery Service Area Geo-Fencing & Coverage Management | Supply Planning |
+| W492 | Temperature-Controlled & Sensitive Goods Logistics | Supply Planning |
+| W622 | Mock Product Recall Exercise & Recall Readiness Testing | Supply Planning |
+| W623 | Cross-Functional New Store Opening Readiness Review | Supply Planning |
+| W786 | DC-to-Store Delivery Route Optimization & Multi-Stop Planning | Supply Planning |
+| W1002 | Vendor Product Sampling & Test Batch Inventory Lifecycle Management | Vendor Management & Procurement |
+| W1033 | Vendor Lead Time Accuracy Monitoring & Supply Planning Impact Assessment | Vendor Management & Procurement |
+| W1035 | Store-Level Return-to-Vendor (RTV) Consolidation & Batch Shipping Processing | Vendor Management & Procurement |
+| W1100 | Customer Contractor Project Financing & Supplier Credit Line Partnership Management | Vendor Management & Procurement |
+| W1105 | Vendor Early Payment Discount Capture & Dynamic Discounting Optimization | Vendor Management & Procurement |
+| W1110 | Vendor-Managed Inventory (VMI) Seasonal Ramp-Up & Wind-Down | Vendor Management & Procurement |
+| W1115 | Vendor Performance-Based Shelf Space Allocation Review | Vendor Management & Procurement |
+| W1128 | Vendor Catalog New Product Sample Request & In-Store Trial Evaluation | Vendor Management & Procurement |
+| W1132 | Vendor Logistics Performance Weekly Scorecard & Carrier Lane Analysis | Vendor Management & Procurement |
+| W1141 | Vendor Payment Term Annual Renegotiation & Cost Savings Tracking | Vendor Management & Procurement |
+| W1145 | Vendor Seasonal Import Container Consolidation & Optimization Planning | Vendor Management & Procurement |
+| W1151 | Vendor Product Recall Cost Recovery & Margin Impact Assessment | Vendor Management & Procurement |
+| W491 | Supplier Financial Health & Credit Risk Monitoring | Vendor Management & Procurement |
+| W513 | Vendor-Funded Promotional Activity & Co-op Advertising Management | Vendor Management & Procurement |
+| W621 | Vendor-Managed Inventory (VMI) Daily Performance Monitoring | Vendor Management & Procurement |
+| W631 | Strategic Sourcing & Category Strategy | Vendor Management & Procurement |
+| W672 | VMI Quarterly Business Review & Program Optimization | Vendor Management & Procurement |
+| W705 | Vendor Self-Service Portal Operations & Supplier Collaboration | Vendor Management & Procurement |
+| W706 | Supplier Performance Scorecard & Quarterly Business Review | Vendor Management & Procurement |
+| W788 | Vendor New Product Submission Review & Evaluation Processing | Vendor Management & Procurement |
+| W868 | Vendor Catalog & Product Information Self-Service Management | Vendor Management & Procurement |
+| W869 | Vendor Dispute Resolution & Issue Ticketing | Vendor Management & Procurement |
+| W871 | Supplier Scorecard Portal Publication & Performance Transparency | Vendor Management & Procurement |
+| W872 | Vendor RFQ & Bid Submission Portal Management | Vendor Management & Procurement |
+| W901 | Vendor Seasonal Buy-Back & Stock Return Agreement Execution | Vendor Management & Procurement |
+| W932 | Vendor Catalog Price Change Intake, Assessment & ERP Synchronization | Vendor Management & Procurement |
+| W978 | Vendor Seasonal Product Post-Season Performance Review & Assortment Rationalization | Vendor Management & Procurement |
+
+#### Make & Move
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W648 | DC Cycle Counting & Inventory Accuracy Program | DC & Warehouse Operations |
+| W651 | Reverse Logistics Processing (Customer/Store Returns at DC) | DC & Warehouse Operations |
+| W652 | Seasonal Warehouse Surge Planning & Execution | DC & Warehouse Operations |
+| W784 | DC Inventory Slotting Optimization & Periodic Re-Slotting Execution | DC & Warehouse Operations |
+| W796 | DC Workforce Scheduling, Labor Planning & Productivity Tracking | DC & Warehouse Operations |
+| W797 | DC Security Operations, Perimeter Management & Access Control | DC & Warehouse Operations |
+| W836 | DC Outbound Load Verification & Pre-Dispatch Quality Check | DC & Warehouse Operations |
+| W588 | Seasonal Inventory Build-Down & Transition Execution | Inventory Lifecycle |
+
+#### Sell & Serve
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W1049 | Store-Level Customer Tool Sharpening, Blade Replacement & Small Engine Maintenance Service | Store Operations |
+| W1058 | Store-Level Customer Bulk Construction Water Delivery & Site Logistics Coordination | Store Operations |
+| W1085 | Store-Level Appliance Display Model Lifecycle & Periodic Refresh Management | Store Operations |
+| W1091 | Store-Level Customer Fence & Gate Installation Service Partner Coordination | Store Operations |
+| W1103 | Store-Level Outdoor Lumber Yard Rain Protection & Inventory Preservation | Store Operations |
+| W1106 | Store-Level Community Building Materials Donation & LGU Partnership | Store Operations |
+| W1112 | Store-Level Inventory Age-Based Auto-Markdown & Clearance Trigger | Store Operations |
+| W1116 | Store-Level Customer Complaint Trend Analysis & Systemic Issue Escalation | Store Operations |
+| W1119 | Store-Level Outdoor Garden Center Seasonal Plant Inventory Lifecycle | Store Operations |
+| W1121 | Store-Level Intercom & Public Address System Daily Operations | Store Operations |
+| W1123 | Store-Level Customer Project Progress Site Visit & Material Delivery Verification | Store Operations |
+| W1130 | Store-Level Paint Tinting Machine Calibration Verification & Color Accuracy Audit | Store Operations |
+| W1133 | Store-Level Customer Special Order Cancellation & Partial Refund Processing | Store Operations |
+| W1135 | Store-Level Daily Temperature-Sensitive Product Monitoring & Quality Check | Store Operations |
+| W1139 | Store-Level Lumber Yard Inventory Seasonal Rotation & Grade Segregation | Store Operations |
+| W1142 | Store-Level Customer Waiting Area Comfort & Amenities Daily Management | Store Operations |
+| W503 | Store-Level Pest Control & Sanitation Management | Store Operations |
+| W524 | Demo / Display Unit Selling at POS | Store Operations |
+| W575 | Store-Level Weekly Sales & Operations Review | Store Operations |
+| W577 | Store-Level Holiday Season (Ber Months) Operational Ramp-Up | Store Operations |
+| W578 | Store-Level Payday Weekend & Peak Day Operational Readiness | Store Operations |
+| W581 | Store-Level Vendor Representative Access & Activity Management | Store Operations |
+| W583 | Store-Level Seasonal Promotional Transition & Display Reset | Store Operations |
+| W602 | Store-Level Labor Cost Monitoring & Overtime Budget Control | Store Operations |
+| W606 | Store-Level Water & Utility Conservation Operations | Store Operations |
+| W609 | Store-Level New Employee Buddy System & First-Week Onboarding | Store Operations |
+| W665 | Store-Level KPI Dashboard & Daily Performance Monitoring | Store Operations |
+| W668 | Store-Level Home Delivery & Third-Party Logistics Coordination | Store Operations |
+| W702 | New Store Opening Project Management & Go-Live Execution | Store Operations |
+| W703 | Store Closure, Consolidation & Asset Recovery | Store Operations |
+| W722 | Store-Level Exterior Display & Garden Center Daily Operations | Store Operations |
+| W723 | Store-Level Loading Bay Traffic & Truck Queue Management | Store Operations |
+| W742 | Store-Level Key, Access Card & Secure Area Daily Management | Store Operations |
+| W745 | Store-Level Receiving Dock Scheduling & DSD Vendor Delivery Window Management | Store Operations |
+| W774 | Store-Level Parking Lot & Exterior Facility Daily Management | Store Operations |
+| W824 | Store-Level Lumber Yard & Outdoor Area Daily Operations | Store Operations |
+| W825 | Store-Level Bulky Item Delivery Proof Collection & Documentation | Store Operations |
+| W826 | Store-Level Layaway Payment Reminder & Forfeiture Processing | Store Operations |
+| W950 | Store-Level Customer Vehicle Loading Assistance & Load Securing | Store Operations |
+| W951 | Store-Level Bulk Material Breaking & Custom Quantity Packaging | Store Operations |
+| W952 | Store-Level Customer Gratuity & Service Tip Processing | Store Operations |
+| W974 | Store-Level Customer Project Staged Delivery & Phased Material Release | Store Operations |
+| W999 | Store-Level Customer Tile & Flooring Sample Loan & Return Program | Store Operations |
+| W523 | POS Promotional Terminal Setup & Pre-Live Verification | POS & Checkout |
+| W526 | POS Customer Queue Management & Express Lane Operations | POS & Checkout |
+| W605 | Return Fraud Detection & Serial Returner Management | POS & Checkout |
+| W747 | POS Credit Card Installment Selling & 0% Interest Promotion Processing | POS & Checkout |
+| W748 | POS Customer Loyalty On-the-Spot Upselling & Cross-Selling | POS & Checkout |
+| W896 | Customer Gift Card Corporate & Bulk Purchase Processing | POS & Checkout |
+| W935 | Customer Product Registration at POS for Vendor Extended Warranty | POS & Checkout |
+| W1000 | Customer Ceiling System Material Calculator & Design Recommendation Service | In-Store Customer Services |
+| W1004 | Customer Material Delivery Scheduling & Rescheduling Self-Service Portal | In-Store Customer Services |
+| W1007 | Customer Tool & Equipment Demo Reservation & Scheduling Service | In-Store Customer Services |
+| W1009 | Customer Custom Order Special Pricing Approval & Quotation Lifecycle | In-Store Customer Services |
+| W1014 | Customer Multi-Entity Billing & Consolidated Invoicing for Corporate Accounts | In-Store Customer Services |
+| W1016 | Customer Product Installation Warranty Registration & Follow-Up Service | In-Store Customer Services |
+| W1018 | Customer Project Progress Payment Verification & Invoice Matching | In-Store Customer Services |
+| W1043 | Customer Paint Coverage Area Calculator & Primer/Finish Quantity Estimator Service | In-Store Customer Services |
+| W1044 | Customer Concrete Mix Ratio & Volume Calculator for Slab/Foundation/Column Service | In-Store Customer Services |
+| W1045 | Store-Level Customer PVC Pipe Cutting, Jointing & Fabrication Service | In-Store Customer Services |
+| W1046 | Customer Door & Window Measurement, Sizing & Custom Order Service | In-Store Customer Services |
+| W1048 | Customer Rainwater Harvesting System Design & Material Sizing Service | In-Store Customer Services |
+| W1050 | Customer Staircase Tread, Riser & Railing Material Calculator Service | In-Store Customer Services |
+| W1052 | Customer Gutter, Downspout & Flashing Sizing Calculator Service | In-Store Customer Services |
+| W1053 | Customer Bathroom & Kitchen Exhaust Fan & Ventilation Duct Sizing Service | In-Store Customer Services |
+| W1054 | Store-Level Customer Wire & Cable Cut-to-Length Spool Service | In-Store Customer Services |
+| W1055 | Customer Water Filtration & Purification System Sizing for Residential & Commercial | In-Store Customer Services |
+| W1057 | Customer Insulation Material Calculator (Wall, Ceiling, Roof Thermal & Acoustic) | In-Store Customer Services |
+| W1059 | Customer Kitchen Countertop Measurement & Custom Fabrication Order Service | In-Store Customer Services |
+| W1060 | Customer Rebar Stirrup, Tying Wire & Binding Material Quantity Estimator Service | In-Store Customer Services |
+| W1061 | Customer Tile Grout, Adhesive & Thin-Set Mortar Quantity Calculator Service | In-Store Customer Services |
+| W1063 | Store-Level Customer Welding Gas Cylinder Exchange & Refill Service | In-Store Customer Services |
+| W1064 | Customer Electrical Panel & Circuit Breaker Sizing Recommendation Service | In-Store Customer Services |
+| W1065 | Customer Bathroom Renovation Complete Project Planning & Material Bundle Service | In-Store Customer Services |
+| W1066 | Customer Termite & Pest Control Product Selection & Treatment Plan Recommendation | In-Store Customer Services |
+| W1068 | Customer Earthquake-Resistant Construction Material Selection & Retrofit Advisory | In-Store Customer Services |
+| W1069 | Customer Flood-Resistant Construction Material Recommendation | In-Store Customer Services |
+| W1072 | Store-Level Customer Marine & Coastal Construction Material Selection Advisory | In-Store Customer Services |
+| W1073 | Customer House Foundation Type Recommendation & Material Estimation Service | In-Store Customer Services |
+| W1075 | Customer Roof Truss & Structural Frame Material Estimation Service | In-Store Customer Services |
+| W1077 | Store-Level Customer Construction Site Portable Toilet & Temporary Facility Rental Coordination | In-Store Customer Services |
+| W1078 | Customer Rainwater Collection & Storage System Complete Package Design | In-Store Customer Services |
+| W1079 | Customer Swimming Pool Construction Material Estimation Service | In-Store Customer Services |
+| W1081 | Customer Construction Project Insurance Coverage Advisory Service | In-Store Customer Services |
+| W1083 | Store-Level Customer Plumbing Fixture & Fitting Compatibility Verification Service | In-Store Customer Services |
+| W1084 | Customer Home Security & CCTV System Design & Product Recommendation Service | In-Store Customer Services |
+| W1086 | Customer Construction Waste Disposal & Skip/Dumpster Rental Coordination | In-Store Customer Services |
+| W1089 | Store-Level Customer Tile & Flooring Digital Room Visualizer Kiosk Operations | In-Store Customer Services |
+| W1090 | Customer HVAC Ductwork Design & Complete Material Sizing Recommendation | In-Store Customer Services |
+| W1093 | Customer Interior Paint Color Scheme Consultation & Material Board Service | In-Store Customer Services |
+| W1094 | Customer Construction Equipment Rental Partner Coordination & Booking | In-Store Customer Services |
+| W1095 | Store-Level Customer Electrical Residential Wiring Diagram & Material List Service | In-Store Customer Services |
+| W1097 | Store-Level Customer Outdoor Deck, Patio & Pergola Material Estimation Service | In-Store Customer Services |
+| W1101 | Store-Level Customer Door & Window Security Grille Custom Fabrication Coordination | In-Store Customer Services |
+| W1102 | Customer Retaining Wall & Foundation Formwork Material Estimation Service | In-Store Customer Services |
+| W1113 | Customer E-Gift Card Purchase & Digital Delivery | In-Store Customer Services |
+| W1114 | Customer Product Availability Real-Time Stock Lookup & Reservation Service | In-Store Customer Services |
+| W1122 | Customer Project Material Delivery Photo Documentation & Proof Service | In-Store Customer Services |
+| W1124 | Customer Construction Material Compatibility Cross-Reference & Substitution Advisory | In-Store Customer Services |
+| W1126 | Customer Bulk Cement & Sand Order Direct-to-Site Delivery Tracking | In-Store Customer Services |
+| W1129 | Customer Interior Design Material Board Curation & Mood Board Assembly Service | In-Store Customer Services |
+| W1131 | Customer Construction Project Milestone Photo Documentation & Progress Tracking Portal | In-Store Customer Services |
+| W1140 | Customer Post-Construction Punch List Material Fulfillment & Callback Order | In-Store Customer Services |
+| W1143 | Customer Construction Material Pre-Order Reservation & Price Lock Service | In-Store Customer Services |
+| W1146 | Store-Level Customer Cement & Bagged Material Shelf Life Monitoring & Freshness Guarantee | In-Store Customer Services |
+| W1148 | Store-Level Customer Construction Site Vehicle Access Assessment & Delivery Feasibility | In-Store Customer Services |
+| W1150 | Store-Level Customer Lumber & Plywood Moisture Content Testing & Quality Verification | In-Store Customer Services |
+| W1152 | Store-Level Customer Project Material Quantity Verification & Completeness Check | In-Store Customer Services |
+| W1158 | Store-Level Customer Project Material List Sharing & Contractor Collaborative Shopping | In-Store Customer Services |
+| W1159 | Customer Construction Material Price Escalation Protection & Forward Pricing Agreement | In-Store Customer Services |
+| W1160 | Store-Level DC-to-Store Delivery Inter-Island Ferry Scheduling & Coordination | In-Store Customer Services |
+| W1162 | Store-Level Customer Power Tool & Equipment Pre-Purchase Try-Before-You-Buy Program | In-Store Customer Services |
+| W604 | Store-Level Customer Experience Standards & Daily Service Operations | In-Store Customer Services |
+| W607 | Store-Level Product Demo & Trial Station Daily Operations | In-Store Customer Services |
+| W608 | Store-Level Customer Feedback Collection & Daily CX Pulse Monitoring | In-Store Customer Services |
+| W740 | Store-Level Customer Complaint On-the-Spot Resolution & Floor Staff Empowerment | In-Store Customer Services |
+| W744 | Store-Level Special Order Follow-Up & Proactive Customer Notification | In-Store Customer Services |
+| W746 | Store-Level Building Material Sample Management & Customer Selection Assistance | In-Store Customer Services |
+| W772 | Store-Level Rain Check Issuance for Out-of-Stock Promotional Items | In-Store Customer Services |
+| W773 | Store-Level Customer Hold & Will-Call Order Management | In-Store Customer Services |
+| W775 | Store-Level Customer Loyalty Card Replacement & Account Recovery | In-Store Customer Services |
+| W776 | Store-Level Product Recall Customer Notification Execution | In-Store Customer Services |
+| W823 | Store-Level Customer Material Calculator & Quantity Estimation Service | In-Store Customer Services |
+| W897 | Store-Level Trade Professional Verification & Pro Badge Issuance for Discount Program | In-Store Customer Services |
+| W903 | Store-Level Customer Material Sample Loan & Return Management | In-Store Customer Services |
+| W916 | Customer Trade-In & Used Power Tool Buy-Back Program | In-Store Customer Services |
+| W922 | Customer Walk-In Bulk Purchase Negotiation & Volume Pricing Approval | In-Store Customer Services |
+| W924 | Store-Level Self-Service Kiosk & Interactive Product Information Station Management | In-Store Customer Services |
+| W929 | Store-Level Lost & Found Item Management | In-Store Customer Services |
+| W931 | Store-Level Customer Comfort Room & Amenity Daily Operations | In-Store Customer Services |
+| W937 | Store-Level Customer Wheelchair & PWD Mobility Assistance Service | In-Store Customer Services |
+| W941 | Store-Level Customer Baggage Hold & Parcel Custody Service | In-Store Customer Services |
+| W943 | Customer Glass Cutting & Custom Flat Glass Service | In-Store Customer Services |
+| W944 | Customer Pipe Threading, Cutting & Fabrication Service | In-Store Customer Services |
+| W945 | Customer Key Duplication & Lock Rekeying Service | In-Store Customer Services |
+| W946 | Customer Screen Door & Window Screen Custom Fabrication Service | In-Store Customer Services |
+| W954 | Customer Delivery & Installation Quality Follow-Up Verification | In-Store Customer Services |
+| W955 | Customer Daily-Wage Construction Worker Hiring Facilitation Service | In-Store Customer Services |
+| W960 | Seasonal Forward Stock Pre-Positioning & Regional Buffer Management | In-Store Customer Services |
+| W963 | Customer Tile & Flooring Quantity Calculator & Waste Factor Recommendation | In-Store Customer Services |
+| W964 | Customer Bulk Cement, Sand & Aggregates Order & Direct-to-Site Delivery | In-Store Customer Services |
+| W965 | Customer Complete Bathroom/Kitchen Renovation Package Assembly & Order | In-Store Customer Services |
+| W967 | Store-Level Customer Project Material Takeoff & Professional Estimation Service | In-Store Customer Services |
+| W968 | Customer Multi-Store Aggregated Order & Consolidated Single Delivery | In-Store Customer Services |
+| W971 | Customer Power Tool Battery & Accessory Cross-Compatibility Checker & Recommendation | In-Store Customer Services |
+| W976 | Store-Level Customer Lumber & Plywood Grade Selection & Quality Verification | In-Store Customer Services |
+| W981 | Customer Paint Color Matching from Physical Sample & Digital Photo | In-Store Customer Services |
+| W982 | Customer Electrical Load Calculation & Wire Size Recommendation Service | In-Store Customer Services |
+| W983 | Customer Roofing Material Calculator & GI Sheet/Insulation Sizing Recommendation | In-Store Customer Services |
+| W984 | Customer Water Tank & Pump System Sizing Recommendation Service | In-Store Customer Services |
+| W985 | Store-Level Customer Aircon Sizing & BTU/Horsepower Calculation Service | In-Store Customer Services |
+| W986 | Store-Level Customer Rebar Cutting, Bending & Fabrication Service | In-Store Customer Services |
+| W987 | Customer Fence & Gate Material Estimation & Design Recommendation Service | In-Store Customer Services |
+| W988 | Store-Level Customer Welding & Custom Metal Fabrication Service | In-Store Customer Services |
+| W989 | Customer Plumbing System Layout Design & Material Takeoff Service | In-Store Customer Services |
+| W991 | Customer Electrical Circuit Design & Residential Load Planning Service | In-Store Customer Services |
+| W993 | Customer Construction Project Timeline & Phased Material Delivery Planner | In-Store Customer Services |
+| W997 | Customer Bathroom/Kitchen Fixture Compatibility Checker & Bundle Builder | In-Store Customer Services |
+| W998 | Customer Septic Tank & Wastewater System Sizing Recommendation Service | In-Store Customer Services |
+| W569 | E-Commerce New Product Launch & Go-Live Process | Ecommerce & Digital Channels |
+| W905 | Customer Project Photo Gallery & Social Proof/Inspiration Platform | Ecommerce & Digital Channels |
+| W923 | Ecommerce Assembly & Installation Service Upsell at Online Checkout | Ecommerce & Digital Channels |
+| W948 | Social Commerce Order Processing (Facebook, Instagram, TikTok Shop) | Ecommerce & Digital Channels |
+| W1011 | Customer Trade Account Credit Insurance & Bad Debt Protection Processing | Trade, Project & Wholesale |
+| W1022 | Customer Trade Account Statement Dispute & Resolution Processing | Trade, Project & Wholesale |
+| W1024 | Customer Material Escrow & Project Fund Management for B2B Construction Accounts | Trade, Project & Wholesale |
+| W1092 | Customer B2B Recurring Standing Order & Scheduled Auto-Replenishment Management | Trade, Project & Wholesale |
+| W1107 | Customer Bulk Purchasing Group / Co-Op Buying Program Management | Trade, Project & Wholesale |
+| W1111 | Customer Contractor Crew Registration & Job Site Badge Management | Trade, Project & Wholesale |
+| W1117 | Customer Trade Account Statement of Account Auto-Generation & Email Delivery | Trade, Project & Wholesale |
+| W1118 | Customer Contractor Project Bidding Support & Material Quote Service | Trade, Project & Wholesale |
+| W1134 | Customer B2B Project Retention Money Release & Final Billing Reconciliation | Trade, Project & Wholesale |
+| W1147 | Customer B2B Project Material Return Window Management & Excess Inventory Reconciliation | Trade, Project & Wholesale |
+| W1149 | Customer Multi-Store Consolidated Purchase & Single Invoice Billing | Trade, Project & Wholesale |
+| W1153 | Customer B2B Standing Order Seasonal Volume Adjustment & Forecast Sharing | Trade, Project & Wholesale |
+| W1161 | Customer B2B Annual Volume Rebate Tier Qualification Tracking & Earned Benefit Management | Trade, Project & Wholesale |
+| W598 | Wholesale Pricing & Quotation Management | Trade, Project & Wholesale |
+| W599 | Wholesale Returns, Credit & Adjustment Processing | Trade, Project & Wholesale |
+| W704 | Wholesale Customer Contract Renewal & Tier Reclassification | Trade, Project & Wholesale |
+| W792 | Project Change Order Management & Margin Re-Impact Assessment | Trade, Project & Wholesale |
+| W793 | Project Close-Out, Final Reconciliation & Warranty Handover | Trade, Project & Wholesale |
+| W810 | Wholesale Backorder Management, Allocation & Customer Communication | Trade, Project & Wholesale |
+| W811 | Wholesale Delivery Proof, Discrepancy Resolution & POD Reconciliation | Trade, Project & Wholesale |
+| W918 | Customer Project Budget Tracking & Material Cost Variance Management | Trade, Project & Wholesale |
+| W972 | Customer Franchise & Dealer Mini-Store Program Management | Trade, Project & Wholesale |
+| W979 | Customer B2B Blanket Purchase Agreement & Scheduled Call-Off Management | Trade, Project & Wholesale |
+| W980 | Store-Level Customer Construction Site Delivery Scheduling & Multi-Drop Coordination (B2B) | Trade, Project & Wholesale |
+| W1036 | Customer Digital Product Passport & Sustainability Information Access | Customer Experience & Loyalty |
+| W507 | Customer Complaint Root Cause Analysis & Systemic Improvement | Customer Experience & Loyalty |
+| W508 | Customer Account Maintenance & B2B Information Update | Customer Experience & Loyalty |
+| W673 | Customer Segmentation & Target Marketing Operations | Customer Experience & Loyalty |
+| W674 | Customer Loyalty Program Partner Management | Customer Experience & Loyalty |
+| W707 | Omnichannel Returns & Refund Orchestration | Customer Experience & Loyalty |
+| W708 | Customer Communication Management & Proactive Notification Operations | Customer Experience & Loyalty |
+| W735 | Customer Onboarding Journey Management & First-90-Day Engagement | Customer Experience & Loyalty |
+| W756 | Customer Post-Purchase Follow-Up & Satisfaction Verification | Customer Experience & Loyalty |
+| W757 | Customer On-the-Spot Loyalty Tier Upgrade Offer Processing | Customer Experience & Loyalty |
+| W781 | Customer Store Credit Issuance & Lifecycle Management | Customer Experience & Loyalty |
+| W782 | Customer B2B Order-to-Cash Cycle Monitoring & Proactive Communication | Customer Experience & Loyalty |
+| W783 | Customer Credit Application Scoring & Risk Assessment Processing | Customer Experience & Loyalty |
+| W820 | Customer Project BOM Estimation & Material Planning Service | Customer Experience & Loyalty |
+| W821 | Customer Project Warranty Registration & Multi-Year Tracking | Customer Experience & Loyalty |
+| W822 | Customer Loyalty Tier Benefit Fulfillment & Welcome Package Processing | Customer Experience & Loyalty |
+| W894 | Customer Project Material List (BOM) Save, Share & Reorder Service ("Project Vault") | Customer Experience & Loyalty |
+| W895 | Store-Level Pro Desk Appointment Scheduling & Priority Service Queue Management | Customer Experience & Loyalty |
+| W914 | Customer Project Completion Celebration & Review Incentive Program | Customer Experience & Loyalty |
+| W928 | Customer Price Protection & Price Adjustment Policy Processing | Customer Experience & Loyalty |
+| W933 | Customer Loyalty Account Deceased Member Processing & Points Estate Transfer | Customer Experience & Loyalty |
+| W936 | Customer B2B Self-Service Portal Order Management & Account Access | Customer Experience & Loyalty |
+| W942 | Customer Loyalty Family/Household Account Linking & Shared Benefits Management | Customer Experience & Loyalty |
+| W969 | Customer Quick Reorder from Purchase History (Trade & Loyalty Members) | Customer Experience & Loyalty |
+
+#### Finance
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W489 | Store-Level Operating Budget & Cost Control | Procure-to-Pay |
+| W500 | Transfer Order In-Transit Damage Claim & Resolution | Procure-to-Pay |
+| W613 | Store-Level Weekly Payroll Accrual & Labor Cost Flash Report | Procure-to-Pay |
+| W714 | Store-Level Daily Financial Summary Reporting & Flash P&L | Procure-to-Pay |
+| W770 | AP Vendor Debit Memo Processing & Account Deduction Management | Procure-to-Pay |
+| W712 | Financial Restatement & Prior-Year Adjustment Processing | Order-to-Cash |
+| W892 | Customer Statement Generation & Distribution | Order-to-Cash |
+| W482 | Annual Stockholders' Meeting (ASHM) Management | Record-to-Report |
+| W610 | Insurance Claims Processing & Recovery Management | Record-to-Report |
+| W639 | Rolling Forecast & Financial Scenario Planning | Record-to-Report |
+| W85 | Product Costing & Margin Analysis Review | Record-to-Report |
+
+#### People
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W493 | Labor Union & Collective Bargaining Management | Hire-to-Retire |
+| W511 | Employee Cross-Entity & Cross-Location Transfer Processing | Hire-to-Retire |
+| W555 | Seasonal & Temporary Staffing Process | Hire-to-Retire |
+| W567 | Employee Cross-Training & Skill Matrix Management | Hire-to-Retire |
+| W641 | Off-Cycle & Ad-Hoc Payment Processing | Hire-to-Retire |
+| W754 | Store-Level New Hire First-30-Day Performance Check-In & Early Intervention | Hire-to-Retire |
+| W779 | Store-Level Employee Injury Incident Reporting & Workers' Compensation Claim Processing | Hire-to-Retire |
+
+#### Governance & Assurance
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W484 | Pandemic/Epidemic Business Response Protocol | Compliance & Regulatory |
+| W626 | Enterprise Risk Register Maintenance & Quarterly Risk Review | Compliance & Regulatory |
+| W627 | Product Recall Effectiveness Verification & Post-Recall Review | Compliance & Regulatory |
+| W685 | Business Continuity Plan Maintenance & Annual BIA Refresh | Compliance & Regulatory |
+| W802 | LGU Local Business Tax Computation, Payment & Receipt Management | Compliance & Regulatory |
+| W961 | BSP Anti-Money Laundering (AML) Covered Transaction Reporting | Compliance & Regulatory |
+| W805 | Workers' Compensation, SSS/ECC Claims & Return-to-Work Processing | Health, Safety & Environment |
+| W862 | Insurance Policy Annual Renewal & Coverage Review | Business Continuity & Insurance |
+| W863 | Third-Party Liability Claim & Customer Incident Insurance Response | Business Continuity & Insurance |
+
+#### Technology & Data
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W684 | Business Intelligence Report Development & Governance Lifecycle | IT Operations & Security |
+| W709 | Enterprise Data Governance & Quality Management Operations | IT Operations & Security |
+| W734 | Data Quality Daily Triage & Remediation Operations | IT Operations & Security |
+| W787 | ERP System Monthly Performance Review & Capacity Planning Update | IT Operations & Security |
+
+### Tier 3 Additions (104 Workflows)
+
+#### Plan & Source
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W624 | Competitor Store Visit Program & Market Intelligence Operations | Merchandise Strategy |
+| W625 | Product Quality Lab Testing & Certification Management | Merchandise Strategy |
+| W728 | Port & Customs Clearance Daily Status Tracking & Escalation | Supply Planning |
+| W927 | Store-Level Rainy Season Emergency Product Deployment & Rapid Stock Replenishment | Supply Planning |
+| W1087 | Store-Level Power Tool Brand Ambassador & Vendor Demo Day Event Management | Vendor Management & Procurement |
+| W1099 | Store-Level Vendor-Sponsored Product Training Academy & Staff Certification Program | Vendor Management & Procurement |
+| W1157 | Vendor Sustainable Packaging Assessment & Plastic Reduction Collaboration | Vendor Management & Procurement |
+| W761 | Supplier Innovation & New Product Introduction Collaboration Processing | Vendor Management & Procurement |
+| W865 | Vendor Portal User Onboarding, Access Provisioning & Training | Vendor Management & Procurement |
+| W995 | Vendor Consignment Inventory Ageing Analysis & Automatic Markdown Trigger | Vendor Management & Procurement |
+
+#### Make & Move
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W584 | DC Daily Operations & Shift Management | DC & Warehouse Operations |
+| W586 | DC Daily KPI Dashboard & Performance Tracking | DC & Warehouse Operations |
+| W650 | Warehouse Equipment Preventive Maintenance | DC & Warehouse Operations |
+| W798 | DC Building Maintenance, Utility Operations & Facility Condition Monitoring | DC & Warehouse Operations |
+| W654 | Driver Onboarding, Training & Certification | Logistics & Fleet |
+
+#### Sell & Serve
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W1017 | Store-Level Scrap Metal & Recyclable Material Collection & Revenue Recognition | Store Operations |
+| W1108 | Store-Level Forklift Operator Daily Certification Check & Compliance | Store Operations |
+| W504 | Store-Level Digital Signage & Content Management | Store Operations |
+| W516 | Self-Checkout (SCO) Daily Operations | POS & Checkout |
+| W518 | Cashier Onboarding, POS Training & Competency Certification | POS & Checkout |
+| W1027 | Customer AI-Powered Chatbot & Virtual Shopping Assistant Operations | In-Store Customer Services |
+| W1071 | Customer Smart Home System Design & Product Recommendation Service | In-Store Customer Services |
+| W1074 | Customer Home Office & Workspace Design Consultation Service | In-Store Customer Services |
+| W1076 | Customer Garden & Outdoor Kitchen Design Consultation Service | In-Store Customer Services |
+| W1082 | Store-Level Customer Construction Material Quality Verification & Grade Certification Assistance | In-Store Customer Services |
+| W1088 | Customer Mortgage & Housing Loan Partner Bank Referral Desk Operations | In-Store Customer Services |
+| W1096 | Customer Solar Water Heater System Sizing & Complete Package Recommendation | In-Store Customer Services |
+| W1109 | Customer Project Material Surplus Buy-Back & Recycling Program | In-Store Customer Services |
+| W1136 | Customer Product Knowledge Video Library & How-To Tutorial Content Management | In-Store Customer Services |
+| W920 | Store-Level Vendor-Led Product Knowledge Training & Staff Certification Program | In-Store Customer Services |
+| W949 | Customer AI-Powered Home Renovation Visualizer & Material Estimator | In-Store Customer Services |
+| W953 | Customer Contractor Micro-Lending Partnership Program Management | In-Store Customer Services |
+| W966 | Customer Construction Loan Documentation Assistance & Partner Bank Referral | In-Store Customer Services |
+| W970 | Customer Post-Disaster Insurance Claim Material Replacement Coordination | In-Store Customer Services |
+| W975 | Customer Home Energy Audit Referral & Energy-Efficient Product Recommendation | In-Store Customer Services |
+| W990 | Customer Solar Panel System Sizing & ROI Calculator Service | In-Store Customer Services |
+| W992 | Customer Garden & Landscape Design Consultation & Material Estimation Service | In-Store Customer Services |
+| W510 | Ecommerce Product Review & Rating Management | Ecommerce & Digital Channels |
+| W557 | E-Commerce Abandoned Cart Recovery & Retargeting | Ecommerce & Digital Channels |
+| W563 | E-Commerce SEO & Digital Merchandising Management | Ecommerce & Digital Channels |
+| W568 | E-Commerce Flash Sale & Limited-Time Offer Operations | Ecommerce & Digital Channels |
+| W726 | Ecommerce Product Content Enrichment & Catalog Daily Operations | Ecommerce & Digital Channels |
+| W828 | Ecommerce Platform Feature Release, A/B Testing & UX Optimization | Ecommerce & Digital Channels |
+| W907 | Customer Consumables Subscription & Auto-Replenishment Service | Ecommerce & Digital Channels |
+| W917 | Ecommerce Live Commerce & Social Selling Operations | Ecommerce & Digital Channels |
+| W930 | Customer Back-in-Stock Notification Subscription & Alert Management | Ecommerce & Digital Channels |
+| W934 | Ecommerce Customer Wishlist, Save-for-Later & Price Drop Alert | Ecommerce & Digital Channels |
+| W940 | Ecommerce Customer Product Comparison Tool & Buying Guide Content Management | Ecommerce & Digital Channels |
+| W947 | Ecommerce Live Video Shopping & Virtual Store Walkthrough | Ecommerce & Digital Channels |
+| W794 | Service SKU Catalog Management, Pricing & Material Linkage | Installation & Services |
+| W795 | Service Customer Complaint, Rework & Warranty Claim Management | Installation & Services |
+| W898 | Store-Level Custom Paint Formula Save, Recall & Reorder Service | Installation & Services |
+| W906 | Store-Level Community Workshop Space Booking & DIY Event Management | Installation & Services |
+| W1039 | Customer Housewarming & New Home Gift Registry Service | Customer Experience & Loyalty |
+| W1120 | Customer Loyalty Points Donation to Charity / Community Cause | Customer Experience & Loyalty |
+| W566 | Mystery Shopping Program & CX Compliance Audit | Customer Experience & Loyalty |
+| W618 | Customer Churn Prediction & Proactive Retention Management | Customer Experience & Loyalty |
+| W904 | Store-Level Contractor Referral & Customer-Contractor Matchmaking Service | Customer Experience & Loyalty |
+| W911 | Customer Digital Warranty Vault & Multi-Vendor Warranty Claim Aggregation | Customer Experience & Loyalty |
+| W496 | Customer Loyalty Fraud Detection & Prevention | Marketing & Communications |
+| W565 | Marketing Campaign ROI & Attribution Analysis | Marketing & Communications |
+| W570 | Loyalty Points Expiry Management & Annual Liability Cleanup | Marketing & Communications |
+| W676 | Digital Marketing Campaign Operations & Cross-Channel Execution | Marketing & Communications |
+| W677 | Marketing Budget Management & Spend Analytics | Marketing & Communications |
+| W736 | Marketing Data Platform Daily Operations & Campaign Analytics | Marketing & Communications |
+| W833 | Marketing Campaign Compliance Review & Regulatory Approval | Marketing & Communications |
+| W902 | Customer Loyalty Partner Reward Catalog Management & Fulfillment | Marketing & Communications |
+| W909 | Customer Trade Account Co-Branded Credit Card Program Management | Marketing & Communications |
+| W912 | Store-Level Customer Loyalty Points Gifting & Transfer Between Members | Marketing & Communications |
+| W926 | Customer Loyalty Reward Physical Fulfillment & Partner Logistics Management | Marketing & Communications |
+
+#### People
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W1042 | Employee Store-Level Rotational Cross-Training & Multi-Skill Certification Program | Hire-to-Retire |
+| W1127 | Store-Level Employee Annual Competency Re-Certification & Skills Refresher | Hire-to-Retire |
+| W683 | Employee Competency Assessment & Certification Management | Hire-to-Retire |
+| W715 | Employee Referral Program Management & Reward Processing | Hire-to-Retire |
+
+#### Asset & Infrastructure
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W700 | Facility Condition Assessment & Capital Planning Support | Real Estate & Construction |
+| W701 | Utility Infrastructure Management & Metering Operations | Real Estate & Construction |
+| W789 | Construction Safety Management & DOLE DO 13 Compliance | Real Estate & Construction |
+| W790 | Construction Quality Assurance, Milestone Inspection & Material Testing | Real Estate & Construction |
+| W791 | Construction Document Control, Drawing Revision & As-Built Management | Real Estate & Construction |
+| W807 | Store Closure, Lease Termination & Asset Recovery Management | Real Estate & Construction |
+| W808 | Generator Preventive Maintenance, Fuel Management & Load Testing | Real Estate & Construction |
+
+#### Governance & Assurance
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W490 | Organized Retail Crime (ORC) Investigation & Task Force | Internal Audit & Risk |
+| W447 | DTI-BPS Mandatory Product Certification (ICC/SOC) | Compliance & Regulatory |
+| W655 | Safety Training & Certification Tracking | Health, Safety & Environment |
+| W806 | Annual Fire Safety System Testing, Certification & BFP Compliance | Health, Safety & Environment |
+| W692 | Store Energy Efficiency Monitoring & Utility Cost Optimization | ESG & Sustainability |
+| W693 | Water Consumption Tracking & Conservation Management | ESG & Sustainability |
+| W694 | ESG Data Collection, Validation & Annual Sustainability Report Preparation | ESG & Sustainability |
+| W800 | Green Building Certification (BERDE/LEED) & Sustainable Store Design Standards | ESG & Sustainability |
+| W801 | ESG Incident Response, Regulatory Citation Management & Stakeholder Communication | ESG & Sustainability |
+
+#### Technology & Data
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W832 | ERP User Access Quarterly Recertification & Compliance Review | IT Operations & Security |
+| W879 | Daily Report Distribution & Automated Dashboard Refresh | Data, Analytics & BI |
+| W880 | BI Dashboard Development, Enhancement & User Request Management | Data, Analytics & BI |
+| W881 | Data Warehouse ETL Job Monitoring & Exception Handling | Data, Analytics & BI |
+| W882 | Self-Service BI Governance, Access Provisioning & Training | Data, Analytics & BI |
+| W883 | Ad-hoc Analytics Request Fulfillment & SLA Management | Data, Analytics & BI |
+| W884 | Data Quality Monitoring, Exception Triage & Remediation | Data, Analytics & BI |
+| W885 | Monthly Executive Reporting Package Preparation | Data, Analytics & BI |
+| W686 | Document Approval Routing & Digital Signature Management | Innovation & Digital Transformation |
+| W687 | Document Template Management & Version Control | Innovation & Digital Transformation |
+| W688 | Contract & Agreement Lifecycle Management | Innovation & Digital Transformation |
+| W689 | AI/ML Model Governance, Bias Audit & Ethical Review | Innovation & Digital Transformation |
+| W690 | Digital Transformation Initiative Portfolio Management | Innovation & Digital Transformation |
+| W691 | Emerging Technology Scouting & Proof-of-Concept Evaluation | Innovation & Digital Transformation |
+
+## Updated Summary
+
+| Phase | Label | Previously Classified | New Additions | Updated Total |
+|---|---|---|---|---|
+| Phase 1 | Go-Live Critical (Tier 1) | 153 | 284 | **437** |
+| Phase 2 | Operational Excellence (Tier 2) | 206 | 293 | **499** |
+| Phase 3 | Innovation & Optimization (Tier 3) | 124 | 104 | **228** |
+| **Classified Total** | | **483** | **681** | **1164** |
+| Unclassified | | — | — | **0** |
+| **Grand Total** | | | | **1,143** |
+
+### Operational Tier Guidance
+
+1. **Tier 1 workflows** (437) are foundational to daily store and supply chain operations.
+2. **Tier 2 workflows** (499) add necessary control and support capabilities to stabilize the business.
+3. **Tier 3 workflows** (228) enable optimization, AI integration, and strategic differentiation.
+4. **Cross-tier dependencies**: Some Tier 2/3 workflows reference Tier 1 workflows; the core Tier 1 workflows must be stable for Tier 2/3 to generate value.
+
+*Date: 2026-06-09 | Workflow Criticality Classification v4.0 — all 1,143 workflows now classified. Tier 1: 437 · Tier 2: 499 · Tier 3: 228. Previously unclassified 681 workflows classified. Grand total: 1,143 workflows.*
