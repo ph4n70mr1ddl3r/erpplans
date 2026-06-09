@@ -4,12 +4,25 @@
 
 ---
 
+## 2026-06-09 — Review: Fix Count & Cross-Reference Issues
+
+### Fixed
+- **Fixed VS-16 workflow count** in `README.md` — changed from "17 workflows" to "23 workflows" to match actual PA file content (PA-16.1: 13 + PA-16.2: 6 + PA-16.3: 4)
+- **Removed duplicate sentence** in `value-stream-index.md` — second occurrence of the WORKFLOW-FORMAT-GUIDE cross-reference was removed
+- **Fixed broken link** in `requirement-workflow-matrix.md` — changed `workflows/README.md` (non-existent) to `workflows/value-stream-index.md`
+- **Deduplicated classification entries** — removed 9 cross-tier duplicates (W59, W131, W132, W158, W257, W265, W266, W267, W271 appeared in two tiers) and 2 within-Tier-1 duplicates (W74, W76) from `workflow-criticality-classification.md`
+- **Reconciled classification tier totals** — updated section headers and footer: Tier 1: 439, Tier 2: 499, Tier 3: 229 = 1,167 total
+- **Added count clarification** — documented that 1,167 classified references include 14 parent/sub-variant grouping entries (e.g., W2, W5B, W9A) that appear as `###` sub-headings in PA files; 1,153 have dedicated `## W` section headers
+- **Updated README Key Metrics** — simplified tier classification row with deduplicated totals and count explanation
+
+---
+
 ## 2026-06-09 — Post-Review Cleanup
 
 ### Fixed
 - **Added WHL-001, WHL-002, WHL-003** to `erp-requirements.md` — these DC/warehouse management requirements were referenced in the requirement-workflow matrix but had no formal requirement definition. Now formalized under R4 (Warehouse Management) with Must Have / Should Have priorities.
 - **Removed dead link** to `_archive-domains/` in `value-stream-index.md` — the archive directory was deleted in a prior commit but the reference remained.
-- **Reconciled workflow counts** — removed 4 duplicate classification entries (W1163, W1164, W1165, W1166 appeared in two tier sections) from `workflow-criticality-classification.md`. Corrected title from 1,147 → 1,167. Updated summary totals (Tier 1: 439, Tier 2: 499, Tier 3: 226 = 1,167 classified).
+- **Reconciled workflow counts** — removed 4 duplicate classification entries (W1163, W1164, W1165, W1166 appeared in two tier sections) from `workflow-criticality-classification.md`. Corrected title from 1,147 → 1,167. Deduplicated 9 cross-tier and 2 within-tier entries. Updated summary totals (Tier 1: 439, Tier 2: 499, Tier 3: 229 = 1,167 classified).
 - **Fixed "5 terminals" → "3 terminals"** across `PA-07.1-store-daily-management.md`, `PA-22.1-regulatory-permits-and-licenses.md`, and `PA-27.1-service-management.md` — the model company profile specifies 3 POS terminals per store but multiple workflow sections referenced 5 terminals from an earlier design iteration. Corrected all related staffing calculations, time estimates, and skim event volumes.
 - **Fixed MER-028 reference** in GOV-053 — changed undefined `MER-028 (sample/demo inventory)` to `MDM-025 (digital asset & product content master — demo inventory)`.
 - **Fixed XXX-000-000 TIN format** in COM-011 — changed to standard Philippine TIN format `XXX-XXX-XXX-T00`.

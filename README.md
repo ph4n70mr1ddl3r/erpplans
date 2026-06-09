@@ -50,7 +50,7 @@ erpplans/
 │   │   ├── VS-13-customer-experience/           50 workflows (3 process areas)
 │   │   ├── VS-14-marketing/                     23 workflows (3 process areas)
 │   │   ├── VS-15-procure-to-pay/                39 workflows (2 process areas)
-│   │   ├── VS-16-order-to-cash/                 17 workflows (3 process areas)
+│   │   ├── VS-16-order-to-cash/                 23 workflows (3 process areas)
 │   │   ├── VS-17-record-to-report/              53 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 22 workflows (3 process areas)
 │   │   ├── VS-19-hire-to-retire/                60 workflows (5 process areas)
@@ -106,7 +106,7 @@ erpplans/
 |---|---|---|
 | Requirements | **730** across 32+ categories | `01-model-company/erp-requirements.md` |
 | Workflows (total) | **1,153** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
-| Workflows (classified by tier) | 483 (Tier 1: 153, Tier 2: 206, Tier 3: 124) + 684 subsequently classified (Tier 1: 286, Tier 2: 293, Tier 3: 226) = 1,167 classified | `workflows/workflow-criticality-classification.md` |
+| Workflows (classified by tier) | 1,167 classified (Tier 1: 439, Tier 2: 499, Tier 3: 229) — includes 14 parent/sub-variant grouping references; 1,153 have dedicated `## W` section headers in PA files | `workflows/workflow-criticality-classification.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |

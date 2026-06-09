@@ -28,7 +28,7 @@
 
 ---
 
-## Tier 1: Core Operations (153 Workflows)
+## Tier 1: Core Operations (439 Workflows)
 
 These 153 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
@@ -50,8 +50,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W26 | Annual Budget Preparation | Cost controls |
 | W30 | Treasury & Cash Management | Sweep cash; ensure liquidity |
 | W59 | Insurance Policy Lifecycle | Risk mitigation |
-| W74 | Employee Expense Reimbursement | Employee payouts |
-| W76 | Employee Loans & Advances | HR benefit delivery |
+| W74 | Employee Expense Reimbursement | Expense processing |
+| W76 | Employee Loans & Advances | Loan management |
+| W251 | Philippine Statutory Benefits & Claims Administration | SSS, PhilHealth, Pag-IBIG |
 | W89 | Bank Reconciliation | Daily/weekly bank matching |
 | W90 | Monthly Tax Filing & Statutory Remittance | BIR compliance |
 | W94 | Customer Deposit & Advance Payment Management | Deposit tracking |
@@ -172,8 +173,6 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W15 | Recruitment & Employee Onboarding | ~1,200–1,600 hires/year |
 | W34 | Store Shift Scheduling | Store workforce management |
 | W43 | Employee Separation & Offboarding | Offboarding compliance |
-| W74 | Employee Expense Reimbursement | Expense processing |
-| W76 | Employee Loans & Advances | Loan management |
 | W251 | Philippine Statutory Benefits & Claims Administration | SSS, PhilHealth, Pag-IBIG |
 | W280 | Court-Ordered Wage Garnishment & Third-Party Deductions | Legal compliance |
 
@@ -252,7 +251,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (206 Workflows)
+## Tier 2: Standard Support (499 Workflows)
 
 These 206 workflows are needed for standard operational support, cost controls, and category management.
 
@@ -351,7 +350,6 @@ These 206 workflows are needed for standard operational support, cost controls, 
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
-| W59 | Insurance Policy Lifecycle Management | Insurance management |
 | W137 | Intercompany Dividend & Loan Management | IC financial management |
 | W174 | Store-Level Cash-in-Transit (CIT) & Armored Car Management | CIT operations |
 | W175 | Employee Gratuity & Retirement Fund Management (RA 7641) | Retirement management |
@@ -403,9 +401,6 @@ These 206 workflows are needed for standard operational support, cost controls, 
 |---|---|---|
 | W180 | Ecommerce Marketplace Integration (Lazada/Shopee) | Marketplace expansion |
 | W210 | Ecommerce Fulfillment Hub (Dark Store) Operations | Dark store |
-| W266 | Ecommerce Online Fraud Detection & Prevention | Fraud prevention |
-| W267 | Ecommerce Digital Payment Reconciliation & Dispute Handling | Payment disputes |
-
 ### Customer Experience (11 workflows)
 
 | ID | Workflow | Operational Significance |
@@ -461,13 +456,11 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W82 | Hazardous Waste Disposal Tracking & DENR Compliance | Hazmat compliance |
 | W95 | External Audit Coordination & Support | External audit |
 | W114 | Sustainability & Environmental Compliance Reporting | ESG reporting |
-| W158 | Business Continuity Drill & Disaster Recovery Testing | BC drills |
 | W185 | Product Liability & Consumer Safety Incident Management | Product safety |
 | W207 | Store-Level Security Camera (CCTV) Audit & LP Integration | CCTV audit |
 | W209 | Barangay & Local Community Relationship Management | Community relations |
 | W216 | BIR CAS Compliance Audit | BIR CAS audit |
 | W469 | Customer Complaint DTI Escalation & Consumer Adjudication Management | DTI complaint adjudication case management |
-| W271 | Data Subject Access & Deletion Requests (DPA Compliance) | DSAR handling |
 | W285 | Public Liability & Customer Incident Claims Management | Liability claims |
 | W426 | Annual Conflict of Interest (COI) & Gift Policy Disclosure | Corporate governance & fraud prevention |
 | W427 | DTI Sales Promotion Permit Monitoring & In-Store Compliance | Regulatory fine avoidance |
@@ -549,7 +542,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 
 ---
 
-## Tier 3: Advanced Optimization (124 Workflows)
+## Tier 3: Advanced Optimization (229 Workflows)
 
 These 124 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
 
@@ -723,11 +716,6 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
-| W131 | IT Asset Lifecycle Management | IT asset management |
-| W132 | Software Development & Change Management | Change management |
-| W257 | Enterprise API & Systems Integration Lifecycle Management | API lifecycle |
-| W265 | POS Terminal Hardware Maintenance & Peripheral Management | POS hardware |
-
 ### Advanced Treasury (3 workflows)
 
 | ID | Workflow | Operational Significance |
@@ -1623,4 +1611,4 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 3. **Tier 3 workflows** (226) enable optimization, AI integration, and strategic differentiation.
 4. **Cross-tier dependencies**: Some Tier 2/3 workflows reference Tier 1 workflows; the core Tier 1 workflows must be stable for Tier 2/3 to generate value.
 
-*Date: 2026-06-09 | Workflow Criticality Classification v5.1 — all 1,167 workflows now classified (removed 1 duplicate entry). Tier 1: 439 · Tier 2: 500 · Tier 3: 228. Grand total: 1,167 workflows.*
+*Date: 2026-06-09 | Workflow Criticality Classification v5.2 — all 1,167 classified workflow references are deduplicated across tiers (Tier 1: 439 · Tier 2: 499 · Tier 3: 229 = 1,167). Of these, 1,153 have dedicated `## W` section headers in PA workflow files; the remaining 14 are parent/summary workflows (e.g., W2, W5B, W9A) that appear as `###` sub-headings within PA files.*
