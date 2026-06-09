@@ -47,4 +47,4 @@
 
 ---
 
-*Document Version: 49.0 | Date: 2026-06-09 | Wave 49: Reconciled workflow counts to 1,165 total across repository. All classified (483) and additional batch workflows mapped.*
+*Document Version: 49.0 | Date: 2026-06-09 | Wave 49: Reconciled workflow counts to 1,143 total across repository (483 classified + 660 unclassified). All classified and additional batch workflows mapped.*

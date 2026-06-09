@@ -79,4 +79,4 @@ erpplans/
 
 ---
 
-*Date: 2026-06-09 (updated counts: 730 requirements, 1,165 workflows)*
+*Date: 2026-06-09 (updated counts: 730 requirements, 1,143 workflows)*

@@ -71,6 +71,8 @@ erpplans/
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
 │   └── data-migration-mapping.md       Data migration field mapping templates
 └── 07-methodology/              ← Technical system architecture and guidelines
+    ├── README.md                     Methodology index & future document plan
+    └── technical-guidelines.md       POS hardware, infrastructure, integration, security
 ```
 
 ## The Model Company at a Glance

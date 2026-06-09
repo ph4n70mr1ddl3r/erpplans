@@ -97,7 +97,7 @@
 
 - **PA-06.1** [Outbound Distribution](./VS-06-logistics-fleet/PA-06.1-outbound-distribution.md) — 2 workflows
 - **PA-06.2** [Fleet & Driver Management](./VS-06-logistics-fleet/PA-06.2-fleet-and-driver-management.md) — 6 workflows
-- **PA-06.3** Last-Mile & Delivery Partners — *(no workflows yet)*
+- **PA-06.3** Last-Mile & Delivery Partners — *(no workflows yet — tracked for future addition)*
 
 ### Sell & Serve
 
@@ -117,7 +117,7 @@
 **[VS-09: In-Store Customer Services](./VS-09-in-store-services/README.md)** (141 workflows)
 
 - **PA-09.1** [Custom Fabrication & Processing](./VS-09-in-store-services/PA-09.1-custom-fabrication-and-processing.md) — 130 workflows
-- **PA-09.2** Project Estimation & Advisory — *(no workflows yet)*
+- **PA-09.2** Project Estimation & Advisory — *(no workflows yet — tracked for future addition)*
 - **PA-09.3** [Customer Amenities & Assistance](./VS-09-in-store-services/PA-09.3-customer-amenities-and-assistance.md) — 11 workflows
 
 **[VS-10: Ecommerce & Digital Channels](./VS-10-ecommerce-digital/README.md)** (38 workflows)
@@ -160,7 +160,7 @@
 **[VS-16: Order-to-Cash](./VS-16-order-to-cash/README.md)** (17 workflows)
 
 - **PA-16.1** [Credit Application & Scoring](./VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md) — 13 workflows
-- **PA-16.2** AR & Collections — *(no workflows yet)*
+- **PA-16.2** AR & Collections — *(no workflows yet — tracked for future addition)*
 - **PA-16.3** [Customer Payment & Settlement](./VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md) — 4 workflows
 
 **[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (53 workflows)

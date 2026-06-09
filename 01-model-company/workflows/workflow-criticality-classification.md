@@ -1,8 +1,9 @@
 # Workflow Criticality Classification
 
 > Classifies 483 operational workflows into operational criticality tiers.
-> An additional 682 workflows (from the additional batch files and newer domain additions)
+> An additional 660 workflows (from the additional batch files and newer domain additions)
 > are not yet classified and default to **Tier 2** pending review.
+> These 660 workflows are targeted for classification during implementation planning.
 >
 > Back to [Workflow Index](README.md)
 
@@ -761,8 +762,8 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | Phase 2 | Operational Excellence (Tier 2) | 206 | 41.4% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 124 | 24.9% |
 | **Classified Total** | | **483** | **100%** |
-| Unclassified (additional batches) | Default Tier 2 | 682 | — |
-| **Grand Total** | | **1,165** | — |
+| Unclassified (additional batches) | Default Tier 2 (pending review) | 660 | — |
+| **Grand Total** | | **1,143** | — |
 
 ### By Domain and Phase
 
@@ -808,4 +809,4 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 
 ---
 
-*Date: 2026-06-09 | Workflow Criticality Classification v3.5 — classifies 483 workflows into 3 operational tiers. Tier 1: 153 core workflows. Tier 2: 206 standard support workflows. Tier 3: 124 advanced optimization workflows. 682 additional batch workflows unclassified (default Tier 2). Grand total: 1,165 workflows.*
+*Date: 2026-06-09 | Workflow Criticality Classification v3.5 — classifies 483 workflows into 3 operational tiers. Tier 1: 153 core workflows. Tier 2: 206 standard support workflows. Tier 3: 124 advanced optimization workflows. 660 additional batch workflows unclassified (default Tier 2, pending review). Grand total: 1,143 workflows.*

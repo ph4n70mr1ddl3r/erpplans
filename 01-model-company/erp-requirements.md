@@ -6,6 +6,43 @@
 
 ---
 
+## Table of Contents
+
+| Section | Category | Req IDs | Count |
+|---|---|---|---|
+| [R1](#r1-financial-management) | Financial Management | FIN-001 – FIN-047 | 47 |
+| [R2](#r2-inventory-management) | Inventory Management | INV-001 – INV-022 | 22 |
+| [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-026 | 26 |
+| [R4](#r4-warehouse-management) | Warehouse Management | WMS-001 – WMS-008 | 8 |
+| [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-073 | 73 |
+| [R6](#r6-ecommerce-integration) | Ecommerce Integration | ECOM-001 – ECOM-022 | 22 |
+| [R7](#r7-supply-chain-planning) | Supply Chain Planning | SCP-001 – SCP-014 | 14 |
+| [R8](#r8-hr--payroll) | HR & Payroll | HR-001 – HR-027 | 27 |
+| [R9](#r9-customer-relationship--loyalty) | CRM & Loyalty | CRM-001 – CRM-021 | 21+ |
+| [R10](#r10-analytics--reporting) | Analytics & Reporting | RPT-001 – RPT-012 | 12 |
+| [R11](#r11-intercompany--transfer-pricing) | Intercompany & Transfer Pricing | IC-001 – IC-005 | 5 |
+| [R12](#r12-document-management) | Document Management | DOC-001 – DOC-008 | 8 |
+| [R13](#r13-master-data-management) | Master Data Management | MDM-001 – MDM-033 | 33 |
+| [R14](#r14-non-functional-requirements) | Non-Functional Requirements | NFR-001 – NFR-030 | 30 |
+| [R15](#r15-installation--value-added-services) | Installation & Services | SRV-001 – SRV-002 | 2 |
+| [R16](#r16-wholesale--reseller-operations) | Wholesale & Reseller | WSL-001 – WSL-004 | 4 |
+| [R17](#r17-corporate-governance-legal--strategy) | Governance, Legal & Strategy | GOV-001 – GOV-048 | 48+ |
+| [R18](#r18-additional-cross-functional-requirements) | Cross-Functional Additions | FIN-048+, HR-028+, etc. | 30+ |
+| R19–R24 | Operational Gap Closure (Rounds 11–19) | Mixed | 200+ |
+| [R25](#r25-loss-prevention--asset-protection) | Loss Prevention & Asset Protection | LP-001 – LP-010 | 10 |
+| [R26](#r26-business-continuity--disaster-recovery) | Business Continuity & DR | BCP-001 – BCP-010 | 10 |
+| [R27](#r27-insurance--claims-management) | Insurance & Claims | INS-001 – INS-008 | 8 |
+| [R28](#r28-vendor-portal--supplier-collaboration) | Vendor Portal & Collaboration | VPP-001 – VPP-008 | 8 |
+| [R29](#r29-product-recall-management) | Product Recall Management | RCL-001 – RCL-006 | 6 |
+| [R30](#r30-business-intelligence--analytics-operations) | BI & Analytics Operations | BIA-001 – BIA-007 | 7 |
+| [R31](#r31-customer-credit--collections-management) | Customer Credit & Collections | CCR-001 – CCR-008 | 8 |
+| R32 | Operational Gap Closure (Round 21) | Mixed | 16+ |
+
+> **Total: 730 unique requirements** across 32+ categories. Requirements marked with
+> priority: **Must Have** (429), **Should Have** (295), **Nice to Have** (6).
+
+---
+
 ## R1. Financial Management
 
 | Req ID | Requirement | Priority | Notes |
@@ -340,7 +377,7 @@
 | POS-045 | Unified Order Management & Cross-Channel Fulfillment Orchestration | Must Have | Centralized order management engine that accepts orders from all channels (in-store POS, ecommerce, marketplace, mobile app, trade counter) and orchestrates fulfillment routing across all origins (store shelves, DCs, drop-ship vendors, dark stores); unified order lifecycle: creation → ATP check → fulfillment routing → pick/pack → dispatch → delivery/pickup → completion; supports split fulfillment (one order, multiple fulfillment locations), partial shipment, and backorder management; real-time order status visible to customer and store staff across all channels; cross-channel return processing (buy online, return in-store; buy in-store, return online); order-level financial reconciliation with channel-level attribution per W536 |
 | POS-046 | POS Offline Terminal-to-Terminal Local Sync | Should Have | In stores with multiple POS terminals (3 per store), when the store's WAN link is down but the local area network is operational, POS terminals synchronize transaction data and inventory deductions peer-to-peer over the store LAN; ensures that item sold on Terminal 1 is immediately reflected as reduced ATP on Terminal 2, preventing overselling during offline period; store LAN sync maintains consistent inventory view across all terminals; on WAN reconnection, any terminal's upload reconciles the full store's offline transaction set; supports concurrent selling across all terminals without overselling per W535 |
 | POS-047 | POS Continuous Price & Promotion Push (Real-Time Activation) | Must Have | When a price change, promotional activation, or DTI price freeze (POS-024) is enacted in ERP, the updated price is pushed to all online POS terminals within 60 seconds (not waiting for nightly batch); POS terminals apply the new price immediately to all subsequent transactions; if a terminal is offline at time of push, the price update is queued and applied upon reconnection before any new transaction is processed; ensures price compliance for emergency price controls (calamity-declared areas), same-day promotional launches, and mid-day price corrections per W533 |
-| POS-048 | POS Offline Scope Governance & Capability Matrix | Must Have | Documented and configurable offline capability matrix defining which POS functions operate offline, with degraded behavior, or are unavailable: (a) Full offline capability: barcode scanning, price calculation, promotions, cash tender, offline card authorization (store-and-forward), receipt printing, void with manager auth, age-restricted prompts, catch-weight, layaway payment collection; (b) Degraded: loyalty points earning (queued, no balance display), gift card redemption (cached balance only, floor limit), trade account charge (credit limit not verifiable, floor limit per account tier); (c) Unavailable: real-time customer lookup (beyond cached), new account enrollment, e-wallet payments (requires online gateway), digital receipt delivery (queued for later), tax exemption certificate verification; offline scope configurable per store by IT Operations; quarterly offline readiness drill per W535 |
+| POS-048 | POS Offline Scope Governance & Capability Matrix | Must Have | Documented and configurable offline capability matrix defining which POS functions operate offline, with degraded behavior, or are unavailable: (a) Full offline capability: barcode scanning, price calculation, promotions, cash tender, offline card authorization (store-and-forward), receipt printing, void with manager auth, age-restricted prompts, catch-weight, layaway payment collection; (b) Degraded: loyalty points earning (queued, no balance display), gift card redemption (cached balance only, floor limit), trade account charge (credit limit not verifiable, floor limit per account tier); (c) Unavailable: real-time customer lookup (beyond cached), new account enrollment, e-wallet payments (requires online gateway), digital receipt delivery (queued for later), tax exemption certificate verification; offline scope configurable per store by IT Operations; quarterly offline readiness drill per W535. **See also: POS-002 (offline mode core capability), POS-043 (local data store for offline resilience).** |
 | POS-049 | POS Card Terminal & Acquirer Settlement Operations | Must Have | Integrated card payment processing on each POS terminal (EMV chip, contactless/NFC, manual key-entry) with daily batch close per shift per terminal; acquirer settlement reconciliation next-business-day; PIN pad troubleshooting protocol with IT escalation per W265; card batch total verification against POS card tender report at shift-end (W517) and EOD (W5F); settlement exception handling with automatic retry; PCI-DSS compliance across all 600 PIN pads with quarterly firmware audit; EMV fallback to manual entry restricted to manager authorization per W537 |
 | POS-050 | POS Real-Time Loss Prevention Exception Monitoring & Alert Response | Must Have | Real-time LP analytics engine consuming POS event stream (W533) for anomaly detection with configurable detection rules: excessive voids, no-sale drawer opens, sweethearting (price-to-basket ratio), pass-through fraud (weight mismatch), rapid consecutive voids, coupon abuse, serial returners, manual card entry; alert classification by severity (Critical, High, Medium, Low); Critical and High alerts pushed to LP Analyst dashboard and Store Manager mobile app in real-time; same-shift response protocol for Critical alerts; weekly analytics and ML model tuning with confirmed-case feedback; cross-store serial fraud detection; integration with W37 (LP investigation), W522 (daily review), W281 (SCO exceptions), W248 (inventory variance) per W538 |
 | POS-051 | POS Promotional Coupon, Voucher & Manufacturer Coupon Processing | Should Have | Coupon/voucher scanning (barcode/QR) at POS with validation against coupon master data: active status, date range, item eligibility, usage limits (per-coupon, per-customer, per-transaction), duplicate detection; configurable stacking rules (store + manufacturer allowed, two store coupons blocked, loyalty + coupon = lower of two, employee discount + coupon = employee only, clearance items excluded); digital voucher single-use QR with time-limited validity window to prevent screenshot fraud; manufacturer coupon line items flagged for vendor reimbursement (FIN-019); EOD coupon redemption summary by type; manual coupon entry with manager override for coupons > PHP 500 per W539 |
