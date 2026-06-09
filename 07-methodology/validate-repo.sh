@@ -25,7 +25,7 @@ PA_WFS=$(grep -ohP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS
 CLASSIFIED=$(grep -ohP '\bW\d{1,4}[A-Z]?\b' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sort -u)
 
 UNCLASSIFIED=$(comm -23 <(echo "$PA_WFS") <(echo "$CLASSIFIED"))
-UNCLASS_COUNT=$(echo "$UNCLASSIFIED" | grep -c '^' || true)
+UNCLASS_COUNT=$(echo "$UNCLASSIFIED" | grep -cP '^W' || true)
 
 if [ "$UNCLASS_COUNT" -eq 0 ]; then
     ok "All workflow headers in PA files are referenced in criticality classification"

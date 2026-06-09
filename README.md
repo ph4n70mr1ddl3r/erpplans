@@ -18,6 +18,8 @@ The following are **not** covered in this repository and would be addressed duri
 - **Hardware procurement and vendor selection** — reference specifications provided; purchasing is out of scope
 - **Network infrastructure detailed design** — bandwidth targets specified; network architecture diagrams are not
 
+See [CHANGELOG.md](CHANGELOG.md) for revision history.
+
 ## Folder Structure
 
 ```
@@ -70,6 +72,7 @@ erpplans/
 │   ├── internal-controls-matrix.md     67 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
 │   └── data-migration-mapping.md       Data migration field mapping templates
+├── CHANGELOG.md                 ← Revision history
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     └── technical-guidelines.md       POS hardware, infrastructure, integration, security
@@ -103,10 +106,10 @@ erpplans/
 |---|---|---|
 | Requirements | **730** across 32+ categories | `01-model-company/erp-requirements.md` |
 | Workflows (total) | **1,153** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
-| Workflows (classified by tier) | 483 (Tier 1: 153, Tier 2: 206, Tier 3: 124) + 685 now classified (Tier 1: 286, Tier 2: 295, Tier 3: 104) = 1,168 classified | `workflows/workflow-criticality-classification.md` |
+| Workflows (classified by tier) | 483 (Tier 1: 153, Tier 2: 206, Tier 3: 124) + 684 subsequently classified (Tier 1: 286, Tier 2: 293, Tier 3: 226) = 1,167 classified | `workflows/workflow-criticality-classification.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
-| Must Have Requirements | 429 | `01-model-company/erp-requirements.md` |
-| Should Have Requirements | 295 | `01-model-company/erp-requirements.md` |
+| Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
+| Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
 | Nice to Have Requirements | 6 | `01-model-company/erp-requirements.md` |
 
 ## Document Relationships

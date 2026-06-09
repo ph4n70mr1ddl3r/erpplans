@@ -2,7 +2,7 @@
 
 > Index of all operational workflows organized by **Value Stream** and **Process Area**.
 > For the workflow format, conventions, and RACI key, see [WORKFLOW-FORMAT-GUIDE.md](./WORKFLOW-FORMAT-GUIDE.md).
-> For the previous domain-based organization, see [_archive-domains/](./_archive-domains/).
+> For workflow format, conventions, and RACI key, see [WORKFLOW-FORMAT-GUIDE.md](./WORKFLOW-FORMAT-GUIDE.md).
 
 ---
 
