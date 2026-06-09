@@ -662,15 +662,376 @@
 | NFR-036 | Loss Prevention Analytics & Shrinkage Investigation System Operations | M | W710 | W79, W80, W6, W91, W92, W681, W152, W44, W706, W88, W48 |
 
 
----
+
+## R25. Business Continuity & Disaster Recovery (BCP)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| BCP-001 | Business Continuity Plan Annual Review & Update | M | W847 | — |
+| BCP-002 | Typhoon & Natural Disaster Store Emergency Protocol | M | W848 | — |
+| BCP-003 | IT Disaster Recovery Site Activation & Failover | M | W849 | — |
+| BCP-004 | Store Emergency Closure & Reopening Procedure | M | W850 | — |
+| BCP-005 | Critical System Recovery & Service Restoration | M | W851 | — |
+| BCP-006 | Supply Chain Disruption Business Impact Assessment & Recovery | M | W852 | — |
+| BCP-007 | Business Continuity Plan Tabletop Exercise & Drill | S | W853 | — |
+| BCP-008 | Pandemic/Epidemic Business Continuity Activation | M | W854 | — |
+| BCP-009 | Communication Tree Activation & Crisis Communication | M | W855 | — |
+| BCP-010 | Post-Incident Review, Lessons Learned & Plan Update | M | W856 | — |
+
+## R30. Business Intelligence & Analytics Operations (BIA)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| BIA-001 | Daily Report Distribution & Automated Dashboard Refresh | M | W879 | — |
+| BIA-002 | BI Dashboard Development & User Request Management | S | W880 | — |
+| BIA-003 | Data Warehouse ETL Job Monitoring & Exception Handling | M | W881 | — |
+| BIA-004 | Self-Service BI Governance & Access Provisioning | S | W882 | — |
+| BIA-005 | Ad-hoc Analytics Request Fulfillment & SLA Management | S | W883 | — |
+| BIA-006 | Data Quality Monitoring & Remediation Operations | M | W884 | — |
+| BIA-007 | Monthly Executive Reporting Package Preparation | M | W885 | — |
+
+## R31. Customer Credit & Collections Management (CCR)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| CCR-001 | Customer Credit Application Processing & Scoring | M | W886 | — |
+| CCR-002 | Customer Credit Limit Review & Adjustment | M | W887 | — |
+| CCR-003 | Customer Credit Hold & Order Blocking | M | W888 | — |
+| CCR-004 | Customer AR Aging Analysis & Collection Prioritization | M | W889 | — |
+| CCR-005 | Customer Collection Call Execution & Promise Tracking | S | W890 | — |
+| CCR-006 | Customer Bad Debt Write-Off & Recovery | M | W891 | — |
+| CCR-007 | Customer Statement Generation & Distribution | S | W892 | — |
+| CCR-008 | Customer Credit Scorecard & Portfolio Analysis | S | W893 | — |
+
+## R19–R24. Additional Compliance Requirements (COM)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| COM-009 | Anti-Money Laundering (AML) Compliance Program Operations | M | W730 | W460, W519 |
+| COM-010 | Consumer Act (RA 7394) Compliance Monitoring & Enforcement | M | W731 | W12, W447, W469 |
+| COM-011 | Vendor Tax Compliance Monitoring & BIR TIN Validation | M | W732 | W293, W36, W711 |
+| COM-012 | Customer Account Data Deletion & RA 10173 Privacy Compliance Processing | M | W834 | W156, W257, W675 |
+
+## Additional CRM Requirements (CRM)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| CRM-032 | Customer Onboarding Journey Management & First-90-Day Engagement | S | W735 | W65 |
+| CRM-033 | Customer Store Credit Issuance & Lifecycle Management | M | W781 | W5, W660 |
+| CRM-034 | Customer B2B Order-to-Cash Cycle Monitoring & Proactive Communication | S | W782 | — |
+| CRM-035 | Customer Credit Application Scoring & Risk Assessment Processing | M | W783 | W24, W572, W732 |
+| CRM-036 | Customer Project BOM Estimation & Material Planning Service | S | W820 | W252, W289, W542 |
+| CRM-037 | Customer Project Warranty Registration & Multi-Year Tracking | M | W821 | W33, W487, W708, W88 |
+| CRM-038 | Customer Loyalty Tier Benefit Fulfillment & Welcome Package Processing | S | W822 | W104, W11, W5, W615, W708 |
+| CRM-039 | Customer Loyalty Account Deceased Member Processing & Points Estate Transfer | S | W933 | — |
+| CRM-040 | Customer B2B Self-Service Portal Order Management & Account Access | S | W936 | — |
+| CRM-041 | Customer Loyalty Family/Household Account Linking & Shared Benefits Management | S | W942 | W515 |
+| CRM-042 | Customer Complaint Root Cause Analysis & Systemic Improvement | S | W507 | W110 |
+| CRM-043 | Customer Account Maintenance & B2B Information Update | S | W508 | W253, W328 |
+| CRM-044 | Customer Price Protection & Price Adjustment Policy Processing | M | W928 | — |
+
+## Additional Ecommerce Requirements (ECOM)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| ECOM-026 | Marketplace Channel Daily Operations & Order Management (Lazada/Shopee) | M | W724 | W180, W19, W246, W99 |
+| ECOM-027 | Ecommerce Platform Daily Health Monitoring & Performance Dashboard | M | W725 | — |
+| ECOM-028 | Ecommerce Product Content Enrichment & Catalog Daily Operations | M | W726 | W180, W264, W298, W564 |
+| ECOM-029 | Ecommerce Platform Feature Release, A/B Testing & UX Optimization | S | W828 | W132, W659 |
+| ECOM-030 | Customer Ecommerce Order Split & Partial Delivery Proactive Communication | M | W829 | W101, W592 |
+| ECOM-031 | Customer Back-in-Stock Notification Subscription & Alert Management | S | W930 | — |
+| ECOM-032 | Ecommerce Customer Wishlist, Save-for-Later & Price Drop Alert | S | W934 | — |
+| ECOM-033 | Ecommerce Customer Product Comparison Tool & Buying Guide Content Management | S | W940 | — |
+
+## Additional Engineering & Construction Requirements (ENG)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| ENG-001 | Construction Safety Management & DOLE DO 13 Compliance | M | W789 | — |
+| ENG-002 | Construction Quality Assurance & Milestone Inspection | M | W790 | — |
+| ENG-003 | Construction Document Control & As-Built Management | M | W791 | — |
+
+## Additional ESG Requirements (ESG)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| ESG-009 | Green Building Certification (BERDE) & Sustainable Store Design Standards | S | W800 | — |
+| ESG-010 | ESG Incident Response, Regulatory Citation & Stakeholder Communication | M | W801 | — |
+
+## Additional Financial Management Requirements (FIN)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| FIN-062 | BIR Withholding Tax (EWT) Certificate Form 2307 Issuance to Vendors | M | W711 | W260, W293, W556, W705 |
+| FIN-063 | Financial Restatement & Prior-Year Adjustment Processing | M | W712 | W260, W351, W481, W637 |
+| FIN-064 | Corporate Credit Card Program Management & Expense Reconciliation | S | W713 | W43, W435 |
+| FIN-065 | Store-Level Daily Financial Summary & Flash P&L | M | W714 | W489, W533, W561, W85 |
+| FIN-066 | Store-Level Daily Opening Safe Count & Cash Float Preparation | M | W764 | W25, W272, W5, W541 |
+| FIN-067 | Multi-Entity Consolidation Monthly Execution & Elimination Processing | M | W765 | W137, W234, W351, W635, W752 |
+| FIN-068 | Customer Credit Note Aging Management & Unredeemed Credit Write-Off | M | W766 | W540, W708 |
+| FIN-069 | Vendor Rebate Claim Filing & Settlement Documentation Processing | M | W767 | W244, W556, W705 |
+| FIN-070 | BIR VAT Refund Claim Processing & Input VAT Recovery | S | W768 | W590 |
+| FIN-071 | Customer Overpayment Detection & Refund Processing | M | W769 | W708, W99 |
+| FIN-072 | AP Vendor Debit Memo Processing & Account Deduction Management | M | W770 | W110, W244, W500, W513, W556, W669, W705 |
+| FIN-073 | Customer Credit Field Collection Operations & Legal Escalation | M | W812 | W196, W280 |
+| FIN-074 | AP Vendor Invoice Duplicate Detection & Resolution | M | W813 | W244, W705 |
+| FIN-075 | Credit Card Settlement Exception & Chargeback Recovery Processing | M | W814 | — |
+| FIN-076 | Weekly Cash Flow Forecast & Treasury Planning | S | W589 | W10, W14, W144, W232, W30, W318, W319, W556 |
+| FIN-077 | Monthly Tax Provision & Compliance Review | M | W590 | W260, W407, W473, W475, W499, W9, W90 |
+| FIN-078 | Insurance Claims Processing & Recovery Management | M | W610 | — |
+| FIN-079 | Customer Store Credit Expiration Management & Unclaimed Credit Processing | M | W939 | — |
+
+## Additional Governance Requirements (GOV)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| GOV-055 | Store-Level Pest Control & Sanitation Management | S | W503 | W448 |
+| GOV-056 | Store-Level Digital Signage & Content Management | S | W504 | W190, W262 |
+
+## Additional Hazardous Materials Requirements (HAZ)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| HAZ-001 | Hazmat Regulatory Change Management & Compliance Update | M | W803 | — |
+
+## Additional HR & Payroll Requirements (HR)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| HR-040 | Employee Referral Program Management & Reward Processing | S | W715 | — |
+| HR-041 | Internal Communication & Company-Wide Announcement Management | M | W716 | W504 |
+| HR-042 | Workplace Violence Prevention & Response Protocol | M | W717 | W207, W251, W494 |
+| HR-043 | Employee Relocation & Housing Assistance Management | S | W718 | W441, W511, W74 |
+| HR-044 | Diversity, Equity & Inclusion (DEI) Program Management | M | W719 | W694 |
+| HR-045 | Employee Leave Balance Management & Annual Leave Carry-Forward Processing | M | W777 | W10, W34 |
+| HR-046 | Employee Benefits Annual Open Enrollment & Plan Selection Management | S | W778 | W10, W504, W716 |
+| HR-047 | Store-Level Employee Injury Incident Reporting & Workers' Compensation Claim Processing | M | W779 | W140, W642 |
+| HR-048 | Store-Level Employee Uniform & PPE Periodic Issuance & Replacement Processing | M | W780 | W43, W655 |
+| HR-049 | Employee Business Travel Request, Approval & Expense Management | M | W815 | W74 |
+| HR-050 | Multi-Entity Payroll Consolidation & Cross-Entity Reconciliation | M | W816 | W10, W235, W251, W638, W752 |
+| HR-051 | Employee Sabbatical, Study Leave & Secondment Management | S | W817 | W34, W511, W603, W72 |
+| HR-052 | Store-Level Employee Daily Attendance Verification & Exception Processing | S | W594 | W10, W34 |
+| HR-053 | Store-Level Daily HR Operations & People Management | M | W601 | — |
+| HR-054 | Store-Level Labor Cost Monitoring & Overtime Budget Control | S | W602 | — |
+
+## Additional Health & Safety Requirements (HSE)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| HSE-005 | Occupational Health Surveillance & Employee Medical Monitoring | M | W804 | — |
+| HSE-006 | Workers' Compensation, SSS/ECC Claims & Return-to-Work Processing | M | W805 | — |
+| HSE-007 | Annual Fire Safety System Testing & BFP Compliance | M | W806 | W54, W610 |
+
+## R27. Insurance & Claims Management (INS)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| INS-001 | Store & DC Property Insurance Claim Filing | M | W857 | — |
+| INS-002 | Typhoon & Natural Disaster Catastrophic Insurance Claim | M | W858 | — |
+| INS-003 | Vehicle & Fleet Insurance Claim Processing | M | W859 | — |
+| INS-004 | Business Interruption Insurance Claim & Loss Documentation | S | W860 | — |
+| INS-005 | Employee Injury Insurance Claim & SSS/ECC Filing | M | W861 | — |
+| INS-006 | Insurance Policy Annual Renewal & Coverage Review | M | W862 | — |
+| INS-007 | Third-Party Liability Claim & Customer Incident Response | S | W863 | — |
+| INS-008 | Insurance Claim Recovery, Settlement & Accounting | M | W864 | — |
+
+## Additional Inventory Requirements (INV)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| INV-025 | AI/ML Model Governance, Bias Audit & Ethical Review | M | W689 | — |
+| INV-026 | Digital Transformation Initiative Portfolio Management | S | W690 | — |
+| INV-027 | Emerging Technology Scouting & Proof-of-Concept Evaluation | S | W691 | — |
+
+## Additional Logistics Requirements (LOG)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| LOG-003 | Vehicle Acquisition, Registration, Insurance & Disposal Lifecycle Management | M | W799 | — |
+
+## R25. Loss Prevention & Asset Protection (LP)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| LP-001 | Daily Store Exception-Based Reporting & Transaction Monitoring | M | W837 | — |
+| LP-002 | CCTV & Surveillance System Daily Operations & Incident Review | M | W838 | — |
+| LP-003 | Internal Theft Investigation & Employee Dishonesty Case Management | M | W839 | — |
+| LP-004 | Organized Retail Crime (ORC) Detection & Multi-Store Task Force | M | W840 | — |
+| LP-005 | Refund & Return Fraud Detection & Prevention System | M | W841 | — |
+| LP-006 | Cash Handling Exception Monitoring & Sweethearting Detection | M | W842 | — |
+| LP-007 | Vendor & Delivery Fraud Detection & Dock Security Audit | M | W843 | — |
+| LP-008 | Store Entrance/Exit Audit & Electronic Article Surveillance (EAS) | M | W844 | — |
+| LP-009 | Shrinkage Analysis, Root Cause Investigation & Reduction Program | M | W845 | — |
+| LP-010 | Loss Prevention Training, Awareness & Compliance Program | M | W846 | — |
+
+## Additional Merchandising Requirements (MER)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| MER-008 | Markdown Optimization & Analytics Operations | S | W737 | W161 |
+| MER-009 | Vendor Trade Fund Management & Promotional Budget Tracking | S | W738 | W155, W27, W513 |
+| MER-010 | Product Phase-Out Inventory Disposition Planning & Execution | M | W830 | W180, W2, W312, W315, W443, W444, W62, W636 |
+| MER-011 | Competitor Store Visit Program & Market Intelligence Operations | S | W624 | — |
+
+## Additional Marketing Requirements (MKT)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| MKT-005 | Marketing Data Platform Daily Operations & Campaign Analytics | S | W736 | — |
+| MKT-006 | Marketing Campaign Compliance Review & Regulatory Approval | M | W833 | W126, W149, W170, W289, W427 |
+
+## Additional Maintenance Requirements (MNT)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| MNT-007 | Generator Preventive Maintenance, Fuel Management & Load Testing | M | W808 | W492, W535 |
+
+## Additional Non-Functional Requirements (NFR)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| NFR-037 | Enterprise API Gateway Daily Monitoring & Health Dashboard | M | W733 | — |
+| NFR-038 | Data Quality Daily Triage & Remediation Operations | M | W734 | W253, W292, W732 |
+| NFR-039 | ERP System Monthly Performance Review & Capacity Planning Update | M | W787 | — |
+| NFR-040 | POS Terminal Emergency Swap & Rapid Replacement Protocol | M | W831 | W265, W404, W48 |
+| NFR-041 | ERP User Access Quarterly Recertification & Compliance Review | M | W832 | W338, W511 |
+
+## Additional POS & Retail Requirements (POS)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| POS-091 | Store-Level Daily Safety Briefing & Toolbox Talk | S | W720 | W559 |
+| POS-092 | Store-Level Vendor Promodizer Floor Activity Coordination | M | W721 | W237, W269, W449, W581 |
+| POS-093 | Store-Level Exterior Display & Garden Center Operations | S | W722 | W438, W93 |
+| POS-094 | Store-Level Loading Bay Traffic & Truck Queue Management | M | W723 | W575 |
+| POS-095 | Store-Level BOPIS Order Aging & Abandoned Pickup Processing | M | W771 | W101, W708, W86 |
+| POS-096 | Store-Level Rain Check Issuance for Out-of-Stock Promotional Items | M | W772 | W529, W708 |
+| POS-097 | Store-Level Customer Hold & Will-Call Order Management | S | W773 | W708 |
+| POS-098 | Store-Level Parking Lot & Exterior Facility Daily Management | S | W774 | W238, W497 |
+| POS-099 | Store-Level Customer Loyalty Card Replacement & Account Recovery | S | W775 | W496, W708 |
+| POS-100 | Store-Level Product Recall Customer Notification Execution | M | W776 | W12, W29, W617, W627, W708 |
+| POS-101 | Store-Level Customer Material Calculator & Quantity Estimation Service | S | W823 | W252, W5 |
+| POS-102 | Store-Level Lumber Yard & Outdoor Area Daily Operations | M | W824 | W463, W576, W579, W780 |
+| POS-103 | Store-Level Bulky Item Delivery Proof Collection & Documentation | M | W825 | W255, W438, W487, W5, W541 |
+| POS-104 | Store-Level Layaway Payment Reminder & Forfeiture Processing | M | W826 | W28, W708 |
+| POS-105 | Store-Level Building Material Load Calculation & Safety Advisory | S | W827 | W148 |
+| POS-106 | Store-Level Daily Closing Procedure | M | W574 | W272, W5, W517, W541 |
+| POS-107 | Store-Level Weekly Sales & Operations Review | S | W575 | W35, W522, W67 |
+| POS-108 | Store-Level Typhoon & Severe Weather Preparedness | M | W576 | — |
+| POS-109 | Store-Level Holiday Season (Ber Months) Operational Ramp-Up | S | W577 | W13, W262, W555 |
+| POS-110 | Store-Level Payday Weekend & Peak Day Operational Readiness | S | W578 | W206, W212, W278, W34, W547 |
+| POS-111 | Store-Level Daily Equipment & Specialized Fixture Safety Check | M | W579 | W139, W168, W169, W47 |
+| POS-112 | Store-Level Emergency Manual Operations Protocol | M | W580 | — |
+| POS-113 | Store-Level Vendor Representative Access & Activity Management | S | W581 | W269, W449, W71 |
+| POS-114 | Store-Level Fire Drill Execution & Documentation | S | W582 | W141, W330, W476 |
+| POS-115 | Store-Level Seasonal Promotional Transition & Display Reset | S | W583 | W13, W181, W262, W523, W554, W63, W86 |
+| POS-116 | Store-Level KPI Dashboard & Daily Performance Monitoring | M | W665 | — |
+| POS-117 | Store-Level Lost & Found Item Management | S | W929 | — |
+| POS-118 | Store-Level Customer Comfort Room & Amenity Daily Operations | M | W931 | W47 |
+| POS-119 | Customer Product Registration at POS for Vendor Extended Warranty | S | W935 | W911 |
+| POS-120 | Store-Level Customer Wheelchair & PWD Mobility Assistance Service | M | W937 | W170, W438, W497 |
+| POS-121 | Store-Level Customer Baggage Hold & Parcel Custody Service | S | W941 | W929 |
+
+## Additional Project Management Requirements (PRJ)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| PRJ-001 | Project Change Order Management & Margin Re-Impact Assessment | M | W792 | — |
+| PRJ-002 | Project Close-Out, Final Reconciliation & Warranty Handover | M | W793 | — |
+
+## Additional Property Requirements (PROP)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| PROP-001 | Store Closure, Lease Termination & Asset Recovery Management | M | W807 | W117, W43 |
+
+## Additional Procurement Requirements (PUR)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| PUR-039 | Vendor New Product Submission Review & Evaluation Processing | S | W788 | W625, W679, W705 |
+| PUR-040 | Vendor Insurance Certificate & Compliance Documentation Tracking | M | W818 | W36, W59, W705, W706 |
+| PUR-041 | Vendor Quality Incoming Inspection Failure & Material Review Board | M | W819 | W110, W681, W770, W88, W92 |
+| PUR-042 | Vendor Catalog Price Change Intake, Assessment & ERP Synchronization | M | W932 | — |
+| PUR-043 | Vendor Managed Inventory (VMI) Periodic Data Accuracy Audit & Reconciliation | S | W938 | — |
+
+## R29. Product Recall Management (RCL)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| RCL-001 | Product Safety Incident Triage & Recall Risk Assessment | M | W873 | — |
+| RCL-002 | Product Recall Customer Notification Campaign | M | W874 | — |
+| RCL-003 | Product Recall Inventory Quarantine & Disposition | M | W875 | — |
+| RCL-004 | Product Recall Regulatory Reporting & Compliance | M | W876 | — |
+| RCL-005 | Product Recall Vendor Recovery & Cost Reimbursement | S | W877 | — |
+| RCL-006 | Product Recall Effectiveness Audit & Close-Out | M | W878 | — |
+
+## Additional Regulatory Requirements (REG)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| REG-002 | LGU Local Business Tax Computation, Payment & Receipt Management | M | W802 | — |
+
+## Additional Supply Chain Planning Requirements (SCP)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| SCP-015 | Port & Customs Clearance Daily Status Tracking & Escalation | M | W728 | — |
+| SCP-016 | Supply Chain Disruption Rapid Response & Escalation Protocol | M | W729 | W60, W670 |
+| SCP-017 | DC-to-Store Delivery Route Optimization & Multi-Stop Planning | M | W786 | W199, W431 |
+| SCP-018 | Store-Level Replenishment Forecast Accuracy Review & Parameter Tuning | M | W835 | W312 |
+| SCP-019 | Supply Chain Cost Analysis & Logistics Optimization Review | S | W680 | — |
+| SCP-020 | Carrier & Freight Forwarder Daily Performance Monitoring | M | W727 | W304, W500 |
+
+## Additional Service Requirements (SRV)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| SRV-004 | Service SKU Catalog Management, Pricing & Material Linkage | M | W794 | — |
+| SRV-005 | Service Customer Complaint, Rework & Warranty Claim Management | M | W795 | W600 |
+
+## R28. Vendor Portal & Supplier Collaboration (VPP)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| VPP-001 | Vendor Portal User Onboarding & Access Provisioning | M | W865 | — |
+| VPP-002 | Vendor Self-Service PO Acknowledgment & Confirmation | M | W866 | — |
+| VPP-003 | Vendor Self-Service Invoice Submission & Payment Inquiry | M | W867 | — |
+| VPP-004 | Vendor Catalog & Product Information Self-Service | S | W868 | — |
+| VPP-005 | Vendor Dispute Resolution & Issue Ticketing | M | W869 | — |
+| VPP-006 | Vendor Compliance Document Upload & Expiration Tracking | M | W870 | — |
+| VPP-007 | Supplier Scorecard Portal Publication & Transparency | S | W871 | — |
+| VPP-008 | Vendor RFQ & Bid Submission Portal Management | M | W872 | — |
+
+## Additional Warehouse Management Requirements (WMS)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| WMS-018 | DC Inventory Slotting Optimization & Periodic Re-Slotting Execution | S | W784 | W236, W586, W71 |
+| WMS-019 | Vendor Returnable Transport Packaging Reconciliation & Settlement | M | W785 | W106, W22, W3, W7 |
+| WMS-020 | DC Workforce Scheduling, Labor Planning & Productivity Tracking | M | W796 | — |
+| WMS-021 | DC Security Operations, Perimeter Management & Access Control | M | W797 | — |
+| WMS-022 | DC Building Maintenance, Utility Operations & Facility Condition Monitoring | M | W798 | W700 |
+| WMS-023 | DC Outbound Load Verification & Pre-Dispatch Quality Check | M | W836 | W106, W109, W199, W236, W463 |
+
+## Additional Wholesale Requirements (WSL)
+
+| Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
+|---|---|---|---|---|
+| WSL-006 | Wholesale Consignment Inventory Management & Settlement | S | W809 | — |
+| WSL-007 | Wholesale Backorder Management, Allocation & Customer Communication | M | W810 | — |
+| WSL-008 | Wholesale Delivery Proof, Discrepancy Resolution & POD Reconciliation | M | W811 | — |
+
 
 ## Coverage Validation
 
-- **Total requirements**: 557 across 21 categories (R1–R21)
+- **Total requirements**: 730 across 37+ categories (R1–R32)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: 763 (all workflows in the README index)
-- **Must Have requirements**: 295 (any scored 0 is a disqualifier)
+- **Total workflows referenced**: 900+ (all workflows across 30 value streams)
+- **Must Have requirements**: 429 (any scored 0 is a disqualifier)
+- **Should Have requirements**: 295
+- **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-07 (v46 — gap analysis round 16: added 25 new requirement rows (POS-071–073, FIN-045–047, PUR-025a–025b, SCP-011–012, HR-023–025, CRM-015–016, GOV-043–044, POS-074–081) mapping to workflows W739–W763 covering POS installment selling, upselling, safety acknowledgment, installment reconciliation, emergency cash float, IC management fee allocation, commodity price tracking, supplier innovation, carrier benchmarking, vendor diversification, meal break compliance, new hire check-in, theft prevention, post-purchase follow-up, loyalty tier upgrade, fire safety inspection, hazmat advisory, daily huddle, complaint resolution, fuel management, key management, cleaning checklist, special order follow-up, dock scheduling, and sample management; updating total requirements to 557 and total workflows to 763; all workflows have full requirement traceability)*
+*Date: 2026-06-09 (v47 — backfilled 199 previously unmapped requirements from gap analysis rounds 13–21, adding new sections R25 (BCP), R27 (INS), R28 (VPP), R29 (RCL), R30 (BIA), R31 (CCR), and additional rows across FIN, INV, PUR, WMS, POS, ECOM, SCP, HR, CRM, NFR, SRV, WSL, GOV, COM, ENG, ESG, HAZ, HSE, LOG, LP, MER, MKT, MNT, PRJ, PROP, REG categories; total requirements now 730 with full workflow traceability)*

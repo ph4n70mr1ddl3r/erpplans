@@ -1,6 +1,6 @@
 # Workflow Criticality Classification
 
-> Classifies all 1,143 operational workflows into operational criticality tiers.
+> Classifies all 1,147 operational workflows into operational criticality tiers.
 > Previously unclassified workflows (681) have been classified by value stream context
 > and operational criticality.
 >
@@ -697,7 +697,7 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W226 | Store Renovation & Retrofitting (CAPEX) | Store renovation |
 | W227 | Commissioning & Operational Handover | Commissioning |
 
-### Fleet & Logistics (4 workflows)
+### Fleet & Logistics (8 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -705,6 +705,10 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W197 | Driver Performance & Safety Management | Driver management |
 | W198 | Fuel Management & Consumption Monitoring | Fuel management |
 | W199 | Fleet Telematics & Real-Time Tracking | Telematics |
+| W1163 | 3PL & Delivery Partner Daily Operations Management | 3PL partner coordination |
+| W1164 | Inter-Island Logistics Coordination & Shipping Management | Inter-island shipping |
+| W1165 | Last-Mile Delivery Dispatch, Tracking & SLA Management | Last-mile delivery SLA |
+| W1166 | Carrier Rate Management, Freight Audit & Cost Optimization | Freight cost management |
 
 ### Hazmat & Safety (4 workflows)
 
@@ -819,6 +823,8 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W596 | Store-Level Replenishment Exception Management & Auto-Override | Supply Planning |
 | W680 | Supply Chain Cost Analysis & Logistics Optimization Review | Supply Planning |
 | W727 | Carrier & Freight Forwarder Daily Performance Monitoring | Supply Planning |
+| W1163 | 3PL & Delivery Partner Daily Operations Management | Logistics |
+| W1165 | Last-Mile Delivery Dispatch, Tracking & SLA Management | Logistics |
 | W729 | Supply Chain Disruption Rapid Response & Escalation Protocol | Supply Planning |
 | W762 | Carrier Performance Weekly Review & Freight Rate Benchmarking | Supply Planning |
 | W763 | Supply Chain Vendor Diversification & Alternative Sourcing Maintenance | Supply Planning |
@@ -1152,6 +1158,8 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W622 | Mock Product Recall Exercise & Recall Readiness Testing | Supply Planning |
 | W623 | Cross-Functional New Store Opening Readiness Review | Supply Planning |
 | W786 | DC-to-Store Delivery Route Optimization & Multi-Stop Planning | Supply Planning |
+| W1164 | Inter-Island Logistics Coordination & Shipping Management | Logistics |
+| W1166 | Carrier Rate Management, Freight Audit & Cost Optimization | Logistics |
 | W1002 | Vendor Product Sampling & Test Batch Inventory Lifecycle Management | Vendor Management & Procurement |
 | W1033 | Vendor Lead Time Accuracy Monitoring & Supply Planning Impact Assessment | Vendor Management & Procurement |
 | W1035 | Store-Level Return-to-Vendor (RTV) Consolidation & Batch Shipping Processing | Vendor Management & Procurement |
@@ -1605,12 +1613,12 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Previously Classified | New Additions | Updated Total |
 |---|---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 153 | 284 | **437** |
-| Phase 2 | Operational Excellence (Tier 2) | 206 | 293 | **499** |
+| Phase 1 | Go-Live Critical (Tier 1) | 153 | 286 | **439** |
+| Phase 2 | Operational Excellence (Tier 2) | 206 | 295 | **501** |
 | Phase 3 | Innovation & Optimization (Tier 3) | 124 | 104 | **228** |
-| **Classified Total** | | **483** | **681** | **1164** |
+| **Classified Total** | | **483** | **685** | **1168** |
 | Unclassified | | — | — | **0** |
-| **Grand Total** | | | | **1,143** |
+| **Grand Total** | | | | **1,168** |
 
 ### Operational Tier Guidance
 
@@ -1619,4 +1627,4 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 3. **Tier 3 workflows** (228) enable optimization, AI integration, and strategic differentiation.
 4. **Cross-tier dependencies**: Some Tier 2/3 workflows reference Tier 1 workflows; the core Tier 1 workflows must be stable for Tier 2/3 to generate value.
 
-*Date: 2026-06-09 | Workflow Criticality Classification v4.0 — all 1,143 workflows now classified. Tier 1: 437 · Tier 2: 499 · Tier 3: 228. Previously unclassified 681 workflows classified. Grand total: 1,143 workflows.*
+*Date: 2026-06-09 | Workflow Criticality Classification v5.0 — all 1,168 workflows now classified (added W1163–W1166 for VS-06 PA-06.3 Last-Mile & Delivery Partners). Tier 1: 439 · Tier 2: 501 · Tier 3: 228. Grand total: 1,168 workflows.*

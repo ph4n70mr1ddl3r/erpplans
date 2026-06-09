@@ -9,7 +9,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 91 Process Areas · 1,149 Workflows
+8 Families · 30 Value Streams · 91 Process Areas · 1,153 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -20,8 +20,8 @@
 | | | | **Subtotal** | **133** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 26 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 20 |
-|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 8 |
-| | | | **Subtotal** | **54** |
+|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 12 |
+| | | | **Subtotal** | **58** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 124 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 47 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 141 |
@@ -52,7 +52,7 @@
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 41 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 13 |
 | | | | **Subtotal** | **118** |
-| | | | **Grand Total** | **1149** |
+| | | | **Grand Total** | **1153** |
 
 ---
 
@@ -93,11 +93,11 @@
 - **PA-05.2** [Stock Transfers & Rebalancing](./VS-05-inventory-lifecycle/PA-05.2-stock-transfers-and-rebalancing.md) — 7 workflows
 - **PA-05.3** [Inventory Disposition & Optimization](./VS-05-inventory-lifecycle/PA-05.3-inventory-disposition-and-optimization.md) — 7 workflows
 
-**[VS-06: Logistics & Fleet](./VS-06-logistics-fleet/README.md)** (8 workflows)
+**[VS-06: Logistics & Fleet](./VS-06-logistics-fleet/README.md)** (12 workflows)
 
 - **PA-06.1** [Outbound Distribution](./VS-06-logistics-fleet/PA-06.1-outbound-distribution.md) — 2 workflows
 - **PA-06.2** [Fleet & Driver Management](./VS-06-logistics-fleet/PA-06.2-fleet-and-driver-management.md) — 6 workflows
-- **PA-06.3 | Last-Mile & Delivery Partners — *(no workflows yet; last-mile delivery operations are covered under VS-10 PA-10.2 and W268)*
+- **PA-06.3** [Last-Mile & Delivery Partners](./VS-06-logistics-fleet/PA-06.3-last-mile-and-delivery-partners.md) — 4 workflows
 
 ### Sell & Serve
 
@@ -287,4 +287,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1149 workflows across 30 value streams · Date: 2026-06-09*
+*Total: 1153 workflows across 30 value streams · Date: 2026-06-09*

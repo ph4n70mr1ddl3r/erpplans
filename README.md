@@ -27,7 +27,7 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            730 requirements across 32+ categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      1,149 workflows organized by value stream
+│   ├── workflows/                      1,153 workflows organized by value stream
 │   │   ├── value-stream-index.md              Master index (8 families · 30 value streams)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
@@ -38,7 +38,7 @@ erpplans/
 │   │   ├── VS-03-vendor-management/             74 workflows (4 process areas)
 │   │   ├── VS-04-dc-warehouse/                  26 workflows (3 process areas)
 │   │   ├── VS-05-inventory-lifecycle/           20 workflows (3 process areas)
-│   │   ├── VS-06-logistics-fleet/               8 workflows (3 process areas)
+│   │   ├── VS-06-logistics-fleet/               12 workflows (3 process areas)
 │   │   ├── VS-07-store-operations/              124 workflows (4 process areas)
 │   │   ├── VS-08-pos-checkout/                  47 workflows (3 process areas)
 │   │   ├── VS-09-in-store-services/             141 workflows (3 process areas)
@@ -102,8 +102,8 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **730** across 32+ categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **1,149** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
-| Workflows (classified by tier) | 483 (Tier 1: 153, Tier 2: 206, Tier 3: 124) + 681 now classified (Tier 1: 284, Tier 2: 293, Tier 3: 104) = 1,164 classified | `workflows/workflow-criticality-classification.md` |
+| Workflows (total) | **1,153** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (classified by tier) | 483 (Tier 1: 153, Tier 2: 206, Tier 3: 124) + 685 now classified (Tier 1: 286, Tier 2: 295, Tier 3: 104) = 1,168 classified | `workflows/workflow-criticality-classification.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 429 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 295 | `01-model-company/erp-requirements.md` |
@@ -127,7 +127,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (1,143 WF)    │
+   │  erp-requirements.md ←→ workflows/ (1,153 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │

@@ -21,8 +21,8 @@ echo ""
 
 # --- Check 1: Workflow IDs in PA files that are NOT in criticality classification ---
 echo "--- Check 1: Unclassified workflow headers ---"
-PA_WFS=$(grep -ohP '^## W\d+\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed 's/^## //;s/\.$//' | sort -u)
-CLASSIFIED=$(grep -ohP '\bW\d{1,4}\b' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sort -u)
+PA_WFS=$(grep -ohP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed 's/^## //;s/\.$//' | sort -u)
+CLASSIFIED=$(grep -ohP '\bW\d{1,4}[A-Z]?\b' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sort -u)
 
 UNCLASSIFIED=$(comm -23 <(echo "$PA_WFS") <(echo "$CLASSIFIED"))
 UNCLASS_COUNT=$(echo "$UNCLASSIFIED" | grep -c '^' || true)
@@ -38,7 +38,7 @@ fi
 echo "--- Check 2: PA workflow counts ---"
 PA_FILES=$(find "$REPO_ROOT"/01-model-company/workflows -name "PA-*.md" -type f 2>/dev/null)
 while IFS= read -r pafile; do
-    HEADER_COUNT=$(grep -cP '^## W\d+\.' "$pafile" 2>/dev/null || true)
+    HEADER_COUNT=$(grep -cP '^## W\d+[A-Z]?\.' "$pafile" 2>/dev/null || true)
     PA_NAME=$(basename "$pafile" .md)
     VS_NAME=$(basename "$(dirname "$pafile")")
     INDEX_COUNT=$(grep -P "\\Q$PA_NAME\\E" "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md 2>/dev/null | grep -oP '\d+ workflows' | grep -oP '\d+' || echo "0")
@@ -52,7 +52,7 @@ ok "PA workflow count checks complete"
 echo "--- Check 3: Key figure consistency ---"
 # Check total workflows in value-stream-index
 TOTAL_VS=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | head -1)
-README_TOTAL=$(grep '1,14' "$REPO_ROOT"/README.md | grep -oP '1,14\d' | head -1)
+README_TOTAL=$(grep -oP '1,15\d' "$REPO_ROOT"/README.md | head -1)
 if [ -n "$TOTAL_VS" ]; then
     ok "Value stream index total: $TOTAL_VS workflows"
 else
