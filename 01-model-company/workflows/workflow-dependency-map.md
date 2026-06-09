@@ -1,7 +1,8 @@
 # Workflow Dependency Map
 
-> Directed dependency graph of all 498 operational workflows, showing prerequisite
-> relationships for system functions. Use this map to understand data dependencies
+> Directed dependency graph of all 483 classified operational workflows, showing prerequisite
+> relationships for system functions. An additional 682 workflows from batch files are unclassified.
+> Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
 > Back to [Workflow Index](README.md) | See also: [Criticality Classification](workflow-criticality-classification.md)
@@ -632,4 +633,4 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-*Date: 2026-06-09 | Workflow Dependency Map v2.0 — covers 483 classified workflows across 30 domains with hard/soft/integration dependencies. 48-workflow Tier 1 critical path. Top 10 most-depended-upon workflows: W252 (Item Master), W253 (Customer Master), W254 (Location Master), W287 (Vendor Master), W289 (Pricing Master), W288 (Financial COA), W5B (In-Store Selling), W4 (Replenishment), W9A (Month-End Close), W10 (Payroll). Total repository workflows: 1,163.*
+*Date: 2026-06-09 | Workflow Dependency Map v2.0 — covers 483 classified workflows across 30 domains with hard/soft/integration dependencies. 48-workflow Tier 1 critical path. Top 10 most-depended-upon workflows: W252 (Item Master), W253 (Customer Master), W254 (Location Master), W287 (Vendor Master), W289 (Pricing Master), W288 (Financial COA), W5B (In-Store Selling), W4 (Replenishment), W9A (Month-End Close), W10 (Payroll). Total repository workflows: 1,165.*

@@ -1,37 +1,9 @@
 # BuildRight Depot Corp. — Operational Workflows
 
-
-> This document describes the end-to-end operational workflows of BuildRight Depot,
-> defining who does what, when, and why. It serves three purposes:
->
-> 1. **Validate headcount** — by mapping work volume to roles, we can verify staffing assumptions
-> 2. **Inform ERP design** — each workflow reveals system touchpoints, automation opportunities, and integration needs
-> 3. **Optimize organization** — by exposing handoffs, bottlenecks, and spans of control
+> Index of all operational workflows organized by functional domain.
+> For the workflow format, conventions, and RACI key, see [WORKFLOW-FORMAT-GUIDE.md](./WORKFLOW-FORMAT-GUIDE.md).
 
 ---
-
-## How to Read This Document
-
-Each workflow follows this format:
-
-| Field | Meaning |
-|---|---|
-| **Workflow ID** | Unique identifier (WF-XX) |
-| **Name** | Process name |
-| **Trigger** | What initiates the workflow |
-| **Frequency** | How often it occurs |
-| **Volume** | How many instances per occurrence |
-| **Owner** | Role accountable for the outcome |
-| **Participants** | All roles involved |
-| **Steps** | Sequential activities with responsible role |
-| **System Touchpoints** | Where ERP/system support is needed |
-| **Time Estimate** | Estimated effort per occurrence |
-| **Pain Points / Risks** | What can go wrong |
-
-**RACI Key**: R = Responsible (does the work), A = Accountable (owns the outcome), C = Consulted, I = Informed
-
----
-
 
 ## Domain Files
 
@@ -89,13 +61,13 @@ Workflows are organized by functional domain for easier navigation and gap analy
 - **[Additional Operational Workflows — Batch 10](./WF-additional-workflows-batch10.md)** (20 workflows) — Store-level outdoor lumber yard rain protection & inventory preservation, customer tool rental return damage assessment & billing, vendor early payment discount capture & dynamic discounting optimization, store-level community building materials donation & LGU partnership, customer bulk purchasing group/co-op buying program management, store-level forklift operator daily certification check & compliance, customer project material surplus buy-back & recycling program, vendor-managed inventory seasonal ramp-up & wind-down, customer contractor crew registration & job site badge management, store-level inventory age-based auto-markdown & clearance trigger, customer e-gift card purchase & digital delivery, customer product availability real-time stock lookup & reservation service, vendor performance-based shelf space allocation review, store-level customer complaint trend analysis & systemic issue escalation, customer trade account statement of account auto-generation & email delivery, customer contractor project bidding support & material quote service, store-level outdoor garden center seasonal plant inventory lifecycle, customer loyalty points donation to charity/community cause, store-level intercom & public address system daily operations, and customer project material delivery photo documentation & proof service.
 - **[Additional Operational Workflows — Batch 11](./WF-additional-workflows-batch11.md)** (20 workflows) — Customer project progress site visit & material delivery verification, construction material compatibility cross-reference & substitution advisory, seasonal typhoon pre-positioning & emergency stock buffer management, bulk cement & sand direct-to-site delivery tracking, employee annual competency re-certification & skills refresher, vendor catalog new product sample request & in-store trial evaluation, customer interior design material board curation & mood board assembly service, paint tinting machine calibration verification & color accuracy audit, customer construction project milestone photo documentation & progress tracking portal, vendor logistics performance weekly scorecard & carrier lane analysis, customer special order cancellation & partial refund processing, customer B2B project retention money release & final billing reconciliation, daily temperature-sensitive product monitoring & quality check, customer product knowledge video library & how-to tutorial content management, vendor PO line-level partial shipment acceptance & backorder management, customer construction worker safety gear bundle recommendation & compliance package, store-level lumber yard inventory seasonal rotation & grade segregation, customer post-construction punch list material fulfillment & callback order, vendor payment term annual renegotiation & cost savings tracking, and store-level customer waiting area comfort & amenities daily management.
 - **[Workflow-to-System Touchpoint Map](./workflow-system-touchpoint-map.md)** — ERP module-to-workflow cross-reference
-- [**Workflow Criticality Classification**](./workflow-criticality-classification.md) — Operational criticality tiers (498 classified; 665 additional batch workflows unclassified)
+- [**Workflow Criticality Classification**](./workflow-criticality-classification.md) — Operational criticality tiers (483 classified; 682 additional batch workflows unclassified)
 
 - **[Workflow Dependency Map](./workflow-dependency-map.md)** — Prerequisite relationships, critical path, circular risks, go-live readiness checklist
 
 ---
 
-## Complete Workflow Index (W1–W1162)
+## Complete Workflow Index (W1–W1165)
 
 | ID | Workflow Name | Domain File |
 |---|---|---|
