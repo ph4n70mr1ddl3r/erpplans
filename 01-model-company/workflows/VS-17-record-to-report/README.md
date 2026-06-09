@@ -10,7 +10,7 @@
 | [PA-17.2](PA-17.2-consolidation-and-intercompany.md) | Consolidation & Intercompany | 3 |
 | [PA-17.3](PA-17.3-tax-and-statutory.md) | Tax & Statutory | 10 |
 | [PA-17.4](PA-17.4-fpanda-and-reporting.md) | FP&A & Reporting | 15 |
-| | **Total** | **53** |
+| | **Total** | **54** |
 
 ---
 

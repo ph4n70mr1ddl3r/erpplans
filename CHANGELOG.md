@@ -4,6 +4,36 @@
 
 ---
 
+## 2026-06-09 — Add 20 New Workflows Across 16 Process Areas
+
+### Added
+- **W1167**: Reverse Logistics & Vendor Return Shipment Management (PA-06.1)
+- **W1168**: Direct Store Delivery (DSD) Receiving, Verification & Vendor Compliance (PA-06.1)
+- **W1169**: Import Container Inbound Logistics, Port Drayage & DC Delivery (PA-06.1)
+- **W1170**: Subcontractor Installation Daily Dispatch, Work Order & Capacity Management (PA-12.1)
+- **W1171**: Installation Defect Punch List, Customer Walk-Through & Quality Sign-Off (PA-12.1)
+- **W1172**: Tool Rental Fleet Procurement, Lifecycle Planning & Retirement Management (PA-12.2)
+- **W1173**: High-Risk SKU Protection Plan & Product Security Fixture Deployment (PA-23.3)
+- **W1174**: Loss Prevention Store Compliance Audit Program & Scoring (PA-23.3)
+- **W1175**: Sustainable Packaging Reduction & Single-Use Plastic Elimination Program (PA-25.1)
+- **W1176**: Green Procurement & Sustainable Vendor Certification Program (PA-25.2)
+- **W1177**: Enterprise Data Governance Council, Standards & Stewardship Program (PA-28.2)
+- **W1178**: Predictive Analytics Model Development, Deployment & Monitoring (PA-28.3)
+- **W1179**: Store-Level Gift Card Sales, Redemption & Balance Management (PA-09.3)
+- **W1180**: Government Procurement (PhilGEPS) Bidding, Accreditation & Public Sector Account Management (PA-11.2)
+- **W1181**: BIR Point-of-Sale (POS) System Registration & CAS Compliance Maintenance (PA-17.3)
+- **W1182**: Multi-Entity Cross-Company Workforce Scheduling & Labor Cost Allocation (PA-19.3)
+- **W1183**: Store Lease CAM Reconciliation, Rent Escalation & Landlord Relationship Management (PA-20.1)
+- **W1184**: Influencer & Home Improvement Content Creator Partnership Management (PA-14.2)
+- **W1185**: Ecommerce Product Review, Rating & User-Generated Content Moderation (PA-10.1)
+- **W1186**: Loyalty Program Partner Cross-Promotion & Third-Party Reward Integration (PA-13.2)
+
+### Updated
+- Total workflows: **1,153 → 1,173** (+20)
+- Updated all affected VS README files, value-stream-index.md, and root README.md
+
+---
+
 ## 2026-06-09 — Review: Fix Count & Cross-Reference Issues
 
 ### Fixed

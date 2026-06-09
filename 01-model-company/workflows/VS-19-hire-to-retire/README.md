@@ -11,7 +11,7 @@
 | [PA-19.3](PA-19.3-workforce-management.md) | Workforce Management | 6 |
 | [PA-19.4](PA-19.4-learning-and-development.md) | Learning & Development | 10 |
 | [PA-19.5](PA-19.5-separation-and-benefits.md) | Separation & Benefits | 3 |
-| | **Total** | **60** |
+| | **Total** | **61** |
 
 ---
 

@@ -40,29 +40,29 @@ erpplans/
 │   │   ├── VS-03-vendor-management/             74 workflows (4 process areas)
 │   │   ├── VS-04-dc-warehouse/                  26 workflows (3 process areas)
 │   │   ├── VS-05-inventory-lifecycle/           20 workflows (3 process areas)
-│   │   ├── VS-06-logistics-fleet/               12 workflows (3 process areas)
+│   │   ├── VS-06-logistics-fleet/               15 workflows (3 process areas)
 │   │   ├── VS-07-store-operations/              124 workflows (4 process areas)
 │   │   ├── VS-08-pos-checkout/                  47 workflows (3 process areas)
-│   │   ├── VS-09-in-store-services/             141 workflows (3 process areas)
-│   │   ├── VS-10-ecommerce-digital/             38 workflows (3 process areas)
-│   │   ├── VS-11-trade-project-wholesale/       36 workflows (3 process areas)
-│   │   ├── VS-12-installation-services/         16 workflows (3 process areas)
-│   │   ├── VS-13-customer-experience/           50 workflows (3 process areas)
-│   │   ├── VS-14-marketing/                     23 workflows (3 process areas)
+│   │   ├── VS-09-in-store-services/             142 workflows (3 process areas)
+│   │   ├── VS-10-ecommerce-digital/             39 workflows (3 process areas)
+│   │   ├── VS-11-trade-project-wholesale/       37 workflows (3 process areas)
+│   │   ├── VS-12-installation-services/         19 workflows (3 process areas)
+│   │   ├── VS-13-customer-experience/           51 workflows (3 process areas)
+│   │   ├── VS-14-marketing/                     24 workflows (3 process areas)
 │   │   ├── VS-15-procure-to-pay/                39 workflows (2 process areas)
 │   │   ├── VS-16-order-to-cash/                 23 workflows (3 process areas)
-│   │   ├── VS-17-record-to-report/              53 workflows (4 process areas)
+│   │   ├── VS-17-record-to-report/              54 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 22 workflows (3 process areas)
-│   │   ├── VS-19-hire-to-retire/                60 workflows (5 process areas)
-│   │   ├── VS-20-real-estate-construction/      23 workflows (3 process areas)
+│   │   ├── VS-19-hire-to-retire/                61 workflows (5 process areas)
+│   │   ├── VS-20-real-estate-construction/      24 workflows (3 process areas)
 │   │   ├── VS-21-internal-audit-risk/           42 workflows (3 process areas)
 │   │   ├── VS-22-compliance-regulatory/         49 workflows (3 process areas)
-│   │   ├── VS-23-loss-prevention/               10 workflows (3 process areas)
+│   │   ├── VS-23-loss-prevention/               12 workflows (3 process areas)
 │   │   ├── VS-24-health-safety-environment/     20 workflows (3 process areas)
-│   │   ├── VS-25-esg-sustainability/            10 workflows (3 process areas)
+│   │   ├── VS-25-esg-sustainability/            12 workflows (3 process areas)
 │   │   ├── VS-26-business-continuity-insurance/ 18 workflows (3 process areas)
 │   │   ├── VS-27-it-operations-security/        57 workflows (3 process areas)
-│   │   ├── VS-28-data-analytics-bi/             7 workflows (3 process areas)
+│   │   ├── VS-28-data-analytics-bi/             9 workflows (3 process areas)
 │   │   ├── VS-29-master-data/                   41 workflows (3 process areas)
 │   │   ├── VS-30-innovation-digital/            13 workflows (3 process areas)
 
@@ -105,8 +105,8 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **730** across 32+ categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **1,153** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
-| Workflows (classified by tier) | 1,167 classified (Tier 1: 439, Tier 2: 499, Tier 3: 229) — includes 14 parent/sub-variant grouping references; 1,153 have dedicated `## W` section headers in PA files | `workflows/workflow-criticality-classification.md` |
+| Workflows (total) | **1,173** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (classified by tier) | 1,187 classified (Tier 1: 439, Tier 2: 499, Tier 3: 229) — includes 14 parent/sub-variant grouping references; 1,173 have dedicated `## W` section headers in PA files | `workflows/workflow-criticality-classification.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
