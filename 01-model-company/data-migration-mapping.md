@@ -171,4 +171,4 @@
 
 ---
 
-*Date: 2026-06-07 (v2.1 — added COA mapping template (§2.5); added Pricing Master migration template (§2.5b); replaced W17 workflow reference with actual dedup rules in §2.3)*
+*Date: 2026-06-09 (v2.2 — counts reconciled with README.md; canonical glossary reference added)*

@@ -135,7 +135,7 @@ define what connects. The table below details how these systems are integrated.
 
 ### 3.2 Integration Architecture Diagram (Reference)
 
-> The canonical integration architecture diagram is maintained in [data-volumes-and-integrations.md](../01-model-company/data-volumes-and-integrations.md).
+> The canonical integration architecture diagram is maintained in [data-volumes-and-integrations.md](../01-model-company/data-volumes-and-integrations.md). The diagram below is a duplicate for convenience; if updates are needed, update the canonical version first.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -189,4 +189,4 @@ These are the active security controls implemented across the monolithic ERP pla
 
 ---
 
-*Document Version: 2.0 | Date: 2026-06-07 | Added POS Architecture Principles (real-time event-driven, multi-origin fulfillment, offline resilience); updated POS hardware spec with local data store and LAN sync; updated integration method from batch fallback to continuous event streaming with nightly reconciliation*
+*Document Version: 2.1 | Date: 2026-06-09 | Integration diagram canonical reference updated; counts reconciled with README.md*

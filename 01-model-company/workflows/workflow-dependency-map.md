@@ -632,4 +632,4 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-*Date: 2026-06-07 | Workflow Dependency Map v1.9 — covers all 498 workflows across 30 domains with hard/soft/integration dependencies. 51-workflow Tier 1 critical path. Top 10 most-depended-upon workflows: W252 (Item Master), W253 (Customer Master), W254 (Location Master), W287 (Vendor Master), W289 (Pricing Master), W288 (Financial COA), W5B (In-Store Selling), W4 (Replenishment), W9A (Month-End Close), W10 (Payroll).*
+*Date: 2026-06-09 | Workflow Dependency Map v2.0 — covers 483 classified workflows across 30 domains with hard/soft/integration dependencies. 48-workflow Tier 1 critical path. Top 10 most-depended-upon workflows: W252 (Item Master), W253 (Customer Master), W254 (Location Master), W287 (Vendor Master), W289 (Pricing Master), W288 (Financial COA), W5B (In-Store Selling), W4 (Replenishment), W9A (Month-End Close), W10 (Payroll). Total repository workflows: 1,163.*

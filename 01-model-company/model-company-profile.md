@@ -717,6 +717,8 @@ The following external systems are actively integrated with the core ERP system.
 
 ## 18. Glossary
 
+> This glossary is the **single source of truth** for all terms used across the repository. Other documents reference this section rather than duplicating definitions.
+
 | Term | Definition |
 |---|---|
 | **ATV** | Average Transaction Value |
@@ -747,4 +749,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.13 | Date: 2026-06-07 | Updated POS architecture to real-time event-driven, added multi-origin fulfillment, updated integration touchpoints for continuous sync*
+*Document Version: 2.14 | Date: 2026-06-09 | Glossary designated as single source of truth; counts reconciled with README.md*

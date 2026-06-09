@@ -4,6 +4,20 @@
 
 This repository contains the operational specifications, active workflows, and system architecture for **BuildRight Depot Corp.** (the **"Model Company"**), operating with all its capabilities and systems fully enabled under a modern, unified cloud ERP platform. Each subfolder contains the configuration, design, and architecture for running the model company on specific ERP platforms.
 
+## Out of Scope
+
+The following are **not** covered in this repository and would be addressed during ERP platform selection and implementation:
+
+- **Specific ERP vendor evaluation or comparison** — platform-agnostic requirements only
+- **Warehouse robotics or automation hardware** — conveyor systems, AS/RS, autonomous mobile robots
+- **Blockchain or cryptocurrency** — not applicable to current retail operations
+- **IoT sensor networks** — beyond temperature monitoring and GPS telematics already specified
+- **Custom mobile app development details** — strategy defined; UX/UI design and code are out of scope
+- **Organizational change management plan** — training strategy is referenced but not detailed
+- **Implementation project plan** — phase prioritization (Tier 1/2/3) is defined; Gantt charts and resourcing are not
+- **Hardware procurement and vendor selection** — reference specifications provided; purchasing is out of scope
+- **Network infrastructure detailed design** — bandwidth targets specified; network architecture diagrams are not
+
 ## Folder Structure
 
 ```
@@ -11,9 +25,9 @@ erpplans/
 ├── README.md                    ← You are here
 ├── 01-model-company/            ← Complete model company profile, requirements & workflows
 │   ├── model-company-profile.md       Company profile, operations, financials
-│   ├── erp-requirements.md            730 requirements across 32 categories
-│   ├── data-volumes-and-integrations.md  Transaction volumes, integration map
-│   ├── workflows/                      1,063 workflows organized by 43 workflow domain files
+│   ├── erp-requirements.md            730 requirements across 32+ categories
+│   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
+│   ├── workflows/                      1,163 workflows organized by 43 workflow domain files
 │   │   ├── README.md                         Workflow index & format guide
 │   │   ├── WF-merchandising.md               19 workflows (W1, W13, W27, W40, W50, W63, W64, W68, W93, W97, W102, W107, W129, W130, W181, W262, W264, W279, W329)
 │   │   ├── WF-procurement.md                 22 workflows (W2, W20, W36, W38, W44, W60, W62, W88, W110, W115, W136, W150, W155, W160, W161, W244, W245, W422, and sub-variants)
@@ -84,13 +98,47 @@ erpplans/
 
 ## Key Metrics
 
-| Metric | Value |
-|---|---|
-| Requirements | **730** across 32 categories |
-| Workflows | **1,063** across 43 workflow domain files |
-| Internal Controls | 67 (31 preventive, 36 detective) |
-| Must Have Requirements | 429 |
-| Should Have Requirements | 295 |
-| Nice to Have Requirements | 6 |
+> **Single source of truth**: Counts below are derived from actual document content. All documents in this repository reference these figures.
+
+| Metric | Value | Source |
+|---|---|---|
+| Requirements | **730** across 32+ categories | `01-model-company/erp-requirements.md` |
+| Workflows (total) | **1,163** across 43 workflow domain files | `01-model-company/workflows/README.md` index |
+| Workflows (classified by tier) | 483 (Tier 1: 153, Tier 2: 206, Tier 3: 124) + 680 unclassified (additional batches) | `workflows/workflow-criticality-classification.md` |
+| Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
+| Must Have Requirements | 429 | `01-model-company/erp-requirements.md` |
+| Should Have Requirements | 295 | `01-model-company/erp-requirements.md` |
+| Nice to Have Requirements | 6 | `01-model-company/erp-requirements.md` |
+
+## Document Relationships
+
+```
+                              ┌──────────────────────┐
+                              │     README.md        │
+                              │  (this file — index) │
+                              └──────────┬───────────┘
+                                         │
+              ┌──────────────────────────┼──────────────────────────┐
+              │                          │                          │
+   ┌──────────▼──────────┐  ┌───────────▼───────────┐  ┌──────────▼──────────┐
+   │  01-model-company/  │  │  07-methodology/      │  │  (future: 02-06/)   │
+   │  Business context   │  │  Technical reference  │  │  Platform-specific  │
+   └──────────┬──────────┘  └───────────┬───────────┘  └─────────────────────┘
+              │                          │
+   ┌──────────▼──────────────────────────▼───────────┐
+   │              CROSS-REFERENCE LAYER               │
+   │                                                   │
+   │  erp-requirements.md ←→ workflows/ (1,163 WF)   │
+   │       ↕                    ↕                      │
+   │  internal-controls-   workflow-criticality-      │
+   │  matrix.md (67 CTL)   classification.md          │
+   │       ↕                    ↕                      │
+   │  requirement-workflow- workflow-dependency-       │
+   │  matrix.md              map.md                   │
+   │       ↕                    ↕                      │
+   │  assumptions-and-      workflow-system-           │
+   │  design-decisions.md   touchpoint-map.md          │
+   └───────────────────────────────────────────────────┘
+```
 
 

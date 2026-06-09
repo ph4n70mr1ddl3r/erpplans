@@ -95,6 +95,8 @@
 | Fiscal year | Calendar year (Jan–Dec) | April–March or other | Aligned with Philippine tax year (BIR) |
 | Blanket PO coverage | ~45% of COGS | Higher or lower | Aligned with top-20 vendor concentration; remaining 55% on standard POs |
 
+> **Note**: For definitions of all abbreviations and terms used in this document, see the canonical glossary in [model-company-profile.md §18](model-company-profile.md#18-glossary).
+
 ---
 
-*Date: 2026-06-07*
+*Date: 2026-06-09*

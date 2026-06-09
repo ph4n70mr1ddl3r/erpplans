@@ -44,6 +44,8 @@
 
 ## 2. Integration Architecture Map
 
+> **This is the canonical integration architecture diagram.** The diagram also appears in [technical-guidelines.md](../07-methodology/technical-guidelines.md) for convenience; any updates should be made here first.
+
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                        BUILDRIGHT DEPOT CORP                        │
@@ -149,4 +151,4 @@
 
 ---
 
-*Document Version: 4.0 | Date: 2026-06-07 | Updated POS integration to continuous near-real-time event streaming (< 30 sec latency); updated ERP→POS price push to continuous (60 sec); added POS nightly reconciliation batch as separate row; updated critical timing SLAs to reflect real-time architecture*
+*Document Version: 4.1 | Date: 2026-06-09 | Integration architecture diagram designated as canonical source; counts reconciled with README.md*
