@@ -9,7 +9,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · ~70 Process Areas
+8 Families · 30 Value Streams · 94 Process Areas
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -116,8 +116,8 @@
 
 **[VS-09: In-Store Customer Services](./VS-09-in-store-services/README.md)** (141 workflows)
 
-- **PA-09.1** [Custom Fabrication & Processing](./VS-09-in-store-services/PA-09.1-custom-fabrication-and-processing.md) — 130 workflows
-- **PA-09.2** Project Estimation & Advisory — *(no workflows yet — tracked for future addition)*
+- **PA-09.1** [Custom Fabrication & Processing](./VS-09-in-store-services/PA-09.1-custom-fabrication-and-processing.md) — 63 workflows
+- **PA-09.2** [Project Estimation & Advisory](./VS-09-in-store-services/PA-09.2-project-estimation-and-advisory.md) — 67 workflows
 - **PA-09.3** [Customer Amenities & Assistance](./VS-09-in-store-services/PA-09.3-customer-amenities-and-assistance.md) — 11 workflows
 
 **[VS-10: Ecommerce & Digital Channels](./VS-10-ecommerce-digital/README.md)** (38 workflows)

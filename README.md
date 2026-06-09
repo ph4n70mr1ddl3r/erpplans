@@ -63,7 +63,7 @@ erpplans/
 │   │   ├── VS-28-data-analytics-bi/             7 workflows (3 process areas)
 │   │   ├── VS-29-master-data/                   41 workflows (3 process areas)
 │   │   ├── VS-30-innovation-digital/            13 workflows (3 process areas)
-│   │   └── _archive-domains/                    Previous domain-based files (archived)
+
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
