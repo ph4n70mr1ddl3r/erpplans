@@ -9,7 +9,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 94 Process Areas
+8 Families · 30 Value Streams · 91 Process Areas
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |

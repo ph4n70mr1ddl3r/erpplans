@@ -27,9 +27,8 @@
 | A2.5 | Depot Inc. owns all inventory | Even though Logistics Inc. operates DCs | Simplifies inventory accounting; Logistics Inc. charges service fees, not goods transfer | Profile §2, W14 |
 | A2.6 | Revenue per employee | ~PHP 9.28M/year | Driven by optimized staffing and high automation | Profile §4 |
 
----
+## A3. Supply Chain & Logistics Assumptions
 
-*Date: 2026-06-07*
 | ID | Assumption | Value | Rationale | Source |
 |---|---|---|---|---|
 | A3.1 | 4 DCs for 200 stores | DC-to-selling-area ratio ~8–12% | Industry norm for big-box retail; 4 DCs reduces average store-to-DC distance in archipelago | Profile §3.2 |

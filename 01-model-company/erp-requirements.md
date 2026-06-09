@@ -10,25 +10,25 @@
 
 | Section | Category | Req IDs | Count |
 |---|---|---|---|
-| [R1](#r1-financial-management) | Financial Management | FIN-001 – FIN-047 | 47 |
-| [R2](#r2-inventory-management) | Inventory Management | INV-001 – INV-022 | 22 |
-| [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-026 | 26 |
-| [R4](#r4-warehouse-management) | Warehouse Management | WMS-001 – WMS-008 | 8 |
-| [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-073 | 73 |
-| [R6](#r6-ecommerce-integration) | Ecommerce Integration | ECOM-001 – ECOM-022 | 22 |
-| [R7](#r7-supply-chain-planning) | Supply Chain Planning | SCP-001 – SCP-014 | 14 |
-| [R8](#r8-hr--payroll) | HR & Payroll | HR-001 – HR-027 | 27 |
-| [R9](#r9-customer-relationship--loyalty) | CRM & Loyalty | CRM-001 – CRM-021 | 21+ |
+| [R1](#r1-financial-management) | Financial Management | FIN-001 – FIN-079 | 79 |
+| [R2](#r2-inventory-management) | Inventory Management | INV-001 – INV-027 | 27 |
+| [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-043 | 43 |
+| [R4](#r4-warehouse-management) | Warehouse Management | WMS-001 – WMS-023 | 23 |
+| [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-121 | 117 |
+| [R6](#r6-ecommerce-integration) | Ecommerce Integration | ECOM-001 – ECOM-033 | 33 |
+| [R7](#r7-supply-chain-planning) | Supply Chain Planning | SCP-001 – SCP-020 | 20 |
+| [R8](#r8-hr--payroll) | HR & Payroll | HR-001 – HR-054 | 54 |
+| [R9](#r9-customer-relationship--loyalty) | CRM & Loyalty | CRM-001 – CRM-044 | 44 |
 | [R10](#r10-analytics--reporting) | Analytics & Reporting | RPT-001 – RPT-012 | 12 |
 | [R11](#r11-intercompany--transfer-pricing) | Intercompany & Transfer Pricing | IC-001 – IC-005 | 5 |
-| [R12](#r12-document-management) | Document Management | DOC-001 – DOC-008 | 8 |
+| [R12](#r12-document-management) | Document Management | DOC-001 – DOC-011 | 11 |
 | [R13](#r13-master-data-management) | Master Data Management | MDM-001 – MDM-033 | 33 |
-| [R14](#r14-non-functional-requirements) | Non-Functional Requirements | NFR-001 – NFR-030 | 30 |
-| [R15](#r15-installation--value-added-services) | Installation & Services | SRV-001 – SRV-002 | 2 |
-| [R16](#r16-wholesale--reseller-operations) | Wholesale & Reseller | WSL-001 – WSL-004 | 4 |
-| [R17](#r17-corporate-governance-legal--strategy) | Governance, Legal & Strategy | GOV-001 – GOV-048 | 48+ |
-| [R18](#r18-additional-cross-functional-requirements) | Cross-Functional Additions | FIN-048+, HR-028+, etc. | 30+ |
-| R19–R24 | Operational Gap Closure (Rounds 11–19) | Mixed | 200+ |
+| [R14](#r14-non-functional-requirements) | Non-Functional Requirements | NFR-001 – NFR-041 | 41 |
+| [R15](#r15-installation--value-added-services) | Installation & Services | SRV-001 – SRV-005 | 5 |
+| [R16](#r16-wholesale--reseller-operations) | Wholesale & Reseller | WSL-001 – WSL-008 | 8 |
+| [R17](#r17-corporate-governance-legal--strategy) | Governance, Legal & Strategy | GOV-001 – GOV-056 | 55 |
+| [R18](#r18-additional-cross-functional-requirements) | Cross-Functional Additions | FIN-048+, HR-028+, etc. | — |
+| R19–R24 | Operational Gap Closure (Rounds 11–21) | Mixed | — |
 | [R25](#r25-loss-prevention--asset-protection) | Loss Prevention & Asset Protection | LP-001 – LP-010 | 10 |
 | [R26](#r26-business-continuity--disaster-recovery) | Business Continuity & DR | BCP-001 – BCP-010 | 10 |
 | [R27](#r27-insurance--claims-management) | Insurance & Claims | INS-001 – INS-008 | 8 |
@@ -36,9 +36,10 @@
 | [R29](#r29-product-recall-management) | Product Recall Management | RCL-001 – RCL-006 | 6 |
 | [R30](#r30-business-intelligence--analytics-operations) | BI & Analytics Operations | BIA-001 – BIA-007 | 7 |
 | [R31](#r31-customer-credit--collections-management) | Customer Credit & Collections | CCR-001 – CCR-008 | 8 |
-| R32 | Operational Gap Closure (Round 21) | Mixed | 16+ |
+| R32 | Operational Gap Closure (Round 21) | Mixed | — |
+| — | Additional (COM, ENG, ESG, HAZ, HSE, LOG, MER, MKT, MNT, PRJ, PROP, REG, AUD) | Various | 87 |
 
-> **Total: 730 unique requirements** across 32+ categories. Requirements marked with
+> **Total: 730 unique requirements** across 37 prefix categories. Requirements marked with
 > priority: **Must Have** (429), **Should Have** (295), **Nice to Have** (6).
 
 ---
@@ -660,7 +661,7 @@
 
 ---
 
-*Document Version: 13.0 | Date: 2026-06-07 | Gap analysis round 13: added 30 new requirements — PUR-030–032 (strategic sourcing, competitive bidding, PPV analysis), FIN-051–057 (revenue assurance, PFRS 16 lease accounting, balance sheet reconciliation, financial controls testing, JE review, rolling forecast, merchant fee optimization), HR-031–037 (off-cycle payments, HMO administration, final pay, 13th month reconciliation, workforce planning, HR service desk, data privacy operations), WMS-012–016 (DC cycle counting, safety operations, equipment PM, reverse logistics, seasonal surge planning), LOG-001–002 (fleet accident management, driver onboarding), HSE-001 (safety certification tracking), COM-005–007 (ABAC program, regulatory change management, inspection response), ECOM-025 (platform incident management), CRM-026 (service recovery program) — bringing total requirements to 482.*
+*Document Version: 13.0 | Gap analysis round 13: added 30 new requirements — PUR-030–032 (strategic sourcing, competitive bidding, PPV analysis), FIN-051–057 (revenue assurance, PFRS 16 lease accounting, balance sheet reconciliation, financial controls testing, JE review, rolling forecast, merchant fee optimization), HR-031–037 (off-cycle payments, HMO administration, final pay, 13th month reconciliation, workforce planning, HR service desk, data privacy operations), WMS-012–016 (DC cycle counting, safety operations, equipment PM, reverse logistics, seasonal surge planning), LOG-001–002 (fleet accident management, driver onboarding), HSE-001 (safety certification tracking), COM-005–007 (ABAC program, regulatory change management, inspection response), ECOM-025 (platform incident management), CRM-026 (service recovery program).*
 ## R21. Operational Gap Closure — Round 14
 
 | Req ID | Requirement | Priority | Notes |
@@ -718,7 +719,7 @@
 
 ---
 
-*Document Version: 15.0 | Date: 2026-06-07 | Gap analysis round 15: added 25 new requirements — DOC-009–011 (document approval routing, template management, contract lifecycle), INV-010–012 (AI model governance, digital portfolio management, technology scouting), ESG-006–008 (energy efficiency, water management, ESG report preparation), HSE-002–004 (emergency response, contractor safety induction, ergonomics), HAZ-005–006 (SDS lifecycle, hazmat transportation), MNT-005–006 (facility condition assessment, utility infrastructure), POS-085–086 (new store opening project management, store closure), WSL-005 (wholesale contract renewal), PUR-037–038 (vendor portal, supplier scorecard), CRM-030–031 (omnichannel returns, customer communication), NFR-035–036 (data governance, LP analytics) — bringing total requirements to 532.*
+*Document Version: 15.0 | Gap analysis round 15: added 25 new requirements — DOC-009–011 (document approval routing, template management, contract lifecycle), INV-010–012 (AI model governance, digital portfolio management, technology scouting), ESG-006–008 (energy efficiency, water management, ESG report preparation), HSE-002–004 (emergency response, contractor safety induction, ergonomics), HAZ-005–006 (SDS lifecycle, hazmat transportation), MNT-005–006 (facility condition assessment, utility infrastructure), POS-085–086 (new store opening project management, store closure), WSL-005 (wholesale contract renewal), PUR-037–038 (vendor portal, supplier scorecard), CRM-030–031 (omnichannel returns, customer communication), NFR-035–036 (data governance, LP analytics).*
 
 ## R22. Operational Gap Closure — Round 16
 
@@ -838,7 +839,7 @@
 
 ---
 
-*Document Version: 21.0 | Date: 2026-06-09 | Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 730.*
+*Document Version: 21.0 | Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 730.*
 
 ---
 
