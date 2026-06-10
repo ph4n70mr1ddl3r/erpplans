@@ -8,50 +8,50 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 91 Process Areas · 1,193 Workflows
+8 Families · 30 Value Streams · 91 Process Areas · 1,212 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
-| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 32 |
+| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 33 |
 |  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 28 |
-|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 74 |
-| | | | **Subtotal** | **134** |
-| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 26 |
-|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 22 |
+|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 75 |
+| | | | | **Subtotal** | **136** |
+| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 28 |
+|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 23 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 17 |
-| | | | **Subtotal** | **61** |
+| | | | | **Subtotal** | **136** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 126 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 47 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 143 |
-|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 41 |
+|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 42 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 39 |
-|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 20 |
-|  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 51 |
+|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 21 |
+|  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 52 |
 |  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 3 | 24 |
-| | | | **Subtotal** | **511** |
+| | | | | **Subtotal** | **136** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 40 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 24 |
-|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 55 |
+|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 56 |
 |  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 23 |
-| | | | **Subtotal** | **142** |
+| | | | | **Subtotal** | **136** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 61 |
-| | | | **Subtotal** | **61** |
+| | | | | **Subtotal** | **136** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 24 |
-| | | | **Subtotal** | **24** |
+| | | | | **Subtotal** | **136** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 42 |
-|  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 50 |
-|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 12 |
-|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 3 | 20 |
-|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 12 |
-|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 19 |
-| | | | **Subtotal** | **152** |
+|  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 51 |
+|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 13 |
+|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 3 | 21 |
+|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 13 |
+|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 21 |
+| | | | | **Subtotal** | **136** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 58 |
-|  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 9 |
+|  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 11 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 41 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 14 |
-| | | | **Subtotal** | **122** |
-| | | | **Grand Total** | **1193** |
+| | | | | **Subtotal** | **136** |
+| | | | **Grand Total** | **1212** |
 
 ---
 
@@ -59,7 +59,7 @@
 
 ### Plan & Source
 
-**[VS-01: Merchandise Strategy](./VS-01-merchandise-strategy/README.md)** (32 workflows)
+**[VS-01: Merchandise Strategy](./VS-01-merchandise-strategy/README.md)** (33 workflows)
 
 - **PA-01.1** [Assortment Planning & Product Lifecycle](./VS-01-merchandise-strategy/PA-01.1-assortment-planning-and-product-lifecycle.md) — 16 workflows
 - **PA-01.2** [Pricing & Promotions](./VS-01-merchandise-strategy/PA-01.2-pricing-and-promotions.md) — 14 workflows
@@ -86,11 +86,11 @@
 - **PA-04.2** [DC Outbound Operations](./VS-04-dc-warehouse/PA-04.2-dc-outbound-operations.md) — 3 workflows
 - **PA-04.3** [DC Operations Management](./VS-04-dc-warehouse/PA-04.3-dc-operations-management.md) — 14 workflows
 
-**[VS-05: Inventory Lifecycle](./VS-05-inventory-lifecycle/README.md)** (20 workflows)
+**[VS-05: Inventory Lifecycle](./VS-05-inventory-lifecycle/README.md)** (23 workflows)
 
 - ****PA-05.1** [Inventory Accuracy & Counting](./VS-05-inventory-lifecycle/PA-05.1-inventory-accuracy-and-counting.md) — 7 workflows
 - **PA-05.2** [Stock Transfers & Rebalancing](./VS-05-inventory-lifecycle/PA-05.2-stock-transfers-and-rebalancing.md) — 7 workflows
-- ****PA-05.3** [Inventory Disposition & Optimization](./VS-05-inventory-lifecycle/PA-05.3-inventory-disposition-and-optimization.md) — 8 workflows
+- ****PA-05.3** [Inventory Disposition & Optimization](./VS-05-inventory-lifecycle/PA-05.3-inventory-disposition-and-optimization.md) — 9 workflows
 
 **[VS-06: Logistics & Fleet](./VS-06-logistics-fleet/README.md)** (15 workflows)
 
@@ -162,7 +162,7 @@
 - ****PA-16.2** [AR & Collections](./VS-16-order-to-cash/PA-16.2-ar-and-collections.md) — 7 workflows
 - **PA-16.3** [Customer Payment & Settlement](./VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md) — 4 workflows
 
-**[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (54 workflows)
+**[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (56 workflows)
 
 - **PA-17.1** [GL & Financial Close](./VS-17-record-to-report/PA-17.1-gl-and-financial-close.md) — 25 workflows
 - ****PA-17.2** [Consolidation & Intercompany](./VS-17-record-to-report/PA-17.2-consolidation-and-intercompany.md) — 4 workflows
@@ -286,4 +286,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1193 workflows across 30 value streams · Date: 2026-06-10*
+*Total: 1,212 workflows across 30 value streams · Date: 2026-06-10*

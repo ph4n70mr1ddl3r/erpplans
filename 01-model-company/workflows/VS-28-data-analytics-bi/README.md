@@ -6,10 +6,10 @@
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-28.1](PA-28.1-bi-platform-and-reporting.md) | BI Platform & Reporting | 3 |
-| [PA-28.2](PA-28.2-data-engineering-and-quality.md) | Data Engineering & Quality | 3 |
-| [PA-28.3](PA-28.3-advanced-analytics.md) | Advanced Analytics | 1 |
-| | **Total** | **9** |
+| [PA-28.1](PA-28.1-bi-platform-and-reporting.md) | BI Platform & Reporting | 4 |
+| [PA-28.2](PA-28.2-data-engineering-and-quality.md) | Data Engineering & Quality | 4 |
+| [PA-28.3](PA-28.3-advanced-analytics.md) | Advanced Analytics | 3 |
+| | **Total** | **11** |
 
 ---
 
