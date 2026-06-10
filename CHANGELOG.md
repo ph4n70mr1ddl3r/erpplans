@@ -4,6 +4,32 @@
 
 ---
 
+## 2026-06-10 — Add 15 New Workflows Across 12 Process Areas
+
+### Added
+- **W1400**: Driver License Expiration Monitoring, LTO Compliance & Renewal Tracking (PA-06.2)
+- **W1401**: Fleet Vehicle Annual LTO Registration Renewal & Motor Vehicle Inspection Compliance (PA-06.2)
+- **W1402**: DC Seasonal Merchandise Pre-Staging, Forward-Pick Slot Reallocation & Promotional Lane Setup (PA-04.3)
+- **W1403**: Store-Level Material Handling Equipment Inspection, Preventive Maintenance & Operator Safety Certification (PA-20.3)
+- **W1404**: DENR Environmental Compliance Inspection Response, Documentation Package & Corrective Action Management (PA-22.2)
+- **W1405**: Store-Level P&L Auto-Generation, Contribution Margin Analysis & Monthly Financial Performance Review (PA-17.4)
+- **W1406**: Weekly Flash Sales Report, Chain-Wide KPI Dashboard & Executive Performance Summary (PA-17.4)
+- **W1407**: Store Seasonal Department Reset, Category Space Reallocation & New Product Introduction Floor Execution (PA-07.1)
+- **W1408**: ERP User Access Quarterly Review, Segregation of Duties (SoD) Audit & Excessive Access Remediation (PA-27.1)
+- **W1409**: IT Change Advisory Board (CAB) Weekly Review, Risk Assessment & Deployment Approval (PA-27.1)
+- **W1410**: Store Employee Inter-Location Transfer Processing, Labor Cost Reallocation & Benefit Continuity (PA-19.3)
+- **W1411**: Import PO Customs Documentation Package Preparation, Broker Coordination & Compliance Checklist (PA-03.2)
+- **W1412**: Store-Level Receiving Dock Safety Inspection, Material Handling Compliance & Incident Reporting (PA-07.3)
+- **W1413**: DC-Level Cycle Count Discrepancy Root Cause Analysis, Corrective Action & Recount Protocol (PA-05.1)
+- **W1414**: Customer Trade Account Credit Insurance Premium Review, Claims Filing & Recovery Management (PA-16.2)
+
+### Updated
+- Total workflows: **1,385 → 1,400** (+15)
+- Updated all affected VS README files and value-stream-index.md with revised workflow counts
+- Updated workflow counts in PA file footers
+
+---
+
 ## 2026-06-10 — Add 20 New Workflows Across 9 Process Areas
 
 ### Added

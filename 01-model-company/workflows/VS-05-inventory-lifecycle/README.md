@@ -6,10 +6,10 @@
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-05.1](PA-05.1-inventory-accuracy-and-counting.md) | Inventory Accuracy & Counting | 8 |
+| [PA-05.1](PA-05.1-inventory-accuracy-and-counting.md) | Inventory Accuracy & Counting | 9 |
 | [PA-05.2](PA-05.2-stock-transfers-and-rebalancing.md) | Stock Transfers & Rebalancing | 7 |
 | [PA-05.3](PA-05.3-inventory-disposition-and-optimization.md) | Inventory Disposition & Optimization | 12 |
-| | **Total** | **27** | |
+| | **Total** | **28** | |
 
 ---
 

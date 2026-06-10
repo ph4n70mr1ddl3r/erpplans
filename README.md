@@ -29,7 +29,7 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            730 requirements across 32+ categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      1,385 workflows organized by value stream
+│   ├── workflows/                      1,400 workflows organized by value stream
 │   │   ├── value-stream-index.md              Master index (8 families · 30 value streams)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
@@ -37,11 +37,11 @@ erpplans/
 │   │   ├── workflow-system-touchpoint-map.md    ERP module-to-workflow cross-reference
 │   │   ├── VS-01-merchandise-strategy/         32 workflows (3 process areas)
 │   │   ├── VS-02-supply-planning/               27 workflows (3 process areas)
-│   │   ├── VS-03-vendor-management/             74 workflows (4 process areas)
-│   │   ├── VS-04-dc-warehouse/                  26 workflows (3 process areas)
-│   │   ├── VS-05-inventory-lifecycle/           20 workflows (3 process areas)
-│   │   ├── VS-06-logistics-fleet/               15 workflows (3 process areas)
-│   │   ├── VS-07-store-operations/              124 workflows (4 process areas)
+│   │   ├── VS-03-vendor-management/             79 workflows (4 process areas)
+│   │   ├── VS-04-dc-warehouse/                  41 workflows (3 process areas)
+│   │   ├── VS-05-inventory-lifecycle/           28 workflows (3 process areas)
+│   │   ├── VS-06-logistics-fleet/               30 workflows (3 process areas)
+│   │   ├── VS-07-store-operations/              134 workflows (4 process areas)
 │   │   ├── VS-08-pos-checkout/                  47 workflows (3 process areas)
 │   │   ├── VS-09-in-store-services/             142 workflows (3 process areas)
 │   │   ├── VS-10-ecommerce-digital/             39 workflows (3 process areas)
@@ -50,11 +50,11 @@ erpplans/
 │   │   ├── VS-13-customer-experience/           51 workflows (3 process areas)
 │   │   ├── VS-14-marketing/                     24 workflows (3 process areas)
 │   │   ├── VS-15-procure-to-pay/                39 workflows (2 process areas)
-│   │   ├── VS-16-order-to-cash/                 23 workflows (3 process areas)
-│   │   ├── VS-17-record-to-report/              54 workflows (4 process areas)
+│   │   ├── VS-16-order-to-cash/                 29 workflows (3 process areas)
+│   │   ├── VS-17-record-to-report/              60 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 22 workflows (3 process areas)
 │   │   ├── VS-19-hire-to-retire/                61 workflows (5 process areas)
-│   │   ├── VS-20-real-estate-construction/      24 workflows (3 process areas)
+│   │   ├── VS-20-real-estate-construction/      25 workflows (3 process areas)
 │   │   ├── VS-21-internal-audit-risk/           42 workflows (3 process areas)
 │   │   ├── VS-22-compliance-regulatory/         49 workflows (3 process areas)
 │   │   ├── VS-23-loss-prevention/               12 workflows (3 process areas)
