@@ -105,7 +105,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **730** across 32+ categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **1,173** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **1,193** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Workflows (classified by tier) | 1,187 classified (Tier 1: 439, Tier 2: 499, Tier 3: 229) — includes 14 parent/sub-variant grouping references; 1,173 have dedicated `## W` section headers in PA files | `workflows/workflow-criticality-classification.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |

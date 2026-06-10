@@ -5,6 +5,37 @@
 ---
 
 ## 2026-06-09 — Add 20 New Workflows Across 16 Process Areas
+## 2026-06-10 — Add 20 New Workflows Across 19 Process Areas
+
+### Added
+- **W1187**: Post-Disaster Construction Material Demand Surge Fulfillment & Emergency Replenishment (PA-02.3)
+- **W1188**: Consignment Inventory Monthly Reconciliation & Vendor Settlement Processing (PA-05.1)
+- **W1189**: Cement & Bagged Material Shelf Life Expiry Monitoring & Proactive Markdown (PA-05.3)
+- **W1190**: Inter-Island DC-to-Store RoRo & Ferry Consolidated Shipment Planning (PA-06.1)
+- **W1191**: Construction Site Delivery Coordination, Access Assessment & Crane/Boom Truck Scheduling (PA-06.3)
+- **W1192**: Post-Typhoon Store Damage Assessment, Insurance Claim & Rapid Reopening Protocol (PA-07.2)
+- **W1193**: Heavy & Bulky Material Customer Pickup Scheduling & Loading Bay Priority Management (PA-07.3)
+- **W1194**: Customer Whole-House Bill of Materials (BOM) Builder & Multi-Trade Package Assembly (PA-09.2)
+- **W1195**: Mixed-Basket Multi-Origin Order Orchestration & Split Shipment Coordination (PA-10.2)
+- **W1196**: Ship-from-Store Fulfillment Operations & Store-Level Inventory Reservation (PA-10.2)
+- **W1197**: Government Agency & LGU Annual Procurement Catalog Listing & Price Registration (PA-11.2)
+- **W1198**: Installation Material Kit Pre-Stage, Quality Check & Site-Ready Packing (PA-12.1)
+- **W1199**: Import Letter of Credit (LC) Lifecycle, Amendment & Bank Release Management (PA-15.2)
+- **W1200**: Trade Account Monthly Statement Review, Credit Limit Recalibration & Churn Prevention (PA-16.2)
+- **W1201**: Intercompany Monthly Settlement Batch Processing & Netting Execution (PA-17.2)
+- **W1202**: Store Daily Cash Collection, Armored Car Pickup & Bank Deposit Reconciliation (PA-18.1)
+- **W1203**: Philippine Data Privacy Act (RA 10173) Compliance Audit, DPO Reporting & NPC Registration (PA-22.1)
+- **W1204**: Store-Level Business Continuity Plan (BCP) Annual Update, Tabletop Exercise & Certification (PA-26.1)
+- **W1205**: PCI-DSS Compliance for POS Payment Card Data & Annual QSA Audit Management (PA-27.3)
+- **W1206**: AI-Powered Demand Forecasting Model Training, Accuracy Monitoring & Retraining Cycle (PA-30.2)
+
+### Changed
+- Updated all VS README files with revised workflow counts
+- Updated value-stream-index.md: 1,173 → 1,193 workflows
+- Updated root README.md workflow total
+
+---
+
 
 ### Added
 - **W1167**: Reverse Logistics & Vendor Return Shipment Management (PA-06.1)

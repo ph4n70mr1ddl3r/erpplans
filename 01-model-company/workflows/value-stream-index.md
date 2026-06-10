@@ -8,50 +8,50 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 91 Process Areas · 1,173 Workflows
+8 Families · 30 Value Streams · 91 Process Areas · 1,193 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
 | Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 32 |
-|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 27 |
+|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 28 |
 |  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 74 |
-| | | | **Subtotal** | **133** |
+| | | | **Subtotal** | **134** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 26 |
-|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 20 |
-|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 15 |
+|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 22 |
+|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 17 |
 | | | | **Subtotal** | **61** |
-| Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 124 |
+| Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 126 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 47 |
-|  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 142 |
-|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 39 |
-|  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 37 |
-|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 19 |
+|  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 143 |
+|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 41 |
+|  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 39 |
+|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 20 |
 |  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 51 |
 |  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 3 | 24 |
-| | | | **Subtotal** | **493** |
-| Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 39 |
-|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 23 |
-|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 54 |
-|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 22 |
-| | | | **Subtotal** | **138** |
+| | | | **Subtotal** | **511** |
+| Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 40 |
+|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 24 |
+|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 55 |
+|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 23 |
+| | | | **Subtotal** | **142** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 61 |
 | | | | **Subtotal** | **61** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 24 |
 | | | | **Subtotal** | **24** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 42 |
-|  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 49 |
+|  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 50 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 12 |
 |  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 3 | 20 |
 |  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 12 |
-|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 18 |
-| | | | **Subtotal** | **151** |
-| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 57 |
+|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 19 |
+| | | | **Subtotal** | **152** |
+| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 58 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 9 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 41 |
-|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 13 |
-| | | | **Subtotal** | **120** |
-| | | | **Grand Total** | **1173** |
+|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 14 |
+| | | | **Subtotal** | **122** |
+| | | | **Grand Total** | **1193** |
 
 ---
 
@@ -69,7 +69,7 @@
 
 - **PA-02.1** [Demand Forecasting & S&OP](./VS-02-supply-planning/PA-02.1-demand-forecasting-and-sandop.md) — 10 workflows
 - **PA-02.2** [Import & Customs Operations](./VS-02-supply-planning/PA-02.2-import-and-customs-operations.md) — 6 workflows
-- **PA-02.3** [Supply Chain Orchestration & Risk](./VS-02-supply-planning/PA-02.3-supply-chain-orchestration-and-risk.md) — 11 workflows
+- **PA-02.3** [Supply Chain Orchestration & Risk](./VS-02-supply-planning/PA-02.3-supply-chain-orchestration-and-risk.md) — 12 workflows
 
 **[VS-03: Vendor Management & Procurement](./VS-03-vendor-management/README.md)** (74 workflows)
 
@@ -88,23 +88,23 @@
 
 **[VS-05: Inventory Lifecycle](./VS-05-inventory-lifecycle/README.md)** (20 workflows)
 
-- **PA-05.1** [Inventory Accuracy & Counting](./VS-05-inventory-lifecycle/PA-05.1-inventory-accuracy-and-counting.md) — 6 workflows
+- ****PA-05.1** [Inventory Accuracy & Counting](./VS-05-inventory-lifecycle/PA-05.1-inventory-accuracy-and-counting.md) — 7 workflows
 - **PA-05.2** [Stock Transfers & Rebalancing](./VS-05-inventory-lifecycle/PA-05.2-stock-transfers-and-rebalancing.md) — 7 workflows
-- **PA-05.3** [Inventory Disposition & Optimization](./VS-05-inventory-lifecycle/PA-05.3-inventory-disposition-and-optimization.md) — 7 workflows
+- ****PA-05.3** [Inventory Disposition & Optimization](./VS-05-inventory-lifecycle/PA-05.3-inventory-disposition-and-optimization.md) — 8 workflows
 
 **[VS-06: Logistics & Fleet](./VS-06-logistics-fleet/README.md)** (15 workflows)
 
-- **PA-06.1** [Outbound Distribution](./VS-06-logistics-fleet/PA-06.1-outbound-distribution.md) — 5 workflows
+- ****PA-06.1** [Outbound Distribution](./VS-06-logistics-fleet/PA-06.1-outbound-distribution.md) — 6 workflows
 - **PA-06.2** [Fleet & Driver Management](./VS-06-logistics-fleet/PA-06.2-fleet-and-driver-management.md) — 6 workflows
-- **PA-06.3** [Last-Mile & Delivery Partners](./VS-06-logistics-fleet/PA-06.3-last-mile-and-delivery-partners.md) — 4 workflows
+- ****PA-06.3** [Last-Mile & Delivery Partners](./VS-06-logistics-fleet/PA-06.3-last-mile-and-delivery-partners.md) — 5 workflows
 
 ### Sell & Serve
 
 **[VS-07: Store Operations](./VS-07-store-operations/README.md)** (124 workflows)
 
 - **PA-07.1** [Store Daily Management](./VS-07-store-operations/PA-07.1-store-daily-management.md) — 50 workflows
-- **PA-07.2** [Store Facility & Safety](./VS-07-store-operations/PA-07.2-store-facility-and-safety.md) — 41 workflows
-- **PA-07.3** [Store Receiving & Replenishment](./VS-07-store-operations/PA-07.3-store-receiving-and-replenishment.md) — 23 workflows
+- ****PA-07.2** [Store Facility & Safety](./VS-07-store-operations/PA-07.2-store-facility-and-safety.md) — 42 workflows
+- ****PA-07.3** [Store Receiving & Replenishment](./VS-07-store-operations/PA-07.3-store-receiving-and-replenishment.md) — 24 workflows
 - **PA-07.4** [Store Staffing & People](./VS-07-store-operations/PA-07.4-store-staffing-and-people.md) — 10 workflows
 
 **[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (47 workflows)
@@ -116,24 +116,24 @@
 **[VS-09: In-Store Customer Services](./VS-09-in-store-services/README.md)** (142 workflows)
 
 - **PA-09.1** [Custom Fabrication & Processing](./VS-09-in-store-services/PA-09.1-custom-fabrication-and-processing.md) — 63 workflows
-- **PA-09.2** [Project Estimation & Advisory](./VS-09-in-store-services/PA-09.2-project-estimation-and-advisory.md) — 67 workflows
+- ****PA-09.2** [Project Estimation & Advisory](./VS-09-in-store-services/PA-09.2-project-estimation-and-advisory.md) — 68 workflows
 - **PA-09.3** [Customer Amenities & Assistance](./VS-09-in-store-services/PA-09.3-customer-amenities-and-assistance.md) — 12 workflows
 
 **[VS-10: Ecommerce & Digital Channels](./VS-10-ecommerce-digital/README.md)** (39 workflows)
 
 - **PA-10.1** [Ecommerce Platform Operations](./VS-10-ecommerce-digital/PA-10.1-ecommerce-platform-operations.md) — 21 workflows
-- **PA-10.2** [Order Fulfillment & Delivery](./VS-10-ecommerce-digital/PA-10.2-order-fulfillment-and-delivery.md) — 13 workflows
+- ****PA-10.2** [Order Fulfillment & Delivery](./VS-10-ecommerce-digital/PA-10.2-order-fulfillment-and-delivery.md) — 15 workflows
 - **PA-10.3** [Marketplace & Social Commerce](./VS-10-ecommerce-digital/PA-10.3-marketplace-and-social-commerce.md) — 5 workflows
 
 **[VS-11: Trade, Project & Wholesale](./VS-11-trade-project-wholesale/README.md)** (37 workflows)
 
 - **PA-11.1** [Trade Account Management](./VS-11-trade-project-wholesale/PA-11.1-trade-account-management.md) — 4 workflows
-- **PA-11.2** [Project Sales & B2B](./VS-11-trade-project-wholesale/PA-11.2-project-sales-and-b2b.md) — 23 workflows
+- ****PA-11.2** [Project Sales & B2B](./VS-11-trade-project-wholesale/PA-11.2-project-sales-and-b2b.md) — 24 workflows
 - **PA-11.3** [Wholesale Operations](./VS-11-trade-project-wholesale/PA-11.3-wholesale-operations.md) — 10 workflows
 
 **[VS-12: Installation & Services](./VS-12-installation-services/README.md)** (19 workflows)
 
-- **PA-12.1** [Installation & Repair Services](./VS-12-installation-services/PA-12.1-installation-and-repair-services.md) — 13 workflows
+- ****PA-12.1** [Installation & Repair Services](./VS-12-installation-services/PA-12.1-installation-and-repair-services.md) — 14 workflows
 - **PA-12.2** [Tool Rental & Equipment](./VS-12-installation-services/PA-12.2-tool-rental-and-equipment.md) — 2 workflows
 - **PA-12.3** [Workshops & Events](./VS-12-installation-services/PA-12.3-workshops-and-events.md) — 4 workflows
 
@@ -154,24 +154,24 @@
 **[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (39 workflows)
 
 - **PA-15.1** [Invoice Processing & Matching](./VS-15-procure-to-pay/PA-15.1-invoice-processing-and-matching.md) — 17 workflows
-- **PA-15.2** [Vendor Payment & Reconciliation](./VS-15-procure-to-pay/PA-15.2-vendor-payment-and-reconciliation.md) — 22 workflows
+- ****PA-15.2** [Vendor Payment & Reconciliation](./VS-15-procure-to-pay/PA-15.2-vendor-payment-and-reconciliation.md) — 23 workflows
 
 **[VS-16: Order-to-Cash](./VS-16-order-to-cash/README.md)** (23 workflows)
 
 - **PA-16.1** [Credit Application & Scoring](./VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md) — 13 workflows
-- **PA-16.2** [AR & Collections](./VS-16-order-to-cash/PA-16.2-ar-and-collections.md) — 6 workflows
+- ****PA-16.2** [AR & Collections](./VS-16-order-to-cash/PA-16.2-ar-and-collections.md) — 7 workflows
 - **PA-16.3** [Customer Payment & Settlement](./VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md) — 4 workflows
 
 **[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (54 workflows)
 
 - **PA-17.1** [GL & Financial Close](./VS-17-record-to-report/PA-17.1-gl-and-financial-close.md) — 25 workflows
-- **PA-17.2** [Consolidation & Intercompany](./VS-17-record-to-report/PA-17.2-consolidation-and-intercompany.md) — 3 workflows
+- ****PA-17.2** [Consolidation & Intercompany](./VS-17-record-to-report/PA-17.2-consolidation-and-intercompany.md) — 4 workflows
 - **PA-17.3** [Tax & Statutory](./VS-17-record-to-report/PA-17.3-tax-and-statutory.md) — 11 workflows
 - **PA-17.4** [FP&A & Reporting](./VS-17-record-to-report/PA-17.4-fpanda-and-reporting.md) — 15 workflows
 
 **[VS-18: Treasury & Cash](./VS-18-treasury-cash/README.md)** (22 workflows)
 
-- **PA-18.1** [Cash Positioning & Forecasting](./VS-18-treasury-cash/PA-18.1-cash-positioning-and-forecasting.md) — 14 workflows
+- ****PA-18.1** [Cash Positioning & Forecasting](./VS-18-treasury-cash/PA-18.1-cash-positioning-and-forecasting.md) — 15 workflows
 - **PA-18.2** [Banking & Payments](./VS-18-treasury-cash/PA-18.2-banking-and-payments.md) — 3 workflows
 - **PA-18.3** [FX & Investments](./VS-18-treasury-cash/PA-18.3-fx-and-investments.md) — 5 workflows
 
@@ -203,7 +203,7 @@
 
 **[VS-22: Compliance & Regulatory](./VS-22-compliance-regulatory/README.md)** (49 workflows)
 
-- **PA-22.1** [Regulatory Permits & Licenses](./VS-22-compliance-regulatory/PA-22.1-regulatory-permits-and-licenses.md) — 27 workflows
+- ****PA-22.1** [Regulatory Permits & Licenses](./VS-22-compliance-regulatory/PA-22.1-regulatory-permits-and-licenses.md) — 28 workflows
 - **PA-22.2** [Government Audit & Inspection Response](./VS-22-compliance-regulatory/PA-22.2-government-audit-and-inspection-response.md) — 13 workflows
 - **PA-22.3** [Regulatory Change Management](./VS-22-compliance-regulatory/PA-22.3-regulatory-change-management.md) — 9 workflows
 
@@ -227,7 +227,7 @@
 
 **[VS-26: Business Continuity & Insurance](./VS-26-business-continuity-insurance/README.md)** (18 workflows)
 
-- **PA-26.1** [BCP Planning & Testing](./VS-26-business-continuity-insurance/PA-26.1-bcp-planning-and-testing.md) — 2 workflows
+- ****PA-26.1** [BCP Planning & Testing](./VS-26-business-continuity-insurance/PA-26.1-bcp-planning-and-testing.md) — 3 workflows
 - **PA-26.2** [Crisis Response & Recovery](./VS-26-business-continuity-insurance/PA-26.2-crisis-response-and-recovery.md) — 8 workflows
 - **PA-26.3** [Insurance Claims & Policy Management](./VS-26-business-continuity-insurance/PA-26.3-insurance-claims-and-policy-management.md) — 8 workflows
 
@@ -237,7 +237,7 @@
 
 - **PA-27.1** [Service Management](./VS-27-it-operations-security/PA-27.1-service-management.md) — 27 workflows
 - **PA-27.2** [Infrastructure & Platform](./VS-27-it-operations-security/PA-27.2-infrastructure-and-platform.md) — 18 workflows
-- **PA-27.3** [Cybersecurity & Privacy](./VS-27-it-operations-security/PA-27.3-cybersecurity-and-privacy.md) — 12 workflows
+- ****PA-27.3** [Cybersecurity & Privacy](./VS-27-it-operations-security/PA-27.3-cybersecurity-and-privacy.md) — 13 workflows
 
 **[VS-28: Data, Analytics & BI](./VS-28-data-analytics-bi/README.md)** (9 workflows)
 
@@ -254,7 +254,7 @@
 **[VS-30: Innovation & Digital Transformation](./VS-30-innovation-digital/README.md)** (13 workflows)
 
 - **PA-30.1** [Emerging Technology & PoC](./VS-30-innovation-digital/PA-30.1-emerging-technology-and-poc.md) — 5 workflows
-- **PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 3 workflows
+- ****PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 4 workflows
 - **PA-30.3** [Document & Knowledge Management](./VS-30-innovation-digital/PA-30.3-document-and-knowledge-management.md) — 5 workflows
 
 ---
@@ -286,4 +286,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1173 workflows across 30 value streams · Date: 2026-06-09*
+*Total: 1193 workflows across 30 value streams · Date: 2026-06-10*
