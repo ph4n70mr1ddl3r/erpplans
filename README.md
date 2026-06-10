@@ -29,7 +29,7 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            730 requirements across 32+ categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      1,262 workflows organized by value stream
+│   ├── workflows/                      1,292 workflows organized by value stream
 │   │   ├── value-stream-index.md              Master index (8 families · 30 value streams)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
@@ -105,7 +105,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **730** across 32+ categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **1,262** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **1,292** across 30 value streams, 91 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Workflows (classified by tier) | 1,187 classified (Tier 1: 439, Tier 2: 499, Tier 3: 229) — includes 14 parent/sub-variant grouping references; 1,173 have dedicated `## W` section headers in PA files | `workflows/workflow-criticality-classification.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
@@ -130,7 +130,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (1,262 WF)    │
+   │  erp-requirements.md ←→ workflows/ (1,292 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │

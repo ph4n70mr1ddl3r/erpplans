@@ -4,6 +4,28 @@
 
 ---
 
+## 2026-06-10 — Add 10 New Workflows Relevant to BuildRight Depot Model Company (W1318–W1327)
+
+### Added
+- **W1318**: Tool Rental Reservation, Waitlist Management & Demand-Based Fleet Scheduling (PA-12.2)
+- **W1319**: Tool Rental Customer Safety Briefing, Liability Waiver & Equipment Operation Acknowledgment (PA-12.2)
+- **W1320**: Supplier ESG Due Diligence Assessment & Sustainable Procurement Qualification (PA-25.3)
+- **W1321**: ESG Target Setting, Quarterly Progress Tracking & Board Dashboard Reporting (PA-25.3)
+- **W1322**: IT Disaster Recovery (DR) Failover Test Execution, Validation & Recovery Time Assessment (PA-26.1)
+- **W1323**: Supply Chain Disruption Simulation & Alternate Sourcing Activation Drill (PA-26.1)
+- **W1324**: Employee Retrenchment & Redundancy Processing (DOLE DO 174 Compliance) (PA-19.5)
+- **W1325**: Employee Death-in-Service Benefits Processing & Beneficiary Claim Management (PA-19.5)
+- **W1326**: Customer B2B Project Payment Plan Negotiation, Arrears Management & Restructuring (PA-16.3)
+- **W1327**: Customer Trade Account Spend Analysis, Category Insights & Quarterly Business Review (PA-16.3)
+
+### Updated
+- VS-12, VS-16, VS-19, VS-25, VS-26 README.md — workflow counts
+- value-stream-index.md — total: 1,282 → 1,292 workflows
+- Root README.md — workflow total and folder description
+- Reconciled PA-12.1, PA-16.1, PA-19.2, PA-19.3, PA-26.2 counts to match actual ## W entries
+
+---
+
 ## 2026-06-10 — Add 20 New Workflows Relevant to BuildRight Depot Model Company (W1298–W1317)
 
 ### Added
