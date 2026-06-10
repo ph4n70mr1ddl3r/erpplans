@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 91 Process Areas · 1,340 Workflows
+9 Families · 30 Value Streams · 95 Process Areas · 1,355 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -17,19 +17,19 @@
 |  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 32 |
 |  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 78 |
 | | | | | **Subtotal** | **150** |
-| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 37 |
+| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 40 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 27 |
-|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 25 |
-| | | | | **Subtotal** | **89** |
+|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 28 |
+| | | | | **Subtotal** | **95** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 132 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 52 |
-|  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 148 |
+|  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 153 |
 |  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 50 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 42 |
-|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 26 |
+|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 32 |
 |  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 59 |
 |  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 3 | 30 |
-| | | | | **Subtotal** | **541** |
+| | | | | **Subtotal** | **551** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 41 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 28 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 58 |
@@ -51,7 +51,7 @@
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 41 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 17 |
 | | | | | **Subtotal** | **130** |
-| | | | **Grand Total** | **1340** |
+| | | | **Grand Total** | **1355** |
 
 ---
 
@@ -80,10 +80,10 @@
 
 ### Make & Move
 
-**[VS-04: DC & Warehouse Operations](./VS-04-dc-warehouse/README.md)** (37 workflows)
+**[VS-04: DC & Warehouse Operations](./VS-04-dc-warehouse/README.md)** (40 workflows)
 
 - **PA-04.1** [DC Inbound Operations](./VS-04-dc-warehouse/PA-04.1-dc-inbound-operations.md) — 14 workflows
-- **PA-04.2** [DC Outbound Operations](./VS-04-dc-warehouse/PA-04.2-dc-outbound-operations.md) — 6 workflows
+- **PA-04.2** [DC Outbound Operations](./VS-04-dc-warehouse/PA-04.2-dc-outbound-operations.md) — 9 workflows
 - **PA-04.3** [DC Operations Management](./VS-04-dc-warehouse/PA-04.3-dc-operations-management.md) — 17 workflows
 
 **[VS-05: Inventory Lifecycle](./VS-05-inventory-lifecycle/README.md)** (27 workflows)
@@ -92,11 +92,11 @@
 - **PA-05.2** [Stock Transfers & Rebalancing](./VS-05-inventory-lifecycle/PA-05.2-stock-transfers-and-rebalancing.md) — 7 workflows
 - **PA-05.3** [Inventory Disposition & Optimization](./VS-05-inventory-lifecycle/PA-05.3-inventory-disposition-and-optimization.md) — 12 workflows
 
-**[VS-06: Logistics & Fleet](./VS-06-logistics-fleet/README.md)** (25 workflows)
+**[VS-06: Logistics & Fleet](./VS-06-logistics-fleet/README.md)** (28 workflows)
 
 - **PA-06.1** [Outbound Distribution](./VS-06-logistics-fleet/PA-06.1-outbound-distribution.md) — 9 workflows
 - **PA-06.2** [Fleet & Driver Management](./VS-06-logistics-fleet/PA-06.2-fleet-and-driver-management.md) — 10 workflows
-- **PA-06.3** [Last-Mile & Delivery Partners](./VS-06-logistics-fleet/PA-06.3-last-mile-and-delivery-partners.md) — 6 workflows
+- **PA-06.3** [Last-Mile & Delivery Partners](./VS-06-logistics-fleet/PA-06.3-last-mile-and-delivery-partners.md) — 9 workflows
 
 ### Sell & Serve
 
@@ -113,11 +113,11 @@
 - **PA-08.2** [Payment & Cash Management](./VS-08-pos-checkout/PA-08.2-payment-and-cash-management.md) — 4 workflows
 - **PA-08.3** [POS Compliance & Controls](./VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md) — 10 workflows
 
-**[VS-09: In-Store Customer Services](./VS-09-in-store-services/README.md)** (149 workflows)
+**[VS-09: In-Store Customer Services](./VS-09-in-store-services/README.md)** (153 workflows)
 
 - **PA-09.1** [Custom Fabrication & Processing](./VS-09-in-store-services/PA-09.1-custom-fabrication-and-processing.md) — 64 workflows
 - **PA-09.2** [Project Estimation & Advisory](./VS-09-in-store-services/PA-09.2-project-estimation-and-advisory.md) — 72 workflows
-- **PA-09.3** [Customer Amenities & Assistance](./VS-09-in-store-services/PA-09.3-customer-amenities-and-assistance.md) — 13 workflows
+- **PA-09.3** [Customer Amenities & Assistance](./VS-09-in-store-services/PA-09.3-customer-amenities-and-assistance.md) — 17 workflows
 
 **[VS-10: Ecommerce & Digital Channels](./VS-10-ecommerce-digital/README.md)** (50 workflows)
 
@@ -131,11 +131,11 @@
 - **PA-11.2** [Project Sales & B2B](./VS-11-trade-project-wholesale/PA-11.2-project-sales-and-b2b.md) — 27 workflows
 - **PA-11.3** [Wholesale Operations](./VS-11-trade-project-wholesale/PA-11.3-wholesale-operations.md) — 11 workflows
 
-**[VS-12: Installation & Services](./VS-12-installation-services/README.md)** (26 workflows)
+**[VS-12: Installation & Services](./VS-12-installation-services/README.md)** (32 workflows)
 
 - **PA-12.1** [Installation & Repair Services](./VS-12-installation-services/PA-12.1-installation-and-repair-services.md) — 17 workflows
-- **PA-12.2** [Tool Rental & Equipment](./VS-12-installation-services/PA-12.2-tool-rental-and-equipment.md) — 4 workflows
-- **PA-12.3** [Workshops & Events](./VS-12-installation-services/PA-12.3-workshops-and-events.md) — 5 workflows
+- **PA-12.2** [Tool Rental & Equipment](./VS-12-installation-services/PA-12.2-tool-rental-and-equipment.md) — 7 workflows
+- **PA-12.3** [Workshops & Events](./VS-12-installation-services/PA-12.3-workshops-and-events.md) — 8 workflows
 
 **[VS-13: Customer Experience & Loyalty](./VS-13-customer-experience/README.md)** (59 workflows)
 
@@ -286,4 +286,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1,340 workflows across 30 value streams · Date: 2026-06-10*
+*Total: 1,355 workflows across 30 value streams · Date: 2026-06-10*

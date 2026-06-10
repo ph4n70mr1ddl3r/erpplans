@@ -8,8 +8,8 @@
 |---|---|---|
 | [PA-06.1](PA-06.1-outbound-distribution.md) | Outbound Distribution | 9 |
 | [PA-06.2](PA-06.2-fleet-and-driver-management.md) | Fleet & Driver Management | 10 |
-| [PA-06.3](PA-06.3-last-mile-and-delivery-partners.md) | Last-Mile & Delivery Partners | 6 |
-| | **Total** | **25** |
+| [PA-06.3](PA-06.3-last-mile-and-delivery-partners.md) | Last-Mile & Delivery Partners | 9 |
+| | **Total** | **28** |
 
 ---
 
