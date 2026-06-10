@@ -8,8 +8,8 @@
 |---|---|---|
 | [PA-08.1](PA-08.1-transaction-processing.md) | Transaction Processing | 35 |
 | [PA-08.2](PA-08.2-payment-and-cash-management.md) | Payment & Cash Management | 7 |
-| [PA-08.3](PA-08.3-pos-compliance-and-controls.md) | POS Compliance & Controls | 10 |
-| | **Total** | **52** |
+| [PA-08.3](PA-08.3-pos-compliance-and-controls.md) | POS Compliance & Controls | 11 |
+| | **Total** | **53** |
 
 ---
 

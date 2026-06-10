@@ -4,6 +4,39 @@
 
 ---
 
+## 2026-06-11 — Consistency Review: Reconcile All Workflow Counts
+
+### Fixed
+- **Reconciled workflow counts across entire repository** — all 30 VS READMEs, value-stream-index.md, and root README.md now reflect actual workflow header counts from PA files
+- **Corrected header in value-stream-index.md** — family count (9 → 8), process area count (95 → 94), grand total remains 1,400
+- **Fixed VS-28 README** — removed duplicate PA-28.3 row
+- **Fixed table formatting** in VS-07, VS-13, VS-20, VS-24 READMEs — removed extraneous pipe characters
+- **Corrected VS-level totals** for 14 value streams where arithmetic or batch updates caused drift:
+
+| VS | Before | After | PA-level Changes |
+|---|---|---|---|
+| VS-05 | 28 | 29 | PA-05.3: 12→13 |
+| VS-07 | 134 | 136 | PA-07.2: 43→45 |
+| VS-08 | 52 | 53 | PA-08.3: 10→11 |
+| VS-11 | 42 | 45 | PA-11.2: 27→28 |
+| VS-12 | 32 | 31 | PA-12.2: 7→6 |
+| VS-13 | 59 | 60 | PA-13.2: 16→17 |
+| VS-15 | 40 | 41 | PA-15.2: 23→24 |
+| VS-16 | 29 | 32 | arithmetic fix (15+8+9=32) |
+| VS-17 | 60 | 61 | PA-17.2: 7→8 |
+| VS-19 | 67 | 70 | arithmetic fix (34+8+10+10+8=70) |
+| VS-20 | 25 | 26 | PA-20.1: 8→9 |
+| VS-22 | 55 | 55 | PA-22.1: 29→30 (total unchanged) |
+| VS-24 | 23 | 26 | PA-24.3: 7→8, total recalculated |
+| VS-28 | 14 | 18 | removed duplicate row, PA-28.3: 7 |
+
+- **Updated root README** — folder structure counts, Key Metrics (94 process areas), document relationship diagram
+- **Updated workflow-criticality-classification.md** — noted 233 unclassified workflows (1,400 − 1,167 classified)
+- **Updated workflow-dependency-map.md** — corrected total workflow count reference
+- **Updated all dates** to 2026-06-11 where stale
+
+---
+
 ## 2026-06-10 — Add 15 New Workflows Across 12 Process Areas
 
 ### Added

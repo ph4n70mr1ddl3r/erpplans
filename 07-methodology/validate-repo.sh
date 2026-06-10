@@ -52,7 +52,7 @@ ok "PA workflow count checks complete"
 echo "--- Check 3: Key figure consistency ---"
 # Check total workflows in value-stream-index
 TOTAL_VS=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | head -1)
-README_TOTAL=$(grep -oP '1,15\d' "$REPO_ROOT"/README.md | head -1)
+README_TOTAL=$(grep -oP '1,\d{3}' "$REPO_ROOT"/README.md | head -1)
 if [ -n "$TOTAL_VS" ]; then
     ok "Value stream index total: $TOTAL_VS workflows"
 else
