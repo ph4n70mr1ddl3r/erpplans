@@ -8,8 +8,8 @@
 |---|---|---|
 | [PA-12.1](PA-12.1-installation-and-repair-services.md) | Installation & Repair Services | 17 |
 | [PA-12.2](PA-12.2-tool-rental-and-equipment.md) | Tool Rental & Equipment | 2 |
-| [PA-12.3](PA-12.3-workshops-and-events.md) | Workshops & Events | 4 |
-| | **Total** | **23** |
+| [PA-12.3](PA-12.3-workshops-and-events.md) | Workshops & Events | 5 |
+| | **Total** | **24** | |
 
 ---
 
