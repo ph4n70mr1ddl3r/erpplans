@@ -4,6 +4,37 @@
 
 ---
 
+## 2026-06-10 — Add 20 New Workflows Relevant to BuildRight Depot Model Company (W1348–W1367)
+
+### Added
+- **W1348**: Fleet Vehicle Preventive Maintenance Scheduling, Work Order & Parts Management (PA-06.2)
+- **W1349**: Fleet Tire Lifecycle Management, Tread Monitoring & Replacement Scheduling (PA-06.2)
+- **W1350**: Email Marketing Campaign Operations, Segmentation & Engagement Analytics (PA-14.2)
+- **W1351**: Customer Referral Program Operations, Reward Fulfillment & Fraud Prevention (PA-14.2)
+- **W1352**: DC Outbound Pick Accuracy Verification, Short-Ship Prevention & Error Reporting (PA-04.2)
+- **W1353**: DC Outbound Staging, Loading Bay Scheduling & Dock Door Assignment Management (PA-04.2)
+- **W1354**: Store Daily Cash Deposit Preparation, Armored Car Pickup & Bank Credit Reconciliation (PA-08.2)
+- **W1355**: Typhoon & Natural Disaster Demand Surge Forecasting & Pre-Positioning (PA-02.1)
+- **W1356**: Store-Level Demand Sensing & Local Event-Driven Forecast Adjustment (PA-02.1)
+- **W1357**: Store Shift Optimization Based on Foot Traffic Analytics & Sales Pattern Analysis (PA-19.3)
+- **W1358**: Seasonal Workforce Scaling, Temporary Hiring Ramp & Post-Season Right-Sizing (PA-19.3)
+- **W1359**: Ecommerce Promotional Price Sync, Markdown Conflict Resolution & POS Price Parity Verification (PA-10.1)
+- **W1360**: Omnichannel Inventory Reservation, Oversell Prevention & Multi-Channel Stock Allocation Governance (PA-10.1)
+- **W1361**: Multi-Bank Cash Position Daily Aggregation & Automated Zero-Balance Sweep (PA-18.2)
+- **W1362**: Vendor Payment Run Execution, File Generation & Multi-Bank Disbursement Processing (PA-18.2)
+- **W1363**: Trade Professional VIP Priority Support Hotline & Dedicated Account Manager Escalation (PA-13.1)
+- **W1364**: Customer Product Knowledge Base & DIY Self-Service Help Center Content Management (PA-13.1)
+- **W1365**: DC Inbound Vendor ASN Pre-Receipt Verification & PO Matching Exception Management (PA-04.1)
+- **W1366**: DC Inbound Damage Claim Processing, Vendor Chargeback & Freight Recovery Management (PA-04.1)
+- **W1367**: BIR CAS Registration Renewal, System Change Notification & Annual Compliance Attestation (PA-22.2)
+
+### Updated
+- VS-02, VS-04, VS-06, VS-08, VS-10, VS-13, VS-14, VS-18, VS-19, VS-22 README.md — workflow counts
+- value-stream-index.md — total: 1,312 → 1,340 workflows (reconciled all VS counts to match actual README.md totals)
+- Root README.md — workflow total
+
+---
+
 ## 2026-06-10 — Add 10 New Workflows Relevant to BuildRight Depot Model Company (W1318–W1327)
 
 ### Added
