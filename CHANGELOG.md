@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-06-10 — Add 10 New Workflows Across 10 Process Areas (Batch 3)
+
+### Added
+- **W1268**: E-Wallet (GCash/Maya) Daily Settlement & Reconciliation (PA-08.2)
+- **W1269**: Customer Trade Account Application, Credit Assessment & Onboarding (PA-11.1)
+- **W1270**: Seasonal Promotional Catalog Production, Printing & Store Distribution (PA-14.1)
+- **W1271**: DC Inbound Import Container Devanning, Staging & Quality Sampling (PA-04.1)
+- **W1272**: Store-Level Emergency Local Cash Purchase Authorization & Reimbursement (PA-07.3)
+- **W1273**: Customer E-Commerce In-Store Return Drop-Off Processing & Cross-Channel Refund (PA-10.2)
+- **W1274**: Customer Loyalty Points Financial Liability Monthly Valuation & Accounting Reserve (PA-13.2)
+- **W1275**: Store-Level Daily Consignment Inventory Sales Reconciliation & Vendor Reporting (PA-05.1)
+- **W1276**: POS Multi-Tender Split Payment Processing & Reconciliation (PA-08.1)
+- **W1277**: Intercompany Warehouse Service Fee Monthly Calculation, Billing & Reconciliation (PA-17.2)
+
+### Updated
+- VS-04, VS-05, VS-07, VS-08, VS-10, VS-11, VS-13, VS-14, VS-17 README.md — workflow counts
+- value-stream-index.md — total: 1,262 workflows (was 1,252)
+- All affected PA files — TOC entries and footer counts
+
+---
+
 ## 2026-06-09 — Add 20 New Workflows Across 16 Process Areas
 ## 2026-06-10 — Add 20 New Workflows Across 19 Process Areas
 

@@ -7,9 +7,9 @@
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-10.1](PA-10.1-ecommerce-platform-operations.md) | Ecommerce Platform Operations | 22 |
-| [PA-10.2](PA-10.2-order-fulfillment-and-delivery.md) | Order Fulfillment & Delivery | 16 |
+| [PA-10.2](PA-10.2-order-fulfillment-and-delivery.md) | Order Fulfillment & Delivery | 17 |
 | [PA-10.3](PA-10.3-marketplace-and-social-commerce.md) | Marketplace & Social Commerce | 6 |
-| | **Total** | **44** |
+| | **Total** | **45** |
 
 ---
 

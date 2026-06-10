@@ -8,9 +8,9 @@
 |---|---|---|
 | [PA-07.1](PA-07.1-store-daily-management.md) | Store Daily Management | 51 |
 | [PA-07.2](PA-07.2-store-facility-and-safety.md) | Store Facility & Safety | 42 |
-| [PA-07.3](PA-07.3-store-receiving-and-replenishment.md) | Store Receiving & Replenishment | 24 |
+| [PA-07.3](PA-07.3-store-receiving-and-replenishment.md) | Store Receiving & Replenishment | 25 |
 | [PA-07.4](PA-07.4-store-staffing-and-people.md) | Store Staffing & People | 10 |
-| | **Total** | **127** |
+| | **Total** | **128** |
 
 ---
 
