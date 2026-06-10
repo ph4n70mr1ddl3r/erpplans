@@ -4,6 +4,34 @@
 
 ---
 
+## 2026-06-10 — Add 20 New Workflows Relevant to BuildRight Depot Model Company (W1298–W1317)
+
+### Added
+- **W1298**: Consignment Inventory Reconciliation, Settlement & Ownership Transfer Processing (PA-05.3)
+- **W1299**: Intercompany Transfer Pricing Review, Adjustment & Arm's-Length Compliance Documentation (PA-17.2)
+- **W1300**: Trade Account Credit Limit Annual Review, Adjustment & Exposure Monitoring (PA-16.1)
+- **W1301**: E-Wallet (GCash/Maya) Settlement Reconciliation & Discrepancy Resolution (PA-08.2)
+- **W1302**: Typhoon Season Store Protection, Rapid Reopening & Post-Disaster Assessment Protocol (PA-07.2)
+- **W1303**: Vendor Rebate, Co-Op Advertising Fund & Promotional Incentive Management (PA-03.3)
+- **W1304**: BIR Computerized Accounting System (CAS) Registration, Compliance & Audit Readiness (PA-22.1)
+- **W1305**: Catch-Weight & Variable-Quantity Item POS Pricing Verification & Scale Calibration Compliance (PA-08.3)
+- **W1306**: Multi-Entity Statutory Benefits Consolidation, Remittance Reconciliation & Government Portal Compliance (PA-19.2)
+- **W1307**: DC Cross-Dock Fast-Mover Expedited Receiving, Sortation & Same-Day Dispatch Processing (PA-04.1)
+- **W1308**: B2B Project Bid, Tender Response & Government Procurement Compliance Management (PA-11.2)
+- **W1310**: Import Letter of Credit (LC) Lifecycle Management, Amendment & Settlement Processing (PA-15.2)
+- **W1311**: E-Commerce Product Review & Rating Management, Seller Response & Negative Review Escalation (PA-10.1)
+- **W1312**: Store-Level Hazardous Material (Paint/Chemical/Solvent) Spill Response, Cleanup & Environmental Reporting (PA-24.3)
+- **W1313**: Vendor-Supplied Merchandising Fixture, Display & Point-of-Purchase (POP) Material Lifecycle Management (PA-01.3)
+- **W1314**: Customer Project Material List (Bill of Materials) Creation, Management & Reorder Tracking (PA-09.2)
+- **W1315**: Delivery Vehicle Loading Optimization, Weight Compliance & LTFRB Regulation Adherence (PA-06.1)
+- **W1316**: Loyalty Points Liability Accounting, Redemption Forecasting & Program Financial Management (PA-13.2)
+- **W1317**: Store-Level Generator Backup Power Operations, Fuel Management & Load Shedding Protocol (PA-07.2)
+
+### Updated
+- Value Stream Index: 1,262 → 1,282 workflows (20 new across 16 process areas, 14 value streams)
+
+---
+
 ## 2026-06-10 — Add 10 New Workflows Across 10 Process Areas (Batch 3)
 
 ### Added
