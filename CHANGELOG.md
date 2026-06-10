@@ -4,6 +4,37 @@
 
 ---
 
+## 2026-06-10 — Add 20 New Workflows Across 9 Process Areas
+
+### Added
+- **W1380**: Customer Post-Dated Check (PDC) Receipt, Register Management & Bank Deposit Processing (PA-16.3)
+- **W1381**: Customer Bounced Check (DAIF) Resolution, Legal Action & BIR Reporting (PA-16.3)
+- **W1382**: Customer Electronic Payment (PESONet/InstaPay) Reconciliation & Auto-Application (PA-16.3)
+- **W1383**: Employee Resignation Processing, Clearance & Final Pay Computation — Philippine Labor Code (PA-19.5)
+- **W1384**: Employee 13th Month Pay Computation, Proration & BIR Taxable Benefit Reporting (PA-19.5)
+- **W1385**: Employee Separation Pay Computation, DOLE Clearance & Retirement Benefit Settlement (PA-19.5)
+- **W1386**: Typhoon Early Warning Response, Store Pre-Closure Preparation & Post-Disaster Assessment (PA-24.2)
+- **W1387**: Store-Level Flood Response, Inventory Elevation Protocol & Water Damage Recovery (PA-24.2)
+- **W1388**: Store CCTV System Daily Health Check, Footage Retention & Incident Retrieval Processing (PA-23.2)
+- **W1389**: Store After-Hours Burglary Alarm Response, Police Coordination & Incident Documentation (PA-23.2)
+- **W1390**: Store POS Transaction Data Quality Validation, Anomaly Detection & Correction Processing (PA-28.2)
+- **W1391**: Master Data Duplicate Detection, Merge Processing & Golden Record Management (PA-28.2)
+- **W1392**: DC-Level Business Continuity Plan, Annual Tabletop Exercise & Recovery Time Objective Validation (PA-26.1)
+- **W1393**: Store-Level IT Disaster Recovery, POS System Failover & Manual Operations Procedure (PA-26.1)
+- **W1394**: Customer Trade Account Annual Credit Review, Tier Reclassification & Terms Adjustment (PA-11.1)
+- **W1395**: Customer Trade Account Suspension, Reactivation & Delinquent Account Rehabilitation (PA-11.1)
+- **W1396**: Store-Level Energy Consumption Benchmarking, Carbon Footprint Estimation & Reduction Target Tracking (PA-25.3)
+- **W1397**: Philippine SEC Sustainability Reporting (Memo Circular No. 4) Annual Data Collection & Report Preparation (PA-25.3)
+- **W1398**: Customer Churn Prediction Model, At-Risk Account Identification & Proactive Retention Campaign (PA-28.3)
+- **W1399**: Store-Level Sales Forecasting Accuracy Monitoring, Model Drift Detection & Retraining Trigger (PA-28.3)
+
+### Updated
+- Total workflows: **1,365 → 1,385** (+20)
+- Updated all affected VS README files and value-stream-index.md with revised workflow counts
+- Updated workflow counts in PA file footers
+
+---
+
 ## 2026-06-10 — Add 20 New Workflows Relevant to BuildRight Depot Model Company (W1348–W1367)
 
 ### Added
