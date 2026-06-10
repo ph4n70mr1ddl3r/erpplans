@@ -8,15 +8,15 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 91 Process Areas · 1,292 Workflows
+8 Families · 30 Value Streams · 91 Process Areas · 1,312 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
-| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 36 |
+| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 39 |
 |  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 30 |
 |  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 78 |
-| | | | | **Subtotal** | **143** |
+| | | | | **Subtotal** | **146** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 32 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 27 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 23 |
@@ -33,25 +33,25 @@
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 41 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 28 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 58 |
-|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 23 |
-| | | | | **Subtotal** | **152** |
+|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 26 |
+| | | | | **Subtotal** | **155** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 64 |
 | | | | | **Subtotal** | **64** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 24 |
 | | | | | **Subtotal** | **24** |
-| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 42 |
+| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 45 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 53 |
-|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 16 |
+|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 19 |
 |  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 3 | 23 |
-|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 17 |
+|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 22 |
 |  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 23 |
-| | | | | **Subtotal** | **174** |
+| | | | | **Subtotal** | **185** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 58 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 14 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 41 |
-|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 14 |
-| | | | | **Subtotal** | **127** |
-| | | | **Grand Total** | **1292** |
+|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 17 |
+| | | | | **Subtotal** | **130** |
+| | | | **Grand Total** | **1312** |
 
 ---
 
@@ -59,11 +59,11 @@
 
 ### Plan & Source
 
-**[VS-01: Merchandise Strategy](./VS-01-merchandise-strategy/README.md)** (36 workflows)
+**[VS-01: Merchandise Strategy](./VS-01-merchandise-strategy/README.md)** (39 workflows)
 
 - **PA-01.1** [Assortment Planning & Product Lifecycle](./VS-01-merchandise-strategy/PA-01.1-assortment-planning-and-product-lifecycle.md) — 18 workflows
 - **PA-01.2** [Pricing & Promotions](./VS-01-merchandise-strategy/PA-01.2-pricing-and-promotions.md) — 15 workflows
-- **PA-01.3** [Product Information & Content](./VS-01-merchandise-strategy/PA-01.3-product-information-and-content.md) — 3 workflows
+- **PA-01.3** [Product Information & Content](./VS-01-merchandise-strategy/PA-01.3-product-information-and-content.md) — 6 workflows
 
 **[VS-02: Supply Planning](./VS-02-supply-planning/README.md)** (30 workflows)
 
@@ -169,10 +169,10 @@
 - **PA-17.3** [Tax & Statutory](./VS-17-record-to-report/PA-17.3-tax-and-statutory.md) — 11 workflows
 - **PA-17.4** [FP&A & Reporting](./VS-17-record-to-report/PA-17.4-fpanda-and-reporting.md) — 15 workflows
 
-**[VS-18: Treasury & Cash](./VS-18-treasury-cash/README.md)** (23 workflows)
+**[VS-18: Treasury & Cash](./VS-18-treasury-cash/README.md)** (26 workflows)
 
 - **PA-18.1** [Cash Positioning & Forecasting](./VS-18-treasury-cash/PA-18.1-cash-positioning-and-forecasting.md) — 15 workflows
-- **PA-18.2** [Banking & Payments](./VS-18-treasury-cash/PA-18.2-banking-and-payments.md) — 3 workflows
+- **PA-18.2** [Banking & Payments](./VS-18-treasury-cash/PA-18.2-banking-and-payments.md) — 7 workflows
 - **PA-18.3** [FX & Investments](./VS-18-treasury-cash/PA-18.3-fx-and-investments.md) — 5 workflows
 
 ### People
@@ -195,10 +195,10 @@
 
 ### Governance & Assurance
 
-**[VS-21: Internal Audit & Risk](./VS-21-internal-audit-risk/README.md)** (42 workflows)
+**[VS-21: Internal Audit & Risk](./VS-21-internal-audit-risk/README.md)** (45 workflows)
 
 - **PA-21.1** [Audit Planning & Execution](./VS-21-internal-audit-risk/PA-21.1-audit-planning-and-execution.md) — 26 workflows
-- **PA-21.2** [Enterprise Risk Management](./VS-21-internal-audit-risk/PA-21.2-enterprise-risk-management.md) — 3 workflows
+- **PA-21.2** [Enterprise Risk Management](./VS-21-internal-audit-risk/PA-21.2-enterprise-risk-management.md) — 6 workflows
 - **PA-21.3** [Specialized Audit Domains](./VS-21-internal-audit-risk/PA-21.3-specialized-audit-domains.md) — 13 workflows
 
 **[VS-22: Compliance & Regulatory](./VS-22-compliance-regulatory/README.md)** (53 workflows)
@@ -207,11 +207,11 @@
 - **PA-22.2** [Government Audit & Inspection Response](./VS-22-compliance-regulatory/PA-22.2-government-audit-and-inspection-response.md) — 13 workflows
 - **PA-22.3** [Regulatory Change Management](./VS-22-compliance-regulatory/PA-22.3-regulatory-change-management.md) — 9 workflows
 
-**[VS-23: Loss Prevention & Asset Protection](./VS-23-loss-prevention/README.md)** (16 workflows)
+**[VS-23: Loss Prevention & Asset Protection](./VS-23-loss-prevention/README.md)** (19 workflows)
 
 - **PA-23.1** [Exception Monitoring & Investigation](./VS-23-loss-prevention/PA-23.1-exception-monitoring-and-investigation.md) — 7 workflows
 - **PA-23.2** [Physical Security & Surveillance](./VS-23-loss-prevention/PA-23.2-physical-security-and-surveillance.md) — 5 workflows
-- **PA-23.3** [Shrinkage Reduction](./VS-23-loss-prevention/PA-23.3-shrinkage-reduction.md) — 4 workflows
+- **PA-23.3** [Shrinkage Reduction](./VS-23-loss-prevention/PA-23.3-shrinkage-reduction.md) — 7 workflows
 
 **[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (23 workflows)
 
@@ -219,11 +219,11 @@
 - **PA-24.2** [Emergency Preparedness](./VS-24-health-safety-environment/PA-24.2-emergency-preparedness.md) — 4 workflows
 - **PA-24.3** [Hazmat Management](./VS-24-health-safety-environment/PA-24.3-hazmat-management.md) — 8 workflows
 
-**[VS-25: ESG & Sustainability](./VS-25-esg-sustainability/README.md)** (17 workflows)
+**[VS-25: ESG & Sustainability](./VS-25-esg-sustainability/README.md)** (22 workflows)
 
 - **PA-25.1** [Environmental Monitoring](./VS-25-esg-sustainability/PA-25.1-environmental-monitoring.md) — 9 workflows
-- **PA-25.2** [Social Impact & Governance](./VS-25-esg-sustainability/PA-25.2-social-impact-and-governance.md) — 4 workflows
-- **PA-25.3** [ESG Reporting & Compliance](./VS-25-esg-sustainability/PA-25.3-esg-reporting-and-compliance.md) — 4 workflows
+- **PA-25.2** [Social Impact & Governance](./VS-25-esg-sustainability/PA-25.2-social-impact-and-governance.md) — 7 workflows
+- **PA-25.3** [ESG Reporting & Compliance](./VS-25-esg-sustainability/PA-25.3-esg-reporting-and-compliance.md) — 6 workflows
 
 **[VS-26: Business Continuity & Insurance](./VS-26-business-continuity-insurance/README.md)** (23 workflows)
 
@@ -251,10 +251,10 @@
 - **PA-29.2** [Financial & Operational Masters](./VS-29-master-data/PA-29.2-financial-and-operational-masters.md) — 11 workflows
 - **PA-29.3** [Extended Masters](./VS-29-master-data/PA-29.3-extended-masters.md) — 13 workflows
 
-**[VS-30: Innovation & Digital Transformation](./VS-30-innovation-digital/README.md)** (14 workflows)
+**[VS-30: Innovation & Digital Transformation](./VS-30-innovation-digital/README.md)** (17 workflows)
 
 - **PA-30.1** [Emerging Technology & PoC](./VS-30-innovation-digital/PA-30.1-emerging-technology-and-poc.md) — 5 workflows
-- **PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 4 workflows
+- **PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 7 workflows
 - **PA-30.3** [Document & Knowledge Management](./VS-30-innovation-digital/PA-30.3-document-and-knowledge-management.md) — 5 workflows
 
 ---
