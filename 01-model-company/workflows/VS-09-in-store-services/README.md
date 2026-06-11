@@ -6,10 +6,10 @@
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-09.1](PA-09.1-custom-fabrication-and-processing.md) | Custom Fabrication & Processing | 64 |
+| [PA-09.1](PA-09.1-custom-fabrication-and-processing.md) | Custom Fabrication & Processing | 65 |
 | [PA-09.2](PA-09.2-project-estimation-and-advisory.md) | Project Estimation & Advisory | 72 |
 | [PA-09.3](PA-09.3-customer-amenities-and-assistance.md) | Customer Amenities & Assistance | 17 |
-| | **Total** | **153** |
+| | **Total** | **154** |
 
 ---
 

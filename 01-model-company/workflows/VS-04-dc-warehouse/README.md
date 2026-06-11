@@ -7,9 +7,9 @@
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-04.1](PA-04.1-dc-inbound-operations.md) | DC Inbound Operations | 14 |
-| [PA-04.2](PA-04.2-dc-outbound-operations.md) | DC Outbound Operations | 9 |
-| [PA-04.3](PA-04.3-dc-operations-management.md) | DC Operations Management | 18 |
-| | **Total** | **41** |
+| [PA-04.2](PA-04.2-dc-outbound-operations.md) | DC Outbound Operations | 10 |
+| [PA-04.3](PA-04.3-dc-operations-management.md) | DC Operations Management | 19 |
+| | **Total** | **43** |
 
 ---
 
