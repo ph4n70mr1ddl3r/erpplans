@@ -8,8 +8,8 @@
 |---|---|---|
 | [PA-30.1](PA-30.1-emerging-technology-and-poc.md) | Emerging Technology & PoC | 7 |
 | [PA-30.2](PA-30.2-ai-ml-and-automation.md) | AI/ML & Automation | 9 |
-| [PA-30.3](PA-30.3-document-and-knowledge-management.md) | Document & Knowledge Management | 7 |
-| | **Total** | **23** |
+| [PA-30.3](PA-30.3-document-and-knowledge-management.md) | Document & Knowledge Management | 9 |
+| | **Total** | **25** |
 
 ---
 
