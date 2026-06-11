@@ -7,9 +7,9 @@
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-21.1](PA-21.1-audit-planning-and-execution.md) | Audit Planning & Execution | 26 |
-| [PA-21.2](PA-21.2-enterprise-risk-management.md) | Enterprise Risk Management | 6 |
+| [PA-21.2](PA-21.2-enterprise-risk-management.md) | Enterprise Risk Management | 8 |
 | [PA-21.3](PA-21.3-specialized-audit-domains.md) | Specialized Audit Domains | 13 |
-| | **Total** | **45** |
+| | **Total** | **47** |
 
 ---
 

@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 94 Process Areas · 1,440 Workflows
+8 Families · 30 Value Streams · 94 Process Areas · 1,460 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -24,7 +24,7 @@
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 138 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 54 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 154 |
-|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 53 |
+|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 55 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 46 |
 |  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 31 |
 |  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 61 |
@@ -33,25 +33,25 @@
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 41 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 33 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 64 |
-|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 29 |
+|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 31 |
 | | | | | **Subtotal** | **167** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 71 |
 | | | | | **Subtotal** | **71** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 27 |
 | | | | | **Subtotal** | **29** |
-| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 45 |
+| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 47 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 56 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 21 |
 |  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 3 | 26 |
 |  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 26 |
 |  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 27 |
-| | | | | **Subtotal** | **201** |
+| | | | | **Subtotal** | **203** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 60 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 20 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 41 |
-|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 19 |
+|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 23 |
 | | | | | **Subtotal** | **140** |
-| | | | **Grand Total** | **1440** |
+| | | | **Grand Total** | **1460** |
 
 ---
 
@@ -123,7 +123,7 @@
 
 - **PA-10.1** [Ecommerce Platform Operations](./VS-10-ecommerce-digital/PA-10.1-ecommerce-platform-operations.md) — 27 workflows
 - **PA-10.2** [Order Fulfillment & Delivery](./VS-10-ecommerce-digital/PA-10.2-order-fulfillment-and-delivery.md) — 20 workflows
-- **PA-10.3** [Marketplace & Social Commerce](./VS-10-ecommerce-digital/PA-10.3-marketplace-and-social-commerce.md) — 6 workflows
+- **PA-10.3** [Marketplace & Social Commerce](./VS-10-ecommerce-digital/PA-10.3-marketplace-and-social-commerce.md) — 8 workflows
 
 **[VS-11: Trade, Project & Wholesale](./VS-11-trade-project-wholesale/README.md)** (46 workflows)
 
@@ -169,11 +169,11 @@
 - **PA-17.3** [Tax & Statutory](./VS-17-record-to-report/PA-17.3-tax-and-statutory.md) — 12 workflows
 - **PA-17.4** [FP&A & Reporting](./VS-17-record-to-report/PA-17.4-fpanda-and-reporting.md) — 17 workflows
 
-**[VS-18: Treasury & Cash](./VS-18-treasury-cash/README.md)** (29 workflows)
+**[VS-18: Treasury & Cash](./VS-18-treasury-cash/README.md)** (31 workflows)
 
 - **PA-18.1** [Cash Positioning & Forecasting](./VS-18-treasury-cash/PA-18.1-cash-positioning-and-forecasting.md) — 15 workflows
 - **PA-18.2** [Banking & Payments](./VS-18-treasury-cash/PA-18.2-banking-and-payments.md) — 9 workflows
-- **PA-18.3** [FX & Investments](./VS-18-treasury-cash/PA-18.3-fx-and-investments.md) — 5 workflows
+- **PA-18.3** [FX & Investments](./VS-18-treasury-cash/PA-18.3-fx-and-investments.md) — 7 workflows
 
 ### People
 
@@ -195,10 +195,10 @@
 
 ### Governance & Assurance
 
-**[VS-21: Internal Audit & Risk](./VS-21-internal-audit-risk/README.md)** (45 workflows)
+**[VS-21: Internal Audit & Risk](./VS-21-internal-audit-risk/README.md)** (47 workflows)
 
 - **PA-21.1** [Audit Planning & Execution](./VS-21-internal-audit-risk/PA-21.1-audit-planning-and-execution.md) — 26 workflows
-- **PA-21.2** [Enterprise Risk Management](./VS-21-internal-audit-risk/PA-21.2-enterprise-risk-management.md) — 6 workflows
+- **PA-21.2** [Enterprise Risk Management](./VS-21-internal-audit-risk/PA-21.2-enterprise-risk-management.md) — 8 workflows
 - **PA-21.3** [Specialized Audit Domains](./VS-21-internal-audit-risk/PA-21.3-specialized-audit-domains.md) — 13 workflows
 
 **[VS-22: Compliance & Regulatory](./VS-22-compliance-regulatory/README.md)** (56 workflows)
@@ -253,9 +253,9 @@
 
 **[VS-30: Innovation & Digital Transformation](./VS-30-innovation-digital/README.md)** (17 workflows)
 
-- **PA-30.1** [Emerging Technology & PoC](./VS-30-innovation-digital/PA-30.1-emerging-technology-and-poc.md) — 5 workflows
+- **PA-30.1** [Emerging Technology & PoC](./VS-30-innovation-digital/PA-30.1-emerging-technology-and-poc.md) — 7 workflows
 - **PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 9 workflows
-- **PA-30.3** [Document & Knowledge Management](./VS-30-innovation-digital/PA-30.3-document-and-knowledge-management.md) — 5 workflows
+- **PA-30.3** [Document & Knowledge Management](./VS-30-innovation-digital/PA-30.3-document-and-knowledge-management.md) — 7 workflows
 
 ---
 
@@ -286,4 +286,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1,440 workflows across 30 value streams · Date: 2026-06-11*
+*Total: 1,460 workflows across 30 value streams · Date: 2026-06-11*
