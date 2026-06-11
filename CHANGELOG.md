@@ -4,6 +4,43 @@
 
 ---
 
+## 2026-06-12 — Add 20 New Workflows Across 19 Process Areas (W1485–W1504)
+
+### Added
+- **W1485**: Store Paint Mixing Station Daily Calibration, Color Formula Database Update & Tint Inventory Replenishment (PA-07.1)
+- **W1486**: Lumber Yard Inventory Measurement, Board Foot Calculation & Dimensional Grading Verification (PA-05.1)
+- **W1487**: Store Garden Center & Plant Nursery Seasonal Assortment Rotation, Vendor-Managed Inventory & Markdown Optimization (PA-01.1)
+- **W1488**: Customer Bulk Sand, Gravel & Cement Delivery Scheduling, Weight Ticket Verification & Site Unloading Coordination (PA-06.3)
+- **W1489**: BIR Electronic Invoicing (E-Invoice) Compliance, System Registration & Monthly Transmission (PA-22.1)
+- **W1490**: Store-Level Plumbing & Electrical Fixture Display Model Rotation, Demo Unit Tracking & Write-Off (PA-07.1)
+- **W1491**: Customer Kitchen & Bathroom Design Consultation, 3D Rendering & Material Take-Off Generation (PA-09.2)
+- **W1492**: Typhoon Season Pre-Positioning of Emergency Construction Materials (Tarpaulins, Plywood, CGI Sheets) & Demand Allocation Across Store Network (PA-02.3)
+- **W1493**: Store-Level Contractor Lounge & Trade Amenities Management, Satisfaction Survey & Retention (PA-09.3)
+- **W1494**: POS Customer Project Receipt, Multi-Store Purchase Aggregation & Tax Credit Certificate Processing (PA-08.1)
+- **W1495**: Vendor-Managed Inventory (VMI) Replenishment, Min/Max Review & Automated PO Generation (PA-03.4)
+- **W1496**: Intercompany Warehouse Service Fee Dispute Resolution, Rate Review & Quarterly Settlement Agreement (PA-17.2)
+- **W1497**: Store-Level Anti-Theft Cable & Sensor Tag Deployment, Deactivation Compliance & Equipment Maintenance (PA-23.3)
+- **W1498**: DC Temperature-Sensitive Material (Adhesives, Sealants, Paint) Storage Monitoring, Expiry Alert & FIFO Enforcement (PA-04.3)
+- **W1499**: Customer Loyalty Program Tier Qualification Period Reset, Points Expiration Management & Downgrade Communication (PA-13.2)
+- **W1500**: Store New Employee Shadow Training Program, Buddy Assignment & 90-Day Competency Checklist (PA-19.4)
+- **W1501**: Store Rooftop Solar Panel Installation ROI Assessment, Net Metering Application & Monthly Energy Offset Tracking (PA-20.3)
+- **W1502**: Customer E-Commerce Product Comparison Tool, Alternate/Substitute Product Recommendation & Cross-Sell Engine (PA-10.1)
+- **W1503**: BIR Percentage Tax vs. VAT Threshold Monitoring, Quarterly Tax Regime Evaluation & Registration Adjustment (PA-17.3)
+- **W1504**: Supplier Invoice Price Discrepancy Investigation, Debit Note Issuance & Resolution Tracking (PA-15.1)
+
+### Fixed
+- **Corrected PA-12.2 workflow count** in VS-12 README: 6 → 7 (actual file count); VS-12 total: 31 → 32
+- **Corrected VS-10 detailed section** in value-stream-index.md: 53 → 58 (summary table was already correct)
+- **Corrected VS-28 detailed section** in value-stream-index.md: 20 → 22 (summary table was already correct)
+
+### Updated
+- Total workflows: **1,470 → 1,490** (+20 new + 1 existing uncounted fix)
+- Updated all affected VS README files and value-stream-index.md with revised workflow counts
+- Updated workflow counts in PA file footers
+- Updated root README.md folder structure counts
+
+---
+
 ## 2026-06-11 — Consistency Review: Reconcile All Workflow Counts
 
 ### Fixed

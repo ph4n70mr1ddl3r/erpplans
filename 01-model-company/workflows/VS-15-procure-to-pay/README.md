@@ -6,9 +6,9 @@
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-15.1](PA-15.1-invoice-processing-and-matching.md) | Invoice Processing & Matching | 17 |
+| [PA-15.1](PA-15.1-invoice-processing-and-matching.md) | Invoice Processing & Matching | 18 |
 | [PA-15.2](PA-15.2-vendor-payment-and-reconciliation.md) | Vendor Payment & Reconciliation | 24 |
-| | **Total** | **41** |
+| | **Total** | **42** | |
 
 ---
 
