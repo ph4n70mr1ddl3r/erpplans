@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 94 Process Areas · 1562 Workflows
+8 Families · 34 Value Streams · 106 Process Areas · 1,689 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -51,7 +51,14 @@
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 | | | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **1562** |
+| Governance & Assurance | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | 3 | 22 |
+|  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance | 3 | 23 |
+| | | | **Subtotal** | **45** |
+| Make & Move | [VS-32](VS-32-returns-reverse-logistics/README.md) | Returns & Reverse Logistics | 3 | 23 |
+| | | | **Subtotal** | **23** |
+| Finance | [VS-34](VS-34-expense-procurement/README.md) | Expense & Non-Merchandise Procurement | 3 | 22 |
+| | | | **Subtotal** | **22** |
+| | | | **Grand Total** | **1,689** | |
 
 ---
 
@@ -257,6 +264,38 @@
 - **PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 11 workflows
 - **PA-30.3** [Document & Knowledge Management](./VS-30-innovation-digital/PA-30.3-document-and-knowledge-management.md) — 9 workflows
 
+### Quality Management & Product Compliance
+
+**[VS-31: Quality Management & Product Compliance](./VS-31-quality-management/README.md)** (22 workflows)
+
+- **PA-31.1** [Incoming Quality Inspection & Control](./VS-31-quality-management/PA-31.1-incoming-quality-inspection.md) — 8 workflows
+- **PA-31.2** [Vendor Quality Management & Audit](./VS-31-quality-management/PA-31.2-vendor-quality-audit.md) — 7 workflows
+- **PA-31.3** [Product Recall & Safety Compliance](./VS-31-quality-management/PA-31.3-product-recall-safety-compliance.md) — 7 workflows
+
+### Returns & Reverse Logistics
+
+**[VS-32: Returns & Reverse Logistics](./VS-32-returns-reverse-logistics/README.md)** (23 workflows)
+
+- **PA-32.1** [Customer Returns Processing](./VS-32-returns-reverse-logistics/PA-32.1-customer-returns-processing.md) — 9 workflows
+- **PA-32.2** [Vendor Returns & Recovery](./VS-32-returns-reverse-logistics/PA-32.2-vendor-returns-recovery.md) — 7 workflows
+- **PA-32.3** [Reverse Logistics & Disposition](./VS-32-returns-reverse-logistics/PA-32.3-reverse-logistics-disposition.md) — 7 workflows
+
+### Strategic Planning & Corporate Performance Management
+
+**[VS-33: Strategic Planning & Corporate Performance](./VS-33-strategic-planning/README.md)** (23 workflows)
+
+- **PA-33.1** [Annual Business Planning & Budgeting](./VS-33-strategic-planning/PA-33.1-annual-business-planning.md) — 8 workflows
+- **PA-33.2** [Corporate Performance Management](./VS-33-strategic-planning/PA-33.2-corporate-performance-management.md) — 8 workflows
+- **PA-33.3** [Competitive Intelligence & Market Analysis](./VS-33-strategic-planning/PA-33.3-competitive-intelligence.md) — 7 workflows
+
+### Expense & Non-Merchandise Procurement
+
+**[VS-34: Expense & Non-Merchandise Procurement](./VS-34-expense-procurement/README.md)** (22 workflows)
+
+- **PA-34.1** [Non-Merchandise Procurement Operations](./VS-34-expense-procurement/PA-34.1-non-merchandise-procurement.md) — 8 workflows
+- **PA-34.2** [Service Provider & Contract Management](./VS-34-expense-procurement/PA-34.2-service-provider-management.md) — 7 workflows
+- **PA-34.3** [Expense Monitoring & Control](./VS-34-expense-procurement/PA-34.3-expense-monitoring-control.md) — 7 workflows
+
 ---
 
 ## Cross-Reference Documents
@@ -275,15 +314,16 @@
 
 ```
 Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14)
-Does it move physical goods?             → Make & Move (VS-04 to VS-06)
+Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34)
 Does it involve people/HR?               → People (VS-19)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20)
-Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26)
+Is it about product quality/safety?      → Quality & Compliance (VS-31)
+Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-33)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 ```
 
 ---
 
-*Total: 1,562 workflows across 30 value streams · Date: 2026-06-12*
+*Total: 1,689 workflows across 34 value streams · Date: 2026-06-12*
