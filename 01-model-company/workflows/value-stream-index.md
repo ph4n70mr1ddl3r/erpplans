@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 44 Value Streams · 136 Process Areas · 1,930 Workflows
+9 Families · 52 Value Streams · 160 Process Areas · 2,122 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -78,7 +78,19 @@
 | | | | **Subtotal** | **24** |
 | Sell & Serve | [VS-44](VS-44-consumer-insights-market-research/README.md) | Consumer Insights & Market Research | 3 | 24 |
 | | | | **Subtotal** | **24** |
-| | | | **Grand Total** | **1,930** | |
+| Plan & Source | [VS-45](VS-45-consignment-vmi-operations/README.md) | Consignment & VMI Operations | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-46](VS-46-government-institutional-sales/README.md) | Government & Institutional B2G Sales | 3 | 24 |
+| | [VS-47](VS-47-subscription-recurring-services/README.md) | Subscription & Recurring Home Services | 3 | 24 |
+| | [VS-48](VS-48-retail-media-network/README.md) | Retail Media Network & Vendor Advertising | 3 | 24 |
+| | [VS-51](VS-51-assembly-kitting-bundling/README.md) | Product Assembly, Kitting & Bundling | 3 | 24 |
+| | | | **Subtotal** | **120** |
+| Make & Move | [VS-49](VS-49-dark-store-micro-fulfillment/README.md) | Dark Store & Micro-Fulfillment | 3 | 24 |
+| | [VS-50](VS-50-damage-claims-management/README.md) | Damage & Claims Management | 3 | 24 |
+| | | | **Subtotal** | **48** |
+| Plan & Source | [VS-52](VS-52-cooperative-community-procurement/README.md) | Cooperative & Community Enterprise Procurement | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| | | | **Grand Total** | **2,122** | | |
 
 ---
 
@@ -284,6 +296,70 @@
 - **PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 11 workflows
 - **PA-30.3** [Document & Knowledge Management](./VS-30-innovation-digital/PA-30.3-document-and-knowledge-management.md) — 9 workflows
 
+### Consignment & VMI Operations
+
+**[VS-45: Consignment & VMI Operations](./VS-45-consignment-vmi-operations/README.md)** (24 workflows)
+
+- **PA-45.1** [Consignment Inventory Operations](./VS-45-consignment-vmi-operations/PA-45.1-consignment-inventory-operations.md) — 8 workflows
+- **PA-45.2** [Vendor-Managed Inventory (VMI) Operations](./VS-45-consignment-vmi-operations/PA-45.2-vmi-operations.md) — 8 workflows
+- **PA-45.3** [Consignment & VMI Settlement & Analytics](./VS-45-consignment-vmi-operations/PA-45.3-consignment-vmi-settlement-analytics.md) — 8 workflows
+
+### Government & Institutional B2G Sales
+
+**[VS-46: Government & Institutional B2G Sales](./VS-46-government-institutional-sales/README.md)** (24 workflows)
+
+- **PA-46.1** [Government Registration & Qualification](./VS-46-government-institutional-sales/PA-46.1-government-registration-qualification.md) — 8 workflows
+- **PA-46.2** [Government Bid, Quotation & Order Processing](./VS-46-government-institutional-sales/PA-46.2-government-bid-order-processing.md) — 8 workflows
+- **PA-46.3** [Government Billing, Collection & Compliance](./VS-46-government-institutional-sales/PA-46.3-government-billing-collection-compliance.md) — 8 workflows
+
+### Subscription & Recurring Home Services
+
+**[VS-47: Subscription & Recurring Home Services](./VS-47-subscription-recurring-services/README.md)** (24 workflows)
+
+- **PA-47.1** [Subscription Product Design & Setup](./VS-47-subscription-recurring-services/PA-47.1-subscription-product-design-setup.md) — 8 workflows
+- **PA-47.2** [Subscription Billing, Renewal & Lifecycle](./VS-47-subscription-recurring-services/PA-47.2-subscription-billing-renewal-lifecycle.md) — 8 workflows
+- **PA-47.3** [Service Fulfillment, Scheduling & Quality Assurance](./VS-47-subscription-recurring-services/PA-47.3-service-fulfillment-quality.md) — 8 workflows
+
+### Retail Media Network & Vendor Advertising
+
+**[VS-48: Retail Media Network & Vendor Advertising](./VS-48-retail-media-network/README.md)** (24 workflows)
+
+- **PA-48.1** [Retail Media Platform & Inventory Management](./VS-48-retail-media-network/PA-48.1-retail-media-platform-inventory.md) — 8 workflows
+- **PA-48.2** [Vendor Advertising Campaign Execution](./VS-48-retail-media-network/PA-48.2-vendor-advertising-campaign-execution.md) — 8 workflows
+- **PA-48.3** [Retail Media Revenue & Analytics](./VS-48-retail-media-network/PA-48.3-retail-media-revenue-analytics.md) — 8 workflows
+
+### Dark Store & Micro-Fulfillment
+
+**[VS-49: Dark Store & Micro-Fulfillment](./VS-49-dark-store-micro-fulfillment/README.md)** (24 workflows)
+
+- **PA-49.1** [Dark Store Setup & Daily Operations](./VS-49-dark-store-micro-fulfillment/PA-49.1-dark-store-setup-daily-operations.md) — 8 workflows
+- **PA-49.2** [Micro-Fulfillment Order Processing & Routing](./VS-49-dark-store-micro-fulfillment/PA-49.2-micro-fulfillment-order-processing.md) — 8 workflows
+- **PA-49.3** [Dark Store Performance & Analytics](./VS-49-dark-store-micro-fulfillment/PA-49.3-dark-store-performance-analytics.md) — 8 workflows
+
+### Damage & Claims Management
+
+**[VS-50: Damage & Claims Management](./VS-50-damage-claims-management/README.md)** (24 workflows)
+
+- **PA-50.1** [In-Transit Damage & Carrier Claims](./VS-50-damage-claims-management/PA-50.1-in-transit-damage-carrier-claims.md) — 8 workflows
+- **PA-50.2** [In-Store Damage, Shrinkage & Vendor Recovery](./VS-50-damage-claims-management/PA-50.2-in-store-damage-vendor-recovery.md) — 8 workflows
+- **PA-50.3** [Insurance Claims & Loss Documentation](./VS-50-damage-claims-management/PA-50.3-insurance-claims-loss-documentation.md) — 8 workflows
+
+### Product Assembly, Kitting & Bundling
+
+**[VS-51: Product Assembly, Kitting & Bundling](./VS-51-assembly-kitting-bundling/README.md)** (24 workflows)
+
+- **PA-51.1** [Product Assembly Operations](./VS-51-assembly-kitting-bundling/PA-51.1-product-assembly-operations.md) — 8 workflows
+- **PA-51.2** [Custom Kit & Bundle Creation & Pricing](./VS-51-assembly-kitting-bundling/PA-51.2-custom-kit-bundle-creation.md) — 8 workflows
+- **PA-51.3** [Assembly & Kit Fulfillment & Quality](./VS-51-assembly-kitting-bundling/PA-51.3-assembly-kit-fulfillment-quality.md) — 8 workflows
+
+### Cooperative & Community Enterprise Procurement
+
+**[VS-52: Cooperative & Community Enterprise Procurement](./VS-52-cooperative-community-procurement/README.md)** (24 workflows)
+
+- **PA-52.1** [Local MSME & Cooperative Vendor Development](./VS-52-cooperative-community-procurement/PA-52.1-local-msme-cooperative-development.md) — 8 workflows
+- **PA-52.2** [Community Sourcing & Artisan Product Integration](./VS-52-cooperative-community-procurement/PA-52.2-community-sourcing-artisan-integration.md) — 8 workflows
+- **PA-52.3** [Social Enterprise Procurement Analytics](./VS-52-cooperative-community-procurement/PA-52.3-social-enterprise-procurement-analytics.md) — 8 workflows
+
 ### Quality Management & Product Compliance
 
 **[VS-31: Quality Management & Product Compliance](./VS-31-quality-management/README.md)** (22 workflows)
@@ -426,4 +502,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1,930 workflows across 44 value streams · Date: 2026-06-12*
+*Total: 2,122 workflows across 52 value streams · Date: 2026-06-12*
