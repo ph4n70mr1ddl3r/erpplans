@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 34 Value Streams · 106 Process Areas · 1,689 Workflows
+8 Families · 40 Value Streams · 124 Process Areas · 1,834 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -58,7 +58,19 @@
 | | | | **Subtotal** | **23** |
 | Finance | [VS-34](VS-34-expense-procurement/README.md) | Expense & Non-Merchandise Procurement | 3 | 22 |
 | | | | **Subtotal** | **22** |
-| | | | **Grand Total** | **1,689** | |
+| Asset & Infrastructure | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Governance & Assurance | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | 3 | 23 |
+| | | | **Subtotal** | **23** |
+| Sell & Serve | [VS-37](VS-37-store-opening-commissioning/README.md) | Store Opening & Commissioning | 3 | 26 |
+| | | | **Subtotal** | **26** |
+| Finance | [VS-38](VS-38-consumer-credit-financing/README.md) | Consumer Credit & Financing | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Finance | [VS-39](VS-39-vendor-rebate-incentive/README.md) | Vendor Rebate & Incentive Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Finance | [VS-40](VS-40-capex-project-accounting/README.md) | Capex & Project Accounting | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| | | | **Grand Total** | **1,834** | |
 
 ---
 
@@ -296,6 +308,54 @@
 - **PA-34.2** [Service Provider & Contract Management](./VS-34-expense-procurement/PA-34.2-service-provider-management.md) — 7 workflows
 - **PA-34.3** [Expense Monitoring & Control](./VS-34-expense-procurement/PA-34.3-expense-monitoring-control.md) — 7 workflows
 
+### Fixed Asset Management
+
+**[VS-35: Fixed Asset Management](./VS-35-fixed-asset-management/README.md)** (24 workflows)
+
+- **PA-35.1** [Asset Registration & Lifecycle Tracking](./VS-35-fixed-asset-management/PA-35.1-asset-registration-lifecycle.md) — 8 workflows
+- **PA-35.2** [Depreciation & Financial Reporting](./VS-35-fixed-asset-management/PA-35.2-depreciation-financial-reporting.md) — 8 workflows
+- **PA-35.3** [Physical Verification & Disposal](./VS-35-fixed-asset-management/PA-35.3-physical-verification-disposal.md) — 8 workflows
+
+### Corporate Governance & Board Management
+
+**[VS-36: Corporate Governance & Board Management](./VS-36-corporate-governance/README.md)** (23 workflows)
+
+- **PA-36.1** [Board Meeting Management & Corporate Records](./VS-36-corporate-governance/PA-36.1-board-meeting-corporate-records.md) — 8 workflows
+- **PA-36.2** [Shareholder & Equity Management](./VS-36-corporate-governance/PA-36.2-shareholder-equity-management.md) — 7 workflows
+- **PA-36.3** [Corporate Policy & Entity Governance](./VS-36-corporate-governance/PA-36.3-corporate-policy-entity-governance.md) — 8 workflows
+
+### Store Opening & Commissioning
+
+**[VS-37: Store Opening & Commissioning](./VS-37-store-opening-commissioning/README.md)** (26 workflows)
+
+- **PA-37.1** [New Store Project Planning & Coordination](./VS-37-store-opening-commissioning/PA-37.1-new-store-project-planning.md) — 9 workflows
+- **PA-37.2** [Store Staffing, Training & Systems Setup](./VS-37-store-opening-commissioning/PA-37.2-staffing-training-systems-setup.md) — 9 workflows
+- **PA-37.3** [Grand Opening Execution & Post-Opening Stabilization](./VS-37-store-opening-commissioning/PA-37.3-grand-opening-post-opening.md) — 8 workflows
+
+### Consumer Credit & Financing
+
+**[VS-38: Consumer Credit & Financing](./VS-38-consumer-credit-financing/README.md)** (24 workflows)
+
+- **PA-38.1** [Consumer Financing Program Management](./VS-38-consumer-credit-financing/PA-38.1-consumer-financing-program.md) — 8 workflows
+- **PA-38.2** [Installment Sale Processing & Monitoring](./VS-38-consumer-credit-financing/PA-38.2-installment-sale-processing.md) — 8 workflows
+- **PA-38.3** [Financing Reconciliation & Partner Settlement](./VS-38-consumer-credit-financing/PA-38.3-financing-reconciliation-settlement.md) — 8 workflows
+
+### Vendor Rebate & Incentive Management
+
+**[VS-39: Vendor Rebate & Incentive Management](./VS-39-vendor-rebate-incentive/README.md)** (24 workflows)
+
+- **PA-39.1** [Rebate Agreement & Accrual Management](./VS-39-vendor-rebate-incentive/PA-39.1-rebate-agreement-accrual.md) — 8 workflows
+- **PA-39.2** [Co-Op Marketing & Promotional Fund Management](./VS-39-vendor-rebate-incentive/PA-39.2-coop-marketing-promotional-funds.md) — 8 workflows
+- **PA-39.3** [Rebate Settlement & Analytics](./VS-39-vendor-rebate-incentive/PA-39.3-rebate-settlement-analytics.md) — 8 workflows
+
+### Capex & Project Accounting
+
+**[VS-40: Capex & Project Accounting](./VS-40-capex-project-accounting/README.md)** (24 workflows)
+
+- **PA-40.1** [Capital Expenditure Request & Approval](./VS-40-capex-project-accounting/PA-40.1-capex-request-approval.md) — 8 workflows
+- **PA-40.2** [Project Cost Tracking & Capitalization](./VS-40-capex-project-accounting/PA-40.2-project-cost-tracking.md) — 8 workflows
+- **PA-40.3** [Construction-in-Progress & Asset Turnover](./VS-40-capex-project-accounting/PA-40.3-cip-asset-turnover.md) — 8 workflows
+
 ---
 
 ## Cross-Reference Documents
@@ -326,4 +386,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1,689 workflows across 34 value streams · Date: 2026-06-12*
+*Total: 1,834 workflows across 40 value streams · Date: 2026-06-12*
