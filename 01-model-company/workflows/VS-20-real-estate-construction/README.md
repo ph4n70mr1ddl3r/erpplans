@@ -8,8 +8,8 @@
 |---|---|---|
 | [PA-20.1](PA-20.1-site-selection-and-lease-management.md) | Site Selection & Lease Management | 11 |
 | [PA-20.2](PA-20.2-engineering-and-construction.md) | Engineering & Construction | 10 |
-| [PA-20.3](PA-20.3-facility-maintenance-and-equipment.md) | Facility Maintenance & Equipment | 9 |
-| | **Total** | **30** | |
+| [PA-20.3](PA-20.3-facility-maintenance-and-equipment.md) | Facility Maintenance & Equipment | 11 |
+| | **Total** | **32** | |
 
 ---
 
