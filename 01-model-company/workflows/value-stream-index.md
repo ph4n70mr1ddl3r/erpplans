@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-9 Families · 52 Value Streams · 160 Process Areas · 2,122 Workflows
+10 Families · 68 Value Streams · 208 Process Areas · 2,410 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -90,7 +90,37 @@
 | | | | **Subtotal** | **48** |
 | Plan & Source | [VS-52](VS-52-cooperative-community-procurement/README.md) | Cooperative & Community Enterprise Procurement | 3 | 24 |
 | | | | **Subtotal** | **24** |
-| | | | **Grand Total** | **2,122** | | |
+| Sell & Serve | [VS-53](VS-53-warranty-guarantee-management/README.md) | Warranty & Guarantee Management | 3 | 24 |
+| Finance | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | 3 | 24 |
+| Sell & Serve | [VS-55](VS-55-store-planogram-space-optimization/README.md) | Store Planogram & Space Optimization | 3 | 24 |
+| | | | **Subtotal** | **72** |
+| Make & Move | [VS-56](VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Plan & Source | [VS-57](VS-57-competitive-price-intelligence/README.md) | Competitive Price Intelligence & Monitoring | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-58](VS-58-coupon-digital-promotions/README.md) | Coupon & Digital Promotions Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Asset & Infrastructure | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-60](VS-60-omnichannel-order-routing/README.md) | Omnichannel Order Routing & Fulfillment Orchestration | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Make & Move | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-62](VS-62-product-sample-display-management/README.md) | Product Sample & Display Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-63](VS-63-store-communication-task-management/README.md) | Store Communication & Task Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Plan & Source | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Transition & Clearance | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-65](VS-65-ecommerce-marketplace-integration/README.md) | E-Commerce Marketplace Integration | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-66](VS-66-customer-project-design-services/README.md) | Customer Project & Design Services | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Plan & Source | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Performance Analytics | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Finance | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| | | | **Grand Total** | **2,410** | | |
 
 ---
 
@@ -502,4 +532,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 2,122 workflows across 52 value streams · Date: 2026-06-12*
+*Total: 2,410 workflows across 68 value streams · Date: 2026-06-12*
