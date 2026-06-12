@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 40 Value Streams · 124 Process Areas · 1,834 Workflows
+8 Families · 44 Value Streams · 136 Process Areas · 1,930 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -70,7 +70,15 @@
 | | | | **Subtotal** | **24** |
 | Finance | [VS-40](VS-40-capex-project-accounting/README.md) | Capex & Project Accounting | 3 | 24 |
 | | | | **Subtotal** | **24** |
-| | | | **Grand Total** | **1,834** | |
+| Plan & Source | [VS-41](VS-41-private-label-brand/README.md) | Private Label & Exclusive Brand Management | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Asset & Infrastructure | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-43](VS-43-trade-professional-program/README.md) | Trade Professional Program & Contractor Services | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| Sell & Serve | [VS-44](VS-44-consumer-insights-market-research/README.md) | Consumer Insights & Market Research | 3 | 24 |
+| | | | **Subtotal** | **24** |
+| | | | **Grand Total** | **1,930** | |
 
 ---
 
@@ -356,6 +364,38 @@
 - **PA-40.2** [Project Cost Tracking & Capitalization](./VS-40-capex-project-accounting/PA-40.2-project-cost-tracking.md) — 8 workflows
 - **PA-40.3** [Construction-in-Progress & Asset Turnover](./VS-40-capex-project-accounting/PA-40.3-cip-asset-turnover.md) — 8 workflows
 
+### Private Label & Exclusive Brand Management
+
+**[VS-41: Private Label & Exclusive Brand Management](./VS-41-private-label-brand/README.md)** (24 workflows)
+
+- **PA-41.1** [Private Label Product Development & Sourcing](./VS-41-private-label-brand/PA-41.1-private-label-product-development.md) — 8 workflows
+- **PA-41.2** [Private Label Quality Assurance & Compliance](./VS-41-private-label-brand/PA-41.2-private-label-quality-assurance.md) — 8 workflows
+- **PA-41.3** [Private Label Brand, Packaging & Marketing](./VS-41-private-label-brand/PA-41.3-private-label-brand-marketing.md) — 8 workflows
+
+### Property & Lease Administration
+
+**[VS-42: Property & Lease Administration](./VS-42-property-lease-admin/README.md)** (24 workflows)
+
+- **PA-42.1** [Lease Negotiation & Administration](./VS-42-property-lease-admin/PA-42.1-lease-negotiation-administration.md) — 8 workflows
+- **PA-42.2** [Rent Payment, Escalation & CAM Reconciliation](./VS-42-property-lease-admin/PA-42.2-rent-payment-escalation.md) — 8 workflows
+- **PA-42.3** [Property Tax, LGU Compliance & Lease Accounting](./VS-42-property-lease-admin/PA-42.3-property-tax-compliance.md) — 8 workflows
+
+### Trade Professional Program & Contractor Services
+
+**[VS-43: Trade Professional Program & Contractor Services](./VS-43-trade-professional-program/README.md)** (24 workflows)
+
+- **PA-43.1** [Trade Account Lifecycle & Relationship Management](./VS-43-trade-professional-program/PA-43.1-trade-account-lifecycle.md) — 8 workflows
+- **PA-43.2** [Contractor Loyalty, Incentive & Volume Program](./VS-43-trade-professional-program/PA-43.2-contractor-loyalty-incentive.md) — 8 workflows
+- **PA-43.3** [Trade Training, Certification & Community Engagement](./VS-43-trade-professional-program/PA-43.3-trade-training-community.md) — 8 workflows
+
+### Consumer Insights & Market Research
+
+**[VS-44: Consumer Insights & Market Research](./VS-44-consumer-insights-market-research/README.md)** (24 workflows)
+
+- **PA-44.1** [Customer Satisfaction & Experience Research](./VS-44-consumer-insights-market-research/PA-44.1-customer-satisfaction-research.md) — 8 workflows
+- **PA-44.2** [Market & Competitive Intelligence](./VS-44-consumer-insights-market-research/PA-44.2-market-competitive-intelligence.md) — 8 workflows
+- **PA-44.3** [Product Category & Shopper Research](./VS-44-consumer-insights-market-research/PA-44.3-product-category-research.md) — 8 workflows
+
 ---
 
 ## Cross-Reference Documents
@@ -386,4 +426,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1,834 workflows across 40 value streams · Date: 2026-06-12*
+*Total: 1,930 workflows across 44 value streams · Date: 2026-06-12*

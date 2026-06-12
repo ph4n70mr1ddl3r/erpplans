@@ -4,6 +4,34 @@
 
 ---
 
+## 2026-06-12 — Add 4 New Value Streams with 96 Workflows (W1830–W1925)
+
+### Added
+- **VS-41: Private Label & Exclusive Brand Management** — 3 process areas, 24 workflows
+  - PA-41.1: Private Label Product Development & Sourcing (W1830–W1837)
+  - PA-41.2: Private Label Quality Assurance & Compliance (W1838–W1845)
+  - PA-41.3: Private Label Brand, Packaging & Marketing (W1846–W1853)
+- **VS-42: Property & Lease Administration** — 3 process areas, 24 workflows
+  - PA-42.1: Lease Negotiation & Administration (W1854–W1861)
+  - PA-42.2: Rent Payment, Escalation & CAM Reconciliation (W1862–W1869)
+  - PA-42.3: Property Tax, LGU Compliance & Lease Accounting (W1870–W1877)
+- **VS-43: Trade Professional Program & Contractor Services** — 3 process areas, 24 workflows
+  - PA-43.1: Trade Account Lifecycle & Relationship Management (W1878–W1885)
+  - PA-43.2: Contractor Loyalty, Incentive & Volume Program (W1886–W1893)
+  - PA-43.3: Trade Training, Certification & Community Engagement (W1894–W1901)
+- **VS-44: Consumer Insights & Market Research** — 3 process areas, 24 workflows
+  - PA-44.1: Customer Satisfaction & Experience Research (W1902–W1909)
+  - PA-44.2: Market & Competitive Intelligence (W1910–W1917)
+  - PA-44.3: Product Category & Shopper Research (W1918–W1925)
+
+### Updated
+- Total workflows: **1,834 → 1,930** (+96 new)
+- Total value streams: **40 → 44** (+4 new)
+- Total process areas: **124 → 136** (+12 new)
+- Updated value-stream-index.md with new value stream entries and revised totals
+
+---
+
 ## 2026-06-12 — Add 20 New Workflows Across 20 Process Areas (W1533–W1552)
 
 ### Added
