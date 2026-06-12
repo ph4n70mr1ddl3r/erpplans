@@ -10,7 +10,7 @@
 | [PA-07.2](PA-07.2-store-facility-and-safety.md) | Store Facility & Safety | 46 |
 | [PA-07.3](PA-07.3-store-receiving-and-replenishment.md) | Store Receiving & Replenishment | 28 |
 | [PA-07.4](PA-07.4-store-staffing-and-people.md) | Store Staffing & People | 10 |
-| | **Total** | **145** | |
+| | **Total** | **144** | |
 
 ---
 

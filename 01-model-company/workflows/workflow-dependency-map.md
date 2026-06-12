@@ -1,8 +1,8 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 1,400 total workflows, 1,167 are classified into
-> criticality tiers; 233 remain unclassified and default to Tier 2 pending review.
+> relationships for system functions. Of 2,465 total workflows, 1,167 are classified into
+> criticality tiers; 1,298 remain unclassified and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
@@ -634,4 +634,4 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-*Date: 2026-06-11 | Workflow Dependency Map v2.1 — covers prerequisite relationships for 1,167 classified workflows across 30 value streams with hard/soft/integration dependencies. Total repository workflows: 1,400.*
+*Date: 2026-06-13 | Workflow Dependency Map v2.2 — covers prerequisite relationships for 1,167 classified workflows across 68 value streams with hard/soft/integration dependencies. Total repository workflows: 2,465.*

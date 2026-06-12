@@ -9,7 +9,7 @@
 | [PA-10.1](PA-10.1-ecommerce-platform-operations.md) | Ecommerce Platform Operations | 31 |
 | [PA-10.2](PA-10.2-order-fulfillment-and-delivery.md) | Order Fulfillment & Delivery | 20 |
 | [PA-10.3](PA-10.3-marketplace-and-social-commerce.md) | Marketplace & Social Commerce | 10 |
-| | **Total** | **63** | |
+| | **Total** | **61** | |
 
 ---
 

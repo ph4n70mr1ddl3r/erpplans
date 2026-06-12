@@ -27,10 +27,10 @@ erpplans/
 ├── README.md                    ← You are here
 ├── 01-model-company/            ← Complete model company profile, requirements & workflows
 │   ├── model-company-profile.md       Company profile, operations, financials
-│   ├── erp-requirements.md            730 requirements across 32+ categories
+│   ├── erp-requirements.md            733 requirements across 32+ categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      1,510 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 30 value streams · 94 process areas)
+│   ├── workflows/                      2,465 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 68 value streams · 208 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -41,31 +41,68 @@ erpplans/
 │   │   ├── VS-04-dc-warehouse/                  45 workflows (3 process areas)
 │   │   ├── VS-05-inventory-lifecycle/           35 workflows (3 process areas)
 │   │   ├── VS-06-logistics-fleet/               36 workflows (3 process areas)
-│   │   ├── VS-07-store-operations/              145 workflows (4 process areas)
+│   │   ├── VS-07-store-operations/              144 workflows (4 process areas)
 │   │   ├── VS-08-pos-checkout/                  59 workflows (3 process areas)
-│   │   ├── VS-09-in-store-services/             156 workflows (3 process areas)
-│   │   ├── VS-10-ecommerce-digital/             63 workflows (3 process areas)
+│   │   ├── VS-09-in-store-services/             158 workflows (3 process areas)
+│   │   ├── VS-10-ecommerce-digital/             61 workflows (3 process areas)
 │   │   ├── VS-11-trade-project-wholesale/       52 workflows (3 process areas)
-│   │   ├── VS-12-installation-services/         35 workflows (3 process areas)
+│   │   ├── VS-12-installation-services/         39 workflows (3 process areas)
 │   │   ├── VS-13-customer-experience/           64 workflows (3 process areas)
-│   │   ├── VS-14-marketing/                     35 workflows (3 process areas)
+│   │   ├── VS-14-marketing/                     40 workflows (3 process areas)
 │   │   ├── VS-15-procure-to-pay/                42 workflows (2 process areas)
 │   │   ├── VS-16-order-to-cash/                 35 workflows (3 process areas)
-│   │   ├── VS-17-record-to-report/              66 workflows (4 process areas)
+│   │   ├── VS-17-record-to-report/              67 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 33 workflows (3 process areas)
-│   │   ├── VS-19-hire-to-retire/                72 workflows (5 process areas)
-│   │   ├── VS-20-real-estate-construction/      30 workflows (3 process areas)
+│   │   ├── VS-19-hire-to-retire/                74 workflows (5 process areas)
+│   │   ├── VS-20-real-estate-construction/      32 workflows (3 process areas)
 │   │   ├── VS-21-internal-audit-risk/           48 workflows (3 process areas)
 │   │   ├── VS-22-compliance-regulatory/         57 workflows (3 process areas)
 │   │   ├── VS-23-loss-prevention/               28 workflows (3 process areas)
 │   │   ├── VS-24-health-safety-environment/     26 workflows (3 process areas)
 │   │   ├── VS-25-esg-sustainability/            31 workflows (3 process areas)
-│   │   ├── VS-26-business-continuity-insurance/ 28 workflows (3 process areas)
+│   │   ├── VS-26-business-continuity-insurance/ 30 workflows (3 process areas)
 │   │   ├── VS-27-it-operations-security/        62 workflows (3 process areas)
-│   │   ├── VS-28-data-analytics-bi/             22 workflows (3 process areas)
+│   │   ├── VS-28-data-analytics-bi/             24 workflows (3 process areas)
 │   │   ├── VS-29-master-data/                   43 workflows (3 process areas)
-│   │   ├── VS-30-innovation-digital/            25 workflows (3 process areas)
-
+│   │   ├── VS-30-innovation-digital/            29 workflows (3 process areas)
+│   │   ├── VS-31-quality-management/            22 workflows (3 process areas)
+│   │   ├── VS-32-returns-reverse-logistics/     23 workflows (3 process areas)
+│   │   ├── VS-33-strategic-planning/            23 workflows (3 process areas)
+│   │   ├── VS-34-expense-procurement/           22 workflows (3 process areas)
+│   │   ├── VS-35-fixed-asset-management/        24 workflows (3 process areas)
+│   │   ├── VS-36-corporate-governance/          23 workflows (3 process areas)
+│   │   ├── VS-37-store-opening-commissioning/   26 workflows (3 process areas)
+│   │   ├── VS-38-consumer-credit-financing/     24 workflows (3 process areas)
+│   │   ├── VS-39-vendor-rebate-incentive/       24 workflows (3 process areas)
+│   │   ├── VS-40-capex-project-accounting/      24 workflows (3 process areas)
+│   │   ├── VS-41-private-label-brand/           24 workflows (3 process areas)
+│   │   ├── VS-42-property-lease-admin/          24 workflows (3 process areas)
+│   │   ├── VS-43-trade-professional-program/    24 workflows (3 process areas)
+│   │   ├── VS-44-consumer-insights-market-research/ 24 workflows (3 process areas)
+│   │   ├── VS-45-consignment-vmi-operations/    24 workflows (3 process areas)
+│   │   ├── VS-46-government-institutional-sales/ 24 workflows (3 process areas)
+│   │   ├── VS-47-subscription-recurring-services/ 24 workflows (3 process areas)
+│   │   ├── VS-48-retail-media-network/          24 workflows (3 process areas)
+│   │   ├── VS-49-dark-store-micro-fulfillment/  24 workflows (3 process areas)
+│   │   ├── VS-50-damage-claims-management/      24 workflows (3 process areas)
+│   │   ├── VS-51-assembly-kitting-bundling/     24 workflows (3 process areas)
+│   │   ├── VS-52-cooperative-community-procurement/ 24 workflows (3 process areas)
+│   │   ├── VS-53-warranty-guarantee-management/ 24 workflows (3 process areas)
+│   │   ├── VS-54-gift-card-stored-value/        24 workflows (3 process areas)
+│   │   ├── VS-55-store-planogram-space-optimization/ 24 workflows (3 process areas)
+│   │   ├── VS-56-third-party-delivery-partner/  24 workflows (3 process areas)
+│   │   ├── VS-57-competitive-price-intelligence/ 24 workflows (3 process areas)
+│   │   ├── VS-58-coupon-digital-promotions/     24 workflows (3 process areas)
+│   │   ├── VS-59-store-closure-decommissioning/ 24 workflows (3 process areas)
+│   │   ├── VS-60-omnichannel-order-routing/     24 workflows (3 process areas)
+│   │   ├── VS-61-fuel-fleet-cost-management/    24 workflows (3 process areas)
+│   │   ├── VS-62-product-sample-display-management/ 24 workflows (3 process areas)
+│   │   ├── VS-63-store-communication-task-management/ 24 workflows (3 process areas)
+│   │   ├── VS-64-seasonal-merchandise-clearance/ 24 workflows (3 process areas)
+│   │   ├── VS-65-ecommerce-marketplace-integration/ 24 workflows (3 process areas)
+│   │   ├── VS-66-customer-project-design-services/ 24 workflows (3 process areas)
+│   │   ├── VS-67-vendor-scorecard-analytics/    24 workflows (3 process areas)
+│   │   └── VS-68-trade-credit-risk-management/  24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -105,8 +142,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 32+ categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **1,400** across 30 value streams, 94 process areas | `01-model-company/workflows/value-stream-index.md` |
-| Workflows (classified by tier) | 1,167 classified (Tier 1: 439, Tier 2: 499, Tier 3: 229) — includes 14 parent/sub-variant grouping references; 233 unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows (total) | **2,465** across 68 value streams, 208 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -130,7 +166,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (1,400 WF)    │
+   │  erp-requirements.md ←→ workflows/ (2,465 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -142,8 +178,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
    │                value-stream-index.md              │
-   │              (30 VS · 94 process areas)           │
+   │            (68 VS · 208 process areas)            │
    └───────────────────────────────────────────────────┘
 ```
-
-

@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
 > Classifies 1,167 operational workflows into operational criticality tiers.
-> An additional 233 workflows (1,400 total − 1,167 classified) remain unclassified pending review.
+> An additional 1,298 workflows (2,465 total − 1,167 classified) remain unclassified pending review.
 >
 > Back to [Workflow Index](README.md)
 
@@ -755,7 +755,7 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | Phase 3 | Innovation & Optimization (Tier 3) | 124 | 24.9% |
 | **Classified Total** | | **1,167** | — |
 | Unclassified (pending review) | Default Tier 2 (pending review) | 233 | — |
-| **Grand Total** | | **1,400** | — |
+| **Grand Total** | | **2,465** | — |
 
 ### By Domain and Phase
 
@@ -1610,4 +1610,4 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 3. **Tier 3 workflows** (226) enable optimization, AI integration, and strategic differentiation.
 4. **Cross-tier dependencies**: Some Tier 2/3 workflows reference Tier 1 workflows; the core Tier 1 workflows must be stable for Tier 2/3 to generate value.
 
-*Date: 2026-06-11 | Workflow Criticality Classification v6.0 — 1,167 classified workflow references are deduplicated across tiers (Tier 1: 439 · Tier 2: 499 · Tier 3: 229 = 1,167). An additional 233 workflows remain unclassified (1,400 total − 1,167 classified). 14 classified references are parent/summary workflows (e.g., W2, W5B, W9A) that appear as `###` sub-headings within PA files.*
+*Date: 2026-06-13 | Workflow Criticality Classification v7.0 — 1,167 classified workflow references are deduplicated across tiers (Tier 1: 439 · Tier 2: 499 · Tier 3: 229 = 1,167). An additional 1,298 workflows remain unclassified (2,465 total − 1,167 classified). 14 classified references are parent/summary workflows (e.g., W2, W5B, W9A) that appear as `###` sub-headings within PA files.*
