@@ -8,30 +8,30 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 30 Value Streams · 94 Process Areas · 1522 Workflows
+8 Families · 30 Value Streams · 94 Process Areas · 1542 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
-| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 45 |
-|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 36 |
-|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 80 |
-| | | | | **Subtotal** | **161** |
-| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 44 |
-|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 34 |
-|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 35 |
-| | | | | **Subtotal** | **113** |
-| Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
-|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 58 |
+| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 46 |
+|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 37 |
+|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 81 |
+| | | | | **Subtotal** | **164** |
+| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 45 |
+|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 35 |
+|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 36 |
+| | | | | **Subtotal** | **116** |
+| Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 145 |
+|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 59 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
-|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 62 |
-|  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 51 |
-|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 34 |
-|  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 63 |
-|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 3 | 34 |
-| | | | | **Subtotal** | **604** |
+|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 63 |
+|  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 52 |
+|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 35 |
+|  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 64 |
+|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 3 | 35 |
+| | | | | **Subtotal** | **611** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
-|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 34 |
+|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 35 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
 |  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 33 |
 | | | | | **Subtotal** | **176** |
@@ -39,19 +39,19 @@
 | | | | | **Subtotal** | **74** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 30 |
 | | | | | **Subtotal** | **30** |
-| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 47 |
+| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 48 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 57 |
-|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 27 |
+|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 28 |
 |  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 3 | 26 |
-|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 30 |
-|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 27 |
-| | | | | **Subtotal** | **214** |
-| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 61 |
+|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 31 |
+|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 28 |
+| | | | | **Subtotal** | **218** |
+| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 22 |
-|  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 42 |
+|  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 25 |
-| | | | | **Subtotal** | **150** |
-| | | | **Grand Total** | **1522** |
+| | | | | **Subtotal** | **152** |
+| | | | **Grand Total** | **1542** |
 
 ---
 
@@ -286,4 +286,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 
 ---
 
-*Total: 1,522 workflows across 30 value streams · Date: 2026-06-12*
+*Total: 1,542 workflows across 30 value streams · Date: 2026-06-12*

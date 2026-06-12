@@ -8,8 +8,8 @@
 |---|---|---|
 | [PA-04.1](PA-04.1-dc-inbound-operations.md) | DC Inbound Operations | 14 |
 | [PA-04.2](PA-04.2-dc-outbound-operations.md) | DC Outbound Operations | 10 |
-| [PA-04.3](PA-04.3-dc-operations-management.md) | DC Operations Management | 20 |
-| | **Total** | **44** | |
+| [PA-04.3](PA-04.3-dc-operations-management.md) | DC Operations Management | 21 |
+| | **Total** | **45** | |
 
 ---
 
