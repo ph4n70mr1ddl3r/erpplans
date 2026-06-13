@@ -4,6 +4,23 @@
 
 ---
 
+## 2026-06-14 — Consistency Review: Requirement-ID Dedup & Criticality Summary Fix
+
+### Fixed
+- **Removed 19 mislabeled duplicate requirement-ID rows** from `requirement-workflow-matrix.md`: each row carried a low requirement ID (e.g. `POS-071`, `GOV-045`, `FIN-045`) but the description and workflow mapping of a higher-numbered "Additional" requirement (e.g. `POS-106` Store-Level Daily Closing Procedure → `W574`). In `erp-requirements.md` those low IDs already map to *different* requirements (e.g. `POS-071` = POS Credit Card Installment Selling → `W747`), so the duplicate rows were both wrong and misleading. Verified that every canonical requirement retains its correct primary-workflow mapping (0 unmapped requirements; 0 orphan references).
+- **Corrected the `requirement-workflow-matrix.md` Coverage Validation block** — previous counts (730 / 429 / 295 / 6) did not match `erp-requirements.md`. Now reads **733 / 431 / 296 / 6** and references the full 2,700-workflow / 78-value-stream scope.
+- **Reconciled the tier totals in `workflow-criticality-classification.md`** — the `## Summary` table now reflects the "Additions" sections (Tier 1: 155+284=**439** · Tier 2: 206+293=**499** · Tier 3: 125+104=**229** = 1,167 classified; 1,533 unclassified; grand total **2,700**) and the per-subsection headings were updated to match (e.g. Core POS 21→23, Core HR 8→6, Extended Ecommerce 4→2, Extended Finance 22→21, Internal Audit 15→42, Advanced Master Data 3→7).
+- **Removed a stale, contradictory `## Updated Summary` + `### Operational Tier Guidance` block** at the end of `workflow-criticality-classification.md`. It reported a Tier 3 total of **226** (correct: 229), **0 unclassified** (correct: 1,533), and a grand total of **1,167** (correct: 2,700), directly contradicting the canonical `## Summary`. The authoritative summary above is unchanged.
+- **Replaced the per-domain breakdown table** in `workflow-criticality-classification.md` with a note pointing at the per-tier subsection headings and `value-stream-index.md`, since the table's partial counts could not be reconciled with the tier totals.
+
+### Verified ✓
+- `07-methodology/validate-repo.sh` passes with 0 errors (1 informational warning).
+- Grand total: **2,700** workflows; 1,167 classified (439/499/229) + 1,533 unclassified.
+- Requirements: **733** (431 Must / 296 Should / 6 Nice); all mapped to workflows; 0 duplicate IDs.
+- 0 genuinely broken intra-repo markdown links.
+
+---
+
 ## 2026-06-13 — Consistency Review: Deduplicate Workflow IDs & Reconcile Counts
 
 ### Fixed

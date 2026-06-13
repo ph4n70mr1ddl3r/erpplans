@@ -482,15 +482,11 @@
 | HR-020 | Seasonal & Temporary Staffing Process | S | W555 (Seasonal staffing -- DOLE 174 classification, abbreviated recruitment 1-round interview, pre-employment registration/re-activation, 1-day onboarding, payroll setup, mid-season check, abbreviated offboarding, returning worker database) | HR-001 (payroll -- seasonal setup), HR-009 (recruitment -- abbreviated process), HR-005 (attendance -- biometric enrollment), W15 (onboarding -- base process), W34 (scheduling -- seasonal shifts), W43 (separation -- abbreviated offboarding), W10 (payroll -- seasonal run), W172 (PPE -- seasonal issuance) |
 | HR-021 | Employee Attendance Exception Management | M | W561 (Attendance exceptions -- daily exception report, severity prioritization, biometric failure manual entry, late deduction auto-calc, unfiled absence classification, undertime deduction, missing punch self-service, unauthorized overtime verification, mass exception blanket directive, payroll update) | HR-005 (time & attendance -- biometric source), HR-010 (overtime -- exception verification), HR-011 (holiday pay -- holiday exception), W10 (payroll -- corrected data), W34 (scheduling -- schedule source), W48 (helpdesk -- biometric repair) |
 | HR-022 | Employee Cross-Training & Skill Matrix Management | S | W567 (Cross-training & skill matrix -- multi-department competency matrix, initial assessment, gap analysis, quarterly training plan, shadow sessions, practical assessment, skill matrix update, cross-coverage heatmap, scheduling integration, quarterly re-assessment, succession pipeline) | W51 (training -- delivery), W72 (performance -- performance feed), W34 (scheduling -- cross-trained scheduling), W178 (succession -- pipeline feed), W179 (management trainee -- candidate identification) |
-| CRM-017 | Customer Complaint Root Cause Analysis & Systemic Improvement | S | W507 (Complaint root cause analysis — monthly pattern detection, systemic issue threshold alerting, cross-departmental corrective action assignment, 60-day effectiveness monitoring, quarterly complaint-to-improvement reporting) | W41 (complaint resolution — complaint data source), W87 (feedback-to-action — feedback data source), W110 (supplier CAPA — vendor-attributed issues), W67 (store performance — store-attributed issues), W40 (price changes — pricing error correction), W4 (replenishment — stock availability issues) |
-| CRM-018 | Customer Account Maintenance & B2B Information Update | S | W508 (Customer account maintenance — update request intake, document verification, change type classification, customer master update with audit trail, downstream propagation, annual re-verification of 5,200 B2B accounts) | W24 (credit application — credit-related changes), W460 (corporate/trade onboarding — initial account setup), W253 (customer master governance — master data update), W328 (credit limit review — credit-related trigger), W293 (tax master — VAT registration update), W112 (trade counter — update request intake) |
 | CRM-019 | Customer Account Dormancy Identification & Deactivation | S | W560 (Account dormancy -- monthly scan, 3-tier classification, automated re-engagement for Early, data quality review for Extended, quarterly deactivation batch, B2B credit zero, loyalty points freeze, quarterly analytics) | CRM-002 (customer master -- data update), CRM-003 (trade account -- B2B deactivation), CRM-008 (credit application -- credit limit zero), W84 (reactivation -- reactivation path), W24 (credit -- status review), W156 (CDP -- data quality), W328 (credit review -- B2B partner), W108 (collection -- balance escalation), W253 (customer master -- status update) |
 | CRM-020 | Mystery Shopping Program & CX Compliance Audit | S | W566 (Mystery shopping -- 400-600 visits/month, 4-category evaluation with weights, 4 shopper profiles, mobile app evaluation, agency quality review, < 70% remediation, Regional Manager integration, quarterly review, annual ROI correlation) | CRM-011 (feedback-to-action -- feedback data), W65 (CSAT/NPS -- correlation), W67 (store performance -- integration), W522 (cashier audit -- cashier data), W86 (planogram -- standards data), W503 (pest control -- cleanliness), W170 (SC/PWD discount -- compliance test), W518 (cashier training -- need identification) |
 | CRM-021 | Loyalty Points Expiry Management & Annual Liability Cleanup | S | W570 (Points expiry -- T-60 config, T-30 notification sequence, recovery campaign, CS briefing, batch execution, PFRS 15 journal entry, post-expiry notification, re-enrollment incentive, reconciliation, quarterly adjustment, annual audit report) | CRM-001 (loyalty engine -- execution), FIN-039 (revenue recognition -- accounting), W104 (loyalty governance -- liability review), W313 (loyalty rule master -- config), W551 (enrollment -- re-enrollment), W550 (points as tender -- redemption data), W253 (customer master -- member data), W351 (external audit -- audit data) |
 | GOV-043 | Store-Level First Aid & Medical Emergency Response | M | W501 (Store first aid — medical emergency response protocol, certified first aider roster, first aid kit inventory and quarterly audit, AED placement and maintenance, incident logging, monthly trend analysis) | W140 (OHS incidents — medical incident interface), W330 (emergency response — emergency coordination), W285 (public liability — customer injury claims), W436 (DOLE OHS reporting — first aid incident data), W51 (training — first aider certification), W136 (indirect procurement — kit restocking) |
 | GOV-044 | Store-Level Non-Hazardous Waste Management | S | W502 (Non-hazardous waste — waste stream segregation, cardboard baling and recycling revenue, hauler vendor management, monthly volume tracking, quarterly vendor review, annual waste reduction targets) | W167 (recycling program — recycling stream integration), W82 (hazardous waste — separate hazmat stream), W193 (circular economy — waste diversion reporting), W192 (GHG tracking — waste-related emissions), W62B (vendor onboarding — waste hauler vendor), W489 (store budget — waste cost allocation) |
-| GOV-045 | Store-Level Pest Control & Sanitation Management | S | W503 (Pest control — monthly vendor service visits, zone-by-zone findings, pest incident emergency response, monthly sanitation self-audit, quarterly deep treatment, annual vendor review) | W448 (LGU sanitary permit — compliance integration), W436 (DOLE OHS reporting — sanitation data), W237 (hazmat handling — chemical MSDS tracking), W47 (facility maintenance — pest-related maintenance), W242 (3PL performance — pest control vendor review) |
-| GOV-046 | Store-Level Digital Signage & Content Management | S | W504 (Digital signage — content scheduling, zone-based targeting, automated content validation, remote distribution, playback compliance monitoring, ad-hoc request workflow) | W262 (promotional setup — promotional content source), W190 (creative production — content production), W83 (campaign planning — campaign content schedule), W265 (POS hardware — screen maintenance), W289 (pricing master — promotional pricing validation) |
 | GOV-047 | DOLE Labor Inspection Response Protocol | M | W505 (DOLE inspection — inspection type classification, response team assembly, document preparation, inspection attendance, findings documentation, corrective action plan, re-inspection preparation, annual inspection history) | W10 (payroll — payroll records for inspection), W251 (statutory benefits — remittance records), W436 (DOLE OHS reporting — safety committee documentation), W140 (OHS incidents — incident records), W34 (shift scheduling — working hours records), W512 (safety committee — committee minutes), W186 (SOP governance — policy documentation) |
 | GOV-048 | Unified Regulatory Compliance Calendar & Dashboard | M | W506 (Unified compliance calendar — multi-body obligation tracking, automated deadline alerting, per-entity/per-location status dashboard, proof-of-submission attachment, weekly compliance review, monthly status report, quarterly risk review, annual compliance report) | W54 (LGU permits — business permit obligations), W54A (CAS registration — BIR CAS obligations), W77 (BIR audit — tax audit obligations), W90 (tax filing — monthly BIR filings), W260 (eFPS — electronic filing), W433 (DENR SMR/CMR — environmental obligations), W436 (DOLE OHS — labor compliance), W476 (FSIC — fire safety), W477 (DENR PTO — air/water permits), W479 (FDA LTO — household hazardous substances), W480 (CAAP — height clearance), W481 (SEC filings — reportorial requirements), W485 (BIR branch registration — registration obligations) |
 | MER-003 | Loyalty Tier Re-evaluation & Migration Processing | S | W515 (Loyalty tier re-evaluation — quarterly batch 12-month rolling spend calculation, borderline case grace period, deferred revenue adjustment, upgrade/downgrade notifications, member profile update, migration analytics, annual threshold review) | W17 (loyalty operations — tier status consumer), W104 (loyalty financial governance — liability impact), W313 (loyalty rule master — tier threshold configuration), W5B (POS — tier recognition at checkout), W156 (CDP — tier-based segmentation), W253 (customer master — tier status on profile), W263 (enrollment — new member initial tier) |
@@ -520,9 +516,6 @@
 | WHL-001 | DC Daily Operations & Shift Management | S | W584 (DC daily operations & shift management -- night-before operations plan, shift start-up briefing, labor allocation against daily volume forecast, mid-morning pace check, exception handling, shift handover log, night shift operations, end-of-day KPI snapshot, DC Manager daily review, weekly operations review) | W3 (receiving -- throughput data), W106 (dispatch -- loading data), W585 (dock scheduling -- appointment data), W586 (KPI dashboard -- performance feed), W6 (cycle counting -- night shift data), W188 (fleet maintenance -- equipment availability), W52 (fleet -- carrier performance), W57 (promotions -- pre-positioning priority) |
 | WHL-002 | DC Dock Scheduling & Appointment Management | M | W585 (DC dock scheduling & appointment management -- appointment request intake, dock door assignment with capability matching, time slot allocation, carrier/vendor notification, day-of gate check-in, real-time dock door utilization tracking, no-show management with vendor scorecard feed, appointment compliance reporting, monthly dock capacity planning) | W3 (receiving -- appointment feeds gate check), W3C (inbound scheduling -- extended appointment management), W106 (dispatch -- outbound dock slots), W52 (fleet -- carrier notification), W44 (vendor scorecard -- appointment compliance), W242 (3PL review -- carrier compliance), W584 (daily operations -- pace check dashboard), W586 (KPI dashboard -- dock utilization KPI) |
 | WHL-003 | DC Daily KPI Dashboard & Performance Tracking | M | W586 (DC daily KPI dashboard & performance tracking -- automated overnight KPI calculation across 6 categories and ~20 KPIs per DC, morning dashboard generation with green/amber/red scorecard, DC Manager morning review, exception flagging with configurable rules, corrective action assignment with lifecycle tracking, VP Supply Chain multi-DC dashboard review, weekly trend analysis, monthly executive DC performance report) | W584 (daily operations -- shift log data), W3 (receiving -- throughput, accuracy, quality KPIs), W106 (dispatch -- departure rate, utilization, delivery on-time), W585 (dock scheduling -- dock utilization), W4 (picking -- productivity, accuracy), W6 (cycle counting -- count accuracy), W44 (vendor scorecard -- quality cross-reference), W52 (fleet -- truck utilization, delivery performance), W242 (3PL review -- carrier performance), W21 (capex -- capacity recommendations) |
-| POS-071 | Store-Level Daily Closing Procedure | Must Have | W574 | W5, W517, W541, W272, W71 |
-| POS-072 | Store-Level Weekly Sales & Operations Review | Should Have | W575 | W67, W522, W35, W562 |
-| POS-073 | Store-Level Typhoon & Severe Weather Preparedness | Must Have | W576 | W330, W49, W428, W111, W580 |
 | POS-074 | Store-Level Daily Huddle | M | W739 (daily huddle — team briefing, performance flash, priorities, safety minute, policy updates, staffing confirmation) | W665 (KPI dashboard — performance data), W34 (scheduling — attendance verification), W13 (promotions — active promos), W571 (communication — memos) |
 | POS-075 | Store-Level On-the-Spot Complaint Resolution | M | W740 (on-the-spot resolution — authority matrix, floor-level resolution, logging, pattern flagging) | W41 (complaint resolution — escalation path), W507 (root cause analysis — pattern data), W608 (CX pulse — satisfaction data), W5B (POS — price adjustment) |
 | POS-076 | Store-Level Fuel & Generator Management | S | W741 (fuel inventory — daily level check, reorder, generator testing, PM scheduling, outage event logging) | W470 (brownout protocol — outage event), W47 (maintenance — PM work orders), W489 (store budget — fuel expense) |
@@ -531,27 +524,22 @@
 | POS-079 | Store-Level Special Order Follow-Up | S | W744 (special order follow-up — daily review, status check, customer notification, received item inspection, overdue escalation) | W545 (special order — order creation), W250 (control tower — shipment tracking), W109 (store receiving — arrival trigger), W5D/W438 (delivery/carry-out) |
 | POS-080 | Store-Level Receiving Dock Scheduling | M | W745 (dock scheduling — schedule compilation, time slot allocation, vendor notification, congestion management, no-show tracking) | W18B (DSD scheduling — vendor appointment feed), W4 (replenishment — DC delivery window), W44 (vendor scorecard — no-show data), W723 (loading bay — outbound coordination) |
 | POS-081 | Store-Level Building Material Sample Management | S | W746 (sample management — library maintenance, customer assistance, sample checkout, quantity calculation, replenishment, seasonal rotation) | W50 (PIM — product specs), W542 (quotation — quantity calculation), W1 (assortment — sample performance), W314 (planogram — display position), W17 (loyalty — checkout tracking) |
-| WMS-009 | DC Daily Operations & Shift Management | Must Have | W584 | W3, W106, W585, W586 |
-| WMS-010 | DC Dock Scheduling & Appointment Management | Must Have | W585 | W3, W106, W52, W242 |
-| WMS-011 | DC Daily KPI Dashboard & Performance Tracking | Should Have | W586 | W584, W3, W106, W44 |
-| INV-023 | Inventory Obsolescence Identification & Write-Off Management | Must Have | W587 | W220, W93, W88, W91, W42, W92 |
-| INV-024 | Seasonal Inventory Build-Down & Transition Execution | Should Have | W588 | W32, W93, W220, W262, W554, W583 |
-| FIN-045 | Weekly Cash Flow Forecast & Treasury Planning | Should Have | W589 | W30, W89, W99, W14, W10, W232, W80 |
-| FIN-046 | Monthly Tax Provision & Compliance Review | Must Have | W590 | W90, W260, W407, W473, W475, W499, W9 |
-| ECOM-023 | E-Commerce Fulfillment SLA Monitoring & Exception Escalation | Must Have | W591 | W11, W19, W19B, W98, W246, W268 |
-| ECOM-024 | E-Commerce Customer Delivery Tracking & Proof of Delivery Management | Must Have | W592 | W19, W268, W12, W98, W509 |
-| PUR-027 | Vendor Portal Content Management & Self-Service Operations | Should Have | W593 | W36, W7, W100, W287, W44 |
-| HR-023 | Store-Level Employee Daily Attendance Verification & Exception Processing | Should Have | W594 | W34, W10, W561 |
-| NFR-030 | ERP System Daily Health Check & Integration Monitoring | Must Have | W595 | W48, W55, W257, W380, W525, W382 |
-| SCP-010 | Store-Level Replenishment Exception Management & Auto-Override | Should Have | W596 | W4, W22, W57, W31, W105, W214 |
-| CRM-022 | Customer Complaint Escalation Matrix & Resolution SLA Tracking | Must Have | W597 | W41, W469, W258, W259, W507, W65 |
-| WSL-003 | Wholesale Pricing & Quotation Management | Should Have | W598 | W145, W58, W163, W78, W85 |
-| WSL-004 | Wholesale Returns, Credit & Adjustment Processing | Should Have | W599 | W12, W146, W70, W88, W145 |
-| SRV-003 | Service Contractor Accreditation & Onboarding Management | Must Have | W600 | W138, W213, W33, W544, W187 |
+| WMS-009 | DC Daily Operations & Shift Management | M | W584 | W3, W106, W585, W586 |
+| WMS-010 | DC Dock Scheduling & Appointment Management | M | W585 | W3, W106, W52, W242 |
+| WMS-011 | DC Daily KPI Dashboard & Performance Tracking | S | W586 | W584, W3, W106, W44 |
+| INV-023 | Inventory Obsolescence Identification & Write-Off Management | M | W587 | W220, W93, W88, W91, W42, W92 |
+| INV-024 | Seasonal Inventory Build-Down & Transition Execution | S | W588 | W32, W93, W220, W262, W554, W583 |
+| ECOM-023 | E-Commerce Fulfillment SLA Monitoring & Exception Escalation | M | W591 | W11, W19, W19B, W98, W246, W268 |
+| ECOM-024 | E-Commerce Customer Delivery Tracking & Proof of Delivery Management | M | W592 | W19, W268, W12, W98, W509 |
+| PUR-027 | Vendor Portal Content Management & Self-Service Operations | S | W593 | W36, W7, W100, W287, W44 |
+| NFR-030 | ERP System Daily Health Check & Integration Monitoring | M | W595 | W48, W55, W257, W380, W525, W382 |
+| SCP-010 | Store-Level Replenishment Exception Management & Auto-Override | S | W596 | W4, W22, W57, W31, W105, W214 |
+| CRM-022 | Customer Complaint Escalation Matrix & Resolution SLA Tracking | M | W597 | W41, W469, W258, W259, W507, W65 |
+| WSL-003 | Wholesale Pricing & Quotation Management | S | W598 | W145, W58, W163, W78, W85 |
+| WSL-004 | Wholesale Returns, Credit & Adjustment Processing | S | W599 | W12, W146, W70, W88, W145 |
+| SRV-003 | Service Contractor Accreditation & Onboarding Management | M | W600 | W138, W213, W33, W544, W187 |
 
 
-| HR-024 | Store-Level Daily HR Operations & People Management | M | W601 | W34, W10, W511, W561, HR-005, HR-007 |
-| HR-025 | Store-Level Labor Cost Monitoring & Overtime Budget Control | S | W602 | W489, W10, HR-010, HR-011 |
 | HR-026 | Store-Level Employee Disciplinary Process & DOLE Due Process Compliance | M | W603 | W10, HR-014, GOV-040, W292 |
 | HR-027 | Store-Level New Employee Buddy System & First-Week Onboarding | S | W609 | W15, W51, W567, W292 |
 | HR-028 | Employee Exit Interview & Attrition Analysis | S | W628 | HR-008, W43, W10 |
@@ -562,7 +550,6 @@
 | GOV-052 | Store-Level Water & Utility Conservation Operations | S | W606 | GOV-019, GOV-042, FIN-040 |
 | GOV-053 | Store-Level Product Demo & Trial Station Daily Operations | S | W607 | SRV-001, POS-033, GOV-028 |
 | GOV-054 | Store-Level Customer Feedback Collection & CX Pulse Monitoring | S | W608 | CRM-011, CRM-020, GOV-050 |
-| FIN-047 | Insurance Claims Processing & Recovery Management | M | W610 | FIN-023, GOV-012, GOV-033 |
 | FIN-048 | Payment Gateway Daily Operations & Settlement Monitoring | M | W611 | POS-049, POS-013, FIN-032 |
 | FIN-049 | Intercompany Rate Setting & Quarterly Transfer Pricing Review | M | W612 | FIN-002, IC-002, FIN-038 |
 | FIN-050 | Store-Level Weekly Payroll Accrual & Labor Cost Flash Report | S | W613 | HR-001, FIN-012, FIN-040 |
@@ -576,7 +563,6 @@
 | PUR-029 | VMI Daily Performance Monitoring | S | W621 | PUR-014, INV-018 |
 | SCP-011 | Mock Product Recall Exercise & Recall Readiness Testing | M | W622 | INV-016, PUR-017 |
 | SCP-012 | Cross-Functional New Store Opening Readiness Review | M | W623 | GOV-005, POS-001, GOV-048 |
-| MER-004 | Competitor Store Visit Program & Market Intelligence Operations | S | W624 | MDM-030, MER-003 |
 | MER-005 | Product Quality Lab Testing & Certification Management | M | W625 | PUR-016, PUR-017, GOV-034, GOV-036 |
 | COM-003 | Enterprise Risk Register Maintenance & Quarterly Risk Review | M | W626 | GOV-002, COM-001, GOV-013 |
 | COM-004 | Product Recall Effectiveness Verification & Post-Recall Review | M | W627 | INV-016, PUR-017, SCP-011 |
@@ -614,7 +600,6 @@
 | FIN-059 | AP Aging Management & Vendor Payment Prioritization | M | W662 | W7, W556, W30, W589, W324, W244 |
 | FIN-060 | Customer Credit Portfolio Periodic Review & Collection Strategy | M | W663 | W328, W108, W81, W572, W24 |
 | FIN-061 | Cash Flow Variance Analysis & Liquidity Stress Testing | M | W664 | W589, W89, W30, W319, W327 |
-| POS-081 | Store-Level KPI Dashboard & Daily Performance Monitoring | M | W665 | W67, W522, W34, W526, W586 |
 | POS-082 | Store-Level Inventory Receiving Quality Control | M | W666 | W109, W3, W22B, PUR-016 |
 | POS-083 | Store-Level Price Verification & Daily Compliance Operations | M | W667 | W69, W181, W553, POS-024 |
 | POS-084 | Store-Level Home Delivery & Third-Party Logistics Coordination | S | W668 | W548, W19, W242, W237 |
@@ -629,7 +614,6 @@
 | MKT-004 | Marketing Budget Management & Spend Analytics | S | W677 | W83, W26, W565 |
 | MER-006 | Multi-Channel Pricing Consistency Monitoring & Governance | M | W678 | W289, W533, POS-024, W180 |
 | MER-007 | Assortment Optimization & Rationalization Review | S | W679 | W1, W68, W624, W563, W252, W314 |
-| SCP-013 | Supply Chain Cost Analysis & Logistics Optimization Review | S | W680 | W85, W277, W242, W196, W584 |
 | WMS-017 | DC Quality Control & Vendor Compliance Inspection at Receiving | M | W681 | W110, W219, W447, W44, PUR-016 |
 | HR-038 | Employee Career Development & Internal Job Posting Operations | S | W682 | W178, W511, W72, W292 |
 | HR-039 | Employee Competency Assessment & Certification Management | M | W683 | W51, W567, W655, W292 |
@@ -638,9 +622,6 @@
 | DOC-009 | Document Approval Routing & Digital Signature Management | M | W686 | W255, W256, W243, W359, W442 |
 | DOC-010 | Document Template Management & Version Control | M | W687 | W255, W256, W686 |
 | DOC-011 | Contract & Agreement Lifecycle Management | M | W688 | W62, W124, W243, W620, W669, W635, W686, W687, W508 |
-| INV-010 | AI/ML Model Governance, Bias Audit & Ethical Review | M | W689 | W200, W201, W203, W208, W618, W647, W359 |
-| INV-011 | Digital Transformation Initiative Portfolio Management | S | W690 | W200, W201, W202, W203, W208, W596, W677 |
-| INV-012 | Emerging Technology Scouting & Proof-of-Concept Evaluation | S | W691 | W690, W624, W36, W677 |
 | ESG-006 | Store Energy Efficiency Monitoring & Utility Cost Optimization | M | W692 | W192, W193, W7, W173, W188, W184, W26, W694 |
 | ESG-007 | Water Consumption Tracking & Conservation Management | S | W693 | W192, W7, W188, W477, W506, W193, W694 |
 | ESG-008 | ESG Data Collection, Validation & Annual Sustainability Report Preparation | M | W694 | W192, W193, W194, W195, W443, W15, W51, W140, W629, W656, W124, W647, W359, W692, W693 |
@@ -726,8 +707,8 @@
 | CRM-039 | Customer Loyalty Account Deceased Member Processing & Points Estate Transfer | S | W933 | — |
 | CRM-040 | Customer B2B Self-Service Portal Order Management & Account Access | S | W936 | — |
 | CRM-041 | Customer Loyalty Family/Household Account Linking & Shared Benefits Management | S | W942 | W515 |
-| CRM-042 | Customer Complaint Root Cause Analysis & Systemic Improvement | S | W507 | W110 |
-| CRM-043 | Customer Account Maintenance & B2B Information Update | S | W508 | W253, W328 |
+| CRM-042 | Customer Complaint Root Cause Analysis & Systemic Improvement | S | W507 (Complaint root cause analysis — monthly pattern detection, systemic issue threshold alerting, cross-departmental corrective action assignment, 60-day effectiveness monitoring, quarterly complaint-to-improvement reporting) | W41, W87, W110, W67, W40, W4 |
+| CRM-043 | Customer Account Maintenance & B2B Information Update | S | W508 (Customer account maintenance — update request intake, document verification, change type classification, customer master update with audit trail, downstream propagation, annual re-verification of 5,200 B2B accounts) | W24, W460, W253, W328, W293, W112 |
 | CRM-044 | Customer Price Protection & Price Adjustment Policy Processing | M | W928 | — |
 
 ## Additional Ecommerce Requirements (ECOM)
@@ -776,17 +757,17 @@
 | FIN-073 | Customer Credit Field Collection Operations & Legal Escalation | M | W812 | W196, W280 |
 | FIN-074 | AP Vendor Invoice Duplicate Detection & Resolution | M | W813 | W244, W705 |
 | FIN-075 | Credit Card Settlement Exception & Chargeback Recovery Processing | M | W814 | — |
-| FIN-076 | Weekly Cash Flow Forecast & Treasury Planning | S | W589 | W10, W14, W144, W232, W30, W318, W319, W556 |
-| FIN-077 | Monthly Tax Provision & Compliance Review | M | W590 | W260, W407, W473, W475, W499, W9, W90 |
-| FIN-078 | Insurance Claims Processing & Recovery Management | M | W610 | — |
+| FIN-076 | Weekly Cash Flow Forecast & Treasury Planning | S | W589 | W10, W14, W30, W80, W89, W99, W144, W232, W318, W319, W556 |
+| FIN-077 | Monthly Tax Provision & Compliance Review | M | W590 | W9, W90, W260, W407, W473, W475, W499 |
+| FIN-078 | Insurance Claims Processing & Recovery Management | M | W610 | FIN-023, GOV-012, GOV-033 |
 | FIN-079 | Customer Store Credit Expiration Management & Unclaimed Credit Processing | M | W939 | — |
 
 ## Additional Governance Requirements (GOV)
 
 | Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
 |---|---|---|---|---|
-| GOV-055 | Store-Level Pest Control & Sanitation Management | S | W503 | W448 |
-| GOV-056 | Store-Level Digital Signage & Content Management | S | W504 | W190, W262 |
+| GOV-055 | Store-Level Pest Control & Sanitation Management | S | W503 (Pest control — monthly vendor service visits, zone-by-zone findings, pest incident emergency response, monthly sanitation self-audit, quarterly deep treatment, annual vendor review) | W448, W436, W237, W47, W242 |
+| GOV-056 | Store-Level Digital Signage & Content Management | S | W504 (Digital signage — content scheduling, zone-based targeting, automated content validation, remote distribution, playback compliance monitoring, ad-hoc request workflow) | W190, W262, W83, W265, W289 |
 
 ## Additional Hazardous Materials Requirements (HAZ)
 
@@ -810,9 +791,9 @@
 | HR-049 | Employee Business Travel Request, Approval & Expense Management | M | W815 | W74 |
 | HR-050 | Multi-Entity Payroll Consolidation & Cross-Entity Reconciliation | M | W816 | W10, W235, W251, W638, W752 |
 | HR-051 | Employee Sabbatical, Study Leave & Secondment Management | S | W817 | W34, W511, W603, W72 |
-| HR-052 | Store-Level Employee Daily Attendance Verification & Exception Processing | S | W594 | W10, W34 |
-| HR-053 | Store-Level Daily HR Operations & People Management | M | W601 | — |
-| HR-054 | Store-Level Labor Cost Monitoring & Overtime Budget Control | S | W602 | — |
+| HR-052 | Store-Level Employee Daily Attendance Verification & Exception Processing | S | W594 | W10, W34, W561 |
+| HR-053 | Store-Level Daily HR Operations & People Management | M | W601 | W34, W10, W511, W561, HR-005, HR-007 |
+| HR-054 | Store-Level Labor Cost Monitoring & Overtime Budget Control | S | W602 | W489, W10, HR-010, HR-011 |
 
 ## Additional Health & Safety Requirements (HSE)
 
@@ -839,9 +820,9 @@
 
 | Req ID | Requirement | Priority | Primary Workflows | Supporting Workflows |
 |---|---|---|---|---|
-| INV-025 | AI/ML Model Governance, Bias Audit & Ethical Review | M | W689 | — |
-| INV-026 | Digital Transformation Initiative Portfolio Management | S | W690 | — |
-| INV-027 | Emerging Technology Scouting & Proof-of-Concept Evaluation | S | W691 | — |
+| INV-025 | AI/ML Model Governance, Bias Audit & Ethical Review | M | W689 | W200, W201, W203, W208, W618, W647, W359 |
+| INV-026 | Digital Transformation Initiative Portfolio Management | S | W690 | W200, W201, W202, W203, W208, W596, W677 |
+| INV-027 | Emerging Technology Scouting & Proof-of-Concept Evaluation | S | W691 | W36, W624, W677, W690 |
 
 ## Additional Logistics Requirements (LOG)
 
@@ -871,7 +852,7 @@
 | MER-008 | Markdown Optimization & Analytics Operations | S | W737 | W161 |
 | MER-009 | Vendor Trade Fund Management & Promotional Budget Tracking | S | W738 | W155, W27, W513 |
 | MER-010 | Product Phase-Out Inventory Disposition Planning & Execution | M | W830 | W180, W2, W312, W315, W443, W444, W62, W636 |
-| MER-011 | Competitor Store Visit Program & Market Intelligence Operations | S | W624 | — |
+| MER-011 | Competitor Store Visit Program & Market Intelligence Operations | S | W624 | MDM-030, MER-003 |
 
 ## Additional Marketing Requirements (MKT)
 
@@ -915,9 +896,9 @@
 | POS-103 | Store-Level Bulky Item Delivery Proof Collection & Documentation | M | W825 | W255, W438, W487, W5, W541 |
 | POS-104 | Store-Level Layaway Payment Reminder & Forfeiture Processing | M | W826 | W28, W708 |
 | POS-105 | Store-Level Building Material Load Calculation & Safety Advisory | S | W827 | W148 |
-| POS-106 | Store-Level Daily Closing Procedure | M | W574 | W272, W5, W517, W541 |
-| POS-107 | Store-Level Weekly Sales & Operations Review | S | W575 | W35, W522, W67 |
-| POS-108 | Store-Level Typhoon & Severe Weather Preparedness | M | W576 | — |
+| POS-106 | Store-Level Daily Closing Procedure | M | W574 | W5, W71, W272, W517, W541 |
+| POS-107 | Store-Level Weekly Sales & Operations Review | S | W575 | W35, W67, W522, W562 |
+| POS-108 | Store-Level Typhoon & Severe Weather Preparedness | M | W576 | W49, W111, W330, W428, W580 |
 | POS-109 | Store-Level Holiday Season (Ber Months) Operational Ramp-Up | S | W577 | W13, W262, W555 |
 | POS-110 | Store-Level Payday Weekend & Peak Day Operational Readiness | S | W578 | W206, W212, W278, W34, W547 |
 | POS-111 | Store-Level Daily Equipment & Specialized Fixture Safety Check | M | W579 | W139, W168, W169, W47 |
@@ -925,7 +906,7 @@
 | POS-113 | Store-Level Vendor Representative Access & Activity Management | S | W581 | W269, W449, W71 |
 | POS-114 | Store-Level Fire Drill Execution & Documentation | S | W582 | W141, W330, W476 |
 | POS-115 | Store-Level Seasonal Promotional Transition & Display Reset | S | W583 | W13, W181, W262, W523, W554, W63, W86 |
-| POS-116 | Store-Level KPI Dashboard & Daily Performance Monitoring | M | W665 | — |
+| POS-116 | Store-Level KPI Dashboard & Daily Performance Monitoring | M | W665 | W34, W67, W522, W526, W586 |
 | POS-117 | Store-Level Lost & Found Item Management | S | W929 | — |
 | POS-118 | Store-Level Customer Comfort Room & Amenity Daily Operations | M | W931 | W47 |
 | POS-119 | Customer Product Registration at POS for Vendor Extended Warranty | S | W935 | W911 |
@@ -980,7 +961,7 @@
 | SCP-016 | Supply Chain Disruption Rapid Response & Escalation Protocol | M | W729 | W60, W670 |
 | SCP-017 | DC-to-Store Delivery Route Optimization & Multi-Stop Planning | M | W786 | W199, W431 |
 | SCP-018 | Store-Level Replenishment Forecast Accuracy Review & Parameter Tuning | M | W835 | W312 |
-| SCP-019 | Supply Chain Cost Analysis & Logistics Optimization Review | S | W680 | — |
+| SCP-019 | Supply Chain Cost Analysis & Logistics Optimization Review | S | W680 | W85, W196, W242, W277, W584 |
 | SCP-020 | Carrier & Freight Forwarder Daily Performance Monitoring | M | W727 | W304, W500 |
 
 ## Additional Service Requirements (SRV)
@@ -1025,13 +1006,13 @@
 
 ## Coverage Validation
 
-- **Total requirements**: 730 across 37+ categories (R1–R32)
+- **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: 900+ (all workflows across 30 value streams)
-- **Must Have requirements**: 429 (any scored 0 is a disqualifier)
-- **Should Have requirements**: 295
+- **Total workflows referenced**: spans the full 2,700 workflows across 78 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Must Have requirements**: 431 (any scored 0 is a disqualifier)
+- **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-09 (v47 — backfilled 199 previously unmapped requirements from gap analysis rounds 13–21, adding new sections R25 (BCP), R27 (INS), R28 (VPP), R29 (RCL), R30 (BIA), R31 (CCR), and additional rows across FIN, INV, PUR, WMS, POS, ECOM, SCP, HR, CRM, NFR, SRV, WSL, GOV, COM, ENG, ESG, HAZ, HSE, LOG, LP, MER, MKT, MNT, PRJ, PROP, REG categories; total requirements now 730 with full workflow traceability)*
+*Date: 2026-06-13 (v48 — consistency review: corrected Coverage Validation counts to 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories and 2,700 workflows / 78 value streams; removed 19 duplicate requirement-ID rows whose mappings were merged into their canonical ID rows; total requirements reconciled with erp-requirements.md)*

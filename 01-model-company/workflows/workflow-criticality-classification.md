@@ -17,8 +17,8 @@
 
 ### Classification Rules
 
-1. **Must Have requirements** (429) are overwhelmingly Tier 1, with exceptions for requirements that only apply at scale (e.g., across all 200 stores rather than pilot 5)
-2. **Should Have requirements** (295) are split between Tier 1 (operational necessities) and Tier 2
+1. **Must Have requirements** (431) are overwhelmingly Tier 1, with exceptions for requirements that only apply at scale (e.g., across all 200 stores rather than pilot 5)
+2. **Should Have requirements** (296) are split between Tier 1 (operational necessities) and Tier 2
 3. **Nice to Have requirements** (6) are Tier 3
 4. Domain-specific workflows (governance, audit, ESG, innovation) are classified by their operational impact
 5. Master data governance workflows are classified by dependency — foundational masters (item, customer, vendor, location) are Tier 1; advanced masters (planogram, loyalty config, digital assets) are Tier 2
@@ -29,7 +29,7 @@
 
 ## Tier 1: Core Operations (439 Workflows)
 
-These 153 workflows are foundational to daily store and supply chain operations.
+These 439 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
 
 ### Core Finance (31 workflows)
@@ -51,7 +51,6 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W59 | Insurance Policy Lifecycle | Risk mitigation |
 | W74 | Employee Expense Reimbursement | Expense processing |
 | W76 | Employee Loans & Advances | Loan management |
-| W251 | Philippine Statutory Benefits & Claims Administration | SSS, PhilHealth, Pag-IBIG |
 | W89 | Bank Reconciliation | Daily/weekly bank matching |
 | W90 | Monthly Tax Filing & Statutory Remittance | BIR compliance |
 | W94 | Customer Deposit & Advance Payment Management | Deposit tracking |
@@ -118,7 +117,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W188 | Fleet Spare Parts & Preventive Maintenance | Fleet readiness |
 | W270 | Pallet & Returnable Transport Packaging (RTP) Tracking | Pallet management |
 
-### Core POS & Store Operations (21 workflows)
+### Core POS & Store Operations (23 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -164,7 +163,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W246 | Drop-Ship Vendor (DSV) Order Fulfillment | Drop-ship orders |
 | W247 | BOPIS Smart Locker & Queue Management | Smart locker pickup |
 
-### Core HR & Payroll (8 workflows)
+### Core HR & Payroll (6 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -185,7 +184,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W144 | International Logistics & Import Operations | Import operations |
 | W250 | Supply Chain Control Tower & Real-Time Shipment Visibility | Shipment visibility |
 
-### Core Compliance & IT (24 workflows)
+### Core Compliance & IT (28 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -252,7 +251,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ## Tier 2: Standard Support (499 Workflows)
 
-These 206 workflows are needed for standard operational support, cost controls, and category management.
+These 499 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -274,7 +273,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W262 | Store Promotional Setup & Visual Merchandising Execution | Promotional execution |
 | W329 | Competitive Price Tactical Response | Tactical pricing |
 
-### Extended Inventory (5 workflows)
+### Extended Inventory (6 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -285,7 +284,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W220 | Slow-Moving & Obsolete Inventory (SLOB) Provisioning & Liquidation | SLOB management |
 | W439 | In-Store Bulk-to-Retail Repackaging Operations | Bulk-to-retail conversion for hardware items |
 
-### Extended Procurement (9 workflows)
+### Extended Procurement (10 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -308,7 +307,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W66 | Inter-Island Logistics & Freight Management | Inter-island coordination |
 | W221 | Cross-Docking Operations for Fast-Moving Bulky Items | Cross-dock optimization |
 
-### Extended Store Operations (30 workflows)
+### Extended Store Operations (32 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -345,7 +344,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W550 | POS Loyalty Points as Payment Tender | Loyalty point redemption as payment method |
 | W551 | POS Customer On-the-Spot Loyalty Enrollment & Account Lookup | Real-time loyalty enrollment during checkout |
 
-### Extended Finance & Treasury (22 workflows)
+### Extended Finance & Treasury (21 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -371,7 +370,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W327 | External Shareholder Dividend Declaration & Payment | Dividend management |
 | W435 | Intercompany Service Level Agreement (SLA) Fee Billing | IC service fee governance |
 
-### Extended HR (6 workflows)
+### Extended HR (8 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -394,7 +393,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W268 | Last-Mile Home Delivery Tracking & Proof-of-Delivery | Last-mile tracking |
 | W284 | Customs Bonded Warehouse (CBW) Operations & Duty Deferral | Bonded warehouse |
 
-### Extended Ecommerce (4 workflows)
+### Extended Ecommerce (2 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -512,7 +511,7 @@ These 206 workflows are needed for standard operational support, cost controls, 
 | W403 | Competitor & Market Intelligence Master Governance | Competitor profiles and pricing category structures |
 | W406 | ESG & Sustainability Metrics Master Governance | Carbon emission factor and environmental indicators metadata |
 
-### Other Phase 2 (18 workflows)
+### Other Phase 2 (22 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -543,9 +542,9 @@ These 206 workflows are needed for standard operational support, cost controls, 
 
 ## Tier 3: Advanced Optimization (229 Workflows)
 
-These 124 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
+These 229 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
 
-### Innovation & Digital Transformation (7 workflows)
+### Innovation & Digital Transformation (8 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -598,7 +597,7 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W230 | Legal Contract Review & Approval | Legal review |
 | W474 | Enterprise Data Governance Council Operations | Data quality policy ratification and dispute arbitration |
 
-### Internal Audit (15 workflows)
+### Internal Audit (42 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -711,10 +710,6 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W236 | Hazmat Storage & Segregation Compliance (DC) | Hazmat storage |
 | W237 | Hazmat Handling & Safety Training (Store) | Hazmat training |
 
-### Extended IT (4 workflows)
-
-| ID | Workflow | Operational Significance |
-|---|---|---|
 ### Advanced Treasury (3 workflows)
 
 | ID | Workflow | Operational Significance |
@@ -723,7 +718,7 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W324 | Supply Chain Finance & Dynamic Discounting Program | SCF program |
 | W325 | Corporate Guarantee & Contingent Liability Management | Guarantee management |
 
-### Advanced Master Data (3 workflows)
+### Advanced Master Data (7 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -750,47 +745,16 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 153 | 30.7% |
-| Phase 2 | Operational Excellence (Tier 2) | 206 | 41.4% |
-| Phase 3 | Innovation & Optimization (Tier 3) | 124 | 24.9% |
-| **Classified Total** | | **1,167** | — |
-| Unclassified (pending review) | Default Tier 2 (pending review) | 233 | — |
+| Phase 1 | Go-Live Critical (Tier 1) | 439 | 37.6% |
+| Phase 2 | Operational Excellence (Tier 2) | 499 | 42.8% |
+| Phase 3 | Innovation & Optimization (Tier 3) | 229 | 19.6% |
+| **Classified Total** | | **1,167** | 100% |
+| Unclassified (pending review) | Default Tier 2 (pending review) | 1,533 | — |
 | **Grand Total** | | **2,700** | — |
 
-### By Domain and Phase
+### Domain Breakdown
 
-| Domain | Total | Phase 1 | Phase 2 | Phase 3 |
-|---|---|---|---|---|
-| Store Operations | 69 | 24 | 32 | 13 |
-| IT Operations | 44 | 15 | 23 | 6 |
-| Finance & Treasury | 43 | 33 | 10 | 0 |
-| Internal Audit & Risk Management | 41 | 0 | 0 | 41 |
-| Master Data Management (MDM) | 41 | 16 | 25 | 0 |
-| Compliance & Governance | 25 | 4 | 19 | 2 |
-| Procurement & Vendor Management | 22 | 12 | 10 | 0 |
-| Inventory Management | 20 | 14 | 6 | 0 |
-| Merchandising & Pricing | 19 | 2 | 17 | 0 |
-| Treasury & Corporate Finance | 18 | 4 | 11 | 3 |
-| HR & Payroll | 16 | 8 | 8 | 0 |
-| Customer Experience | 13 | 1 | 11 | 1 |
-| Marketing Campaigns | 12 | 0 | 0 | 12 |
-| Warehouse & Logistics | 11 | 7 | 3 | 1 |
-| Ecommerce | 11 | 7 | 4 | 0 |
-| Supply Chain Planning | 11 | 6 | 5 | 0 |
-| Corporate Governance, Legal & Strategy | 12 | 1 | 2 | 9 |
-| Installation & Value-Added Services | 11 | 0 | 1 | 10 |
-| Project-Based B2B & Trade Sales | 8 | 0 | 8 | 0 |
-| Real Estate & Lease Management | 7 | 0 | 7 | 0 |
-| Fleet Operations & Driver Management | 5 | 0 | 1 | 4 |
-| Innovation & Digital Transformation | 5 | 0 | 0 | 5 |
-| ESG & Sustainability Reporting | 5 | 0 | 0 | 5 |
-| Engineering & Construction | 5 | 0 | 0 | 5 |
-| Health, Safety & Environment | 4 | 1 | 1 | 2 |
-| Facility & Asset Maintenance (HQ & DC) | 4 | 0 | 3 | 1 |
-| Hazardous Materials (Hazmat) & Compliance | 4 | 0 | 2 | 2 |
-| Regulatory Permits & Local Government Compliance | 7 | 7 | 0 | 0 |
-| Wholesale & Reseller Operations | 3 | 0 | 0 | 3 |
-| Document Management (DOC) | 2 | 0 | 2 | 0 |
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,167 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 2,700 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 ---
 
@@ -1592,22 +1556,4 @@ These 124 workflows deliver advanced capabilities for competitive differentiatio
 | W690 | Digital Transformation Initiative Portfolio Management | Innovation & Digital Transformation |
 | W691 | Emerging Technology Scouting & Proof-of-Concept Evaluation | Innovation & Digital Transformation |
 
-## Updated Summary
-
-| Phase | Label | Previously Classified | New Additions | Updated Total |
-|---|---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 153 | 286 | **439** |
-| Phase 2 | Operational Excellence (Tier 2) | 206 | 293 | **499** |
-| Phase 3 | Innovation & Optimization (Tier 3) | 124 | 102 | **226** |
-| **Classified Total** | | **483** | **684** | **1167** |
-| Unclassified | | — | — | **0** |
-| **Grand Total** | | | | **1,167** |
-
-### Operational Tier Guidance
-
-1. **Tier 1 workflows** (439) are foundational to daily store and supply chain operations.
-2. **Tier 2 workflows** (499) add necessary control and support capabilities to stabilize the business.
-3. **Tier 3 workflows** (226) enable optimization, AI integration, and strategic differentiation.
-4. **Cross-tier dependencies**: Some Tier 2/3 workflows reference Tier 1 workflows; the core Tier 1 workflows must be stable for Tier 2/3 to generate value.
-
-*Date: 2026-06-13 | Workflow Criticality Classification v7.0 — 1,167 classified workflow references are deduplicated across tiers (Tier 1: 439 · Tier 2: 499 · Tier 3: 229 = 1,167). An additional 1,533 workflows remain unclassified (2,700 total − 1,167 classified). 14 classified references are parent/summary workflows (e.g., W2, W5B, W9A) that appear as `###` sub-headings within PA files.*
+*Date: 2026-06-14 | Workflow Criticality Classification v7.1 — 1,167 classified workflow references are deduplicated across tiers (Tier 1: 439 · Tier 2: 499 · Tier 3: 229 = 1,167). An additional 1,533 workflows remain unclassified (2,700 total − 1,167 classified). 14 classified references are parent/summary workflows (e.g., W2, W5B, W9A) that appear as `###` sub-headings within PA files. The authoritative tier summary is the `## Summary` table above; a stale `## Updated Summary` duplicate that reported a Tier 3 total of 226 and 0 unclassified (contradicting the correct 229 / 1,533) was removed during consistency review.*
