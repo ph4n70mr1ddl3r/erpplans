@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 68 Value Streams · 208 Process Areas · 2465 Workflows
+8 Families · 78 Value Streams · 238 Process Areas · 2705 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -31,7 +31,8 @@
 |  | [VS-50](VS-50-damage-claims-management/README.md) | Damage & Claims Management | 3 | 24 |
 |  | [VS-56](VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner Management | 3 | 24 |
 |  | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 3 | 24 |
-| | | | **Subtotal** | **235** |
+|  | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | 3 | 24 |
+| | | | **Subtotal** | **259** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 59 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
@@ -55,7 +56,11 @@
 |  | [VS-63](VS-63-store-communication-task-management/README.md) | Store Communication & Task Management | 3 | 24 |
 |  | [VS-65](VS-65-ecommerce-marketplace-integration/README.md) | E-Commerce Marketplace Integration | 3 | 24 |
 |  | [VS-66](VS-66-customer-project-design-services/README.md) | Customer Project & Design Services | 3 | 24 |
-| | | | **Subtotal** | **979** |
+|  | [VS-70](VS-70-solar-renewable-energy/README.md) | Solar & Renewable Energy Product Operations | 3 | 24 |
+|  | [VS-75](VS-75-digital-engagement-app/README.md) | Customer Digital Engagement & Mobile App Operations | 3 | 24 |
+|  | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | 3 | 24 |
+|  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 3 | 24 |
+| | | | **Subtotal** | **1075** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 35 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
@@ -66,7 +71,8 @@
 |  | [VS-40](VS-40-capex-project-accounting/README.md) | Capex & Project Accounting | 3 | 24 |
 |  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | 3 | 24 |
 |  | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | 3 | 24 |
-| | | | **Subtotal** | **319** |
+|  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | 3 | 24 |
+| | | | **Subtotal** | **343** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
 | | | | **Subtotal** | **74** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 32 |
@@ -83,13 +89,17 @@
 |  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | 3 | 22 |
 |  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | 3 | 23 |
 |  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | 3 | 23 |
-| | | | **Subtotal** | **288** |
+|  | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | 3 | 24 |
+|  | [VS-71](VS-71-anti-counterfeit-authentication/README.md) | Anti-Counterfeit & Product Authentication | 3 | 24 |
+|  | [VS-73](VS-73-store-waste-circular-economy/README.md) | Store-Level Waste Management & Circular Economy | 3 | 24 |
+|  | [VS-76](VS-76-multi-region-lgu-compliance/README.md) | Philippine Multi-Region LGU & Local Regulatory Compliance | 3 | 24 |
+| | | | **Subtotal** | **376** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 | | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **2465** | |
+| | | | **Grand Total** | **2481** | |
 
 ---
 
@@ -201,7 +211,13 @@
 
 - **PA-61.1** [Fuel Procurement & Consumption Management](./VS-61-fuel-fleet-cost-management/PA-61.1-fuel-procurement-consumption.md) — 8 workflows
 - **PA-61.2** [Toll, Parking & Route Cost Management](./VS-61-fuel-fleet-cost-management/PA-61.2-toll-route-cost.md) — 8 workflows
-- **PA-61.3** [Fleet Total Cost of Ownership Analytics](./VS-61-fuel-fleet-cost-management/PA-61.3-fleet-total-cost-analytics.md) — 8 workflows
+- **PA-61.3** [Fleet Total Cost of Ownership Analytics](./VS-61-fleet-cost-management/PA-61.3-fleet-total-cost-analytics.md) — 8 workflows
+
+**[VS-74: Professional Contractor Job Site Delivery](./VS-74-contractor-jobsite-delivery/README.md)** (24 workflows)
+
+- **PA-74.1** [Job Site Delivery Planning & Scheduling](./VS-74-contractor-jobsite-delivery/PA-74.1-jobsite-delivery-planning-scheduling.md) — 8 workflows
+- **PA-74.2** [Job Site Delivery Execution & Material Handling](./VS-74-contractor-jobsite-delivery/PA-74.2-jobsite-delivery-execution-material-handling.md) — 8 workflows
+- **PA-74.3** [Job Site Delivery Performance & Analytics](./VS-74-contractor-jobsite-delivery/PA-74.3-jobsite-delivery-performance-analytics.md) — 8 workflows
 
 
 ### Sell & Serve
@@ -345,6 +361,30 @@
 - **PA-66.2** [Project Quotation & Material Management](./VS-66-customer-project-design-services/PA-66.2-project-quotation-material-estimation.md) — 8 workflows
 - **PA-66.3** [Project Tracking & Completion](./VS-66-customer-project-design-services/PA-66.3-project-tracking-completion.md) — 8 workflows
 
+**[VS-70: Solar & Renewable Energy Product Operations](./VS-70-solar-renewable-energy/README.md)** (24 workflows)
+
+- **PA-70.1** [Solar Product Merchandising & Consultation](./VS-70-solar-renewable-energy/PA-70.1-solar-product-merchandising-consultation.md) — 8 workflows
+- **PA-70.2** [Solar Installation Coordination & Permitting](./VS-70-solar-renewable-energy/PA-70.2-solar-installation-coordination-permitting.md) — 8 workflows
+- **PA-70.3** [Solar After-Sales Monitoring & Analytics](./VS-70-solar-renewable-energy/PA-70.3-solar-after-sales-monitoring-analytics.md) — 8 workflows
+
+**[VS-75: Customer Digital Engagement & Mobile App Operations](./VS-75-digital-engagement-app/README.md)** (24 workflows)
+
+- **PA-75.1** [Mobile App Product & Feature Management](./VS-75-digital-engagement-app/PA-75.1-mobile-app-product-feature-management.md) — 8 workflows
+- **PA-75.2** [In-Store Digital Experience & Self-Service](./VS-75-digital-engagement-app/PA-75.2-in-store-digital-experience-self-service.md) — 8 workflows
+- **PA-75.3** [Digital Engagement Analytics & Optimization](./VS-75-digital-engagement-app/PA-75.3-digital-engagement-analytics-optimization.md) — 8 workflows
+
+**[VS-77: Construction Project Material Staging & Phased Delivery](./VS-77-construction-material-staging/README.md)** (24 workflows)
+
+- **PA-77.1** [Project Material Planning & Phasing](./VS-77-construction-material-staging/PA-77.1-project-material-planning-phasing.md) — 8 workflows
+- **PA-77.2** [Phased Delivery Execution & Site Coordination](./VS-77-construction-material-staging/PA-77.2-phased-delivery-execution-site-coordination.md) — 8 workflows
+- **PA-77.3** [Project Material Reconciliation & Analytics](./VS-77-construction-material-staging/PA-77.3-project-material-reconciliation-analytics.md) — 8 workflows
+
+**[VS-78: Green Building & Sustainable Product Advisory](./VS-78-green-building-advisory/README.md)** (24 workflows)
+
+- **PA-78.1** [Green Product Curation & Certification](./VS-78-green-building-advisory/PA-78.1-green-product-curation-certification.md) — 8 workflows
+- **PA-78.2** [Green Building Project Consultation](./VS-78-green-building-advisory/PA-78.2-green-building-project-consultation.md) — 8 workflows
+- **PA-78.3** [Sustainability Compliance & Analytics](./VS-78-green-building-advisory/PA-78.3-sustainability-compliance-analytics.md) — 8 workflows
+
 
 ### Finance
 
@@ -407,6 +447,12 @@
 - **PA-68.1** [Trade Credit Risk Assessment & Scoring](./VS-68-trade-credit-risk-management/PA-68.1-trade-credit-risk-assessment.md) — 8 workflows
 - **PA-68.2** [Credit Limit Management & Monitoring](./VS-68-trade-credit-risk-management/PA-68.2-credit-limit-management-monitoring.md) — 8 workflows
 - **PA-68.3** [Bad Debt Recovery & Write-Off Management](./VS-68-trade-credit-risk-management/PA-68.3-bad-debt-recovery-writeoff.md) — 8 workflows
+
+**[VS-72: Cross-Entity Shared Services & Chargeback](./VS-72-cross-entity-shared-services/README.md)** (24 workflows)
+
+- **PA-72.1** [Shared Services Cost Pool Management](./VS-72-cross-entity-shared-services/PA-72.1-shared-services-cost-pool-management.md) — 8 workflows
+- **PA-72.2** [Inter-Entity Service Level & Billing](./VS-72-cross-entity-shared-services/PA-72.2-inter-entity-service-level-billing.md) — 8 workflows
+- **PA-72.3** [Shared Services Performance & Analytics](./VS-72-cross-entity-shared-services/PA-72.3-shared-services-performance-analytics.md) — 8 workflows
 
 
 ### People
@@ -503,6 +549,30 @@
 - **PA-36.2** [Shareholder & Equity Management](./VS-36-corporate-governance/PA-36.2-shareholder-equity-management.md) — 7 workflows
 - **PA-36.3** [Corporate Policy & Entity Governance](./VS-36-corporate-governance/PA-36.3-corporate-policy-entity-governance.md) — 8 workflows
 
+**[VS-69: Typhoon & Natural Disaster Preparedness & Response](./VS-69-typhoon-disaster-response/README.md)** (24 workflows)
+
+- **PA-69.1** [Typhoon Preparedness & Early Warning Operations](./VS-69-typhoon-disaster-response/PA-69.1-typhoon-preparedness-early-warning.md) — 8 workflows
+- **PA-69.2** [Active Disaster Response & Emergency Operations](./VS-69-typhoon-disaster-response/PA-69.2-disaster-active-response-operations.md) — 8 workflows
+- **PA-69.3** [Post-Disaster Recovery & Community Support](./VS-69-typhoon-disaster-response/PA-69.3-post-disaster-recovery-community-support.md) — 8 workflows
+
+**[VS-71: Anti-Counterfeit & Product Authentication](./VS-71-anti-counterfeit-authentication/README.md)** (24 workflows)
+
+- **PA-71.1** [Product Authentication & Serialization](./VS-71-anti-counterfeit-authentication/PA-71.1-product-authentication-serialization.md) — 8 workflows
+- **PA-71.2** [Counterfeit Detection & Investigation](./VS-71-anti-counterfeit-authentication/PA-71.2-counterfeit-detection-investigation.md) — 8 workflows
+- **PA-71.3** [Vendor Compliance & Anti-Counterfeit Analytics](./VS-71-anti-counterfeit-authentication/PA-71.3-vendor-compliance-anti-counterfeit-analytics.md) — 8 workflows
+
+**[VS-73: Store-Level Waste Management & Circular Economy](./VS-73-store-waste-circular-economy/README.md)** (24 workflows)
+
+- **PA-73.1** [Store Waste Segregation & Collection](./VS-73-store-waste-circular-economy/PA-73.1-store-waste-segregation-collection.md) — 8 workflows
+- **PA-73.2** [Hazardous Waste & DENR Compliance](./VS-73-store-waste-circular-economy/PA-73.2-hazardous-waste-denr-compliance.md) — 8 workflows
+- **PA-73.3** [Circular Economy & Recycling Analytics](./VS-73-store-waste-circular-economy/PA-73.3-circular-economy-recycling-analytics.md) — 8 workflows
+
+**[VS-76: Philippine Multi-Region LGU & Local Regulatory Compliance](./VS-76-multi-region-lgu-compliance/README.md)** (24 workflows)
+
+- **PA-76.1** [Multi-LGU Business Permit & License Management](./VS-76-multi-region-lgu-compliance/PA-76.1-multi-lgu-business-permit-license-management.md) — 8 workflows
+- **PA-76.2** [Local Tax & Regulatory Variation Management](./VS-76-multi-region-lgu-compliance/PA-76.2-local-tax-regulatory-variation-management.md) — 8 workflows
+- **PA-76.3** [LGU Relationship & Regulatory Analytics](./VS-76-multi-region-lgu-compliance/PA-76.3-lgu-relationship-regulatory-analytics.md) — 8 workflows
+
 
 ### Technology & Data
 
@@ -548,15 +618,15 @@
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-51, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66)
-Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-49–50, VS-56, VS-61)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-51, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78)
+Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-49–50, VS-56, VS-61, VS-74)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-52, VS-57, VS-64, VS-67)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72)
 Does it involve people/HR?               → People (VS-19)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59)
-Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36)
+Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 ```
 
 
-*Total: 2465 workflows across 68 value streams · Date: 2026-06-13*
+*Total: 2705 workflows across 78 value streams · Date: 2026-06-13*
