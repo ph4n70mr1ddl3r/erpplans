@@ -1,8 +1,8 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 2,705 total workflows, 1,167 are classified into
-> criticality tiers; 1,538 remain unclassified and default to Tier 2 pending review.
+> relationships for system functions. Of 2,700 total workflows, 1,167 are classified into
+> criticality tiers; 1,533 remain unclassified and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
@@ -302,7 +302,7 @@ W5B (In-Store Selling)
   → W552 (Donation & Charity Round-Up Processing — checkout triggers donation prompt)
   → W553 (Pricing Error Detection & Immediate Correction — checkout detects price errors)
 
-W331 (DTI Application)
+W2747 (DTI Application)
   → W427 (DTI Monitoring & Compliance)
 
 W517 (POS Cashier Shift Handover)
@@ -634,4 +634,4 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-*Date: 2026-06-13 | Workflow Dependency Map v2.2 — covers prerequisite relationships for 1,167 classified workflows across 78 value streams with hard/soft/integration dependencies. Total repository workflows: 2,705.*
+*Date: 2026-06-13 | Workflow Dependency Map v2.2 — covers prerequisite relationships for 1,167 classified workflows across 78 value streams with hard/soft/integration dependencies. Total repository workflows: 2,700.*

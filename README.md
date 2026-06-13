@@ -29,7 +29,7 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 32+ categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      2,705 workflows organized by value stream
+│   ├── workflows/                      2,700 workflows organized by value stream
 │   │   ├── value-stream-index.md              Master index (8 families · 78 value streams · 238 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
@@ -42,7 +42,7 @@ erpplans/
 │   │   ├── VS-05-inventory-lifecycle/           35 workflows (3 process areas)
 │   │   ├── VS-06-logistics-fleet/               36 workflows (3 process areas)
 │   │   ├── VS-07-store-operations/              144 workflows (4 process areas)
-│   │   ├── VS-08-pos-checkout/                  59 workflows (3 process areas)
+│   │   ├── VS-08-pos-checkout/                  58 workflows (3 process areas)
 │   │   ├── VS-09-in-store-services/             158 workflows (3 process areas)
 │   │   ├── VS-10-ecommerce-digital/             61 workflows (3 process areas)
 │   │   ├── VS-11-trade-project-wholesale/       52 workflows (3 process areas)
@@ -50,7 +50,7 @@ erpplans/
 │   │   ├── VS-13-customer-experience/           64 workflows (3 process areas)
 │   │   ├── VS-14-marketing/                     40 workflows (3 process areas)
 │   │   ├── VS-15-procure-to-pay/                42 workflows (2 process areas)
-│   │   ├── VS-16-order-to-cash/                 35 workflows (3 process areas)
+│   │   ├── VS-16-order-to-cash/                 31 workflows (3 process areas)
 │   │   ├── VS-17-record-to-report/              67 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 33 workflows (3 process areas)
 │   │   ├── VS-19-hire-to-retire/                74 workflows (5 process areas)
@@ -152,7 +152,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 32+ categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **2,705** across 78 value streams, 238 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **2,700** across 78 value streams, 238 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -176,7 +176,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (2,705 WF)    │
+   │  erp-requirements.md ←→ workflows/ (2,700 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │

@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 78 Value Streams · 238 Process Areas · 2705 Workflows
+8 Families · 78 Value Streams · 238 Process Areas · 2700 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -34,7 +34,7 @@
 |  | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | 3 | 24 |
 | | | | **Subtotal** | **259** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
-|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 59 |
+|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
 |  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 61 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 52 |
@@ -60,9 +60,9 @@
 |  | [VS-75](VS-75-digital-engagement-app/README.md) | Customer Digital Engagement & Mobile App Operations | 3 | 24 |
 |  | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | 3 | 24 |
 |  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 3 | 24 |
-| | | | **Subtotal** | **1075** |
+| | | | **Subtotal** | **1074** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
-|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 35 |
+|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
 |  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 33 |
 |  | [VS-34](VS-34-expense-procurement/README.md) | Expense & Non-Merchandise Procurement | 3 | 22 |
@@ -72,7 +72,7 @@
 |  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | 3 | 24 |
 |  | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | 3 | 24 |
 |  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | 3 | 24 |
-| | | | **Subtotal** | **343** |
+| | | | **Subtotal** | **339** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
 | | | | **Subtotal** | **74** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 32 |
@@ -99,7 +99,7 @@
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 | | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **2705** | |
+| | | | **Grand Total** | **2700** | |
 
 ---
 
@@ -211,7 +211,7 @@
 
 - **PA-61.1** [Fuel Procurement & Consumption Management](./VS-61-fuel-fleet-cost-management/PA-61.1-fuel-procurement-consumption.md) — 8 workflows
 - **PA-61.2** [Toll, Parking & Route Cost Management](./VS-61-fuel-fleet-cost-management/PA-61.2-toll-route-cost.md) — 8 workflows
-- **PA-61.3** [Fleet Total Cost of Ownership Analytics](./VS-61-fleet-cost-management/PA-61.3-fleet-total-cost-analytics.md) — 8 workflows
+- **PA-61.3** [Fleet Total Cost of Ownership Analytics](./VS-61-fuel-fleet-cost-management/PA-61.3-fleet-total-cost-analytics.md) — 8 workflows
 
 **[VS-74: Professional Contractor Job Site Delivery](./VS-74-contractor-jobsite-delivery/README.md)** (24 workflows)
 
@@ -229,9 +229,9 @@
 - **PA-07.3** [Store Receiving & Replenishment](./VS-07-store-operations/PA-07.3-store-receiving-and-replenishment.md) — 28 workflows
 - **PA-07.4** [Store Staffing & People](./VS-07-store-operations/PA-07.4-store-staffing-and-people.md) — 10 workflows
 
-**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (59 workflows)
+**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (58 workflows)
 
-- **PA-08.1** [Transaction Processing](./VS-08-pos-checkout/PA-08.1-transaction-processing.md) — 37 workflows
+- **PA-08.1** [Transaction Processing](./VS-08-pos-checkout/PA-08.1-transaction-processing.md) — 36 workflows
 - **PA-08.2** [Payment & Cash Management](./VS-08-pos-checkout/PA-08.2-payment-and-cash-management.md) — 10 workflows
 - **PA-08.3** [POS Compliance & Controls](./VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md) — 12 workflows
 
@@ -393,11 +393,11 @@
 - **PA-15.1** [Invoice Processing & Matching](./VS-15-procure-to-pay/PA-15.1-invoice-processing-and-matching.md) — 18 workflows
 - **PA-15.2** [Vendor Payment & Reconciliation](./VS-15-procure-to-pay/PA-15.2-vendor-payment-and-reconciliation.md) — 24 workflows
 
-**[VS-16: Order-to-Cash](./VS-16-order-to-cash/README.md)** (35 workflows)
+**[VS-16: Order-to-Cash](./VS-16-order-to-cash/README.md)** (31 workflows)
 
-- **PA-16.1** [Credit Application & Scoring](./VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md) — 15 workflows
+- **PA-16.1** [Credit Application & Scoring](./VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md) — 12 workflows
 - **PA-16.2** [AR & Collections](./VS-16-order-to-cash/PA-16.2-ar-and-collections.md) — 10 workflows
-- **PA-16.3** [Customer Payment & Settlement](./VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md) — 10 workflows
+- **PA-16.3** [Customer Payment & Settlement](./VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md) — 9 workflows
 
 **[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (67 workflows)
 
@@ -629,4 +629,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 ```
 
 
-*Total: 2705 workflows across 78 value streams · Date: 2026-06-13*
+*Total: 2700 workflows across 78 value streams · Date: 2026-06-13*

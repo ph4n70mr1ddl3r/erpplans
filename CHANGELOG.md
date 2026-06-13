@@ -4,6 +4,34 @@
 
 ---
 
+## 2026-06-13 — Consistency Review: Deduplicate Workflow IDs & Reconcile Counts
+
+### Fixed
+- **Eliminated all 15 duplicate workflow IDs** (workflow IDs must be unique per `WORKFLOW-FORMAT-GUIDE.md`):
+  - **Removed 4 duplicate authorings in VS-16** — `W812`, `W889`, `W890` were authored twice (once misplaced in PA-16.1 Credit, once correctly in PA-16.2 AR & Collections); `W892` was duplicated in PA-16.3. Kept the correctly-placed PA-16.2 versions; removed the misplaced copies. VS-16: 35 → 31 workflows.
+  - **Renumbered 11 ID collisions** (two different workflows sharing one number) to the next free IDs `W2742`–`W2752`. Canonical (externally-referenced) owner retained in each case: VS-09 PA-09.3 (`W1380–1382`), VS-16 PA-16.2 (`W813–814`), VS-22 PA-22.1 (`W331`), VS-40 PA-40.3 (`W1830–1834`) were the displaced copies; VS-15/VS-21/VS-41 versions kept their numbers.
+  - Updated the 2 cross-references that pointed at a displaced copy: `workflow-dependency-map.md` (`W331 (DTI Application)` → `W2747`) and VS-40 PA-40.1 (`per W1830` → `per W2748`).
+- **Rebuilt all 238 PA-file "Workflows in This Process Area" tables of contents** from actual headers, which also:
+  - Fixed **295 broken in-page anchor links** (TOC anchors missing the `W<number>-` prefix, concentrated in generated VS-49–VS-78).
+  - Added **~42 workflows** that had bodies but were missing from their PA's TOC.
+  - Dropped **2 stub TOC entries** (`W1194`, `W1318`) that have no workflow body (flagged as content gaps).
+  - Recomputed every PA footer `Workflow Count`.
+- **Reconciled over-counted workflow totals** (grand total 2,705 → **2,700**; unclassified 1,538 → **1,533**): VS-08 (POS & Checkout) 59 → 58 — PA-08.1 claimed 37 but contained 36; VS-16 35 → 31 (duplicate removal above). Updated `value-stream-index.md`, `README.md`, `executive-summary.md`, `workflow-criticality-classification.md`, `workflow-dependency-map.md`, `workflow-system-touchpoint-map.md`, and the 2 affected VS READMEs.
+- **Fixed broken link** in `value-stream-index.md` — VS-61 PA-61.3 pointed at `VS-61-fleet-cost-management/` (non-existent) → corrected to `VS-61-fuel-fleet-cost-management/`.
+
+### Verified ✓
+- Grand total: **2,700 workflows** across 78 value streams, 238 process areas, 8 families
+- 0 duplicate workflow IDs; 2700 distinct IDs = 2700 headers
+- 0 broken in-page TOC anchors; 0 missing intra-repo links in the index
+- All 78 VS README totals and all 238 PA footers match actual `## W` header counts
+- All 8 family subtotals reconcile (308 + 259 + 1074 + 339 + 74 + 104 + 384 + 158 = 2700)
+- Requirements: 733 (431 Must / 296 Should / 6 Nice); Internal Controls: 67 (31 Preventive / 36 Detective)
+- `07-methodology/validate-repo.sh` passes with 0 errors
+
+> Note: the prior total of 2,705 was an over-count — it included 4 duplicate workflows in VS-16, 1 phantom workflow over-counted in VS-08, and missed that VS-03/VS-10 were already correct (their letter-suffix workflows `W2C` and `W19B` had not been tallied). Corrected here.
+
+---
+
 ## 2026-06-13 — Consistency Review: Standardize PA File Footers
 
 ### Fixed
