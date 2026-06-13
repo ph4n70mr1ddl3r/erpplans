@@ -21,7 +21,7 @@ Each workflow follows this format:
 
 | Field | Meaning |
 |---|---|
-| **Workflow ID** | Unique identifier (W-XX) |
+| **Workflow ID** | Unique identifier (W-number, e.g. W7, W5B) |
 | **Name** | Process name |
 | **Trigger** | What initiates the workflow |
 | **Frequency** | How often it occurs |

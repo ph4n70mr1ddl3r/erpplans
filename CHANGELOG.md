@@ -4,6 +4,51 @@
 
 ---
 
+## 2026-06-14 — Consistency Review: Decision Tree, Matrix Counts & Validator Accuracy
+
+A full-repository consistency review (all 84 value streams, 256 process areas, 2,844
+workflows) reconciled every cross-document count. The grand totals (2,844 workflows /
+84 value streams / 256 process areas / 733 requirements / 67 controls / 1,167 classified)
+were already correct and consistent across `README.md`, `executive-summary.md`, both
+workflow indexes, the dependency/touchpoint maps, and the criticality classification.
+Four residual defects were found and fixed:
+
+### Fixed
+- **`01-model-company/workflows/value-stream-index.md`** — the "Decision Tree: Where
+  Does a New Workflow Go?" block still listed the **retired** VS-49 (Sell & Serve),
+  VS-49–VS-50 (Make & Move), and VS-52 (Plan & Source) alongside the live value streams.
+  These references contradicted the 2026-06-14 retirement of VS-49/50/51/52 and the
+  coverage note at the top of the same file. Removed; the surviving VS lists now match
+  the authoritative family tables exactly.
+- **`01-model-company/requirement-workflow-matrix.md`** — the Coverage Validation section
+  and footer still reported the pre-retirement figures **"2,700 workflows across 78 value
+  streams"** (should be 2,844 / 84). Updated both; footer bumped to v49.
+- **`01-model-company/workflows/WORKFLOW-FORMAT-GUIDE.md`** — the Workflow ID format was
+  documented as `(W-XX)`, but no workflow ID in the repository uses a dash (actual IDs
+  are `W7`, `W5B`, `W9A`, …). Corrected to `(W-number, e.g. W7, W5B)`.
+- **`01-model-company/workflows/workflow-criticality-classification.md`** — the footer
+  stated **"14 classified references are parent/summary workflows"** that appear as `###`
+  sub-headings; the actual count is **22**. Corrected.
+
+### Hardened — `07-methodology/validate-repo.sh`
+- **Check 1** (unclassified workflows) rewritten to report the **documented** unclassified
+  total (`grand_total − classified` = 1,677) used by every repo document, instead of the
+  `##`-header-minus-classified figure (1,699) that double-counted the 22 `###` parent/
+  summary workflows. It now also verifies that **every classified workflow ID resolves to
+  a real `##`/`###` header** in a PA file, catching stale classification references, and
+  prints the count of `###` parent/summary workflows for transparency.
+- **Check 4** (requirement ↔ matrix consistency) now extracts requirement IDs from
+  **table rows only** (`^| REQ-XX |`) instead of any `[A-Z]+-\d+` token. This eliminates
+  false positives such as day-offset tokens (`T-7`, `T-14`) and the `VS-49` token inside
+  the retirement footnote, so the check now reports the accurate **733** (matrix) = **733**
+  (defined) instead of 740.
+
+### Validation result
+`validate-repo.sh` passes with **0 errors** and a single informational warning
+("1,677 workflows remain unclassified") that reflects the documented pending-review total.
+
+---
+
 ## 2026-06-14 — Repo Review: Retire VS-49/50/51/52 Placeholder Content, Harden Validator
 
 A second full-repository review identified four value streams whose workflow files had

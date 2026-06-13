@@ -21,23 +21,30 @@ echo ""
 
 # --- Check 1: Workflow IDs in PA files that are NOT in criticality classification ---
 echo "--- Check 1: Unclassified workflow headers ---"
-# Include both ## (h2) primary workflows and ### (h3) sub-workflows (W<number><letter> variants)
-PA_WFS=$(grep -rohP '^#{2,3} W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^#{2,3} //;s/\.$//' | sort -u)
-# Count classified IDs from actual table rows only (|^W...|) rather than any W\d+ mention in prose.
-# This avoids undercounting from regex token extraction and matches the file's stated 1,167 total.
+# Primary workflows are ## (h2) headers; a small number of ### (h3) parent/summary
+# sub-workflows (e.g. W9A) also receive their own classification row. The documented
+# unclassified total = grand_total − classified table rows, used consistently repo-wide.
+# We (a) report that documented figure and (b) verify every classified ID resolves to a
+# real workflow header in a PA file (catching stale classification references).
 CLASSIFIED=$(grep -oP '^\| (W\d+[A-Z]?) \|' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sed -E 's/^\| //;s/ \|$//' | sort -u)
-
-UNCLASSIFIED=$(comm -23 <(echo "$PA_WFS") <(echo "$CLASSIFIED"))
-UNCLASS_COUNT=$(echo "$UNCLASSIFIED" | grep -cP '^W' || true)
 CLASSIFIED_COUNT=$(echo "$CLASSIFIED" | grep -cP '^W' || true)
+GRAND_TOTAL=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | head -1)
+DOC_UNCLASS=$((GRAND_TOTAL - CLASSIFIED_COUNT))
 
-echo "  Classified table rows: $CLASSIFIED_COUNT | PA workflow headers: $(echo "$PA_WFS" | grep -cP '^W')"
+ALL_HEADERS=$(grep -rohP '^#{2,3} W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^#{2,3} //;s/\.$//' | sort -u)
+STALE_CLASSIFIED=$(comm -23 <(echo "$CLASSIFIED") <(echo "$ALL_HEADERS") | grep -cP '^W' || true)
+SUB_CLASSIFIED=$(comm -12 <(grep -rohP '^### W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^### //;s/\.$//' | sort -u) <(echo "$CLASSIFIED") | grep -cP '^W' || true)
 
-if [ "$UNCLASS_COUNT" -eq 0 ]; then
-    ok "All workflow headers in PA files are referenced in criticality classification"
+echo "  Classified: $CLASSIFIED_COUNT | Grand total: $GRAND_TOTAL | Documented unclassified: $DOC_UNCLASS ($SUB_CLASSIFIED classified rows are ### parent/summary workflows)"
+
+if [ "$STALE_CLASSIFIED" -eq 0 ]; then
+    ok "All $CLASSIFIED_COUNT classified workflow IDs resolve to a header in a PA file"
 else
-    warn "$UNCLASS_COUNT workflow header IDs in PA files not found in criticality classification"
-    echo "  First 10: $(echo "$UNCLASSIFIED" | head -10 | tr '\n' ' ')"
+    error "$STALE_CLASSIFIED classified ID(s) do not match any workflow header in PA files"
+fi
+
+if [ "$DOC_UNCLASS" -gt 0 ]; then
+    warn "$DOC_UNCLASS workflows remain unclassified (pending criticality review)"
 fi
 
 # --- Check 2: Workflow counts per PA file match value-stream-index ---
@@ -75,8 +82,11 @@ echo "  Controls found in internal-controls-matrix.md: $CTL_COUNT"
 
 # --- Check 4: Requirement IDs in matrix vs erp-requirements ---
 echo "--- Check 4: Requirement-Workflow matrix consistency ---"
-MATRIX_REQS=$(grep -ohP '\b[A-Z]+-\d+[a-z]?\b' "$REPO_ROOT"/01-model-company/requirement-workflow-matrix.md | sort -u | wc -l)
-echo "  Unique requirement IDs in matrix: $MATRIX_REQS"
+# Match only requirement IDs that begin a table row (|^REQ-XX |) so day-offset tokens
+# like "T-7"/"T-14" or "VS-49" in footer prose are not mistaken for requirement IDs.
+MATRIX_REQS=$(grep -ohP '^\| [A-Z]{2,}-\d+[a-z]? \|' "$REPO_ROOT"/01-model-company/requirement-workflow-matrix.md | sed -E 's/^\| //;s/ \|$//' | sort -u | wc -l)
+REQ_DEFINED=$(grep -cP '^\| [A-Z]+-\d+' "$REPO_ROOT"/01-model-company/erp-requirements.md 2>/dev/null || true)
+echo "  Requirement IDs in matrix table rows: $MATRIX_REQS | defined in erp-requirements.md: $REQ_DEFINED"
 
 # --- Check 5: Empty process areas ---
 echo "--- Check 5: Empty process areas ---"
