@@ -8,7 +8,7 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 78 Value Streams · 238 Process Areas · 2700 Workflows
+8 Families · 88 Value Streams · 268 Process Areas · 2940 Workflows
 ```
 
 | Family | VS | Value Stream | Process Areas | Workflows |
@@ -32,7 +32,8 @@
 |  | [VS-56](VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner Management | 3 | 24 |
 |  | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 3 | 24 |
 |  | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | 3 | 24 |
-| | | | **Subtotal** | **259** |
+|  | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car Operations | 3 | 24 |
+| | | | **Subtotal** | **283** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
@@ -60,7 +61,8 @@
 |  | [VS-75](VS-75-digital-engagement-app/README.md) | Customer Digital Engagement & Mobile App Operations | 3 | 24 |
 |  | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | 3 | 24 |
 |  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 3 | 24 |
-| | | | **Subtotal** | **1074** |
+|  | [VS-82](VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | 3 | 24 |
+| | | | **Subtotal** | **1098** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
@@ -72,9 +74,13 @@
 |  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | 3 | 24 |
 |  | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | 3 | 24 |
 |  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | 3 | 24 |
-| | | | **Subtotal** | **339** |
+|  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | 3 | 24 |
+|  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | 3 | 24 |
+| | | | **Subtotal** | **387** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
-| | | | **Subtotal** | **74** |
+|  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
+|  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
+| | | | **Subtotal** | **122** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | 3 | 24 |
@@ -93,13 +99,17 @@
 |  | [VS-71](VS-71-anti-counterfeit-authentication/README.md) | Anti-Counterfeit & Product Authentication | 3 | 24 |
 |  | [VS-73](VS-73-store-waste-circular-economy/README.md) | Store-Level Waste Management & Circular Economy | 3 | 24 |
 |  | [VS-76](VS-76-multi-region-lgu-compliance/README.md) | Philippine Multi-Region LGU & Local Regulatory Compliance | 3 | 24 |
-| | | | **Subtotal** | **384** |
+|  | [VS-85](VS-85-mandatory-discount-eligibility-tax-credit/README.md) | Mandatory Discount, Eligibility & Tax Credit Recovery | 3 | 24 |
+|  | [VS-86](VS-86-anti-financial-crime-aml-abc/README.md) | Anti-Financial Crime, AML/KYC & Anti-Corruption | 3 | 24 |
+|  | [VS-87](VS-87-customs-trade-compliance-tariff/README.md) | Customs Trade Compliance & Tariff Optimization | 3 | 24 |
+|  | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control, Records Management & Retention | 3 | 24 |
+| | | | **Subtotal** | **480** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 | | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **2700** | |
+| | | | **Grand Total** | **2940** | |
 
 ---
 
@@ -218,6 +228,12 @@
 - **PA-74.1** [Job Site Delivery Planning & Scheduling](./VS-74-contractor-jobsite-delivery/PA-74.1-jobsite-delivery-planning-scheduling.md) — 8 workflows
 - **PA-74.2** [Job Site Delivery Execution & Material Handling](./VS-74-contractor-jobsite-delivery/PA-74.2-jobsite-delivery-execution-material-handling.md) — 8 workflows
 - **PA-74.3** [Job Site Delivery Performance & Analytics](./VS-74-contractor-jobsite-delivery/PA-74.3-jobsite-delivery-performance-analytics.md) — 8 workflows
+
+**[VS-81: Cash-in-Transit, Vault & Armored Car Operations](./VS-81-cash-in-transit-vault-armored/README.md)** (24 workflows)
+
+- **PA-81.1** [Store Cash Office, Smart Safe & Pickup Planning](./VS-81-cash-in-transit-vault-armored/PA-81.1-store-cash-office-smart-safe-pickup.md) — 8 workflows
+- **PA-81.2** [Armored Car, Vault & Cash Logistics Execution](./VS-81-cash-in-transit-vault-armored/PA-81.2-armored-car-vault-cash-execution.md) — 8 workflows
+- **PA-81.3** [CIT Risk, Insurance & Cash Analytics](./VS-81-cash-in-transit-vault-armored/PA-81.3-cit-risk-insurance-analytics.md) — 8 workflows
 
 
 ### Sell & Serve
@@ -385,6 +401,12 @@
 - **PA-78.2** [Green Building Project Consultation](./VS-78-green-building-advisory/PA-78.2-green-building-project-consultation.md) — 8 workflows
 - **PA-78.3** [Sustainability Compliance & Analytics](./VS-78-green-building-advisory/PA-78.3-sustainability-compliance-analytics.md) — 8 workflows
 
+**[VS-82: Sari-Sari Store & MSME Micro-Wholesale Program](./VS-82-sari-sari-msme-micro-wholesale/README.md)** (24 workflows)
+
+- **PA-82.1** [MSME/Sari-Sari Account Acquisition & Micro-Distribution](./VS-82-sari-sari-msme-micro-wholesale/PA-82.1-msme-acquisition-and-micro-distribution.md) — 8 workflows
+- **PA-82.2** [Micro-Wholesale Ordering, Fulfillment & Delivery](./VS-82-sari-sari-msme-micro-wholesale/PA-82.2-micro-wholesale-order-fulfillment-delivery.md) — 8 workflows
+- **PA-82.3** [MSME Growth, Credit & Digital Enablement](./VS-82-sari-sari-msme-micro-wholesale/PA-82.3-msme-growth-credit-and-digital-enablement.md) — 8 workflows
+
 
 ### Finance
 
@@ -454,6 +476,18 @@
 - **PA-72.2** [Inter-Entity Service Level & Billing](./VS-72-cross-entity-shared-services/PA-72.2-inter-entity-service-level-billing.md) — 8 workflows
 - **PA-72.3** [Shared Services Performance & Analytics](./VS-72-cross-entity-shared-services/PA-72.3-shared-services-performance-analytics.md) — 8 workflows
 
+**[VS-79: Tax Management & BIR Statutory Reporting](./VS-79-tax-management-bir-reporting/README.md)** (24 workflows)
+
+- **PA-79.1** [Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing](./VS-79-tax-management-bir-reporting/PA-79.1-indirect-tax-vat-and-einvoicing.md) — 8 workflows
+- **PA-79.2** [Withholding Tax (EWT/CWT) & Form 2307 Management](./VS-79-tax-management-bir-reporting/PA-79.2-withholding-tax-and-2307-management.md) — 8 workflows
+- **PA-79.3** [Corporate Income Tax, Local Tax, DST & BIR Audit Defense](./VS-79-tax-management-bir-reporting/PA-79.3-income-tax-local-tax-and-audit-defense.md) — 8 workflows
+
+**[VS-80: Payment Operations, Acquirer & Settlement Management](./VS-80-payment-operations-acquirer-settlement/README.md)** (24 workflows)
+
+- **PA-80.1** [Acquirer, PSP & Payment Partner Lifecycle Management](./VS-80-payment-operations-acquirer-settlement/PA-80.1-acquirer-psp-and-partner-lifecycle.md) — 8 workflows
+- **PA-80.2** [Settlement Reconciliation & Chargeback/Dispute Management](./VS-80-payment-operations-acquirer-settlement/PA-80.2-settlement-reconciliation-and-dispute.md) — 8 workflows
+- **PA-80.3** [Payment Cost, Fraud & Tokenization Governance](./VS-80-payment-operations-acquirer-settlement/PA-80.3-payment-cost-fraud-and-tokenization.md) — 8 workflows
+
 
 ### People
 
@@ -464,6 +498,18 @@
 - **PA-19.3** [Workforce Management](./VS-19-hire-to-retire/PA-19.3-workforce-management.md) — 10 workflows
 - **PA-19.4** [Learning & Development](./VS-19-hire-to-retire/PA-19.4-learning-and-development.md) — 11 workflows
 - **PA-19.5** [Separation & Benefits](./VS-19-hire-to-retire/PA-19.5-separation-and-benefits.md) — 8 workflows
+
+**[VS-83: Occupational Health, Safety Clinic & Employee Wellness](./VS-83-occupational-health-clinic-wellness/README.md)** (24 workflows)
+
+- **PA-83.1** [Occupational Health Clinic & Medical Case Management](./VS-83-occupational-health-clinic-wellness/PA-83.1-occupational-health-clinic-and-medical-case.md) — 8 workflows
+- **PA-83.2** [Periodic Examination, DOLE Compliance & Disease Surveillance](./VS-83-occupational-health-clinic-wellness/PA-83.2-periodic-exam-dole-compliance-surveillance.md) — 8 workflows
+- **PA-83.3** [Mental Health, Wellness & Employee Assistance Program](./VS-83-occupational-health-clinic-wellness/PA-83.3-mental-health-wellness-eap.md) — 8 workflows
+
+**[VS-84: Labor Relations & Collective Bargaining Management](./VS-84-labor-relations-collective-bargaining/README.md)** (24 workflows)
+
+- **PA-84.1** [Union Recognition, CBA Negotiation & Administration](./VS-84-labor-relations-collective-bargaining/PA-84.1-union-recognition-cba-negotiation-administration.md) — 8 workflows
+- **PA-84.2** [Grievance Handling, Labor Dispute & DOLE Conciliation](./VS-84-labor-relations-collective-bargaining/PA-84.2-grievance-labor-dispute-dole-conciliation.md) — 8 workflows
+- **PA-84.3** [Employee Voice, Engagement & Partnership Management](./VS-84-labor-relations-collective-bargaining/PA-84.3-employee-voice-engagement-partnership.md) — 8 workflows
 
 
 ### Asset & Infrastructure
@@ -573,6 +619,30 @@
 - **PA-76.2** [Local Tax & Regulatory Variation Management](./VS-76-multi-region-lgu-compliance/PA-76.2-local-tax-regulatory-variation-management.md) — 8 workflows
 - **PA-76.3** [LGU Relationship & Regulatory Analytics](./VS-76-multi-region-lgu-compliance/PA-76.3-lgu-relationship-regulatory-analytics.md) — 8 workflows
 
+**[VS-85: Mandatory Discount, Eligibility & Tax Credit Recovery](./VS-85-mandatory-discount-eligibility-tax-credit/README.md)** (24 workflows)
+
+- **PA-85.1** [SC/PWD/Solo Parent Eligibility & In-Store Discount Program](./VS-85-mandatory-discount-eligibility-tax-credit/PA-85.1-scpwd-soloparent-eligibility-indiscount.md) — 8 workflows
+- **PA-85.2** [VAT-Exempt & Zero-Rated Customer Certification](./VS-85-mandatory-discount-eligibility-tax-credit/PA-85.2-vatexempt-zero-rated-certification.md) — 8 workflows
+- **PA-85.3** [Tax Credit Recovery, Registry Reporting & Audit Defense](./VS-85-mandatory-discount-eligibility-tax-credit/PA-85.3-tax-credit-recovery-registry-audit.md) — 8 workflows
+
+**[VS-86: Anti-Financial Crime, AML/KYC & Anti-Corruption](./VS-86-anti-financial-crime-aml-abc/README.md)** (24 workflows)
+
+- **PA-86.1** [KYC, Customer Due Diligence & PEP/Sanctions Screening](./VS-86-anti-financial-crime-aml-abc/PA-86.1-kyc-cdd-pep-sanctions-screening.md) — 8 workflows
+- **PA-86.2** [AML Transaction Monitoring & STR/CTR Reporting (AMLC)](./VS-86-anti-financial-crime-aml-abc/PA-86.2-aml-transaction-monitoring-strctr.md) — 8 workflows
+- **PA-86.3** [Anti-Bribery, Gifts & Conflict of Interest Management](./VS-86-anti-financial-crime-aml-abc/PA-86.3-antibribery-gifts-conflict-of-interest.md) — 8 workflows
+
+**[VS-87: Customs Trade Compliance & Tariff Optimization](./VS-87-customs-trade-compliance-tariff/README.md)** (24 workflows)
+
+- **PA-87.1** [Tariff Classification, Origin & Valuation](./VS-87-customs-trade-compliance-tariff/PA-87.1-tariff-classification-origin-valuation.md) — 8 workflows
+- **PA-87.2** [FTA Preference, Duty Drawback & Bonded Operations](./VS-87-customs-trade-compliance-tariff/PA-87.2-fta-preference-duty-drawback-bonded.md) — 8 workflows
+- **PA-87.3** [Trade Compliance Audit, Broker Governance & ADC/NPCA](./VS-87-customs-trade-compliance-tariff/PA-87.3-trade-compliance-audit-broker-governance.md) — 8 workflows
+
+**[VS-88: Document Control, Records Management & Retention](./VS-88-document-control-records-retention/README.md)** (24 workflows)
+
+- **PA-88.1** [Document Classification, Versioning & Taxonomy](./VS-88-document-control-records-retention/PA-88.1-document-classification-versioning-taxonomy.md) — 8 workflows
+- **PA-88.2** [Retention, Legal Hold & Secure Disposition](./VS-88-document-control-records-retention/PA-88.2-retention-legal-hold-disposition.md) — 8 workflows
+- **PA-88.3** [Records Compliance, e-Discovery & BIR/SEC/NPC Audit](./VS-88-document-control-records-retention/PA-88.3-records-compliance-ediscovery-audit.md) — 8 workflows
+
 
 ### Technology & Data
 
@@ -618,15 +688,15 @@
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-51, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78)
-Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-49–50, VS-56, VS-61, VS-74)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-51, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82)
+Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-49–50, VS-56, VS-61, VS-74, VS-81)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-52, VS-57, VS-64, VS-67)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72)
-Does it involve people/HR?               → People (VS-19)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59)
-Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76)
+Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–88)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 ```
 
 
-*Total: 2700 workflows across 78 value streams · Date: 2026-06-13*
+*Total: 2940 workflows across 88 value streams · Date: 2026-06-14*

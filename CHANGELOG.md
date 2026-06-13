@@ -4,6 +4,44 @@
 
 ---
 
+## 2026-06-14 — Add 10 New Value Streams (240 Workflows, W2753–W2992)
+
+### Added
+Identified 10 business capabilities relevant to the model company that were not yet
+organized as value streams, and authored each as a full 3-process-area / 24-workflow value
+stream (10 × 24 = 240 new workflows, W2753–W2992):
+
+- **VS-79: Tax Management & BIR Statutory Reporting** (Finance) — Indirect tax (VAT/percentage tax) & BIR EIS e-Invoicing; Withholding tax (EWT/CWT) & Form 2307; Corporate income tax, local business tax, DST & BIR audit defense. Consolidates/extends scattered tax touchpoints (W90, W260, W473, W293, W478) into a coherent tax-compliance program.
+- **VS-80: Payment Operations, Acquirer & Settlement Management** (Finance) — Acquirer/PSP/e-wallet/BNPL partner lifecycle; settlement reconciliation & chargeback representment; PCI-DSS, 3DS, tokenization & payment fraud governance across ~2.8M POS transactions/month.
+- **VS-81: Cash-in-Transit, Vault & Armored Car Operations** (Make & Move) — Smart-safe and pickup planning for ~1.2M monthly cash transactions; armored car/vault execution; CIT insurance, risk & cash analytics.
+- **VS-82: Sari-Sari Store & MSME Micro-Wholesale Program** (Sell & Serve) — Acquisition & micro-distribution for the Philippines' ~1.3M sari-sari stores; last-mile micro-wholesale ordering & delivery; MSME credit, digital enablement & growth.
+- **VS-83: Occupational Health, Safety Clinic & Employee Wellness** (People) — Clinic operations & medical case management; pre-employment/APE/DOLE hazard exams & disease surveillance; mental health (RA 11036), EAP & wellness for 6,715 employees.
+- **VS-84: Labor Relations & Collective Bargaining Management** (People) — Union recognition & CBA negotiation/administration; grievance handling, 2-notice rule & DOLE conciliation/NLRC; employee voice & partnership governance.
+- **VS-85: Mandatory Discount, Eligibility & Tax Credit Recovery** (Governance & Assurance) — SC/PWD/Solo Parent discount program (RA 9994/10754/11861); VAT-exempt & zero-rated customer certification; tax credit recovery via BIR Form 2552 & TCC. Program layer over W170/W217/W432.
+- **VS-86: Anti-Financial Crime, AML/KYC & Anti-Corruption** (Governance & Assurance) — First-line KYC/CDD/PEP/sanctions screening; AML transaction monitoring, CTR/STR filing with AMLC; anti-bribery, gifts & conflict-of-interest (AMLA RA 9160/10365, RA 3019, ISO 37001). Operational counterpart to audit workflows W159/W354.
+- **VS-87: Customs Trade Compliance & Tariff Optimization** (Governance & Assurance) — HS tariff classification, valuation & rules of origin; FTA preference (AFTA/RCEP), duty drawback & bonded warehouse; BOC audit defense, broker governance & ADC/CVD for ~40% of COGS imported.
+- **VS-88: Document Control, Records Management & Retention** (Governance & Assurance) — Taxonomy, versioning & access control; retention scheduling (BIR 10-yr, SEC, DOLE, NPC), legal hold & secure disposition; e-Discovery & BIR/SEC/NPC/DOLE records audit.
+
+### Updated
+- Total workflows: **2,700 → 2,940** (+240 new)
+- Total value streams: **78 → 88** (+10 new)
+- Total process areas: **238 → 268** (+30 new)
+- `value-stream-index.md` — added 10 VS rows, 10 detailed map blocks, updated all family subtotals (Make & Move 259→283; Sell & Serve 1074→1098; Finance 339→387; People 74→122; Governance & Assurance 384→480), grand total, and decision tree.
+- `README.md` (workflows) — full rewrite of family tables to complete and accurate 88-VS view (also corrected a pre-existing omission of VS-70/71/72/73/75/76/77/78 from the family tables).
+- `README.md` (repository) — folder structure extended with VS-79–VS-88; counts updated to 2,940 / 88 VS / 268 PA in structure, key metrics, and integration diagram.
+- `executive-summary.md` — workflow count updated to 2,940 across 88 value streams.
+- `workflow-criticality-classification.md` — grand total 2,700→2,940; unclassified 1,533→1,773 (the 240 new workflows are unclassified pending criticality review; flagged many as Tier 1 candidates).
+- `workflow-dependency-map.md` — total 2,700→2,940; VS count 78→88.
+- `workflow-system-touchpoint-map.md` — total 2,700→2,940 (1,167 classified + 1,773 unclassified).
+
+### Verified ✓
+- 10 new VS folders, each with README + 3 PA files = 40 new files.
+- 240 new `## W<number>.` workflow headers (W2753–W2992); 0 duplicate workflow IDs.
+- Family subtotal reconciliation: 308 + 283 + 1,098 + 387 + 122 + 104 + 480 + 158 = 2,940.
+- `07-methodology/validate-repo.sh` passes with 0 errors.
+
+---
+
 ## 2026-06-14 — Consistency Review: Requirement-ID Dedup & Criticality Summary Fix
 
 ### Fixed

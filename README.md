@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 32+ categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      2,700 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 78 value streams · 238 process areas)
+│   ├── workflows/                      2,940 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 88 value streams · 268 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -112,7 +112,17 @@ erpplans/
 │   │   ├── VS-75-digital-engagement-app/          24 workflows (3 process areas)
 │   │   ├── VS-76-multi-region-lgu-compliance/     24 workflows (3 process areas)
 │   │   ├── VS-77-construction-material-staging/   24 workflows (3 process areas)
-│   │   └── VS-78-green-building-advisory/          24 workflows (3 process areas)
+│   │   ├── VS-78-green-building-advisory/          24 workflows (3 process areas)
+│   │   ├── VS-79-tax-management-bir-reporting/     24 workflows (3 process areas)
+│   │   ├── VS-80-payment-operations-acquirer-settlement/ 24 workflows (3 process areas)
+│   │   ├── VS-81-cash-in-transit-vault-armored/    24 workflows (3 process areas)
+│   │   ├── VS-82-sari-sari-msme-micro-wholesale/   24 workflows (3 process areas)
+│   │   ├── VS-83-occupational-health-clinic-wellness/ 24 workflows (3 process areas)
+│   │   ├── VS-84-labor-relations-collective-bargaining/ 24 workflows (3 process areas)
+│   │   ├── VS-85-mandatory-discount-eligibility-tax-credit/ 24 workflows (3 process areas)
+│   │   ├── VS-86-anti-financial-crime-aml-abc/     24 workflows (3 process areas)
+│   │   ├── VS-87-customs-trade-compliance-tariff/  24 workflows (3 process areas)
+│   │   └── VS-88-document-control-records-retention/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -152,7 +162,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 32+ categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **2,700** across 78 value streams, 238 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **2,940** across 88 value streams, 268 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -176,7 +186,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (2,700 WF)    │
+   │  erp-requirements.md ←→ workflows/ (2,940 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -188,6 +198,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
    │                value-stream-index.md              │
-   │            (78 VS · 238 process areas)            │
+   │            (88 VS · 268 process areas)            │
    └───────────────────────────────────────────────────┘
 ```
