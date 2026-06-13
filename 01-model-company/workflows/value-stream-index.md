@@ -8,8 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 88 Value Streams · 268 Process Areas · 2940 Workflows
+8 Families · 84 Value Streams · 256 Process Areas · 2844 Workflows
 ```
+
+> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous; the four value streams will be re-introduced with fully detailed workflows in a future revision. See [CHANGELOG.md](../../CHANGELOG.md) for details.
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -18,22 +20,19 @@
 |  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 81 |
 |  | [VS-41](VS-41-private-label-brand/README.md) | Private Label & Exclusive Brand Management | 3 | 24 |
 |  | [VS-45](VS-45-consignment-vmi-operations/README.md) | Consignment & Vendor-Managed Inventory Operations | 3 | 24 |
-|  | [VS-52](VS-52-cooperative-community-procurement/README.md) | Cooperative & Community Enterprise Procurement | 3 | 24 |
 |  | [VS-57](VS-57-competitive-price-intelligence/README.md) | Competitive Price Intelligence & Monitoring | 3 | 24 |
 |  | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Transition & Clearance | 3 | 24 |
 |  | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Performance Analytics | 3 | 24 |
-| | | | **Subtotal** | **308** |
+| | | | **Subtotal** | **284** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 36 |
 |  | [VS-32](VS-32-returns-reverse-logistics/README.md) | Returns & Reverse Logistics | 3 | 23 |
-|  | [VS-49](VS-49-dark-store-micro-fulfillment/README.md) | Dark Store & Micro-Fulfillment Operations | 3 | 24 |
-|  | [VS-50](VS-50-damage-claims-management/README.md) | Damage & Claims Management | 3 | 24 |
 |  | [VS-56](VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner Management | 3 | 24 |
 |  | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 3 | 24 |
 |  | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | 3 | 24 |
 |  | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car Operations | 3 | 24 |
-| | | | **Subtotal** | **283** |
+| | | | **Subtotal** | **235** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
@@ -48,7 +47,6 @@
 |  | [VS-46](VS-46-government-institutional-sales/README.md) | Government & Institutional B2G Sales | 3 | 24 |
 |  | [VS-47](VS-47-subscription-recurring-services/README.md) | Subscription & Recurring Home Services | 3 | 24 |
 |  | [VS-48](VS-48-retail-media-network/README.md) | Retail Media Network & Vendor Advertising | 3 | 24 |
-|  | [VS-51](VS-51-assembly-kitting-bundling/README.md) | Product Assembly, Kitting & Bundling | 3 | 24 |
 |  | [VS-53](VS-53-warranty-guarantee-management/README.md) | Warranty & Guarantee Management | 3 | 24 |
 |  | [VS-55](VS-55-store-planogram-space-optimization/README.md) | Store Planogram & Space Optimization | 3 | 24 |
 |  | [VS-58](VS-58-coupon-digital-promotions/README.md) | Coupon & Digital Promotions Management | 3 | 24 |
@@ -62,7 +60,7 @@
 |  | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | 3 | 24 |
 |  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 3 | 24 |
 |  | [VS-82](VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | 3 | 24 |
-| | | | **Subtotal** | **1098** |
+| | | | **Subtotal** | **1074** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
@@ -109,7 +107,7 @@
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 | | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **2940** | |
+| | | | **Grand Total** | **2844** | |
 
 ---
 
@@ -147,12 +145,6 @@
 - **PA-45.1** [Consignment Inventory Operations](./VS-45-consignment-vmi-operations/PA-45.1-consignment-inventory-operations.md) — 8 workflows
 - **PA-45.2** [Vendor-Managed Inventory (VMI) Operations](./VS-45-consignment-vmi-operations/PA-45.2-vmi-operations.md) — 8 workflows
 - **PA-45.3** [Consignment & VMI Settlement & Analytics](./VS-45-consignment-vmi-operations/PA-45.3-consignment-vmi-settlement-analytics.md) — 8 workflows
-
-**[VS-52: Cooperative & Community Enterprise Procurement](./VS-52-cooperative-community-procurement/README.md)** (24 workflows)
-
-- **PA-52.1** [Local MSME & Cooperative Vendor Development](./VS-52-cooperative-community-procurement/PA-52.1-local-msme-cooperative-development.md) — 8 workflows
-- **PA-52.2** [Community Sourcing & Artisan Product Integration](./VS-52-cooperative-community-procurement/PA-52.2-community-sourcing-artisan-integration.md) — 8 workflows
-- **PA-52.3** [Social Enterprise Procurement Analytics](./VS-52-cooperative-community-procurement/PA-52.3-social-enterprise-procurement-analytics.md) — 8 workflows
 
 **[VS-57: Competitive Price Intelligence & Monitoring](./VS-57-competitive-price-intelligence/README.md)** (24 workflows)
 
@@ -198,18 +190,6 @@
 - **PA-32.1** [Customer Returns Processing](./VS-32-returns-reverse-logistics/PA-32.1-customer-returns-processing.md) — 9 workflows
 - **PA-32.2** [Vendor Returns & Recovery](./VS-32-returns-reverse-logistics/PA-32.2-vendor-returns-recovery.md) — 7 workflows
 - **PA-32.3** [Reverse Logistics & Disposition](./VS-32-returns-reverse-logistics/PA-32.3-reverse-logistics-disposition.md) — 7 workflows
-
-**[VS-49: Dark Store & Micro-Fulfillment Operations](./VS-49-dark-store-micro-fulfillment/README.md)** (24 workflows)
-
-- **PA-49.1** [Dark Store Setup & Daily Operations](./VS-49-dark-store-micro-fulfillment/PA-49.1-dark-store-setup-daily-operations.md) — 8 workflows
-- **PA-49.2** [Micro-Fulfillment Order Processing & Routing](./VS-49-dark-store-micro-fulfillment/PA-49.2-micro-fulfillment-order-processing.md) — 8 workflows
-- **PA-49.3** [Dark Store Performance & Analytics](./VS-49-dark-store-micro-fulfillment/PA-49.3-dark-store-performance-analytics.md) — 8 workflows
-
-**[VS-50: Damage & Claims Management](./VS-50-damage-claims-management/README.md)** (24 workflows)
-
-- **PA-50.1** [In-Transit Damage & Carrier Claims](./VS-50-damage-claims-management/PA-50.1-in-transit-damage-carrier-claims.md) — 8 workflows
-- **PA-50.2** [In-Store Damage, Shrinkage & Vendor Recovery](./VS-50-damage-claims-management/PA-50.2-in-store-damage-vendor-recovery.md) — 8 workflows
-- **PA-50.3** [Insurance Claims & Loss Documentation](./VS-50-damage-claims-management/PA-50.3-insurance-claims-loss-documentation.md) — 8 workflows
 
 **[VS-56: Third-Party Delivery Partner Management](./VS-56-third-party-delivery-partner/README.md)** (24 workflows)
 
@@ -322,12 +302,6 @@
 - **PA-48.1** [Retail Media Platform & Inventory Management](./VS-48-retail-media-network/PA-48.1-retail-media-platform-inventory.md) — 8 workflows
 - **PA-48.2** [Vendor Advertising Campaign Execution](./VS-48-retail-media-network/PA-48.2-vendor-advertising-campaign-execution.md) — 8 workflows
 - **PA-48.3** [Retail Media Revenue & Analytics](./VS-48-retail-media-network/PA-48.3-retail-media-revenue-analytics.md) — 8 workflows
-
-**[VS-51: Product Assembly, Kitting & Bundling](./VS-51-assembly-kitting-bundling/README.md)** (24 workflows)
-
-- **PA-51.1** [Product Assembly Operations](./VS-51-assembly-kitting-bundling/PA-51.1-product-assembly-operations.md) — 8 workflows
-- **PA-51.2** [Custom Kit & Bundle Creation & Pricing](./VS-51-assembly-kitting-bundling/PA-51.2-custom-kit-bundle-creation.md) — 8 workflows
-- **PA-51.3** [Assembly & Kit Fulfillment & Quality](./VS-51-assembly-kitting-bundling/PA-51.3-assembly-kit-fulfillment-quality.md) — 8 workflows
 
 **[VS-53: Warranty & Guarantee Management](./VS-53-warranty-guarantee-management/README.md)** (24 workflows)
 
@@ -699,4 +673,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 ```
 
 
-*Total: 2940 workflows across 88 value streams · Date: 2026-06-14*
+*Total: 2844 workflows across 84 value streams · Date: 2026-06-14*

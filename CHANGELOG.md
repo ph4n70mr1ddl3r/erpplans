@@ -4,6 +4,72 @@
 
 ---
 
+## 2026-06-14 — Repo Review: Retire VS-49/50/51/52 Placeholder Content, Harden Validator
+
+A second full-repository review identified four value streams whose workflow files had
+been committed with only auto-generated placeholder content (broken H1 headers, generic
+"Process trigger" steps, copy-paste 3-step bodies, and no criticality/dependency/matrix
+references). All other cross-document counts reconciled cleanly.
+
+### Removed
+- **Retired VS-49, VS-50, VS-51, VS-52** (96 placeholder workflows, W2022–W2117) — the four
+  directories under `01-model-company/workflows/` were deleted:
+  - `VS-49-dark-store-micro-fulfillment/` (3 PA files, 24 workflows)
+  - `VS-50-damage-claims-management/` (3 PA files, 24 workflows)
+  - `VS-51-assembly-kitting-bundling/` (3 PA files, 24 workflows)
+  - `VS-52-cooperative-community-procurement/` (3 PA files, 24 workflows)
+  
+  Each PA file had a broken H1 (e.g. `# PA-50.1](PA-50.1-...md — 8`), workflow titles of
+  the form "Workflow 2046 — 8 Process 0", and copy-paste body content. The four VS numbers
+  are intentionally **retired** and will not be reused — the value streams will be reintroduced
+  with fully detailed workflows in a future revision. Existing references to these VS numbers
+  elsewhere have been removed or rewritten.
+
+### Updated counts (repository-wide reconciliation)
+All documents that referenced the old totals were reconciled to the new figures:
+
+| Metric | Old | New |
+|---|---|---|
+| Value streams | 88 | **84** |
+| Process areas | 268 | **256** |
+| Total workflows | 2,940 | **2,844** |
+| Unclassified workflows | 1,773 | **1,677** |
+| Plan & Source subtotal | 308 | 284 |
+| Make & Move subtotal | 283 | 235 |
+| Sell & Serve subtotal | 1,098 | 1,074 |
+
+Files updated (summary table, family tables, footer notes, or grand totals):
+- `README.md` — folder tree, Key Metrics table, Document Relationships diagram, and a new
+  **Coverage & Known Gaps** section disclosing the retired VS numbers and the 1,677
+  workflows still pending criticality classification.
+- `01-model-company/executive-summary.md` — totals line.
+- `01-model-company/workflows/README.md` — Quick Stats, family tables, and reconciliation line.
+- `01-model-company/workflows/value-stream-index.md` — header banner, summary table rows,
+  family subtotals, grand total, detailed VS-49–VS-52 sections removed, and a coverage note.
+- `01-model-company/workflows/workflow-criticality-classification.md` — disclaimer, Summary
+  table, and footer version (bumped to v7.2).
+- `01-model-company/workflows/workflow-dependency-map.md` — header note and footer (v2.3).
+- `01-model-company/workflows/workflow-system-touchpoint-map.md` — footer (v54.0).
+- `01-model-company/workflows/VS-56-third-party-delivery-partner/PA-56.2-delivery-performance-sla.md`
+  — one inline reference to "VS-50" (damage-record routing) rewritten to VS-agnostic wording.
+
+### Hardened
+- **`07-methodology/validate-repo.sh`** — tightened and extended to prevent regressions:
+  - **Check 1** (unclassified workflows) now counts actual classification **table rows**
+    (`^| W...|`) rather than any `\bW\d+\b` token in the file's prose. The old extraction
+    undercounted by ~22 IDs and produced a misleading "1,794 unclassified" figure. The new
+    count reconciles exactly with the file's stated 1,167 classified rows.
+  - **Check 8** (new) — placeholder/skeleton content detector. Flags any PA file containing
+    the known generator-script failure markers: broken H1 (`# PA-X.Y](...`), generic
+    "Workflow NNNN — N Process N" titles, "Process trigger", "Execute standard process step",
+    or "Standard operational risks mitigated by procedural controls". This would have caught
+    VS-49–VS-52 at commit time.
+  - **Check 9** (new) — grand-total reconciler. Asserts that the `Grand Total` row in
+    `value-stream-index.md` equals the actual count of `## W...` headers in PA files. This
+    would have caught the VS-49–VS-52 inflation immediately.
+
+---
+
 ## 2026-06-14 — Repo Review: Fix Dangling W5G Reference & Harden Validator
 
 A full-repository review identified a small number of defects. Investigation narrowed the

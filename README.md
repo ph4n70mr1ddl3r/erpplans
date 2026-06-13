@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      2,940 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 88 value streams · 268 process areas)
+│   ├── workflows/                      2,844 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 84 value streams · 256 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -83,10 +83,6 @@ erpplans/
 │   │   ├── VS-46-government-institutional-sales/ 24 workflows (3 process areas)
 │   │   ├── VS-47-subscription-recurring-services/ 24 workflows (3 process areas)
 │   │   ├── VS-48-retail-media-network/          24 workflows (3 process areas)
-│   │   ├── VS-49-dark-store-micro-fulfillment/  24 workflows (3 process areas)
-│   │   ├── VS-50-damage-claims-management/      24 workflows (3 process areas)
-│   │   ├── VS-51-assembly-kitting-bundling/     24 workflows (3 process areas)
-│   │   ├── VS-52-cooperative-community-procurement/ 24 workflows (3 process areas)
 │   │   ├── VS-53-warranty-guarantee-management/ 24 workflows (3 process areas)
 │   │   ├── VS-54-gift-card-stored-value/        24 workflows (3 process areas)
 │   │   ├── VS-55-store-planogram-space-optimization/ 24 workflows (3 process areas)
@@ -162,11 +158,21 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **2,940** across 88 value streams, 268 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **2,844** across 84 value streams, 256 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
 | Nice to Have Requirements | 6 | `01-model-company/erp-requirements.md` |
+
+## Coverage & Known Gaps
+
+| Coverage Area | Status | Source |
+|---|---|---|
+| Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
+| Workflows | 2,844 fully specified across 84 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,167 of 2,844 workflows classified** (41%); 1,677 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
+| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14); the numbers will not be reused. See [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
 
@@ -186,7 +192,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (2,940 WF)    │
+    │  erp-requirements.md ←→ workflows/ (2,844 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -197,7 +203,7 @@ erpplans/
    │  assumptions-and-      workflow-system-           │
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
-   │                value-stream-index.md              │
-   │            (88 VS · 268 process areas)            │
+    │                value-stream-index.md              │
+    │            (84 VS · 256 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

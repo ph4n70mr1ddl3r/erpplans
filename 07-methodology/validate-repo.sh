@@ -23,10 +23,15 @@ echo ""
 echo "--- Check 1: Unclassified workflow headers ---"
 # Include both ## (h2) primary workflows and ### (h3) sub-workflows (W<number><letter> variants)
 PA_WFS=$(grep -rohP '^#{2,3} W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^#{2,3} //;s/\.$//' | sort -u)
-CLASSIFIED=$(grep -ohP '\bW\d{1,4}[A-Z]?\b' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sort -u)
+# Count classified IDs from actual table rows only (|^W...|) rather than any W\d+ mention in prose.
+# This avoids undercounting from regex token extraction and matches the file's stated 1,167 total.
+CLASSIFIED=$(grep -oP '^\| (W\d+[A-Z]?) \|' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sed -E 's/^\| //;s/ \|$//' | sort -u)
 
 UNCLASSIFIED=$(comm -23 <(echo "$PA_WFS") <(echo "$CLASSIFIED"))
 UNCLASS_COUNT=$(echo "$UNCLASSIFIED" | grep -cP '^W' || true)
+CLASSIFIED_COUNT=$(echo "$CLASSIFIED" | grep -cP '^W' || true)
+
+echo "  Classified table rows: $CLASSIFIED_COUNT | PA workflow headers: $(echo "$PA_WFS" | grep -cP '^W')"
 
 if [ "$UNCLASS_COUNT" -eq 0 ]; then
     ok "All workflow headers in PA files are referenced in criticality classification"
@@ -117,6 +122,34 @@ for doc in \
     error "$(basename "$doc"): $DANGLING_COUNT dangling workflow reference(s): $(echo "$DANGLING" | tr '\n' ' ')"
   fi
 done
+
+# --- Check 8: Placeholder/skeleton workflow content ---
+echo "--- Check 8: Placeholder workflow content ---"
+# Detect auto-generated placeholder workflows. Markers (any one indicates a stub):
+#   - H1 header starting with "# PA-X.Y](..."  (broken markdown from a failed generator run)
+#   - Generic workflow title pattern "Workflow NNNN — N Process N"
+#   - Generic trigger "Process trigger"
+#   - Generic 3-step body "Execute standard process step"
+#   - Generic pain point "Standard operational risks mitigated by procedural controls"
+PLACEHOLDER_FILES=$(grep -rlP '^# PA-\d+\.\d+\]\(|Workflow \d+ — \d+ Process \d|\*\*Trigger\*\* \| Process trigger \|Execute standard process step|Standard operational risks mitigated by procedural controls' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
+PLACEHOLDER_COUNT=$(echo -n "$PLACEHOLDER_FILES" | grep -cP 'PA-' || true)
+
+if [ "$PLACEHOLDER_COUNT" -eq 0 ]; then
+    ok "No placeholder/skeleton workflow files detected"
+else
+    error "$PLACEHOLDER_COUNT PA file(s) contain placeholder workflow content:"
+    echo "$PLACEHOLDER_FILES" | sed 's/^/    /' | head -20
+fi
+
+# --- Check 9: Grand total in value-stream-index matches actual PA file count ---
+echo "--- Check 9: Grand total vs actual workflow count ---"
+GRAND_TOTAL=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | head -1)
+ACTUAL_WFS=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l)
+if [ "$GRAND_TOTAL" = "$ACTUAL_WFS" ]; then
+    ok "Grand total ($GRAND_TOTAL) matches actual PA workflow header count ($ACTUAL_WFS)"
+else
+    error "Grand total ($GRAND_TOTAL) does NOT match actual PA workflow header count ($ACTUAL_WFS)"
+fi
 
 echo ""
 echo "=== Validation Complete ==="

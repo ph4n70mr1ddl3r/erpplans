@@ -47,4 +47,4 @@
 
 ---
 
-*Document Version: 53.0 | Date: 2026-06-14 | Reconciled workflow counts to 2,940 total across repository (1,167 classified + 1,773 unclassified, including the 240 new VS-79–VS-88 workflows added 2026-06-14). All classified and batch workflows mapped.*
+*Document Version: 54.0 | Date: 2026-06-14 | Reconciled workflow counts to 2,844 total across repository (1,167 classified + 1,677 unclassified). VS-49/50/51/52 (96 placeholder workflows) retired during 2026-06-14 repo review; all classified and remaining batch workflows mapped.*

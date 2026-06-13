@@ -79,4 +79,4 @@ erpplans/
 
 ---
 
-*Date: 2026-06-14 (updated counts: 733 requirements, 2,940 workflows across 88 value streams)*
+*Date: 2026-06-14 (updated counts: 733 requirements, 2,844 workflows across 84 value streams; VS-49/50/51/52 retired after placeholder-content review)*

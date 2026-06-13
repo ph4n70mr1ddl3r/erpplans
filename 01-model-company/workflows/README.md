@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Value Streams | 88 |
-| Process Areas | 268 |
-| Workflows | 2,940 |
+| Value Streams | 84 |
+| Process Areas | 256 |
+| Workflows | 2,844 |
 | Classified (Tier 1) | 439 |
 | Classified (Tier 2) | 499 |
 | Classified (Tier 3) | 229 |
@@ -22,7 +22,7 @@
 
 | Document | Purpose |
 |---|---|
-| [value-stream-index.md](value-stream-index.md) | **Master index** — all 88 value streams with workflow counts |
+| [value-stream-index.md](value-stream-index.md) | **Master index** — all 84 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
@@ -32,7 +32,7 @@
 
 ## Value Streams by Family
 
-### Plan & Source (308 workflows)
+### Plan & Source (284 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 46 |
@@ -40,26 +40,23 @@
 | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 81 |
 | [VS-41](VS-41-private-label-brand/README.md) | Private Label & Exclusive Brand | 24 |
 | [VS-45](VS-45-consignment-vmi-operations/README.md) | Consignment & VMI Operations | 24 |
-| [VS-52](VS-52-cooperative-community-procurement/README.md) | Cooperative & Community Procurement | 24 |
 | [VS-57](VS-57-competitive-price-intelligence/README.md) | Competitive Price Intelligence | 24 |
 | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Clearance | 24 |
 | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Analytics | 24 |
 
-### Make & Move (283 workflows)
+### Make & Move (235 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 45 |
 | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 35 |
 | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 36 |
 | [VS-32](VS-32-returns-reverse-logistics/README.md) | Returns & Reverse Logistics | 23 |
-| [VS-49](VS-49-dark-store-micro-fulfillment/README.md) | Dark Store & Micro-Fulfillment | 24 |
-| [VS-50](VS-50-damage-claims-management/README.md) | Damage & Claims Management | 24 |
 | [VS-56](VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner | 24 |
 | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 24 |
 | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Contractor Job Site Delivery | 24 |
 | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car | 24 |
 
-### Sell & Serve (1,098 workflows)
+### Sell & Serve (1,074 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-07](VS-07-store-operations/README.md) | Store Operations | 144 |
@@ -76,7 +73,6 @@
 | [VS-46](VS-46-government-institutional-sales/README.md) | Government & Institutional Sales | 24 |
 | [VS-47](VS-47-subscription-recurring-services/README.md) | Subscription & Recurring Services | 24 |
 | [VS-48](VS-48-retail-media-network/README.md) | Retail Media Network | 24 |
-| [VS-51](VS-51-assembly-kitting-bundling/README.md) | Assembly, Kitting & Bundling | 24 |
 | [VS-53](VS-53-warranty-guarantee-management/README.md) | Warranty & Guarantee Management | 24 |
 | [VS-55](VS-55-store-planogram-space-optimization/README.md) | Planogram & Space Optimization | 24 |
 | [VS-58](VS-58-coupon-digital-promotions/README.md) | Coupon & Digital Promotions | 24 |
@@ -154,6 +150,8 @@
 
 ---
 
-*Family subtotal reconciliation: 308 + 283 + 1,098 + 387 + 122 + 104 + 480 + 158 = 2,940*
+*Family subtotal reconciliation: 284 + 235 + 1,074 + 387 + 122 + 104 + 480 + 158 = 2,844*
+
+> **Note (2026-06-14):** VS-49, VS-50, VS-51 and VS-52 were retired after a repository review found their workflow files contained only auto-generated placeholder content. Their family subtotals above reflect the removal. The four numbers are retired and will not be reused; the value streams will be re-introduced with detailed workflows in a future revision. See [CHANGELOG.md](../../CHANGELOG.md).
 
 *Back to [Model Company](../) · [Repository README](../../README.md)*
