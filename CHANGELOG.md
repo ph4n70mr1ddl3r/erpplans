@@ -4,6 +4,30 @@
 
 ---
 
+## 2026-06-13 — Consistency Review: Standardize PA File Footers
+
+### Fixed
+- **Standardized all 238 PA file footers** to consistent format: `*Workflow Count: N · Back to **[VS-XX: Name](./README.md)** · [Value Stream Index](../value-stream-index.md)*`
+- **Corrected 4 wrong workflow counts in PA footers**:
+  - PA-07.2 (Store Facility & Safety): 44 → 46
+  - PA-11.1 (Trade Account Management): 8 → 10
+  - PA-12.2 (Tool Rental & Equipment): 10 → 9
+  - PA-25.1 (Environmental Monitoring): 12 → 14
+- **Added missing `Workflow Count` footer** to 48 PA files that only had a back-link without a count (PA files across VS-01 through VS-40)
+- **Standardized VS link text** in all PA footers to use readable names (e.g., `VS-50: Damage & Claims Management`) instead of folder slugs (e.g., `VS-50-damage-claims-management`)
+- **Updated WORKFLOW-FORMAT-GUIDE date** to 2026-06-13
+
+### Verified (no changes needed)
+- Grand total: 2,705 workflows across 78 value streams, 238 process areas ✓
+- All 78 VS README totals match actual `## W` header counts ✓
+- All 238 PA-level counts in value-stream-index.md match actual counts ✓
+- Requirements: 733 (431 Must Have + 296 Should Have + 6 Nice to Have) ✓
+- Internal Controls: 67 (31 Preventive + 36 Detective) ✓
+- POS terminal count: 3 per store (600 total) — no stale "5 terminal" references ✓
+- validate-repo.sh passes with 0 errors ✓
+
+---
+
 ## 2026-06-13 — Consistency Review: Reconcile All Cross-Document Counts
 
 ### Fixed
