@@ -4,6 +4,67 @@
 
 ---
 
+## 2026-06-14 — Repo Review: Fix Dangling W5G Reference & Harden Validator
+
+A full-repository review identified a small number of defects. Investigation narrowed the
+scope: most flagged items were validator artifacts, not content defects. The genuinely
+required fixes are below.
+
+### Fixed
+- **W5G (Offline POS Recovery & Reconciliation)** — the only genuinely dangling workflow
+  reference in the repository. It was referenced 15+ times across `PA-07.1`, `PA-08.1`,
+  `workflow-dependency-map.md`, `workflow-system-touchpoint-map.md`, and
+  `requirement-workflow-matrix.md`, but had no definition at any heading level. Added the
+  full `### W5G.` sub-workflow definition inside `## W5. Daily Store Operations`
+  (`PA-07.1-store-daily-management.md`), covering offline-event replay, inventory/void/
+  loyalty reconciliation (NR-3/4/5), settlement matching, and escalation to W48/W37.
+  Existing inline references to `W5G.5` (cross-channel loyalty conflict) are now honored.
+- **`workflow-dependency-map.md` section numbering** — duplicate `## 5.` heading;
+  "Circular Data Loop Risks" and "Dependency Matrix" were both misnumbered. Renumbered
+  to sequential 5 (Critical Path) → 6 (Circular Data Loop Risks) → 7 (Dependency Matrix).
+- **`workflow-system-touchpoint-map.md` duplicate entries** — `W439` was listed twice
+  (Inventory Management) and `W440`/`W442` were each listed twice (Services / Rental).
+  Deduplicated to one entry each.
+- **`README.md` requirement-category count** — stated "32+ categories"; there are actually
+  **38** distinct requirement prefixes. Corrected in both the folder-structure comment and
+  the Key Metrics table (consistent with `erp-requirements.md` which already stated 38).
+
+### Updated
+- **`07-methodology/validate-repo.sh`** — the validator's `\bW\d{1,4}\b` regex silently
+  ignored letter-suffixed sub-workflow IDs (`W<number><letter>`, defined in the
+  `WORKFLOW-FORMAT-GUIDE.md` as sub-workflow/variant notation), and Check 1 only inspected
+  `## ` (h2) headers, missing `### ` (h3) sub-workflow definitions. This is what had
+  masked W5G and produced misleading "unclassified" counts. Hardened as follows:
+  - **Check 1** now extracts headers at both `## ` and `### ` levels, so h3 sub-workflows
+    (W5A–W5G, W12A–C, W2A–C, etc.) are counted.
+  - **Check 6** regex widened to `\bW\d{1,4}[A-Z]?\b` so letter-suffixed references in the
+    requirement-workflow matrix are validated.
+  - **Check 7 (new)** scans all four cross-reference documents (dependency map, touchpoint
+    map, requirement-workflow matrix, internal-controls matrix) for workflow IDs that are
+    referenced but never defined as a `## `/`### ` header in any PA file. Dangling
+    references are reported as **errors** (this check would have caught W5G pre-fix).
+
+### Reviewed — no action needed (corrected from initial review)
+- **Letter-suffixed workflow IDs were NOT dangling.** 23 of 24 such IDs in the criticality
+  file are legitimately defined as `### ` (h3) sub-workflows (e.g. `W5A`, `W12A`, `W2A`,
+  `W7C`), and 2 (`W2C`, `W19B`) as `## ` (h2) workflows — exactly per the format guide's
+  `W<number><letter>` sub-workflow convention. The initial review's "24 dangling IDs"
+  claim was a validator-regex artifact, now resolved by the validator hardening above.
+- **Criticality sub-section counts reconcile.** All 42 domain sections and 3 "Tier N
+  Additions" sections sum to exactly 1,167 classified rows (486 domain + 681 tier
+  additions), matching the stated grand total. The initial review's "sums to ~490" finding
+  was an off-by-one in the ad-hoc awk used during review.
+
+### Verified ✓
+- `07-methodology/validate-repo.sh` passes with **0 errors** (1 informational warning on
+  the acknowledged ~1,793 unclassified workflows pending criticality review).
+- New **Check 7** reports 0 dangling references across all 4 cross-reference documents.
+- All 268 PA file footers still match their `## ` header counts (0 mismatches).
+- Total defined workflow IDs: **2,963** (2,940 h2 primary + 23 h3 sub-workflows),
+  0 duplicates.
+
+---
+
 ## 2026-06-14 — Add 10 New Value Streams (240 Workflows, W2753–W2992)
 
 ### Added

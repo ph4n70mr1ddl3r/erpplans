@@ -602,7 +602,7 @@ These workflows are prerequisites for the largest number of downstream workflows
 
 ---
 
-## 5. Circular Data Loop Risks
+## 6. Circular Data Loop Risks
 
 The following circular data flows must be managed during steady-state operations:
 
@@ -615,7 +615,7 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-## 6. Dependency Matrix (Summary Table)
+## 7. Dependency Matrix (Summary Table)
 
 | Upstream → Downstream | Dependency Type | Impact if Missing |
 |---|---|---|

@@ -21,7 +21,8 @@ echo ""
 
 # --- Check 1: Workflow IDs in PA files that are NOT in criticality classification ---
 echo "--- Check 1: Unclassified workflow headers ---"
-PA_WFS=$(grep -ohP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed 's/^## //;s/\.$//' | sort -u)
+# Include both ## (h2) primary workflows and ### (h3) sub-workflows (W<number><letter> variants)
+PA_WFS=$(grep -rohP '^#{2,3} W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^#{2,3} //;s/\.$//' | sort -u)
 CLASSIFIED=$(grep -ohP '\bW\d{1,4}[A-Z]?\b' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sort -u)
 
 UNCLASSIFIED=$(comm -23 <(echo "$PA_WFS") <(echo "$CLASSIFIED"))
@@ -84,8 +85,9 @@ fi
 
 # --- Check 6: W-numbers in requirement-workflow matrix that don't exist in PA files ---
 echo "--- Check 6: Matrix workflow references ---"
-MATRIX_WFS=$(grep -ohP '\bW\d{1,4}\b' "$REPO_ROOT"/01-model-company/requirement-workflow-matrix.md | sort -u)
-PA_ALL=$(grep -ohP '\bW\d{1,4}\b' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md | sort -u)
+# Include letter-suffixed sub-workflow IDs (W<number><letter>) via the [A-Z]? qualifier
+MATRIX_WFS=$(grep -ohP '\bW\d{1,4}[A-Z]?\b' "$REPO_ROOT"/01-model-company/requirement-workflow-matrix.md | sort -u)
+PA_ALL=$(grep -ohP '\bW\d{1,4}[A-Z]?\b' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md | sort -u)
 MISSING=$(comm -23 <(echo "$MATRIX_WFS") <(echo "$PA_ALL") | head -20)
 MISSING_COUNT=$(comm -23 <(echo "$MATRIX_WFS") <(echo "$PA_ALL") | wc -l)
 if [ "$MISSING_COUNT" -le 5 ]; then
@@ -94,6 +96,27 @@ else
     warn "$MISSING_COUNT W-numbers in requirement-workflow matrix not found in PA file headers"
     echo "  First 10: $(echo "$MISSING" | head -10 | tr '\n' ' ')"
 fi
+
+# --- Check 7: Dangling workflow references in cross-reference docs ---
+echo "--- Check 7: Dangling workflow references ---"
+# All workflow IDs actually defined as a header (## or ###) in any PA file
+DEFINED_WFS=$(grep -rohP '^#{2,3} W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^#{2,3} //;s/\.$//' | sort -u)
+DANGLING_TOTAL=0
+for doc in \
+  "$REPO_ROOT"/01-model-company/workflows/workflow-dependency-map.md \
+  "$REPO_ROOT"/01-model-company/workflows/workflow-system-touchpoint-map.md \
+  "$REPO_ROOT"/01-model-company/requirement-workflow-matrix.md \
+  "$REPO_ROOT"/01-model-company/internal-controls-matrix.md; do
+  REFS=$(grep -ohP '\bW\d{1,4}[A-Z]?\b' "$doc" 2>/dev/null | sort -u)
+  DANGLING=$(comm -23 <(echo "$REFS") <(echo "$DEFINED_WFS") | grep -P '^W' || true)
+  DANGLING_COUNT=$(echo "$DANGLING" | grep -cP '^W' || true)
+  DANGLING_TOTAL=$((DANGLING_TOTAL + DANGLING_COUNT))
+  if [ "$DANGLING_COUNT" -eq 0 ]; then
+    ok "$(basename "$doc"): no dangling workflow references"
+  else
+    error "$(basename "$doc"): $DANGLING_COUNT dangling workflow reference(s): $(echo "$DANGLING" | tr '\n' ' ')"
+  fi
+done
 
 echo ""
 echo "=== Validation Complete ==="

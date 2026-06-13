@@ -27,7 +27,7 @@ erpplans/
 ├── README.md                    ← You are here
 ├── 01-model-company/            ← Complete model company profile, requirements & workflows
 │   ├── model-company-profile.md       Company profile, operations, financials
-│   ├── erp-requirements.md            733 requirements across 32+ categories
+│   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
 │   ├── workflows/                      2,940 workflows organized by value stream
 │   │   ├── value-stream-index.md              Master index (8 families · 88 value streams · 268 process areas)
@@ -161,7 +161,7 @@ erpplans/
 
 | Metric | Value | Source |
 |---|---|---|
-| Requirements | **733** across 32+ categories | `01-model-company/erp-requirements.md` |
+| Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
 | Workflows (total) | **2,940** across 88 value streams, 268 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
