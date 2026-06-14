@@ -1008,11 +1008,11 @@
 
 - **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 3,420 workflows across 108 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: spans the full 3,708 workflows across 120 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-14 (v53 — gap-analysis Pass 6: added VS-109–VS-112 (96 workflows W3473–W3568: Store Remodel/Renovation/Lifecycle Refurbishment, Freight Procurement/Carrier Management/Freight Audit, Packaging/Pallet/RTI Management, Corporate Project & Program Management Office (PMO)); updated totals to 3,420 workflows / 108 value streams. Requirement-to-workflow mappings for the new value streams will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
+*Date: 2026-06-14 (v54 — gap-analysis Pass 9: added VS-121–VS-124 (96 workflows W3761–W3856: Talent Acquisition/Employer Brand & Candidate Experience, Global Sourcing/Import Buying & Sourcing Agent Management, Skilled-Trade Apprenticeship/Vocational Education & Capability Pipeline, Sales Enablement/Product Knowledge Mastery & Clienteling); updated totals to 3,708 workflows / 120 value streams. Requirement-to-workflow mappings for the Pass 7–Pass 9 value streams (VS-113–VS-124) will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v53 added VS-109–VS-112 via Pass 6; prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*

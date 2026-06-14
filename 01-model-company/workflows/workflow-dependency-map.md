@@ -1,8 +1,8 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 3,612 total workflows, 1,167 are classified into
-> criticality tiers; 2,445 remain unclassified and default to Tier 2 pending review.
+> relationships for system functions. Of 3,708 total workflows, 1,167 are classified into
+> criticality tiers; 2,541 remain unclassified and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
@@ -634,4 +634,4 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-*Date: 2026-06-14 | Workflow Dependency Map v2.10 — covers prerequisite relationships for 1,167 classified workflows across 116 value streams with hard/soft/integration dependencies. Total repository workflows: 3,612. (The 96 workflows in VS-89–VS-92, the 96 workflows in VS-93–VS-96, the 96 workflows in VS-97–VS-100, the 96 workflows in VS-101–VS-104, the 96 workflows in VS-105–VS-108, the 96 workflows in VS-109–VS-112, the 96 workflows in VS-113–VS-116, and the 96 workflows in VS-117–VS-120, added 2026-06-14 via eight gap-analysis passes, are unclassified and reference classified upstream dependencies via cross-links in their PA files; they will be incorporated into the dependency graph during the next classification pass.)*
+*Date: 2026-06-14 | Workflow Dependency Map v2.11 — covers prerequisite relationships for 1,167 classified workflows across 120 value streams with hard/soft/integration dependencies. Total repository workflows: 3,708. (The 96 workflows in VS-89–VS-92, the 96 workflows in VS-93–VS-96, the 96 workflows in VS-97–VS-100, the 96 workflows in VS-101–VS-104, the 96 workflows in VS-105–VS-108, the 96 workflows in VS-109–VS-112, the 96 workflows in VS-113–VS-116, and the 96 workflows in VS-117–VS-120, and the 96 workflows in VS-121–VS-124, added 2026-06-14 via nine gap-analysis passes, are unclassified and reference classified upstream dependencies via cross-links in their PA files; they will be incorporated into the dependency graph during the next classification pass.)*

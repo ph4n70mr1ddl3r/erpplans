@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> Pass 5, Pass 6, Pass 7, and Pass 8, all 2026-06-14).
+> Pass 5, Pass 6, Pass 7, Pass 8, and Pass 9, all 2026-06-14).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -38,7 +38,13 @@ identify capability gaps not addressed by any existing value stream.
    to be either a single workflow within another value stream ripe for elevation (W447 DTI-BPS in
    VS-22.1; W348 Revenue Assurance in VS-21.3; W2943 ABC-Whistleblower in VS-86.3) or genuinely
    uncovered with no dedicated owner and only incidental references (RA 11285 energy-efficiency
-   compliance across 14 PA files with zero dedicated headers).
+   compliance across 14 PA files with zero dedicated headers). For Pass 9, every candidate gap was
+   confirmed to be genuinely uncovered with **zero** dedicated PA-file references for the defining
+   terms ('candidate experience' / 'career site' / 'talent community' for VS-121; 'global sourcing' /
+   'sourcing agent' / 'overseas buying office' for VS-122; 'apprenticeship program' for VS-123;
+   'clienteling' for VS-124) and only incidental single-workflow references to the broader capability
+   (employer brand in 3 PA files, vocational/TESDA participation in 4, product knowledge in 33 with
+   no dedicated owner), each scoped to be distinct from adjacent covered capabilities.
 5. **Prioritize** gaps by operational criticality, regulatory exposure, and volume, and select the
    set to fill in each revision pass.
 
@@ -82,6 +88,10 @@ identify capability gaps not addressed by any existing value stream.
 | 32 | **Revenue Assurance, Pricing Integrity & Leakage Management** | ~PHP 62.3B revenue / 2.8M monthly POS transactions across 600 terminals / ~42,900 ecommerce orders/month / ~600K loyalty members / gift-card / marketplace-3P / catch-weight selling; retail revenue leakage benchmarks 1–3% of gross revenue = **PHP 0.6B–1.9B/yr** at risk from pricing, promo/loyalty/gift-card, refund/reversal, catch-weight/weighing, discount-stacking, VAT/tax, payment/MDR, and settlement leakage | **New gap (Pass 8)** — only the single monthly-audit workflow **W348** in VS-21.3 existed; VS-23 addresses inventory shrink (a different vector), VS-17.4 reports revenue, VS-08 executes the transaction — no value stream owned the continuous, all-channel revenue-assurance / leakage-detection / recovery program | **FILLED — VS-118** |
 | 33 | **Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program** | 6,715 employees + ~10–20% contingent labor across 200 stores/4 DCs/5 entities; ~800–1,000 vendors; ~10% B2G + ~30% B2B revenue (ABC exposure); cash/data handling at scale — an enterprise speak-up channel, independent investigation, and whistleblower protection is a governance expectation (board audit/risk oversight, ISO 37001/37301) | **New gap (Pass 8)** — only the single ABC-specific workflow **W2943** in VS-86.3 existed; VS-21 audits controls, VS-100 manages litigation, VS-23 investigates theft, VS-84 handles grievances, VS-103 runs HR cases — no value stream owned the multi-channel intake / triage / investigation / retaliation-protection / culture / analytics program across **all** violation types | **FILLED — VS-119** |
 | 34 | **Energy Efficiency, Conservation & RA 11285 Compliance Program** | ~205 large energy-consuming sites (200 stores at 8,000–15,000 sqm + 4 DCs + HQ) are RA 11285 (Energy Efficiency & Conservation Act, 2019) designated establishments with statutory obligations: designate an Energy Efficiency Officer, conduct mandatory energy audits (Type-1 every 3 yrs / Type-2 annually), prepare and submit an Energy Conservation Plan and annual reporting to DOE; energy is a material cost line and decarbonization lever | **New gap (Pass 8)** — referenced incidentally across 14 PA files (W692/W1543 energy consumption in VS-25.1, W701/W1563 in VS-20.3, W111 utility bill, VS-108 own-generation) with **zero** dedicated workflow headers; VS-25 reports the footprint, VS-108 generates clean energy, VS-34 buys transactionally — no value stream owned the RA 11285 compliance program / ISO 50001 EnMS / ECM pipeline / M&V / energy-procurement-retail-competition discipline | **FILLED — VS-120** |
+| 35 | **Talent Acquisition, Employer Brand & Candidate Experience** | ~1,200–1,600 hires/yr at 15–20% turnover across a 5-entity, 205-location, ~6,715-employee group competing for scarce corporate *and* trade-knowledgeable frontline talent in the Philippine market; the strategic candidate-side discipline (EVP, career site, candidate experience, sourcing-channel strategy, talent community, campus/vocational feeder, candidate NPS, TA operations) directly drives time-to-fill, cost-per-hire, offer-acceptance, and early-attrition | **New gap (Pass 9)** — VS-19.1 executes recruitment *transaction* processing only (W15/W179/W715/W682) and VS-103.2 owns the *employee* experience; 'candidate experience', 'career site', and 'talent community' each appeared in **zero** PA files and 'employer brand' only incidentally (3 PA files) — no value stream owned the *attraction and candidate-side* discipline | **FILLED — VS-121** |
+| 36 | **Global Sourcing, Import Buying & Sourcing Agent Management** | ~40% of COGS imported (~PHP 17–18B/yr), ~400 international vendors across China/Taiwan/Indonesia/Malaysia/Japan/Europe, ~400–600 import TEUs/month, ~PHP 1.4B/month import value, commodity-intensive assortment; the strategic source-side discipline (source-market/country strategy, sourcing-model decision, sourcing-agent/overseas-buying-office governance, import vendor development, consolidated container buying, total-landed-cost sourcing) materially drives COGS, availability, and supply-base resilience | **New gap (Pass 9)** — VS-02.2 executes operational import/customs, VS-03 executes transactional vendor/PO, VS-87 customs compliance, VS-31/VS-41 quality/factory audit; 'global sourcing', 'sourcing agent', and 'overseas buying office' each appeared in **zero** PA files — no value stream owned the *strategic source-side* discipline | **FILLED — VS-122** |
+| 37 | **Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline** | BuildRight's differentiation is knowledgeable trade staff (lumber/tile/plumbing/electrical/paint/tools) plus fabrication/estimation/installation specialists, in a Philippine market where trade certification runs through the TESDA (RA 7796) NC/COC framework and such talent is scarce; a structured apprenticeship/vocational capability pipeline is the primary lever on service quality, attach, and the credible "home-building partner" positioning | **New gap (Pass 9)** — VS-19.4 runs general employee L&D/competency, VS-12.3 W1556 is a single TESDA school career-day *participation* workflow, VS-43.3 trains trade *customers*; 'apprenticeship program' appeared in **zero** PA files and 'vocational' only incidentally (4) — no value stream owned BuildRight's *own* structured apprenticeship and vocational feeder | **FILLED — VS-123** |
+| 38 | **Sales Enablement, Product Knowledge Mastery & Clienteling** | ~5,800 store staff serving 2.8M monthly POS transactions, ~PHP 1,800 ATV, ~40% B2B/trade revenue, ~600K loyalty members; associate selling effectiveness (product-knowledge mastery, consultative selling, clienteling/customer-360 at POS, attachment/linked/category selling, trade-pro consultative selling) is the single largest controllable lever on basket size, conversion, attach, and trade-pro capture | **New gap (Pass 9)** — product knowledge referenced across ~33 PA files and product training ~13 with **no dedicated owner**; 'clienteling' appeared in **zero** PA files and 'sales enablement'/'selling skills' in 2/1 — VS-19.4 owns general L&D, VS-13 loyalty/CRM, VS-07 daily store execution, VS-09 in-store services — no value stream owned the *associate selling-effectiveness* discipline | **FILLED — VS-124** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -231,21 +241,34 @@ across 14 PA files with zero dedicated headers):
 | [VS-119](VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/README.md) | Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program | Governance & Assurance | 3 | 24 | W3713–W3736 |
 | [VS-120](VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/README.md) | Energy Efficiency, Conservation & RA 11285 Compliance Program | Asset & Infrastructure | 3 | 24 | W3737–W3760 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8)
+**Pass 9** (W3761–W3856): four value streams, 12 process areas, 96 workflows, deliberately
+strengthening the thinnest family by workflow count (**People** +48, the thinnest at 194 workflows)
+while also filling one genuine gap each in **Plan & Source** and **Sell & Serve**. Each gap had been
+previously overlooked because it was genuinely uncovered with **zero** PA-file references for its
+defining terms and only incidental single-workflow references to the broader capability:
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 (current) |
-|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 |
-| Finance | 411 | 411 | 435 | 435 | 459 | **483** (+24) |
-| People | 146 | 194 | 194 | 194 | 194 | 194 |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | **224** (+24) |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | **648** (+48) |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | **116** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | **352** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-121](VS-121-talent-acquisition-employer-brand-candidate-experience/README.md) | Talent Acquisition, Employer Brand & Candidate Experience | People | 3 | 24 | W3761–W3784 |
+| [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | Plan & Source | 3 | 24 | W3785–W3808 |
+| [VS-123](VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/README.md) | Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline | People | 3 | 24 | W3809–W3832 |
+| [VS-124](VS-124-sales-enablement-product-knowledge-clienteling/README.md) | Sales Enablement, Product Knowledge Mastery & Clienteling | Sell & Serve | 3 | 24 | W3833–W3856 |
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 (current) |
+|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | **380** (+24) |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | **1,146** (+24) |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | **242** (+48) |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | **120** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | **356** (+12) |
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
@@ -290,13 +313,38 @@ market-surveillance controls, revenue-assurance pricing/promo/loyalty/refund/set
 and leakage-recovery controls, speak-up confidentiality/retaliation-protection/investigation-
 independence controls, and RA 11285 designated-establishment/audit/reporting controls).
 
+Pass 9 deliberately strengthened the thinnest family by workflow count — **People** (194 → 242,
++48 via VS-121 Talent Acquisition/Employer Brand & Candidate Experience + VS-123 Skilled-Trade
+Apprenticeship/Vocational Education & Capability Pipeline) — and added one value stream each to
+**Plan & Source** (356 → 380 via VS-122 Global Sourcing/Import Buying & Sourcing Agent Management)
+and **Sell & Serve** (1,122 → 1,146 via VS-124 Sales Enablement/Product Knowledge Mastery &
+Clienteling). Each gap had been previously overlooked because it was genuinely uncovered — the
+defining terms 'candidate experience'/'career site'/'talent community', 'global sourcing'/'sourcing
+agent'/'overseas buying office', 'apprenticeship program', and 'clienteling' each appeared in **zero**
+PA files — with only incidental single-workflow references to the broader capability (employer
+brand in 3 PA files, vocational/TESDA participation in 4, product knowledge in 33 with no dedicated
+owner). After Passes 1–8 had filled the genuinely-uncovered *operational* and *statutory*
+capabilities across Make & Move, Asset & Infrastructure, Technology & Data, Finance, and
+Governance & Assurance, the remaining genuinely-uncovered capabilities are the *strategic
+people-attraction and selling-effectiveness* disciplines that naturally live in People, Plan &
+Source, and Sell & Serve. None of the four follows the single-workflow-elevation pattern; all four
+are genuinely-uncovered strategic disciplines with no dedicated owner.
+
+The 96 new workflows added in Pass 9 are currently **unclassified** (counted in the 2,541-workflow
+unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
+Pass 1–Pass 8 batches were handled. Several Pass 9 workflows are anticipated Tier 1 (candidate
+consent/RA 10173 and equal-opportunity controls in VS-121, sourcing sanctions/ABC and
+import-vendor trade-compliance gating controls in VS-122, TESDA/DOLE apprenticeship-compliance
+and trade-safety controls in VS-123, and clienteling RA 10173/associate-fairness and selling-
+quality controls in VS-124).
+
 ---
 
 ## 5. Validation
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,612) matches actual PA workflow header count (3,612). ✅
+- Grand total (3,708) matches actual PA workflow header count (3,708). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -350,6 +398,15 @@ independence controls, and RA 11285 designated-establishment/audit/reporting con
   (W447 DTI-BPS in VS-22.1, W348 Revenue Assurance in VS-21.3, W2943 ABC-Whistleblower in VS-86.3)
   and one was genuinely uncovered with only incidental references (RA 11285 energy-efficiency
   compliance across 14 PA files with zero dedicated headers).
+- **Talent Acquisition/Employer Brand & Candidate Experience**, **Global Sourcing/Import Buying &
+  Sourcing Agent Management**, **Skilled-Trade Apprenticeship/Vocational Education & Capability
+  Pipeline**, and **Sales Enablement/Product Knowledge Mastery & Clienteling** — **filled** by
+  VS-121, VS-122, VS-123, and VS-124 (Pass 9); all four were genuinely uncovered strategic
+  disciplines whose defining terms ('candidate experience'/'career site'/'talent community',
+  'global sourcing'/'sourcing agent'/'overseas buying office', 'apprenticeship program', and
+  'clienteling') each appeared in zero PA files, with only incidental single-workflow references to
+  the broader capability (employer brand in 3 files, vocational/TESDA participation in 4, product
+  knowledge in 33 with no dedicated owner).
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.
@@ -383,6 +440,44 @@ independence controls, and RA 11285 designated-establishment/audit/reporting con
 - **Performance/capacity of PA 53-file 'calibration' mentions** — *considered as elevation*
   (like Pass 5 elevated W324 SCF) but elevated here to a dedicated value stream (VS-115) because the
   references had no owning PA and spanned revenue, quality, compliance, and HSE impact.
+
+### Candidate gaps considered but rejected in Pass 9 (adequate coverage)
+
+- **In-store events / DIY workshops / community engagement** — covered comprehensively by PA-12.3
+  (Workshops & Events, 10 workflows: W147/W906/W1289/W1377/W1378/W1379/W1556/W1557 incl. instructor
+  recruitment, registration/waitlist, vendor demo days, TESDA/school career-day participation, and
+  seasonal workshop series with conversion-funnel management).
+- **Supplier ESG / sustainable sourcing / responsible procurement** — covered by VS-25.2 (W195
+  Sustainable Sourcing & Ethical Vendor Audit, W1176 Green Procurement & Sustainable Vendor
+  Certification, W1480 Supplier Diversity), VS-78 green-building product curation, and source-side
+  audits in VS-122.2/VS-31/VS-41; three dedicated workflows within ESG plus the new global-sourcing
+  source-side governance make this substantially covered.
+- **Organizational design / capability framework / strategic workforce planning** — covered by
+  VS-103.3 (People Analytics, Workforce Planning & HR Technology) for workforce planning and
+  VS-102.1 (Job Architecture, Pay Structure & Market Benchmarking) for job architecture/org-design
+  inputs, with VS-33.1 corporate planning linkage; the *strategic* org-design layer is owned across
+  these rather than as a standalone value stream.
+- **B2B punchout / hosted catalog / procurement integration** — covered by W1242 (E-Commerce B2B
+  Corporate Punchout Catalog & Procurement Integration, cXML/OCI) in VS-10.1 plus VS-11 trade/B2B
+  and VS-65 marketplace integration.
+- **Vendor EDI / ASN / B2B integration** — covered by VS-03.4 (Vendor Portal & Collaboration),
+  VS-110.2 (Freight Execution/Routing Guide/Visibility), VS-15.1 (Invoice Processing & Matching),
+  and the integration architecture in VS-113; EDI/ASN is a system-of-record integration discipline
+  distributed across these rather than a standalone operational value stream.
+- **Insurance program / risk financing / total cost of risk** — covered by PA-26.3 (Insurance
+  Claims & Policy Management, incl. W862 annual renewal and W1565 annual portfolio review/coverage-
+  gap analysis/market benchmarking) in VS-26.
+- **Construction-site / jobsite HSE (DOLE D.O. 13)** — covered by W789 (Construction Safety
+  Management & DOLE DO 13 Compliance) in VS-20.2 for BuildRight construction projects, with field
+  safety for dispatched crews in VS-12.1/VS-24.
+- **Open innovation / R&D / corporate venture / pilot-to-scale** — covered by VS-30.1 (Emerging
+  Technology & PoC, incl. W691 scouting/evaluation and W690 digital-transformation portfolio) and
+  VS-30.2 (AI/ML & Automation); emerging tech is owned there rather than as a standalone value
+  stream.
+- **Clienteling-adjacent: personalization / recommendation engine / customer 360** — covered by
+  W200 (AI personalization/recommendation) in VS-30.2, VS-13.3 (Customer Data & CRM), and the new
+  VS-124 clienteling tool (W3844); the *data/ML* layer is owned across these, while VS-124 owns the
+  *associate-side selling* discipline that was the genuine gap.
 
 ### Candidate gaps considered but rejected in Pass 8 (adequate coverage)
 

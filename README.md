@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      3,612 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 116 value streams · 352 process areas)
+│   ├── workflows/                      3,708 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 120 value streams · 356 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -146,7 +146,15 @@ erpplans/
 │   │   ├── VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/ 24 workflows (3 process areas)
 │   │   ├── VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/ 24 workflows (3 process areas)
 │   │   ├── VS-115-calibration-metrology-and-measurement-traceability-management/ 24 workflows (3 process areas)
-│   │   └── VS-116-performance-bond-surety-and-bank-guarantee-management/ 24 workflows (3 process areas)
+│   │   ├── VS-116-performance-bond-surety-and-bank-guarantee-management/ 24 workflows (3 process areas)
+│   │   ├── VS-117-dti-bps-product-standards-certification-ps-mark-icc-compliance/ 24 workflows (3 process areas)
+│   │   ├── VS-118-revenue-assurance-pricing-integrity-and-leakage-management/ 24 workflows (3 process areas)
+│   │   ├── VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/ 24 workflows (3 process areas)
+│   │   ├── VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/ 24 workflows (3 process areas)
+│   │   ├── VS-121-talent-acquisition-employer-brand-candidate-experience/ 24 workflows (3 process areas)
+│   │   ├── VS-122-global-sourcing-import-buying-sourcing-agent-management/ 24 workflows (3 process areas)
+│   │   ├── VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/ 24 workflows (3 process areas)
+│   │   └── VS-124-sales-enablement-product-knowledge-clienteling/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -186,7 +194,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **3,612** across 116 value streams, 352 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **3,708** across 120 value streams, 356 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -197,10 +205,10 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 3,612 fully specified across 116 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,167 of 3,612 workflows classified** (32%); 2,445 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 3,708 fully specified across 120 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,167 of 3,708 workflows classified** (31%); 2,541 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14). Two 2026-06-14 gap-analysis passes filled all four capability gaps: VS-90 ↔ former VS-50, VS-92 ↔ former VS-51, VS-89 (Product Recall) and VS-91 (Consumer Data Privacy) added new; then VS-93 ↔ former VS-49, VS-94 ↔ former VS-52, plus VS-95 (Marketplace Operator) and VS-96 (Equipment Leasing) added new. A third 2026-06-14 gap-analysis pass added VS-97 (Corporate Real Estate & Property Portfolio), VS-98 (Contingent & Outsourced Workforce), VS-99 (IT Asset & Technology Lifecycle), and VS-100 (Legal Operations, Litigation & IP) to strengthen the previously-thinnest operating families. A fourth 2026-06-14 gap-analysis pass added VS-101 (Merchandise Financial Planning, OTB & Margin Management), VS-102 (Compensation, Benefits & Total Rewards), VS-103 (HR Shared Services, Employee Experience & People Analytics), and VS-104 (Government Affairs, Public Policy & Industry Relations) — each filling a capability previously conflated with an adjacent covered one. A fifth 2026-06-14 gap-analysis pass added VS-105 (Supply Chain Finance & Working Capital Management), VS-106 (Commodity & Input-Cost Risk Management), VS-107 (Strategic Key Account & Enterprise Customer Management), and VS-108 (On-Site Renewable Energy & Prosumer Asset Operations) — each filling a capability previously touched only as a single workflow within another value stream or conflated with an adjacent covered one. A sixth 2026-06-14 gap-analysis pass added VS-109 (Store Remodel, Renovation & Lifecycle Refurbishment Program), VS-110 (Freight Procurement, Carrier Management & Freight Audit), VS-111 (Packaging, Pallet & Returnable Transport Item (RTI) Management), and VS-112 (Corporate Project & Program Management Office (PMO)) — each filling a capability previously uncovered or sprinkled across multiple value streams (remodel-execution vs capex-accounting/opening/closure; freight-spend vs logistics-execution/import; packaging-asset vs DC/inventory/waste; and project-portfolio governance vs capex-accounting/strategic-planning respectively). A seventh 2026-06-14 gap-analysis pass added VS-113 (Enterprise Architecture, Application Portfolio & Technology Strategy), VS-114 (Dangerous Goods & Hazmat Transport, Ecommerce & Regulatory Compliance), VS-115 (Calibration, Metrology & Measurement Traceability Management), and VS-116 (Performance Bond, Surety & Bank Guarantee Management) — each filling a capability previously genuinely uncovered ('enterprise architecture' appeared in zero PA files), sprinkled across 50+ files with no owner (calibration/metrology), distinct from fixed-site HSE storage (DG transport/ecommerce/regulatory), or sprinkled across B2G/B2B/treasury (performance bonds/surety). The retired numbers remain unused. See [CHANGELOG.md](CHANGELOG.md) | — |
+| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14). Two 2026-06-14 gap-analysis passes filled all four capability gaps: VS-90 ↔ former VS-50, VS-92 ↔ former VS-51, VS-89 (Product Recall) and VS-91 (Consumer Data Privacy) added new; then VS-93 ↔ former VS-49, VS-94 ↔ former VS-52, plus VS-95 (Marketplace Operator) and VS-96 (Equipment Leasing) added new. A third 2026-06-14 gap-analysis pass added VS-97 (Corporate Real Estate & Property Portfolio), VS-98 (Contingent & Outsourced Workforce), VS-99 (IT Asset & Technology Lifecycle), and VS-100 (Legal Operations, Litigation & IP) to strengthen the previously-thinnest operating families. A fourth 2026-06-14 gap-analysis pass added VS-101 (Merchandise Financial Planning, OTB & Margin Management), VS-102 (Compensation, Benefits & Total Rewards), VS-103 (HR Shared Services, Employee Experience & People Analytics), and VS-104 (Government Affairs, Public Policy & Industry Relations) — each filling a capability previously conflated with an adjacent covered one. A fifth 2026-06-14 gap-analysis pass added VS-105 (Supply Chain Finance & Working Capital Management), VS-106 (Commodity & Input-Cost Risk Management), VS-107 (Strategic Key Account & Enterprise Customer Management), and VS-108 (On-Site Renewable Energy & Prosumer Asset Operations) — each filling a capability previously touched only as a single workflow within another value stream or conflated with an adjacent covered one. A sixth 2026-06-14 gap-analysis pass added VS-109 (Store Remodel, Renovation & Lifecycle Refurbishment Program), VS-110 (Freight Procurement, Carrier Management & Freight Audit), VS-111 (Packaging, Pallet & Returnable Transport Item (RTI) Management), and VS-112 (Corporate Project & Program Management Office (PMO)) — each filling a capability previously uncovered or sprinkled across multiple value streams (remodel-execution vs capex-accounting/opening/closure; freight-spend vs logistics-execution/import; packaging-asset vs DC/inventory/waste; and project-portfolio governance vs capex-accounting/strategic-planning respectively). A seventh 2026-06-14 gap-analysis pass added VS-113 (Enterprise Architecture, Application Portfolio & Technology Strategy), VS-114 (Dangerous Goods & Hazmat Transport, Ecommerce & Regulatory Compliance), VS-115 (Calibration, Metrology & Measurement Traceability Management), and VS-116 (Performance Bond, Surety & Bank Guarantee Management) — each filling a capability previously genuinely uncovered ('enterprise architecture' appeared in zero PA files), sprinkled across 50+ files with no owner (calibration/metrology), distinct from fixed-site HSE storage (DG transport/ecommerce/regulatory), or sprinkled across B2G/B2B/treasury (performance bonds/surety). An eighth 2026-06-14 gap-analysis pass added VS-117 (DTI-BPS Product Standards Certification & PS Mark/ICC Compliance), VS-118 (Revenue Assurance, Pricing Integrity & Leakage Management), VS-119 (Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program), and VS-120 (Energy Efficiency, Conservation & RA 11285 Compliance Program) — three elevating a single workflow within another value stream to a dedicated program (W447 DTI-BPS, W348 Revenue Assurance, W2943 ABC-Whistleblower) and one filling a genuinely-uncovered statutory program (RA 11285). A ninth 2026-06-14 gap-analysis pass added VS-121 (Talent Acquisition, Employer Brand & Candidate Experience), VS-122 (Global Sourcing, Import Buying & Sourcing Agent Management), VS-123 (Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline), and VS-124 (Sales Enablement, Product Knowledge Mastery & Clienteling) — each filling a capability previously genuinely uncovered or reduced to incidental single-workflow references with no dedicated owner ('candidate experience'/'career site'/'talent community', 'global sourcing'/'sourcing agent'/'overseas buying office', 'apprenticeship program', and 'clienteling' each appeared in zero PA files). The retired numbers remain unused. See [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
 
@@ -220,7 +228,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-    │  erp-requirements.md ←→ workflows/ (3,612 WF)    │
+    │  erp-requirements.md ←→ workflows/ (3,708 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -232,6 +240,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
     │                value-stream-index.md              │
-    │            (116 VS · 352 process areas)            │
+    │            (120 VS · 356 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

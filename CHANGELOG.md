@@ -4,6 +4,60 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 9): Add VS-121–VS-124 (96 workflows W3761–W3856)
+
+A ninth workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer: 200 stores,
+4 DCs, 35,000 active SKUs, ~PHP 62.3B annual revenue, 5 legal entities, ~6,715 employees). After
+Passes 1–8 had filled the genuinely-uncovered *operational* and *statutory* capabilities across
+Make & Move, Asset & Infrastructure, Technology & Data, Finance, and Governance & Assurance,
+Pass 9 targeted the remaining genuinely-uncovered **strategic people-attraction and selling-
+effectiveness** disciplines, which cluster in **People** (the thinnest family by workflow count at
+194). Each candidate gap was validated by keyword search across all PA files and confirmed to be
+**genuinely uncovered** — the defining terms ('candidate experience'/'career site'/'talent
+community', 'global sourcing'/'sourcing agent'/'overseas buying office', 'apprenticeship program',
+and 'clienteling') each appeared in **zero** PA files, with only incidental single-workflow
+references to the broader capability. The four new value streams add two to **People** (VS-121,
+VS-123), one to **Plan & Source** (VS-122), and one to **Sell & Serve** (VS-124). Methodology and
+results (including the full list of rejected-as-covered candidates) are documented in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+- **VS-121 Talent Acquisition, Employer Brand & Candidate Experience** (People) — owns the
+  strategic attraction and candidate-side of hiring for ~1,200–1,600 hires/yr at 15–20% turnover
+  across a 5-entity, 205-location group: employer brand/EVP, career-site product, talent-marketing
+  & sourcing-channel strategy, candidate experience & candidate-NPS, talent community/CRM, and
+  TA operations/analytics; distinct from recruitment *transaction* processing (VS-19.1), total-
+  rewards design (VS-102), employee experience (VS-103.2), and trade-capability building (VS-123).
+- **VS-122 Global Sourcing, Import Buying & Sourcing Agent Management** (Plan & Source) — owns
+  the strategic source-side of imported merchandise for the ~40%-import assortment (~PHP 17–18B/yr,
+  ~400 international vendors, ~400–600 TEUs/month): source-market/country strategy, sourcing-model
+  decision (direct vs agent vs overseas office), sourcing-agent & overseas-buying-office governance,
+  import vendor development, consolidated container buying, and total-landed-cost sourcing
+  analytics; distinct from operational import/customs (VS-02.2), transactional vendor/PO (VS-03),
+  customs compliance (VS-87), quality (VS-31), and commodity hedging (VS-106).
+- **VS-123 Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline** (People) —
+  owns BuildRight's own structured, TESDA-registered (RA 7796) apprenticeship and vocational
+  capability pipeline for trade-knowledgeable staff: program design & registration, cohort
+  operations, mentor/master-tradesperson network, competency assessment & certification,
+  vocational-school feeder, instructor pipeline, and trade-capability analytics; distinct from
+  general L&D (VS-19.4), customer-facing workshops/TESDA participation (VS-12.3 W1556), trade-
+  customer training (VS-43.3), and general talent attraction (VS-121).
+- **VS-124 Sales Enablement, Product Knowledge Mastery & Clienteling** (Sell & Serve) — owns the
+  associate selling-effectiveness discipline across ~5,800 store staff serving 2.8M monthly
+  transactions: selling-skills curriculum & coaching, product-knowledge mastery & certification,
+  department/category attach playbooks, clienteling tool & customer-360 at POS, trade-pro/B2B
+  consultative selling enablement, selling-quality assurance, and selling-effectiveness analytics;
+  distinct from general L&D (VS-19.4), loyalty/CRM (VS-13), store operations (VS-07), in-store
+  services (VS-09), and trade-capability building (VS-123).
+
+**Counts**: 3,612 → **3,708** workflows; 116 → **120** value streams; 352 → **356** process
+areas. Family impact: People 194 → **242** (+48), Plan & Source 356 → **380** (+24), Sell & Serve
+1,122 → **1,146** (+24). The 96 new workflows are unclassified pending a follow-up criticality
+review (exactly as Passes 1–8 were handled). `07-methodology/validate-repo.sh` passes with **0
+errors**.
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 8): Add VS-117–VS-120 (96 workflows W3665–W3760)
 
 An eighth workflow **gap-analysis** pass was performed against the model company's operations
