@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> Pass 5, and Pass 6, all 2026-06-14).
+> Pass 5, Pass 6, and Pass 7, all 2026-06-14).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -29,8 +29,12 @@ identify capability gaps not addressed by any existing value stream.
    known retired value stream (VS-49/50/51/52) not yet re-introduced.
 4. **Validate** each candidate gap by keyword search across all PA files to confirm it is not
    already covered (avoiding redundant value streams) and to scope it so the new value stream is
-   distinct from adjacent ones. For Pass 4 and Pass 5, every candidate gap was confirmed to have
-   only incidental single-workflow coverage (or none) in the existing PA files.
+   distinct from adjacent ones. For Pass 4, Pass 5, Pass 6, and Pass 7, every candidate gap was
+   confirmed to have only incidental single-workflow coverage (or none) in the existing PA files;
+   for Pass 7 specifically, 'enterprise architecture' appeared in **zero** PA files, calibration was
+   referenced across **50+** PA files with no dedicated owner, dangerous-goods transport was
+   confirmed distinct from VS-24.3 fixed-site storage, and performance bonds/surety were confirmed
+   sprinkled across VS-46/VS-11/VS-18 as single steps.
 5. **Prioritize** gaps by operational criticality, regulatory exposure, and volume, and select the
    set to fill in each revision pass.
 
@@ -66,6 +70,10 @@ identify capability gaps not addressed by any existing value stream.
 | 24 | **Freight Procurement, Carrier Management & Freight Audit** | Freight is a major cost line (inbound/import, line-haul, last-mile; ~400–600 import TEUs/month, ~5,000 replenishment orders/month, ~80% third-party fleet, ~42.9K ecommerce orders/month); PHP-hundreds-of-millions-to-low-billions of spend with no single owner for carrier contracting/rate/routing-guide/freight-audit/landed-cost | **New gap (Pass 6)** — the freight-financial discipline was sprinkled across VS-02.2 (import freight, W66 inter-island, W249 demurrage), VS-04 (DC), VS-06.1 (outbound), and VS-06.3 (last-mile, incl. the single carrier-rate/freight-audit workflow W1166 and W1371/W1439/W1440); VS-56 covers only the last-mile 3PL *delivery-partner* relationship, VS-87 customs/tariff, and VS-15 AP processing — no value stream owned the end-to-end freight-spend/carrier-relationship/landed-cost program | **FILLED — VS-110** |
 | 25 | **Packaging, Pallet & Returnable Transport Item (RTI) Management** | At BuildRight's volume (~72K inbound receipts/yr, ~134M POS line items/yr), packaging/pallets/RTI are a material cost line (PHP 200–500M/yr), a damage/shrink source, a freight-cube driver, and a sustainability/EPR (RA 11898) and single-use-plastic exposure | **New gap (Pass 6)** — referenced incidentally across VS-04 (DC receiving/palletization), VS-05 (merchandise inventory), VS-06 (logistics), VS-32 (reverse), VS-73 (waste), VS-41 (private-label packaging), VS-87 (import/ISPM-15), VS-24.3 (hazmat); no value stream owned the packaging-engineering, pallet/RTI pool, tracking/reconciliation, compliance/EPR, or cost-analytics discipline | **FILLED — VS-111** |
 | 26 | **Corporate Project & Program Management Office (PMO)** | PHP 800M–1.2B annual capex plus major transformation programs (ERP/digital, net-zero/renewable, omnichannel, store-format evolution) run dozens of concurrent projects and several multi-project programs requiring portfolio governance, stage-gate discipline, resource/capacity planning, dependency/risk management, and benefits realization | **New gap (Pass 6)** — VS-40 performs only the *financial accounting* of capital projects (request/approval/commitment/CIP/turnover/variance/ROI-review W1811–W2752); VS-33 sets the budget envelope and tracks corporate KPIs; and the delivery-domain VSs (VS-20/VS-37/VS-109/VS-108/VS-27/VS-06) execute their respective project types — no value stream owned the enterprise project-portfolio governance/methodology/program-management/benefits-realization discipline | **FILLED — VS-112** |
+| 27 | **Enterprise Architecture, Application Portfolio & Technology Strategy** | A 5-entity, 200-store, PHP 62.3B-revenue retailer on a unified cloud ERP with ~10+ active integration touchpoints (POS, ecommerce, payments, bank, BIR eFPS, statutory, delivery, loyalty, WMS, supplier portal) and an expanding digital perimeter (ecommerce, marketplace, retail media, mobile app, BIR e-invoicing, AI/ML) requires a continuous enterprise-architecture discipline to keep the application landscape coherent, integrated, secure, standards-compliant, and strategy-aligned | **New gap (Pass 7)** — 'enterprise architecture' appeared in **0** PA files; VS-27 operates/secures platforms, VS-28 consumes data, VS-30 evaluates emerging tech/POCs, VS-99 manages hardware/software asset lifecycle — none designs and governs the application landscape, integration architecture, technology standards, solution architecture, or multi-year technology strategy | **FILLED — VS-113** |
+| 28 | **Dangerous Goods (DG) & Hazardous Materials Transport, Ecommerce & Regulatory Compliance** | An 8–10%+ DG-intensive assortment (paint/solvents ~2,800 SKUs, adhesives/thinners, aerosols, garden/agro chemicals, cleaning chemicals, fuels/lubricants, gas cylinders, lithium-battery products) moves by import ocean freight (~400–600 TEUs/month), inter-island sea/land, DC-to-store distribution, and ecommerce last-mile (~42,900 orders/month) under multiple regulators (DENR-EMB RA 6969, BFP Fire Code, DOLE OSH, MARINA/Coast Guard, CAB, LTFRB/DOTC) and international modal rules (IMDG/IATA/ADR); non-compliance causes carrier refusal, ecommerce channel blocking, port seizure, fines, and fire/spill/injury risk | **New gap (Pass 7)** — VS-24.3 (HSE) covers only **fixed-site** storage/handling safety; VS-87 covers import customs; VS-89 covers defective-product recall; VS-111 engineers product/transport packaging generally — no value stream owned the DG transport, ecommerce ship-eligibility, DG documentation/carrier-qualification, DENR-EMB hazardous-waste transport manifest, DG site permitting, or DG incident/spill/claim lifecycle | **FILLED — VS-114** |
+| 29 | **Calibration, Metrology & Measurement Traceability Management** | Catch-weight and cut-to-length selling (lumber/board-foot, wire/meter, nails bulk, tiles/sq-m) at 600 POS across 2.8M monthly transactions; custom fabrication (pipe/lumber/sheet/wire cutting) and paint mixing/tinting at every store; DC weighbridges/truck scales at 4 DCs; fuel & logistics meters; environmental/process instruments; and test & measurement tools — measurement accuracy directly determines revenue accuracy, inventory accuracy (≥97% target), quality acceptance, and DTI weights & measures / Consumer Act RA 7394 compliance | **New gap (Pass 7)** — calibration/metrology was referenced incidentally across **53** PA files (VS-08 POS scales, VS-09 cutting/paint, VS-04 DC scales, VS-07 store equipment, VS-31 quality instruments, VS-12 rental tools, VS-61 fuel, VS-23 system calibration) with **no dedicated owner** and **zero** PA with 'calibration' or 'metrology' in its title — no value stream owned the program, standards/traceability, scheduling, records, or compliance discipline | **FILLED — VS-115** |
+| 30 | **Performance Bond, Surety & Bank Guarantee Management** | ~10% B2G + ~30% B2B/project revenue under RA 9184 (Government Procurement Reform Act) and large enterprise contracts require bid bonds, performance bonds (5–30%), payment bonds, warranty bonds, and retention — secured by surety bonds or bank guarantees/LCs/cash that encumber on the order of **PHP 5M–50M+** of credit facility simultaneously and tie up capacity that otherwise supports operations | **New gap (Pass 7)** — VS-46 (B2G) references the bond as one bid step, VS-11 (B2B/project) references tender/performance bonds in bidding, VS-18 (Treasury) manages the bank/facility — no value stream owned the surety facility strategy, bond application/issuance/tracking/encumbrance lifecycle, counter-indemnity/collateral, release/closeout, claim/default response, or surety analytics | **FILLED — VS-116** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -185,21 +193,35 @@ with an adjacent covered capability:
 | [VS-111](VS-111-packaging-pallet-and-returnable-transport-item-management/README.md) | Packaging, Pallet & Returnable Transport Item (RTI) Management | Make & Move | 3 | 24 | W3521–W3544 |
 | [VS-112](VS-112-corporate-project-and-program-management-office/README.md) | Corporate Project & Program Management Office (PMO) | Asset & Infrastructure | 3 | 24 | W3545–W3568 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5)
+**Pass 7** (W3569–W3664): four value streams, 12 process areas, 96 workflows, deliberately
+strengthening the thinnest family by workflow count (**Technology & Data** +48) and adding to three
+families total (Governance & Assurance, Finance, and Technology & Data). Each gap had been
+previously overlooked because it was (a) genuinely uncovered by every value stream, (b) referenced
+across many PA files with no dedicated owner, (c) conflated with a fixed-site HSE capability, or
+(d) reduced to single steps within B2G/B2B/treasury value streams:
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 (current) |
-|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 |
-| Make & Move | 307 | 307 | 307 | **355** (+48) |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 |
-| Finance | 411 | 411 | 435 | 435 |
-| People | 146 | 194 | 194 | 194 |
-| Asset & Infrastructure | 128 | 128 | 152 | **200** (+48) |
-| Governance & Assurance | 552 | 576 | 576 | 576 |
-| Technology & Data | 182 | 182 | 182 | 182 |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** (+96) |
-| Value streams | 96 | 100 | 104 | **108** (+4) |
-| Process areas | 292 | 304 | 316 | **328** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | Technology & Data | 3 | 24 | W3569–W3592 |
+| [VS-114](VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md) | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | Governance & Assurance | 3 | 24 | W3593–W3616 |
+| [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | Technology & Data | 3 | 24 | W3617–W3640 |
+| [VS-116](VS-116-performance-bond-surety-and-bank-guarantee-management/README.md) | Performance Bond, Surety & Bank Guarantee Management | Finance | 3 | 24 | W3641–W3664 |
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 (current) |
+|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 |
+| Finance | 411 | 411 | 435 | 435 | **459** (+24) |
+| People | 146 | 194 | 194 | 194 | 194 |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | **600** (+24) |
+| Technology & Data | 182 | 182 | 182 | 182 | **230** (+48) |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | **112** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | **340** (+12) |
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
@@ -214,13 +236,25 @@ genuinely uncovered (remodel execution, packaging/pallet/RTI engineering), sprin
 multiple value streams (freight-spend/carrier), or conflated with the financial-accounting view
 of an asset (capex accounting vs project-portfolio governance).
 
-The 96 new workflows added in Pass 6 are currently **unclassified** (counted in the 2,253-workflow
+Pass 7 deliberately strengthened the thinnest family by workflow count — **Technology & Data**
+(182 → 230, +48 via VS-113 Enterprise Architecture + VS-115 Calibration/Metrology) — and added one
+value stream each to **Governance & Assurance** (576 → 600 via VS-114 DG/Hazmat Compliance) and
+**Finance** (435 → 459 via VS-116 Surety/Bank Guarantee). Each gap had been previously overlooked
+because it was genuinely uncovered by every value stream ('enterprise architecture' appeared in
+zero PA files), referenced across many PA files with no dedicated owner (calibration/metrology
+across 53 files), conflated with a fixed-site HSE capability (DG transport/ecommerce/regulatory vs
+VS-24.3 storage safety), or reduced to single steps within B2G/B2B/treasury value streams
+(performance bonds/surety in VS-46/VS-11/VS-18).
+
+The 96 new workflows added in Pass 7 are currently **unclassified** (counted in the 2,349-workflow
 unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
-Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), Pass 3 (VS-97–VS-100), Pass 4 (VS-101–VS-104), and
-Pass 5 (VS-105–VS-108) batches were handled. Several Pass 6 workflows are anticipated Tier 1
-(remodel capex-governance and live-store HSE/continuity controls, freight-audit SoD and
-landed-cost/cost-to-serve accuracy, pallet/RTI and deposit-reconciliation controls and EPR/plastic
-compliance, and PMO stage-gate/capex-approval authority and benefits-realization governance).
+Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), Pass 3 (VS-97–VS-100), Pass 4 (VS-101–VS-104),
+Pass 5 (VS-105–VS-108), and Pass 6 (VS-109–VS-112) batches were handled. Several Pass 7 workflows
+are anticipated Tier 1 (EA security/resilience/standards controls and approved-technology
+gatekeeping, DG classification/transport-documentation/carrier-qualification and DG ecommerce
+ship-eligibility/regulated-product controls, legal-for-trade POS/catch-weight/weighbridge
+verification and DTI weights & measures compliance, and bid/performance-bond issuance/authority
+and encumbrance/release controls).
 
 ---
 
@@ -228,7 +262,7 @@ compliance, and PMO stage-gate/capex-approval authority and benefits-realization
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,420) matches actual PA workflow header count (3,420). ✅
+- Grand total (3,516) matches actual PA workflow header count (3,516). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -268,9 +302,46 @@ compliance, and PMO stage-gate/capex-approval authority and benefits-realization
   across multiple value streams (freight-spend/carrier across VS-02.2/VS-04/VS-06.1/VS-06.3), or
   conflated with the financial-accounting view of an asset (capex accounting in VS-40 vs
   project-portfolio governance).
+- **Enterprise Architecture/Application Portfolio/Technology Strategy**, **Dangerous Goods/Hazmat
+  Transport/Ecommerce/Regulatory Compliance**, **Calibration/Metrology/Measurement Traceability**, and
+  **Performance Bond/Surety/Bank Guarantee Management** — **filled** by VS-113, VS-114, VS-115, and
+  VS-116 (Pass 7); each had been genuinely uncovered by every value stream ('enterprise architecture'
+  in zero PA files), referenced across many PA files with no dedicated owner (calibration/metrology
+  across 53 files), conflated with a fixed-site HSE capability (DG transport vs VS-24.3 storage), or
+  reduced to single steps within B2G/B2B/treasury value streams (performance bonds/surety).
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.
+
+### Candidate gaps considered but rejected in Pass 7 (adequate coverage)
+
+- **Tax controversy / BIR audit defense / CTA appeal** — covered by W77 (BIR Audit Response) in
+  VS-22, with a detailed LOA → investigation → FAN → protest → CTA-appeal lifecycle (separate from
+  VS-79 tax filing).
+- **Real Property Tax (RPT) assessment, payment & appeal** — covered by W119 (RPT Management) in
+  VS-79 and referenced across VS-97/VS-42/VS-76 as owner/lessor/LGU.
+- **Insurance claims management & subrogation** — covered by the dedicated PA-26.3 (Insurance
+  Claims and Policy Management) in VS-26, including adjuster, settlement, and subrogation.
+- **Special / custom / made-to-order lifecycle** — covered by W744 (Store-Level Special Order
+  Follow-Up), W545 (special orders), and W38 (special order fulfillment) across VS-09/VS-11.
+- **Merchandise allocation / initial distribution** — covered for new stores (VS-37 allocation
+  planning) and cross-dock (VS-04); replenishment allocation in VS-02.
+- **Loyalty points liability / breakage / reward economics** — covered by VS-13 (loyalty) and
+  VS-17.4 (W1405 PFRS 15 deferred-revenue allocation, breakage accounting).
+- **Market development funds / co-op advertising / vendor-funded marketing** — covered by W513
+  (co-op advertising) in VS-39 and VS-14 marketing.
+- **Trade show / exhibition / industry-event representation** — covered by W1899 (Trade Show
+  Participation & Industry Event Representation) in VS-43.3 and W1292 (Builder's Expo) in VS-07.1.
+- **Fire & life-safety systems management** — covered across VS-24 (HSE), VS-20.3 (facilities),
+  and VS-07.2 (store facility/safety), including BFP FSIC and suppression inspections.
+- **Data platform / data engineering / analytics operations** — covered by VS-28.2 (Data
+  Engineering and Quality) and VS-27.2 (Infrastructure and Platform).
+- **Management accounting / cost center / profitability analytics** — covered by VS-17.4 FP&A
+  (W1405 Store-Level P&L/Contribution Margin, W85 Product Costing & Margin Analysis Review) and
+  VS-33.2 corporate performance management (W1655/W1656 store/category performance review).
+- **Performance/capacity of PA 53-file 'calibration' mentions** — *considered as elevation*
+  (like Pass 5 elevated W324 SCF) but elevated here to a dedicated value stream (VS-115) because the
+  references had no owning PA and spanned revenue, quality, compliance, and HSE impact.
 
 ---
 

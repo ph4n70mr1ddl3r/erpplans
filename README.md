@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      3,420 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 108 value streams · 328 process areas)
+│   ├── workflows/                      3,516 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 112 value streams · 340 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -142,7 +142,11 @@ erpplans/
 │   │   ├── VS-109-store-remodel-renovation-lifecycle-refurbishment/ 24 workflows (3 process areas)
 │   │   ├── VS-110-freight-procurement-carrier-management-and-freight-audit/ 24 workflows (3 process areas)
 │   │   ├── VS-111-packaging-pallet-and-returnable-transport-item-management/ 24 workflows (3 process areas)
-│   │   └── VS-112-corporate-project-and-program-management-office/ 24 workflows (3 process areas)
+│   │   ├── VS-112-corporate-project-and-program-management-office/ 24 workflows (3 process areas)
+│   │   ├── VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/ 24 workflows (3 process areas)
+│   │   ├── VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/ 24 workflows (3 process areas)
+│   │   ├── VS-115-calibration-metrology-and-measurement-traceability-management/ 24 workflows (3 process areas)
+│   │   └── VS-116-performance-bond-surety-and-bank-guarantee-management/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -182,7 +186,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **3,420** across 108 value streams, 328 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **3,516** across 112 value streams, 340 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -193,10 +197,10 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 3,420 fully specified across 108 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,167 of 3,420 workflows classified** (34%); 2,253 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 3,516 fully specified across 112 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,167 of 3,516 workflows classified** (33%); 2,349 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14). Two 2026-06-14 gap-analysis passes filled all four capability gaps: VS-90 ↔ former VS-50, VS-92 ↔ former VS-51, VS-89 (Product Recall) and VS-91 (Consumer Data Privacy) added new; then VS-93 ↔ former VS-49, VS-94 ↔ former VS-52, plus VS-95 (Marketplace Operator) and VS-96 (Equipment Leasing) added new. A third 2026-06-14 gap-analysis pass added VS-97 (Corporate Real Estate & Property Portfolio), VS-98 (Contingent & Outsourced Workforce), VS-99 (IT Asset & Technology Lifecycle), and VS-100 (Legal Operations, Litigation & IP) to strengthen the previously-thinnest operating families. A fourth 2026-06-14 gap-analysis pass added VS-101 (Merchandise Financial Planning, OTB & Margin Management), VS-102 (Compensation, Benefits & Total Rewards), VS-103 (HR Shared Services, Employee Experience & People Analytics), and VS-104 (Government Affairs, Public Policy & Industry Relations) — each filling a capability previously conflated with an adjacent covered one. A fifth 2026-06-14 gap-analysis pass added VS-105 (Supply Chain Finance & Working Capital Management), VS-106 (Commodity & Input-Cost Risk Management), VS-107 (Strategic Key Account & Enterprise Customer Management), and VS-108 (On-Site Renewable Energy & Prosumer Asset Operations) — each filling a capability previously touched only as a single workflow within another value stream or conflated with an adjacent covered one. A sixth 2026-06-14 gap-analysis pass added VS-109 (Store Remodel, Renovation & Lifecycle Refurbishment Program), VS-110 (Freight Procurement, Carrier Management & Freight Audit), VS-111 (Packaging, Pallet & Returnable Transport Item (RTI) Management), and VS-112 (Corporate Project & Program Management Office (PMO)) — each filling a capability previously uncovered or sprinkled across multiple value streams (remodel-execution vs capex-accounting/opening/closure; freight-spend vs logistics-execution/import; packaging-asset vs DC/inventory/waste; and project-portfolio governance vs capex-accounting/strategic-planning respectively). The retired numbers remain unused. See [CHANGELOG.md](CHANGELOG.md) | — |
+| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14). Two 2026-06-14 gap-analysis passes filled all four capability gaps: VS-90 ↔ former VS-50, VS-92 ↔ former VS-51, VS-89 (Product Recall) and VS-91 (Consumer Data Privacy) added new; then VS-93 ↔ former VS-49, VS-94 ↔ former VS-52, plus VS-95 (Marketplace Operator) and VS-96 (Equipment Leasing) added new. A third 2026-06-14 gap-analysis pass added VS-97 (Corporate Real Estate & Property Portfolio), VS-98 (Contingent & Outsourced Workforce), VS-99 (IT Asset & Technology Lifecycle), and VS-100 (Legal Operations, Litigation & IP) to strengthen the previously-thinnest operating families. A fourth 2026-06-14 gap-analysis pass added VS-101 (Merchandise Financial Planning, OTB & Margin Management), VS-102 (Compensation, Benefits & Total Rewards), VS-103 (HR Shared Services, Employee Experience & People Analytics), and VS-104 (Government Affairs, Public Policy & Industry Relations) — each filling a capability previously conflated with an adjacent covered one. A fifth 2026-06-14 gap-analysis pass added VS-105 (Supply Chain Finance & Working Capital Management), VS-106 (Commodity & Input-Cost Risk Management), VS-107 (Strategic Key Account & Enterprise Customer Management), and VS-108 (On-Site Renewable Energy & Prosumer Asset Operations) — each filling a capability previously touched only as a single workflow within another value stream or conflated with an adjacent covered one. A sixth 2026-06-14 gap-analysis pass added VS-109 (Store Remodel, Renovation & Lifecycle Refurbishment Program), VS-110 (Freight Procurement, Carrier Management & Freight Audit), VS-111 (Packaging, Pallet & Returnable Transport Item (RTI) Management), and VS-112 (Corporate Project & Program Management Office (PMO)) — each filling a capability previously uncovered or sprinkled across multiple value streams (remodel-execution vs capex-accounting/opening/closure; freight-spend vs logistics-execution/import; packaging-asset vs DC/inventory/waste; and project-portfolio governance vs capex-accounting/strategic-planning respectively). A seventh 2026-06-14 gap-analysis pass added VS-113 (Enterprise Architecture, Application Portfolio & Technology Strategy), VS-114 (Dangerous Goods & Hazmat Transport, Ecommerce & Regulatory Compliance), VS-115 (Calibration, Metrology & Measurement Traceability Management), and VS-116 (Performance Bond, Surety & Bank Guarantee Management) — each filling a capability previously genuinely uncovered ('enterprise architecture' appeared in zero PA files), sprinkled across 50+ files with no owner (calibration/metrology), distinct from fixed-site HSE storage (DG transport/ecommerce/regulatory), or sprinkled across B2G/B2B/treasury (performance bonds/surety). The retired numbers remain unused. See [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
 
@@ -216,7 +220,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-    │  erp-requirements.md ←→ workflows/ (3,420 WF)    │
+    │  erp-requirements.md ←→ workflows/ (3,516 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -228,6 +232,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
     │                value-stream-index.md              │
-    │            (108 VS · 328 process areas)            │
+    │            (112 VS · 340 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

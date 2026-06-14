@@ -1,7 +1,7 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 3,420 total workflows, 1,167 are classified into
+> relationships for system functions. Of 3,516 total workflows, 1,167 are classified into
 > criticality tiers; 2,253 remain unclassified and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
@@ -634,4 +634,4 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-*Date: 2026-06-14 | Workflow Dependency Map v2.8 — covers prerequisite relationships for 1,167 classified workflows across 108 value streams with hard/soft/integration dependencies. Total repository workflows: 3,420. (The 96 workflows in VS-89–VS-92, the 96 workflows in VS-93–VS-96, the 96 workflows in VS-97–VS-100, the 96 workflows in VS-101–VS-104, the 96 workflows in VS-105–VS-108, and the 96 workflows in VS-109–VS-112, added 2026-06-14 via six gap-analysis passes, are unclassified and reference classified upstream dependencies via cross-links in their PA files; they will be incorporated into the dependency graph during the next classification pass.)*
+*Date: 2026-06-14 | Workflow Dependency Map v2.9 — covers prerequisite relationships for 1,167 classified workflows across 112 value streams with hard/soft/integration dependencies. Total repository workflows: 3,516. (The 96 workflows in VS-89–VS-92, the 96 workflows in VS-93–VS-96, the 96 workflows in VS-97–VS-100, the 96 workflows in VS-101–VS-104, the 96 workflows in VS-105–VS-108, the 96 workflows in VS-109–VS-112, and the 96 workflows in VS-113–VS-116, added 2026-06-14 via seven gap-analysis passes, are unclassified and reference classified upstream dependencies via cross-links in their PA files; they will be incorporated into the dependency graph during the next classification pass.)*

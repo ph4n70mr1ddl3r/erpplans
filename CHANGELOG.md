@@ -4,6 +4,96 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 7): Add VS-113–VS-116 (96 workflows W3569–W3664)
+
+A seventh workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer: 200 stores,
+4 DCs, 35,000 active SKUs, ~PHP 62.3B annual revenue, 5 legal entities). Pass 7 targeted
+capabilities that were **genuinely uncovered by every value stream, referenced across many PA
+files with no dedicated owner, conflated with a fixed-site HSE capability, or reduced to single
+steps within B2G/B2B/treasury value streams**. Each candidate gap was validated by keyword search
+across all PA files to confirm it had no dedicated value stream and to scope it distinct from
+adjacent ones. The four new value streams deliberately strengthen the thinnest family by workflow
+count — **Technology & Data** (+48 via VS-113 and VS-115) — and add one each to **Governance &
+Assurance** (VS-114) and **Finance** (VS-116). Methodology and results are documented in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+### Added — 4 new value streams, 12 process areas, 96 workflows
+
+| VS | Value Stream | Family | W-range |
+|---|---|---|---|
+| **VS-113** | Enterprise Architecture, Application Portfolio & Technology Strategy | Technology & Data | W3569–W3592 |
+| **VS-114** | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | Governance & Assurance | W3593–W3616 |
+| **VS-115** | Calibration, Metrology & Measurement Traceability Management | Technology & Data | W3617–W3640 |
+| **VS-116** | Performance Bond, Surety & Bank Guarantee Management | Finance | W3641–W3664 |
+
+Each value stream comprises a README plus three process-area files (8 workflows each), all fully
+specified (trigger, frequency, volume, owner, participants, steps with RACI, system touchpoints,
+pain points, time estimates) and cross-referenced to adjacent value streams.
+
+### Rationale (gaps filled)
+
+- **VS-113 Enterprise Architecture, Application Portfolio & Technology Strategy** — a 5-entity,
+  200-store, PHP 62.3B-revenue retailer on a unified cloud ERP with ~10+ active integration
+  touchpoints and an expanding digital perimeter (ecommerce, marketplace, retail media, mobile app,
+  BIR e-invoicing, AI/ML) requires a continuous enterprise-architecture discipline, yet 'enterprise
+  architecture' appeared in **0** PA files. VS-27 operates/secures platforms, VS-28 consumes data,
+  VS-30 evaluates emerging tech/POCs, VS-99 manages hardware/software asset lifecycle — none designs
+  and governs the application landscape, integration architecture, technology standards, solution
+  architecture, or technology strategy. Distinct from all four.
+- **VS-114 Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance** — an 8–10%+
+  DG-intensive assortment (paint/solvents ~2,800 SKUs, adhesives/thinners, aerosols, garden/agro
+  chemicals, lithium batteries) moves by ocean, inter-island, road, and ecommerce last-mile under
+  DENR-EMB RA 6969, BFP Fire Code, DOLE OSH, MARINA/Coast Guard, CAB, LTFRB/DOTC, and IMDG/IATA/ADR.
+  VS-24.3 (HSE) covers only **fixed-site** storage safety; VS-87 import customs; VS-89 recall; VS-111
+  product/transport packaging generally — no value stream owned the DG transport, ecommerce
+  ship-eligibility, documentation/carrier-qualification, hazardous-waste transport manifest, or
+  incident/claim lifecycle. Distinct from all four and from VS-06/VS-110 logistics execution.
+- **VS-115 Calibration, Metrology & Measurement Traceability Management** — catch-weight/cut-to-length
+  selling at 600 POS across 2.8M monthly transactions, custom fabrication (pipe/lumber/sheet/wire
+  cutting) and paint mixing/tinting at every store, DC weighbridges/truck scales at 4 DCs, fuel &
+  logistics meters, environmental/process instruments, and test & measurement tools. Calibration/
+  metrology was referenced incidentally across **53** PA files with **no dedicated owner** and **zero**
+  PA with 'calibration'/'metrology' in its title. No value stream owned the program, standards/
+  traceability (ISO 17025), scheduling, records, or DTI weights & measures compliance. Distinct from
+  POS operations, in-store services, DC operations, quality testing, master data, and facility
+  maintenance.
+- **VS-116 Performance Bond, Surety & Bank Guarantee Management** — ~10% B2G + ~30% B2B/project
+  revenue under RA 9184 and large enterprise contracts require bid/performance/payment/warranty
+  bonds, bank guarantees, LCs, and cash retention that encumber on the order of **PHP 5M–50M+** of
+  credit facility simultaneously. VS-46 (B2G) references the bond as one bid step, VS-11 (B2B/project)
+  references tender/performance bonds in bidding, VS-18 (Treasury) manages the bank/facility — no
+  value stream owned the surety facility strategy, bond application/issuance/tracking/encumbrance
+  lifecycle, counter-indemnity/collateral, release/closeout, claim/default response, or surety
+  analytics. Distinct from B2G/B2B sales, treasury, trade credit, cross-entity billing, and legal
+  operations.
+
+### Updated counts
+
+| Metric | Before | After |
+|---|---|---|
+| Value streams | 108 | **112** (+4) |
+| Process areas | 328 | **340** (+12) |
+| Workflows | 3,420 | **3,516** (+96) |
+| Unclassified workflows | 2,253 | **2,349** (+96; pending criticality review) |
+
+Family subtotals after Pass 7: Technology & Data 182→**230** (thinnest family, +48); Finance
+435→**459**; Governance & Assurance 576→**600**; Plan & Source 356, Make & Move 355, Sell & Serve
+1,122, People 194, Asset & Infrastructure 200 unchanged.
+
+### Changed
+
+- Created 4 new value-stream directories (`VS-113`…`VS-116`) with README + 3 PA files each (16 new
+  files, 96 workflows W3569–W3664).
+- Updated `value-stream-index.md` (architecture line, coverage note, summary table + subtotals,
+  detailed map, decision tree, footer).
+- Updated `README.md`, `executive-summary.md`, `workflows/README.md` (counts, folder structure,
+  coverage note, reconciliation, diagram).
+- Extended `workflow-gap-analysis.md` (Pass 7 gaps, candidate table, new-VS table, family-subtotal
+  impact, validation, deferred-gaps, and Pass-7 rejected candidates).
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 6): Add VS-109–VS-112 (96 workflows W3473–W3568)
 
 A sixth workflow **gap-analysis** pass was performed against the model company's operations

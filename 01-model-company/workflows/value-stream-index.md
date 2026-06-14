@@ -8,10 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 108 Value Streams · 328 Process Areas · 3420 Workflows
+8 Families · 112 Value Streams · 340 Process Areas · 3516 Workflows
 ```
 
-> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management)**, **VS-98 (Contingent, Contract & Outsourced Workforce Management)**, **VS-99 (IT Asset & Technology Lifecycle Management)**, and **VS-100 (Legal Operations, Litigation & IP Management)**. A fourth gap-analysis pass (2026-06-14) added four further value streams that strengthen the previously-thinnest operating families and fill capabilities conflated with adjacent covered ones: **VS-101 (Merchandise Financial Planning, OTB & Margin Management)**, **VS-102 (Compensation, Benefits & Total Rewards Strategy)**, **VS-103 (HR Shared Services, Employee Experience & People Analytics)**, and **VS-104 (Government Affairs, Public Policy & Industry Relations)**. A fifth gap-analysis pass (2026-06-14) added four further value streams, each filling a capability previously conflated with an adjacent covered one or touched only as a single workflow within another value stream: **VS-105 (Supply Chain Finance & Working Capital Management)**, **VS-106 (Commodity & Input-Cost Risk Management)**, **VS-107 (Strategic Key Account & Enterprise Customer Management)**, and **VS-108 (On-Site Renewable Energy & Prosumer Asset Operations)**. A sixth gap-analysis pass (2026-06-14) added four further value streams, each filling a capability previously uncovered or sprinkled across multiple value streams: **VS-109 (Store Remodel, Renovation & Lifecycle Refurbishment Program — Asset & Infrastructure)** owns the in-life store-asset renewal program (distinct from new-store opening in VS-37, closure in VS-59, new-build construction in VS-20, and capex accounting in VS-40); **VS-110 (Freight Procurement, Carrier Management & Freight Audit — Make & Move)** owns the transportation-spend and carrier-relationship discipline that was sprinkled across VS-02.2/VS-04/VS-06.1/VS-06.3 (incl. the single carrier-rate/freight-audit workflow W1166); **VS-111 (Packaging, Pallet & Returnable Transport Item (RTI) Management — Make & Move)** owns the packaging-asset and transport-packaging engineering discipline (distinct from DC operations, merchandise inventory, logistics, waste, and private-label development); and **VS-112 (Corporate Project & Program Management Office (PMO) — Asset & Infrastructure)** owns the enterprise project-portfolio governance/stage-gate/program-management/benefits-realization discipline (distinct from capex accounting in VS-40, strategic planning in VS-33, and the individual delivery-domain value streams). The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
+> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management)**, **VS-98 (Contingent, Contract & Outsourced Workforce Management)**, **VS-99 (IT Asset & Technology Lifecycle Management)**, and **VS-100 (Legal Operations, Litigation & IP Management)**. A fourth gap-analysis pass (2026-06-14) added four further value streams that strengthen the previously-thinnest operating families and fill capabilities conflated with adjacent covered ones: **VS-101 (Merchandise Financial Planning, OTB & Margin Management)**, **VS-102 (Compensation, Benefits & Total Rewards Strategy)**, **VS-103 (HR Shared Services, Employee Experience & People Analytics)**, and **VS-104 (Government Affairs, Public Policy & Industry Relations)**. A fifth gap-analysis pass (2026-06-14) added four further value streams, each filling a capability previously conflated with an adjacent covered one or touched only as a single workflow within another value stream: **VS-105 (Supply Chain Finance & Working Capital Management)**, **VS-106 (Commodity & Input-Cost Risk Management)**, **VS-107 (Strategic Key Account & Enterprise Customer Management)**, and **VS-108 (On-Site Renewable Energy & Prosumer Asset Operations)**. A sixth gap-analysis pass (2026-06-14) added four further value streams, each filling a capability previously uncovered or sprinkled across multiple value streams: **VS-109 (Store Remodel, Renovation & Lifecycle Refurbishment Program — Asset & Infrastructure)** owns the in-life store-asset renewal program (distinct from new-store opening in VS-37, closure in VS-59, new-build construction in VS-20, and capex accounting in VS-40); **VS-110 (Freight Procurement, Carrier Management & Freight Audit — Make & Move)** owns the transportation-spend and carrier-relationship discipline that was sprinkled across VS-02.2/VS-04/VS-06.1/VS-06.3 (incl. the single carrier-rate/freight-audit workflow W1166); **VS-111 (Packaging, Pallet & Returnable Transport Item (RTI) Management — Make & Move)** owns the packaging-asset and transport-packaging engineering discipline (distinct from DC operations, merchandise inventory, logistics, waste, and private-label development); and **VS-112 (Corporate Project & Program Management Office (PMO) — Asset & Infrastructure)** owns the enterprise project-portfolio governance/stage-gate/program-management/benefits-realization discipline (distinct from capex accounting in VS-40, strategic planning in VS-33, and the individual delivery-domain value streams). A seventh gap-analysis pass (2026-06-14) added four further value streams, each filling a capability previously genuinely uncovered, sprinkled across multiple value streams, or with no single owner: **VS-113 (Enterprise Architecture, Application Portfolio & Technology Strategy — Technology & Data)** owns the design and governance of the enterprise application landscape/integration/technology-strategy discipline (distinct from IT operations in VS-27, analytics in VS-28, innovation in VS-30, and ITAM in VS-99 — 'enterprise architecture' appeared in zero PA files); **VS-114 (Dangerous Goods (DG) & Hazardous Materials Transport, Ecommerce & Regulatory Compliance — Governance & Assurance)** owns the enterprise DG/hazmat transport/ecommerce-shipment/regulatory program (distinct from fixed-site storage safety in VS-24.3, import customs in VS-87, recall in VS-89, packaging in VS-111, and logistics execution in VS-06/VS-110); **VS-115 (Calibration, Metrology & Measurement Traceability Management — Technology & Data)** owns the measurement-system integrity discipline (calibration/metrology was referenced across 50+ PA files with no dedicated owner, directly underpinning catch-weight revenue, cut-length yield, paint dispensing, weighbridge accuracy, and DTI weights & measures compliance); and **VS-116 (Performance Bond, Surety & Bank Guarantee Management — Finance)** owns the contractual-security and surety program for B2G/B2B business (distinct from B2G bidding in VS-46, B2B sales in VS-11, treasury in VS-18, and trade credit in VS-16/VS-68). The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -86,7 +86,8 @@
 |  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | 3 | 24 |
 |  | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | 3 | 24 |
 |  | [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | 3 | 24 |
-| | | | **Subtotal** | **435** |
+|  | [VS-116](VS-116-performance-bond-surety-and-bank-guarantee-management/README.md) | Performance Bond, Surety & Bank Guarantee Management | 3 | 24 |
+| | | | **Subtotal** | **459** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
@@ -124,14 +125,17 @@
 |  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | 3 | 24 |
 |  | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & Intellectual Property Management | 3 | 24 |
 |  | [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | 3 | 24 |
-| | | | **Subtotal** | **576** |
+|  | [VS-114](VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md) | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | 3 | 24 |
+| | | | **Subtotal** | **600** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 |  | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | 3 | 24 |
-| | | | **Subtotal** | **182** |
-| | | | **Grand Total** | **3420** | |
+|  | [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | 3 | 24 |
+|  | [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | 3 | 24 |
+| | | | **Subtotal** | **230** |
+| | | | **Grand Total** | **3516** | |
 
 ---
 
@@ -558,6 +562,12 @@
 - **PA-105.2** [Dynamic Discounting & Early-Payment Operations](./VS-105-supply-chain-finance-working-capital-management/PA-105.2-dynamic-discounting-and-early-payment-operations.md) — 8 workflows
 - **PA-105.3** [Working Capital Analytics & Cash-Conversion-Cycle Governance](./VS-105-supply-chain-finance-working-capital-management/PA-105.3-working-capital-analytics-and-cash-conversion-governance.md) — 8 workflows
 
+**[VS-116: Performance Bond, Surety & Bank Guarantee Management](./VS-116-performance-bond-surety-and-bank-guarantee-management/README.md)** (24 workflows)
+
+- **PA-116.1** [Surety Facility Strategy, Provider Management & Program Governance](./VS-116-performance-bond-surety-and-bank-guarantee-management/PA-116.1-surety-facility-strategy-provider-management-and-governance.md) — 8 workflows
+- **PA-116.2** [Bond/Guarantee Application, Issuance, Tracking & Encumbrance Management](./VS-116-performance-bond-surety-and-bank-guarantee-management/PA-116.2-bond-application-issuance-tracking-and-encumbrance-management.md) — 8 workflows
+- **PA-116.3** [Bond Release, Claims, Recovery & Surety Analytics](./VS-116-performance-bond-surety-and-bank-guarantee-management/PA-116.3-bond-release-claims-recovery-and-surety-analytics.md) — 8 workflows
+
 
 ### People
 
@@ -779,6 +789,12 @@
 - **PA-104.2** [Industry & Trade Association Relations](./VS-104-government-affairs-public-policy-industry-relations/PA-104.2-industry-and-trade-association-relations.md) — 8 workflows
 - **PA-104.3** [Public Affairs, Community Relations & Reputation](./VS-104-government-affairs-public-policy-industry-relations/PA-104.3-public-affairs-community-relations-and-reputation.md) — 8 workflows
 
+**[VS-114: Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance](./VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md)** (24 workflows)
+
+- **PA-114.1** [DG Classification, Inventory & Program Governance](./VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/PA-114.1-dg-classification-inventory-and-program-governance.md) — 8 workflows
+- **PA-114.2** [DG Transport, Carrier & Ecommerce Shipping Compliance](./VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/PA-114.2-dg-transport-carrier-and-ecommerce-shipping-compliance.md) — 8 workflows
+- **PA-114.3** [DG Storage/Handling Safety, Incident Response & Regulatory Compliance](./VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/PA-114.3-dg-storage-handling-incident-and-regulatory-compliance.md) — 8 workflows
+
 
 ### Technology & Data
 
@@ -812,6 +828,18 @@
 - **PA-99.2** [Software Asset Management & License Compliance](./VS-99-it-asset-technology-lifecycle-management/PA-99.2-software-asset-management-license-compliance.md) — 8 workflows
 - **PA-99.3** [Technology Asset Security, Cost & Governance Analytics](./VS-99-it-asset-technology-lifecycle-management/PA-99.3-technology-asset-security-cost-governance-analytics.md) — 8 workflows
 
+**[VS-113: Enterprise Architecture, Application Portfolio & Technology Strategy](./VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md)** (24 workflows)
+
+- **PA-113.1** [Enterprise Architecture Framework, Standards & Governance](./VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/PA-113.1-enterprise-architecture-framework-standards-and-governance.md) — 8 workflows
+- **PA-113.2** [Application Portfolio, Integration & Solution Architecture](./VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/PA-113.2-application-portfolio-integration-and-solution-architecture.md) — 8 workflows
+- **PA-113.3** [Technology Strategy, Innovation Governance & Architecture Analytics](./VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/PA-113.3-technology-strategy-innovation-governance-and-architecture-analytics.md) — 8 workflows
+
+**[VS-115: Calibration, Metrology & Measurement Traceability Management](./VS-115-calibration-metrology-and-measurement-traceability-management/README.md)** (24 workflows)
+
+- **PA-115.1** [Calibration Program, Standards & Measurement Traceability](./VS-115-calibration-metrology-and-measurement-traceability-management/PA-115.1-calibration-program-standards-and-measurement-traceability.md) — 8 workflows
+- **PA-115.2** [Device Calibration Operations](./VS-115-calibration-metrology-and-measurement-traceability-management/PA-115.2-device-calibration-operations.md) — 8 workflows
+- **PA-115.3** [Weights & Measures Compliance, MRM & Measurement Analytics](./VS-115-calibration-metrology-and-measurement-traceability-management/PA-115.3-weights-and-measures-compliance-and-analytics.md) — 8 workflows
+
 
 ---
 
@@ -834,12 +862,12 @@
 Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112)
-Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104)
-Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99)
+Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114)
+Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115)
 ```
 
 
-*Total: 3420 workflows across 108 value streams · Date: 2026-06-14*
+*Total: 3516 workflows across 112 value streams · Date: 2026-06-14*
