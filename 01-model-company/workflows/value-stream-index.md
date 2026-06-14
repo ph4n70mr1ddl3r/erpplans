@@ -8,10 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 88 Value Streams · 268 Process Areas · 2940 Workflows
+8 Families · 92 Value Streams · 280 Process Areas · 3036 Workflows
 ```
 
-> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**; the remaining gaps (dark-store/micro-fulfillment, cooperative/community procurement) remain open for future revision. See [CHANGELOG.md](../../CHANGELOG.md) for details.
+> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -23,7 +23,8 @@
 |  | [VS-57](VS-57-competitive-price-intelligence/README.md) | Competitive Price Intelligence & Monitoring | 3 | 24 |
 |  | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Transition & Clearance | 3 | 24 |
 |  | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Performance Analytics | 3 | 24 |
-| | | | **Subtotal** | **284** |
+|  | [VS-94](VS-94-cooperative-community-enterprise-procurement/README.md) | Cooperative & Community Enterprise Procurement | 3 | 24 |
+| | | | **Subtotal** | **308** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 36 |
@@ -34,7 +35,8 @@
 |  | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car Operations | 3 | 24 |
 |  | [VS-90](VS-90-damage-claims-freight-recovery/README.md) | Damage, Claims & Freight Recovery Management | 3 | 24 |
 |  | [VS-92](VS-92-kitting-bundling-build-to-order-assembly/README.md) | Kitting, Bundling & Build-to-Order Assembly Operations | 3 | 24 |
-| | | | **Subtotal** | **283** |
+|  | [VS-93](VS-93-dark-store-micro-fulfillment/README.md) | Dark Store & Micro-Fulfillment Operations | 3 | 24 |
+| | | | **Subtotal** | **307** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
@@ -62,7 +64,8 @@
 |  | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | 3 | 24 |
 |  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 3 | 24 |
 |  | [VS-82](VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | 3 | 24 |
-| | | | **Subtotal** | **1074** |
+|  | [VS-95](VS-95-marketplace-operator-third-party-seller/README.md) | Marketplace Operator & Third-Party Seller Management | 3 | 24 |
+| | | | **Subtotal** | **1098** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
@@ -76,7 +79,8 @@
 |  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | 3 | 24 |
 |  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | 3 | 24 |
 |  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | 3 | 24 |
-| | | | **Subtotal** | **387** |
+|  | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | 3 | 24 |
+| | | | **Subtotal** | **411** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
@@ -111,7 +115,7 @@
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 | | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **2940** | |
+| | | | **Grand Total** | **3036** | |
 
 ---
 
@@ -167,6 +171,12 @@
 - **PA-67.1** [Vendor KPI Definition & Data Collection](./VS-67-vendor-scorecard-analytics/PA-67.1-vendor-kpi-data-collection.md) — 8 workflows
 - **PA-67.2** [Vendor Performance Review & Rating](./VS-67-vendor-scorecard-analytics/PA-67.2-vendor-performance-review-rating.md) — 8 workflows
 - **PA-67.3** [Vendor Development & Improvement Programs](./VS-67-vendor-scorecard-analytics/PA-67.3-vendor-development-improvement.md) — 8 workflows
+
+**[VS-94: Cooperative & Community Enterprise Procurement](./VS-94-cooperative-community-enterprise-procurement/README.md)** (24 workflows)
+
+- **PA-94.1** [Cooperative & Social Enterprise Sourcing Strategy & Onboarding](./VS-94-cooperative-community-enterprise-procurement/PA-94.1-cooperative-sourcing-strategy-onboarding.md) — 8 workflows
+- **PA-94.2** [Cooperative Purchase Order, Logistics & Livelihood Settlement](./VS-94-cooperative-community-enterprise-procurement/PA-94.2-cooperative-po-logistics-settlement.md) — 8 workflows
+- **PA-94.3** [Impact Measurement, Fair-Trade Compliance & Development Program](./VS-94-cooperative-community-enterprise-procurement/PA-94.3-impact-fairtrade-development-program.md) — 8 workflows
 
 
 ### Make & Move
@@ -230,6 +240,12 @@
 - **PA-92.1** [Kit & Bundle Definition, BOM & Build Planning](./VS-92-kitting-bundling-build-to-order-assembly/PA-92.1-kit-bundle-definition-bom-build-planning.md) — 8 workflows
 - **PA-92.2** [Kit Assembly, Build Execution & Inventory Management](./VS-92-kitting-bundling-build-to-order-assembly/PA-92.2-kit-assembly-build-execution-inventory.md) — 8 workflows
 - **PA-92.3** [Bundle Pricing, Promotion & Performance Analytics](./VS-92-kitting-bundling-build-to-order-assembly/PA-92.3-bundle-pricing-promotion-performance-analytics.md) — 8 workflows
+
+**[VS-93: Dark Store & Micro-Fulfillment Operations](./VS-93-dark-store-micro-fulfillment/README.md)** (24 workflows)
+
+- **PA-93.1** [Dark Store Site Strategy, Design & Network Planning](./VS-93-dark-store-micro-fulfillment/PA-93.1-dark-store-site-strategy-design-network.md) — 8 workflows
+- **PA-93.2** [Micro-Fulfillment Daily Pick / Pack / Dispatch Operations](./VS-93-dark-store-micro-fulfillment/PA-93.2-micro-fulfillment-daily-pick-pack-dispatch.md) — 8 workflows
+- **PA-93.3** [Dark Store Inventory, Capacity & Performance Analytics](./VS-93-dark-store-micro-fulfillment/PA-93.3-dark-store-inventory-capacity-analytics.md) — 8 workflows
 
 
 ### Sell & Serve
@@ -397,6 +413,12 @@
 - **PA-82.2** [Micro-Wholesale Ordering, Fulfillment & Delivery](./VS-82-sari-sari-msme-micro-wholesale/PA-82.2-micro-wholesale-order-fulfillment-delivery.md) — 8 workflows
 - **PA-82.3** [MSME Growth, Credit & Digital Enablement](./VS-82-sari-sari-msme-micro-wholesale/PA-82.3-msme-growth-credit-and-digital-enablement.md) — 8 workflows
 
+**[VS-95: Marketplace Operator & Third-Party Seller Management](./VS-95-marketplace-operator-third-party-seller/README.md)** (24 workflows)
+
+- **PA-95.1** [Marketplace Platform Strategy & Seller Onboarding](./VS-95-marketplace-operator-third-party-seller/PA-95.1-marketplace-platform-strategy-seller-onboarding.md) — 8 workflows
+- **PA-95.2** [Marketplace Catalog, Order Routing & Seller Fulfillment](./VS-95-marketplace-operator-third-party-seller/PA-95.2-marketplace-catalog-order-routing-fulfillment.md) — 8 workflows
+- **PA-95.3** [Marketplace Settlement, Seller Performance & Governance](./VS-95-marketplace-operator-third-party-seller/PA-95.3-marketplace-settlement-performance-governance.md) — 8 workflows
+
 
 ### Finance
 
@@ -477,6 +499,12 @@
 - **PA-80.1** [Acquirer, PSP & Payment Partner Lifecycle Management](./VS-80-payment-operations-acquirer-settlement/PA-80.1-acquirer-psp-and-partner-lifecycle.md) — 8 workflows
 - **PA-80.2** [Settlement Reconciliation & Chargeback/Dispute Management](./VS-80-payment-operations-acquirer-settlement/PA-80.2-settlement-reconciliation-and-dispute.md) — 8 workflows
 - **PA-80.3** [Payment Cost, Fraud & Tokenization Governance](./VS-80-payment-operations-acquirer-settlement/PA-80.3-payment-cost-fraud-and-tokenization.md) — 8 workflows
+
+**[VS-96: Equipment Leasing & Capital Equipment Finance](./VS-96-equipment-leasing-capital-equipment-finance/README.md)** (24 workflows)
+
+- **PA-96.1** [Lease Product Design, Credit Underwriting & Origination](./VS-96-equipment-leasing-capital-equipment-finance/PA-96.1-lease-product-design-underwriting-origination.md) — 8 workflows
+- **PA-96.2** [Lease Booking, Billing & Asset Lifecycle Management](./VS-96-equipment-leasing-capital-equipment-finance/PA-96.2-lease-booking-billing-asset-lifecycle.md) — 8 workflows
+- **PA-96.3** [Lease Portfolio Risk, Residual & Yield Analytics](./VS-96-equipment-leasing-capital-equipment-finance/PA-96.3-lease-portfolio-risk-residual-yield-analytics.md) — 8 workflows
 
 
 ### People
@@ -691,10 +719,10 @@
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82)
-Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92)
-Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95)
+Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93)
+Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59)
 Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91)
@@ -702,4 +730,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 ```
 
 
-*Total: 2940 workflows across 88 value streams · Date: 2026-06-14*
+*Total: 3036 workflows across 92 value streams · Date: 2026-06-14*

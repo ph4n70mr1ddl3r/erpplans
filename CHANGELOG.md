@@ -4,6 +4,102 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 2): Add VS-93–VS-96 (96 workflows W3089–W3184)
+
+A second workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer). The pass
+filled the two remaining retired-number gaps (former VS-49 and VS-52) and added two further new
+value streams identified by the analysis. Methodology and results are documented in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md)
+(Pass 1 = VS-89–VS-92; Pass 2 = VS-93–VS-96).
+
+### Added — 4 new value streams, 12 process areas, 96 workflows
+
+| VS | Value Stream | Family | W-range |
+|---|---|---|---|
+| **VS-93** | Dark Store & Micro-Fulfillment Operations | Make & Move | W3089–W3112 |
+| **VS-94** | Cooperative & Community Enterprise Procurement | Plan & Source | W3113–W3136 |
+| **VS-95** | Marketplace Operator & Third-Party Seller Management | Sell & Serve | W3137–W3160 |
+| **VS-96** | Equipment Leasing & Capital Equipment Finance | Finance | W3161–W3184 |
+
+Each value stream comprises a README plus three process-area files (8 workflows each), all fully
+specified (trigger, frequency, volume, owner, participants, steps with RACI, system touchpoints,
+pain points, time estimates) and cross-referenced to adjacent value streams.
+
+### Rationale (gaps filled)
+
+- **VS-93 Dark Store & Micro-Fulfillment** — fills the retired-VS-49 gap. Ecommerce is growing
+  from ~3% to ~7% of revenue (~42,900 orders/month scaling toward ~100K); dense Metro
+  Manila/Cebu/Davao markets need dedicated pick/pack/dispatch nodes distinct from full DCs
+  (VS-04) and ship-from-store (VS-10 PA-10.2).
+- **VS-94 Cooperative & Community Enterprise Procurement** — fills the retired-VS-52 gap. Buy-
+  side counterpart to VS-82 (Sari-Sari/MSME sell-side). Covers CDA-registered cooperatives,
+  social enterprises, livelihood programs (DSWD-SLP, DOLE, DTI-BMED), and indigenous-community
+  sourcing under IPRA — distinct from mainstream vendor onboarding (VS-03) by virtue of
+  fair-trade pricing, capacity-building, advance-financing, and impact-reporting duty.
+- **VS-95 Marketplace Operator & Third-Party Seller Management** — **new gap**. BuildRight as
+  **operator** of its own 3P marketplace (buildright.com.ph / app), where vetted sellers list
+  specialty SKUs alongside BuildRight's 1P catalog. Distinct from VS-48 retail media
+  (advertising), VS-65 (BuildRight selling on Lazada/Shopee), and VS-10 (1P fulfillment).
+- **VS-96 Equipment Leasing & Capital Equipment Finance** — **new gap**. B2B lease / lease-to-
+  own / capital-equipment finance for trade, project, corporate, and government customers
+  acquiring expensive equipment (generators, scaffolding, solar/storage — links to VS-70, HVAC,
+  MHE) over multi-year terms. Distinct from VS-12 short-term tool rental and VS-38 consumer
+  credit.
+
+### Candidate gaps considered but rejected (adequate coverage)
+
+- Energy/Utilities Management — covered (VS-25 W692/W1543, VS-20 W701/W1563).
+- B2B PunchOut/cXML — covered (VS-10 W1242, VS-11 W283).
+- Customer Trade-In/Refurbishment — covered (VS-09 W916, VS-05 disposition).
+- Ocean Freight/Demurrage — covered (VS-02 W144/W249, VS-87).
+- Lumber Yard Operations — covered (VS-07 PA-07.1 incl. W1276).
+- Typhoon Emergency Merchandise/Price-Freeze Compliance — covered (VS-02 W927/W1187.7, VS-07,
+  VS-69).
+- Concessionaire/Sublease Management — covered (VS-07 W177).
+- Workers' Compensation/ECC — covered (VS-24 W805, VS-83 W2853).
+- Self-Checkout/Scan-and-Go — covered (VS-08 W281/W516/W538).
+- Pallet/RTI Pool Management — covered (VS-04 W270 + RTP reconciliation).
+- Treasury FX Hedging — covered (VS-18 PA-18.3 incl. W1473).
+
+### Reconciled counts (repository-wide)
+
+| Metric | Before (after Pass 1) | After (Pass 2) |
+|---|---|---|
+| Value streams | 88 | **92** |
+| Process areas | 268 | **280** |
+| Workflows | 2,940 | **3,036** |
+| Plan & Source subtotal | 284 | 308 |
+| Make & Move subtotal | 283 | 307 |
+| Sell & Serve subtotal | 1,074 | 1,098 |
+| Finance subtotal | 387 | 411 |
+| Unclassified workflows | 1,773 | 1,869 |
+| Classified workflows | 1,167 | 1,167 (unchanged) |
+
+Files updated (summary table, family tables, footer notes, or grand totals):
+- `README.md` — folder tree (4 new VS dirs), Key Metrics, Coverage & Known Gaps, totals.
+- `01-model-company/executive-summary.md` — totals line.
+- `01-model-company/workflows/README.md` — Quick Stats, family tables, subtotal reconciliation,
+  retired-VS note.
+- `01-model-company/workflows/value-stream-index.md` — header banner, summary table, family
+  tables/subtotals, grand total, detailed VS sections, decision tree, totals footer.
+- `01-model-company/workflows/workflow-criticality-classification.md` — disclaimer, footer (v7.4).
+- `01-model-company/workflows/workflow-dependency-map.md` — header note and footer (v2.5).
+- `01-model-company/workflows/workflow-system-touchpoint-map.md` — footer (v56.0).
+- `01-model-company/requirement-workflow-matrix.md` — Coverage Validation and footer (v51).
+- `01-model-company/workflows/workflow-gap-analysis.md` — methodology, gaps-identified table,
+  Pass 1/Pass 2 value-stream table, family subtotal impact, validation, remaining-gaps section.
+
+### Validation result
+`validate-repo.sh` passes with **0 errors**. Grand total (3,036) matches actual PA workflow
+header count (3,036); all 1,167 classified IDs resolve; no dangling references; no placeholder
+content. The 96 new workflows are unclassified (counted in the 1,869 unclassified total) pending
+a follow-up criticality pass. All four retired VS numbers (49, 50, 51, 52) now have
+fully-detailed successor value streams (VS-90/VS-92 from Pass 1; VS-93/VS-94 from Pass 2); no
+retired-number gaps remain.
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis: Add VS-89–VS-92 (96 workflows W2993–W3088)
 
 A workflow **gap analysis** was performed against the model company's operations

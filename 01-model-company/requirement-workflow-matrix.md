@@ -1008,11 +1008,11 @@
 
 - **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 2,940 workflows across 88 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: spans the full 3,036 workflows across 92 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-14 (v50 — gap analysis: added VS-89–VS-92 (96 workflows W2993–W3088: Product Recall, Damage & Claims, Consumer Data Privacy, Kitting & Bundling); updated totals to 2,940 workflows / 88 value streams. Requirement-to-workflow mappings for the new value streams will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
+*Date: 2026-06-14 (v51 — gap-analysis Pass 2: added VS-93–VS-96 (96 workflows W3089–W3184: Dark Store & Micro-Fulfillment, Cooperative & Community Enterprise Procurement, Marketplace Operator & Third-Party Seller, Equipment Leasing & Capital Equipment Finance); updated totals to 3,036 workflows / 92 value streams. Requirement-to-workflow mappings for the new value streams will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v50 added VS-89–VS-92; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
