@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> Pass 5, Pass 6, and Pass 7, all 2026-06-14).
+> Pass 5, Pass 6, Pass 7, and Pass 8, all 2026-06-14).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -34,7 +34,11 @@ identify capability gaps not addressed by any existing value stream.
    for Pass 7 specifically, 'enterprise architecture' appeared in **zero** PA files, calibration was
    referenced across **50+** PA files with no dedicated owner, dangerous-goods transport was
    confirmed distinct from VS-24.3 fixed-site storage, and performance bonds/surety were confirmed
-   sprinkled across VS-46/VS-11/VS-18 as single steps.
+   sprinkled across VS-46/VS-11/VS-18 as single steps. For Pass 8, every candidate gap was confirmed
+   to be either a single workflow within another value stream ripe for elevation (W447 DTI-BPS in
+   VS-22.1; W348 Revenue Assurance in VS-21.3; W2943 ABC-Whistleblower in VS-86.3) or genuinely
+   uncovered with no dedicated owner and only incidental references (RA 11285 energy-efficiency
+   compliance across 14 PA files with zero dedicated headers).
 5. **Prioritize** gaps by operational criticality, regulatory exposure, and volume, and select the
    set to fill in each revision pass.
 
@@ -74,6 +78,10 @@ identify capability gaps not addressed by any existing value stream.
 | 28 | **Dangerous Goods (DG) & Hazardous Materials Transport, Ecommerce & Regulatory Compliance** | An 8–10%+ DG-intensive assortment (paint/solvents ~2,800 SKUs, adhesives/thinners, aerosols, garden/agro chemicals, cleaning chemicals, fuels/lubricants, gas cylinders, lithium-battery products) moves by import ocean freight (~400–600 TEUs/month), inter-island sea/land, DC-to-store distribution, and ecommerce last-mile (~42,900 orders/month) under multiple regulators (DENR-EMB RA 6969, BFP Fire Code, DOLE OSH, MARINA/Coast Guard, CAB, LTFRB/DOTC) and international modal rules (IMDG/IATA/ADR); non-compliance causes carrier refusal, ecommerce channel blocking, port seizure, fines, and fire/spill/injury risk | **New gap (Pass 7)** — VS-24.3 (HSE) covers only **fixed-site** storage/handling safety; VS-87 covers import customs; VS-89 covers defective-product recall; VS-111 engineers product/transport packaging generally — no value stream owned the DG transport, ecommerce ship-eligibility, DG documentation/carrier-qualification, DENR-EMB hazardous-waste transport manifest, DG site permitting, or DG incident/spill/claim lifecycle | **FILLED — VS-114** |
 | 29 | **Calibration, Metrology & Measurement Traceability Management** | Catch-weight and cut-to-length selling (lumber/board-foot, wire/meter, nails bulk, tiles/sq-m) at 600 POS across 2.8M monthly transactions; custom fabrication (pipe/lumber/sheet/wire cutting) and paint mixing/tinting at every store; DC weighbridges/truck scales at 4 DCs; fuel & logistics meters; environmental/process instruments; and test & measurement tools — measurement accuracy directly determines revenue accuracy, inventory accuracy (≥97% target), quality acceptance, and DTI weights & measures / Consumer Act RA 7394 compliance | **New gap (Pass 7)** — calibration/metrology was referenced incidentally across **53** PA files (VS-08 POS scales, VS-09 cutting/paint, VS-04 DC scales, VS-07 store equipment, VS-31 quality instruments, VS-12 rental tools, VS-61 fuel, VS-23 system calibration) with **no dedicated owner** and **zero** PA with 'calibration' or 'metrology' in its title — no value stream owned the program, standards/traceability, scheduling, records, or compliance discipline | **FILLED — VS-115** |
 | 30 | **Performance Bond, Surety & Bank Guarantee Management** | ~10% B2G + ~30% B2B/project revenue under RA 9184 (Government Procurement Reform Act) and large enterprise contracts require bid bonds, performance bonds (5–30%), payment bonds, warranty bonds, and retention — secured by surety bonds or bank guarantees/LCs/cash that encumber on the order of **PHP 5M–50M+** of credit facility simultaneously and tie up capacity that otherwise supports operations | **New gap (Pass 7)** — VS-46 (B2G) references the bond as one bid step, VS-11 (B2B/project) references tender/performance bonds in bidding, VS-18 (Treasury) manages the bank/facility — no value stream owned the surety facility strategy, bond application/issuance/tracking/encumbrance lifecycle, counter-indemnity/collateral, release/closeout, claim/default response, or surety analytics | **FILLED — VS-116** |
+| 31 | **DTI-BPS Product Standards Certification & PS Mark/ICC Compliance** | ~44% of the 35,000-SKU assortment by category mix is DTI-BPS-regulated (steel/cement/PVC ~14%, tiles ~12%, electrical ~10%, paint/coatings ~8%) and ~40% is imported; RA 4109 and DTI-BPS DAOs make PS Mark / ICC / SOC certification a legal prerequisite to sale, with ~10–15 regulated import shipments/month, market-surveillance exposure, and per-unit ICC-sticker obligations | **New gap (Pass 8)** — only the single import-clearance workflow **W447** in VS-22.1 existed; VS-87 clears customs, VS-31 runs internal QC, VS-89 recalls defective product — no value stream owned the full PS-Mark-license / vendor-certification / accredited-testing / ICC-sticker / market-surveillance / vendor-recovery program | **FILLED — VS-117** |
+| 32 | **Revenue Assurance, Pricing Integrity & Leakage Management** | ~PHP 62.3B revenue / 2.8M monthly POS transactions across 600 terminals / ~42,900 ecommerce orders/month / ~600K loyalty members / gift-card / marketplace-3P / catch-weight selling; retail revenue leakage benchmarks 1–3% of gross revenue = **PHP 0.6B–1.9B/yr** at risk from pricing, promo/loyalty/gift-card, refund/reversal, catch-weight/weighing, discount-stacking, VAT/tax, payment/MDR, and settlement leakage | **New gap (Pass 8)** — only the single monthly-audit workflow **W348** in VS-21.3 existed; VS-23 addresses inventory shrink (a different vector), VS-17.4 reports revenue, VS-08 executes the transaction — no value stream owned the continuous, all-channel revenue-assurance / leakage-detection / recovery program | **FILLED — VS-118** |
+| 33 | **Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program** | 6,715 employees + ~10–20% contingent labor across 200 stores/4 DCs/5 entities; ~800–1,000 vendors; ~10% B2G + ~30% B2B revenue (ABC exposure); cash/data handling at scale — an enterprise speak-up channel, independent investigation, and whistleblower protection is a governance expectation (board audit/risk oversight, ISO 37001/37301) | **New gap (Pass 8)** — only the single ABC-specific workflow **W2943** in VS-86.3 existed; VS-21 audits controls, VS-100 manages litigation, VS-23 investigates theft, VS-84 handles grievances, VS-103 runs HR cases — no value stream owned the multi-channel intake / triage / investigation / retaliation-protection / culture / analytics program across **all** violation types | **FILLED — VS-119** |
+| 34 | **Energy Efficiency, Conservation & RA 11285 Compliance Program** | ~205 large energy-consuming sites (200 stores at 8,000–15,000 sqm + 4 DCs + HQ) are RA 11285 (Energy Efficiency & Conservation Act, 2019) designated establishments with statutory obligations: designate an Energy Efficiency Officer, conduct mandatory energy audits (Type-1 every 3 yrs / Type-2 annually), prepare and submit an Energy Conservation Plan and annual reporting to DOE; energy is a material cost line and decarbonization lever | **New gap (Pass 8)** — referenced incidentally across 14 PA files (W692/W1543 energy consumption in VS-25.1, W701/W1563 in VS-20.3, W111 utility bill, VS-108 own-generation) with **zero** dedicated workflow headers; VS-25 reports the footprint, VS-108 generates clean energy, VS-34 buys transactionally — no value stream owned the RA 11285 compliance program / ISO 50001 EnMS / ECM pipeline / M&V / energy-procurement-retail-competition discipline | **FILLED — VS-120** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -207,21 +215,37 @@ across many PA files with no dedicated owner, (c) conflated with a fixed-site HS
 | [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | Technology & Data | 3 | 24 | W3617–W3640 |
 | [VS-116](VS-116-performance-bond-surety-and-bank-guarantee-management/README.md) | Performance Bond, Surety & Bank Guarantee Management | Finance | 3 | 24 | W3641–W3664 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7)
+**Pass 8** (W3665–W3760): four value streams, 12 process areas, 96 workflows. Three of the four
+are elevations of a single workflow within another value stream to a dedicated end-to-end program
+(the same pattern used in Pass 1, Pass 5, and Pass 7), and the fourth is a genuinely-uncovered
+statutory program referenced only incidentally across multiple value streams. Each gap had been
+previously overlooked because it was (a) reduced to a single workflow (W447 DTI-BPS in VS-22.1;
+W348 Revenue Assurance in VS-21.3; W2943 ABC-Whistleblower in VS-86.3), or (b) genuinely uncovered
+with only incidental references and no dedicated owner (RA 11285 energy-efficiency compliance
+across 14 PA files with zero dedicated headers):
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 (current) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
 |---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 |
-| Finance | 411 | 411 | 435 | 435 | **459** (+24) |
-| People | 146 | 194 | 194 | 194 | 194 |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | **600** (+24) |
-| Technology & Data | 182 | 182 | 182 | 182 | **230** (+48) |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | **112** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | **340** (+12) |
+| [VS-117](VS-117-dti-bps-product-standards-certification-ps-mark-icc-compliance/README.md) | DTI-BPS Product Standards Certification & PS Mark/ICC Compliance | Governance & Assurance | 3 | 24 | W3665–W3688 |
+| [VS-118](VS-118-revenue-assurance-pricing-integrity-and-leakage-management/README.md) | Revenue Assurance, Pricing Integrity & Leakage Management | Finance | 3 | 24 | W3689–W3712 |
+| [VS-119](VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/README.md) | Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program | Governance & Assurance | 3 | 24 | W3713–W3736 |
+| [VS-120](VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/README.md) | Energy Efficiency, Conservation & RA 11285 Compliance Program | Asset & Infrastructure | 3 | 24 | W3737–W3760 |
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 (current) |
+|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 |
+| Finance | 411 | 411 | 435 | 435 | 459 | **483** (+24) |
+| People | 146 | 194 | 194 | 194 | 194 | 194 |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | **224** (+24) |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | **648** (+48) |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | **116** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | **352** (+12) |
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
@@ -246,15 +270,25 @@ across 53 files), conflated with a fixed-site HSE capability (DG transport/ecomm
 VS-24.3 storage safety), or reduced to single steps within B2G/B2B/treasury value streams
 (performance bonds/surety in VS-46/VS-11/VS-18).
 
-The 96 new workflows added in Pass 7 are currently **unclassified** (counted in the 2,349-workflow
+Pass 8 added one value stream each to **Finance** (459 → 483 via VS-118 Revenue Assurance),
+**Asset & Infrastructure** (200 → 224 via VS-120 Energy Efficiency/RA 11285), and two to
+**Governance & Assurance** (600 → 648 via VS-117 DTI-BPS Certification + VS-119 Ethics/Speak-Up).
+This pass concentrates in Governance & Assurance and Finance because the remaining genuinely-
+uncovered capabilities — after the thinner families (People, Technology & Data, Make & Move) were
+substantially strengthened in Passes 4–7 — are statutory product-certification, revenue-leakage
+protection, corporate-ethics/speak-up, and energy-efficiency compliance programs that naturally
+live in those two families. Three of the four gaps (VS-117 elevating W447, VS-118 elevating W348,
+VS-119 extending W2943) follow the Pass-1/Pass-5/Pass-7 pattern of elevating a single workflow to
+a dedicated end-to-end program; the fourth (VS-120) is a genuinely-uncovered statutory program.
+
+The 96 new workflows added in Pass 8 are currently **unclassified** (counted in the 2,445-workflow
 unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
 Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), Pass 3 (VS-97–VS-100), Pass 4 (VS-101–VS-104),
-Pass 5 (VS-105–VS-108), and Pass 6 (VS-109–VS-112) batches were handled. Several Pass 7 workflows
-are anticipated Tier 1 (EA security/resilience/standards controls and approved-technology
-gatekeeping, DG classification/transport-documentation/carrier-qualification and DG ecommerce
-ship-eligibility/regulated-product controls, legal-for-trade POS/catch-weight/weighbridge
-verification and DTI weights & measures compliance, and bid/performance-bond issuance/authority
-and encumbrance/release controls).
+Pass 5 (VS-105–VS-108), Pass 6 (VS-109–VS-112), and Pass 7 (VS-113–VS-116) batches were handled.
+Several Pass 8 workflows are anticipated Tier 1 (DTI-BPS regulated-product gating/ICC-sticker/
+market-surveillance controls, revenue-assurance pricing/promo/loyalty/refund/settlement integrity
+and leakage-recovery controls, speak-up confidentiality/retaliation-protection/investigation-
+independence controls, and RA 11285 designated-establishment/audit/reporting controls).
 
 ---
 
@@ -262,7 +296,7 @@ and encumbrance/release controls).
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,516) matches actual PA workflow header count (3,516). ✅
+- Grand total (3,612) matches actual PA workflow header count (3,612). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -309,6 +343,13 @@ and encumbrance/release controls).
   in zero PA files), referenced across many PA files with no dedicated owner (calibration/metrology
   across 53 files), conflated with a fixed-site HSE capability (DG transport vs VS-24.3 storage), or
   reduced to single steps within B2G/B2B/treasury value streams (performance bonds/surety).
+- **DTI-BPS Product Standards Certification & PS Mark/ICC Compliance**, **Revenue Assurance/Pricing
+  Integrity/Leakage Management**, **Whistleblower/Ethics & Corporate Integrity (Speak-Up) Program**,
+  and **Energy Efficiency & Conservation & RA 11285 Compliance** — **filled** by VS-117, VS-118,
+  VS-119, and VS-120 (Pass 8); three were elevations of a single workflow to a dedicated program
+  (W447 DTI-BPS in VS-22.1, W348 Revenue Assurance in VS-21.3, W2943 ABC-Whistleblower in VS-86.3)
+  and one was genuinely uncovered with only incidental references (RA 11285 energy-efficiency
+  compliance across 14 PA files with zero dedicated headers).
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.
@@ -342,6 +383,44 @@ and encumbrance/release controls).
 - **Performance/capacity of PA 53-file 'calibration' mentions** — *considered as elevation*
   (like Pass 5 elevated W324 SCF) but elevated here to a dedicated value stream (VS-115) because the
   references had no owning PA and spanned revenue, quality, compliance, and HSE impact.
+
+### Candidate gaps considered but rejected in Pass 8 (adequate coverage)
+
+- **Product Information Management (PIM) / Digital Asset Management (DAM) / product-content
+  production** — covered by PA-01.3 (Product Information & Content: W50 PIM, W1346 multilingual
+  localization, W1345 barcode/GS1, W1465 SDS, W1466 seasonal content staging), VS-10 (ecommerce),
+  and VS-48 (retail media). The 'content factory' (photo studio, syndication to marketplaces) is
+  substantially covered across VS-01.3/VS-10/VS-65.
+- **Vendor compliance / routing guide / ASN / inbound appointment / compliance chargeback** —
+  covered by VS-110.2 (Freight Execution, Routing Guide & Visibility), W1168 (DSD Receiving & Vendor
+  Compliance), VS-04 (DC receiving), VS-03 (vendor mgmt), and VS-67 (vendor scorecard).
+- **Fleet asset lifecycle / telematics / vehicle management** — covered comprehensively by VS-06
+  (W199 telematics, W799 vehicle acquisition/registration/disposal, W1348 preventive maintenance,
+  W1349 tires, W197 driver, W653 accident) and VS-61 (W2310–W2333 fleet cost/TCO).
+- **Organized retail crime (ORC) / refund & return fraud / loyalty-points / gift-card fraud** —
+  covered comprehensively by VS-23 (W840/W1542/W1337 ORC, W841/W1336 refund fraud, W1475 coupon
+  abuse, W1476 gift-card fraud, W1338 employee theft).
+- **Product liability / consumer-safety incident / customer-injury claims** — covered by W185
+  (Product Liability & Consumer Safety Incident Management) in VS-22.3, W863 (Third-Party Liability
+  & Customer Incident Insurance Response) and W1566 (Store-Level Slip-and-Fall/Customer-Injury
+  Claims) in VS-26.3, VS-100 (legal/litigation), and VS-89 (recall).
+- **B2B project job costing / progress billing / retention money** — covered by VS-11 (W165
+  Project Retention & Milestone Billing, W918 Project Budget & Cost-Variance, W1134 Retention
+  Release, W1288/W1426 Progress Billing & Milestone Collection, W1024 Material Escrow).
+- **Diversity, Equity, Inclusion & Belonging (DEIB)** — covered by dedicated workflows W3343
+  (VS-103.2) and W719 (VS-19.1).
+- **Carbon / GHG / Scope 1-2-3 / net-zero accounting** — covered by W192 (GHG Tracking in
+  VS-25.1) and W3466 (GHG Reduction & Scope 2 Attribution in VS-108.3), within the ESG (VS-25) and
+  renewable (VS-108) programs.
+- **Pricing / markdown / price optimization** — covered by VS-01.2 (Pricing & Promotions),
+  VS-57 (Competitive Price Intelligence), and VS-101 (Merchandise Financial Planning/OTB/Margin).
+- **Energy & utilities consumption management / procurement** — covered by W111 (utility bill),
+  VS-25.1 (environmental monitoring), VS-108 (own generation); the *RA 11285 statutory
+  compliance / ISO-50001 / ECM program* dimension is now filled by VS-120.
+- **Tool / equipment repair & service center** — covered by VS-12 (Installation & Repair Services).
+- **AI / model-risk governance / responsible AI** — covered by VS-30.2 (AI/ML & Automation) and
+  VS-113 (Enterprise Architecture); emerging and not yet a standalone operational program for the
+  current model company.
 
 ---
 

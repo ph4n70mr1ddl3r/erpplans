@@ -4,6 +4,82 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 8): Add VS-117–VS-120 (96 workflows W3665–W3760)
+
+An eighth workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer: 200 stores,
+4 DCs, 35,000 active SKUs, ~PHP 62.3B annual revenue, 5 legal entities). After Passes 1–7, the
+thinner operating families (People, Technology & Data, Make & Move) were substantially
+strengthened; Pass 8 targeted the remaining genuinely-uncovered capabilities, which cluster in
+**Governance & Assurance** and **Finance**. Each candidate gap was validated by keyword search
+across all PA files: three were confirmed to be a **single workflow within another value stream**
+ripe for elevation to a dedicated end-to-end program (the same pattern used in Pass 1/5/7), and
+the fourth was genuinely uncovered with only incidental references and no dedicated owner. The
+four new value streams add one each to **Finance** (VS-118), **Asset & Infrastructure** (VS-120),
+and two to **Governance & Assurance** (VS-117, VS-119). Methodology and results (including the
+full list of rejected-as-covered candidates) are documented in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+- **VS-117 DTI-BPS Product Standards Certification & PS Mark/ICC Compliance** (Governance &
+  Assurance) — elevates the single import-clearance workflow W447 (VS-22.1) to a full PS-Mark-
+  license / vendor-certification / import-ICC-SOC / accredited-testing / ICC-sticker /
+  market-surveillance / vendor-recovery program for the ~44%-regulated assortment (steel, cement,
+  PVC, electrical, tiles, paint) and ~40% imports; distinct from customs (VS-87), internal quality
+  (VS-31), recall (VS-89), DG (VS-114), and vendor management (VS-03).
+- **VS-118 Revenue Assurance, Pricing Integrity & Leakage Management** (Finance) — elevates the
+  single monthly-audit workflow W348 (VS-21.3) to a continuous, all-channel revenue-protection /
+  leakage-detection / recovery program spanning pricing, promo, loyalty, gift-card, mandatory-
+  discount, catch-weight/weighing, payment/MDR, ecommerce/marketplace settlement, and refund/
+  reversal integrity (PHP 0.6B–1.9B/yr leakage exposure at PHP 62.3B revenue); distinct from the
+  periodic audit (VS-21.3), inventory shrink (VS-23), POS execution (VS-08), and FP&A (VS-17.4).
+- **VS-119 Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program** (Governance &
+  Assurance) — extends the ABC-specific W2943 (VS-86.3) to an enterprise multi-channel-intake /
+  triage / independent-investigation / retaliation-protection / culture / analytics program across
+  all violation types; distinct from the ABC regime (VS-86), internal audit (VS-21), legal
+  (VS-100), loss prevention (VS-23), labor relations (VS-84), and HR case management (VS-103).
+- **VS-120 Energy Efficiency, Conservation & RA 11285 Compliance Program** (Asset &
+  Infrastructure) — fills the genuinely-uncovered statutory energy-management program for ~205
+  RA 11285 designated-establishment sites (EEO designation, mandatory energy audit, conservation
+  plan, DOE reporting, ISO 50001 EnMS, ECM pipeline, M&V, retail-competition energy procurement);
+  distinct from facility maintenance (VS-20.3), ESG reporting (VS-25), own-generation (VS-108),
+  expense procurement (VS-34), and store remodel (VS-109).
+
+**Candidate gaps considered but rejected as adequately covered** (documented in the gap-analysis
+file): PIM/DAM/product-content (PA-01.3), vendor routing-guide/ASN (VS-110.2), fleet/telematics
+(VS-06/VS-61), ORC/refund/loyalty/gift-card fraud (VS-23), product-liability claims (W185/W863/
+W1566/VS-100), B2B job-costing/progress-billing (VS-11), DEIB (W719/W3343), carbon/GHG/net-zero
+(W192/W3466), pricing/markdown (VS-01.2/VS-57/VS-101), tool repair (VS-12), and AI/model-risk
+governance (VS-30.2/VS-113, emerging).
+
+### Updated counts
+
+| Metric | Before | After |
+|---|---|---|
+| Value streams | 112 | **116** (+4) |
+| Process areas | 340 | **352** (+12) |
+| Workflows | 3,516 | **3,612** (+96) |
+| Unclassified workflows | 2,349 | **2,445** (+96; pending criticality review) |
+
+Family subtotals after Pass 8: Governance & Assurance 600→**648** (+48 via VS-117 + VS-119);
+Finance 459→**483** (+24 via VS-118); Asset & Infrastructure 200→**224** (+24 via VS-120);
+Plan & Source 356, Make & Move 355, Sell & Serve 1,122, People 194, Technology & Data 230
+unchanged.
+
+### Changed
+
+- Created 4 new value-stream directories (`VS-117`…`VS-120`) with README + 3 PA files each (16 new
+  files, 96 workflows W3665–W3760).
+- Updated cross-reference docs: value-stream-index (summary table, detailed map, decision tree,
+  grand total), README, executive-summary, workflows/README (stats, family sections, subtotals,
+  note), workflow-gap-analysis (Pass 8 gaps #31–34, Pass 8 value-stream table, family-impact table,
+  deferred-gaps, rejected candidates), workflow-criticality-classification (unclassified/grand-total
+  counts, version v7.9, Pass 8 footer note), workflow-dependency-map (totals, version v2.10),
+  workflow-system-touchpoint-map (totals, version 61.0), CHANGELOG.
+- Validator (`07-methodology/validate-repo.sh`) passes with **0 errors** (1 informational warning
+  for the 2,445 unclassified workflows pending criticality review, consistent with prior passes).
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 7): Add VS-113–VS-116 (96 workflows W3569–W3664)
 
 A seventh workflow **gap-analysis** pass was performed against the model company's operations
