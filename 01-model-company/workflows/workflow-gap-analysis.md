@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
-> Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, and
-> Pass 4, all 2026-06-14).
+> Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
+> and Pass 5, all 2026-06-14).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -29,8 +29,8 @@ identify capability gaps not addressed by any existing value stream.
    known retired value stream (VS-49/50/51/52) not yet re-introduced.
 4. **Validate** each candidate gap by keyword search across all PA files to confirm it is not
    already covered (avoiding redundant value streams) and to scope it so the new value stream is
-   distinct from adjacent ones. For Pass 4, every candidate gap was confirmed to have **zero**
-   dedicated workflow headers in the existing PA files.
+   distinct from adjacent ones. For Pass 4 and Pass 5, every candidate gap was confirmed to have
+   only incidental single-workflow coverage (or none) in the existing PA files.
 5. **Prioritize** gaps by operational criticality, regulatory exposure, and volume, and select the
    set to fill in each revision pass.
 
@@ -58,6 +58,10 @@ identify capability gaps not addressed by any existing value stream.
 | 16 | **Compensation, Benefits & Total Rewards Strategy** | 6,715 employees across 5 entities/205 locations, 15–20% turnover, region-varying minimum wages, mandatory 13th-month/statutory benefits, executive-pay governance before the board; pay equity and market competitiveness directly drive attract-and-retain | **New gap (Pass 4)** — VS-19.2 (Payroll & Compensation) executes *payroll processing* only (pay runs, statutory remittance, 13th-month, final pay, garnishments); no value stream owned the *design and governance* of pay/benefits (job architecture, salary structure, market benchmarking, pay equity, benefits/HMO design, retirement, STI/LTI plans) | **FILLED — VS-102** |
 | 17 | **HR Shared Services, Employee Experience & People Analytics** | 6,715 employees, ~1,200–1,600 hires and ~1,000–1,340 exits/year, 5 entities, distributed 200-store footprint; a structured HR service-center, EX program, and people-analytics function is essential to service quality, self-service adoption, compliance, and data-driven people decisions | **New gap (Pass 4)** — VS-19 owns the employee *lifecycle* (recruitment, payroll, WFM, learning, separation) and VS-84 owns labor relations, but no value stream owned the *service-delivery* layer (HR helpdesk/case management, ESS/MSS, multi-entity shared services, EX, engagement, DEI, workforce planning, people analytics, HRIS admin) | **FILLED — VS-103** |
 | 18 | **Government Affairs, Public Policy & Industry Relations** | A PHP 62.3B retailer operating under Philippine national regulation (BIR tax/e-invoicing, DTI consumer, DOLE labor, BSP payments, DENR environmental, customs/tariff, data privacy) and participating in retail/supply-chain industry associations; 200 stores across regions require consistent national policy engagement and the board expects external-affairs reporting | **New gap (Pass 4)** — VS-76 covers *local* (LGU) permits/tax/relationships, VS-22 executes *permit/license operations* and government-audit response, VS-84.3 covers *labor-specific* policy advocacy/associations (W2893/W2894), VS-14.3 handles PR/crisis-comms, and VS-100 handles litigation; no value stream owned *proactive national corporate government affairs and industry relations* (stakeholder mapping, legislative/regulatory monitoring, advocacy, coalition building, association leadership, public affairs, political/regulatory risk) | **FILLED — VS-104** |
+| 19 | **Supply Chain Finance & Working Capital Management** | ~PHP 37B annual procurement spend, ~800–1,000 vendors, 30–60-day standard terms; the supplier-finance / reverse-factoring / dynamic-discounting / cash-conversion-cycle discipline that releases working capital and supports vendor liquidity at PHP 62.3B-revenue scale | **New gap (Pass 5)** — VS-18 (treasury cash) contained a single program-summary workflow W324 “Supply Chain Finance & Dynamic Discounting Program”; VS-15 (P2P) processed the payable and VS-39 handled rebates, but no value stream owned the comprehensive SCF & working-capital program (multi-funder facility, vendor enrollment, dynamic-discounting platform, CCC governance) | **FILLED — VS-105** |
+| 20 | **Commodity & Input-Cost Risk Management** | 35K-SKU assortment heavily weighted to commodity-intensive categories (steel/cement/lumber 14%+14%, copper 10%+12%, oil-derived paint/plastics 8%); ~40% import; a 10% commodity swing can move COGS by ~PHP 0.5–1.5B and threatens the 28–32% gross-margin target | **New gap (Pass 5)** — VS-02.3 touched supply-chain disruption risk and VS-18.3 hedged FX only; VS-101 modeled margin; “commodity hedg” appeared in only 1 PA file and no value stream owned the dedicated commodity-exposure / hedging / indexed-pricing / pass-through program | **FILLED — VS-106** |
+| 21 | **Strategic Key Account & Enterprise Customer Management** | ~40% of revenue concentrated in ~5,200 B2B accounts; the top ~700 strategic accounts (developers, large enterprises, government, large contractors) materially move the P&L and warrant dedicated relationship/growth management | **New gap (Pass 5)** — VS-11 executed transactional trade/project/wholesale, VS-43 operated the trade loyalty program, VS-46 executed government bidding, and VS-13 served mass support; “key account” appeared across 16 files but no value stream owned the strategic key-account program (tiering, KAP/JBP, account teams, executive sponsorship, account profitability, CLV/churn) | **FILLED — VS-107** |
+| 22 | **On-Site Renewable Energy & Prosumer Asset Operations** | ~205 large rooftops (1.6–3.0M sqm) in a high-irradiance, high-tariff market; rooftop solar/storage cuts grid cost, hedges brownouts (links to VS-07/W470), and delivers the ESG decarbonization target (links to VS-25) | **New gap (Pass 5)** — VS-70 sold solar products to customers, VS-35 accounted for fixed assets, and VS-07/VS-20.3 contained single energy/solar-monitoring workflows (W111/W173); no value stream owned BuildRight's own generation/prosumer program (capex, EPC, net-metering, REC, decarbonization accounting) | **FILLED — VS-108** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -87,6 +91,15 @@ identify capability gaps not addressed by any existing value stream.
 - **Property / facility maintenance (landlord-side)** — covered by VS-20.3 and VS-97.2.
 - **IT change & release management** — covered by VS-27.1 (service management, W132 SDLC).
 - **Continuous improvement / operations excellence** — covered across VS-30 (innovation/automation) and VS-21 (audit).
+
+### Capabilities elevated from single workflows to dedicated value streams (Pass 5)
+
+Pass 5 specifically targeted capabilities that existed only as a single workflow within another value stream (or were conflated with an adjacent covered one) and elevated each to its own end-to-end program — the same pattern used in Pass 1 (VS-89 Product Recall was elevated from the single customer-notification workflow W776 in VS-09):
+
+- **Supply chain finance / dynamic discounting** — *previously* the single workflow W324 in VS-18 PA-18.1; now the dedicated **VS-105** program.
+- **Commodity hedging / input-cost risk** — *previously* a single incidental reference; now the dedicated **VS-106** program.
+- **Strategic / key account management** — *previously* sprinkled across VS-11/VS-43/VS-46/VS-13; now the dedicated **VS-107** program.
+- **Own-generation / prosumer solar** — *previously* the single monitoring workflows W111 (energy) and W173 (solar) in VS-07/VS-20.3; now the dedicated **VS-108** program.
 
 ---
 
@@ -134,32 +147,52 @@ an adjacent covered capability:
 | [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | People | 3 | 24 | W3329–W3352 |
 | [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | Governance & Assurance | 3 | 24 | W3353–W3376 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4)
+**Pass 5** (W3377–W3472): four value streams, 12 process areas, 96 workflows. Each gap had been
+previously overlooked because it was either (a) conflated with an adjacent covered capability or
+(b) addressed only as a single workflow within another value stream (the same pattern used in
+Pass 1, where VS-89 Product Recall was elevated from the single customer-notification workflow
+W776 in VS-09):
 
-| Family | After Pass 3 | After Pass 4 (current) |
-|---|---|---|
-| Plan & Source | 308 | **332** (+24) |
-| Make & Move | 307 | 307 |
-| Sell & Serve | 1,098 | 1,098 |
-| Finance | 411 | 411 |
-| People | 146 | **194** (+48) |
-| Asset & Infrastructure | 128 | 128 |
-| Governance & Assurance | 552 | **576** (+24) |
-| Technology & Data | 182 | 182 |
-| **Grand total** | **3,132** | **3,228** (+96) |
-| Value streams | 96 | **100** (+4) |
-| Process areas | 292 | **304** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | Finance | 3 | 24 | W3377–W3400 |
+| [VS-106](VS-106-commodity-input-cost-risk-management/README.md) | Commodity & Input-Cost Risk Management | Plan & Source | 3 | 24 | W3401–W3424 |
+| [VS-107](VS-107-strategic-key-account-enterprise-customer-management/README.md) | Strategic Key Account & Enterprise Customer Management | Sell & Serve | 3 | 24 | W3425–W3448 |
+| [VS-108](VS-108-onsite-renewable-energy-prosumer-asset-operations/README.md) | On-Site Renewable Energy & Prosumer Asset Operations | Asset & Infrastructure | 3 | 24 | W3449–W3472 |
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 (current) |
+|---|---|---|---|
+| Plan & Source | 308 | 332 | **356** (+24) |
+| Make & Move | 307 | 307 | 307 |
+| Sell & Serve | 1,098 | 1,098 | **1,122** (+24) |
+| Finance | 411 | 411 | **435** (+24) |
+| People | 146 | 194 | 194 |
+| Asset & Infrastructure | 128 | 128 | **152** (+24) |
+| Governance & Assurance | 552 | 576 | 576 |
+| Technology & Data | 182 | 182 | 182 |
+| **Grand total** | **3,132** | **3,228** | **3,324** (+96) |
+| Value streams | 96 | 100 | **104** (+4) |
+| Process areas | 292 | 304 | **316** (+12) |
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
-received +1.
+received +1. Pass 5 added one value stream to each of four families (Plan & Source, Sell & Serve,
+Finance, and Asset & Infrastructure — the last being the thinnest by value-stream count), targeting
+capabilities that existed only as single workflows within another value stream (SCF / commodity
+hedging / key account / own-generation) or were conflated with an adjacent covered one.
 
-The 96 new workflows added in Pass 4 are currently **unclassified** (counted in the 2,061-workflow
-unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
-Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), and Pass 3 (VS-97–VS-100) batches were handled. Several
-Pass 4 workflows are anticipated Tier 1 (open-to-buy/markdown-budget governance and merchandise
-P&A control, pay-equity analysis and minimum-wage compliance, multi-entity statutory-benefits
-remittance governance, and political-activity/anti-bribery compliance in government affairs).
+The 96 new workflows added in Pass 4 and the 96 added in Pass 5 are currently **unclassified**
+(counted in the 2,157-workflow unclassified total) and will be tier-assigned in a follow-up
+criticality review, exactly as the Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), and Pass 3
+(VS-97–VS-100) batches were handled. Several Pass 4 workflows are anticipated Tier 1
+(open-to-buy/markdown-budget governance and merchandise P&A control, pay-equity analysis and
+minimum-wage compliance, multi-entity statutory-benefits remittance governance, and
+political-activity/anti-bribery compliance in government affairs), as are several Pass 5 workflows
+(SCF facility/covenant governance and hedge-accounting controls, commodity hedge authority/SoD
+and PFRS 9 hedge documentation, strategic-account credit-concentration disclosure and
+anti-bribery controls, and renewable-asset net-metering/REC accounting and PFRS 16 treatment).
 
 ---
 
@@ -167,7 +200,7 @@ remittance governance, and political-activity/anti-bribery compliance in governm
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,228) matches actual PA workflow header count (3,228). ✅
+- Grand total (3,324) matches actual PA workflow header count (3,324). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -194,6 +227,12 @@ remittance governance, and political-activity/anti-bribery compliance in governm
   VS-101, VS-102, VS-103, and VS-104 (Pass 4); as with Pass 3, each had been conflated with an
   adjacent covered capability (assortment/supply/corporate-budget, payroll processing, the
   employee lifecycle, and LGU/regulatory/labor-advocacy respectively).
+- **Supply Chain Finance & Working Capital**, **Commodity & Input-Cost Risk**, **Strategic Key
+  Account & Enterprise Customer**, and **On-Site Renewable Energy & Prosumer** — **filled** by
+  VS-105, VS-106, VS-107, and VS-108 (Pass 5); each had existed only as a single workflow within
+  another value stream (W324 SCF in VS-18, the incidental commodity-hedging reference, the
+  sprinkled key-account mentions across VS-11/VS-43/VS-46, and the W111/W173 energy/solar
+  monitoring workflows) or was conflated with an adjacent covered capability.
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.

@@ -4,6 +4,89 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 5): Add VS-105–VS-108 (96 workflows W3377–W3472)
+
+A fifth workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer: 200 stores,
+4 DCs, 35,000 active SKUs, ~PHP 62.3B annual revenue, 5 legal entities). Pass 5 targeted
+capabilities that had been **overlooked because each existed only as a single workflow within
+another value stream** (or was conflated with an adjacent covered capability) — the same pattern
+used in Pass 1, where VS-89 Product Recall was elevated from the single customer-notification
+workflow W776 in VS-09. Each of the four candidate gaps was validated by keyword search across
+all PA files to confirm it had no dedicated value stream. The four new value streams are
+distributed one each across Plan & Source, Sell & Serve, Finance, and Asset & Infrastructure
+(the last being the thinnest family by value-stream count). Methodology and results are documented
+in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+### Added — 4 new value streams, 12 process areas, 96 workflows
+
+| VS | Value Stream | Family | W-range |
+|---|---|---|---|
+| **VS-105** | Supply Chain Finance & Working Capital Management | Finance | W3377–W3400 |
+| **VS-106** | Commodity & Input-Cost Risk Management | Plan & Source | W3401–W3424 |
+| **VS-107** | Strategic Key Account & Enterprise Customer Management | Sell & Serve | W3425–W3448 |
+| **VS-108** | On-Site Renewable Energy & Prosumer Asset Operations | Asset & Infrastructure | W3449–W3472 |
+
+Each value stream comprises a README plus three process-area files (8 workflows each), all fully
+specified (trigger, frequency, volume, owner, participants, steps with RACI, system touchpoints,
+pain points, time estimates) and cross-referenced to adjacent value streams.
+
+### Rationale (gaps filled — each previously a single workflow or conflated with a covered capability)
+
+- **VS-105 Supply Chain Finance & Working Capital Management** — the supplier-finance /
+  reverse-factoring / dynamic-discounting / cash-conversion-cycle discipline existed only as the
+  single program-summary workflow W324 in VS-18 (Treasury). No value stream owned the
+  comprehensive SCF program (multi-funder facility, vendor enrollment, dynamic-discounting
+  platform, CCC governance) that monetizes BuildRight's payer position across ~PHP 37B annual
+  procurement spend and 30–60-day payment terms. Distinct from VS-18 (cash positioning), VS-15
+  (P2P processing), and VS-39 (rebates).
+- **VS-106 Commodity & Input-Cost Risk Management** — BuildRight's heavy commodity exposure
+  (steel/cement/lumber 14%+14% of SKUs, copper 10%+12%, oil-derived paint/plastics 8%, ~40%
+  import) had no dedicated owner; "commodity hedging" appeared in only 1 PA file. A 10% commodity
+  swing can move COGS by ~PHP 0.5–1.5B and threatens the 28–32% gross-margin target. Distinct
+  from VS-02 (supply operations), VS-18.3 (FX hedging only), and VS-101 (merchandise margin).
+- **VS-107 Strategic Key Account & Enterprise Customer Management** — ~40% of revenue is
+  concentrated in ~5,200 B2B accounts; the top ~700 strategic accounts warrant dedicated
+  relationship/growth management, but "key account" was only sprinkled across VS-11/VS-43/VS-46/
+  VS-13 (transactional trade, trade loyalty, government bidding, mass support). Distinct from all
+  four and from VS-16/VS-68 (credit/billing).
+- **VS-108 On-Site Renewable Energy & Prosumer Asset Operations** — BuildRight's own rooftop
+  solar/storage generation across ~205 large rooftops (1.6–3.0M sqm) in a high-tariff market had
+  no dedicated owner; only single monitoring workflows existed (W111 energy, W173 solar in
+  VS-07/VS-20.3). Distinct from VS-70 (selling solar products to customers), VS-35 (fixed-asset
+  accounting), and VS-25 (ESG reporting).
+
+### Updated counts
+
+| Metric | Before | After |
+|---|---|---|
+| Value streams | 100 | **104** (+4) |
+| Process areas | 304 | **316** (+12) |
+| Workflows | 3,228 | **3,324** (+96) |
+| Unclassified workflows | 2,061 | **2,157** (+96; pending criticality review) |
+
+Family subtotals after Pass 5: Plan & Source 332→**356**, Sell & Serve 1,098→**1,122**, Finance
+411→**435**, Asset & Infrastructure 128→**152**; Make & Move 307, People 194, Governance &
+Assurance 576, Technology & Data 182 unchanged.
+
+### Changed
+
+- Created 4 new value-stream directories (`VS-105`…`VS-108`) with README + 3 PA files each (16 new
+  files, 96 workflows W3377–W3472).
+- Updated `value-stream-index.md` (architecture line, coverage note, summary table + subtotals,
+  detailed map, decision tree, footer).
+- Updated `README.md`, `executive-summary.md`, `workflows/README.md` (counts, folder structure,
+  coverage note, reconciliation).
+- Updated `workflow-gap-analysis.md` (Pass 5 section, gaps #19–22, family impact table,
+  validation, deferred-gaps section).
+- Updated count references in `workflow-criticality-classification.md`, `workflow-dependency-map.md`,
+  `workflow-system-touchpoint-map.md`, and `requirement-workflow-matrix.md` (new VS are unclassified
+  and will be tier-assigned in a follow-up criticality review, consistent with prior passes).
+- `07-methodology/validate-repo.sh` passes with 0 errors.
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 4): Add VS-101–VS-104 (96 workflows W3281–W3376)
 
 A fourth workflow **gap-analysis** pass was performed against the model company's operations

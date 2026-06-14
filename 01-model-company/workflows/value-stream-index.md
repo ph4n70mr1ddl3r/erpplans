@@ -8,10 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 100 Value Streams · 304 Process Areas · 3228 Workflows
+8 Families · 104 Value Streams · 316 Process Areas · 3324 Workflows
 ```
 
-> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management)**, **VS-98 (Contingent, Contract & Outsourced Workforce Management)**, **VS-99 (IT Asset & Technology Lifecycle Management)**, and **VS-100 (Legal Operations, Litigation & IP Management)**. A fourth gap-analysis pass (2026-06-14) added four further value streams that strengthen the previously-thinnest operating families and fill capabilities conflated with adjacent covered ones: **VS-101 (Merchandise Financial Planning, OTB & Margin Management)**, **VS-102 (Compensation, Benefits & Total Rewards Strategy)**, **VS-103 (HR Shared Services, Employee Experience & People Analytics)**, and **VS-104 (Government Affairs, Public Policy & Industry Relations)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
+> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management)**, **VS-98 (Contingent, Contract & Outsourced Workforce Management)**, **VS-99 (IT Asset & Technology Lifecycle Management)**, and **VS-100 (Legal Operations, Litigation & IP Management)**. A fourth gap-analysis pass (2026-06-14) added four further value streams that strengthen the previously-thinnest operating families and fill capabilities conflated with adjacent covered ones: **VS-101 (Merchandise Financial Planning, OTB & Margin Management)**, **VS-102 (Compensation, Benefits & Total Rewards Strategy)**, **VS-103 (HR Shared Services, Employee Experience & People Analytics)**, and **VS-104 (Government Affairs, Public Policy & Industry Relations)**. A fifth gap-analysis pass (2026-06-14) added four further value streams, each filling a capability previously conflated with an adjacent covered one or touched only as a single workflow within another value stream: **VS-105 (Supply Chain Finance & Working Capital Management)**, **VS-106 (Commodity & Input-Cost Risk Management)**, **VS-107 (Strategic Key Account & Enterprise Customer Management)**, and **VS-108 (On-Site Renewable Energy & Prosumer Asset Operations)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -25,7 +25,8 @@
 |  | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Performance Analytics | 3 | 24 |
 |  | [VS-94](VS-94-cooperative-community-enterprise-procurement/README.md) | Cooperative & Community Enterprise Procurement | 3 | 24 |
 |  | [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | 3 | 24 |
-| | | | **Subtotal** | **332** |
+|  | [VS-106](VS-106-commodity-input-cost-risk-management/README.md) | Commodity & Input-Cost Risk Management | 3 | 24 |
+| | | | **Subtotal** | **356** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 36 |
@@ -66,7 +67,8 @@
 |  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 3 | 24 |
 |  | [VS-82](VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | 3 | 24 |
 |  | [VS-95](VS-95-marketplace-operator-third-party-seller/README.md) | Marketplace Operator & Third-Party Seller Management | 3 | 24 |
-| | | | **Subtotal** | **1098** |
+|  | [VS-107](VS-107-strategic-key-account-enterprise-customer-management/README.md) | Strategic Key Account & Enterprise Customer Management | 3 | 24 |
+| | | | **Subtotal** | **1122** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
@@ -81,7 +83,8 @@
 |  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | 3 | 24 |
 |  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | 3 | 24 |
 |  | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | 3 | 24 |
-| | | | **Subtotal** | **411** |
+|  | [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | 3 | 24 |
+| | | | **Subtotal** | **435** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
@@ -94,7 +97,8 @@
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | 3 | 24 |
 |  | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | 3 | 24 |
 |  | [VS-97](VS-97-corporate-real-estate-property-portfolio/README.md) | Corporate Real Estate & Property Portfolio Management | 3 | 24 |
-| | | | **Subtotal** | **128** |
+|  | [VS-108](VS-108-onsite-renewable-energy-prosumer-asset-operations/README.md) | On-Site Renewable Energy & Prosumer Asset Operations | 3 | 24 |
+| | | | **Subtotal** | **152** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 48 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 28 |
@@ -123,7 +127,7 @@
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 |  | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | 3 | 24 |
 | | | | **Subtotal** | **182** |
-| | | | **Grand Total** | **3228** | |
+| | | | **Grand Total** | **3324** | |
 
 ---
 
@@ -191,6 +195,12 @@
 - **PA-101.1** [Seasonal Merchandise Financial Planning & Open-to-Buy](./VS-101-merchandise-financial-planning-otb-margin-management/PA-101.1-seasonal-merchandise-financial-planning-and-open-to-buy.md) — 8 workflows
 - **PA-101.2** [Inventory Investment, Turn & Productivity Planning](./VS-101-merchandise-financial-planning-otb-margin-management/PA-101.2-inventory-investment-turn-and-productivity-planning.md) — 8 workflows
 - **PA-101.3** [Merchandise Performance Analytics & Margin Optimization](./VS-101-merchandise-financial-planning-otb-margin-management/PA-101.3-merchandise-performance-analytics-and-margin-optimization.md) — 8 workflows
+
+**[VS-106: Commodity & Input-Cost Risk Management](./VS-106-commodity-input-cost-risk-management/README.md)** (24 workflows)
+
+- **PA-106.1** [Commodity Exposure Identification & Market Intelligence](./VS-106-commodity-input-cost-risk-management/PA-106.1-commodity-exposure-identification-and-market-intelligence.md) — 8 workflows
+- **PA-106.2** [Procurement Hedging, Forward Buying & Indexed-Pricing Strategy](./VS-106-commodity-input-cost-risk-management/PA-106.2-procurement-hedging-forward-buying-and-indexed-pricing.md) — 8 workflows
+- **PA-106.3** [Input-Cost Pass-Through, Margin Protection & Risk Analytics](./VS-106-commodity-input-cost-risk-management/PA-106.3-input-cost-pass-through-margin-protection-and-risk-analytics.md) — 8 workflows
 
 
 ### Make & Move
@@ -433,6 +443,12 @@
 - **PA-95.2** [Marketplace Catalog, Order Routing & Seller Fulfillment](./VS-95-marketplace-operator-third-party-seller/PA-95.2-marketplace-catalog-order-routing-fulfillment.md) — 8 workflows
 - **PA-95.3** [Marketplace Settlement, Seller Performance & Governance](./VS-95-marketplace-operator-third-party-seller/PA-95.3-marketplace-settlement-performance-governance.md) — 8 workflows
 
+**[VS-107: Strategic Key Account & Enterprise Customer Management](./VS-107-strategic-key-account-enterprise-customer-management/README.md)** (24 workflows)
+
+- **PA-107.1** [Strategic Account Selection, Planning & Relationship Governance](./VS-107-strategic-key-account-enterprise-customer-management/PA-107.1-strategic-account-selection-planning-and-relationship-governance.md) — 8 workflows
+- **PA-107.2** [Enterprise Account Growth, Contract & Executive Engagement](./VS-107-strategic-key-account-enterprise-customer-management/PA-107.2-enterprise-account-growth-contract-and-executive-engagement.md) — 8 workflows
+- **PA-107.3** [Account Profitability, Retention & Strategic Analytics](./VS-107-strategic-key-account-enterprise-customer-management/PA-107.3-account-profitability-retention-and-strategic-analytics.md) — 8 workflows
+
 
 ### Finance
 
@@ -520,6 +536,12 @@
 - **PA-96.2** [Lease Booking, Billing & Asset Lifecycle Management](./VS-96-equipment-leasing-capital-equipment-finance/PA-96.2-lease-booking-billing-asset-lifecycle.md) — 8 workflows
 - **PA-96.3** [Lease Portfolio Risk, Residual & Yield Analytics](./VS-96-equipment-leasing-capital-equipment-finance/PA-96.3-lease-portfolio-risk-residual-yield-analytics.md) — 8 workflows
 
+**[VS-105: Supply Chain Finance & Working Capital Management](./VS-105-supply-chain-finance-working-capital-management/README.md)** (24 workflows)
+
+- **PA-105.1** [Supplier Finance & Reverse-Factoring Program Management](./VS-105-supply-chain-finance-working-capital-management/PA-105.1-supplier-finance-and-reverse-factoring-program.md) — 8 workflows
+- **PA-105.2** [Dynamic Discounting & Early-Payment Operations](./VS-105-supply-chain-finance-working-capital-management/PA-105.2-dynamic-discounting-and-early-payment-operations.md) — 8 workflows
+- **PA-105.3** [Working Capital Analytics & Cash-Conversion-Cycle Governance](./VS-105-supply-chain-finance-working-capital-management/PA-105.3-working-capital-analytics-and-cash-conversion-governance.md) — 8 workflows
+
 
 ### People
 
@@ -593,6 +615,12 @@
 - **PA-97.1** [Property Acquisition, Investment & Portfolio Strategy](./VS-97-corporate-real-estate-property-portfolio/PA-97.1-property-acquisition-investment-portfolio-strategy.md) — 8 workflows
 - **PA-97.2** [Landlord Leasing Operations & Tenant Management](./VS-97-corporate-real-estate-property-portfolio/PA-97.2-landlord-leasing-tenant-management.md) — 8 workflows
 - **PA-97.3** [Property Accounting, Compliance & Portfolio Analytics](./VS-97-corporate-real-estate-property-portfolio/PA-97.3-property-accounting-compliance-portfolio-analytics.md) — 8 workflows
+
+**[VS-108: On-Site Renewable Energy & Prosumer Asset Operations](./VS-108-onsite-renewable-energy-prosumer-asset-operations/README.md)** (24 workflows)
+
+- **PA-108.1** [Renewable Generation Investment, Capex & Project Development](./VS-108-onsite-renewable-energy-prosumer-asset-operations/PA-108.1-renewable-generation-investment-capex-and-project-development.md) — 8 workflows
+- **PA-108.2** [Generation Operations, Grid Interaction & Net-Metering](./VS-108-onsite-renewable-energy-prosumer-asset-operations/PA-108.2-generation-operations-grid-interaction-and-net-metering.md) — 8 workflows
+- **PA-108.3** [Renewable Asset Performance, REC & Decarbonization Analytics](./VS-108-onsite-renewable-energy-prosumer-asset-operations/PA-108.3-renewable-asset-performance-rec-and-decarbonization-analytics.md) — 8 workflows
 
 
 ### Governance & Assurance
@@ -775,15 +803,15 @@
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93)
-Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96)
+Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103)
-Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97)
+Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108)
 Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99)
 ```
 
 
-*Total: 3228 workflows across 100 value streams · Date: 2026-06-14*
+*Total: 3324 workflows across 104 value streams · Date: 2026-06-14*
