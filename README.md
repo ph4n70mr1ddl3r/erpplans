@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      2,844 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 84 value streams · 256 process areas)
+│   ├── workflows/                      2,940 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 88 value streams · 268 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -118,7 +118,11 @@ erpplans/
 │   │   ├── VS-85-mandatory-discount-eligibility-tax-credit/ 24 workflows (3 process areas)
 │   │   ├── VS-86-anti-financial-crime-aml-abc/     24 workflows (3 process areas)
 │   │   ├── VS-87-customs-trade-compliance-tariff/  24 workflows (3 process areas)
-│   │   └── VS-88-document-control-records-retention/ 24 workflows (3 process areas)
+│   │   ├── VS-88-document-control-records-retention/ 24 workflows (3 process areas)
+│   │   ├── VS-89-product-recall-safety-corrective-action/ 24 workflows (3 process areas)
+│   │   ├── VS-90-damage-claims-freight-recovery/ 24 workflows (3 process areas)
+│   │   ├── VS-91-consumer-data-privacy-protection/ 24 workflows (3 process areas)
+│   │   └── VS-92-kitting-bundling-build-to-order-assembly/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -158,7 +162,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **2,844** across 84 value streams, 256 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **2,940** across 88 value streams, 268 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -169,10 +173,10 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 2,844 fully specified across 84 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,167 of 2,844 workflows classified** (41%); 1,677 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 2,940 fully specified across 88 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,167 of 2,940 workflows classified** (40%); 1,773 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14); the numbers will not be reused. See [CHANGELOG.md](CHANGELOG.md) | — |
+| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14). A 2026-06-14 gap analysis filled two of those capability gaps with new value streams (VS-90 ↔ former VS-50, VS-92 ↔ former VS-51) and added VS-89 (Product Recall) and VS-91 (Consumer Data Privacy). The retired numbers remain unused. See [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
 
@@ -192,7 +196,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-    │  erp-requirements.md ←→ workflows/ (2,844 WF)    │
+    │  erp-requirements.md ←→ workflows/ (2,940 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -204,6 +208,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
     │                value-stream-index.md              │
-    │            (84 VS · 256 process areas)            │
+    │            (88 VS · 268 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

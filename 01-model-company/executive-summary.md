@@ -79,4 +79,4 @@ erpplans/
 
 ---
 
-*Date: 2026-06-14 (updated counts: 733 requirements, 2,844 workflows across 84 value streams; VS-49/50/51/52 retired after placeholder-content review)*
+*Date: 2026-06-14 (updated counts: 733 requirements, 2,940 workflows across 88 value streams; VS-49/50/51/52 retired after placeholder-content review; VS-89/90/91/92 added via gap analysis — Product Recall, Damage & Claims, Consumer Data Privacy, Kitting & Bundling)*

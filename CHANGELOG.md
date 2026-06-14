@@ -4,6 +4,85 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis: Add VS-89–VS-92 (96 workflows W2993–W3088)
+
+A workflow **gap analysis** was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer) to confirm
+the operational workflow inventory comprehensively covers its business, and to fill capability
+gaps. Methodology and results are documented in the new
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+### Added — 4 new value streams, 12 process areas, 96 workflows
+
+| VS | Value Stream | Family | W-range |
+|---|---|---|---|
+| **VS-89** | Product Recall & Safety Corrective Action Management | Governance & Assurance | W2993–W3016 |
+| **VS-90** | Damage, Claims & Freight Recovery Management | Make & Move | W3017–W3040 |
+| **VS-91** | Consumer Data Privacy & Data Protection Program | Governance & Assurance | W3041–W3064 |
+| **VS-92** | Kitting, Bundling & Build-to-Order Assembly Operations | Make & Move | W3065–W3088 |
+
+Each value stream comprises a README plus three process-area files (8 workflows each), all fully
+specified (trigger, frequency, volume, owner, participants, steps with RACI, system touchpoints,
+pain points, time estimates) and cross-referenced to adjacent value streams.
+
+### Rationale (gaps filled)
+
+- **VS-89 Product Recall** — only the store-level customer-notification execution step (W776)
+  existed; the end-to-end recall program (hazard intake, risk assessment, DTI-BPS/FDA notification,
+  retrieval, vendor reimbursement, destruction, CAPA, post-recall surveillance) was missing.
+  Consumer Act (RA 7394) + DTI-BPS mandate recall procedures.
+- **VS-90 Damage & Claims** — fills the retired-VS-50 gap. Systematic damage identification/
+  disposition, vendor/carrier/freight claim filing & settlement, customer damage-claim handling,
+  subrogation/insurance recovery, and enterprise damage cost analytics.
+- **VS-91 Consumer Data Privacy** — employee data privacy existed (W647); the consumer program
+  (consent/preference, DSAR fulfillment, PIA/DPIA, vendor privacy due diligence, DPA 72-hour
+  breach NPC notification) was missing. ~600K loyalty members + ~515K ecommerce orders/yr.
+- **VS-92 Kitting & Bundling** — fills the retired-VS-51 gap (distinct from VS-09 custom
+  fabrication). Kit/Bundle is an explicit item type (profile §6.4); covers BOM, centralized &
+  store-level build, tear-down/component recovery, bundle pricing/promotion analytics.
+
+### Considered but not added
+
+- Workforce Management — already covered (PA-19.3 in VS-19, 10 workflows).
+- Facilities/Equipment Maintenance — substantially covered (VS-20 PA-20.3 + VS-07 PA-07.2).
+- Dark Store & Micro-Fulfillment (former VS-49) and Cooperative/Community Procurement (former
+  VS-52) — **deferred** (lower near-term priority); VS-49–VS-52 numbers remain retired.
+
+### Reconciled counts (repository-wide)
+
+| Metric | Before | After |
+|---|---|---|
+| Value streams | 84 | **88** |
+| Process areas | 256 | **268** |
+| Workflows | 2,844 | **2,940** |
+| Make & Move subtotal | 235 | 283 |
+| Governance & Assurance subtotal | 480 | 528 |
+| Unclassified workflows | 1,677 | 1,773 |
+| Classified workflows | 1,167 | 1,167 (unchanged) |
+
+Files updated (summary table, family tables, footer notes, or grand totals):
+- `README.md` — folder tree (4 new VS dirs), Key Metrics, Coverage & Known Gaps, Document
+  Relationships diagram, totals.
+- `01-model-company/executive-summary.md` — totals line.
+- `01-model-company/workflows/README.md` — Quick Stats, family tables, subtotal reconciliation,
+  retired-VS note, navigation.
+- `01-model-company/workflows/value-stream-index.md` — header banner, summary table, family
+  tables/subtotals, grand total, detailed VS sections, decision tree, totals footer.
+- `01-model-company/workflows/workflow-criticality-classification.md` — disclaimer, summary
+  table, addition note, footer (v7.3).
+- `01-model-company/workflows/workflow-dependency-map.md` — header note and footer (v2.4).
+- `01-model-company/workflows/workflow-system-touchpoint-map.md` — footer (v55.0).
+- `01-model-company/requirement-workflow-matrix.md` — Coverage Validation and footer (v50).
+- `01-model-company/workflows/workflow-gap-analysis.md` — **new** methodology & results document.
+
+### Validation result
+`validate-repo.sh` passes with **0 errors**. Grand total (2,940) matches actual PA workflow
+header count (2,940); all classified IDs resolve; no dangling references; no placeholder content.
+The 96 new workflows are unclassified (counted in the 1,773 unclassified total) pending a
+follow-up criticality pass.
+
+---
+
 ## 2026-06-14 — Consistency Review: Decision Tree, Matrix Counts & Validator Accuracy
 
 A full-repository consistency review (all 84 value streams, 256 process areas, 2,844

@@ -8,10 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 84 Value Streams · 256 Process Areas · 2844 Workflows
+8 Families · 88 Value Streams · 268 Process Areas · 2940 Workflows
 ```
 
-> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous; the four value streams will be re-introduced with fully detailed workflows in a future revision. See [CHANGELOG.md](../../CHANGELOG.md) for details.
+> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**; the remaining gaps (dark-store/micro-fulfillment, cooperative/community procurement) remain open for future revision. See [CHANGELOG.md](../../CHANGELOG.md) for details.
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -32,7 +32,9 @@
 |  | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 3 | 24 |
 |  | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | 3 | 24 |
 |  | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car Operations | 3 | 24 |
-| | | | **Subtotal** | **235** |
+|  | [VS-90](VS-90-damage-claims-freight-recovery/README.md) | Damage, Claims & Freight Recovery Management | 3 | 24 |
+|  | [VS-92](VS-92-kitting-bundling-build-to-order-assembly/README.md) | Kitting, Bundling & Build-to-Order Assembly Operations | 3 | 24 |
+| | | | **Subtotal** | **283** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
@@ -101,13 +103,15 @@
 |  | [VS-86](VS-86-anti-financial-crime-aml-abc/README.md) | Anti-Financial Crime, AML/KYC & Anti-Corruption | 3 | 24 |
 |  | [VS-87](VS-87-customs-trade-compliance-tariff/README.md) | Customs Trade Compliance & Tariff Optimization | 3 | 24 |
 |  | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control, Records Management & Retention | 3 | 24 |
-| | | | **Subtotal** | **480** |
+|  | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action Management | 3 | 24 |
+|  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | 3 | 24 |
+| | | | **Subtotal** | **528** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 | | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **2844** | |
+| | | | **Grand Total** | **2940** | |
 
 ---
 
@@ -214,6 +218,18 @@
 - **PA-81.1** [Store Cash Office, Smart Safe & Pickup Planning](./VS-81-cash-in-transit-vault-armored/PA-81.1-store-cash-office-smart-safe-pickup.md) — 8 workflows
 - **PA-81.2** [Armored Car, Vault & Cash Logistics Execution](./VS-81-cash-in-transit-vault-armored/PA-81.2-armored-car-vault-cash-execution.md) — 8 workflows
 - **PA-81.3** [CIT Risk, Insurance & Cash Analytics](./VS-81-cash-in-transit-vault-armored/PA-81.3-cit-risk-insurance-analytics.md) — 8 workflows
+
+**[VS-90: Damage, Claims & Freight Recovery Management](./VS-90-damage-claims-freight-recovery/README.md)** (24 workflows)
+
+- **PA-90.1** [Damage Identification, Documentation & Disposition](./VS-90-damage-claims-freight-recovery/PA-90.1-damage-identification-documentation-disposition.md) — 8 workflows
+- **PA-90.2** [Vendor, Carrier & Freight Claims Filing & Resolution](./VS-90-damage-claims-freight-recovery/PA-90.2-vendor-carrier-freight-claims-filing-resolution.md) — 8 workflows
+- **PA-90.3** [Customer Damage/Shortage Claims & Recovery Analytics](./VS-90-damage-claims-freight-recovery/PA-90.3-customer-damage-claims-recovery-analytics.md) — 8 workflows
+
+**[VS-92: Kitting, Bundling & Build-to-Order Assembly Operations](./VS-92-kitting-bundling-build-to-order-assembly/README.md)** (24 workflows)
+
+- **PA-92.1** [Kit & Bundle Definition, BOM & Build Planning](./VS-92-kitting-bundling-build-to-order-assembly/PA-92.1-kit-bundle-definition-bom-build-planning.md) — 8 workflows
+- **PA-92.2** [Kit Assembly, Build Execution & Inventory Management](./VS-92-kitting-bundling-build-to-order-assembly/PA-92.2-kit-assembly-build-execution-inventory.md) — 8 workflows
+- **PA-92.3** [Bundle Pricing, Promotion & Performance Analytics](./VS-92-kitting-bundling-build-to-order-assembly/PA-92.3-bundle-pricing-promotion-performance-analytics.md) — 8 workflows
 
 
 ### Sell & Serve
@@ -617,6 +633,18 @@
 - **PA-88.2** [Retention, Legal Hold & Secure Disposition](./VS-88-document-control-records-retention/PA-88.2-retention-legal-hold-disposition.md) — 8 workflows
 - **PA-88.3** [Records Compliance, e-Discovery & BIR/SEC/NPC Audit](./VS-88-document-control-records-retention/PA-88.3-records-compliance-ediscovery-audit.md) — 8 workflows
 
+**[VS-89: Product Recall & Safety Corrective Action Management](./VS-89-product-recall-safety-corrective-action/README.md)** (24 workflows)
+
+- **PA-89.1** [Recall Initiation, Risk Assessment & Regulatory Notification](./VS-89-product-recall-safety-corrective-action/PA-89.1-recall-initiation-risk-assessment-regulatory-notification.md) — 8 workflows
+- **PA-89.2** [Recall Execution, Customer Notification & Product Retrieval](./VS-89-product-recall-safety-corrective-action/PA-89.2-recall-execution-customer-notification-retrieval.md) — 8 workflows
+- **PA-89.3** [Recall Resolution, Reimbursement & Root Cause / CAPA](./VS-89-product-recall-safety-corrective-action/PA-89.3-recall-resolution-reimbursement-root-cause-capa.md) — 8 workflows
+
+**[VS-91: Consumer Data Privacy & Data Protection Program](./VS-91-consumer-data-privacy-protection/README.md)** (24 workflows)
+
+- **PA-91.1** [Privacy Governance, Consent & Data Subject Rights Fulfillment](./VS-91-consumer-data-privacy-protection/PA-91.1-privacy-governance-consent-data-subject-rights.md) — 8 workflows
+- **PA-91.2** [Privacy Impact Assessment, Data Mapping & Vendor Privacy Due Diligence](./VS-91-consumer-data-privacy-protection/PA-91.2-privacy-impact-assessment-data-mapping-vendor-privacy.md) — 8 workflows
+- **PA-91.3** [Breach Detection, Notification & NPC Regulatory Response](./VS-91-consumer-data-privacy-protection/PA-91.3-breach-detection-notification-npc-response.md) — 8 workflows
+
 
 ### Technology & Data
 
@@ -655,6 +683,7 @@
 | [workflow-criticality-classification.md](./workflow-criticality-classification.md) | Phase 1/2/3 implementation priorities |
 | [workflow-dependency-map.md](./workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](./workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
+| [workflow-gap-analysis.md](./workflow-gap-analysis.md) | Gap analysis methodology & results |
 | [../requirement-workflow-matrix.md](../requirement-workflow-matrix.md) | Requirement-to-workflow traceability |
 
 ---
@@ -663,14 +692,14 @@
 
 ```
 Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82)
-Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81)
+Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59)
-Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–88)
+Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
 ```
 
 
-*Total: 2844 workflows across 84 value streams · Date: 2026-06-14*
+*Total: 2940 workflows across 88 value streams · Date: 2026-06-14*

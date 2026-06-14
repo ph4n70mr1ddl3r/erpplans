@@ -1008,11 +1008,11 @@
 
 - **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 2,844 workflows across 84 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: spans the full 2,940 workflows across 88 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-14 (v49 — consistency review: corrected Coverage Validation counts to 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories and 2,844 workflows / 84 value streams, reconciling with value-stream-index.md after the VS-49/50/51/52 retirement; removed 19 duplicate requirement-ID rows whose mappings were merged into their canonical ID rows; total requirements reconciled with erp-requirements.md)*
+*Date: 2026-06-14 (v50 — gap analysis: added VS-89–VS-92 (96 workflows W2993–W3088: Product Recall, Damage & Claims, Consumer Data Privacy, Kitting & Bundling); updated totals to 2,940 workflows / 88 value streams. Requirement-to-workflow mappings for the new value streams will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Value Streams | 84 |
-| Process Areas | 256 |
-| Workflows | 2,844 |
+| Value Streams | 88 |
+| Process Areas | 268 |
+| Workflows | 2,940 |
 | Classified (Tier 1) | 439 |
 | Classified (Tier 2) | 499 |
 | Classified (Tier 3) | 229 |
@@ -22,11 +22,12 @@
 
 | Document | Purpose |
 |---|---|
-| [value-stream-index.md](value-stream-index.md) | **Master index** — all 84 value streams with workflow counts |
+| [value-stream-index.md](value-stream-index.md) | **Master index** — all 88 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
+| [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap analysis methodology & results |
 
 ---
 
@@ -44,7 +45,7 @@
 | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Clearance | 24 |
 | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Analytics | 24 |
 
-### Make & Move (235 workflows)
+### Make & Move (283 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 45 |
@@ -55,6 +56,8 @@
 | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 24 |
 | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Contractor Job Site Delivery | 24 |
 | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car | 24 |
+| [VS-90](VS-90-damage-claims-freight-recovery/README.md) | Damage, Claims & Freight Recovery | 24 |
+| [VS-92](VS-92-kitting-bundling-build-to-order-assembly/README.md) | Kitting, Bundling & Build-to-Order Assembly | 24 |
 
 ### Sell & Serve (1,074 workflows)
 | VS | Value Stream | Workflows |
@@ -119,7 +122,7 @@
 | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | 24 |
 | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | 24 |
 
-### Governance & Assurance (480 workflows)
+### Governance & Assurance (528 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 48 |
@@ -139,6 +142,8 @@
 | [VS-86](VS-86-anti-financial-crime-aml-abc/README.md) | Anti-Financial Crime, AML & Anti-Corruption | 24 |
 | [VS-87](VS-87-customs-trade-compliance-tariff/README.md) | Customs Trade Compliance & Tariff | 24 |
 | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control & Records Retention | 24 |
+| [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action | 24 |
+| [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection | 24 |
 
 ### Technology & Data (158 workflows)
 | VS | Value Stream | Workflows |
@@ -150,8 +155,8 @@
 
 ---
 
-*Family subtotal reconciliation: 284 + 235 + 1,074 + 387 + 122 + 104 + 480 + 158 = 2,844*
+*Family subtotal reconciliation: 284 + 283 + 1,074 + 387 + 122 + 104 + 528 + 158 = 2,940*
 
-> **Note (2026-06-14):** VS-49, VS-50, VS-51 and VS-52 were retired after a repository review found their workflow files contained only auto-generated placeholder content. Their family subtotals above reflect the removal. The four numbers are retired and will not be reused; the value streams will be re-introduced with detailed workflows in a future revision. See [CHANGELOG.md](../../CHANGELOG.md).
+> **Note (2026-06-14):** VS-49, VS-50, VS-51 and VS-52 were retired after a repository review found their workflow files contained only auto-generated placeholder content. A subsequent gap analysis (2026-06-14) reintroduced two of those capabilities as fully-detailed value streams — **VS-90 (Damage, Claims & Freight Recovery)** fills the former VS-50 gap, and **VS-92 (Kitting, Bundling & Build-to-Order Assembly)** fills the former VS-51 gap — alongside two new governance value streams, **VS-89 (Product Recall & Safety Corrective Action)** and **VS-91 (Consumer Data Privacy & Data Protection)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md).
 
 *Back to [Model Company](../) · [Repository README](../../README.md)*
