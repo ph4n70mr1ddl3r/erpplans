@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> and Pass 5, all 2026-06-14).
+> Pass 5, and Pass 6, all 2026-06-14).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -62,6 +62,10 @@ identify capability gaps not addressed by any existing value stream.
 | 20 | **Commodity & Input-Cost Risk Management** | 35K-SKU assortment heavily weighted to commodity-intensive categories (steel/cement/lumber 14%+14%, copper 10%+12%, oil-derived paint/plastics 8%); ~40% import; a 10% commodity swing can move COGS by ~PHP 0.5–1.5B and threatens the 28–32% gross-margin target | **New gap (Pass 5)** — VS-02.3 touched supply-chain disruption risk and VS-18.3 hedged FX only; VS-101 modeled margin; “commodity hedg” appeared in only 1 PA file and no value stream owned the dedicated commodity-exposure / hedging / indexed-pricing / pass-through program | **FILLED — VS-106** |
 | 21 | **Strategic Key Account & Enterprise Customer Management** | ~40% of revenue concentrated in ~5,200 B2B accounts; the top ~700 strategic accounts (developers, large enterprises, government, large contractors) materially move the P&L and warrant dedicated relationship/growth management | **New gap (Pass 5)** — VS-11 executed transactional trade/project/wholesale, VS-43 operated the trade loyalty program, VS-46 executed government bidding, and VS-13 served mass support; “key account” appeared across 16 files but no value stream owned the strategic key-account program (tiering, KAP/JBP, account teams, executive sponsorship, account profitability, CLV/churn) | **FILLED — VS-107** |
 | 22 | **On-Site Renewable Energy & Prosumer Asset Operations** | ~205 large rooftops (1.6–3.0M sqm) in a high-irradiance, high-tariff market; rooftop solar/storage cuts grid cost, hedges brownouts (links to VS-07/W470), and delivers the ESG decarbonization target (links to VS-25) | **New gap (Pass 5)** — VS-70 sold solar products to customers, VS-35 accounted for fixed assets, and VS-07/VS-20.3 contained single energy/solar-monitoring workflows (W111/W173); no value stream owned BuildRight's own generation/prosumer program (capex, EPC, net-metering, REC, decarbonization accounting) | **FILLED — VS-108** |
+| 23 | **Store Remodel, Renovation & Lifecycle Refurbishment Program** | 200-store chain remodels/refurbishes on a ~5–7-year cycle (~30–40 events/year at PHP 8–25M each; ~PHP 300–700M/yr program) — the single largest lever for comp-sales growth, format relevance, and asset-value preservation | **New gap (Pass 6)** — VS-37 covers only *new* store opening/commissioning, VS-59 only closure/decommissioning, VS-20 only *new-build* construction, VS-97 the landlord/owner investment view, and VS-40 only the *capex accounting* of remodel spend (W1811–W2752); the *operational* remodel program (lifecycle scoring, scope/concept/design, phasing around a live trading store, FF&E/signage rollout, technology/POS refresh, merchandise reset, re-opening, post-remodel analytics) was entirely uncovered | **FILLED — VS-109** |
+| 24 | **Freight Procurement, Carrier Management & Freight Audit** | Freight is a major cost line (inbound/import, line-haul, last-mile; ~400–600 import TEUs/month, ~5,000 replenishment orders/month, ~80% third-party fleet, ~42.9K ecommerce orders/month); PHP-hundreds-of-millions-to-low-billions of spend with no single owner for carrier contracting/rate/routing-guide/freight-audit/landed-cost | **New gap (Pass 6)** — the freight-financial discipline was sprinkled across VS-02.2 (import freight, W66 inter-island, W249 demurrage), VS-04 (DC), VS-06.1 (outbound), and VS-06.3 (last-mile, incl. the single carrier-rate/freight-audit workflow W1166 and W1371/W1439/W1440); VS-56 covers only the last-mile 3PL *delivery-partner* relationship, VS-87 customs/tariff, and VS-15 AP processing — no value stream owned the end-to-end freight-spend/carrier-relationship/landed-cost program | **FILLED — VS-110** |
+| 25 | **Packaging, Pallet & Returnable Transport Item (RTI) Management** | At BuildRight's volume (~72K inbound receipts/yr, ~134M POS line items/yr), packaging/pallets/RTI are a material cost line (PHP 200–500M/yr), a damage/shrink source, a freight-cube driver, and a sustainability/EPR (RA 11898) and single-use-plastic exposure | **New gap (Pass 6)** — referenced incidentally across VS-04 (DC receiving/palletization), VS-05 (merchandise inventory), VS-06 (logistics), VS-32 (reverse), VS-73 (waste), VS-41 (private-label packaging), VS-87 (import/ISPM-15), VS-24.3 (hazmat); no value stream owned the packaging-engineering, pallet/RTI pool, tracking/reconciliation, compliance/EPR, or cost-analytics discipline | **FILLED — VS-111** |
+| 26 | **Corporate Project & Program Management Office (PMO)** | PHP 800M–1.2B annual capex plus major transformation programs (ERP/digital, net-zero/renewable, omnichannel, store-format evolution) run dozens of concurrent projects and several multi-project programs requiring portfolio governance, stage-gate discipline, resource/capacity planning, dependency/risk management, and benefits realization | **New gap (Pass 6)** — VS-40 performs only the *financial accounting* of capital projects (request/approval/commitment/CIP/turnover/variance/ROI-review W1811–W2752); VS-33 sets the budget envelope and tracks corporate KPIs; and the delivery-domain VSs (VS-20/VS-37/VS-109/VS-108/VS-27/VS-06) execute their respective project types — no value stream owned the enterprise project-portfolio governance/methodology/program-management/benefits-realization discipline | **FILLED — VS-112** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -91,6 +95,14 @@ identify capability gaps not addressed by any existing value stream.
 - **Property / facility maintenance (landlord-side)** — covered by VS-20.3 and VS-97.2.
 - **IT change & release management** — covered by VS-27.1 (service management, W132 SDLC).
 - **Continuous improvement / operations excellence** — covered across VS-30 (innovation/automation) and VS-21 (audit).
+
+### Candidate gaps considered but rejected in Pass 6 (adequate coverage)
+
+- **Lumber yard / bulk building materials operations** — covered by VS-07.1 (W1281 Lumber Yard Daily Operations & Inventory Management, W951 bulk material breaking, W1243 lumber grading) and W1488 bulk delivery.
+- **Corporate travel, expense & P-card management** — covered by VS-34.3 Expense Monitoring & Control (W1686 Travel & Business Entertainment Expense Management + the corporate-card issuance/audit workflows).
+- **Print, signage & POSM production & distribution** — covered by VS-14.1 Campaign Planning & Execution (W1270 Seasonal Promotional Catalog Production/Printing/Store Distribution, W1522 Monthly Flyer & Promotional Catalog, plus the in-store POS-material production/distribution step and W1313 vendor-supplied POP lifecycle).
+- **Energy & utilities procurement & contract management** — covered by W111 (utility bill/consumption across ~205 accounts, in VS-07.2/VS-20.3), VS-108 (own generation), and VS-34 (procurement); explicitly noted as covered above.
+- **Store fixtures / FF&E procurement** — absorbed into the new VS-109 remodel program (W3481) and VS-37 store opening, with VS-34/VS-03 for transactional procurement.
 
 ### Capabilities elevated from single workflows to dedicated value streams (Pass 5)
 
@@ -160,39 +172,55 @@ W776 in VS-09):
 | [VS-107](VS-107-strategic-key-account-enterprise-customer-management/README.md) | Strategic Key Account & Enterprise Customer Management | Sell & Serve | 3 | 24 | W3425–W3448 |
 | [VS-108](VS-108-onsite-renewable-energy-prosumer-asset-operations/README.md) | On-Site Renewable Energy & Prosumer Asset Operations | Asset & Infrastructure | 3 | 24 | W3449–W3472 |
 
+**Pass 6** (W3473–W3568): four value streams, 12 process areas, 96 workflows, deliberately
+concentrated in the two thinnest-by-workflow operating families (Make & Move and Asset &
+Infrastructure). Each gap had been overlooked because it was either (a) genuinely uncovered by any
+value stream, (b) sprinkled across multiple value streams without a single owner, or (c) conflated
+with an adjacent covered capability:
+
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-109](VS-109-store-remodel-renovation-lifecycle-refurbishment/README.md) | Store Remodel, Renovation & Lifecycle Refurbishment Program | Asset & Infrastructure | 3 | 24 | W3473–W3496 |
+| [VS-110](VS-110-freight-procurement-carrier-management-and-freight-audit/README.md) | Freight Procurement, Carrier Management & Freight Audit | Make & Move | 3 | 24 | W3497–W3520 |
+| [VS-111](VS-111-packaging-pallet-and-returnable-transport-item-management/README.md) | Packaging, Pallet & Returnable Transport Item (RTI) Management | Make & Move | 3 | 24 | W3521–W3544 |
+| [VS-112](VS-112-corporate-project-and-program-management-office/README.md) | Corporate Project & Program Management Office (PMO) | Asset & Infrastructure | 3 | 24 | W3545–W3568 |
+
 ### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5)
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 (current) |
-|---|---|---|---|
-| Plan & Source | 308 | 332 | **356** (+24) |
-| Make & Move | 307 | 307 | 307 |
-| Sell & Serve | 1,098 | 1,098 | **1,122** (+24) |
-| Finance | 411 | 411 | **435** (+24) |
-| People | 146 | 194 | 194 |
-| Asset & Infrastructure | 128 | 128 | **152** (+24) |
-| Governance & Assurance | 552 | 576 | 576 |
-| Technology & Data | 182 | 182 | 182 |
-| **Grand total** | **3,132** | **3,228** | **3,324** (+96) |
-| Value streams | 96 | 100 | **104** (+4) |
-| Process areas | 292 | 304 | **316** (+12) |
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 (current) |
+|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 |
+| Make & Move | 307 | 307 | 307 | **355** (+48) |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 |
+| Finance | 411 | 411 | 435 | 435 |
+| People | 146 | 194 | 194 | 194 |
+| Asset & Infrastructure | 128 | 128 | 152 | **200** (+48) |
+| Governance & Assurance | 552 | 576 | 576 | 576 |
+| Technology & Data | 182 | 182 | 182 | 182 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** (+96) |
+| Value streams | 96 | 100 | 104 | **108** (+4) |
+| Process areas | 292 | 304 | 316 | **328** (+12) |
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
 received +1. Pass 5 added one value stream to each of four families (Plan & Source, Sell & Serve,
 Finance, and Asset & Infrastructure — the last being the thinnest by value-stream count), targeting
 capabilities that existed only as single workflows within another value stream (SCF / commodity
-hedging / key account / own-generation) or were conflated with an adjacent covered one.
+hedging / key account / own-generation) or were conflated with an adjacent covered one. Pass 6
+concentrated both new value streams in each of the two thinnest families by *workflow count* —
+**Make & Move** (307 → 355, +48 via VS-110 Freight + VS-111 Packaging/RTI) and **Asset &
+Infrastructure** (152 → 200, +48 via VS-109 Remodel + VS-112 PMO) — targeting capabilities that were
+genuinely uncovered (remodel execution, packaging/pallet/RTI engineering), sprinkled across
+multiple value streams (freight-spend/carrier), or conflated with the financial-accounting view
+of an asset (capex accounting vs project-portfolio governance).
 
-The 96 new workflows added in Pass 4 and the 96 added in Pass 5 are currently **unclassified**
-(counted in the 2,157-workflow unclassified total) and will be tier-assigned in a follow-up
-criticality review, exactly as the Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), and Pass 3
-(VS-97–VS-100) batches were handled. Several Pass 4 workflows are anticipated Tier 1
-(open-to-buy/markdown-budget governance and merchandise P&A control, pay-equity analysis and
-minimum-wage compliance, multi-entity statutory-benefits remittance governance, and
-political-activity/anti-bribery compliance in government affairs), as are several Pass 5 workflows
-(SCF facility/covenant governance and hedge-accounting controls, commodity hedge authority/SoD
-and PFRS 9 hedge documentation, strategic-account credit-concentration disclosure and
-anti-bribery controls, and renewable-asset net-metering/REC accounting and PFRS 16 treatment).
+The 96 new workflows added in Pass 6 are currently **unclassified** (counted in the 2,253-workflow
+unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
+Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), Pass 3 (VS-97–VS-100), Pass 4 (VS-101–VS-104), and
+Pass 5 (VS-105–VS-108) batches were handled. Several Pass 6 workflows are anticipated Tier 1
+(remodel capex-governance and live-store HSE/continuity controls, freight-audit SoD and
+landed-cost/cost-to-serve accuracy, pallet/RTI and deposit-reconciliation controls and EPR/plastic
+compliance, and PMO stage-gate/capex-approval authority and benefits-realization governance).
 
 ---
 
@@ -200,7 +228,7 @@ anti-bribery controls, and renewable-asset net-metering/REC accounting and PFRS 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,324) matches actual PA workflow header count (3,324). ✅
+- Grand total (3,420) matches actual PA workflow header count (3,420). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -233,6 +261,13 @@ anti-bribery controls, and renewable-asset net-metering/REC accounting and PFRS 
   another value stream (W324 SCF in VS-18, the incidental commodity-hedging reference, the
   sprinkled key-account mentions across VS-11/VS-43/VS-46, and the W111/W173 energy/solar
   monitoring workflows) or was conflated with an adjacent covered capability.
+- **Store Remodel/Renovation/Lifecycle Refurbishment**, **Freight Procurement/Carrier
+  Management/Freight Audit**, **Packaging/Pallet/RTI Management**, and **Corporate Project &
+  Program Management Office (PMO)** — **filled** by VS-109, VS-110, VS-111, and VS-112 (Pass 6);
+  each had been genuinely uncovered (remodel execution, packaging/pallet/RTI engineering), sprinkled
+  across multiple value streams (freight-spend/carrier across VS-02.2/VS-04/VS-06.1/VS-06.3), or
+  conflated with the financial-accounting view of an asset (capex accounting in VS-40 vs
+  project-portfolio governance).
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.

@@ -4,6 +4,82 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 6): Add VS-109–VS-112 (96 workflows W3473–W3568)
+
+A sixth workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer: 200 stores,
+4 DCs, 35,000 active SKUs, ~PHP 62.3B annual revenue, 5 legal entities). Pass 6 targeted
+capabilities that were **genuinely uncovered by any value stream, sprinkled across multiple value
+streams without a single owner, or conflated with the financial-accounting view of an asset**.
+Each candidate gap was validated by keyword search across all PA files to confirm it had no
+dedicated value stream and to scope it distinct from adjacent ones. The four new value streams are
+concentrated in the two thinnest families by *workflow count* — **Make & Move** (+48) and **Asset &
+Infrastructure** (+48). Methodology and results are documented in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+### Added — 4 new value streams, 12 process areas, 96 workflows
+
+| VS | Value Stream | Family | W-range |
+|---|---|---|---|
+| **VS-109** | Store Remodel, Renovation & Lifecycle Refurbishment Program | Asset & Infrastructure | W3473–W3496 |
+| **VS-110** | Freight Procurement, Carrier Management & Freight Audit | Make & Move | W3497–W3520 |
+| **VS-111** | Packaging, Pallet & Returnable Transport Item (RTI) Management | Make & Move | W3521–W3544 |
+| **VS-112** | Corporate Project & Program Management Office (PMO) | Asset & Infrastructure | W3545–W3568 |
+
+Each value stream comprises a README plus three process-area files (8 workflows each), all fully
+specified (trigger, frequency, volume, owner, participants, steps with RACI, system touchpoints,
+pain points, time estimates) and cross-referenced to adjacent value streams.
+
+### Rationale (gaps filled)
+
+- **VS-109 Store Remodel, Renovation & Lifecycle Refurbishment Program** — a 200-store chain
+  remodels on a ~5–7-year cycle (~30–40 events/year at PHP 8–25M each; ~PHP 300–700M/yr program),
+  yet no value stream owned the *operational* remodel program. VS-37 covers only new-store
+  opening, VS-59 only closure, VS-20 only new-build construction, VS-97 the landlord view, and
+  VS-40 only the capex *accounting*. Distinct from all five.
+- **VS-110 Freight Procurement, Carrier Management & Freight Audit** — freight is a major cost
+  line (inbound/import/line-haul/last-mile) that was sprinkled across VS-02.2 (import freight,
+  W66, W249), VS-04 (DC), VS-06.1 (outbound), and VS-06.3 (last-mile, incl. the single
+  carrier-rate/freight-audit workflow W1166). No value stream owned the end-to-end
+  carrier-contracting/routing-guide/freight-audit/landed-cost discipline. Distinct from VS-06
+  (execution), VS-56 (3PL last-mile partner), VS-87 (customs), and VS-15 (AP).
+- **VS-111 Packaging, Pallet & Returnable Transport Item (RTI) Management** — at BuildRight's
+  volume, packaging/pallets/RTI are a PHP 200–500M/yr cost line, a damage/shrink source, a
+  freight-cube driver, and a sustainability/EPR (RA 11898) exposure, referenced incidentally across
+  VS-04/VS-05/VS-06/VS-32/VS-73/VS-41/VS-87/VS-24.3 with no dedicated owner. Distinct from DC
+  operations, merchandise inventory, logistics, returns, waste, and private-label development.
+- **VS-112 Corporate Project & Program Management Office (PMO)** — PHP 800M–1.2B annual capex
+  plus major transformation programs require portfolio governance/stage-gate/program-management/
+  benefits-realization, but VS-40 performs only the *financial accounting* of capital projects
+  (W1811–W2752) and VS-33 sets the budget envelope; no value stream owned the operational PMO
+  discipline. Distinct from capex accounting, strategic planning, and the delivery-domain VSs.
+
+### Updated counts
+
+| Metric | Before | After |
+|---|---|---|
+| Value streams | 104 | **108** (+4) |
+| Process areas | 316 | **328** (+12) |
+| Workflows | 3,324 | **3,420** (+96) |
+| Unclassified workflows | 2,157 | **2,253** (+96; pending criticality review) |
+
+Family subtotals after Pass 6: Make & Move 307→**355**, Asset & Infrastructure 152→**200**;
+Plan & Source 356, Sell & Serve 1,122, Finance 435, People 194, Governance & Assurance 576,
+Technology & Data 182 unchanged.
+
+### Changed
+
+- Created 4 new value-stream directories (`VS-109`…`VS-112`) with README + 3 PA files each (16 new
+  files, 96 workflows W3473–W3568).
+- Updated `value-stream-index.md` (architecture line, coverage note, summary table + subtotals,
+  detailed map, decision tree, footer).
+- Updated `README.md`, `executive-summary.md`, `workflows/README.md` (counts, folder structure,
+  coverage note, reconciliation).
+- Extended `workflow-gap-analysis.md` (Pass 6 gaps, candidate table, new-VS table, family-subtotal
+  impact, validation, deferred-gaps, and Pass-6 rejected candidates).
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 5): Add VS-105–VS-108 (96 workflows W3377–W3472)
 
 A fifth workflow **gap-analysis** pass was performed against the model company's operations

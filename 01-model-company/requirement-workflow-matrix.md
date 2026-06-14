@@ -1008,11 +1008,11 @@
 
 - **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 3,324 workflows across 104 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: spans the full 3,420 workflows across 108 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-14 (v52 — gap-analysis Pass 3: added VS-97–VS-100 (96 workflows W3185–W3280: Corporate Real Estate & Property Portfolio, Contingent & Outsourced Workforce, IT Asset & Technology Lifecycle, Legal Operations/Litigation & IP); gap-analysis Pass 4: added VS-101–VS-104 (96 workflows W3281–W3376: Merchandise Financial Planning/OTB/Margin Management, Compensation/Benefits/Total Rewards, HR Shared Services/EX/People Analytics, Government Affairs/Public Policy/Industry Relations); gap-analysis Pass 5: added VS-105–VS-108 (96 workflows W3377–W3472: Supply Chain Finance & Working Capital Management, Commodity & Input-Cost Risk Management, Strategic Key Account & Enterprise Customer Management, On-Site Renewable Energy & Prosumer Asset Operations); updated totals to 3,324 workflows / 104 value streams. Requirement-to-workflow mappings for the new value streams will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v51 added VS-93–VS-96; prior v50 added VS-89–VS-92; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
+*Date: 2026-06-14 (v53 — gap-analysis Pass 6: added VS-109–VS-112 (96 workflows W3473–W3568: Store Remodel/Renovation/Lifecycle Refurbishment, Freight Procurement/Carrier Management/Freight Audit, Packaging/Pallet/RTI Management, Corporate Project & Program Management Office (PMO)); updated totals to 3,420 workflows / 108 value streams. Requirement-to-workflow mappings for the new value streams will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
