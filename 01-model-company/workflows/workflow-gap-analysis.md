@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
-> Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, and Pass 3,
-> all 2026-06-14).
+> Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, and
+> Pass 4, all 2026-06-14).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -29,7 +29,8 @@ identify capability gaps not addressed by any existing value stream.
    known retired value stream (VS-49/50/51/52) not yet re-introduced.
 4. **Validate** each candidate gap by keyword search across all PA files to confirm it is not
    already covered (avoiding redundant value streams) and to scope it so the new value stream is
-   distinct from adjacent ones.
+   distinct from adjacent ones. For Pass 4, every candidate gap was confirmed to have **zero**
+   dedicated workflow headers in the existing PA files.
 5. **Prioritize** gaps by operational criticality, regulatory exposure, and volume, and select the
    set to fill in each revision pass.
 
@@ -53,6 +54,10 @@ identify capability gaps not addressed by any existing value stream.
 | 12 | **Contingent, Contract & Outsourced Workforce Management** | ~10–20% of store/DC labor is non-employee (outsourced security guards, janitorial, promodizers, construction/agency labor); DOLE Department Order 174 labor-only-contracting compliance, worker-misclassification and co-employment risk before the NLRC | **New gap (Pass 3)** — VS-19 covers BuildRight's own employees (incl. directly-hired seasonal W555) and VS-34 covers commercial service contracts at the PO/invoice level, but no dedicated contingent-workforce *program* (DOLE D.O. 174 structuring, four-fold-test classification, contractor onboarding/access/safety, time-vs-invoice reconciliation, spend analytics) | **FILLED — VS-98** |
 | 13 | **IT Asset & Technology Lifecycle Management** | 600 POS terminals + RF/handheld scanners + mobile devices + network/Wi-Fi + servers/storage + the full software/SaaS estate across 205+ locations; license true-up/audit exposure (BSA), data-privacy obligations on device disposal (RA 10173), DENR e-waste rules | **New gap (Pass 3)** — VS-35 fixed-asset *accounting* and VS-27 IT *operations/service desk* did not cover the ITAM discipline (hardware/software discovery & CMDB, SAM & license optimization, SaaS portfolio & FinOps, technology refresh, secure retirement with sanitization) | **FILLED — VS-99** |
 | 14 | **Legal Operations, Litigation & IP Management** | Active legal matters and outside counsel across the 5-entity group; commercial/contract, labor (NLRC), consumer/DTI, property/lease, tax (BIR), customs (BOC), insurance/subrogation, and IP exposure; the board receives periodic litigation updates (per VS-36.1) | **New gap (Pass 3)** — VS-36 corporate governance, VS-22 compliance/regulatory, and VS-88 records/retention/legal-hold *execution* covered adjacent areas but not the *litigator work* (matter/case management, litigation lifecycle, outside counsel, IP portfolio prosecution & enforcement, settlement/loss-contingency) | **FILLED — VS-100** |
+| 15 | **Merchandise Financial Planning, Open-to-Buy & Margin Management** | ~PHP 62.3B revenue, ~PHP 42–45B COGS, 28–32% gross margin, ~40% import component, 6–8x inventory-turn target; the open-to-buy, receipt-budget, markdown-margin, and inventory-investment discipline that governs whether EBITDA (12–14%) and turn targets are met | **New gap (Pass 4)** — VS-01.1 (assortment = *which* products), VS-02 (supply operations = *how much/when* operationally), VS-33.1 (corporate revenue/OPEx budget), and VS-17.4 (finance FP&A) all touched adjacent territory, but no value stream owned the *merchandise-financial* layer (seasonal merchandise plan, OTB, markdown budget, IMU/maintained-margin modeling, turn/GMROI/WOS planning, in-season reforecast, merchandise P&A) | **FILLED — VS-101** |
+| 16 | **Compensation, Benefits & Total Rewards Strategy** | 6,715 employees across 5 entities/205 locations, 15–20% turnover, region-varying minimum wages, mandatory 13th-month/statutory benefits, executive-pay governance before the board; pay equity and market competitiveness directly drive attract-and-retain | **New gap (Pass 4)** — VS-19.2 (Payroll & Compensation) executes *payroll processing* only (pay runs, statutory remittance, 13th-month, final pay, garnishments); no value stream owned the *design and governance* of pay/benefits (job architecture, salary structure, market benchmarking, pay equity, benefits/HMO design, retirement, STI/LTI plans) | **FILLED — VS-102** |
+| 17 | **HR Shared Services, Employee Experience & People Analytics** | 6,715 employees, ~1,200–1,600 hires and ~1,000–1,340 exits/year, 5 entities, distributed 200-store footprint; a structured HR service-center, EX program, and people-analytics function is essential to service quality, self-service adoption, compliance, and data-driven people decisions | **New gap (Pass 4)** — VS-19 owns the employee *lifecycle* (recruitment, payroll, WFM, learning, separation) and VS-84 owns labor relations, but no value stream owned the *service-delivery* layer (HR helpdesk/case management, ESS/MSS, multi-entity shared services, EX, engagement, DEI, workforce planning, people analytics, HRIS admin) | **FILLED — VS-103** |
+| 18 | **Government Affairs, Public Policy & Industry Relations** | A PHP 62.3B retailer operating under Philippine national regulation (BIR tax/e-invoicing, DTI consumer, DOLE labor, BSP payments, DENR environmental, customs/tariff, data privacy) and participating in retail/supply-chain industry associations; 200 stores across regions require consistent national policy engagement and the board expects external-affairs reporting | **New gap (Pass 4)** — VS-76 covers *local* (LGU) permits/tax/relationships, VS-22 executes *permit/license operations* and government-audit response, VS-84.3 covers *labor-specific* policy advocacy/associations (W2893/W2894), VS-14.3 handles PR/crisis-comms, and VS-100 handles litigation; no value stream owned *proactive national corporate government affairs and industry relations* (stakeholder mapping, legislative/regulatory monitoring, advocacy, coalition building, association leadership, public affairs, political/regulatory risk) | **FILLED — VS-104** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -74,6 +79,14 @@ identify capability gaps not addressed by any existing value stream.
 - **Refurbishment / open-box / liquidation** — covered by VS-32.3 (W1640) + VS-05.3 (W220).
 - **Disaster/BCP / insurance** — covered by VS-26.
 - **Field service / installation dispatch** — covered across VS-12 / VS-66 / VS-70 / VS-06 / VS-74.
+- **Visual merchandising / display execution** — substantially covered across VS-55 (planogram/space, incl. W2168 cross-merchandising, W2177 endcap compliance, W2180 visual-standards audit, W2187 seasonal display rotation) and VS-62 (sample/display lifecycle, incl. W2347 vendor-funded display).
+- **Corporate communications / PR / crisis comms** — covered by VS-14.3 (W134/W143/W1562).
+- **Contact center / call-center operations** — covered by VS-13.1 (W258 omnichannel ticketing, W259 call-center daily ops, W597 escalation SLA, W1550 VOC).
+- **Import trade finance / LC / freight forwarder** — covered by VS-02.2 (W144/W191/W249/W464/W1233/W1264) and VS-87.
+- **Talent management / succession** — covered by VS-19.1 (W72/W178) and the EX/DEI workflows now in VS-103.
+- **Property / facility maintenance (landlord-side)** — covered by VS-20.3 and VS-97.2.
+- **IT change & release management** — covered by VS-27.1 (service management, W132 SDLC).
+- **Continuous improvement / operations excellence** — covered across VS-30 (innovation/automation) and VS-21 (audit).
 
 ---
 
@@ -109,29 +122,44 @@ home for legal operations):
 | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | Technology & Data | 3 | 24 | W3233–W3256 |
 | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & IP Management | Governance & Assurance | 3 | 24 | W3257–W3280 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3)
+**Pass 4** (W3281–W3376): four value streams, 12 process areas, 96 workflows, deliberately
+distributed to strengthen the three thinnest operating families (People +2; Plan & Source +1;
+Governance & Assurance +1). Each gap had been previously overlooked because it was conflated with
+an adjacent covered capability:
 
-| Family | After Pass 2 | After Pass 3 (current) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | Plan & Source | 3 | 24 | W3281–W3304 |
+| [VS-102](VS-102-compensation-benefits-total-rewards/README.md) | Compensation, Benefits & Total Rewards Strategy | People | 3 | 24 | W3305–W3328 |
+| [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | People | 3 | 24 | W3329–W3352 |
+| [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | Governance & Assurance | 3 | 24 | W3353–W3376 |
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4)
+
+| Family | After Pass 3 | After Pass 4 (current) |
 |---|---|---|
-| Plan & Source | 308 | 308 |
+| Plan & Source | 308 | **332** (+24) |
 | Make & Move | 307 | 307 |
 | Sell & Serve | 1,098 | 1,098 |
 | Finance | 411 | 411 |
-| People | 122 | **146** (+24) |
-| Asset & Infrastructure | 104 | **128** (+24) |
-| Governance & Assurance | 528 | **552** (+24) |
-| Technology & Data | 158 | **182** (+24) |
-| **Grand total** | **3,036** | **3,132** (+96) |
-| Value streams | 92 | **96** (+4) |
-| Process areas | 280 | **292** (+12) |
+| People | 146 | **194** (+48) |
+| Asset & Infrastructure | 128 | 128 |
+| Governance & Assurance | 552 | **576** (+24) |
+| Technology & Data | 182 | 182 |
+| **Grand total** | **3,132** | **3,228** (+96) |
+| Value streams | 96 | **100** (+4) |
+| Process areas | 292 | **304** (+12) |
 
-The 96 new workflows added in Pass 3 are currently **unclassified** (counted in the 1,965-workflow
+Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
+thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
+received +1.
+
+The 96 new workflows added in Pass 4 are currently **unclassified** (counted in the 2,061-workflow
 unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
-Pass 1 (VS-89–VS-92) and Pass 2 (VS-93–VS-96) batches were handled. Several Pass 3 workflows are
-anticipated Tier 1 (intercompany rent transfer-pricing benchmarking and PFRS 40 fair-value
-measurement, DOLE D.O. 174 labor-only-contracting compliance and misclassification defense,
-software license compliance-audit response, lease/investment-property impairment, and litigation
-loss-contingency accrual under PFRS/IAS 37).
+Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), and Pass 3 (VS-97–VS-100) batches were handled. Several
+Pass 4 workflows are anticipated Tier 1 (open-to-buy/markdown-budget governance and merchandise
+P&A control, pay-equity analysis and minimum-wage compliance, multi-entity statutory-benefits
+remittance governance, and political-activity/anti-bribery compliance in government affairs).
 
 ---
 
@@ -139,7 +167,7 @@ loss-contingency accrual under PFRS/IAS 37).
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,132) matches actual PA workflow header count (3,132). ✅
+- Grand total (3,228) matches actual PA workflow header count (3,228). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -161,6 +189,11 @@ loss-contingency accrual under PFRS/IAS 37).
   VS-98, VS-99, and VS-100 (Pass 3); these four gaps had been previously overlooked because each
   was conflated with an adjacent covered capability (lease administration, employee HR, fixed-asset
   accounting, and corporate-governance/compliance/records respectively).
+- **Merchandise Financial Planning/OTB**, **Compensation/Benefits/Total Rewards**, **HR Shared
+  Services/EX/People Analytics**, and **Government Affairs/Industry Relations** — **filled** by
+  VS-101, VS-102, VS-103, and VS-104 (Pass 4); as with Pass 3, each had been conflated with an
+  adjacent covered capability (assortment/supply/corporate-budget, payroll processing, the
+  employee lifecycle, and LGU/regulatory/labor-advocacy respectively).
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Value Streams | 96 |
-| Process Areas | 292 |
-| Workflows | 3,132 |
+| Value Streams | 100 |
+| Process Areas | 304 |
+| Workflows | 3,228 |
 | Classified (Tier 1) | 439 |
 | Classified (Tier 2) | 499 |
 | Classified (Tier 3) | 229 |
@@ -22,7 +22,7 @@
 
 | Document | Purpose |
 |---|---|
-| [value-stream-index.md](value-stream-index.md) | **Master index** — all 92 value streams with workflow counts |
+| [value-stream-index.md](value-stream-index.md) | **Master index** — all 100 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
@@ -33,7 +33,7 @@
 
 ## Value Streams by Family
 
-### Plan & Source (308 workflows)
+### Plan & Source (332 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 46 |
@@ -45,6 +45,7 @@
 | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Clearance | 24 |
 | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Analytics | 24 |
 | [VS-94](VS-94-cooperative-community-enterprise-procurement/README.md) | Cooperative & Community Enterprise Procurement | 24 |
+| [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | 24 |
 
 ### Make & Move (307 workflows)
 | VS | Value Stream | Workflows |
@@ -111,13 +112,15 @@
 | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement | 24 |
 | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | 24 |
 
-### People (146 workflows)
+### People (194 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 74 |
 | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Wellness | 24 |
 | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining | 24 |
 | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce | 24 |
+| [VS-102](VS-102-compensation-benefits-total-rewards/README.md) | Compensation, Benefits & Total Rewards | 24 |
+| [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | 24 |
 
 ### Asset & Infrastructure (128 workflows)
 | VS | Value Stream | Workflows |
@@ -128,7 +131,7 @@
 | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | 24 |
 | [VS-97](VS-97-corporate-real-estate-property-portfolio/README.md) | Corporate Real Estate & Property Portfolio | 24 |
 
-### Governance & Assurance (552 workflows)
+### Governance & Assurance (576 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 48 |
@@ -151,6 +154,7 @@
 | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action | 24 |
 | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection | 24 |
 | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & IP | 24 |
+| [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | 24 |
 
 ### Technology & Data (182 workflows)
 | VS | Value Stream | Workflows |
@@ -163,8 +167,8 @@
 
 ---
 
-*Family subtotal reconciliation: 308 + 307 + 1,098 + 411 + 146 + 128 + 552 + 182 = 3,132*
+*Family subtotal reconciliation: 332 + 307 + 1,098 + 411 + 194 + 128 + 576 + 182 = 3,228*
 
-> **Note (2026-06-14):** VS-49, VS-50, VS-51 and VS-52 were retired after a repository review found their workflow files contained only auto-generated placeholder content. A subsequent gap analysis (2026-06-14) reintroduced two of those capabilities as fully-detailed value streams — **VS-90 (Damage, Claims & Freight Recovery)** fills the former VS-50 gap, and **VS-92 (Kitting, Bundling & Build-to-Order Assembly)** fills the former VS-51 gap — alongside two new governance value streams, **VS-89 (Product Recall & Safety Corrective Action)** and **VS-91 (Consumer Data Privacy & Data Protection)**. A second gap analysis pass (2026-06-14) filled the remaining two retired-number gaps — **VS-93 (Dark Store & Micro-Fulfillment)** for former VS-49 and **VS-94 (Cooperative & Community Enterprise Procurement)** for former VS-52 — and added two further new value streams: **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management — Asset & Infrastructure)** governs BuildRight Property Management Inc. as property owner/lessor (previously only the lessee side was covered by VS-20/VS-42); **VS-98 (Contingent, Contract & Outsourced Workforce Management — People)** governs non-employee labor (security, janitorial, promodizers, construction/agency labor) and DOLE D.O. 174 labor-only-contracting compliance; **VS-99 (IT Asset & Technology Lifecycle Management — Technology & Data)** governs the 600-POS + endpoint + software estate (distinct from fixed-asset accounting and IT operations); and **VS-100 (Legal Operations, Litigation & IP Management — Governance & Assurance)** governs active legal matters, outside counsel, and the intellectual-property portfolio (distinct from corporate governance, compliance, and records management). The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md).
+> **Note (2026-06-14):** VS-49, VS-50, VS-51 and VS-52 were retired after a repository review found their workflow files contained only auto-generated placeholder content. A subsequent gap analysis (2026-06-14) reintroduced two of those capabilities as fully-detailed value streams — **VS-90 (Damage, Claims & Freight Recovery)** fills the former VS-50 gap, and **VS-92 (Kitting, Bundling & Build-to-Order Assembly)** fills the former VS-51 gap — alongside two new governance value streams, **VS-89 (Product Recall & Safety Corrective Action)** and **VS-91 (Consumer Data Privacy & Data Protection)**. A second gap analysis pass (2026-06-14) filled the remaining two retired-number gaps — **VS-93 (Dark Store & Micro-Fulfillment)** for former VS-49 and **VS-94 (Cooperative & Community Enterprise Procurement)** for former VS-52 — and added two further new value streams: **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management — Asset & Infrastructure)** governs BuildRight Property Management Inc. as property owner/lessor (previously only the lessee side was covered by VS-20/VS-42); **VS-98 (Contingent, Contract & Outsourced Workforce Management — People)** governs non-employee labor (security, janitorial, promodizers, construction/agency labor) and DOLE D.O. 174 labor-only-contracting compliance; **VS-99 (IT Asset & Technology Lifecycle Management — Technology & Data)** governs the 600-POS + endpoint + software estate (distinct from fixed-asset accounting and IT operations); and **VS-100 (Legal Operations, Litigation & IP Management — Governance & Assurance)** governs active legal matters, outside counsel, and the intellectual-property portfolio (distinct from corporate governance, compliance, and records management). A fourth gap-analysis pass (2026-06-14) added four further value streams that fill capabilities previously conflated with adjacent covered ones: **VS-101 (Merchandise Financial Planning, OTB & Margin Management — Plan & Source)** owns the merchandise-finance/open-to-buy/markdown-margin discipline (distinct from assortment in VS-01, supply operations in VS-02, corporate budgeting in VS-33, and finance FP&A in VS-17.4); **VS-102 (Compensation, Benefits & Total Rewards Strategy — People)** owns pay/benefits design (distinct from payroll processing in VS-19.2); **VS-103 (HR Shared Services, Employee Experience & People Analytics — People)** owns the HR service-delivery and people-analytics layer (distinct from the employee lifecycle in VS-19 and labor relations in VS-84); and **VS-104 (Government Affairs, Public Policy & Industry Relations — Governance & Assurance)** owns national/policy-level corporate external affairs (distinct from LGU/local permitting in VS-76, regulatory execution in VS-22, and labor-specific advocacy in VS-84.3). The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md).
 
 *Back to [Model Company](../) · [Repository README](../../README.md)*

@@ -8,10 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 96 Value Streams · 292 Process Areas · 3132 Workflows
+8 Families · 100 Value Streams · 304 Process Areas · 3228 Workflows
 ```
 
-> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management)**, **VS-98 (Contingent, Contract & Outsourced Workforce Management)**, **VS-99 (IT Asset & Technology Lifecycle Management)**, and **VS-100 (Legal Operations, Litigation & IP Management)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
+> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management)**, **VS-98 (Contingent, Contract & Outsourced Workforce Management)**, **VS-99 (IT Asset & Technology Lifecycle Management)**, and **VS-100 (Legal Operations, Litigation & IP Management)**. A fourth gap-analysis pass (2026-06-14) added four further value streams that strengthen the previously-thinnest operating families and fill capabilities conflated with adjacent covered ones: **VS-101 (Merchandise Financial Planning, OTB & Margin Management)**, **VS-102 (Compensation, Benefits & Total Rewards Strategy)**, **VS-103 (HR Shared Services, Employee Experience & People Analytics)**, and **VS-104 (Government Affairs, Public Policy & Industry Relations)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -24,7 +24,8 @@
 |  | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Transition & Clearance | 3 | 24 |
 |  | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Performance Analytics | 3 | 24 |
 |  | [VS-94](VS-94-cooperative-community-enterprise-procurement/README.md) | Cooperative & Community Enterprise Procurement | 3 | 24 |
-| | | | **Subtotal** | **308** |
+|  | [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | 3 | 24 |
+| | | | **Subtotal** | **332** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 36 |
@@ -85,7 +86,9 @@
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
 |  | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | 3 | 24 |
-| | | | **Subtotal** | **146** |
+|  | [VS-102](VS-102-compensation-benefits-total-rewards/README.md) | Compensation, Benefits & Total Rewards Strategy | 3 | 24 |
+|  | [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | 3 | 24 |
+| | | | **Subtotal** | **194** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | 3 | 24 |
@@ -112,14 +115,15 @@
 |  | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action Management | 3 | 24 |
 |  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | 3 | 24 |
 |  | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & Intellectual Property Management | 3 | 24 |
-| | | | **Subtotal** | **552** |
+|  | [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | 3 | 24 |
+| | | | **Subtotal** | **576** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
 |  | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | 3 | 24 |
 | | | | **Subtotal** | **182** |
-| | | | **Grand Total** | **3132** | |
+| | | | **Grand Total** | **3228** | |
 
 ---
 
@@ -181,6 +185,12 @@
 - **PA-94.1** [Cooperative & Social Enterprise Sourcing Strategy & Onboarding](./VS-94-cooperative-community-enterprise-procurement/PA-94.1-cooperative-sourcing-strategy-onboarding.md) — 8 workflows
 - **PA-94.2** [Cooperative Purchase Order, Logistics & Livelihood Settlement](./VS-94-cooperative-community-enterprise-procurement/PA-94.2-cooperative-po-logistics-settlement.md) — 8 workflows
 - **PA-94.3** [Impact Measurement, Fair-Trade Compliance & Development Program](./VS-94-cooperative-community-enterprise-procurement/PA-94.3-impact-fairtrade-development-program.md) — 8 workflows
+
+**[VS-101: Merchandise Financial Planning, OTB & Margin Management](./VS-101-merchandise-financial-planning-otb-margin-management/README.md)** (24 workflows)
+
+- **PA-101.1** [Seasonal Merchandise Financial Planning & Open-to-Buy](./VS-101-merchandise-financial-planning-otb-margin-management/PA-101.1-seasonal-merchandise-financial-planning-and-open-to-buy.md) — 8 workflows
+- **PA-101.2** [Inventory Investment, Turn & Productivity Planning](./VS-101-merchandise-financial-planning-otb-margin-management/PA-101.2-inventory-investment-turn-and-productivity-planning.md) — 8 workflows
+- **PA-101.3** [Merchandise Performance Analytics & Margin Optimization](./VS-101-merchandise-financial-planning-otb-margin-management/PA-101.3-merchandise-performance-analytics-and-margin-optimization.md) — 8 workflows
 
 
 ### Make & Move
@@ -539,6 +549,18 @@
 - **PA-98.2** [Contingent Worker Onboarding, Access & Time Operations](./VS-98-contingent-contract-outsourced-workforce/PA-98.2-contingent-worker-onboarding-access-time-operations.md) — 8 workflows
 - **PA-98.3** [Contingent Workforce Performance, Risk & Spend Analytics](./VS-98-contingent-contract-outsourced-workforce/PA-98.3-contingent-workforce-performance-risk-spend-analytics.md) — 8 workflows
 
+**[VS-102: Compensation, Benefits & Total Rewards Strategy](./VS-102-compensation-benefits-total-rewards/README.md)** (24 workflows)
+
+- **PA-102.1** [Job Architecture, Pay Structure & Market Benchmarking](./VS-102-compensation-benefits-total-rewards/PA-102.1-job-architecture-pay-structure-and-market-benchmarking.md) — 8 workflows
+- **PA-102.2** [Benefits, Wellness Programs & Statutory Administration](./VS-102-compensation-benefits-total-rewards/PA-102.2-benefits-wellness-programs-and-statutory-administration.md) — 8 workflows
+- **PA-102.3** [Variable Pay, Incentives & Total Rewards Strategy](./VS-102-compensation-benefits-total-rewards/PA-102.3-variable-pay-incentives-and-total-rewards-strategy.md) — 8 workflows
+
+**[VS-103: HR Shared Services, Employee Experience & People Analytics](./VS-103-hr-shared-services-employee-experience-people-analytics/README.md)** (24 workflows)
+
+- **PA-103.1** [HR Shared Services & Employee/Manager Self-Service Operations](./VS-103-hr-shared-services-employee-experience-people-analytics/PA-103.1-hr-shared-services-and-employee-manager-self-service-operations.md) — 8 workflows
+- **PA-103.2** [Employee Experience, Engagement & Internal Communications](./VS-103-hr-shared-services-employee-experience-people-analytics/PA-103.2-employee-experience-engagement-and-internal-communications.md) — 8 workflows
+- **PA-103.3** [People Analytics, Workforce Planning & HR Technology](./VS-103-hr-shared-services-employee-experience-people-analytics/PA-103.3-people-analytics-workforce-planning-and-hr-technology.md) — 8 workflows
+
 
 ### Asset & Infrastructure
 
@@ -695,6 +717,12 @@
 - **PA-100.2** [Intellectual Property Portfolio & Brand Protection](./VS-100-legal-operations-litigation-ip-management/PA-100.2-intellectual-property-portfolio-brand-protection.md) — 8 workflows
 - **PA-100.3** [Corporate Legal Advisory, Contracts & Risk Governance](./VS-100-legal-operations-litigation-ip-management/PA-100.3-corporate-legal-advisory-contracts-risk-governance.md) — 8 workflows
 
+**[VS-104: Government Affairs, Public Policy & Industry Relations](./VS-104-government-affairs-public-policy-industry-relations/README.md)** (24 workflows)
+
+- **PA-104.1** [National Government Relations & Public Policy Advocacy](./VS-104-government-affairs-public-policy-industry-relations/PA-104.1-national-government-relations-and-public-policy-advocacy.md) — 8 workflows
+- **PA-104.2** [Industry & Trade Association Relations](./VS-104-government-affairs-public-policy-industry-relations/PA-104.2-industry-and-trade-association-relations.md) — 8 workflows
+- **PA-104.3** [Public Affairs, Community Relations & Reputation](./VS-104-government-affairs-public-policy-industry-relations/PA-104.3-public-affairs-community-relations-and-reputation.md) — 8 workflows
+
 
 ### Technology & Data
 
@@ -749,13 +777,13 @@
 ```
 Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93)
-Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94)
+Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96)
-Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97)
-Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100)
+Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99)
 ```
 
 
-*Total: 3132 workflows across 96 value streams · Date: 2026-06-14*
+*Total: 3228 workflows across 100 value streams · Date: 2026-06-14*

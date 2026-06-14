@@ -4,6 +4,64 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 4): Add VS-101–VS-104 (96 workflows W3281–W3376)
+
+A fourth workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer). As with
+Pass 3, Pass 4 targeted capabilities that had been **overlooked because each was conflated with an
+adjacent, already-covered value stream**. Each of the four candidate gaps was validated to have
+**zero** dedicated workflow headers in the existing PA files before being added. The four new value
+streams deliberately strengthen the three thinnest operating families (People +2; Plan & Source +1;
+Governance & Assurance +1). Methodology and results are documented in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+### Added — 4 new value streams, 12 process areas, 96 workflows
+
+| VS | Value Stream | Family | W-range |
+|---|---|---|---|
+| **VS-101** | Merchandise Financial Planning, OTB & Margin Management | Plan & Source | W3281–W3304 |
+| **VS-102** | Compensation, Benefits & Total Rewards Strategy | People | W3305–W3328 |
+| **VS-103** | HR Shared Services, Employee Experience & People Analytics | People | W3329–W3352 |
+| **VS-104** | Government Affairs, Public Policy & Industry Relations | Governance & Assurance | W3353–W3376 |
+
+Each value stream comprises a README plus three process-area files (8 workflows each), all fully
+specified (trigger, frequency, volume, owner, participants, steps with RACI, system touchpoints,
+pain points, time estimates) and cross-referenced to adjacent value streams.
+
+### Rationale (gaps filled — each previously conflated with a covered capability)
+
+- **VS-101 Merchandise Financial Planning, OTB & Margin Management** — the merchandise-finance
+  discipline (seasonal merchandise plan, open-to-buy, markdown budget, IMU/maintained-margin
+  modeling, turn/GMROI/WOS planning, in-season reforecast, merchandise P&A) was conflated with
+  assortment (VS-01), supply operations (VS-02), corporate budgeting (VS-33.1), and finance FP&A
+  (VS-17.4) — none of which own the open-to-buy and margin-governance layer that protects a
+  ~PHP 42–45B COGS / 28–32% gross-margin business.
+- **VS-102 Compensation, Benefits & Total Rewards Strategy** — pay/benefits design was conflated
+  with payroll processing (VS-19.2, which only executes pay runs, statutory remittance, 13th-month,
+  and final pay). Job architecture, salary structure, market benchmarking, pay equity, benefits/HMO
+  design, retirement, and STI/LTI plan design had no owner.
+- **VS-103 HR Shared Services, Employee Experience & People Analytics** — the HR service-delivery
+  layer was conflated with the employee lifecycle (VS-19) and labor relations (VS-84). The employee
+  service center, ESS/MSS, multi-entity shared services, EX/engagement, DEI, workforce planning,
+  people analytics, and HRIS administration had no dedicated owner.
+- **VS-104 Government Affairs, Public Policy & Industry Relations** — proactive national corporate
+  external affairs was conflated with local/LGU permitting (VS-76), regulatory permit execution
+  (VS-22), labor-specific advocacy (VS-84.3), PR/crisis comms (VS-14.3), and litigation (VS-100).
+  National stakeholder relations, legislative/regulatory monitoring, advocacy, coalition building,
+  association leadership, public affairs, and political/regulatory risk had no owner.
+
+### Repository impact
+
+- Grand total: **3,132 → 3,228** workflows (+96)
+- Value streams: **96 → 100** (+4); Process areas: **292 → 304** (+12)
+- The 96 new workflows are **unclassified** (unclassified count: 1,965 → 2,061) and will be
+  tier-assigned in a follow-up criticality review, exactly as the Pass 1–3 batches were.
+- All cross-reference documents reconciled (root README, executive summary, value-stream-index,
+  workflows/README, criticality classification, dependency map, touchpoint map).
+- `07-methodology/validate-repo.sh` passes with 0 errors.
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 3): Add VS-97–VS-100 (96 workflows W3185–W3280)
 
 A third workflow **gap-analysis** pass was performed against the model company's operations
