@@ -8,10 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 92 Value Streams · 280 Process Areas · 3036 Workflows
+8 Families · 96 Value Streams · 292 Process Areas · 3132 Workflows
 ```
 
-> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
+> **Coverage note (2026-06-14):** 4 value streams originally numbered VS-49 (Dark Store & Micro-Fulfillment), VS-50 (Damage & Claims Management), VS-51 (Product Assembly, Kitting & Bundling) and VS-52 (Cooperative & Community Enterprise Procurement) were removed after a repository review found their 96 workflow files contained only auto-generated placeholder content (broken H1 headers, generic "Process trigger" steps, no criticality classification, no cross-references). Their VS numbers are intentionally retired so existing references remain unambiguous. Two of the four capability gaps were filled on 2026-06-14 by new, fully-detailed value streams: **VS-90 (Damage, Claims & Freight Recovery Management)** and **VS-92 (Kitting, Bundling & Build-to-Order Assembly Operations)**. The remaining two retired-number gaps (dark-store/micro-fulfillment, cooperative/community procurement) were filled on 2026-06-14 by **VS-93 (Dark Store & Micro-Fulfillment Operations)** and **VS-94 (Cooperative & Community Enterprise Procurement)**, alongside two further new value streams — **VS-95 (Marketplace Operator & Third-Party Seller Management)** and **VS-96 (Equipment Leasing & Capital Equipment Finance)**. A third gap-analysis pass (2026-06-14) added four more value streams that strengthen the previously-thinnest operating families: **VS-97 (Corporate Real Estate & Property Portfolio Management)**, **VS-98 (Contingent, Contract & Outsourced Workforce Management)**, **VS-99 (IT Asset & Technology Lifecycle Management)**, and **VS-100 (Legal Operations, Litigation & IP Management)**. The retired VS numbers (49, 50, 51, 52) remain unused. See [CHANGELOG.md](../../CHANGELOG.md) for details.
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -84,12 +84,14 @@
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
-| | | | **Subtotal** | **122** |
+|  | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | 3 | 24 |
+| | | | **Subtotal** | **146** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | 3 | 24 |
 |  | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | 3 | 24 |
-| | | | **Subtotal** | **104** |
+|  | [VS-97](VS-97-corporate-real-estate-property-portfolio/README.md) | Corporate Real Estate & Property Portfolio Management | 3 | 24 |
+| | | | **Subtotal** | **128** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 48 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 28 |
@@ -109,13 +111,15 @@
 |  | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control, Records Management & Retention | 3 | 24 |
 |  | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action Management | 3 | 24 |
 |  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | 3 | 24 |
-| | | | **Subtotal** | **528** |
+|  | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & Intellectual Property Management | 3 | 24 |
+| | | | **Subtotal** | **552** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
-| | | | **Subtotal** | **158** |
-| | | | **Grand Total** | **3036** | |
+|  | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | 3 | 24 |
+| | | | **Subtotal** | **182** |
+| | | | **Grand Total** | **3132** | |
 
 ---
 
@@ -529,6 +533,12 @@
 - **PA-84.2** [Grievance Handling, Labor Dispute & DOLE Conciliation](./VS-84-labor-relations-collective-bargaining/PA-84.2-grievance-labor-dispute-dole-conciliation.md) — 8 workflows
 - **PA-84.3** [Employee Voice, Engagement & Partnership Management](./VS-84-labor-relations-collective-bargaining/PA-84.3-employee-voice-engagement-partnership.md) — 8 workflows
 
+**[VS-98: Contingent, Contract & Outsourced Workforce Management](./VS-98-contingent-contract-outsourced-workforce/README.md)** (24 workflows)
+
+- **PA-98.1** [Contingent Workforce Strategy, Sourcing & Compliance](./VS-98-contingent-contract-outsourced-workforce/PA-98.1-contingent-workforce-strategy-sourcing-compliance.md) — 8 workflows
+- **PA-98.2** [Contingent Worker Onboarding, Access & Time Operations](./VS-98-contingent-contract-outsourced-workforce/PA-98.2-contingent-worker-onboarding-access-time-operations.md) — 8 workflows
+- **PA-98.3** [Contingent Workforce Performance, Risk & Spend Analytics](./VS-98-contingent-contract-outsourced-workforce/PA-98.3-contingent-workforce-performance-risk-spend-analytics.md) — 8 workflows
+
 
 ### Asset & Infrastructure
 
@@ -555,6 +565,12 @@
 - **PA-59.1** [Store Closure Decision & Planning](./VS-59-store-closure-decommissioning/PA-59.1-store-closure-decision-planning.md) — 8 workflows
 - **PA-59.2** [Store Wind-Down & Asset Recovery](./VS-59-store-closure-decommissioning/PA-59.2-store-wind-down-asset-recovery.md) — 8 workflows
 - **PA-59.3** [Staff Redeployment & Post-Closure Analytics](./VS-59-store-closure-decommissioning/PA-59.3-staff-redeployment-post-closure.md) — 8 workflows
+
+**[VS-97: Corporate Real Estate & Property Portfolio Management](./VS-97-corporate-real-estate-property-portfolio/README.md)** (24 workflows)
+
+- **PA-97.1** [Property Acquisition, Investment & Portfolio Strategy](./VS-97-corporate-real-estate-property-portfolio/PA-97.1-property-acquisition-investment-portfolio-strategy.md) — 8 workflows
+- **PA-97.2** [Landlord Leasing Operations & Tenant Management](./VS-97-corporate-real-estate-property-portfolio/PA-97.2-landlord-leasing-tenant-management.md) — 8 workflows
+- **PA-97.3** [Property Accounting, Compliance & Portfolio Analytics](./VS-97-corporate-real-estate-property-portfolio/PA-97.3-property-accounting-compliance-portfolio-analytics.md) — 8 workflows
 
 
 ### Governance & Assurance
@@ -673,6 +689,12 @@
 - **PA-91.2** [Privacy Impact Assessment, Data Mapping & Vendor Privacy Due Diligence](./VS-91-consumer-data-privacy-protection/PA-91.2-privacy-impact-assessment-data-mapping-vendor-privacy.md) — 8 workflows
 - **PA-91.3** [Breach Detection, Notification & NPC Regulatory Response](./VS-91-consumer-data-privacy-protection/PA-91.3-breach-detection-notification-npc-response.md) — 8 workflows
 
+**[VS-100: Legal Operations, Litigation & Intellectual Property Management](./VS-100-legal-operations-litigation-ip-management/README.md)** (24 workflows)
+
+- **PA-100.1** [Legal Matter, Case & Outside Counsel Management](./VS-100-legal-operations-litigation-ip-management/PA-100.1-legal-matter-case-outside-counsel-management.md) — 8 workflows
+- **PA-100.2** [Intellectual Property Portfolio & Brand Protection](./VS-100-legal-operations-litigation-ip-management/PA-100.2-intellectual-property-portfolio-brand-protection.md) — 8 workflows
+- **PA-100.3** [Corporate Legal Advisory, Contracts & Risk Governance](./VS-100-legal-operations-litigation-ip-management/PA-100.3-corporate-legal-advisory-contracts-risk-governance.md) — 8 workflows
+
 
 ### Technology & Data
 
@@ -700,6 +722,12 @@
 - **PA-30.2** [AI/ML & Automation](./VS-30-innovation-digital/PA-30.2-ai-ml-and-automation.md) — 11 workflows
 - **PA-30.3** [Document & Knowledge Management](./VS-30-innovation-digital/PA-30.3-document-and-knowledge-management.md) — 9 workflows
 
+**[VS-99: IT Asset & Technology Lifecycle Management](./VS-99-it-asset-technology-lifecycle-management/README.md)** (24 workflows)
+
+- **PA-99.1** [IT Hardware Asset Lifecycle & Deployment](./VS-99-it-asset-technology-lifecycle-management/PA-99.1-it-hardware-asset-lifecycle-deployment.md) — 8 workflows
+- **PA-99.2** [Software Asset Management & License Compliance](./VS-99-it-asset-technology-lifecycle-management/PA-99.2-software-asset-management-license-compliance.md) — 8 workflows
+- **PA-99.3** [Technology Asset Security, Cost & Governance Analytics](./VS-99-it-asset-technology-lifecycle-management/PA-99.3-technology-asset-security-cost-governance-analytics.md) — 8 workflows
+
 
 ---
 
@@ -723,11 +751,11 @@ Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96)
-Does it involve people/HR?               → People (VS-19, VS-83, VS-84)
-Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59)
-Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91)
-Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98)
+Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97)
+Is it about control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100)
+Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99)
 ```
 
 
-*Total: 3036 workflows across 92 value streams · Date: 2026-06-14*
+*Total: 3132 workflows across 96 value streams · Date: 2026-06-14*

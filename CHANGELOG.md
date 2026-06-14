@@ -4,6 +4,75 @@
 
 ---
 
+## 2026-06-14 — Workflow Gap Analysis (Pass 3): Add VS-97–VS-100 (96 workflows W3185–W3280)
+
+A third workflow **gap-analysis** pass was performed against the model company's operations
+(BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer). Whereas
+Passes 1 and 2 (VS-89–VS-96) filled retired-number gaps and added ecommerce/marketplace/leasing
+capabilities, Pass 3 deliberately targeted capabilities that had been **overlooked because each
+was conflated with an adjacent, already-covered value stream**. The four new value streams were
+distributed across the four previously-thinnest operating families. Methodology and results are
+documented in
+[`01-model-company/workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md).
+
+### Added — 4 new value streams, 12 process areas, 96 workflows
+
+| VS | Value Stream | Family | W-range |
+|---|---|---|---|
+| **VS-97** | Corporate Real Estate & Property Portfolio Management | Asset & Infrastructure | W3185–W3208 |
+| **VS-98** | Contingent, Contract & Outsourced Workforce Management | People | W3209–W3232 |
+| **VS-99** | IT Asset & Technology Lifecycle Management | Technology & Data | W3233–W3256 |
+| **VS-100** | Legal Operations, Litigation & IP Management | Governance & Assurance | W3257–W3280 |
+
+Each value stream comprises a README plus three process-area files (8 workflows each), all fully
+specified (trigger, frequency, volume, owner, participants, steps with RACI, system touchpoints,
+pain points, time estimates) and cross-referenced to adjacent value streams.
+
+### Rationale (gaps filled — each previously conflated with a covered capability)
+
+- **VS-97 Corporate Real Estate & Property Portfolio Management** — BuildRight Property
+  Management, Inc. (one of the 5 named legal entities, profile §2) is a real-estate
+  owner/lessor/developer. VS-20 (site selection) and VS-42 (lease administration) cover
+  BuildRight **as tenant**; VS-35 covers fixed-asset accounting. The **lessor / property-owner /
+  investor** operating model — acquisition underwriting, PFRS 40 investment-property fair-value,
+  landlord leasing & CAM recovery, real property tax as owner, portfolio NOI/yield — was entirely
+  uncovered.
+- **VS-98 Contingent, Contract & Outsourced Workforce Management** — ~10–20% of store/DC labor
+  is non-employee (outsourced security, janitorial, promodizers, construction/agency labor). VS-19
+  covers BuildRight's own employees (incl. directly-hired seasonal W555); VS-34 covers commercial
+  service contracts at the PO/invoice level. The **contingent-workforce program** — DOLE D.O. 174
+  labor-only-contracting compliance, four-fold-test worker classification, contractor onboarding /
+  access / permit-to-work, time-vs-invoice reconciliation, co-employment risk — had no dedicated
+  owner.
+- **VS-99 IT Asset & Technology Lifecycle Management** — 600 POS terminals + RF guns + mobile +
+  network + servers + the full software/SaaS estate across 205+ locations. VS-35 is fixed-asset
+  **accounting**; VS-27 is IT **operations / service desk**. The **ITAM discipline** — hardware /
+  software discovery & CMDB, software asset management & license optimization, SaaS portfolio &
+  FinOps, technology refresh, secure retirement with data sanitization (RA 10173 / DENR e-waste) —
+  was uncovered.
+- **VS-100 Legal Operations, Litigation & IP Management** — active legal matters and outside
+  counsel across the 5-entity group; commercial, labor (NLRC), consumer/DTI, property, tax (BIR),
+  customs, and IP exposure; the board receives periodic litigation updates (per VS-36.1). VS-36
+  (governance), VS-22 (compliance), and VS-88 (records / legal-hold execution) covered adjacent
+  areas but not the **litigator work** — matter/case management, litigation lifecycle, outside
+  counsel, IP portfolio prosecution & enforcement, settlement/loss-contingency.
+
+### Counts reconciled
+
+| Metric | Before | After |
+|---|---|---|
+| Value streams | 92 | **96** |
+| Process areas | 280 | **292** |
+| Workflows | 3,036 | **3,132** |
+| Unclassified | 1,869 | **1,965** (+96, pending criticality review) |
+
+All cross-document counts (README, executive-summary, value-stream-index, workflows/README,
+criticality classification, dependency map, touchpoint map) reconciled; `07-methodology/validate-repo.sh`
+passes with **0 errors**. The 96 new workflows remain unclassified (consistent with how Pass 1 and
+Pass 2 batches were handled) and will be tier-assigned in a follow-up criticality review.
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 2): Add VS-93–VS-96 (96 workflows W3089–W3184)
 
 A second workflow **gap-analysis** pass was performed against the model company's operations

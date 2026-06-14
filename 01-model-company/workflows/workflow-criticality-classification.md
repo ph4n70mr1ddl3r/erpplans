@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
 > Classifies 1,167 operational workflows into operational criticality tiers.
-> An additional 1,869 workflows (3,036 total − 1,167 classified) remain unclassified pending review.
+> An additional 1,965 workflows (3,132 total − 1,167 classified) remain unclassified pending review.
 >
 > Back to [Workflow Index](README.md)
 
@@ -749,12 +749,12 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 | Phase 2 | Operational Excellence (Tier 2) | 499 | 42.8% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 229 | 19.6% |
 | **Classified Total** | | **1,167** | 100% |
-| Unclassified (pending review) | Default Tier 2 (pending review) | 1,869 | — |
-| **Grand Total** | | **3,036** | — |
+| Unclassified (pending review) | Default Tier 2 (pending review) | 1,965 | — |
+| **Grand Total** | | **3,132** | — |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,167 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 3,036 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,167 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 3,132 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-06-14 addition:** Value streams VS-79 through VS-88 (240 workflows, W2753–W2992) were added covering Tax Management & BIR Statutory Reporting, Payment Operations & Acquirer Settlement, Cash-in-Transit & Armored Car Operations, Sari-Sari Store & MSME Micro-Wholesale, Occupational Health & Employee Wellness, Labor Relations & Collective Bargaining, Mandatory Discount & Tax Credit Recovery, Anti-Financial Crime (AML/KYC/ABC), Customs Trade Compliance & Tariff Optimization, and Document Control & Records Retention. These 240 workflows are currently **unclassified** (counted in the 1,869 unclassified total) pending criticality review; many warrant Tier 1 classification (BIR tax filing, AML/STR reporting, CBA administration, mandatory-discount tax credit recovery, CIT operations) and will be assigned in a follow-up classification pass.
 >
@@ -1562,4 +1562,4 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W690 | Digital Transformation Initiative Portfolio Management | Innovation & Digital Transformation |
 | W691 | Emerging Technology Scouting & Proof-of-Concept Evaluation | Innovation & Digital Transformation |
 
-*Date: 2026-06-14 | Workflow Criticality Classification v7.4 — 1,167 classified workflow references are deduplicated across tiers (Tier 1: 439 · Tier 2: 499 · Tier 3: 229 = 1,167). An additional 1,869 workflows remain unclassified (3,036 total − 1,167 classified). 22 classified references are parent/summary workflows (e.g., W2, W5B, W9A) that appear as `###` sub-headings within PA files. The authoritative tier summary is the `## Summary` table above; a stale `## Updated Summary` duplicate that reported a Tier 3 total of 226 and 0 unclassified (contradicting the correct 229 / 1,533) was removed during consistency review. The 2026-06-14 repo review retired VS-49/50/51/52 (96 placeholder workflows W2022–W2117), reducing the grand total from 2,940 to 2,844 and the unclassified count from 1,773 to 1,677; the 2026-06-14 gap-analysis Pass 1 added VS-89–VS-92 (96 workflows W2993–W3088), restoring the grand total to 2,940 and the unclassified count to 1,773; the 2026-06-14 gap-analysis Pass 2 added VS-93–VS-96 (96 workflows W3089–W3184 — Dark Store & Micro-Fulfillment, Cooperative & Community Enterprise Procurement, Marketplace Operator & Third-Party Seller, Equipment Leasing & Capital Equipment Finance), bringing the grand total to 3,036 and the unclassified count to 1,869.*
+*Date: 2026-06-14 | Workflow Criticality Classification v7.5 — 1,167 classified workflow references are deduplicated across tiers (Tier 1: 439 · Tier 2: 499 · Tier 3: 229 = 1,167). An additional 1,965 workflows remain unclassified (3,132 total − 1,167 classified). 22 classified references are parent/summary workflows (e.g., W2, W5B, W9A) that appear as `###` sub-headings within PA files. The authoritative tier summary is the `## Summary` table above; a stale `## Updated Summary` duplicate that reported a Tier 3 total of 226 and 0 unclassified (contradicting the correct 229 / 1,533) was removed during consistency review. The 2026-06-14 repo review retired VS-49/50/51/52 (96 placeholder workflows W2022–W2117), reducing the grand total from 2,940 to 2,844 and the unclassified count from 1,773 to 1,677; the 2026-06-14 gap-analysis Pass 1 added VS-89–VS-92 (96 workflows W2993–W3088), restoring the grand total to 2,940 and the unclassified count to 1,773; the 2026-06-14 gap-analysis Pass 2 added VS-93–VS-96 (96 workflows W3089–W3184 — Dark Store & Micro-Fulfillment, Cooperative & Community Enterprise Procurement, Marketplace Operator & Third-Party Seller, Equipment Leasing & Capital Equipment Finance), bringing the grand total to 3,036 and the unclassified count to 1,869; the 2026-06-14 gap-analysis Pass 3 added VS-97–VS-100 (96 workflows W3185–W3280 — Corporate Real Estate & Property Portfolio, Contingent & Outsourced Workforce, IT Asset & Technology Lifecycle, Legal Operations/Litigation & IP), bringing the grand total to 3,132 and the unclassified count to 1,965.*

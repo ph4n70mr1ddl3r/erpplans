@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      3,036 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 92 value streams · 280 process areas)
+│   ├── workflows/                      3,132 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 96 value streams · 292 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -126,7 +126,11 @@ erpplans/
 │   │   ├── VS-93-dark-store-micro-fulfillment/ 24 workflows (3 process areas)
 │   │   ├── VS-94-cooperative-community-enterprise-procurement/ 24 workflows (3 process areas)
 │   │   ├── VS-95-marketplace-operator-third-party-seller/ 24 workflows (3 process areas)
-│   │   └── VS-96-equipment-leasing-capital-equipment-finance/ 24 workflows (3 process areas)
+│   │   ├── VS-96-equipment-leasing-capital-equipment-finance/ 24 workflows (3 process areas)
+│   │   ├── VS-97-corporate-real-estate-property-portfolio/ 24 workflows (3 process areas)
+│   │   ├── VS-98-contingent-contract-outsourced-workforce/ 24 workflows (3 process areas)
+│   │   ├── VS-99-it-asset-technology-lifecycle-management/ 24 workflows (3 process areas)
+│   │   └── VS-100-legal-operations-litigation-ip-management/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -166,7 +170,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **3,036** across 92 value streams, 280 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **3,132** across 96 value streams, 292 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -177,10 +181,10 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 3,036 fully specified across 92 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,167 of 3,036 workflows classified** (38%); 1,869 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 3,132 fully specified across 96 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,167 of 3,132 workflows classified** (37%); 1,965 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14). Two 2026-06-14 gap-analysis passes filled all four capability gaps: VS-90 ↔ former VS-50, VS-92 ↔ former VS-51, VS-89 (Product Recall) and VS-91 (Consumer Data Privacy) added new; then VS-93 ↔ former VS-49, VS-94 ↔ former VS-52, plus VS-95 (Marketplace Operator) and VS-96 (Equipment Leasing) added new. The retired numbers remain unused. See [CHANGELOG.md](CHANGELOG.md) | — |
+| Retired VS numbers | VS-49, VS-50, VS-51, VS-52 are intentionally retired (placeholder content was removed 2026-06-14). Two 2026-06-14 gap-analysis passes filled all four capability gaps: VS-90 ↔ former VS-50, VS-92 ↔ former VS-51, VS-89 (Product Recall) and VS-91 (Consumer Data Privacy) added new; then VS-93 ↔ former VS-49, VS-94 ↔ former VS-52, plus VS-95 (Marketplace Operator) and VS-96 (Equipment Leasing) added new. A third 2026-06-14 gap-analysis pass added VS-97 (Corporate Real Estate & Property Portfolio), VS-98 (Contingent & Outsourced Workforce), VS-99 (IT Asset & Technology Lifecycle), and VS-100 (Legal Operations, Litigation & IP) to strengthen the previously-thinnest operating families. The retired numbers remain unused. See [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
 
@@ -200,7 +204,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-    │  erp-requirements.md ←→ workflows/ (3,036 WF)    │
+    │  erp-requirements.md ←→ workflows/ (3,132 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -212,6 +216,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
     │                value-stream-index.md              │
-    │            (92 VS · 280 process areas)            │
+    │            (96 VS · 292 process areas)            │
    └───────────────────────────────────────────────────┘
 ```
