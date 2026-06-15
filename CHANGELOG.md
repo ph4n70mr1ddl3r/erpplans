@@ -4,6 +4,21 @@
 
 ---
 
+## 2026-06-15 — Workflow review implementation (1/5): structural-integrity fixes (P4) + validator reverse-check
+
+First commit of a five-commit program implementing the recommendations from a value-stream/workflow
+review. This commit delivers the bounded, structural fixes plus a new validator check that prevents
+regression of the defects it corrects:
+
+- **W54A (BIR Computerized Accounting System (CAS) Registration) classified as Tier 1** in `workflow-criticality-classification.md` (Core Compliance & IT) — it was referenced as a Tier-1 hard prerequisite in the dependency map's deepest chain but was never in the classification table. Section/subtotal/summary counts updated (Tier 1: 439 → 440; classified total: 1,167 → 1,168).
+- **Deepest dependency-chain count corrected** in `workflow-dependency-map.md` ("48 workflows" → "46 workflows") — the block actually lists 46 unique workflow IDs.
+- **Block/origin legend + per-row `Block` column** added to `value-stream-index.md` summary table, so a reader can gauge content maturity at a glance (Core VS-01–48, Expansion VS-53–78, Statutory VS-79–88, Gap analysis VS-89–128; retired VS-49–52).
+- **New `validate-repo.sh` Check 11** — verifies the dependency map's "deepest dependency chain (all Tier 1)" block is internally consistent: the stated total equals the unique workflow count, and every workflow in the chain is classified Tier 1 (scanning both the main Tier 1 section and the "Tier 1 Additions" tail subsection). This is a *reverse* check (dependency-claim → classified) that the existing checks could not catch. Uses here-strings to avoid a `grep -q` / `pipefail` SIGPIPE false-negative.
+
+Validator now passes with 0 errors / 2 warnings (the 2 warnings are the known unclassified + boilerplate counts, addressed in subsequent commits).
+
+---
+
 ## 2026-06-15 — Workflow gap analysis (Pass 10): add VS-125–VS-128 (96 workflows W3857–W3952)
 
 A tenth gap-analysis pass added four new value streams, each filling a genuinely-unowned program

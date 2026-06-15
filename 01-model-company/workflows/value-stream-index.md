@@ -5,6 +5,23 @@
 
 ---
 
+## Value-Stream Blocks (origin)
+
+The 124 active value streams were produced in four blocks. Use this to gauge content maturity
+at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
+*Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
+Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
+
+| Block | VS range | Count | Maturity |
+|---|---|---|---|
+| Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
+| Expansion | VS-53 – VS-78 | 26 | Templated; 23 pending rework (VS-69/70/71 detailed) |
+| Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
+| Gap analysis | VS-89 – VS-128 | 40 | Fully detailed (ten gap-analysis passes, 2026-06-14/15) |
+| — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
+
+---
+
 ## Value Stream Architecture
 
 ```
@@ -13,139 +30,139 @@
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (72 → 120 value streams) and a tenth pass on 2026-06-15 (120 → 124 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
-| Family | VS | Value Stream | Process Areas | Workflows |
-|---|---|---|---|---|
-| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 3 | 46 |
-|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | 3 | 37 |
-|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | 4 | 81 |
-|  | [VS-41](VS-41-private-label-brand/README.md) | Private Label & Exclusive Brand Management | 3 | 24 |
-|  | [VS-45](VS-45-consignment-vmi-operations/README.md) | Consignment & Vendor-Managed Inventory Operations | 3 | 24 |
-|  | [VS-57](VS-57-competitive-price-intelligence/README.md) | Competitive Price Intelligence & Monitoring | 3 | 24 |
-|  | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Transition & Clearance | 3 | 24 |
-|  | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Performance Analytics | 3 | 24 |
-|  | [VS-94](VS-94-cooperative-community-enterprise-procurement/README.md) | Cooperative & Community Enterprise Procurement | 3 | 24 |
-|  | [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | 3 | 24 |
-|  | [VS-106](VS-106-commodity-input-cost-risk-management/README.md) | Commodity & Input-Cost Risk Management | 3 | 24 |
-|  | [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | 3 | 24 |
-|  | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | 3 | 24 |
+| Family | VS | Value Stream | Block | Process Areas | Workflows |
+|---|---|---|---|---|---|
+| Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | Core | 3 | 46 |
+|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | Core | 3 | 37 |
+|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | Core | 4 | 81 |
+|  | [VS-41](VS-41-private-label-brand/README.md) | Private Label & Exclusive Brand Management | Core | 3 | 24 |
+|  | [VS-45](VS-45-consignment-vmi-operations/README.md) | Consignment & Vendor-Managed Inventory Operations | Core | 3 | 24 |
+|  | [VS-57](VS-57-competitive-price-intelligence/README.md) | Competitive Price Intelligence & Monitoring | Expansion | 3 | 24 |
+|  | [VS-64](VS-64-seasonal-merchandise-clearance/README.md) | Seasonal Merchandise Transition & Clearance | Expansion | 3 | 24 |
+|  | [VS-67](VS-67-vendor-scorecard-analytics/README.md) | Vendor Scorecard & Performance Analytics | Expansion | 3 | 24 |
+|  | [VS-94](VS-94-cooperative-community-enterprise-procurement/README.md) | Cooperative & Community Enterprise Procurement | Gap analysis | 3 | 24 |
+|  | [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | Gap analysis | 3 | 24 |
+|  | [VS-106](VS-106-commodity-input-cost-risk-management/README.md) | Commodity & Input-Cost Risk Management | Gap analysis | 3 | 24 |
+|  | [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | Gap analysis | 3 | 24 |
+|  | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **404** |
-| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 45 |
-|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 35 |
-|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 36 |
-|  | [VS-32](VS-32-returns-reverse-logistics/README.md) | Returns & Reverse Logistics | 3 | 23 |
-|  | [VS-56](VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner Management | 3 | 24 |
-|  | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | 3 | 24 |
-|  | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | 3 | 24 |
-|  | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car Operations | 3 | 24 |
-|  | [VS-90](VS-90-damage-claims-freight-recovery/README.md) | Damage, Claims & Freight Recovery Management | 3 | 24 |
-|  | [VS-92](VS-92-kitting-bundling-build-to-order-assembly/README.md) | Kitting, Bundling & Build-to-Order Assembly Operations | 3 | 24 |
-|  | [VS-93](VS-93-dark-store-micro-fulfillment/README.md) | Dark Store & Micro-Fulfillment Operations | 3 | 24 |
-|  | [VS-110](VS-110-freight-procurement-carrier-management-and-freight-audit/README.md) | Freight Procurement, Carrier Management & Freight Audit | 3 | 24 |
-|  | [VS-111](VS-111-packaging-pallet-and-returnable-transport-item-management/README.md) | Packaging, Pallet & Returnable Transport Item (RTI) Management | 3 | 24 |
+| Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | Core | 3 | 45 |
+|  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | Core | 3 | 35 |
+|  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | Core | 3 | 36 |
+|  | [VS-32](VS-32-returns-reverse-logistics/README.md) | Returns & Reverse Logistics | Core | 3 | 23 |
+|  | [VS-56](VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner Management | Expansion | 3 | 24 |
+|  | [VS-61](VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | Expansion | 3 | 24 |
+|  | [VS-74](VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | Expansion | 3 | 24 |
+|  | [VS-81](VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car Operations | Statutory | 3 | 24 |
+|  | [VS-90](VS-90-damage-claims-freight-recovery/README.md) | Damage, Claims & Freight Recovery Management | Gap analysis | 3 | 24 |
+|  | [VS-92](VS-92-kitting-bundling-build-to-order-assembly/README.md) | Kitting, Bundling & Build-to-Order Assembly Operations | Gap analysis | 3 | 24 |
+|  | [VS-93](VS-93-dark-store-micro-fulfillment/README.md) | Dark Store & Micro-Fulfillment Operations | Gap analysis | 3 | 24 |
+|  | [VS-110](VS-110-freight-procurement-carrier-management-and-freight-audit/README.md) | Freight Procurement, Carrier Management & Freight Audit | Gap analysis | 3 | 24 |
+|  | [VS-111](VS-111-packaging-pallet-and-returnable-transport-item-management/README.md) | Packaging, Pallet & Returnable Transport Item (RTI) Management | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **355** |
-| Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | 4 | 144 |
-|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 3 | 58 |
-|  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 3 | 158 |
-|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 3 | 61 |
-|  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 3 | 52 |
-|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 3 | 39 |
-|  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 3 | 64 |
-|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 3 | 40 |
-|  | [VS-37](VS-37-store-opening-commissioning/README.md) | Store Opening & Commissioning | 3 | 26 |
-|  | [VS-43](VS-43-trade-professional-program/README.md) | Trade Professional Program & Contractor Services | 3 | 24 |
-|  | [VS-44](VS-44-consumer-insights-market-research/README.md) | Consumer Insights & Market Research | 3 | 24 |
-|  | [VS-46](VS-46-government-institutional-sales/README.md) | Government & Institutional B2G Sales | 3 | 24 |
-|  | [VS-47](VS-47-subscription-recurring-services/README.md) | Subscription & Recurring Home Services | 3 | 24 |
-|  | [VS-48](VS-48-retail-media-network/README.md) | Retail Media Network & Vendor Advertising | 3 | 24 |
-|  | [VS-53](VS-53-warranty-guarantee-management/README.md) | Warranty & Guarantee Management | 3 | 24 |
-|  | [VS-55](VS-55-store-planogram-space-optimization/README.md) | Store Planogram & Space Optimization | 3 | 24 |
-|  | [VS-58](VS-58-coupon-digital-promotions/README.md) | Coupon & Digital Promotions Management | 3 | 24 |
-|  | [VS-60](VS-60-omnichannel-order-routing/README.md) | Omnichannel Order Routing & Fulfillment Orchestration | 3 | 24 |
-|  | [VS-62](VS-62-product-sample-display-management/README.md) | Product Sample & Display Management | 3 | 24 |
-|  | [VS-63](VS-63-store-communication-task-management/README.md) | Store Communication & Task Management | 3 | 24 |
-|  | [VS-65](VS-65-ecommerce-marketplace-integration/README.md) | E-Commerce Marketplace Integration | 3 | 24 |
-|  | [VS-66](VS-66-customer-project-design-services/README.md) | Customer Project & Design Services | 3 | 24 |
-|  | [VS-70](VS-70-solar-renewable-energy/README.md) | Solar & Renewable Energy Product Operations | 3 | 24 |
-|  | [VS-75](VS-75-digital-engagement-app/README.md) | Customer Digital Engagement & Mobile App Operations | 3 | 24 |
-|  | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | 3 | 24 |
-|  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 3 | 24 |
-|  | [VS-82](VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | 3 | 24 |
-|  | [VS-95](VS-95-marketplace-operator-third-party-seller/README.md) | Marketplace Operator & Third-Party Seller Management | 3 | 24 |
-|  | [VS-107](VS-107-strategic-key-account-enterprise-customer-management/README.md) | Strategic Key Account & Enterprise Customer Management | 3 | 24 |
-|  | [VS-124](VS-124-sales-enablement-product-knowledge-clienteling/README.md) | Sales Enablement, Product Knowledge Mastery & Clienteling | 3 | 24 |
+| Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 144 |
+|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
+|  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
+|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | Core | 3 | 61 |
+|  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | Core | 3 | 52 |
+|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | Core | 3 | 39 |
+|  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | Core | 3 | 64 |
+|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | Core | 3 | 40 |
+|  | [VS-37](VS-37-store-opening-commissioning/README.md) | Store Opening & Commissioning | Core | 3 | 26 |
+|  | [VS-43](VS-43-trade-professional-program/README.md) | Trade Professional Program & Contractor Services | Core | 3 | 24 |
+|  | [VS-44](VS-44-consumer-insights-market-research/README.md) | Consumer Insights & Market Research | Core | 3 | 24 |
+|  | [VS-46](VS-46-government-institutional-sales/README.md) | Government & Institutional B2G Sales | Core | 3 | 24 |
+|  | [VS-47](VS-47-subscription-recurring-services/README.md) | Subscription & Recurring Home Services | Core | 3 | 24 |
+|  | [VS-48](VS-48-retail-media-network/README.md) | Retail Media Network & Vendor Advertising | Core | 3 | 24 |
+|  | [VS-53](VS-53-warranty-guarantee-management/README.md) | Warranty & Guarantee Management | Expansion | 3 | 24 |
+|  | [VS-55](VS-55-store-planogram-space-optimization/README.md) | Store Planogram & Space Optimization | Expansion | 3 | 24 |
+|  | [VS-58](VS-58-coupon-digital-promotions/README.md) | Coupon & Digital Promotions Management | Expansion | 3 | 24 |
+|  | [VS-60](VS-60-omnichannel-order-routing/README.md) | Omnichannel Order Routing & Fulfillment Orchestration | Expansion | 3 | 24 |
+|  | [VS-62](VS-62-product-sample-display-management/README.md) | Product Sample & Display Management | Expansion | 3 | 24 |
+|  | [VS-63](VS-63-store-communication-task-management/README.md) | Store Communication & Task Management | Expansion | 3 | 24 |
+|  | [VS-65](VS-65-ecommerce-marketplace-integration/README.md) | E-Commerce Marketplace Integration | Expansion | 3 | 24 |
+|  | [VS-66](VS-66-customer-project-design-services/README.md) | Customer Project & Design Services | Expansion | 3 | 24 |
+|  | [VS-70](VS-70-solar-renewable-energy/README.md) | Solar & Renewable Energy Product Operations | Expansion | 3 | 24 |
+|  | [VS-75](VS-75-digital-engagement-app/README.md) | Customer Digital Engagement & Mobile App Operations | Expansion | 3 | 24 |
+|  | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | Expansion | 3 | 24 |
+|  | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | Expansion | 3 | 24 |
+|  | [VS-82](VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | Statutory | 3 | 24 |
+|  | [VS-95](VS-95-marketplace-operator-third-party-seller/README.md) | Marketplace Operator & Third-Party Seller Management | Gap analysis | 3 | 24 |
+|  | [VS-107](VS-107-strategic-key-account-enterprise-customer-management/README.md) | Strategic Key Account & Enterprise Customer Management | Gap analysis | 3 | 24 |
+|  | [VS-124](VS-124-sales-enablement-product-knowledge-clienteling/README.md) | Sales Enablement, Product Knowledge Mastery & Clienteling | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **1146** |
-| Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 2 | 42 |
-|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 3 | 31 |
-|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 4 | 67 |
-|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 3 | 33 |
-|  | [VS-34](VS-34-expense-procurement/README.md) | Expense & Non-Merchandise Procurement | 3 | 22 |
-|  | [VS-38](VS-38-consumer-credit-financing/README.md) | Consumer Credit & Financing | 3 | 24 |
-|  | [VS-39](VS-39-vendor-rebate-incentive/README.md) | Vendor Rebate & Incentive Management | 3 | 24 |
-|  | [VS-40](VS-40-capex-project-accounting/README.md) | Capex & Project Accounting | 3 | 24 |
-|  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | 3 | 24 |
-|  | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | 3 | 24 |
-|  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | 3 | 24 |
-|  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | 3 | 24 |
-|  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | 3 | 24 |
-|  | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | 3 | 24 |
-|  | [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | 3 | 24 |
-|  | [VS-116](VS-116-performance-bond-surety-and-bank-guarantee-management/README.md) | Performance Bond, Surety & Bank Guarantee Management | 3 | 24 |
-|  | [VS-118](VS-118-revenue-assurance-pricing-integrity-and-leakage-management/README.md) | Revenue Assurance, Pricing Integrity & Leakage Management | 3 | 24 |
-|  | [VS-125](VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md) | Cross-Channel Fraud Management & Payment Fraud Protection | 3 | 24 |
+| Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
+|  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
+|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
+|  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | Core | 3 | 33 |
+|  | [VS-34](VS-34-expense-procurement/README.md) | Expense & Non-Merchandise Procurement | Core | 3 | 22 |
+|  | [VS-38](VS-38-consumer-credit-financing/README.md) | Consumer Credit & Financing | Core | 3 | 24 |
+|  | [VS-39](VS-39-vendor-rebate-incentive/README.md) | Vendor Rebate & Incentive Management | Core | 3 | 24 |
+|  | [VS-40](VS-40-capex-project-accounting/README.md) | Capex & Project Accounting | Core | 3 | 24 |
+|  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | Expansion | 3 | 24 |
+|  | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | Expansion | 3 | 24 |
+|  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | Expansion | 3 | 24 |
+|  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | Statutory | 3 | 24 |
+|  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | Statutory | 3 | 24 |
+|  | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | Gap analysis | 3 | 24 |
+|  | [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | Gap analysis | 3 | 24 |
+|  | [VS-116](VS-116-performance-bond-surety-and-bank-guarantee-management/README.md) | Performance Bond, Surety & Bank Guarantee Management | Gap analysis | 3 | 24 |
+|  | [VS-118](VS-118-revenue-assurance-pricing-integrity-and-leakage-management/README.md) | Revenue Assurance, Pricing Integrity & Leakage Management | Gap analysis | 3 | 24 |
+|  | [VS-125](VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md) | Cross-Channel Fraud Management & Payment Fraud Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **507** |
-| People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
-|  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
-|  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
-|  | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | 3 | 24 |
-|  | [VS-102](VS-102-compensation-benefits-total-rewards/README.md) | Compensation, Benefits & Total Rewards Strategy | 3 | 24 |
-|  | [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | 3 | 24 |
-|  | [VS-121](VS-121-talent-acquisition-employer-brand-candidate-experience/README.md) | Talent Acquisition, Employer Brand & Candidate Experience | 3 | 24 |
-|  | [VS-123](VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/README.md) | Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline | 3 | 24 |
+| People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 74 |
+|  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 24 |
+|  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 24 |
+|  | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | Gap analysis | 3 | 24 |
+|  | [VS-102](VS-102-compensation-benefits-total-rewards/README.md) | Compensation, Benefits & Total Rewards Strategy | Gap analysis | 3 | 24 |
+|  | [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | Gap analysis | 3 | 24 |
+|  | [VS-121](VS-121-talent-acquisition-employer-brand-candidate-experience/README.md) | Talent Acquisition, Employer Brand & Candidate Experience | Gap analysis | 3 | 24 |
+|  | [VS-123](VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/README.md) | Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **242** |
-| Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 3 | 32 |
-|  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | 3 | 24 |
-|  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | 3 | 24 |
-|  | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | 3 | 24 |
-|  | [VS-97](VS-97-corporate-real-estate-property-portfolio/README.md) | Corporate Real Estate & Property Portfolio Management | 3 | 24 |
-|  | [VS-108](VS-108-onsite-renewable-energy-prosumer-asset-operations/README.md) | On-Site Renewable Energy & Prosumer Asset Operations | 3 | 24 |
-|  | [VS-109](VS-109-store-remodel-renovation-lifecycle-refurbishment/README.md) | Store Remodel, Renovation & Lifecycle Refurbishment Program | 3 | 24 |
-|  | [VS-112](VS-112-corporate-project-and-program-management-office/README.md) | Corporate Project & Program Management Office (PMO) | 3 | 24 |
-|  | [VS-120](VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/README.md) | Energy Efficiency, Conservation & RA 11285 Compliance Program | 3 | 24 |
+| Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
+|  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
+|  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
+|  | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | Expansion | 3 | 24 |
+|  | [VS-97](VS-97-corporate-real-estate-property-portfolio/README.md) | Corporate Real Estate & Property Portfolio Management | Gap analysis | 3 | 24 |
+|  | [VS-108](VS-108-onsite-renewable-energy-prosumer-asset-operations/README.md) | On-Site Renewable Energy & Prosumer Asset Operations | Gap analysis | 3 | 24 |
+|  | [VS-109](VS-109-store-remodel-renovation-lifecycle-refurbishment/README.md) | Store Remodel, Renovation & Lifecycle Refurbishment Program | Gap analysis | 3 | 24 |
+|  | [VS-112](VS-112-corporate-project-and-program-management-office/README.md) | Corporate Project & Program Management Office (PMO) | Gap analysis | 3 | 24 |
+|  | [VS-120](VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/README.md) | Energy Efficiency, Conservation & RA 11285 Compliance Program | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **224** |
-| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 3 | 48 |
-|  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 3 | 57 |
-|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 3 | 28 |
-|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 3 | 26 |
-|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 3 | 31 |
-|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 3 | 30 |
-|  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | 3 | 22 |
-|  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | 3 | 23 |
-|  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | 3 | 23 |
-|  | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | 3 | 24 |
-|  | [VS-71](VS-71-anti-counterfeit-authentication/README.md) | Anti-Counterfeit & Product Authentication | 3 | 24 |
-|  | [VS-73](VS-73-store-waste-circular-economy/README.md) | Store-Level Waste Management & Circular Economy | 3 | 24 |
-|  | [VS-76](VS-76-multi-region-lgu-compliance/README.md) | Philippine Multi-Region LGU & Local Regulatory Compliance | 3 | 24 |
-|  | [VS-85](VS-85-mandatory-discount-eligibility-tax-credit/README.md) | Mandatory Discount, Eligibility & Tax Credit Recovery | 3 | 24 |
-|  | [VS-86](VS-86-anti-financial-crime-aml-abc/README.md) | Anti-Financial Crime, AML/KYC & Anti-Corruption | 3 | 24 |
-|  | [VS-87](VS-87-customs-trade-compliance-tariff/README.md) | Customs Trade Compliance & Tariff Optimization | 3 | 24 |
-|  | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control, Records Management & Retention | 3 | 24 |
-|  | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action Management | 3 | 24 |
-|  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | 3 | 24 |
-|  | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & Intellectual Property Management | 3 | 24 |
-|  | [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | 3 | 24 |
-|  | [VS-114](VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md) | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | 3 | 24 |
-|  | [VS-117](VS-117-dti-bps-product-standards-certification-ps-mark-icc-compliance/README.md) | DTI-BPS Product Standards Certification & PS Mark/ICC Compliance | 3 | 24 |
-|  | [VS-119](VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/README.md) | Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program | 3 | 24 |
+| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 48 |
+|  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
+|  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 28 |
+|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 26 |
+|  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | Core | 3 | 31 |
+|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | Core | 3 | 30 |
+|  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | Core | 3 | 22 |
+|  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | Core | 3 | 23 |
+|  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | Core | 3 | 23 |
+|  | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | Expansion | 3 | 24 |
+|  | [VS-71](VS-71-anti-counterfeit-authentication/README.md) | Anti-Counterfeit & Product Authentication | Expansion | 3 | 24 |
+|  | [VS-73](VS-73-store-waste-circular-economy/README.md) | Store-Level Waste Management & Circular Economy | Expansion | 3 | 24 |
+|  | [VS-76](VS-76-multi-region-lgu-compliance/README.md) | Philippine Multi-Region LGU & Local Regulatory Compliance | Expansion | 3 | 24 |
+|  | [VS-85](VS-85-mandatory-discount-eligibility-tax-credit/README.md) | Mandatory Discount, Eligibility & Tax Credit Recovery | Statutory | 3 | 24 |
+|  | [VS-86](VS-86-anti-financial-crime-aml-abc/README.md) | Anti-Financial Crime, AML/KYC & Anti-Corruption | Statutory | 3 | 24 |
+|  | [VS-87](VS-87-customs-trade-compliance-tariff/README.md) | Customs Trade Compliance & Tariff Optimization | Statutory | 3 | 24 |
+|  | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control, Records Management & Retention | Statutory | 3 | 24 |
+|  | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action Management | Gap analysis | 3 | 24 |
+|  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | Gap analysis | 3 | 24 |
+|  | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & Intellectual Property Management | Gap analysis | 3 | 24 |
+|  | [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | Gap analysis | 3 | 24 |
+|  | [VS-114](VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md) | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | Gap analysis | 3 | 24 |
+|  | [VS-117](VS-117-dti-bps-product-standards-certification-ps-mark-icc-compliance/README.md) | DTI-BPS Product Standards Certification & PS Mark/ICC Compliance | Gap analysis | 3 | 24 |
+|  | [VS-119](VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/README.md) | Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **648** |
-| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 3 | 62 |
-|  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | 3 | 24 |
-|  | [VS-29](VS-29-master-data/README.md) | Master Data Management | 3 | 43 |
-|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 3 | 29 |
-|  | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | 3 | 24 |
-|  | [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | 3 | 24 |
-|  | [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | 3 | 24 |
-|  | [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | 3 | 24 |
-|  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | 3 | 24 |
+| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
+|  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
+|  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
+|  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | Core | 3 | 29 |
+|  | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | Gap analysis | 3 | 24 |
+|  | [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | Gap analysis | 3 | 24 |
+|  | [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | Gap analysis | 3 | 24 |
+|  | [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | Gap analysis | 3 | 24 |
+|  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **278** |
 | | | | **Grand Total** | **3804** | |
 

@@ -133,6 +133,35 @@ for doc in \
   fi
 done
 
+# --- Check 11: Dependency-map Tier-1 chain claims must be classified as Tier 1 ---
+echo "--- Check 11: Dependency-map deepest-chain Tier-1 consistency ---"
+# The dependency map declares a 'deepest dependency chain (all Tier 1)' with a stated
+# total. Two reverse checks: (a) the count of unique workflow IDs in that block must
+# equal the stated total; (b) every workflow in that block must be present in the
+# Tier 1 section of the classification file. This catches drift like a Tier-1-claimed
+# workflow that was never classified (regression that Check 1 cannot detect, because
+# Check 1 only proves classified -> header, not dependency-claim -> classified).
+DEPMAP="$REPO_ROOT"/01-model-company/workflows/workflow-dependency-map.md
+TIER1_CHAIN=$(awk '/### Tier 1: Deepest Dependency Chain/{f=1;next} f&&/^### /{exit} f' "$DEPMAP" | grep -oP '\bW\d+[A-Z]?\b' | sort -u)
+TIER1_CHAIN_COUNT=$(echo "$TIER1_CHAIN" | grep -cP '^W' || true)
+STATED_TOTAL=$(grep -oP 'deepest dependency chain \(all Tier 1\)|Total\*\*: \K\d+(?= workflows in the deepest dependency chain)' "$DEPMAP" | head -1)
+TIER1_SECTION=$(awk '/^## Tier 1: Core Operations/{f=1;next} f&&/^## Tier 2:/{f=0} f' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md)
+TIER1_SECTION="$TIER1_SECTION\n$(awk '/^### Tier 1 Additions/{f=1;next} f&&/^### /{exit} f' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md)"
+CHAIN_NOT_CLASSIFIED=$(echo "$TIER1_CHAIN" | while IFS= read -r w; do
+  [ -n "$w" ] && grep -qP "^\| $w \|" <<< "$TIER1_SECTION" || echo "$w"
+done)
+CHAIN_NOT_CLASSIFIED_COUNT=$(echo "$CHAIN_NOT_CLASSIFIED" | grep -cP '^W' || true)
+if [ -n "$STATED_TOTAL" ] && [ "$STATED_TOTAL" -eq "$TIER1_CHAIN_COUNT" ]; then
+  ok "Deepest-chain total ($STATED_TOTAL) matches unique workflow count ($TIER1_CHAIN_COUNT)"
+else
+  error "Deepest-chain stated total ($STATED_TOTAL) != unique workflow count ($TIER1_CHAIN_COUNT)"
+fi
+if [ "$CHAIN_NOT_CLASSIFIED_COUNT" -eq 0 ]; then
+  ok "All $TIER1_CHAIN_COUNT deepest-chain workflows are classified Tier 1"
+else
+  error "$CHAIN_NOT_CLASSIFIED_COUNT deepest-chain workflow(s) not classified Tier 1: $(echo "$CHAIN_NOT_CLASSIFIED" | tr '\n' ' ')"
+fi
+
 # --- Check 8: Placeholder/skeleton workflow content ---
 echo "--- Check 8: Placeholder workflow content ---"
 # Detect auto-generated placeholder workflows. Markers (any one indicates a stub):

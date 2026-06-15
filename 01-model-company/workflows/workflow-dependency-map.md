@@ -517,7 +517,7 @@ must be operational at pilot go-live.
   W37 (LP/Exception) → W54 (LGU Permits) → W476 (BFP FSIC) → W54A (BIR CAS) → W468 (Price Freeze) → W140 (OHS Incidents) → W477 (DENR PTO/WDP) → W479 (FDA LTO) → W480 (CAAP Height Clearance)
 ```
 
-**Total**: 48 workflows in the deepest dependency chain (all Tier 1)
+**Total**: 46 workflows in the deepest dependency chain (all Tier 1)
 
 ### Tier 2: Operational Support Chains
 

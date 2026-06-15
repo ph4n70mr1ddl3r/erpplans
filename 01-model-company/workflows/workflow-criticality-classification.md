@@ -27,9 +27,9 @@
 
 ---
 
-## Tier 1: Core Operations (439 Workflows)
+## Tier 1: Core Operations (440 Workflows)
 
-These 439 workflows are foundational to daily store and supply chain operations.
+These 440 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
 
 ### Core Finance (31 workflows)
@@ -184,7 +184,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W144 | International Logistics & Import Operations | Import operations |
 | W250 | Supply Chain Control Tower & Real-Time Shipment Visibility | Shipment visibility |
 
-### Core Compliance & IT (28 workflows)
+### Core Compliance & IT (29 workflows)
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -216,8 +216,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W477 | DENR Permit to Operate (PTO) & Wastewater Discharge Permit (WDP) Compliance | Mandatory for standby generator sets and wastewater discharge compliance |
 | W479 | FDA License to Operate (LTO) for Household Hazardous Substances Compliance | Mandatory for selling paint, chemical-based goods, and solvents in PH |
 | W480 | CAAP Height Clearance Permit Compliance | Mandatory CAAP clearances for store structures/signage near aerodromes |
-
-### Foundational Master Data (16 workflows)
+| W54A | BIR Computerized Accounting System (CAS) Registration | Mandatory BIR CAS permit per entity/location; legal prerequisite for POS invoice/receipt numbering and books-of-accounts generation |
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
@@ -745,10 +744,10 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 439 | 37.6% |
+| Phase 1 | Go-Live Critical (Tier 1) | 440 | 37.6% |
 | Phase 2 | Operational Excellence (Tier 2) | 499 | 42.8% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 229 | 19.6% |
-| **Classified Total** | | **1,167** | 100% |
+| **Classified Total** | | **1,168** | 100% |
 | Unclassified (pending review) | Default Tier 2 (pending review) | 2,445 | — |
 | **Grand Total** | | **3,804** | — |
 
