@@ -30,7 +30,7 @@ erpplans/
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
 │   ├── workflows/                      3,708 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 120 value streams · 356 process areas)
+│   │   ├── value-stream-index.md              Master index (8 families · 120 value streams · 364 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -194,7 +194,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **3,708** across 120 value streams, 356 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **3,708** across 120 value streams, 364 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -240,6 +240,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
     │                value-stream-index.md              │
-    │            (120 VS · 356 process areas)            │
+    │            (120 VS · 364 process areas)            │
    └───────────────────────────────────────────────────┘
 ```
