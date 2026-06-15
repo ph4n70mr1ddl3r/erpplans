@@ -47,4 +47,67 @@
 
 ---
 
-*Document Version: 63.0 | Date: 2026-06-15 | Reconciled workflow counts to 3,804 total across repository (1,167 classified + 2,637 unclassified). VS-49/50/51/52 (96 placeholder workflows) retired during 2026-06-14 repo review; VS-89–VS-92 (96 workflows W2993–W3088) added 2026-06-14 via gap-analysis Pass 1 (Product Recall, Damage & Claims, Consumer Data Privacy, Kitting & Bundling); VS-93–VS-96 (96 workflows W3089–W3184) added 2026-06-14 via gap-analysis Pass 2 (Dark Store & Micro-Fulfillment, Cooperative & Community Enterprise Procurement, Marketplace Operator & Third-Party Seller, Equipment Leasing & Capital Equipment Finance); VS-97–VS-100 (96 workflows W3185–W3280) added 2026-06-14 via gap-analysis Pass 3 (Corporate Real Estate & Property Portfolio, Contingent & Outsourced Workforce, IT Asset & Technology Lifecycle, Legal Operations/Litigation & IP); VS-101–VS-104 (96 workflows W3281–W3376) added 2026-06-14 via gap-analysis Pass 4 (Merchandise Financial Planning/OTB/Margin Management, Compensation/Benefits/Total Rewards, HR Shared Services/EX/People Analytics, Government Affairs/Public Policy/Industry Relations); VS-105–VS-108 (96 workflows W3377–W3472) added 2026-06-14 via gap-analysis Pass 5 (Supply Chain Finance & Working Capital Management, Commodity & Input-Cost Risk Management, Strategic Key Account & Enterprise Customer Management, On-Site Renewable Energy & Prosumer Asset Operations); VS-109–VS-112 (96 workflows W3473–W3568) added 2026-06-14 via gap-analysis Pass 6 (Store Remodel/Renovation/Lifecycle Refurbishment, Freight Procurement/Carrier Management/Freight Audit, Packaging/Pallet/RTI Management, Corporate Project & Program Management Office (PMO)); VS-113–VS-116 (96 workflows W3569–W3664) added 2026-06-14 via gap-analysis Pass 7 (Enterprise Architecture/Application Portfolio/Technology Strategy, Dangerous Goods & Hazmat Transport/Ecommerce/Regulatory Compliance, Calibration/Metrology/Measurement Traceability Management, Performance Bond/Surety/Bank Guarantee Management); VS-117–VS-120 (96 workflows W3665–W3760) added 2026-06-14 via gap-analysis Pass 8 (DTI-BPS Product Standards Certification & PS Mark/ICC Compliance, Revenue Assurance & Pricing Integrity & Leakage Management, Whistleblower/Ethics & Corporate Integrity (Speak-Up) Program, Energy Efficiency & Conservation & RA 11285 Compliance Program); VS-121–VS-124 (96 workflows W3761–W3856) added 2026-06-14 via gap-analysis Pass 9 (Talent Acquisition/Employer Brand & Candidate Experience, Global Sourcing/Import Buying & Sourcing Agent Management, Skilled-Trade Apprenticeship/Vocational Education & Capability Pipeline, Sales Enablement/Product Knowledge Mastery & Clienteling); VS-125–VS-128 (96 workflows W3857–W3952) added 2026-06-15 via gap-analysis Pass 10 (Cross-Channel Fraud Management & Payment Fraud Protection, Customer Data Platform/Single Customer View & Identity Resolution, Sales & Operations Planning (S&OP)/Integrated Business Planning, AI/ML Governance & Responsible AI) — their system touchpoints are documented within each PA file and will be rolled into the module cross-reference matrix during the next classification pass; all classified and remaining batch workflows mapped.*
+## Gap-Analysis Value Streams (VS-79–VS-128) — Primary ERP Module Coverage
+
+> The ten gap-analysis passes added 50 value streams / 1,200 workflows whose per-workflow system
+> touchpoints are documented inline in each PA file. Rather than append ~1,200 more workflow IDs
+> to the already-dense module rows above (which would make them unreadable), this section gives
+> the **primary ERP module mapping per value stream** for orientation; drill into the PA file for
+> per-workflow module/object detail. Module names match the section headings in the table above.
+
+| VS | Value Stream | Primary ERP module(s) |
+|---|---|---|
+| VS-79 | Tax Management & BIR Statutory Reporting | Financials (GL/AP/AR); Regulatory Operations |
+| VS-80 | Payment Operations, Acquirer & Settlement | Financials; POS / Retail (settlement); Ecommerce |
+| VS-81 | Cash-in-Transit, Vault & Armored Car | Financials; Loss Prevention; Store Lifecycle |
+| VS-82 | Sari-Sari Store & MSME Micro-Wholesale | CRM / Loyalty; Customer Account Mgmt; Wholesale / B2B; Inventory |
+| VS-83 | Occupational Health, Clinic & Wellness | HR & Payroll; HSE / Safety |
+| VS-84 | Labor Relations & Collective Bargaining | HR & Payroll; Corporate Account Mgmt (grievance) |
+| VS-85 | Mandatory Discount & Tax Credit Recovery | POS / Retail; Financials; Regulatory Operations |
+| VS-86 | Anti-Financial Crime, AML & ABC | Financials; Data Privacy & Compliance; Internal Audit |
+| VS-87 | Customs Trade Compliance & Tariff | Regulatory Operations; Financials; Supply Chain Planning |
+| VS-88 | Document Control & Records Retention | Document Management; Data Privacy & Compliance |
+| VS-89 | Product Recall & Safety Corrective Action | Inventory; POS / Retail; Regulatory Operations; Customer Order Mgmt |
+| VS-90 | Damage, Claims & Freight Recovery | Inventory; Vendor Contract Mgmt; Financials; Internal Audit |
+| VS-91 | Consumer Data Privacy & Data Protection | Data Privacy & Compliance; CRM / Loyalty; IT Operations; Internal Audit |
+| VS-92 | Kitting, Bundling & Build-to-Order Assembly | Inventory; Warehouse Management; Pricing / Merchandising |
+| VS-93 | Dark Store & Micro-Fulfillment | Warehouse Management; Ecommerce; Inventory |
+| VS-94 | Cooperative & Community Enterprise Procurement | Procurement; Vendor Contract Mgmt; Financials |
+| VS-95 | Marketplace Operator & Third-Party Seller | Ecommerce; Vendor Contract Mgmt; Financials |
+| VS-96 | Equipment Leasing & Capital Equipment Finance | Financials; Customer Account Mgmt; Corporate Account Mgmt |
+| VS-97 | Corporate Real Estate & Property Portfolio | Real Estate; Financials; Facility Maintenance |
+| VS-98 | Contingent, Contract & Outsourced Workforce | HR & Payroll; Vendor Contract Mgmt |
+| VS-99 | IT Asset & Technology Lifecycle | IT Operations; Financials (Fixed Assets) |
+| VS-100 | Legal Operations, Litigation & IP | Governance / Strategy; Internal Audit; Document Management |
+| VS-101 | Merchandise Financial Planning, OTB & Margin | Pricing / Merchandising; Reporting / Analytics; Supply Chain Planning |
+| VS-102 | Compensation, Benefits & Total Rewards | HR & Payroll; Reporting / Analytics |
+| VS-103 | HR Shared Services, EX & People Analytics | HR & Payroll; Reporting / Analytics |
+| VS-104 | Government Affairs, Public Policy & Industry Relations | Governance / Strategy; Regulatory Operations |
+| VS-105 | Supply Chain Finance & Working Capital | Financials; Procurement; Vendor Contract Mgmt |
+| VS-106 | Commodity & Input-Cost Risk Management | Pricing / Merchandising; Financials; Supply Chain Planning |
+| VS-107 | Strategic Key Account & Enterprise Customer Mgmt | CRM / Loyalty; Customer Account Mgmt; Corporate Account Mgmt |
+| VS-108 | On-Site Renewable Energy & Prosumer Assets | Real Estate; Facility Maintenance; Financials (Fixed Assets) |
+| VS-109 | Store Remodel, Renovation & Lifecycle Refurbishment | Engineering & Construction; Store Lifecycle; Financials (Capex) |
+| VS-110 | Freight Procurement, Carrier Mgmt & Freight Audit | Fleet Management; Procurement; Financials; Supply Chain Planning |
+| VS-111 | Packaging, Pallet & RTI Management | Inventory; Warehouse Management; Procurement |
+| VS-112 | Corporate Project & Program Management Office | Governance / Strategy; Financials (Capex/Project) |
+| VS-113 | Enterprise Architecture & Application Portfolio | IT Operations; Governance / Strategy |
+| VS-114 | Dangerous Goods / Hazmat Transport & Compliance | HSE / Safety; Regulatory Operations; Fleet Management; Ecommerce |
+| VS-115 | Calibration, Metrology & Measurement Traceability | HSE / Safety; IT Operations (asset); Inventory (accuracy) |
+| VS-116 | Performance Bond, Surety & Bank Guarantee | Financials; Corporate Account Mgmt |
+| VS-117 | DTI-BPS Product Standards & PS Mark/ICC Compliance | Regulatory Operations; Procurement; Inventory |
+| VS-118 | Revenue Assurance, Pricing Integrity & Leakage | Financials; POS / Retail; Internal Audit; Reporting / Analytics |
+| VS-119 | Whistleblower, Ethics & Corporate Integrity | Internal Audit; Governance / Strategy; HR & Payroll |
+| VS-120 | Energy Efficiency, Conservation & RA 11285 | Facility Maintenance; Real Estate; Reporting / Analytics |
+| VS-121 | Talent Acquisition, Employer Brand & Candidate Experience | HR & Payroll; CRM / Loyalty (employer brand) |
+| VS-122 | Global Sourcing, Import Buying & Sourcing Agent | Procurement; Supply Chain Planning; Vendor Contract Mgmt |
+| VS-123 | Skilled-Trade Apprenticeship & Vocational Education | HR & Payroll; Training & Development |
+| VS-124 | Sales Enablement, Product Knowledge & Clienteling | Training & Development; CRM / Loyalty; POS / Retail |
+| VS-125 | Cross-Channel Fraud Management & Payment Fraud | Loss Prevention; Financials; Ecommerce; Internal Audit |
+| VS-126 | Customer Data Platform & Single Customer View | CRM / Loyalty; Data Privacy & Compliance; Reporting / Analytics; Innovation |
+| VS-127 | Sales & Operations Planning & Integrated Business Planning | Supply Chain Planning; Reporting / Analytics; Pricing / Merchandising |
+| VS-128 | AI/ML Governance & Responsible AI | IT Operations; Data Privacy & Compliance; Internal Audit; Innovation |
+
+---
+
+*Document Version: 64.0 | Date: 2026-06-15 | Reconciled to 3,804 workflows across 124 value streams. The module-to-workflow rows above cover the foundational + confirmed-classified workflows (1,168); the gap-analysis value streams VS-79–VS-128 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 2,659 workflows not yet in the confirmed register carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the ten-pass history.*

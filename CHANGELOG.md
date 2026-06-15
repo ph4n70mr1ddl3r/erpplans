@@ -1474,3 +1474,21 @@ stream (10 × 24 = 240 new workflows, W2753–W2992):
 - Technical guidelines: POS hardware specs, infrastructure, integration architecture, security.
 - Data migration mapping templates, mobile app strategy, assumptions & design decisions.
 - Validation script (`validate-repo.sh`).
+
+---
+
+## 2026-06-15 — Workflow review implementation (3/5): roll up VS-79–VS-128 into the cross-reference maps (P3)
+
+Third commit. Both rollup maps ended with "will be incorporated during the next classification
+pass", so the strategically-central, cross-cutting programs added in gap-analysis passes 2–10
+were not wired into the dependency graph or the ERP-module matrix. The raw cross-reference data
+already existed inline in each PA file; this commit rolls it up:
+
+- **`workflow-dependency-map.md` → new §8 "Cross-Cutting Program Dependencies (VS-79–VS-128)"**, mined by `grep` over every `links to VS-NN` / `VS-NN` reference in VS-79–VS-128 PA files. §8.1 lists the anchor foundational value streams the gap-analysis programs hook into (VS-17 R2R, VS-21 Audit, VS-27 IT, VS-28 Analytics, VS-19 HR …); §8.2 captures the cross-cutting **Tier-1 statutory** programs (VS-79/85/89/91/114/117/118/125) and where they sit relative to the core compliance chain; §8.3 captures the **Tier-2/3 platform/governance overlays** (CDP, S&OP/IBP, AI Governance, Calibration, EA, SCF, Freight, PMO) and their consumers; §8.4 lists the strongest declared per-program anchor edges. Confirms the key sequencing insight: the gap-analysis programs are largely Tier-2/3 overlays *on top of* the Tier-1 core, with the statutory exceptions in §8.2.
+- **`workflow-system-touchpoint-map.md` → new "Gap-Analysis Value Streams (VS-79–VS-128) — Primary ERP Module Coverage"** section: a curated VS → primary-module mapping for all 50 gap-analysis value streams (per-workflow module/object detail remains in each PA file). Deliberately a summary table rather than appending ~1,200 more IDs to the already-dense per-module rows (which would be unreadable).
+- Both version footers rewritten to drop the stale "will be incorporated … next pass" caveat.
+
+Validator: 0 errors / 2 warnings; no dangling references in either map.
+
+---
+
