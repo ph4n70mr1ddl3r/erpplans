@@ -4,6 +4,91 @@
 
 ---
 
+## 2026-06-15 — Workflow gap analysis (Pass 12): add VS-133–VS-136 (96 workflows W4049–W4144)
+
+A twelfth gap-analysis pass added four more value streams (3 process areas, 24 workflows each),
+each filling a genuinely-unowned **enterprise-management discipline** whose defining terms
+appeared in **zero** PA files as dedicated workflow headers (only incidental single-step
+references to the broader capability existed, scattered across multiple adjacent value streams).
+The four were chosen to be **distinct from the Pass 11 set (VS-129–VS-132: competition law, M&A,
+human rights, political engagement)** — they cover operational excellence/continuous improvement,
+organizational change management, technology financial management/FinOps, and supply-chain
+network/inventory engineering. The pass deliberately strengthened three of the four thinnest-
+by-workflow families (People, Technology & Data, Make & Move) plus the cross-cutting Governance &
+Assurance family.
+
+- **VS-133 — Operational Excellence, Process Mining & Continuous Improvement Program**
+  (Governance & Assurance, W4049–W4072): owns the continuous-improvement operating system —
+  process architecture/ownership, Lean/Six Sigma methodology, an improvement-opportunity
+  pipeline, process/task mining from ERP/POS/WMS event logs, bottleneck & root-cause analysis,
+  standard-work/SOP authoring, pilot execution, benefit-case modeling & realization,
+  productivity/cost-out programs, and a kaizen culture. Genuinely uncovered ('operational
+  excellence', 'process mining', 'continuous improvement', 'lean', 'six sigma', 'kaizen' each
+  appeared in zero PA files; the only matches were literal 'cleaning/cleanup' workflows).
+  Distinct from emerging-tech scouting/PoCs (VS-30), audit assurance (VS-21), and project
+  delivery (VS-112).
+- **VS-134 — Organizational Change Management, Digital Adoption & Transformation Enablement**
+  (People, W4073–W4096): owns the people-side-of-change discipline — change portfolio & capacity
+  planning, stakeholder mapping, change-impact & readiness assessment, sponsor activation, the
+  equip-the-manager cascade, the super-user/champion network, resistance & change-saturation
+  management, change communications, go-live readiness/hypercare, digital-adoption-platform
+  operations, adoption measurement & sustainment, and benefit realization. Genuinely uncovered
+  ('change management', 'OCM', 'change enablement', 'adoption management' each appeared in zero
+  PA files; only ~45 incidental mentions). Distinct from the digital-transformation portfolio
+  (VS-30.1), project delivery (VS-112), training content (VS-19.4/VS-124), HR operations
+  (VS-103), and the IT service desk (VS-27.1).
+- **VS-135 — Technology Business Management, IT Financial Management & Cloud FinOps**
+  (Technology & Data, W4097–W4120): owns the financial-management-of-technology discipline —
+  the TBM cost taxonomy, zero-based & capacity-based IT budgeting, technology investment
+  portfolio & TCO/business-case modeling, demand management, showback/chargeback, application
+  run-cost/rationalization, cloud FinOps (inform/optimize/operate: spend visibility, rightsizing,
+  reservations/commitments, waste elimination, anomaly detection), SaaS license utilization &
+  renewal optimization, shadow-IT discovery, value realization, and unit economics.
+  Genuinely uncovered ('finops', 'cloud cost', 'technology business management', 'IT financial
+  management', 'TBM' each appeared in zero PA files). Distinct from IT asset lifecycle (VS-99),
+  application-landscape design (VS-113), platform operations (VS-27), and enterprise FP&A
+  (VS-17.4/VS-33).
+- **VS-136 — Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow
+  Engineering** (Make & Move, W4121–W4144): owns the network/inventory-engineering discipline —
+  network strategy & modeling/scenario simulation, DC footprint/location/capacity optimization,
+  store coverage/territory, inbound sourcing-lane & outbound distribution-flow architecture,
+  network resilience/redundancy, inventory strategy (postponement/pooling), multi-echelon
+  inventory optimization (MEIO), safety-stock & service-level optimization, ABC/XYZ-differentiated
+  policy, slow-mover/obsolescence optimization, simulation/digital-twin stress-testing, and a
+  continuous re-optimization cycle. Genuinely uncovered ('multi-echelon', 'inventory
+  optimization', 'network design', 'safety stock optimization' each appeared in zero PA files;
+  only the single periodic W183 network-review workflow in VS-02.3). Distinct from operational
+  replenishment (VS-02), the S&OP consensus cycle (VS-127), inventory transactions/lifecycle
+  (VS-05), and logistics execution (VS-06).
+
+### Repository totals after Pass 12
+
+| Metric | Before (Pass 11) | After (Pass 12) |
+|---|---|---|
+| Value streams | 128 | **132** |
+| Process areas | 388 | **400** |
+| Workflows | 3,900 | **3,996** (+96) |
+| Unclassified (keyword-proposed pending review) | 2,755 | **2,851** |
+| Confirmed-classified (Tier 1/2/3) | 1,168 | 1,168 (unchanged) |
+
+Family workflow subtotals: Make & Move 355 → **379** (+24 via VS-136); People 242 → **266**
+(+24 via VS-134); Technology & Data 278 → **302** (+24 via VS-135); Governance & Assurance
+720 → **744** (+24 via VS-133); all other families unchanged.
+
+The 96 new workflows carry a keyword-driven proposed tier in `workflow-criticality-proposed.md`
+(regenerated by `07-methodology/classify-workflows.py`, relabelled Pass 12): 3 proposed Tier 1
+and 93 Tier 2 (the four are enterprise-management disciplines, not statutory/gating controls, so
+most land at the safe Tier-2 default). They will be rolled into the dependency graph, touchpoint
+map, and requirement-to-workflow matrix during the next confirmed-classification pass, matching
+the Pass 1–Pass 11 pattern.
+
+`07-methodology/validate-repo.sh` passes with **0 errors** after the additions (grand total
+3,996 matches actual PA workflow header count 3,996; all 1168 classified IDs resolve; all 2851
+proposed IDs resolve and do not duplicate the confirmed register; no dangling references; no
+placeholder content; no empty process areas).
+
+---
+
 ## 2026-06-15 — Workflow gap analysis (Pass 11): add VS-129–VS-132 (96 workflows W3953–W4048)
 
 An eleventh gap-analysis pass added four more value streams (3 process areas, 24 workflows each),

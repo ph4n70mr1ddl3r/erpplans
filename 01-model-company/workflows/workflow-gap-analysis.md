@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, and Pass 11 (2026-06-15)).
+> Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -113,6 +113,10 @@ identify capability gaps not addressed by any existing value stream.
 | 44 | **Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions** | A growth-stage, 5-entity, 200-store retailer growing 10–15 stores/year whose path includes acquiring competitor chains/banners, specialty/service businesses, JVs (property/digital/fintech), and divesting/carving out non-strategic assets — the inorganic-growth lifecycle (target sourcing, valuation, DD, SPA, regulatory clearance incl. PCC, Day-1, PMI/synergy, carve-out/TSA, divestiture) carries PHP-hundreds-of-millions-to-low-billions per major transaction and a 60–70% integration-failure rate | **New gap (Pass 11)** — 'merger and acquisition' and corporate-transaction 'divestiture' each appeared in **zero** PA files (the only 'divestiture' references were conflict-of-interest divestiture) — VS-33 sets strategy, VS-37 opens stores, VS-40 accounts for capex, VS-112 runs PMO, VS-100.3 provides legal advisory, VS-129 handles PCC clearance — no value stream owned the *M&A transaction lifecycle* | **FILLED — VS-130** |
 | 45 | **Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence** | A commodity-intensive, ~40%-import assortment (tools/electronics, paint/chemicals, lumber, tiles, PPE, garden/agro) sourced from China/Taiwan/Indonesia/Malaysia/Japan/Europe, sold to international B2B customers subject to UK MSA/German LkSG/EU CSDDD/US UFLPA — exposing BuildRight to forced/modern-slavery labor, child labor, unsafe conditions, irresponsible recruitment, conflict-minerals, and land-rights risk across its own operations and supply chain | **New gap (Pass 11)** — 'human rights' and 'modern slavery' each appeared in only **one** PA file (an ESG *reporting topic* in VS-25.2 and an audit *risk* in VS-21.3) — VS-25.2 touches environmental/diversity sourcing, VS-03 runs vendor ops, VS-122 executes import sourcing, VS-31/VS-117 address product quality/standards, VS-119 internal ethics — no value stream owned the *human-rights due-diligence program* | **FILLED — VS-131** |
 | 46 | **Corporate Political Engagement, Election Compliance & Public Affairs Governance** | A PHP 62.3B, 5-entity, 200-store, multi-region retailer with substantial B2G sales (VS-46), LGU relationships (VS-76), industry advocacy (VS-104), and board/investor transparency expectations — operating under the Omnibus Election Code, RA 9006/COMELEC (corporate political contributions largely prohibited, with criminal liability), RA 3019 anti-graft, and RA 6713 | **New gap (Pass 11)** — 'political contribution', 'election compliance', and 'COMELEC' each appeared in **zero** PA files — VS-104 manages govt-affairs *relationships*, VS-86 addresses *bribery*, VS-119 handles *misconduct*, VS-46 executes *B2G sales*, VS-14.3 manages *comms* — no value stream owned the *political-activity governance/compliance/discipline* | **FILLED — VS-132** |
+| 47 | **Operational Excellence, Process Mining & Continuous Improvement Program** | A PHP 62.3B, ~6,715-employee, 200-store, 4-DC operation running ~3,996 documented workflows; without a dedicated OpEx/CI program, cycle-time drag, rework, manual handoffs, and process variants compound and erode the 12–14% EBITDA and 6–8x inventory-turn targets — the systematic-improvement discipline (process architecture/ownership, Lean/Six Sigma methodology, an improvement pipeline, process mining from ERP event logs, bottleneck/root-cause analysis, standard-work authoring, pilot execution, benefit realization, productivity/cost-out programs) | **New gap (Pass 12)** — 'operational excellence', 'process mining', 'continuous improvement', 'lean', 'six sigma', and 'kaizen' each appeared in **zero** PA files as dedicated workflow headers (the only matches were literal 'cleaning/cleanup' workflows) — VS-30 scouts *emerging tech/PoCs*, VS-21 *assures* controls, VS-112 delivers *projects*, VS-27 runs the *service desk* — no value stream owned the *continuous-improvement operating system* | **FILLED — VS-133** |
+| 48 | **Organizational Change Management, Digital Adoption & Transformation Enablement** | A 5-entity, ~6,715-employee, 200-store workforce running a continuous pipeline of major change (cloud ERP, omnichannel/marketplace/retail-media build-out, 10–15 new-store openings/yr, the store-remodel program, net-zero/renewable, BIR e-invoicing) where the 60–70% transformation-failure benchmark is driven overwhelmingly by people-side failure (resistance, low adoption, change saturation) — the people-side-of-change discipline (stakeholder mapping, change-impact/readiness assessment, sponsor activation, equip-the-manager cascade, super-user network, resistance management, change-saturation management, go-live readiness/hypercare, digital-adoption platform, adoption measurement/sustainment) | **New gap (Pass 12)** — 'change management', 'OCM', 'change enablement', and 'adoption management' each appeared in **zero** PA files as dedicated workflow headers (only incidental ~45 PA-file mentions where a project notes 'communicate the change') — VS-30.1 owns the *digital-transformation portfolio*, VS-112 *project delivery*, VS-19.4/VS-124 *training content*, VS-103.1 *HR comms*, VS-27.1 the *IT service desk* — no value stream owned the *OCM discipline* | **FILLED — VS-134** |
+| 49 | **Technology Business Management, IT Financial Management & Cloud FinOps** | A cloud-first, integration-heavy retailer with ~10+ integration touchpoints and an expanding SaaS/AI perimeter where technology spend runs ≈1–3% of revenue (PHP 0.6B–1.9B/yr) across cloud, SaaS, software, telco/network (205+ sites), and the IT org — ungoverned, that spend leaks value through under-used licenses, idle cloud resources, shadow IT, and un-optimised commitments — the financial-management-of-technology discipline (TBM cost taxonomy, zero-based IT budgeting, TCO/business-case modeling, showback/chargeback, FinOps inform/optimize/operate, SaaS license utilization, value realization, unit economics) | **New gap (Pass 12)** — 'finops', 'cloud cost', 'technology business management', 'IT financial management', and 'TBM' each appeared in **zero** PA files as dedicated workflow headers — VS-99 tracks *asset inventory/disposal*, VS-113 designs the *application landscape*, VS-27 *operates* platforms, VS-17.4/VS-33 do *corporate FP&A*, VS-34 buys *transactionally* — no value stream owned the *technology-financial discipline* | **FILLED — VS-135** |
+| 50 | **Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering** | A 4-DC, 200-store, 35K-SKU retailer with ~40% imports (45–90-day lead times), Philippine island geography, and a 6–8x turn target where network/inventory positioning is the single largest controllable lever on working capital, service level, and total landed cost — a 1% inventory reduction releases ~PHP 0.4B of working capital — the structural-engineering discipline (network strategy/modeling, DC footprint/location/capacity, inbound sourcing-lane and outbound flow architecture, network resilience, inventory strategy/postponement/pooling, MEIO, safety-stock/service-level optimization, ABC/XYZ-differentiated policy, simulation/digital-twin, continuous re-optimization) | **New gap (Pass 12)** — 'multi-echelon', 'inventory optimization', 'network design', 'safety stock optimization', and 'postponement' each appeared in **zero** PA files as dedicated workflow headers (only the single periodic W183 network-review workflow in VS-02.3) — VS-02 runs *operational* replenishment, VS-127 the *consensus cycle*, VS-05 inventory *transactions*, VS-06 *logistics execution* — no value stream owned the *network/inventory-engineering discipline* | **FILLED — VS-136** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -297,21 +301,35 @@ scattered across multiple adjacent value streams:
 | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Plan & Source | 3 | 24 | W4001–W4024 |
 | [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Governance & Assurance | 3 | 24 | W4025–W4048 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11)
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12)
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 (current) |
-|---|---|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | **428** (+24) |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | **720** (+72) |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | **128** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | **388** (+12) |
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 (current) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | **379** (+24) |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | **266** (+24) |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | **744** (+24) |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | **302** (+24) |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | **132** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | **400** (+12) |
+
+Pass 12 deliberately strengthened three of the four thinnest-by-workflow families — **People**
+(242 → 266 via VS-134 OCM), **Technology & Data** (278 → 302 via VS-135 TBM/FinOps), and **Make &
+Move** (355 → 379 via VS-136 network design/MEIO) — and added the cross-cutting **Operational
+Excellence/CI** discipline to **Governance & Assurance** (720 → 744 via VS-133), where strategic,
+cross-cutting management/improvement disciplines (VS-33 strategy, VS-36 governance) naturally
+live. Each gap had been previously overlooked because it was a genuinely-unowned *enterprise-
+management discipline* whose defining terms appeared in zero PA files as dedicated workflow
+headers (process mining / operational excellence / continuous improvement; change management / OCM
+/ adoption; finops / cloud cost / TBM / IT financial management; multi-echelon / inventory
+optimization / network design), with only incidental single-step references to the broader
+capability scattered across multiple adjacent value streams. None of the four follows the single-
+workflow-elevation pattern of Passes 1/5/7/8/10/11; all four are genuinely-unowned enterprise-
+management disciplines with no dedicated owner.
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
@@ -406,7 +424,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,900) matches actual PA workflow header count (3,900). ✅
+- Grand total (3,996) matches actual PA workflow header count (3,996). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -484,6 +502,11 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   genuinely uncovered disciplines whose defining terms ('merger and acquisition'/'divestiture',
   'human rights'/'modern slavery', 'political contribution'/'election compliance'/'COMELEC') each
   appeared in zero (or only one incidental) PA file.
+- **Operational Excellence/Process Mining/Continuous Improvement**, **Organizational Change
+  Management/Digital Adoption**, **Technology Business Management/FinOps**, and **Supply Chain
+  Network Design/Multi-Echelon Inventory Optimization** — **filled** by VS-133, VS-134, VS-135,
+  and VS-136 (Pass 12); all four were genuinely-unowned enterprise-management disciplines whose
+  defining terms appeared in zero PA files as dedicated workflow headers.
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.
@@ -593,6 +616,54 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 - **AI / model-risk governance / responsible AI** — covered by VS-30.2 (AI/ML & Automation) and
   VS-113 (Enterprise Architecture); emerging and not yet a standalone operational program for the
   current model company.
+
+### Candidate gaps considered but rejected in Pass 12 (adequate coverage)
+
+- **Continuous improvement / process improvement (as part of VS-30 or VS-21)** — *considered*
+within VS-30 (innovation/automation) and VS-21 (audit) but elevated here to a dedicated value
+stream (VS-133) because the *continuous-improvement operating system* (methodology, pipeline,
+process mining, benefit realization, culture) had no owning PA and is distinct from emerging-tech
+scouting (VS-30), audit assurance (VS-21), and project delivery (VS-112).
+- **Digital adoption / training (as part of VS-19.4 or VS-27.1)** — *considered* within VS-19.4
+(L&D) and VS-27.1 (service desk/hypercare) but elevated here (VS-134) because the *people-side-
+of-change discipline* (stakeholder mapping, change-impact/readiness, sponsor activation,
+resistance, change-saturation, DAP, adoption sustainment) had no owning PA and is distinct from
+training content delivery (VS-19.4/VS-124), project delivery (VS-112), HR operations (VS-103),
+and IT service management (VS-27.1).
+- **Cloud cost optimization / IT budgeting (as part of VS-99 or VS-17.4)** — *considered* within
+VS-99 (IT asset lifecycle) and VS-17.4 (corporate FP&A) but elevated here (VS-135) because the
+*technology-financial discipline* (TBM taxonomy, FinOps inform/optimize/operate, showback/
+chargeback, unit economics, value realization) had no owning PA and is distinct from asset
+inventory/disposal (VS-99), application-landscape design (VS-113), platform operations (VS-27),
+and enterprise FP&A (VS-17.4/VS-33).
+- **Inventory optimization / network review (as part of VS-02)** — *considered* within VS-02
+(the single periodic W183 network-review workflow exists) but elevated here (VS-136) because the
+*network/inventory-engineering discipline* (network modeling/design, MEIO, safety-stock/service-
+level optimization, simulation, continuous re-optimization) had no owning PA beyond the single
+periodic review and is distinct from operational replenishment (VS-02), the S&OP consensus cycle
+(VS-127), inventory transactions/lifecycle (VS-05), and logistics execution (VS-06).
+- **In-store experiential / field / event / brand-activation marketing** — *considered* but
+rejected as adequately covered: VS-14 marketing already owns local store marketing (W1551),
+builder's expo (W1292), grand-opening events (W1523), DIY workshops/community events (W1260),
+and barangay outreach; a dedicated experiential value stream would overlap.
+- **Loyalty coalition / partner rewards / redemption-catalog fulfillment** — *considered* but
+rejected as adequately covered by VS-13 (loyalty) workflows W674/W902/W926/W1186/W1434 and VS-14
+W902 (partner reward catalog) — partner management, cross-promotion, reward fulfillment, and
+settlement are comprehensively owned there.
+- **Strategic sourcing / category strategy / should-cost (non-merchandise)** — *considered* but
+rejected as adequately covered: VS-03 (vendor management) and VS-15 (procure-to-pay) own sourcing
+and category management; VS-110 (freight) and VS-122 (global sourcing) own category-specific
+sourcing depth.
+- **Customer technical product support / after-sales technical service center** — *considered*
+but rejected as adequately covered across VS-12 (W440 power-tool service & repair center,
+W1170–W1253 installation dispatch/quality), VS-13 (W1363 VIP support hotline, W1364 DIY help
+center, W1290 appliance warranty/after-sales coordination), and VS-53 (warranty).
+- **Lease accounting / IFRS 16 / right-of-use asset management** — *considered* but rejected as
+adequately covered: W275 (IFRS 16/PFRS 16 lease accounting) in VS-17 and W1872/W1875 (PFRS 16
+month-end and lease-accounting policy) in VS-42 own the discipline.
+- **Supplier risk / supply-chain resilience** — *considered* but rejected as adequately covered by
+VS-02.3 (W558 supplier risk, W729 disruption response, W763 vendor diversification, W250 control
+tower).
 
 ---
 
