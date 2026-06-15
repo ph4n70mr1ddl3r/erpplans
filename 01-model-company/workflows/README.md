@@ -24,7 +24,8 @@
 |---|---|
 | [value-stream-index.md](value-stream-index.md) | **Master index** — all 124 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
-| [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities |
+| [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal for the remaining unclassified workflows |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap analysis methodology & results |

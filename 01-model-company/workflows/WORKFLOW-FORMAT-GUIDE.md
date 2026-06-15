@@ -103,7 +103,8 @@ workflows/
 ├── value-stream-index.md              Master index (8 families · 120 VS · 364 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
-├── workflow-criticality-classification.md  Tier 1/2/3 priorities (1,167 of 3,804 classified)
+├── workflow-criticality-classification.md  Tier 1/2/3 priorities (1,168 confirmed; 2,659 proposed in workflow-criticality-proposed.md)
+├── workflow-criticality-proposed.md      Keyword-driven tier proposal (pending human review)
 ├── workflow-dependency-map.md         Prerequisite relationships, critical path
 ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
 └── VS-<NN>-<slug>/
@@ -118,7 +119,8 @@ workflows/
 | Document | Purpose |
 |---|---|
 | [value-stream-index.md](value-stream-index.md) | Master index of all value streams and process areas |
-| [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 priority classification |
+| [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 priority classification (confirmed) |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal for unclassified workflows (companion) |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships and critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap-analysis methodology and workflow-ID allocation log |

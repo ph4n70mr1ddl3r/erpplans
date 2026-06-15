@@ -4,6 +4,23 @@
 
 ---
 
+## 2026-06-15 — Workflow review implementation (2/5): keyword-driven classification pass (P2)
+
+Second commit of the review-implementation program. **2,659 workflows (70% of the estate) had no
+criticality tier**, so the go-live sequencing (Tier 1/2/3) could not be applied to most of the
+repository. Rather than bury ~2,600 auto-classified rows inside the authoritative hand-reviewed
+register, the proposal is kept in a **separate, clearly-marked, reversible** companion file:
+
+- **New [`07-methodology/classify-workflows.py`](07-methodology/classify-workflows.py)** — a reusable, documented classifier. It assigns a Tier 1/2/3 proposal to every workflow not in the confirmed register, using conservative keyword rules over the workflow *name* plus whole-family overrides for wholly-statutory value streams (VS-79 tax, VS-85 mandatory discount, VS-89 recall, VS-91 privacy, VS-114 DG/hazmat, VS-117 DTI-BPS, VS-118 revenue assurance, VS-125 fraud). VS-128 (AI *governance*) is handled specially so the regulator/risk framework lands Tier 1 while platform engineering lands Tier 2 — the AI *use-cases* elsewhere remain the Tier 3 candidates.
+- **New [`workflows/workflow-criticality-proposed.md`](01-model-company/workflows/workflow-criticality-proposed.md)** — the proposed assignment for all 2,659 workflows (Tier 1: 606 · Tier 2: 1,925 · Tier 3: 128), grouped by tier then by value stream for review. On review, rows are promoted/demoted by moving them into the confirmed register.
+- **Rules are deliberately conservative**: Tier 1 only on high-confidence statutory / core-transactional keywords; Tier 3 only on high-confidence advanced-tech keywords; everything else defaults to Tier 2 (the documented safe default). A first draft incorrectly matched against PA *filenames* (leaking broad category words like "settlement" into every workflow in a settlement PA); fixed to match the workflow name only.
+- **`workflow-criticality-classification.md` summary** rewritten to separate *confirmed* (1,168) from *proposed* (2,659) and to show **0 workflows without even a proposal**.
+- **`validate-repo.sh` Check 1** enhanced: recognises the proposed file, reports `N unclassified in confirmed; M have a proposed tier; K have no proposal yet`, and verifies every proposed ID resolves to a real header and does not duplicate the confirmed register.
+
+Validator: 0 errors / 2 warnings. The two remaining warnings (boilerplate fields, unclassified-in-confirmed) are addressed in subsequent commits.
+
+---
+
 ## 2026-06-15 — Workflow review implementation (1/5): structural-integrity fixes (P4) + validator reverse-check
 
 First commit of a five-commit program implementing the recommendations from a value-stream/workflow

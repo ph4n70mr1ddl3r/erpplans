@@ -44,7 +44,25 @@ else
 fi
 
 if [ "$DOC_UNCLASS" -gt 0 ]; then
-    warn "$DOC_UNCLASS workflows remain unclassified (pending criticality review)"
+  PROPOSED_FILE="$REPO_ROOT"/01-model-company/workflows/workflow-criticality-proposed.md
+  # Real unclassified = ## headers not present in the confirmed register
+  UNCLASSIFIED_IDS=$(comm -23 <(echo "$ALL_HEADERS") <(echo "$CLASSIFIED") | grep -P '^W' || true)
+  UNCLASSIFIED_COUNT=$(echo "$UNCLASSIFIED_IDS" | grep -cP '^W' || true)
+  if [ -f "$PROPOSED_FILE" ]; then
+    PROPOSED_IDS=$(grep -oP '^\| W\d+[A-Z]? \|' "$PROPOSED_FILE" | sed -E 's/^\| //;s/ \|//' | sort -u)
+    PROPOSED_COUNT=$(echo "$PROPOSED_IDS" | grep -cP '^W' || true)
+    WITHOUT_PROPOSAL=$(comm -23 <(echo "$UNCLASSIFIED_IDS") <(echo "$PROPOSED_IDS") | grep -cP '^W' || true)
+    warn "$UNCLASSIFIED_COUNT workflows remain unclassified in the confirmed register; $PROPOSED_COUNT have a keyword-driven proposed tier (workflow-criticality-proposed.md); $WITHOUT_PROPOSAL have no proposal yet"
+    PROPOSED_DANGLING=$(comm -23 <(echo "$PROPOSED_IDS") <(echo "$ALL_HEADERS") | grep -cP '^W' || true)
+    PROPOSED_DUP=$(comm -12 <(echo "$PROPOSED_IDS") <(echo "$CLASSIFIED") | grep -cP '^W' || true)
+    if [ "$PROPOSED_DANGLING" -eq 0 ] && [ "$PROPOSED_DUP" -eq 0 ]; then
+      ok "All $PROPOSED_COUNT proposed IDs resolve to headers and do not duplicate the confirmed register"
+    else
+      error "Proposed classification: $PROPOSED_DANGLING dangling, $PROPOSED_DUP duplicate(s) of confirmed register"
+    fi
+  else
+    warn "$UNCLASSIFIED_COUNT workflows remain unclassified (pending criticality review)"
+  fi
 fi
 
 # --- Check 2: Workflow counts per PA file match value-stream-index ---

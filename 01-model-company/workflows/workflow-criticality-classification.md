@@ -742,14 +742,39 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 
 ## Summary
 
+### Confirmed classification (hand-reviewed)
+
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
 | Phase 1 | Go-Live Critical (Tier 1) | 440 | 37.6% |
 | Phase 2 | Operational Excellence (Tier 2) | 499 | 42.8% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 229 | 19.6% |
-| **Classified Total** | | **1,168** | 100% |
-| Unclassified (pending review) | Default Tier 2 (pending review) | 2,445 | — |
-| **Grand Total** | | **3,804** | — |
+| **Confirmed Total** | | **1,168** | 100% |
+
+> Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
+> own classification row; the remaining 1,145 are canonical `##` workflows.
+
+### Proposed classification (keyword-driven, pending human review)
+
+The **2,659** workflows not yet in the confirmed register above have been assigned a *proposed*
+tier by [`07-methodology/classify-workflows.py`](../../07-methodology/classify-workflows.py) using
+conservative keyword rules; see the companion file
+[`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). On review, promote/demote
+rows by moving them into the confirmed sections above.
+
+| Phase | Label | Proposed Count |
+|---|---|---|
+| Phase 1 | Go-Live Critical (Tier 1) — proposed | 606 |
+| Phase 2 | Operational Excellence (Tier 2) — proposed | 1,925 |
+| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 128 |
+| **Proposed Total** | | **2,659** |
+
+| Coverage | Workflows |
+|---|---|
+| Confirmed (hand-reviewed) | 1,168 |
+| Proposed (keyword, pending review) | 2,659 |
+| Without even a proposal | 0 |
+| **Grand Total** | **3,804** (note: 23 `###` sub-workflows are double-counted across confirmed rows; unique `##` workflow headers = 3,804) |
 
 ### Domain Breakdown
 
