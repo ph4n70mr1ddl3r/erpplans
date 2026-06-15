@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> Pass 5, Pass 6, Pass 7, Pass 8, and Pass 9, all 2026-06-14).
+> Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), and Pass 10 (2026-06-15)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -29,8 +29,15 @@ identify capability gaps not addressed by any existing value stream.
    known retired value stream (VS-49/50/51/52) not yet re-introduced.
 4. **Validate** each candidate gap by keyword search across all PA files to confirm it is not
    already covered (avoiding redundant value streams) and to scope it so the new value stream is
-   distinct from adjacent ones. For Pass 4, Pass 5, Pass 6, and Pass 7, every candidate gap was
-   confirmed to have only incidental single-workflow coverage (or none) in the existing PA files;
+   distinct from adjacent ones. For Pass 10, every candidate gap was confirmed to have its defining
+   terms appear in zero or near-zero PA files with no dedicated owner — 'fraud orchestration' (0 PA
+   files) and 'fraud management' (1) for VS-125; 'customer golden record' (0) and 'identity
+   resolution' (2) for VS-126; 'integrated business planning' (0), 'IBP' (0), and 'sales and
+   operations planning' (0) for VS-127; and 'model risk management' (0) and 'algorithmic
+   fairness' (0) for VS-128 — each with only incidental single-step references to the broader
+   capability scattered
+   across multiple adjacent value streams. For prior passes, each candidate gap was confirmed to
+   have only incidental single-workflow coverage (or none) in the existing PA files;
    for Pass 7 specifically, 'enterprise architecture' appeared in **zero** PA files, calibration was
    referenced across **50+** PA files with no dedicated owner, dangerous-goods transport was
    confirmed distinct from VS-24.3 fixed-site storage, and performance bonds/surety were confirmed
@@ -92,6 +99,10 @@ identify capability gaps not addressed by any existing value stream.
 | 36 | **Global Sourcing, Import Buying & Sourcing Agent Management** | ~40% of COGS imported (~PHP 17–18B/yr), ~400 international vendors across China/Taiwan/Indonesia/Malaysia/Japan/Europe, ~400–600 import TEUs/month, ~PHP 1.4B/month import value, commodity-intensive assortment; the strategic source-side discipline (source-market/country strategy, sourcing-model decision, sourcing-agent/overseas-buying-office governance, import vendor development, consolidated container buying, total-landed-cost sourcing) materially drives COGS, availability, and supply-base resilience | **New gap (Pass 9)** — VS-02.2 executes operational import/customs, VS-03 executes transactional vendor/PO, VS-87 customs compliance, VS-31/VS-41 quality/factory audit; 'global sourcing', 'sourcing agent', and 'overseas buying office' each appeared in **zero** PA files — no value stream owned the *strategic source-side* discipline | **FILLED — VS-122** |
 | 37 | **Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline** | BuildRight's differentiation is knowledgeable trade staff (lumber/tile/plumbing/electrical/paint/tools) plus fabrication/estimation/installation specialists, in a Philippine market where trade certification runs through the TESDA (RA 7796) NC/COC framework and such talent is scarce; a structured apprenticeship/vocational capability pipeline is the primary lever on service quality, attach, and the credible "home-building partner" positioning | **New gap (Pass 9)** — VS-19.4 runs general employee L&D/competency, VS-12.3 W1556 is a single TESDA school career-day *participation* workflow, VS-43.3 trains trade *customers*; 'apprenticeship program' appeared in **zero** PA files and 'vocational' only incidentally (4) — no value stream owned BuildRight's *own* structured apprenticeship and vocational feeder | **FILLED — VS-123** |
 | 38 | **Sales Enablement, Product Knowledge Mastery & Clienteling** | ~5,800 store staff serving 2.8M monthly POS transactions, ~PHP 1,800 ATV, ~40% B2B/trade revenue, ~600K loyalty members; associate selling effectiveness (product-knowledge mastery, consultative selling, clienteling/customer-360 at POS, attachment/linked/category selling, trade-pro consultative selling) is the single largest controllable lever on basket size, conversion, attach, and trade-pro capture | **New gap (Pass 9)** — product knowledge referenced across ~33 PA files and product training ~13 with **no dedicated owner**; 'clienteling' appeared in **zero** PA files and 'sales enablement'/'selling skills' in 2/1 — VS-19.4 owns general L&D, VS-13 loyalty/CRM, VS-07 daily store execution, VS-09 in-store services — no value stream owned the *associate selling-effectiveness* discipline | **FILLED — VS-124** |
+| 39 | **Cross-Channel Fraud Management & Payment Fraud Protection** | ~PHP 62.3B revenue / 2.8M monthly POS transactions across 600 terminals / ~42,900 ecommerce orders/month (COD-heavy) / ~600K loyalty members / gift-card balances / ~5,200 trade accounts; retail fraud benchmarks 0.5–1.5% of gross revenue = **PHP 0.3B–0.9B/yr** at risk across payment fraud, return/refund abuse, promo/coupon/loyalty abuse, gift-card fraud, account takeover, first-party/friendly fraud, chargebacks, employee/internal collusion, and trade-account/application fraud | **New gap (Pass 10)** — fraud detection referenced across ~17 PA files and specific fraud types handled as single steps within VS-32 (return), VS-58 (coupon), VS-80 (payment/chargeback), VS-13.2 (loyalty), VS-23 (physical shrink), VS-118 (pricing leakage), VS-86 (AML) — 'fraud orchestration' appeared in **zero** PA files and 'fraud management' in one — no value stream owned the *cross-channel fraud program* (detection rules/ML, case management, investigation, recovery, chargeback representment, internal-fraud, regulatory/law-enforcement, analytics) | **FILLED — VS-125** |
+| 40 | **Customer Data Platform, Single Customer View & Identity Resolution** | ~600K loyalty members + ~5,200 trade accounts + ~200 corporate accounts + ~515K ecommerce orders/yr + 2.8M monthly POS transactions + clienteling/personalization ambition; the inability to resolve a single customer across cash/loyalty/ecommerce/trade/app touchpoints blocks personalization, loyalty accuracy, retention, CLV decisions, and consent-compliant marketing under RA 10173 | **New gap (Pass 10)** — 'CDP' referenced across ~23 PA files and 'customer data platform' ~12 with no dedicated owner; 'customer golden record' appeared in **zero** PA files and 'identity resolution' in two — sprinkled across VS-13 (loyalty), VS-29 (master data), VS-107 (key account), VS-10 (ecommerce), VS-75 (app) — no value stream owned the *CDP platform and single-customer-view discipline* | **FILLED — VS-126** |
+| 41 | **Sales & Operations Planning (S&OP) & Integrated Business Planning (IBP)** | 35K SKUs across 200 stores + 4 DCs, ~40% imports with 45–90-day lead times (demand errors compound over long lead times), heavy Philippine seasonality (rainy-season, ber-months, summer), 6–8x inventory-turn target, ~PHP 42–45B COGS; the monthly cross-functional consensus demand-supply cycle that balances forecast, supply constraints, inventory, and the financial plan | **New gap (Pass 10)** — 'S&OP' referenced across ~20 PA files and 'demand planning/forecasting' ~24–31 with no dedicated owner; 'integrated business planning', 'IBP', and 'sales and operations planning' each appeared in **zero** PA files — sprinkled as single steps inside VS-02 (operational supply), VS-101 (merchandise financial plan), VS-33 (corporate strategy), VS-106 (commodity) — no value stream owned the *S&OP/IBP consensus-planning process* | **FILLED — VS-127** |
+| 42 | **AI/ML Governance & Responsible AI** | Rapidly expanding AI/ML footprint — fraud detection (VS-125), demand forecasting (VS-127), personalization/recommendation (VS-126), pricing/markdown, inventory optimization, LP analytics, customer-service chatbots, document/OCR automation, and generative-AI assistants across the PHP 62.3B-revenue, 5-entity, ~6,715-employee operation; uncontrolled models cause revenue loss (bad forecast/price), customer harm (unfair bias, wrongful fraud decline, privacy breach), and regulatory/reputational exposure under RA 10173 automated-decision rights and emerging PH AI rules | **New gap (Pass 10)** — 'AI governance' referenced in ~3 PA files, 'responsible AI' in 1, and the defining terms 'model risk management' and 'algorithmic fairness' in **zero** PA files each — AI/ML is engineered inside VS-30.2 and used by VS-125/VS-126/VS-127/VS-28/VS-113 — no value stream owned the *AI-governance and responsible-AI discipline* (model inventory/risk, fairness/bias, explainability, AI privacy/consent, safety/robustness, human oversight, GenAI governance, ISO 42001/NIST AI RMF) | **FILLED — VS-128** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -254,21 +265,34 @@ defining terms and only incidental single-workflow references to the broader cap
 | [VS-123](VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/README.md) | Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline | People | 3 | 24 | W3809–W3832 |
 | [VS-124](VS-124-sales-enablement-product-knowledge-clienteling/README.md) | Sales Enablement, Product Knowledge Mastery & Clienteling | Sell & Serve | 3 | 24 | W3833–W3856 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9)
+**Pass 10** (W3857–W3952): four value streams, 12 process areas, 96 workflows, distributed across
+four families (Finance, Technology & Data, Plan & Source). Each gap had been
+previously overlooked because it was genuinely unowned as a program — its defining terms appeared
+in zero or near-zero PA files with only incidental single-step references to the broader capability
+scattered across multiple adjacent value streams:
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 (current) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-125](VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md) | Cross-Channel Fraud Management & Payment Fraud Protection | Finance | 3 | 24 | W3857–W3880 |
+| [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | Technology & Data | 3 | 24 | W3881–W3904 |
+| [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | Plan & Source | 3 | 24 | W3905–W3928 |
+| [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Technology & Data | 3 | 24 | W3929–W3952 |
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 (current) |
 |---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | **380** (+24) |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | **1,146** (+24) |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | **242** (+48) |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | **120** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | **356** (+12) |
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | **404** (+24) |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | **507** (+24) |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | **278** (+48) |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | **124** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | **368** (+12) |
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
@@ -338,13 +362,32 @@ import-vendor trade-compliance gating controls in VS-122, TESDA/DOLE apprentices
 and trade-safety controls in VS-123, and clienteling RA 10173/associate-fairness and selling-
 quality controls in VS-124).
 
+Pass 10 added value streams to three families — **Finance** (483 → 507 via VS-125 Fraud
+Management), **Technology & Data** (230 → 278 via VS-126 Customer Data Platform + VS-128 AI/ML
+Governance, strengthening the thinnest-by-workflow family), and **Plan & Source** (380 → 404 via
+VS-127 S&OP/IBP). Each gap had been previously overlooked because the capability was genuinely
+unowned as a program — its defining terms appeared in zero or near-zero PA files ('fraud
+orchestration', 'customer golden record', 'integrated business planning'/'IBP', and 'model risk
+management'/'algorithmic fairness' respectively) with only incidental single-step references to the
+broader capability scattered across multiple adjacent value streams (VS-23/VS-32/VS-58/VS-80/VS-13.2/
+VS-118/VS-86 for fraud; VS-13/VS-29/VS-107/VS-10/VS-75 for the customer view; VS-02/VS-101/VS-33/
+VS-106 for planning; VS-30.2/VS-27.3/VS-91/VS-113/VS-21 for AI). None of the four follows the
+single-workflow-elevation pattern of Passes 1/5/7/8; all four are genuinely-unowned programs.
+
+The 96 new workflows added in Pass 10 are currently **unclassified** (counted in the 2,637-workflow
+unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
+Pass 1–Pass 9 batches were handled. Several Pass 10 workflows are anticipated Tier 1 (chargeback
+representment/recovery and deduction-authorization/SoD controls in VS-125, identity-resolution/
+consent-at-activation/DSAR controls in VS-126, demand-consensus/single-number-plan controls in
+VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in VS-128).
+
 ---
 
 ## 5. Validation
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,708) matches actual PA workflow header count (3,708). ✅
+- Grand total (3,804) matches actual PA workflow header count (3,804). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -407,6 +450,14 @@ quality controls in VS-124).
   'clienteling') each appeared in zero PA files, with only incidental single-workflow references to
   the broader capability (employer brand in 3 files, vocational/TESDA participation in 4, product
   knowledge in 33 with no dedicated owner).
+- **Cross-Channel Fraud Management & Payment Fraud Protection**, **Customer Data Platform/Single
+  Customer View & Identity Resolution**, **Sales & Operations Planning (S&OP) & Integrated Business
+  Planning**, and **AI/ML Governance & Responsible AI** — **filled** by VS-125, VS-126, VS-127, and
+  VS-128 (Pass 10); all four were genuinely-unowned programs whose defining terms ('fraud
+  orchestration', 'customer golden record', 'integrated business planning'/'IBP', and 'model risk
+  management'/'algorithmic fairness') appeared in zero or near-zero PA files, with only incidental
+  single-step references to the broader capability scattered across multiple adjacent value
+  streams.
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.

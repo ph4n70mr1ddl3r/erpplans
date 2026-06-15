@@ -1008,11 +1008,11 @@
 
 - **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 3,708 workflows across 120 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: spans the full 3,804 workflows across 124 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-14 (v54 — gap-analysis Pass 9: added VS-121–VS-124 (96 workflows W3761–W3856: Talent Acquisition/Employer Brand & Candidate Experience, Global Sourcing/Import Buying & Sourcing Agent Management, Skilled-Trade Apprenticeship/Vocational Education & Capability Pipeline, Sales Enablement/Product Knowledge Mastery & Clienteling); updated totals to 3,708 workflows / 120 value streams. Requirement-to-workflow mappings for the Pass 7–Pass 9 value streams (VS-113–VS-124) will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v53 added VS-109–VS-112 via Pass 6; prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
+*Date: 2026-06-15 (v55 — gap-analysis Pass 10: added VS-125–VS-128 (96 workflows W3857–W3952: Cross-Channel Fraud Management & Payment Fraud Protection, Customer Data Platform/Single Customer View & Identity Resolution, Sales & Operations Planning (S&OP)/Integrated Business Planning, AI/ML Governance & Responsible AI); updated totals to 3,804 workflows / 124 value streams. Requirement-to-workflow mappings for the Pass 7–Pass 10 value streams (VS-113–VS-128) will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v54 added VS-121–VS-124 via Pass 9; prior v53 added VS-109–VS-112 via Pass 6; prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*

@@ -4,6 +4,27 @@
 
 ---
 
+## 2026-06-15 — Workflow gap analysis (Pass 10): add VS-125–VS-128 (96 workflows W3857–W3952)
+
+A tenth gap-analysis pass added four new value streams, each filling a genuinely-unowned program
+whose defining terms appeared in zero or near-zero PA files:
+
+- **[VS-125 (Cross-Channel Fraud Management & Payment Fraud Protection — Finance)](01-model-company/workflows/VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md)** — the enterprise fraud program across POS/ecommerce/returns/promo/loyalty/gift-card/payment/account-takeover/trade channels ('fraud orchestration' appeared in zero PA files), distinct from physical shrink (VS-23), revenue leakage (VS-118), payment operations (VS-80), AML (VS-86), and data privacy (VS-91).
+- **[VS-126 (Customer Data Platform, Single Customer View & Identity Resolution — Technology & Data)](01-model-company/workflows/VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md)** — the CDP platform and single-customer-view discipline ('customer golden record' in zero PA files), distinct from foundational master data (VS-29), loyalty ops (VS-13), privacy (VS-91), key-account (VS-107), and enterprise BI (VS-28).
+- **[VS-127 (Sales & Operations Planning (S&OP) & Integrated Business Planning — Plan & Source)](01-model-company/workflows/VS-127-sales-operations-planning-integrated-business-planning/README.md)** — the monthly cross-functional consensus demand-supply planning cycle ('integrated business planning'/'IBP' in zero PA files), distinct from operational supply (VS-02), merchandise financial planning (VS-101), corporate strategy (VS-33), assortment (VS-01), and commodity risk (VS-106).
+- **[VS-128 (AI/ML Governance & Responsible AI — Technology & Data)](01-model-company/workflows/VS-128-ai-ml-governance-responsible-ai/README.md)** — the enterprise AI-governance and responsible-AI discipline ('model risk management' and 'algorithmic fairness' in zero PA files), distinct from AI engineering (VS-30.2), cybersecurity (VS-27.3), privacy (VS-91), architecture (VS-113), and enterprise audit (VS-21).
+
+Each new value stream has 3 process areas × 8 workflows = 24 workflows, following the standard
+format (Trigger / Frequency / Volume / Owner / Participants / Steps table with R+A columns /
+System Touchpoints / Time Estimate / Pain Points & Risks), with workflow-specific (non-boilerplate)
+analysis fields and cross-references throughout. Totals updated: **120 → 124 value streams**, **356
+→ 368 process areas**, **3,708 → 3,804 workflows**. The 96 new workflows are unclassified pending
+the next criticality review. `07-methodology/validate-repo.sh` passes with 0 errors. See
+[`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for the
+full Pass 10 methodology, candidate gaps considered and rejected, and family-subtotal impact.
+
+---
+
 ## 2026-06-15 — Workflow documentation review: format guide, index, validator
 
 A review of the value-stream and workflow documentation identified two issues: (1) the

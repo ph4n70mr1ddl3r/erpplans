@@ -8,10 +8,10 @@
 ## Value Stream Architecture
 
 ```
-8 Families · 120 Value Streams · 364 Process Areas · 3708 Workflows
+8 Families · 124 Value Streams · 376 Process Areas · 3804 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 that grew the catalogue from 72 to 120 value streams. Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (72 → 120 value streams) and a tenth pass on 2026-06-15 (120 → 124 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Process Areas | Workflows |
 |---|---|---|---|---|
@@ -27,7 +27,8 @@
 |  | [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | 3 | 24 |
 |  | [VS-106](VS-106-commodity-input-cost-risk-management/README.md) | Commodity & Input-Cost Risk Management | 3 | 24 |
 |  | [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | 3 | 24 |
-| | | | **Subtotal** | **380** |
+|  | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | 3 | 24 |
+| | | | **Subtotal** | **404** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | 3 | 36 |
@@ -90,7 +91,8 @@
 |  | [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | 3 | 24 |
 |  | [VS-116](VS-116-performance-bond-surety-and-bank-guarantee-management/README.md) | Performance Bond, Surety & Bank Guarantee Management | 3 | 24 |
 |  | [VS-118](VS-118-revenue-assurance-pricing-integrity-and-leakage-management/README.md) | Revenue Assurance, Pricing Integrity & Leakage Management | 3 | 24 |
-| | | | **Subtotal** | **483** |
+|  | [VS-125](VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md) | Cross-Channel Fraud Management & Payment Fraud Protection | 3 | 24 |
+| | | | **Subtotal** | **507** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 3 | 24 |
@@ -142,8 +144,10 @@
 |  | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | 3 | 24 |
 |  | [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | 3 | 24 |
 |  | [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | 3 | 24 |
-| | | | **Subtotal** | **230** |
-| | | | **Grand Total** | **3708** | |
+|  | [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | 3 | 24 |
+|  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | 3 | 24 |
+| | | | **Subtotal** | **278** |
+| | | | **Grand Total** | **3804** | |
 
 ---
 
@@ -223,6 +227,12 @@
 - **PA-122.1** [Global Sourcing Strategy, Source-Market & Sourcing-Model Design](./VS-122-global-sourcing-import-buying-sourcing-agent-management/PA-122.1-global-sourcing-strategy-source-market-and-sourcing-model-design.md) — 8 workflows
 - **PA-122.2** [Sourcing Agent, Overseas Buying Office & Import Vendor Management](./VS-122-global-sourcing-import-buying-sourcing-agent-management/PA-122.2-sourcing-agent-overseas-buying-office-and-import-vendor-management.md) — 8 workflows
 - **PA-122.3** [Import Sourcing Performance, Consolidation & Total-Landed-Cost Analytics](./VS-122-global-sourcing-import-buying-sourcing-agent-management/PA-122.3-import-sourcing-performance-consolidation-and-total-landed-cost-analytics.md) — 8 workflows
+
+**[VS-127: Sales & Operations Planning (S&OP) & Integrated Business Planning](./VS-127-sales-operations-planning-integrated-business-planning/README.md)** (24 workflows)
+
+- **PA-127.1** [S&OP/IBP Framework, Demand Consensus & Forecasting](./VS-127-sales-operations-planning-integrated-business-planning/PA-127.1-sop-framework-demand-consensus-forecasting.md) — 8 workflows
+- **PA-127.2** [Supply Reconciliation, Pre-S&OP & Scenario Planning](./VS-127-sales-operations-planning-integrated-business-planning/PA-127.2-supply-reconciliation-pre-sop-scenario-planning.md) — 8 workflows
+- **PA-127.3** [IBP Financial Integration, Performance & Continuous Improvement](./VS-127-sales-operations-planning-integrated-business-planning/PA-127.3-ibp-financial-integration-performance-improvement.md) — 8 workflows
 
 
 ### Make & Move
@@ -594,6 +604,12 @@
 - **PA-118.2** [Pricing, Promotion, Loyalty & Payment Integrity Monitoring](./VS-118-revenue-assurance-pricing-integrity-and-leakage-management/PA-118.2-pricing-promotion-loyalty-and-payment-integrity-monitoring.md) — 8 workflows
 - **PA-118.3** [Leakage Recovery, Revenue Analytics & Continuous Assurance](./VS-118-revenue-assurance-pricing-integrity-and-leakage-management/PA-118.3-leakage-recovery-revenue-analytics-and-continuous-assurance.md) — 8 workflows
 
+**[VS-125: Cross-Channel Fraud Management & Payment Fraud Protection](./VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md)** (24 workflows)
+
+- **PA-125.1** [Fraud Strategy, Governance & Detection Platform](./VS-125-cross-channel-fraud-management-payment-fraud-protection/PA-125.1-fraud-strategy-governance-detection-platform.md) — 8 workflows
+- **PA-125.2** [Channel-Specific Fraud Prevention & Detection](./VS-125-cross-channel-fraud-management-payment-fraud-protection/PA-125.2-channel-fraud-prevention-detection.md) — 8 workflows
+- **PA-125.3** [Investigation, Recovery, Compliance & Analytics](./VS-125-cross-channel-fraud-management-payment-fraud-protection/PA-125.3-investigation-recovery-compliance-analytics.md) — 8 workflows
+
 
 ### People
 
@@ -896,6 +912,18 @@
 - **PA-115.2** [Device Calibration Operations](./VS-115-calibration-metrology-and-measurement-traceability-management/PA-115.2-device-calibration-operations.md) — 8 workflows
 - **PA-115.3** [Weights & Measures Compliance, MRM & Measurement Analytics](./VS-115-calibration-metrology-and-measurement-traceability-management/PA-115.3-weights-and-measures-compliance-and-analytics.md) — 8 workflows
 
+**[VS-126: Customer Data Platform, Single Customer View & Identity Resolution](./VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md)** (24 workflows)
+
+- **PA-126.1** [CDP Architecture, Ingestion & Identity Resolution](./VS-126-customer-data-platform-single-customer-view-identity-resolution/PA-126.1-cdp-architecture-ingestion-identity-resolution.md) — 8 workflows
+- **PA-126.2** [Customer Segmentation, Activation & Personalization Foundation](./VS-126-customer-data-platform-single-customer-view-identity-resolution/PA-126.2-segmentation-activation-personalization.md) — 8 workflows
+- **PA-126.3** [Customer 360 Consumption, Privacy & Governance Analytics](./VS-126-customer-data-platform-single-customer-view-identity-resolution/PA-126.3-customer-360-consumption-privacy-analytics.md) — 8 workflows
+
+**[VS-128: AI/ML Governance & Responsible AI](./VS-128-ai-ml-governance-responsible-ai/README.md)** (24 workflows)
+
+- **PA-128.1** [AI Strategy, Governance Framework & Model Risk Management](./VS-128-ai-ml-governance-responsible-ai/PA-128.1-ai-strategy-governance-framework-model-risk.md) — 8 workflows
+- **PA-128.2** [Responsible AI — Fairness, Explainability, Privacy & Safety](./VS-128-ai-ml-governance-responsible-ai/PA-128.2-responsible-ai-fairness-explainability-privacy-safety.md) — 8 workflows
+- **PA-128.3** [AI Lifecycle Operations, Assurance & Value Realization](./VS-128-ai-ml-governance-responsible-ai/PA-128.3-ai-lifecycle-operations-assurance-value-realization.md) — 8 workflows
+
 
 ---
 
@@ -915,15 +943,15 @@
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111)
-Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118)
-Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103)
+Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120)
 Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119)
-Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115)
+Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128)
 ```
 
 
-*Total: 3708 workflows across 120 value streams · Date: 2026-06-14*
+*Total: 3804 workflows across 124 value streams · Date: 2026-06-15*
