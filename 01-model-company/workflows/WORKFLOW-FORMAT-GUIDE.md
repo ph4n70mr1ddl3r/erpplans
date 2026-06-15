@@ -1,7 +1,8 @@
 # Workflow Format Guide
 
-> Describes the standard format, conventions, and RACI key used across all operational
-> workflow domain files in this repository.
+> Describes the standard format, conventions, and role key used across all operational
+> workflow domain files in this repository. Enforced (informationally) by
+> [`07-methodology/validate-repo.sh`](../../07-methodology/validate-repo.sh).
 
 ---
 
@@ -13,36 +14,70 @@ The operational workflows serve three purposes:
 2. **Inform ERP design** — each workflow reveals system touchpoints, automation opportunities, and integration needs
 3. **Optimize organization** — by exposing handoffs, bottlenecks, and spans of control
 
+For these purposes to hold, the analysis fields (**Pain Points / Risks**, **System Touchpoints**,
+**Time Estimate**, and **Automation / Controls** where used) must contain *workflow-specific*
+content. Verbatim boilerplate (identical text copied across many workflows) defeats all three
+purposes and is flagged by the validator (Check 10).
+
 ---
 
 ## Standard Workflow Format
 
-Each workflow follows this format:
+Each workflow is a `## W<number>. <Name>` block inside a Process Area (PA) file, with the
+following fields.
+
+### Required fields (every workflow)
 
 | Field | Meaning |
 |---|---|
-| **Workflow ID** | Unique identifier (W-number, e.g. W7, W5B) |
-| **Name** | Process name |
 | **Trigger** | What initiates the workflow |
 | **Frequency** | How often it occurs |
-| **Volume** | How many instances per occurrence |
-| **Owner** | Role accountable for the outcome |
-| **Participants** | All roles involved |
-| **Steps** | Sequential activities with responsible role |
-| **System Touchpoints** | Where ERP/system support is needed |
-| **Time Estimate** | Estimated effort per occurrence |
-| **Pain Points / Risks** | What can go wrong |
+| **Volume** | How many instances per occurrence, with the ×-math that scales it to the enterprise |
+| **Owner** | Role accountable for the outcome (the single throat-to-choke) |
+| **Participants** | All other roles involved |
+| **Steps** | Sequential activities in a table with Responsible (R) and Accountable (A) columns and a per-step Duration |
+| **System Touchpoints** | Where ERP/system support is needed — name the *specific* module/object/integration (e.g. "Goods receipt exception; damage quarantine bin"), not a generic pointer |
+| **Time Estimate** | Estimated effort per occurrence, rolled up to an annual or per-store figure where it drives headcount |
+| **Pain Points / Risks** | What can go wrong, named specifically (e.g. "**Evidence risk**: damage not documented at receipt forfeits claim rights"), with the mitigating control |
+
+### Recommended fields (add where material)
+
+| Field | Meaning |
+|---|---|
+| **Automation Opportunity** | Steps that are manual today but are candidates for system automation — directly informs ERP design (purpose 2) |
+| **Controls** | Internal-control IDs (from [`internal-controls-matrix.md`](../internal-controls-matrix.md)) exercised by this workflow — closes the loop with the 67-control register |
+| **Cross-references** | Links to related workflows in other value streams (e.g. "links to VS-04", "per W533") using the `VS-NN` and `W<number>` identifiers |
+
+### Quality bar for the three analysis fields
+
+The fields that deliver the workflow's value are **System Touchpoints**, **Time Estimate**, and
+**Pain Points / Risks**. Each must be specific to the workflow:
+
+- ❌ `System Touchpoints: ERP integration point (W2599)` — generic, adds no information
+- ✅ `System Touchpoints: Damage-case module with evidence attachments; image repository (links to VS-88)`
+- ❌ `Pain Points: **Execution risk**: Operational variability mitigated by standard procedures and system controls` — generic boilerplate
+- ✅ `Pain Points: **Evidence risk**: damage not documented at receipt forfeits claim rights; mitigated by mandatory photo + discrepancy capture at goods receipt`
+- ❌ `Time Estimate: 30–120 min per occurrence` — generic range with no scaling math
+- ✅ `Time Estimate: 5–15 min per discrepancy; ~72,000 receipts/yr → ~6,000 discrepancies/yr`
 
 ---
 
-## RACI Key
+## Role Key (Responsible / Accountable)
 
-| Letter | Role | Meaning |
-|---|---|---|
-| **R** | Responsible | Does the work |
-| **A** | Accountable | Owns the outcome |
-| **C** | Consulted | Provides input before/during |
-| **I** | Informed | Notified of outcome |
+The per-step **Steps** table uses two columns:
+
+| Column | Meaning |
+|---|---|
+| **Role (R)** — Responsible | Does the work |
+| **Role (A)** — Accountable | Owns the outcome (exactly one per step) |
+
+Full **RACI** (adding **C**onsulted and **I**nformed) is **not** enumerated as per-step columns —
+in practice it crowds the table and almost every step ends up R/A only. Instead:
+
+- **Consulted** and **Informed** parties are captured in the workflow-level **Participants** field and in the narrative, and are called out explicitly only on the specific step where a consultation or notification handoff is material.
+- Where a step genuinely needs a separate authorizer (e.g. a manager swipe for an override), that role is named in the step's **Role (A)** column or in the step prose.
+
+This keeps the table readable while preserving accountability on every step.
 
 ---
 
@@ -50,10 +85,31 @@ Each workflow follows this format:
 
 | Pattern | Example | Meaning |
 |---|---|---|
-| `W<number>` | W7 | Primary workflow |
-| `W<number><letter>` | W5B, W2A, W9A | Sub-workflow or variant of parent |
-| `W<number><letter><letter>` | W12A, W12B | Further variant |
-| `W<number>.<step>` | W7.2, W5B.4 | Specific step within a workflow |
+| `W<number>` | W7, W2598, W3017 | Primary workflow. New value streams use sequential IDs allocated in blocks (see [`workflow-gap-analysis.md`](workflow-gap-analysis.md)); legacy streams use small numbers (W1–W999) |
+| `W<number><letter>` | W5A, W5B, W9A | Sub-workflow or variant of a parent (e.g. W5A Store Opening / W5B In-Store Selling under W5). Mostly used in the original (VS-01–VS-31) streams |
+| `W<number>.<step>` | W7.2, W5B.4 | Reference to a specific step within a workflow (used in cross-references and the requirement-workflow matrix) |
+| `PA-<VS>.<n>` | PA-07.1, PA-90.2 | Process Area file within a value stream folder |
+| `VS-<number>` | VS-07, VS-124 | Value stream. Numbers 49–52 are intentionally retired (see [Value Stream Index](value-stream-index.md)) |
+
+Workflow IDs are unique across the whole repository (not just within a value stream), so a `W`
+number never needs a VS prefix.
+
+---
+
+## Repository Layout
+
+```
+workflows/
+├── value-stream-index.md              Master index (8 families · 120 VS · 364 PAs)
+├── WORKFLOW-FORMAT-GUIDE.md           This file
+├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
+├── workflow-criticality-classification.md  Tier 1/2/3 priorities (1,167 of 3,708 classified)
+├── workflow-dependency-map.md         Prerequisite relationships, critical path
+├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
+└── VS-<NN>-<slug>/
+    ├── README.md                      Value-stream summary + PA list
+    └── PA-<VS>.<n>-<slug>.md          Process area file containing the workflow blocks
+```
 
 ---
 
@@ -61,12 +117,15 @@ Each workflow follows this format:
 
 | Document | Purpose |
 |---|---|
-| [README.md](README.md) | Domain file index and complete workflow table |
+| [value-stream-index.md](value-stream-index.md) | Master index of all value streams and process areas |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 priority classification |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships and critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
+| [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap-analysis methodology and workflow-ID allocation log |
 | [../requirement-workflow-matrix.md](../requirement-workflow-matrix.md) | Requirement-to-workflow traceability |
+| [../internal-controls-matrix.md](../internal-controls-matrix.md) | 67 internal controls mapped to workflows |
+| [../../07-methodology/validate-repo.sh](../../07-methodology/validate-repo.sh) | Consistency & boilerplate validator |
 
 ---
 
-*Date: 2026-06-13*
+*Date: 2026-06-15*

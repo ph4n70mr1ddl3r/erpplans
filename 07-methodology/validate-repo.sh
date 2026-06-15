@@ -161,6 +161,27 @@ else
     error "Grand total ($GRAND_TOTAL) does NOT match actual PA workflow header count ($ACTUAL_WFS)"
 fi
 
+# --- Check 10: Boilerplate analysis fields (unfinished templated workflows) ---
+echo "--- Check 10: Boilerplate analysis fields ---"
+# A block of value streams (VS-53..VS-78) was generated from a template and never finished:
+# the three analysis fields that deliver a workflow's value — Pain Points, System Touchpoints,
+# and Time Estimate — are verbatim boilerplate copied across all their workflows. This check
+# surfaces them as WARNINGS (not errors, since the content is not yet reworked) and lists the
+# affected value streams for prioritised rework. See WORKFLOW-FORMAT-GUIDE.md "Quality bar for
+# the three analysis fields".
+BP_MARKER='Operational variability mitigated by standard procedures and system controls'
+BP_FILES=$(grep -rlF "$BP_MARKER" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
+BP_INSTANCES=$(grep -rhF "$BP_MARKER" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
+if [ "$BP_INSTANCES" -eq 0 ]; then
+    ok "No boilerplate analysis fields detected"
+else
+    BP_FILE_COUNT=$(echo -n "$BP_FILES" | grep -cP 'PA-' || true)
+    BP_VS_LIST=$(echo "$BP_FILES" | sed -E 's#.*/(VS-[0-9]+-[^/]+)/.*#\1#' | sort -u)
+    BP_VS_COUNT=$(echo -n "$BP_VS_LIST" | grep -cP '^VS-' || true)
+    warn "$BP_INSTANCES workflows across $BP_FILE_COUNT PA files in $BP_VS_COUNT value streams use verbatim boilerplate for Pain Points / System Touchpoints / Time Estimate (templated, pending rework per WORKFLOW-FORMAT-GUIDE.md):"
+    echo "$BP_VS_LIST" | sed 's/^/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

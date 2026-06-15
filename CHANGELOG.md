@@ -4,6 +4,43 @@
 
 ---
 
+## 2026-06-15 — Workflow documentation review: format guide, index, validator
+
+A review of the value-stream and workflow documentation identified two issues: (1) the
+[`WORKFLOW-FORMAT-GUIDE.md`](01-model-company/workflows/WORKFLOW-FORMAT-GUIDE.md) documented a
+full RACI (R/A/C/I) key that the actual per-step tables never implemented (only R and A columns
+are used), described a `W<number>` / `W<number><letter>` ID scheme that no longer reflected the
+sequential 4-digit IDs used by newer value streams, and omitted two fields (Automation
+Opportunity, Controls) that directly serve the workflows' stated purposes; and (2) **552
+workflows across 23 value streams (VS-53–VS-78) — 15% of the 3,708 total — carry verbatim
+boilerplate** in their three analysis fields (Pain Points / System Touchpoints / Time Estimate),
+defeating the headcount-validation and ERP-design purposes those fields exist to serve.
+
+This commit addresses the **documentation layer only** (no workflow content was rewritten):
+
+- **[`WORKFLOW-FORMAT-GUIDE.md`](01-model-company/workflows/WORKFLOW-FORMAT-GUIDE.md)** — rewritten
+  to match actual conventions: R/A-only per-step tables (C/I captured at workflow level), the
+  real ID scheme (sequential 4-digit `W` numbers + legacy letter-suffixed variants), an explicit
+  quality bar for the three analysis fields (with ❌/✅ examples), and two recommended fields
+  (Automation Opportunity, Controls) closing the loop with
+  [`internal-controls-matrix.md`](01-model-company/internal-controls-matrix.md).
+- **[`value-stream-index.md`](01-model-company/workflows/value-stream-index.md)** and
+  **[`README.md`](README.md)** — the ~2,500-word nine-pass gap-analysis narrative (duplicated in
+  both files and already covered by the per-pass CHANGELOG entries below) was replaced with a
+  concise one-paragraph summary pointing to CHANGELOG and
+  [`workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for detail.
+- **[`07-methodology/validate-repo.sh`](07-methodology/validate-repo.sh)** — added Check 10, which
+  detects the verbatim boilerplate marker in analysis fields and reports the affected value
+  streams as **warnings** (surfaces the defect list without failing the build, since the templated
+  content has not yet been reworked).
+
+**Deferred (judgment calls, not done here):** whether to rework or relabel-as-stub the 552
+templated workflows; whether to consolidate the 46 value streams that were "elevated from a
+single workflow" or fit the uniform 8×3=24 pattern; and whether to add a machine-readable
+`workflows.csv` sidecar. The validator's Check 10 output quantifies the first of these.
+
+---
+
 ## 2026-06-14 — Workflow Gap Analysis (Pass 9): Add VS-121–VS-124 (96 workflows W3761–W3856)
 
 A ninth workflow **gap-analysis** pass was performed against the model company's operations
