@@ -1,7 +1,7 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), and Pass 10 (2026-06-15)).
+> Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, and Pass 11 (2026-06-15)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -36,7 +36,13 @@ identify capability gaps not addressed by any existing value stream.
    operations planning' (0) for VS-127; and 'model risk management' (0) and 'algorithmic
    fairness' (0) for VS-128 — each with only incidental single-step references to the broader
    capability scattered
-   across multiple adjacent value streams. For prior passes, each candidate gap was confirmed to
+   across multiple adjacent value streams. For Pass 11, every candidate gap was confirmed to be
+   either a single workflow within another value stream ripe for elevation (W2683 Philippine
+   Competition Law Compliance in VS-76.2, elevated to VS-129 following the Pass-1/Pass-5/Pass-7/
+   Pass-8/Pass-10 pattern) or genuinely uncovered with zero (or only one incidental) PA-file
+   references for the defining terms ('merger and acquisition'/'divestiture' for VS-130;
+   'human rights'/'modern slavery' for VS-131; 'political contribution'/'election compliance'/
+   'COMELEC' for VS-132). For prior passes, each candidate gap was confirmed to
    have only incidental single-workflow coverage (or none) in the existing PA files;
    for Pass 7 specifically, 'enterprise architecture' appeared in **zero** PA files, calibration was
    referenced across **50+** PA files with no dedicated owner, dangerous-goods transport was
@@ -103,6 +109,10 @@ identify capability gaps not addressed by any existing value stream.
 | 40 | **Customer Data Platform, Single Customer View & Identity Resolution** | ~600K loyalty members + ~5,200 trade accounts + ~200 corporate accounts + ~515K ecommerce orders/yr + 2.8M monthly POS transactions + clienteling/personalization ambition; the inability to resolve a single customer across cash/loyalty/ecommerce/trade/app touchpoints blocks personalization, loyalty accuracy, retention, CLV decisions, and consent-compliant marketing under RA 10173 | **New gap (Pass 10)** — 'CDP' referenced across ~23 PA files and 'customer data platform' ~12 with no dedicated owner; 'customer golden record' appeared in **zero** PA files and 'identity resolution' in two — sprinkled across VS-13 (loyalty), VS-29 (master data), VS-107 (key account), VS-10 (ecommerce), VS-75 (app) — no value stream owned the *CDP platform and single-customer-view discipline* | **FILLED — VS-126** |
 | 41 | **Sales & Operations Planning (S&OP) & Integrated Business Planning (IBP)** | 35K SKUs across 200 stores + 4 DCs, ~40% imports with 45–90-day lead times (demand errors compound over long lead times), heavy Philippine seasonality (rainy-season, ber-months, summer), 6–8x inventory-turn target, ~PHP 42–45B COGS; the monthly cross-functional consensus demand-supply cycle that balances forecast, supply constraints, inventory, and the financial plan | **New gap (Pass 10)** — 'S&OP' referenced across ~20 PA files and 'demand planning/forecasting' ~24–31 with no dedicated owner; 'integrated business planning', 'IBP', and 'sales and operations planning' each appeared in **zero** PA files — sprinkled as single steps inside VS-02 (operational supply), VS-101 (merchandise financial plan), VS-33 (corporate strategy), VS-106 (commodity) — no value stream owned the *S&OP/IBP consensus-planning process* | **FILLED — VS-127** |
 | 42 | **AI/ML Governance & Responsible AI** | Rapidly expanding AI/ML footprint — fraud detection (VS-125), demand forecasting (VS-127), personalization/recommendation (VS-126), pricing/markdown, inventory optimization, LP analytics, customer-service chatbots, document/OCR automation, and generative-AI assistants across the PHP 62.3B-revenue, 5-entity, ~6,715-employee operation; uncontrolled models cause revenue loss (bad forecast/price), customer harm (unfair bias, wrongful fraud decline, privacy breach), and regulatory/reputational exposure under RA 10173 automated-decision rights and emerging PH AI rules | **New gap (Pass 10)** — 'AI governance' referenced in ~3 PA files, 'responsible AI' in 1, and the defining terms 'model risk management' and 'algorithmic fairness' in **zero** PA files each — AI/ML is engineered inside VS-30.2 and used by VS-125/VS-126/VS-127/VS-28/VS-113 — no value stream owned the *AI-governance and responsible-AI discipline* (model inventory/risk, fairness/bias, explainability, AI privacy/consent, safety/robustness, human oversight, GenAI governance, ISO 42001/NIST AI RMF) | **FILLED — VS-128** |
+| 43 | **Competition & Antitrust Compliance (RA 10667 / PCC)** | A dominant-share, 200-store, ~PHP 62.3B-revenue retailer with pervasive pricing (VS-57), trade/resale-pricing and RPM exposure with ~800–1,000 vendors (VS-03/VS-11/VS-43/VS-82), association/coalition conduct (VS-104), buyer-power in procurement, marketplace/retail-media platform conduct (VS-95/VS-48), and an M&A pipeline (VS-130) — each a distinct antitrust vector under RA 10667 and PCC guidance, with fines up to PHP 250M (first offense) and private damages exposure | **New gap (Pass 11)** — only the single workflow **W2683** (Philippine Competition Law Compliance) in VS-76.2 existed, with scattered antitrust guardrail references in VS-104/VS-46/VS-71.3/VS-100.3/VS-119 — no value stream owned the end-to-end competition-compliance program (market-power assessment, pricing/conduct controls, RPM/clause controls, association protocol, merger notification, PCC engagement/investigation/leniency, penalty/remediation) | **FILLED — VS-129** |
+| 44 | **Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions** | A growth-stage, 5-entity, 200-store retailer growing 10–15 stores/year whose path includes acquiring competitor chains/banners, specialty/service businesses, JVs (property/digital/fintech), and divesting/carving out non-strategic assets — the inorganic-growth lifecycle (target sourcing, valuation, DD, SPA, regulatory clearance incl. PCC, Day-1, PMI/synergy, carve-out/TSA, divestiture) carries PHP-hundreds-of-millions-to-low-billions per major transaction and a 60–70% integration-failure rate | **New gap (Pass 11)** — 'merger and acquisition' and corporate-transaction 'divestiture' each appeared in **zero** PA files (the only 'divestiture' references were conflict-of-interest divestiture) — VS-33 sets strategy, VS-37 opens stores, VS-40 accounts for capex, VS-112 runs PMO, VS-100.3 provides legal advisory, VS-129 handles PCC clearance — no value stream owned the *M&A transaction lifecycle* | **FILLED — VS-130** |
+| 45 | **Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence** | A commodity-intensive, ~40%-import assortment (tools/electronics, paint/chemicals, lumber, tiles, PPE, garden/agro) sourced from China/Taiwan/Indonesia/Malaysia/Japan/Europe, sold to international B2B customers subject to UK MSA/German LkSG/EU CSDDD/US UFLPA — exposing BuildRight to forced/modern-slavery labor, child labor, unsafe conditions, irresponsible recruitment, conflict-minerals, and land-rights risk across its own operations and supply chain | **New gap (Pass 11)** — 'human rights' and 'modern slavery' each appeared in only **one** PA file (an ESG *reporting topic* in VS-25.2 and an audit *risk* in VS-21.3) — VS-25.2 touches environmental/diversity sourcing, VS-03 runs vendor ops, VS-122 executes import sourcing, VS-31/VS-117 address product quality/standards, VS-119 internal ethics — no value stream owned the *human-rights due-diligence program* | **FILLED — VS-131** |
+| 46 | **Corporate Political Engagement, Election Compliance & Public Affairs Governance** | A PHP 62.3B, 5-entity, 200-store, multi-region retailer with substantial B2G sales (VS-46), LGU relationships (VS-76), industry advocacy (VS-104), and board/investor transparency expectations — operating under the Omnibus Election Code, RA 9006/COMELEC (corporate political contributions largely prohibited, with criminal liability), RA 3019 anti-graft, and RA 6713 | **New gap (Pass 11)** — 'political contribution', 'election compliance', and 'COMELEC' each appeared in **zero** PA files — VS-104 manages govt-affairs *relationships*, VS-86 addresses *bribery*, VS-119 handles *misconduct*, VS-46 executes *B2G sales*, VS-14.3 manages *comms* — no value stream owned the *political-activity governance/compliance/discipline* | **FILLED — VS-132** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -278,21 +288,30 @@ scattered across multiple adjacent value streams:
 | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | Plan & Source | 3 | 24 | W3905–W3928 |
 | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Technology & Data | 3 | 24 | W3929–W3952 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10)
+**Pass 11** (W3953–W4048): four value streams, 12 process areas, 96 workflows, adding one value stream to **Plan & Source** (the supply-chain-DD discipline) and three to **Governance & Assurance** (competition law, corporate development/M&A, and political engagement). Each gap had been previously overlooked because it was either reduced to a single workflow within another value stream (VS-129 elevating the single W2683 competition-law workflow in VS-76.2, following the same Pass-1/Pass-5/Pass-7/Pass-8/Pass-10 single-workflow-elevation pattern) or genuinely uncovered with no dedicated owner (VS-130 M&A/divestiture, VS-131 human-rights/responsible-supply-chain DD, VS-132 political engagement/election compliance — each with zero or only one incidental PA-file reference for its defining terms):
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 (current) |
-|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | **404** (+24) |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | **507** (+24) |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | **278** (+48) |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | **124** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | **368** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-129](VS-129-competition-and-antitrust-compliance/README.md) | Competition & Antitrust Compliance (RA 10667 / PCC) | Governance & Assurance | 3 | 24 | W3953–W3976 |
+| [VS-130](VS-130-corporate-development-ma-divestiture/README.md) | Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions | Governance & Assurance | 3 | 24 | W3977–W4000 |
+| [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Plan & Source | 3 | 24 | W4001–W4024 |
+| [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Governance & Assurance | 3 | 24 | W4025–W4048 |
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 (current) |
+|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | **428** (+24) |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | **720** (+72) |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | **128** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | **388** (+12) |
 
 Pass 4 deliberately strengthened the three thinnest operating families: **People** (the
 thinnest at 4 value streams) received +2, and **Plan & Source** and **Governance & Assurance** each
@@ -387,7 +406,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,804) matches actual PA workflow header count (3,804). ✅
+- Grand total (3,900) matches actual PA workflow header count (3,900). ✅
 - All 1,167 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -458,6 +477,13 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   management'/'algorithmic fairness') appeared in zero or near-zero PA files, with only incidental
   single-step references to the broader capability scattered across multiple adjacent value
   streams.
+- **Competition & Antitrust Compliance (RA 10667/PCC)**, **Corporate Development/M&A/Divestiture**,
+  **Human Rights/Responsible Supply Chain DD**, and **Corporate Political Engagement/Election
+  Compliance** — **filled** by VS-129, VS-130, VS-131, and VS-132 (Pass 11); one was an elevation
+  of a single workflow (W2683 competition-law compliance in VS-76.2 → VS-129) and three were
+  genuinely uncovered disciplines whose defining terms ('merger and acquisition'/'divestiture',
+  'human rights'/'modern slavery', 'political contribution'/'election compliance'/'COMELEC') each
+  appeared in zero (or only one incidental) PA file.
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.
@@ -570,4 +596,4 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 ---
 
-*Date: 2026-06-14 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*
+*Date: 2026-06-15 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*

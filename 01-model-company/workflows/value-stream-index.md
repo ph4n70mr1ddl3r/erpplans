@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 124 Value Streams · 376 Process Areas · 3804 Workflows
+8 Families · 128 Value Streams · 388 Process Areas · 3900 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (72 → 120 value streams) and a tenth pass on 2026-06-15 (120 → 124 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
@@ -45,7 +45,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-106](VS-106-commodity-input-cost-risk-management/README.md) | Commodity & Input-Cost Risk Management | Gap analysis | 3 | 24 |
 |  | [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | Gap analysis | 3 | 24 |
 |  | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **404** |
+|  | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **428** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | Core | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | Core | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | Core | 3 | 36 |
@@ -153,7 +154,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-114](VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md) | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | Gap analysis | 3 | 24 |
 |  | [VS-117](VS-117-dti-bps-product-standards-certification-ps-mark-icc-compliance/README.md) | DTI-BPS Product Standards Certification & PS Mark/ICC Compliance | Gap analysis | 3 | 24 |
 |  | [VS-119](VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/README.md) | Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **648** |
+|  | [VS-129](VS-129-competition-and-antitrust-compliance/README.md) | Competition & Antitrust Compliance (RA 10667 / PCC) | Gap analysis | 3 | 24 |
+|  | [VS-130](VS-130-corporate-development-ma-divestiture/README.md) | Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions | Gap analysis | 3 | 24 |
+|  | [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **720** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -164,7 +168,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | Gap analysis | 3 | 24 |
 |  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **278** |
-| | | | **Grand Total** | **3804** | |
+| | | | **Grand Total** | **3900** | |
 
 ---
 
@@ -250,6 +254,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-127.1** [S&OP/IBP Framework, Demand Consensus & Forecasting](./VS-127-sales-operations-planning-integrated-business-planning/PA-127.1-sop-framework-demand-consensus-forecasting.md) — 8 workflows
 - **PA-127.2** [Supply Reconciliation, Pre-S&OP & Scenario Planning](./VS-127-sales-operations-planning-integrated-business-planning/PA-127.2-supply-reconciliation-pre-sop-scenario-planning.md) — 8 workflows
 - **PA-127.3** [IBP Financial Integration, Performance & Continuous Improvement](./VS-127-sales-operations-planning-integrated-business-planning/PA-127.3-ibp-financial-integration-performance-improvement.md) — 8 workflows
+
+**[VS-131: Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence](./VS-131-human-rights-responsible-supply-chain-due-diligence/README.md)** (24 workflows)
+
+- **PA-131.1** [Human Rights Policy, Salient-Risk Identification & Due Diligence Framework](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.1-human-rights-policy-salient-risk-identification-and-due-diligence-framework.md) — 8 workflows
+- **PA-131.2** [Supply Chain Human Rights Risk Assessment, Auditing & Remediation](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.2-supply-chain-human-rights-risk-assessment-auditing-and-remediation.md) — 8 workflows
+- **PA-131.3** [Responsible Sourcing Governance, Reporting & Stakeholder Engagement](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.3-responsible-sourcing-governance-reporting-and-stakeholder-engagement.md) — 8 workflows
 
 
 ### Make & Move
@@ -884,6 +894,24 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-119.2** [Investigation, Case Management & Retaliation Protection](./VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/PA-119.2-investigation-case-management-and-retaliation-protection.md) — 8 workflows
 - **PA-119.3** [Ethics Analytics, Culture & Program Assurance](./VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/PA-119.3-ethics-analytics-culture-and-program-assurance.md) — 8 workflows
 
+**[VS-129: Competition & Antitrust Compliance (RA 10667 / PCC)](./VS-129-competition-and-antitrust-compliance/README.md)** (24 workflows)
+
+- **PA-129.1** [Competition Risk Assessment, Market Power & Exposure Analysis](./VS-129-competition-and-antitrust-compliance/PA-129.1-competition-risk-assessment-market-power-and-exposure-analysis.md) — 8 workflows
+- **PA-129.2** [Anti-Competitive Conduct Prevention & Compliance Controls](./VS-129-competition-and-antitrust-compliance/PA-129.2-anticompetitive-conduct-prevention-and-compliance-controls.md) — 8 workflows
+- **PA-129.3** [Competition Authority (PCC) Engagement, Investigation & Remediation](./VS-129-competition-and-antitrust-compliance/PA-129.3-pcc-engagement-investigation-and-remediation.md) — 8 workflows
+
+**[VS-130: Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions](./VS-130-corporate-development-ma-divestiture/README.md)** (24 workflows)
+
+- **PA-130.1** [Corporate Development Strategy, Pipeline & Target Identification](./VS-130-corporate-development-ma-divestiture/PA-130.1-corporate-development-strategy-pipeline-and-target-identification.md) — 8 workflows
+- **PA-130.2** [Transaction Due Diligence, Valuation & Deal Structuring](./VS-130-corporate-development-ma-divestiture/PA-130.2-transaction-due-diligence-valuation-and-deal-structuring.md) — 8 workflows
+- **PA-130.3** [Integration, Carve-Out, Divestiture & Post-Merger Performance](./VS-130-corporate-development-ma-divestiture/PA-130.3-integration-carveout-divestiture-and-postmerger-performance.md) — 8 workflows
+
+**[VS-132: Corporate Political Engagement, Election Compliance & Public Affairs Governance](./VS-132-corporate-political-engagement-election-compliance/README.md)** (24 workflows)
+
+- **PA-132.1** [Political Engagement Policy, Governance & Risk Assessment](./VS-132-corporate-political-engagement-election-compliance/PA-132.1-political-engagement-policy-governance-and-risk-assessment.md) — 8 workflows
+- **PA-132.2** [Election-Period Compliance, Political Contributions & Lobbying Controls](./VS-132-corporate-political-engagement-election-compliance/PA-132.2-election-compliance-political-contributions-and-lobbying-controls.md) — 8 workflows
+- **PA-132.3** [Stakeholder & Government Affairs Governance, Monitoring & Analytics](./VS-132-corporate-political-engagement-election-compliance/PA-132.3-stakeholder-and-government-affairs-governance-monitoring-and-analytics.md) — 8 workflows
+
 
 ### Technology & Data
 
@@ -962,13 +990,13 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ```
 Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111)
-Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127)
+Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120)
-Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119)
+Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128)
 ```
 
 
-*Total: 3804 workflows across 124 value streams · Date: 2026-06-15*
+*Total: 3900 workflows across 128 value streams · Date: 2026-06-15*

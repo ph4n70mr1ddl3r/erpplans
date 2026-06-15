@@ -1,8 +1,8 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 3,804 total workflows, 1,167 are classified into
-> criticality tiers; 2,637 remain unclassified and default to Tier 2 pending review.
+> relationships for system functions. Of 3,900 total workflows, 1,167 are classified into
+> criticality tiers; 2,733 remain unclassified and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
@@ -737,4 +737,4 @@ for the programs with the heaviest cross-cutting footprint:
 | VS-127 | VS-101(42), VS-122(41), VS-2(38) |
 | VS-128 | VS-91(55), VS-27(48), VS-21(42) |
 
-*Date: 2026-06-15 | Workflow Dependency Map v3.0 — covers prerequisite relationships across all 124 value streams / 3,804 workflows. §1–§7 cover the 1,168 confirmed-classified workflows; §8 adds the VS-79–VS-128 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 2,659 workflows carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the ten-pass history.*
+*Date: 2026-06-15 | Workflow Dependency Map v3.1 — covers prerequisite relationships across all 128 value streams / 3,900 workflows. §1–§7 cover the 1,168 confirmed-classified workflows; §8 adds the VS-79–VS-132 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 2,733 workflows (including the 96 added in Pass 11 as VS-129–VS-132, W3953–W4048) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the eleven-pass history.*
