@@ -1492,3 +1492,19 @@ Validator: 0 errors / 2 warnings; no dangling references in either map.
 
 ---
 
+
+---
+
+## 2026-06-15 — Workflow review implementation (4/5): boilerplate rework reference (P1) + Automation/Controls standardization (P6/P7) + README refresh (P5)
+
+Fourth commit. The largest recommendation (P1: rework 552 boilerplate workflows across 23 Expansion-block value streams) is multi-session work; this commit establishes the **gold-standard reference** and formalizes the two missing fields, so the remaining 22 VSs follow a concrete template:
+
+- **VS-73 (Store-Level Waste Management & Circular Economy) fully reworked** — all 24 workflows (W2598–W2621) rewritten: generic boilerplate `System Touchpoints` / `Pain Points / Risks` / `Time Estimate` replaced with workflow-specific content (named ERP modules/objects, named risks with named mitigations, scaled time math), and **Automation Opportunity** + **Controls** fields added to every workflow (24 of each). Selected because it was cited as the bad-example in the review and carries the highest regulatory exposure (DENR DAO 2013-22, RA 6969, BFP Fire Code). `validate-repo.sh` Check 10 drops 552→528 workflows / 23→22 VSs.
+- **`WORKFLOW-FORMAT-GUIDE.md`** — Automation Opportunity + Controls promoted from "recommended" to **Standard analysis fields** for any fully-detailed workflow (P6: Controls was in only 5/376 files; P7: Automation Opportunity in 0/376). Quality-bar good/bad examples added for both. Cross-references split into its own subsection.
+- **New `validate-repo.sh` Check 12** — tracks Automation Opportunity + Controls field adoption across all PA files (now 24/3,804 = 1% baseline from VS-73), measuring rework progress toward 100% on fully-detailed workflows. Backs the format-guide "Check 12" reference.
+- **VS-73 README** rewritten to the richer standard (purpose, why-it-matters, owner/participants, dependencies, controls, rework status) — the reference for the other 47 original Core-block README refreshes (P5).
+
+**Remaining work (tracked, not blocking):** rework the other 22 Expansion-block VSs to the VS-73 standard (528 workflows); add Automation/Controls to the 101 fully-detailed Core/Statutory/Gap-analysis VSs; refresh the 47 remaining Core-block READMEs. Validator: 0 errors / 3 warnings.
+
+---
+

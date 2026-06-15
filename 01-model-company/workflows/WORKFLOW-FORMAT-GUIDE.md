@@ -40,15 +40,21 @@ following fields.
 | **Time Estimate** | Estimated effort per occurrence, rolled up to an annual or per-store figure where it drives headcount |
 | **Pain Points / Risks** | What can go wrong, named specifically (e.g. "**Evidence risk**: damage not documented at receipt forfeits claim rights"), with the mitigating control |
 
-### Recommended fields (add where material)
+### Standard analysis fields (add to every fully-detailed workflow)
+
+These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (Core / Statutory / Gap-analysis blocks, and the in-progress Expansion-block rework). See VS-73 for the reference implementation, and `validate-repo.sh` Check 12 for adoption tracking.
 
 | Field | Meaning |
 |---|---|
 | **Automation Opportunity** | Steps that are manual today but are candidates for system automation — directly informs ERP design (purpose 2) |
 | **Controls** | Internal-control IDs (from [`internal-controls-matrix.md`](../internal-controls-matrix.md)) exercised by this workflow — closes the loop with the 67-control register |
+### Cross-reference field
+
+| Field | Meaning |
+|---|---|
 | **Cross-references** | Links to related workflows in other value streams (e.g. "links to VS-04", "per W533") using the `VS-NN` and `W<number>` identifiers |
 
-### Quality bar for the three analysis fields
+### Quality bar for the analysis fields
 
 The fields that deliver the workflow's value are **System Touchpoints**, **Time Estimate**, and
 **Pain Points / Risks**. Each must be specific to the workflow:
@@ -59,6 +65,10 @@ The fields that deliver the workflow's value are **System Touchpoints**, **Time 
 - ✅ `Pain Points: **Evidence risk**: damage not documented at receipt forfeits claim rights; mitigated by mandatory photo + discrepancy capture at goods receipt`
 - ❌ `Time Estimate: 30–120 min per occurrence` — generic range with no scaling math
 - ✅ `Time Estimate: 5–15 min per discrepancy; ~72,000 receipts/yr → ~6,000 discrepancies/yr`
+- ❌ `Automation Opportunity: Automate manual steps` — vacuous
+- ✅ `Automation Opportunity: Weigh-scale → ERP auto-posting (eliminates hand-keyed volumes); mobile damage-flag → disposition-suggestion`
+- ❌ `Controls: Standard controls apply` — vacuous
+- ✅ `Controls: CTL-06 (DENR-certified vendor onboarding); CTL-44 (duplicate-invoice guard); operational: manifest-vs-invoice match before payment`
 
 ---
 

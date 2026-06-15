@@ -229,6 +229,17 @@ else
     echo "$BP_VS_LIST" | sed 's/^/    /'
 fi
 
+# --- Check 12: Automation Opportunity + Controls field adoption ---
+echo "--- Check 12: Automation Opportunity & Controls field adoption ---"
+# Per WORKFLOW-FORMAT-GUIDE.md these are now standard analysis fields for any fully-detailed
+# workflow. Each should appear as an ### subsection under its workflow. Adoption is tracked
+# (not enforced as an error) so the Expansion-block rework and the original Core/Statutory/
+# Gap-analysis VSs can be measured against the VS-73 reference implementation.
+TOTAL_WF=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
+AUTO_COUNT=$(grep -rohP '^### Automation Opportunity$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
+CTRL_COUNT=$(grep -rohP '^### Controls$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
+warn "Automation Opportunity present on $AUTO_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($AUTO_COUNT/$TOTAL_WF)*100}")%); Controls present on $CTRL_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($CTRL_COUNT/$TOTAL_WF)*100}")%). Target: 100% on all fully-detailed workflows (see WORKFLOW-FORMAT-GUIDE.md 'Standard analysis fields')"
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
