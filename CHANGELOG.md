@@ -1508,3 +1508,37 @@ Fourth commit. The largest recommendation (P1: rework 552 boilerplate workflows 
 
 ---
 
+
+---
+
+## 2026-06-15 — Workflow review implementation (5/5): Core-block README refresh (P5)
+
+Fifth/final commit of the review-implementation program. The original Core-block value streams
+(VS-01–VS-20) had 16–18-line stub READMEs (overview sentence + PA table only). Refreshed all 20
+to the richer standard demonstrated by VS-73 and the gap-analysis VSs — each now carries
+**Overview · Why it matters · Owner & participants · Process Areas · Key dependencies · Key
+controls**, so the most-visited value streams orient a reader without requiring a dive into PA
+files. PA tables and workflow counts preserved exactly (validator Check 2 confirms).
+
+**Remaining P5 work (tracked, not blocking):** refresh the remaining 27 original Core-block
+READMEs (VS-21–VS-48) to the same standard.
+
+---
+
+## Summary of the five-commit review-implementation program
+
+| # | Recommendation | Status |
+|---|---|---|
+| P4 | Structural fixes (W54A classified, deepest-chain count, Block column, reverse validator check) | ✅ Done |
+| P2 | Classification pass for the 2,659 unclassified workflows | ✅ Done (keyword-driven proposal file; 0 workflows now without a proposed tier) |
+| P3 | Roll VS-79–VS-128 into the dependency & touchpoint maps | ✅ Done (dependency-map §8; touchpoint-map module summary) |
+| P1 | Rework the 552 boilerplate workflows | ◑ Reference done (VS-73, 24 wf); 22 VSs / 528 wf follow the pattern |
+| P6 | Wire internal-controls (CTL-IDs) into workflows | ◑ Standardized + demonstrated (VS-73); rollout pending |
+| P7 | Add the missing Automation Opportunity field | ◑ Standardized + demonstrated (VS-73); rollout pending |
+| P5 | Refresh the stub VS READMEs | ◑ VS-73 + VS-01–VS-20 done; VS-21–VS-48 follow |
+
+Validator: **0 errors / 3 warnings** (boilerplate-remaining, unclassified-in-confirmed,
+field-adoption — all three now explicitly tracked and decreasing toward zero).
+
+---
+

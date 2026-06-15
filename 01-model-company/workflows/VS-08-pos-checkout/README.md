@@ -2,6 +2,20 @@
 
 > **Sell & Serve** · [Value Stream Index](../value-stream-index.md)
 
+---
+
+## Overview
+
+POS & checkout: transaction processing, payment & cash management, and POS compliance & controls across 600 terminals.
+
+## Why it matters
+
+2.8M monthly POS transactions / ~PHP 62.3B revenue flow through 600 terminals; pricing/promo/loyalty/discount execution, payment integrity, and BIR e-invoicing originate here.
+
+## Owner & participants
+
+- **Owner**: VP Store Operations / POS & IT
+
 ## Process Areas
 
 | PA | Name | Workflows |
@@ -9,7 +23,15 @@
 | [PA-08.1](PA-08.1-transaction-processing.md) | Transaction Processing | 36 |
 | [PA-08.2](PA-08.2-payment-and-cash-management.md) | Payment & Cash Management | 10 |
 | [PA-08.3](PA-08.3-pos-compliance-and-controls.md) | POS Compliance & Controls | 12 |
-| | **Total** | **58** | |
+| | **Total** | **58** |
+
+## Key dependencies
+
+VS-07 (stores), VS-29 (pricing master W289), VS-13 (loyalty), VS-79 (BIR), VS-118 (revenue assurance)
+
+## Key controls
+
+CTL-47 (payment recon), CTL-44, W537/541 settlement, W540 BIR credit notes, W553 price-error detection
 
 ---
 
