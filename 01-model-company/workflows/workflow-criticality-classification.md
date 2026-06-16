@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
-> Classifies 1,167 operational workflows into operational criticality tiers.
-> An additional 2,828 workflows (3,996 total − 1,167 classified) remain unclassified pending review.
+> Classifies 1,168 operational workflows into operational criticality tiers.
+> An additional 2,924 workflows (4,092 total − 1,168 classified) remain unclassified pending review.
 >
 > Back to [Workflow Index](README.md)
 
@@ -767,18 +767,18 @@ rows by moving them into the confirmed sections above.
 | Phase 1 | Go-Live Critical (Tier 1) — proposed | 613 |
 | Phase 2 | Operational Excellence (Tier 2) — proposed | 2,096 |
 | Phase 3 | Innovation & Optimization (Tier 3) — proposed | 142 |
-| **Proposed Total** | | **2,851** |
+| **Proposed Total** | | **2,947** |
 
 | Coverage | Workflows |
 |---|---|
 | Confirmed (hand-reviewed) | 1,168 |
-| Proposed (keyword, pending review) | 2,851 |
+| Proposed (keyword, pending review) | 2,947 |
 | Without even a proposal | 0 |
-| **Grand Total** | **3,996** (note: 23 `###` sub-workflows are double-counted across confirmed rows; unique `##` workflow headers = 3,996) |
+| **Grand Total** | **4,092** (note: 23 `###` sub-workflows are double-counted across confirmed rows; unique `##` workflow headers = 4,092) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,167 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 3,900 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,168 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,092 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-06-14 addition:** Value streams VS-79 through VS-88 (240 workflows, W2753–W2992) were added covering Tax Management & BIR Statutory Reporting, Payment Operations & Acquirer Settlement, Cash-in-Transit & Armored Car Operations, Sari-Sari Store & MSME Micro-Wholesale, Occupational Health & Employee Wellness, Labor Relations & Collective Bargaining, Mandatory Discount & Tax Credit Recovery, Anti-Financial Crime (AML/KYC/ABC), Customs Trade Compliance & Tariff Optimization, and Document Control & Records Retention. These 240 workflows are currently **unclassified** (counted in the unclassified total) pending criticality review; many warrant Tier 1 classification (BIR tax filing, AML/STR reporting, CBA administration, mandatory-discount tax credit recovery, CIT operations) and will be assigned in a follow-up classification pass.
 >

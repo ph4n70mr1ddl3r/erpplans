@@ -4,6 +4,96 @@
 
 ---
 
+## 2026-06-16 — Workflow gap analysis (Pass 13): add VS-137–VS-140 (96 workflows W4145–W4240)
+
+A thirteenth gap-analysis pass added four more value streams (3 process areas, 24 workflows each),
+each filling a genuinely-unowned **shared-service or B2B-growth discipline** whose defining terms
+appeared in **zero or near-zero** PA files as dedicated workflow headers (only incidental
+references to the broader capability existed, scattered across multiple adjacent value streams).
+The four were chosen to be **distinct from the Pass 12 set (VS-133–VS-136: OpEx/CI, OCM, TBM/
+FinOps, network design/MEIO)** — they cover product-content management (PIM/DAM), integrated
+facilities management/workplace/building automation, B2B trade-show/field-event marketing, and the
+field-sales/outside-sales force. The pass deliberately strengthened the two thinnest-by-workflow
+families (Asset & Infrastructure and Technology & Data) and added two genuine, B2B-relevant gaps
+to the largest family (Sell & Serve).
+
+- **VS-137 — Product Information Management (PIM) & Digital Asset Management (DAM)**
+  (Technology & Data, W4145–W4168): owns the product-content discipline — the canonical product
+  information model & attribute taxonomy, new-product content onboarding, DAM repository & media
+  production lifecycle, Safety Data Sheet (SDS) & regulatory-certificate management for the ~8–10%
+  DG assortment, how-to/rich-content authoring, multilingual/UoM localization, product-relationship
+  modeling, vendor-supplied content intake, channel content syndication & publication rules, price/
+  promo/availability sync, and PIM/DAM analytics. Genuinely uncovered ('product information
+  management'/'PIM'/'digital asset management'/'DAM' appeared scattered across ~30 PA files with
+  zero dedicated headers; each channel kept its own copy). Distinct from transactional master data
+  (VS-29), the ecommerce storefront (VS-10), retail-media monetization (VS-48), assortment/range
+  (VS-01.1), and marketing (VS-14).
+- **VS-138 — Integrated Facilities Management, Workplace Services & Building Automation**
+  (Asset & Infrastructure, W4169–W4192): owns the facilities/physical-environment discipline — IFM
+  strategy & provider governance, the facilities service catalog & SLA framework, facilities asset
+  register & building-condition management, preventive/reactive maintenance, hard FM trades (HVAC,
+  electrical, plumbing, fire systems), soft services (cleaning, pest, guarding, grounds, waste,
+  cafeteria, mailroom), building automation/BMS & IoT, energy/environmental control, space &
+  occupancy, green-building operations, compliance/permits/fire-life-safety coordination, and
+  facilities analytics. Genuinely uncovered (facility/building-service terms sprinkled across ~30 PA
+  files with zero dedicated headers for the integrated operating model). Distinct from equipment
+  maintenance (VS-20.3), energy management (VS-120), physical security (VS-23.2), and outsourced-
+  workforce governance (VS-98).
+- **VS-139 — Trade Show, Exhibition & Field Event Marketing**
+  (Sell & Serve, W4193–W4216): owns the B2B event/field-marketing channel — event strategy &
+  portfolio/calendar, budget & business case, audience targeting & trade-pro invitation, vendor
+  co-funding/MDF, compliance/permits/promo-prize governance, booth/stand design & logistics, show
+  registration & sponsorship, product display/demo/sample coordination, on-site sales & lead
+  capture, hospitality/VIP/account meetings, travel & per-diem, teardown/asset recovery, event
+  HSE, hosted trade days, product launches, store grand-opening/in-store events, partner/sponsored
+  events, digital/hybrid events, lead routing/nurture, and event-ROI analytics. Genuinely uncovered
+  ('trade show'/'exhibition'/'field event' appeared scattered across ~9 PA files with zero dedicated
+  headers; each event run ad-hoc). Distinct from broad marketing (VS-14), trade-pro membership
+  (VS-43), key-account management (VS-107), and store commissioning (VS-37).
+- **VS-140 — Field Sales, Outside Sales & Route-to-Market Force Management**
+  (Sell & Serve, W4217–W4240): owns the outside-sales-force discipline covering the ~40% B2B revenue
+  base — field-sales strategy & go-to-coverage model, force sizing/structure, territory design &
+  balancing, account segmentation/tiering & coverage plan, quota/target setting, route-to-market &
+  channel assignment, onboarding/enablement/certification, CRM/mobility tooling, daily route & call
+  planning, customer visits/relationship management, project estimating/quoting, pipeline/forecast,
+  field order capture/pricing/fulfillment, project bid/tender/spec pursuit, field samples/demos,
+  field ABC/data-quality, performance/attainment, compensation/incentive administration,
+  conversion win/loss analytics, route efficiency/productivity, retention/churn, coaching/PIP, force
+  cost/ROI & workforce planning, and continuous improvement. Genuinely uncovered ('field sales'/
+  'outside sales'/'route-to-market' appeared in only ~1–3 PA files with zero dedicated headers).
+  Distinct from key-account management (VS-107), trade-pro membership (VS-43), B2B/project
+  transaction processing (VS-11), and general sales enablement (VS-124).
+
+### Repository totals after Pass 13
+
+| Metric | Before (Pass 12) | After (Pass 13) |
+|---|---|---|
+| Value streams | 132 | **136** |
+| Process areas | 400 | **412** |
+| Workflows | 3,996 | **4,092** (+96) |
+| Unclassified (keyword-proposed pending review) | 2,851 | **2,947** |
+| Confirmed-classified (Tier 1/2/3) | 1,168 | 1,168 (unchanged) |
+
+Family workflow subtotals: Sell & Serve 1,146 → **1,194** (+48 via VS-139 + VS-140); Asset &
+Infrastructure 224 → **248** (+24 via VS-138); Technology & Data 302 → **326** (+24 via VS-137);
+all other families unchanged.
+
+The 96 new workflows carry a keyword-driven proposed tier in `workflow-criticality-proposed.md`
+(regenerated by `07-methodology/classify-workflows.py`, relabelled Pass 13): 2 proposed Tier 1
+(facilities business-continuity/critical-systems resilience in VS-138, and event HSE/incident
+management in VS-139), 2 proposed Tier 3 (BMS/IoT integration and HVAC/environmental-control
+optimization in VS-138), and 92 Tier 2 (the four are shared-service/B2B-growth disciplines, so
+most land at the safe Tier-2 default). They will be rolled into the dependency graph, touchpoint
+map, and requirement-to-workflow matrix during the next confirmed-classification pass, matching
+the Pass 1–Pass 12 pattern.
+
+`07-methodology/validate-repo.sh` passes with **0 errors** after the additions (grand total 4,092
+matches actual PA workflow header count 4,092; all 1,168 classified IDs resolve; all 2,947 proposed
+IDs resolve and do not duplicate the confirmed register; no dangling references; no placeholder
+content; no empty process areas).
+
+---
+
 ## 2026-06-15 — Workflow gap analysis (Pass 12): add VS-133–VS-136 (96 workflows W4049–W4144)
 
 A twelfth gap-analysis pass added four more value streams (3 process areas, 24 workflows each),

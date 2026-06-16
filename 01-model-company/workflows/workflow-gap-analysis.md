@@ -1,7 +1,8 @@
 # Workflow Gap Analysis — BuildRight Depot Corp.
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
-> Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15)).
+> Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15),
+> and Pass 13 (2026-06-16)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -117,6 +118,10 @@ identify capability gaps not addressed by any existing value stream.
 | 48 | **Organizational Change Management, Digital Adoption & Transformation Enablement** | A 5-entity, ~6,715-employee, 200-store workforce running a continuous pipeline of major change (cloud ERP, omnichannel/marketplace/retail-media build-out, 10–15 new-store openings/yr, the store-remodel program, net-zero/renewable, BIR e-invoicing) where the 60–70% transformation-failure benchmark is driven overwhelmingly by people-side failure (resistance, low adoption, change saturation) — the people-side-of-change discipline (stakeholder mapping, change-impact/readiness assessment, sponsor activation, equip-the-manager cascade, super-user network, resistance management, change-saturation management, go-live readiness/hypercare, digital-adoption platform, adoption measurement/sustainment) | **New gap (Pass 12)** — 'change management', 'OCM', 'change enablement', and 'adoption management' each appeared in **zero** PA files as dedicated workflow headers (only incidental ~45 PA-file mentions where a project notes 'communicate the change') — VS-30.1 owns the *digital-transformation portfolio*, VS-112 *project delivery*, VS-19.4/VS-124 *training content*, VS-103.1 *HR comms*, VS-27.1 the *IT service desk* — no value stream owned the *OCM discipline* | **FILLED — VS-134** |
 | 49 | **Technology Business Management, IT Financial Management & Cloud FinOps** | A cloud-first, integration-heavy retailer with ~10+ integration touchpoints and an expanding SaaS/AI perimeter where technology spend runs ≈1–3% of revenue (PHP 0.6B–1.9B/yr) across cloud, SaaS, software, telco/network (205+ sites), and the IT org — ungoverned, that spend leaks value through under-used licenses, idle cloud resources, shadow IT, and un-optimised commitments — the financial-management-of-technology discipline (TBM cost taxonomy, zero-based IT budgeting, TCO/business-case modeling, showback/chargeback, FinOps inform/optimize/operate, SaaS license utilization, value realization, unit economics) | **New gap (Pass 12)** — 'finops', 'cloud cost', 'technology business management', 'IT financial management', and 'TBM' each appeared in **zero** PA files as dedicated workflow headers — VS-99 tracks *asset inventory/disposal*, VS-113 designs the *application landscape*, VS-27 *operates* platforms, VS-17.4/VS-33 do *corporate FP&A*, VS-34 buys *transactionally* — no value stream owned the *technology-financial discipline* | **FILLED — VS-135** |
 | 50 | **Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering** | A 4-DC, 200-store, 35K-SKU retailer with ~40% imports (45–90-day lead times), Philippine island geography, and a 6–8x turn target where network/inventory positioning is the single largest controllable lever on working capital, service level, and total landed cost — a 1% inventory reduction releases ~PHP 0.4B of working capital — the structural-engineering discipline (network strategy/modeling, DC footprint/location/capacity, inbound sourcing-lane and outbound flow architecture, network resilience, inventory strategy/postponement/pooling, MEIO, safety-stock/service-level optimization, ABC/XYZ-differentiated policy, simulation/digital-twin, continuous re-optimization) | **New gap (Pass 12)** — 'multi-echelon', 'inventory optimization', 'network design', 'safety stock optimization', and 'postponement' each appeared in **zero** PA files as dedicated workflow headers (only the single periodic W183 network-review workflow in VS-02.3) — VS-02 runs *operational* replenishment, VS-127 the *consensus cycle*, VS-05 inventory *transactions*, VS-06 *logistics execution* — no value stream owned the *network/inventory-engineering discipline* | **FILLED — VS-136** |
+| 51 | **Product Information Management (PIM) & Digital Asset Management (DAM)** | A 35,000-active-SKU (≈55,000-master) hardware assortment sold across six channels (POS/web/app/marketplace/retail-media/print) plus B2B, with ~44% DTI-BPS-regulated and ~8–10% DG (paint/solvents ~2,800 SKUs) requiring accessible Safety Data Sheets — product-content completeness/accuracy directly drives ecommerce conversion, marketplace win-rate, associate consultative selling, and labeling compliance; content fragmentation and stale/missing content (an un-declared SDS, a wrong spec/load rating, a stale SRP) cause lost sales, returns, and Consumer Act (RA 7394)/DTI-BPS exposure | **New gap (Pass 13)** — 'product information management'/'PIM' and 'digital asset management'/'DAM' appeared scattered across ~30 PA files (VS-01 assortment, VS-10 ecommerce, VS-09 in-store, VS-48 retail media, VS-29 master data) with **zero** dedicated workflow headers; each channel kept its own copy and assets lived on shared drives — no value stream owned the *product-content operating model* (canonical model/taxonomy, onboarding, DAM/SDS lifecycle, rich content, channel syndication, quality, analytics) | **FILLED — VS-137** |
+| 52 | **Integrated Facilities Management, Workplace Services & Building Automation** | ~205 large sites (200 stores at 8,000–15,000 sqm + 4 DCs ~130,000 sqm + HQ) under tropical-climate, typhoon/seismic, and fire/life-safety (BFP Fire Code, OSH) pressure, running hard building services (HVAC, lighting, fire/life-safety, plumbing, elevators, generators, BMS) and soft workplace services (cleaning, pest, guarding, grounds, waste, cafeteria) as a material opex line — fragmented/overlapping service contracts leak value, and a failed AC or fire system directly closes a store | **New gap (Pass 13)** — facility/building-service terms were sprinkled across ~30 PA files (VS-20.3 facility maintenance, VS-07.2 store equipment, VS-120 energy, VS-98 outsourced workforce, VS-73 waste, VS-23 security, VS-34 procurement) with **zero** dedicated workflow headers for the *integrated* IFM operating model — no value stream owned IFM strategy/provider governance, the hard+soft service catalog/SLA, PM/reactive maintenance coordination, workplace services, BMS/building-automation, or facilities analytics | **FILLED — VS-138** |
+| 53 | **Trade Show, Exhibition & Field Event Marketing** | ~40% B2B revenue (30% trade + 10% corporate) targeting contractors/builders/developers/architects/government-project buyers via construction/home-building trade shows (PhilConstruct ~100K+ attendees, Worldbex, CebuCon) and hosted field events (contractor trade days, product launches); ~PHP millions/yr spent on booths/sponsorship/samples with vendor co-funding — the relationship-driven, time-bound event channel where projects and trade accounts are won, and where lead-follow-up failure converts the entire spend to zero return | **New gap (Pass 13)** — trade-show/exhibition/event-marketing terms appeared scattered across ~9 PA files (VS-01, VS-02, VS-03, VS-14, VS-30, VS-41, VS-43, VS-44, VS-70) with **zero** dedicated workflow headers; each event run ad-hoc by its sponsor — no value stream owned the *event-marketing operating model* (portfolio/calendar, booth/sponsorship logistics, lead capture/follow-up, vendor co-fund, permits/ABC compliance, ROI) | **FILLED — VS-139** |
+| 54 | **Field Sales, Outside Sales & Route-to-Market Force Management** | ~40% B2B revenue (~PHP 25B/yr) across ~5,000 trade accounts + ~200 corporate accounts is project-driven, relationship-driven, and specification-driven, won or lost at the jobsite/architect's office/developer's procurement — a field sales force covering territories, calling accounts, estimating/quoting, and pursuing project bids/specifications is the primary revenue engine for the B2B segment; a mis-sized/mis-routed/under-enabled force forfeits B2B share and lets the ~5,000-account base churn unnoticed | **New gap (Pass 13)** — field/outside-sales/territory terms appeared in only ~1–3 PA files (VS-82, VS-11) with **zero** dedicated workflow headers; field activity happens inside trade-account/B2B-project workflows but no value stream owned the *field-sales operating model* (force-sizing/territory design, quota/coverage, route/call planning, daily field activity, CRM pipeline/forecast, field compensation, enablement/coaching, performance/route analytics) | **FILLED — VS-140** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -301,21 +306,48 @@ scattered across multiple adjacent value streams:
 | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Plan & Source | 3 | 24 | W4001–W4024 |
 | [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Governance & Assurance | 3 | 24 | W4025–W4048 |
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12)
+**Pass 13** (W4145–W4240): four value streams, 12 process areas, 96 workflows, strengthening the two thinnest families by workflow count (**Asset & Infrastructure** and **Technology & Data**) and adding two genuine, B2B-relevant gaps to **Sell & Serve** (the largest family). Each gap had been previously overlooked because it was a genuinely-unowned *shared-service or B2B-growth discipline* whose defining terms appeared in zero or near-zero PA files as dedicated workflow headers ('product information management'/'PIM'/'digital asset management'/'DAM', 'integrated facilities management'/'IFM'/'building automation'/'BMS', 'trade show'/'exhibition'/'field event', 'field sales'/'outside sales'/'route-to-market'), with only incidental references to the broader capability scattered across multiple adjacent value streams. None of the four follows the single-workflow-elevation pattern of Passes 1/5/7/8/10/11; all four are genuinely-unowned disciplines with no dedicated owner:
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 (current) |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | **379** (+24) |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | **266** (+24) |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | **744** (+24) |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | **302** (+24) |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | **132** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | **400** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Technology & Data | 3 | 24 | W4145–W4168 |
+| [VS-138](VS-138-integrated-facilities-management-workplace-services-and-building-automation/README.md) | Integrated Facilities Management, Workplace Services & Building Automation | Asset & Infrastructure | 3 | 24 | W4169–W4192 |
+| [VS-139](VS-139-trade-show-exhibition-and-field-event-marketing/README.md) | Trade Show, Exhibition & Field Event Marketing | Sell & Serve | 3 | 24 | W4193–W4216 |
+| [VS-140](VS-140-field-sales-outside-sales-and-route-to-market-force-management/README.md) | Field Sales, Outside Sales & Route-to-Market Force Management | Sell & Serve | 3 | 24 | W4217–W4240 |
+
+The 96 new workflows added in Pass 13 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 12 batches were handled. Several Pass 13 workflows are anticipated Tier 1 (DG/SDS publication-gating and DTI-BPS labeling content controls in VS-137, fire/life-safety/permit and statutory-system-cert controls in VS-138, lead-capture consent and event/promo-permit and prize-withholding controls in VS-139, and ABC/gift-register and trade-credit/pricing-integrity controls in VS-140).
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 (current) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | **1,194** (+48) |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | **248** (+24) |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | **326** (+24) |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | **136** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | **412** (+12) |
+
+Pass 13 deliberately strengthened the two thinnest families by workflow count — **Asset &
+Infrastructure** (224 → 248 via VS-138 Integrated Facilities Management) and **Technology & Data**
+(302 → 326 via VS-137 PIM/DAM) — and added two genuine, B2B-relevant gaps to **Sell & Serve**
+(1,146 → 1,194 via VS-139 Trade Show/Field Event Marketing + VS-140 Field Sales/Route-to-Market
+Force Management), the largest family. Each gap had been previously overlooked because it was a
+genuinely-unowned *shared-service or B2B-growth discipline* whose defining terms appeared in zero
+or near-zero PA files as dedicated workflow headers, with only incidental references to the
+broader capability scattered across multiple adjacent value streams. None of the four follows the
+single-workflow-elevation pattern of Passes 1/5/7/8/10/11; all four are genuinely-unowned
+disciplines with no dedicated owner. After the twelve prior passes had filled the genuinely-
+uncovered *operational*, *statutory*, *strategic*, *cross-cutting-management*, and *technology*
+capabilities across every family, the remaining genuinely-uncovered capabilities are the
+*shared-service and B2B-growth* disciplines (product-content, integrated facilities, B2B
+field/event marketing, field-sales force) that naturally live in Technology & Data, Asset &
+Infrastructure, and Sell & Serve.
 
 Pass 12 deliberately strengthened three of the four thinnest-by-workflow families — **People**
 (242 → 266 via VS-134 OCM), **Technology & Data** (278 → 302 via VS-135 TBM/FinOps), and **Make &
@@ -424,8 +456,8 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (3,996) matches actual PA workflow header count (3,996). ✅
-- All 1,167 classified workflow IDs resolve to a header. ✅
+- Grand total (4,092) matches actual PA workflow header count (4,092). ✅
+- All 1,168 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
 - All cross-document counts reconciled (README, executive-summary, value-stream-index,

@@ -1,8 +1,8 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 3,996 total workflows, 1,167 are classified into
-> criticality tiers; 2,828 remain unclassified and default to Tier 2 pending review.
+> relationships for system functions. Of 4,092 total workflows, 1,168 are classified into
+> criticality tiers; 2,924 remain unclassified and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
@@ -644,8 +644,8 @@ The following circular data flows must be managed during steady-state operations
 > assurance, finance-deepening, and technology-platform programs that consume master
 > data and transactions from the foundational value streams. This section captures the
 > VS-level prerequisite wiring declared inline in their PA files, so the dependency graph
-> is no longer limited to the original 1,167 classified workflows. Mined by
-> `grep` over every `links to VS-NN` / `VS-NN` reference in VS-79–VS-136 PA files.
+> is no longer limited to the original 1,168 classified workflows. Mined by
+> `grep` over every `links to VS-NN` / `VS-NN` reference in VS-79–VS-140 PA files.
 
 ### 8.1 Anchor value streams (where the gap-analysis programs hook in)
 

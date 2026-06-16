@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 132 active value streams were produced in four blocks. Use this to gauge content maturity
+The 136 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 23 pending rework (VS-69/70/71 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-136 | 48 | Fully detailed (twelve gap-analysis passes, 2026-06-14/15) |
+| Gap analysis | VS-89 – VS-140 | 52 | Fully detailed (thirteen gap-analysis passes, 2026-06-14/15/16) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 132 Value Streams · 400 Process Areas · 3996 Workflows
+8 Families · 136 Value Streams · 412 Process Areas · 4092 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams) and tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), and a thirteenth pass on 2026-06-16 (132 → 136 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -92,7 +92,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-95](VS-95-marketplace-operator-third-party-seller/README.md) | Marketplace Operator & Third-Party Seller Management | Gap analysis | 3 | 24 |
 |  | [VS-107](VS-107-strategic-key-account-enterprise-customer-management/README.md) | Strategic Key Account & Enterprise Customer Management | Gap analysis | 3 | 24 |
 |  | [VS-124](VS-124-sales-enablement-product-knowledge-clienteling/README.md) | Sales Enablement, Product Knowledge Mastery & Clienteling | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **1146** |
+  | [VS-139](VS-139-trade-show-exhibition-and-field-event-marketing/README.md) | Trade Show, Exhibition & Field Event Marketing | Gap analysis | 3 | 24 |
+  | [VS-140](VS-140-field-sales-outside-sales-and-route-to-market-force-management/README.md) | Field Sales, Outside Sales & Route-to-Market Force Management | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **1194** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -131,7 +133,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-109](VS-109-store-remodel-renovation-lifecycle-refurbishment/README.md) | Store Remodel, Renovation & Lifecycle Refurbishment Program | Gap analysis | 3 | 24 |
 |  | [VS-112](VS-112-corporate-project-and-program-management-office/README.md) | Corporate Project & Program Management Office (PMO) | Gap analysis | 3 | 24 |
 |  | [VS-120](VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/README.md) | Energy Efficiency, Conservation & RA 11285 Compliance Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **224** |
+  | [VS-138](VS-138-integrated-facilities-management-workplace-services-and-building-automation/README.md) | Integrated Facilities Management, Workplace Services & Building Automation | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **248** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 48 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 28 |
@@ -171,8 +174,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | Gap analysis | 3 | 24 |
 |  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Gap analysis | 3 | 24 |
   | [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **302** |
-| | | | **Grand Total** | **3996** | |
+  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **326** |
+| | | | **Grand Total** | **4092** | |
 
 ---
 
@@ -536,6 +540,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-124.2** [Product Knowledge Mastery, Certification & Clienteling Tools](./VS-124-sales-enablement-product-knowledge-clienteling/PA-124.2-product-knowledge-mastery-certification-and-clienteling-tools.md) — 8 workflows
 - **PA-124.3** [Selling Performance, Attachment & Clienteling Analytics](./VS-124-sales-enablement-product-knowledge-clienteling/PA-124.3-selling-performance-attachment-and-clienteling-analytics.md) — 8 workflows
 
+**[VS-139: Trade Show, Exhibition & Field Event Marketing](./VS-139-trade-show-exhibition-and-field-event-marketing/README.md)** (24 workflows)
+
+- **PA-139.1** [Event Marketing Strategy, Portfolio & Calendar Management](./VS-139-trade-show-exhibition-and-field-event-marketing/PA-139.1-event-marketing-strategy-portfolio-and-calendar-management.md) — 8 workflows
+- **PA-139.2** [Exhibition & Trade-Show Operations](./VS-139-trade-show-exhibition-and-field-event-marketing/PA-139.2-exhibition-and-trade-show-operations.md) — 8 workflows
+- **PA-139.3** [Field Events, Trade Days & Lead/ROI Analytics](./VS-139-trade-show-exhibition-and-field-event-marketing/PA-139.3-field-events-trade-days-and-lead-roi-analytics.md) — 8 workflows
+
+**[VS-140: Field Sales, Outside Sales & Route-to-Market Force Management](./VS-140-field-sales-outside-sales-and-route-to-market-force-management/README.md)** (24 workflows)
+
+- **PA-140.1** [Field Sales Strategy, Territory & Force Design](./VS-140-field-sales-outside-sales-and-route-to-market-force-management/PA-140.1-field-sales-strategy-territory-and-force-design.md) — 8 workflows
+- **PA-140.2** [Field Sales Daily Operations, Account Coverage & Pipeline](./VS-140-field-sales-outside-sales-and-route-to-market-force-management/PA-140.2-field-sales-daily-operations-account-coverage-and-pipeline.md) — 8 workflows
+- **PA-140.3** [Field Sales Performance, Compensation & Route Analytics](./VS-140-field-sales-outside-sales-and-route-to-market-force-management/PA-140.3-field-sales-performance-compensation-and-route-analytics.md) — 8 workflows
+
 
 ### Finance
 
@@ -762,6 +778,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-120.1** [EEC Program Strategy, Designated-Establishment & Governance](./VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/PA-120.1-eec-program-strategy-designated-establishment-and-governance.md) — 8 workflows
 - **PA-120.2** [Energy Audit, Measurement & Conservation Plan Management](./VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/PA-120.2-energy-audit-measurement-and-conservation-plan-management.md) — 8 workflows
 - **PA-120.3** [ECM Delivery, Performance Optimization & Compliance Analytics](./VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/PA-120.3-ecm-delivery-performance-optimization-and-compliance-analytics.md) — 8 workflows
+
+**[VS-138: Integrated Facilities Management, Workplace Services & Building Automation](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/README.md)** (24 workflows)
+
+- **PA-138.1** [Facilities Management Strategy, IFM Provider & SLA Governance](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.1-facilities-management-strategy-ifm-provider-and-sla-governance.md) — 8 workflows
+- **PA-138.2** [Hard & Soft FM Service Operations (Cleaning, Pest, Security, Grounds, Workplace)](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.2-hard-and-soft-fm-service-operations.md) — 8 workflows
+- **PA-138.3** [Building Automation, Energy Control & Facilities Analytics](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.3-building-automation-energy-control-and-facilities-analytics.md) — 8 workflows
 
 
 ### Governance & Assurance
@@ -997,6 +1019,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-135.2** [Cloud FinOps, Cost Optimization & Spend Governance](./VS-135-technology-business-management-it-financial-management-cloud-finops/PA-135.2-cloud-finops-cost-optimization-and-spend-governance.md) — 8 workflows
 - **PA-135.3** [Technology Value Realization & Financial Analytics](./VS-135-technology-business-management-it-financial-management-cloud-finops/PA-135.3-technology-value-realization-and-financial-analytics.md) — 8 workflows
 
+**[VS-137: Product Information Management (PIM) & Digital Asset Management (DAM)](./VS-137-product-information-management-and-digital-asset-management/README.md)** (24 workflows)
+
+- **PA-137.1** [Product Information Model, Attribute Taxonomy & Governance](./VS-137-product-information-management-and-digital-asset-management/PA-137.1-product-information-model-attribute-taxonomy-and-governance.md) — 8 workflows
+- **PA-137.2** [Digital Asset Management, Rich Content & SDS/Certificate Lifecycle](./VS-137-product-information-management-and-digital-asset-management/PA-137.2-digital-asset-management-rich-content-and-sds-certificate-lifecycle.md) — 8 workflows
+- **PA-137.3** [Content Syndication, Channel Publishing & PIM Analytics](./VS-137-product-information-management-and-digital-asset-management/PA-137.3-content-syndication-channel-publishing-and-pim-analytics.md) — 8 workflows
+
 
 ---
 
@@ -1016,15 +1044,15 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134)
-Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120)
+Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138)
 Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133)
-Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135)
+Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
 
-*Total: 3996 workflows across 132 value streams · Date: 2026-06-15*
+*Total: 4092 workflows across 136 value streams · Date: 2026-06-16*
