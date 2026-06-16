@@ -154,7 +154,19 @@ erpplans/
 │   │   ├── VS-121-talent-acquisition-employer-brand-candidate-experience/ 24 workflows (3 process areas)
 │   │   ├── VS-122-global-sourcing-import-buying-sourcing-agent-management/ 24 workflows (3 process areas)
 │   │   ├── VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/ 24 workflows (3 process areas)
-│   │   └── VS-124-sales-enablement-product-knowledge-clienteling/ 24 workflows (3 process areas)
+│   │   ├── VS-124-sales-enablement-product-knowledge-clienteling/ 24 workflows (3 process areas)
+│   │   ├── VS-125-cross-channel-fraud-management-payment-fraud-protection/ 24 workflows (3 process areas)
+│   │   ├── VS-126-customer-data-platform-single-customer-view-identity-resolution/ 24 workflows (3 process areas)
+│   │   ├── VS-127-sales-operations-planning-integrated-business-planning/ 24 workflows (3 process areas)
+│   │   ├── VS-128-ai-ml-governance-responsible-ai/ 24 workflows (3 process areas)
+│   │   ├── VS-129-competition-and-antitrust-compliance/ 24 workflows (3 process areas)
+│   │   ├── VS-130-corporate-development-ma-divestiture/ 24 workflows (3 process areas)
+│   │   ├── VS-131-human-rights-responsible-supply-chain-due-diligence/ 24 workflows (3 process areas)
+│   │   ├── VS-132-corporate-political-engagement-election-compliance/ 24 workflows (3 process areas)
+│   │   ├── VS-133-operational-excellence-process-mining-continuous-improvement/ 24 workflows (3 process areas)
+│   │   ├── VS-134-organizational-change-management-digital-adoption-transformation-enablement/ 24 workflows (3 process areas)
+│   │   ├── VS-135-technology-business-management-it-financial-management-cloud-finops/ 24 workflows (3 process areas)
+│   │   └── VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -208,7 +220,7 @@ erpplans/
 | Workflows | 3,996 fully specified across 132 value streams | `workflows/value-stream-index.md` |
 | Criticality classification | **1,168 of 3,996 workflows classified** (29%); 2,828 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (72 → 120 value streams) and tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
+| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams) and tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
 
 ## Document Relationships
 

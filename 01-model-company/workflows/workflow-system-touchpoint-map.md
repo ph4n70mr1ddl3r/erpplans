@@ -47,9 +47,9 @@
 
 ---
 
-## Gap-Analysis Value Streams (VS-79–VS-128) — Primary ERP Module Coverage
+## Gap-Analysis Value Streams (VS-79–VS-136) — Primary ERP Module Coverage
 
-> The ten gap-analysis passes added 50 value streams / 1,200 workflows whose per-workflow system
+> The Statutory deepening (VS-79–VS-88) and twelve gap-analysis passes together added 58 value streams / 1,392 workflows whose per-workflow system
 > touchpoints are documented inline in each PA file. Rather than append ~1,200 more workflow IDs
 > to the already-dense module rows above (which would make them unreadable), this section gives
 > the **primary ERP module mapping per value stream** for orientation; drill into the PA file for
@@ -107,6 +107,14 @@
 | VS-126 | Customer Data Platform & Single Customer View | CRM / Loyalty; Data Privacy & Compliance; Reporting / Analytics; Innovation |
 | VS-127 | Sales & Operations Planning & Integrated Business Planning | Supply Chain Planning; Reporting / Analytics; Pricing / Merchandising |
 | VS-128 | AI/ML Governance & Responsible AI | IT Operations; Data Privacy & Compliance; Internal Audit; Innovation |
+| VS-129 | Competition & Antitrust Compliance (RA 10667 / PCC) | Governance / Strategy; Pricing / Merchandising; Internal Audit; Vendor Contract Management |
+| VS-130 | Corporate Development, M&A & Divestiture | Governance / Strategy; Financials; Internal Audit; Vendor Contract Management |
+| VS-131 | Human Rights & Responsible Supply Chain Due Diligence | Procurement; Data Privacy & Compliance; Internal Audit; Vendor Contract Management |
+| VS-132 | Corporate Political Engagement & Election Compliance | Governance / Strategy; Regulatory Operations; Internal Audit; Financials |
+| VS-133 | Operational Excellence, Process Mining & CI | Reporting / Analytics; IT Operations; Governance / Strategy; Financials |
+| VS-134 | Organizational Change Management & Digital Adoption | Training & Development; HR & Payroll; IT Operations; Governance / Strategy |
+| VS-135 | Technology Business Management, IT Fin Mgmt & FinOps | IT Operations; Financials; Procurement; Reporting / Analytics |
+| VS-136 | Supply Chain Network Design, MEIO & Flow Engineering | Supply Chain Planning; Inventory Management; Reporting / Analytics; Real Estate |
 
 ---
 
