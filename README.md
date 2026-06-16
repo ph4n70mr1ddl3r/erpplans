@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      4,092 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 136 value streams · 412 process areas)
+│   ├── workflows/                      4,140 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 138 value streams · 418 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -166,7 +166,13 @@ erpplans/
 │   │   ├── VS-133-operational-excellence-process-mining-continuous-improvement/ 24 workflows (3 process areas)
 │   │   ├── VS-134-organizational-change-management-digital-adoption-transformation-enablement/ 24 workflows (3 process areas)
 │   │   ├── VS-135-technology-business-management-it-financial-management-cloud-finops/ 24 workflows (3 process areas)
-│   │   └── VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/ 24 workflows (3 process areas)
+│   │   ├── VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/ 24 workflows (3 process areas)
+│   │   ├── VS-137-product-information-management-and-digital-asset-management/ 24 workflows (3 process areas)
+│   │   ├── VS-138-integrated-facilities-management-workplace-services-and-building-automation/ 24 workflows (3 process areas)
+│   │   ├── VS-139-trade-show-exhibition-and-field-event-marketing/ 24 workflows (3 process areas)
+│   │   ├── VS-140-field-sales-outside-sales-and-route-to-market-force-management/ 24 workflows (3 process areas)
+│   │   ├── VS-141-employee-transport-shuttle-and-daily-commute-management/ 24 workflows (3 process areas)
+│   │   └── VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -206,7 +212,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **4,092** across 136 value streams, 412 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **4,140** across 138 value streams, 418 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -217,10 +223,10 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 4,092 fully specified across 136 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,168 of 4,092 workflows classified** (29%); 2,924 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 4,140 fully specified across 138 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,168 of 4,140 workflows classified** (28%); 2,972 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), and a thirteenth pass on 2026-06-16 (132 → 136 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
+| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), and a fourteenth pass on 2026-06-16 (136 → 138 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
 
 ## Document Relationships
 
@@ -240,7 +246,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-    │  erp-requirements.md ←→ workflows/ (4,092 WF)    │
+    │  erp-requirements.md ←→ workflows/ (4,140 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -252,6 +258,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
     │                value-stream-index.md              │
-    │            (136 VS · 412 process areas)            │
+    │            (138 VS · 418 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

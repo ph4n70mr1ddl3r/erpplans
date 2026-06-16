@@ -47,9 +47,9 @@
 
 ---
 
-## Gap-Analysis Value Streams (VS-79–VS-136) — Primary ERP Module Coverage
+## Gap-Analysis Value Streams (VS-79–VS-142) — Primary ERP Module Coverage
 
-> The Statutory deepening (VS-79–VS-88) and twelve gap-analysis passes together added 58 value streams / 1,392 workflows whose per-workflow system
+> The Statutory deepening (VS-79–VS-88) and fourteen gap-analysis passes together added 64 value streams / 1,536 workflows whose per-workflow system
 > touchpoints are documented inline in each PA file. Rather than append ~1,200 more workflow IDs
 > to the already-dense module rows above (which would make them unreadable), this section gives
 > the **primary ERP module mapping per value stream** for orientation; drill into the PA file for
@@ -115,7 +115,13 @@
 | VS-134 | Organizational Change Management & Digital Adoption | Training & Development; HR & Payroll; IT Operations; Governance / Strategy |
 | VS-135 | Technology Business Management, IT Fin Mgmt & FinOps | IT Operations; Financials; Procurement; Reporting / Analytics |
 | VS-136 | Supply Chain Network Design, MEIO & Flow Engineering | Supply Chain Planning; Inventory Management; Reporting / Analytics; Real Estate |
+| VS-137 | Product Information Management (PIM) & Digital Asset Management (DAM) | Pricing / Merchandising; Ecommerce; Document Management; Reporting / Analytics |
+| VS-138 | Integrated Facilities Management, Workplace Services & Building Automation | Facility Maintenance; Real Estate; Reporting / Analytics; Vendor Contract Management |
+| VS-139 | Trade Show, Exhibition & Field Event Marketing | CRM / Loyalty; Marketing / Campaigns; Vendor Contract Management; Financials |
+| VS-140 | Field Sales, Outside Sales & Route-to-Market Force Management | CRM / Loyalty; Customer Account Mgmt; Corporate Account Mgmt; Reporting / Analytics |
+| VS-141 | Employee Transport, Shuttle & Daily Commute Management | HR & Payroll; Fleet Management; Vendor Contract Management; Financials |
+| VS-142 | Cash-on-Delivery (COD) Operations & Driver Cash Reconciliation | Financials; Ecommerce; Treasury / Cash Management; Internal Audit |
 
 ---
 
-*Document Version: 65.0 | Date: 2026-06-15 | Reconciled to 3,996 workflows across 132 value streams. The module-to-workflow rows above cover the foundational + confirmed-classified workflows (1,168); the gap-analysis value streams VS-79–VS-136 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 2,828 workflows not yet in the confirmed register (including the 96 added in Pass 12 as VS-133–VS-136, W4049–W4144) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twelve-pass history.*
+*Document Version: 67.0 | Date: 2026-06-16 | Reconciled to 4,140 workflows across 138 value streams. The module-to-workflow rows above cover the foundational + confirmed-classified workflows (1,168); the gap-analysis value streams VS-79–VS-142 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 2,972 workflows not yet in the confirmed register (including the 96 added in Pass 13 as VS-137–VS-140, W4145–W4240, and the 48 added in Pass 14 as VS-141–VS-142, W4241–W4288) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the fourteen-pass history.*

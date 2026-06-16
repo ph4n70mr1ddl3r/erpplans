@@ -4,6 +4,47 @@
 
 ---
 
+## 2026-06-16 — Workflow gap analysis (Pass 14): add VS-141–VS-142 (48 workflows W4241–W4288)
+
+A fourteenth gap-analysis pass — deliberately smaller (2 value streams, 48 workflows) — closed
+the two remaining genuinely-clean gaps after the thirteen prior passes had covered the
+operational, statutory, strategic, cross-cutting-management, technology, shared-service, and
+B2B-growth surface. Each gap's defining terms appeared in **zero** PA files as dedicated workflow
+headers, and each had been conflated with an adjacent covered capability:
+
+- **VS-141 — Employee Transport, Shuttle & Daily Commute Management** (People, W4241–W4264):
+  the daily people-movement discipline for ~6,715 staff across 205 sites on 2–3 shifts (incl.
+  night). 'employee shuttle', 'company bus', 'transport allowance', and 'daily commute' appeared
+  in zero PA files as headers; only adjacent coverage existed — VS-19.1 *business travel*,
+  VS-18.2 *errand* petty-cash transport, VS-138 *building* services, VS-06 *goods* fleet. None
+  owned commute-need assessment, transport policy/allowance, shuttle fleet/routes/manifest,
+  driver/vendor/safety (LTFRB franchise, women-safe/after-dark), cost allocation, or
+  commute-EX/analytics. Strengthens the thinnest family by workflow count (People 266 → 290).
+- **VS-142 — Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation**
+  (Finance, W4265–W4288): the enterprise COD cash chain for a COD-dominant Philippine ecommerce
+  market (~13,000–21,000 COD orders/month at a 30–50% share). 'COD operations', 'driver cash
+  handling', and 'COD reconciliation' appeared in zero PA files as headers; only W2837
+  (MSME-segment COD in VS-82) and W1202 (store daily cash) existed, with COD scattered as single
+  steps across VS-06.3/VS-08.2/VS-10.2/VS-16.3/VS-80/VS-56. None owned COD policy/limits,
+  doorstep collection/custody, driver/3PL remittance & reconciliation, settlement/float, fraud,
+  or analytics — distinct from acquirer settlement (VS-80), last-mile delivery (VS-06.3), and
+  in-store cash (VS-08.2). Strengthens Finance (507 → 531).
+
+Both are fully detailed to the WORKFLOW-FORMAT-GUIDE quality bar (specific system touchpoints,
+pain points with mitigations, time estimates with scaling math, Automation Opportunity, Controls,
+and cross-references). The 48 new workflows are **unclassified** and carry a keyword-driven
+proposed tier in `workflow-criticality-proposed.md`, exactly as prior batches.
+
+**Cross-reference reconciliation:** updated value-stream-index (138 VS / 418 PA / 4,140 workflows,
+family subtotals, decision tree, detailed map), workflow-gap-analysis (Pass 14 §3 rows, §4
+table, family-subtotal-impact table, §5/§6), workflow-system-touchpoint-map (VS-141/VS-142
+primary-module rows + VS-137–VS-140 rows that were also missing), workflow-dependency-map §8
+(VS-141/VS-142 + missing VS-137–VS-140 rows; VS-79–VS-142 scope), README (tree, key metrics,
+coverage note — also brought current with Pass 13's VS-137–VS-140 which the prior commit had not
+propagated), executive-summary counts, and WORKFLOW-FORMAT-GUIDE index line. Validator: 0 errors.
+
+---
+
 ## 2026-06-16 — Workflow gap analysis (Pass 13): add VS-137–VS-140 (96 workflows W4145–W4240)
 
 A thirteenth gap-analysis pass added four more value streams (3 process areas, 24 workflows each),

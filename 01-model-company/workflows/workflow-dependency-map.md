@@ -636,7 +636,7 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-## 8. Cross-Cutting Program Dependencies (VS-79–VS-136)
+## 8. Cross-Cutting Program Dependencies (VS-79–VS-142)
 
 > The Statutory deepening (VS-79–VS-88) and twelve gap-analysis passes (2026-06-14/15)
 > together added 58 value streams / 1,392 workflows that are predominantly
@@ -649,7 +649,7 @@ The following circular data flows must be managed during steady-state operations
 
 ### 8.1 Anchor value streams (where the gap-analysis programs hook in)
 
-The foundational value streams most referenced by VS-79–VS-136. These confirm that the
+The foundational value streams most referenced by VS-79–VS-142. These confirm that the
 **gap-analysis programs are largely Tier 2/3 overlays** (they sit *on top of*
 Record-to-Report, Audit, IT Ops, Analytics, HR, and Legal), with the **statutory exceptions
 called out in §8.2** that are themselves Tier 1.
@@ -707,6 +707,12 @@ value streams. They depend on the Tier-1 core but are not themselves go-live blo
 | VS-134 Organizational Change Management & Digital Adoption | People-side of transformation; equips PMO portfolio (VS-112), HR/EX (VS-103), training (VS-19.4), and the service desk (VS-27); runs a DAP over cloud ERP. Depends on VS-103, VS-133, VS-112. |
 | VS-135 Technology Business Management, IT Financial Mgmt & FinOps | Financial governance of tech spend; consumes ITAM (VS-99), EA portfolio (VS-113), FP&A (VS-17.4), procurement (VS-34), and cloud ops (VS-27). Depends on VS-17, VS-27, VS-99. |
 | VS-136 Supply Chain Network Design, MEIO & Flow Engineering | Structural network/inventory engineering; consumes supply planning (VS-02), S&OP (VS-127), logistics (VS-06), DC ops (VS-04), and real estate (VS-97/VS-20). Depends on VS-02, VS-28 (analytics), VS-01. |
+| VS-137 Product Information Management (PIM) & DAM | Canonical product-content/DAM platform consumed by ecommerce (VS-10), retail media (VS-48), marketplace (VS-65/VS-95), in-store (VS-09), and master data (VS-29); owns SDS/certificate lifecycle feeding DG (VS-114) and DTI-BPS (VS-117). Depends on VS-29, VS-01, VS-113. |
+| VS-138 Integrated Facilities Management, Workplace Services & BMS | Consolidates facilities/building services sprinkled across VS-20.3, VS-07.2, VS-120, VS-98, VS-73, VS-23; owns the BMS executing energy control (VS-120) and the guard-force coordination (VS-23). Depends on VS-20, VS-35, VS-34, VS-97. |
+| VS-139 Trade Show, Exhibition & Field Event Marketing | Event-marketing operating model for the ~40% B2B base; feeds leads to field sales (VS-140)/key accounts (VS-107)/trade (VS-11); vendor co-fund via VS-39, permits/ABC via VS-22/VS-86. Depends on VS-14, VS-11, VS-107. |
+| VS-140 Field Sales, Outside Sales & Route-to-Market Force Management | Field-force coverage of the ~5,200 B2B accounts; consumes CRM/CDP (VS-11/VS-126), generates trade/project pipeline (VS-11/VS-107), comp via VS-102, enablement via VS-124. Depends on VS-11, VS-107, VS-126. |
+| VS-141 Employee Transport, Shuttle & Daily Commute Management | Daily people-movement for ~6,715 staff; distinct from business travel (VS-19.1), goods fleet (VS-06), and facilities (VS-138); allowance via payroll (VS-19.2)/comp (VS-102), vendor via VS-34/VS-56, safety via VS-24. Depends on VS-19, VS-103, VS-34. |
+| VS-142 Cash-on-Delivery (COD) Operations & Driver Cash Reconciliation | Enterprise COD cash chain; distinct from acquirer settlement (VS-80), last-mile (VS-06.3), and in-store cash (VS-08.2); cash collected by 3PL drivers (VS-56), reconciled to GL (VS-17.1)/AR (VS-16), fraud via VS-125, treasury/float via VS-18. Depends on VS-80, VS-06.3, VS-17.1, VS-125. |
 
 ### 8.4 Notable per-program anchor edges (strongest declared dependencies)
 
@@ -754,4 +760,4 @@ for the programs with the heaviest cross-cutting footprint:
 | VS-135 | VS-17(46), VS-27(33), VS-99(30) |
 | VS-136 | VS-02(63), VS-28(31), VS-01(31) |
 
-*Date: 2026-06-15 | Workflow Dependency Map v3.1 — covers prerequisite relationships across all 132 value streams / 3,996 workflows. §1–§7 cover the 1,168 confirmed-classified workflows; §8 adds the VS-79–VS-136 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 2,828 workflows (including the 96 added in Pass 12 as VS-133–VS-136, W4049–W4144) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twelve-pass history.*
+*Date: 2026-06-16 | Workflow Dependency Map v3.2 — covers prerequisite relationships across all 138 value streams / 4,140 workflows. §1–§7 cover the 1,168 confirmed-classified workflows; §8 adds the VS-79–VS-142 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 2,972 workflows (including the 96 added in Pass 13 as VS-137–VS-140, W4145–W4240, and the 48 added in Pass 14 as VS-141–VS-142, W4241–W4288) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the fourteen-pass history.*

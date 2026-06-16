@@ -2,7 +2,7 @@
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
 > Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15),
-> and Pass 13 (2026-06-16)).
+> Pass 13 and Pass 14 (2026-06-16)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -122,6 +122,8 @@ identify capability gaps not addressed by any existing value stream.
 | 52 | **Integrated Facilities Management, Workplace Services & Building Automation** | ~205 large sites (200 stores at 8,000–15,000 sqm + 4 DCs ~130,000 sqm + HQ) under tropical-climate, typhoon/seismic, and fire/life-safety (BFP Fire Code, OSH) pressure, running hard building services (HVAC, lighting, fire/life-safety, plumbing, elevators, generators, BMS) and soft workplace services (cleaning, pest, guarding, grounds, waste, cafeteria) as a material opex line — fragmented/overlapping service contracts leak value, and a failed AC or fire system directly closes a store | **New gap (Pass 13)** — facility/building-service terms were sprinkled across ~30 PA files (VS-20.3 facility maintenance, VS-07.2 store equipment, VS-120 energy, VS-98 outsourced workforce, VS-73 waste, VS-23 security, VS-34 procurement) with **zero** dedicated workflow headers for the *integrated* IFM operating model — no value stream owned IFM strategy/provider governance, the hard+soft service catalog/SLA, PM/reactive maintenance coordination, workplace services, BMS/building-automation, or facilities analytics | **FILLED — VS-138** |
 | 53 | **Trade Show, Exhibition & Field Event Marketing** | ~40% B2B revenue (30% trade + 10% corporate) targeting contractors/builders/developers/architects/government-project buyers via construction/home-building trade shows (PhilConstruct ~100K+ attendees, Worldbex, CebuCon) and hosted field events (contractor trade days, product launches); ~PHP millions/yr spent on booths/sponsorship/samples with vendor co-funding — the relationship-driven, time-bound event channel where projects and trade accounts are won, and where lead-follow-up failure converts the entire spend to zero return | **New gap (Pass 13)** — trade-show/exhibition/event-marketing terms appeared scattered across ~9 PA files (VS-01, VS-02, VS-03, VS-14, VS-30, VS-41, VS-43, VS-44, VS-70) with **zero** dedicated workflow headers; each event run ad-hoc by its sponsor — no value stream owned the *event-marketing operating model* (portfolio/calendar, booth/sponsorship logistics, lead capture/follow-up, vendor co-fund, permits/ABC compliance, ROI) | **FILLED — VS-139** |
 | 54 | **Field Sales, Outside Sales & Route-to-Market Force Management** | ~40% B2B revenue (~PHP 25B/yr) across ~5,000 trade accounts + ~200 corporate accounts is project-driven, relationship-driven, and specification-driven, won or lost at the jobsite/architect's office/developer's procurement — a field sales force covering territories, calling accounts, estimating/quoting, and pursuing project bids/specifications is the primary revenue engine for the B2B segment; a mis-sized/mis-routed/under-enabled force forfeits B2B share and lets the ~5,000-account base churn unnoticed | **New gap (Pass 13)** — field/outside-sales/territory terms appeared in only ~1–3 PA files (VS-82, VS-11) with **zero** dedicated workflow headers; field activity happens inside trade-account/B2B-project workflows but no value stream owned the *field-sales operating model* (force-sizing/territory design, quota/coverage, route/call planning, daily field activity, CRM pipeline/forecast, field compensation, enablement/coaching, performance/route analytics) | **FILLED — VS-140** |
+| 55 | **Employee Transport, Shuttle & Daily Commute Management** | ~6,715 employees across 205 distributed sites (200 stores + 4 DCs + HQ) on 2–3 shifts/day including the 10 PM–6 AM night-differential window; provincial/island sites have thin or unsafe after-hours public transport, and commute difficulty is a documented frontline attrition driver at the 15–20% turnover rate — an owned daily people-movement discipline directly affects attendance, safety, payroll (transport allowance), and retention | **New gap (Pass 14)** — 'employee shuttle', 'staff shuttle', 'company bus', 'shuttle route', 'transport allowance', and 'daily commute' each appeared in **zero** PA files as dedicated workflow headers; only adjacent coverage exists (VS-19.1 *business travel* ~600–960 trips/yr, VS-18.2 petty-cash *errand* transport, VS-138 *building* services, VS-06 *goods* fleet) — no value stream owned the *daily people-movement discipline* (commute-need assessment, transport policy/allowance, shuttle fleet/routes/manifest, driver/vendor/safety, late-night/women-safe transport, cost allocation, commute-EX/analytics) | **FILLED — VS-141** |
+| 56 | **Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation** | The Philippines is a COD-dominant ecommerce market and BuildRight accepts COD (profile §8.1) across ~42,900 ecommerce orders/month plus MSME (VS-82) and trade deliveries (VS-74); at a 30–50% COD share that is ~13,000–21,000 COD orders/month, each carrying physical cash through a multi-party field chain with float, short-pay/refusal, and theft/fraud exposure — unreconciled COD cash directly distorts revenue, inventory, and AR, with leakage benchmarked at 0.3–1.0% of COD GMV | **New gap (Pass 14)** — 'COD operations', 'driver cash handling', 'COD reconciliation', and 'cash-on-delivery settlement' each appeared in **zero** PA files as dedicated workflow headers; only W2837 (MSME-segment COD in VS-82) and W1202 (store daily cash collection) existed, with COD scattered as single steps across VS-06.3/VS-08.2/VS-10.2/VS-16.3/VS-80/VS-56 — no value stream owned the *enterprise COD cash-chain discipline* (policy/limits, doorstep collection/custody, driver/3PL remittance & reconciliation, settlement/float, fraud, analytics) | **FILLED — VS-142** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -317,21 +319,41 @@ scattered across multiple adjacent value streams:
 
 The 96 new workflows added in Pass 13 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 12 batches were handled. Several Pass 13 workflows are anticipated Tier 1 (DG/SDS publication-gating and DTI-BPS labeling content controls in VS-137, fire/life-safety/permit and statutory-system-cert controls in VS-138, lead-capture consent and event/promo-permit and prize-withholding controls in VS-139, and ABC/gift-register and trade-credit/pricing-integrity controls in VS-140).
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13)
+**Pass 14** (W4241–W4288): two value streams, six process areas, 48 workflows — a deliberately smaller, focused pass closing the two remaining genuinely-clean gaps after thirteen prior passes had covered the operational, statutory, strategic, cross-cutting-management, technology, shared-service, and B2B-growth surface. Each gap had been previously overlooked because its defining terms appeared in **zero** PA files as dedicated workflow headers and it was conflated with an adjacent covered capability (employee transport conflated with business travel / goods fleet / facilities; COD conflated with acquirer settlement / last-mile delivery / in-store cash). Both strengthen operationally-critical, cash-and-people-exposed domains in two families (People +24, Finance +24):
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 (current) |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | **1,194** (+48) |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | **248** (+24) |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | **326** (+24) |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | **136** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | **412** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-141](VS-141-employee-transport-shuttle-and-daily-commute-management/README.md) | Employee Transport, Shuttle & Daily Commute Management | People | 3 | 24 | W4241–W4264 |
+| [VS-142](VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/README.md) | Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation | Finance | 3 | 24 | W4265–W4288 |
+
+The 48 new workflows added in Pass 14 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 13 batches were handled. Several Pass 14 workflows are anticipated Tier 1 (LTFRB-franchise/insurance/out-of-service and women-safe/after-dark transport controls in VS-141, and SoD/daily-reconciliation/custody/bonding and BIR cash-receipting/float-provision controls in VS-142).
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 (current) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | **531** (+24) |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | **290** (+24) |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** (+48) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | **138** (+2) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | **418** (+6) |
+
+Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
+VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
+VS-142 Cash-on-Delivery Operations & Driver Cash Reconciliation) — both operationally-critical,
+cash-and-people-exposed disciplines that had been conflated with adjacent covered capabilities
+(business travel, goods fleet, and facilities for transport; acquirer settlement, last-mile
+delivery, and in-store cash for COD). This is a deliberately smaller pass (2 VS / 48 workflows)
+reflecting that the thirteen prior passes had already covered the operational, statutory,
+strategic, cross-cutting-management, technology, shared-service, and B2B-growth surface; only
+these two genuinely-unowned disciplines remained, each with zero dedicated workflow headers for
+its defining terms and no dedicated owner.
 
 Pass 13 deliberately strengthened the two thinnest families by workflow count — **Asset &
 Infrastructure** (224 → 248 via VS-138 Integrated Facilities Management) and **Technology & Data**
@@ -456,7 +478,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (4,092) matches actual PA workflow header count (4,092). ✅
+- Grand total (4,140) matches actual PA workflow header count (4,140). ✅
 - All 1,168 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -539,6 +561,15 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   Network Design/Multi-Echelon Inventory Optimization** — **filled** by VS-133, VS-134, VS-135,
   and VS-136 (Pass 12); all four were genuinely-unowned enterprise-management disciplines whose
   defining terms appeared in zero PA files as dedicated workflow headers.
+- **PIM/DAM, Integrated Facilities Management, Trade Show/Field Event Marketing, and Field
+  Sales/Route-to-Market Force Management** — **filled** by VS-137, VS-138, VS-139, and VS-140
+  (Pass 13); all four were genuinely-unowned shared-service/B2B-growth disciplines whose defining
+  terms appeared in zero or near-zero PA files as dedicated workflow headers.
+- **Employee Transport/Shuttle/Daily Commute Management** and **Cash-on-Delivery (COD)
+  Operations/Driver Cash Handling & Reconciliation** — **filled** by VS-141 and VS-142 (Pass 14);
+  both were genuinely-unowned disciplines whose defining terms appeared in zero PA files as
+  dedicated workflow headers and had been conflated with adjacent covered capabilities (business
+  travel/goods fleet/facilities for transport; acquirer settlement/last-mile/in-store cash for COD).
 - No further capability gaps are currently outstanding against the model company profile.
   Future business-model changes (e.g., used-material marketplace, customer construction-loan
   brokerage, captive insurance underwriting) may be re-evaluated in a future revision.
@@ -699,4 +730,4 @@ tower).
 
 ---
 
-*Date: 2026-06-15 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*
+*Date: 2026-06-16 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*

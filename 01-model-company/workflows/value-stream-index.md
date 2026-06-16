@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 136 Value Streams · 412 Process Areas · 4092 Workflows
+8 Families · 138 Value Streams · 418 Process Areas · 4140 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), and a thirteenth pass on 2026-06-16 (132 → 136 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), and a fourteenth pass on 2026-06-16 (136 → 138 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -113,7 +113,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-116](VS-116-performance-bond-surety-and-bank-guarantee-management/README.md) | Performance Bond, Surety & Bank Guarantee Management | Gap analysis | 3 | 24 |
 |  | [VS-118](VS-118-revenue-assurance-pricing-integrity-and-leakage-management/README.md) | Revenue Assurance, Pricing Integrity & Leakage Management | Gap analysis | 3 | 24 |
 |  | [VS-125](VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md) | Cross-Channel Fraud Management & Payment Fraud Protection | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **507** |
+|  | [VS-142](VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/README.md) | Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **531** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 24 |
@@ -123,7 +124,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-121](VS-121-talent-acquisition-employer-brand-candidate-experience/README.md) | Talent Acquisition, Employer Brand & Candidate Experience | Gap analysis | 3 | 24 |
 |  | [VS-123](VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/README.md) | Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline | Gap analysis | 3 | 24 |
   | [VS-134](VS-134-organizational-change-management-digital-adoption-transformation-enablement/README.md) | Organizational Change Management, Digital Adoption & Transformation Enablement | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **266** |
+  | [VS-141](VS-141-employee-transport-shuttle-and-daily-commute-management/README.md) | Employee Transport, Shuttle & Daily Commute Management | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **290** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -176,7 +178,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
   | [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | Gap analysis | 3 | 24 |
   | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **326** |
-| | | | **Grand Total** | **4092** | |
+| | | | **Grand Total** | **4140** | |
 
 ---
 
@@ -663,6 +665,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-125.2** [Channel-Specific Fraud Prevention & Detection](./VS-125-cross-channel-fraud-management-payment-fraud-protection/PA-125.2-channel-fraud-prevention-detection.md) — 8 workflows
 - **PA-125.3** [Investigation, Recovery, Compliance & Analytics](./VS-125-cross-channel-fraud-management-payment-fraud-protection/PA-125.3-investigation-recovery-compliance-analytics.md) — 8 workflows
 
+**[VS-142: Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation](./VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/README.md)** (24 workflows)
+
+- **PA-142.1** [COD Program Design, Policy & Risk Framework](./VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/PA-142.1-cod-program-design-policy-and-risk-framework.md) — 8 workflows
+- **PA-142.2** [COD Cash Collection, Custody & Driver/3PL Reconciliation](./VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/PA-142.2-cod-cash-collection-custody-and-driver-3pl-reconciliation.md) — 8 workflows
+- **PA-142.3** [COD Settlement, Working-Capital, Fraud & Analytics](./VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/PA-142.3-cod-settlement-working-capital-fraud-and-analytics.md) — 8 workflows
+
 
 ### People
 
@@ -721,6 +729,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-134.1** [OCM Strategy, Governance & Change Readiness Assessment](./VS-134-organizational-change-management-digital-adoption-transformation-enablement/PA-134.1-ocm-strategy-governance-and-change-readiness.md) — 8 workflows
 - **PA-134.2** [Change Delivery, Communications & Stakeholder Engagement](./VS-134-organizational-change-management-digital-adoption-transformation-enablement/PA-134.2-change-delivery-communications-and-stakeholder-engagement.md) — 8 workflows
 - **PA-134.3** [Digital Adoption, Training & Sustainment Analytics](./VS-134-organizational-change-management-digital-adoption-transformation-enablement/PA-134.3-digital-adoption-training-and-sustainment-analytics.md) — 8 workflows
+
+**[VS-141: Employee Transport, Shuttle & Daily Commute Management](./VS-141-employee-transport-shuttle-and-daily-commute-management/README.md)** (24 workflows)
+
+- **PA-141.1** [Transport Strategy, Policy & Commute-Allowance Framework](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.1-transport-strategy-policy-and-commute-allowance-framework.md) — 8 workflows
+- **PA-141.2** [Shuttle Service, Route & Daily Commute Operations](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.2-shuttle-service-route-and-daily-commute-operations.md) — 8 workflows
+- **PA-141.3** [Transport Vendor, Safety, Cost & Commute Analytics](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.3-transport-vendor-safety-cost-and-commute-analytics.md) — 8 workflows
 
 
 ### Asset & Infrastructure
@@ -1047,12 +1061,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
-Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125)
-Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134)
+Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125, VS-142)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138)
 Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
 
-*Total: 4092 workflows across 136 value streams · Date: 2026-06-16*
+*Total: 4140 workflows across 138 value streams · Date: 2026-06-16*

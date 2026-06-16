@@ -110,7 +110,7 @@ number never needs a VS prefix.
 
 ```
 workflows/
-├── value-stream-index.md              Master index (8 families · 120 VS · 364 PAs)
+├── value-stream-index.md              Master index (8 families · 138 VS · 418 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
 ├── workflow-criticality-classification.md  Tier 1/2/3 priorities (1,168 confirmed; 2,659 proposed in workflow-criticality-proposed.md)
