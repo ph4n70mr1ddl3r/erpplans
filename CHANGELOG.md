@@ -4,6 +4,89 @@
 
 ---
 
+## 2026-06-17 — Workflow gap analysis (Pass 17): add VS-151–VS-156 (144 workflows W4481–W4624)
+
+The largest single gap-analysis pass (6 value streams, 18 process areas, 144 workflows),
+combining three genuinely-uncovered operational disciplines with the three capabilities explicitly
+flagged as *future business-model extensions* in §6 of prior passes. Each gap's defining terms
+appeared in zero or near-zero PA files as dedicated workflow headers with no dedicated owner; the
+three future-flagged capabilities are activated here **within BuildRight's current retail charter**
+(captive = own risk-financing vehicle, not a third-party insurer; construction finance =
+broker/referral, not lending; resale = certified pre-owned, not an open C2C marketplace). VS
+numbering was shifted to VS-151–VS-156 / W4481–W4624 to avoid colliding with VS-143–VS-150 /
+W4289–W4480 allocated by Passes 15–16 (which independently added bulky-goods delivery, staff
+housing, garden center, mystery shopping, customer-safety/premises-liability, lease accounting,
+self-checkout, and drug-free-workplace value streams).
+
+- **VS-151 — Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations** (Technology & Data,
+  W4481–W4504): physical item-identification & labeling infrastructure for 35K SKUs / 600 POS /
+  200 stores / 134.4M annual POS line items. 'auto-ID', 'barcode governance', 'RFID operations',
+  'price-tag labeling', 'EAS operations' appeared in zero PA files as headers / zero VS names;
+  scattered across VS-29 (W1345 barcode/GS1), VS-71, VS-08, VS-23, VS-04/VS-05, VS-115, VS-111.
+  None owned GS1 governance, label spec/production, in-store application, EAS/RFID operations,
+  RA 7394 price-tag compliance, read-rate/label-conformance, or auto-ID fraud-vector control.
+  Strengthens Technology & Data (326 → 350).
+- **VS-152 — Corporate Social Responsibility, Foundation & Community Investment** (Governance &
+  Assurance, W4505–W4528): social-impact & community-investment discipline. 'CSR' appeared in ~58
+  PA files, 'foundation' ~24, but as incidental references; 'CSR'/'social responsibility'/'
+  foundation'/'community investment' appeared in zero PA files as headers. None owned the
+  Foundation (SEC/BIR-donee/PCNC), community-investment portfolio, disaster relief, volunteerism,
+  impact measurement (SROI), or GRI/IRIS+ reporting — distinct from VS-25 (ESG reporting), VS-94
+  (cooperative sourcing), VS-104 (govt affairs), VS-69 (corporate disaster ops), VS-14.3 (CSR
+  comms). Strengthens Governance & Assurance (792 → 816).
+- **VS-153 — Captive Insurance, Reinsurance & Enterprise Risk Financing** (Finance, W4529–W4552):
+  enterprise risk-financing / self-insurance discipline. Previously flagged as a future
+  business-model extension; 'captive insurance', 'reinsurance', 'self-insur' appeared in only 1–4
+  PA files. None owned captive feasibility/formation/domicile, underwriting scope, reinsurance
+  program, claims, captive finance/statutory/RBC compliance, or portfolio analytics — distinct
+  from VS-26 (buys/claims commercial policies), VS-21.2 (measures risk), VS-18 (group cash).
+  Strengthens Finance (555 → 579).
+- **VS-154 — Home Construction Finance, Loan Brokerage & Mortgage Referral Services** (Finance,
+  W4553–W4576): customer construction-finance enablement discipline. Previously flagged as a
+  future capability; 'construction loan', 'home loan', 'mortgage' appeared in 1–6 PA files. None
+  owned the brokerage/referral model (lender network, BSP accreditation, origination handoff,
+  draw-schedule linkage to VS-66/VS-12, referral economics, anti-predatory-lending compliance) —
+  distinct from VS-38 (in-house credit), VS-16 (trade AR), VS-66 (project design). Scoped as
+  broker/referral (not lending). Strengthens Finance (579 → 603).
+- **VS-155 — Trade-In, Buy-Back & Certified Pre-Owned / Refurbished Product Resale** (Make & Move,
+  W4577–W4600): circular trade-in & certified-resale discipline. Previously flagged as a future
+  capability; 'trade-in', 'buy-back', 'pre-owned', 'second-hand' appeared in 0–10 PA files. None
+  owned trade-in valuation/grading, take-back, inspection/refurbishment/certification, resale
+  listing/fulfillment/warranty, or circular-economy analytics — distinct from VS-32 (defective
+  returns), VS-73 (end-of-life disposal), VS-12.1 (repair for owner — this refurbishes for resale),
+  VS-05.3 (BuildRight's own stock disposition). Scoped as certified resale (not open C2C).
+  Strengthens Make & Move (403 → 427).
+- **VS-156 — In-Store Value-Added Services & Financial Agency Operations** (Sell & Serve,
+  W4601–W4624): financial-agency/VAS counter discipline (bills payment, domestic remittance,
+  e-money cash-in/out, mobile load). 'bills payment', 'e-money', 'cash-in', 'value-added service'
+  appeared in 0–2 PA files as headers. None owned the agency product/partner portfolio, BSP agent
+  accreditation, counter operations/KYC, settlement/reconciliation/commission, AML/BSP compliance,
+  or analytics — distinct from VS-80 (BuildRight's own payment rail), VS-08.2 (in-store retail
+  cash), VS-86 (AML program — this executes it as agent), VS-142 (COD), VS-154 (project
+  financing). Scoped as agent-of-principal (not principal). Strengthens Sell & Serve (1,242 →
+  1,266).
+
+All six are fully detailed to the WORKFLOW-FORMAT-GUIDE quality bar (specific system touchpoints,
+pain points with mitigations, time estimates with scaling math, Automation Opportunity, Controls,
+and cross-references). The 144 new workflows are **unclassified** and carry a keyword-driven
+proposed tier in `workflow-criticality-proposed.md` (regenerated via
+`07-methodology/classify-workflows.py`), exactly as prior batches.
+
+**Cross-reference reconciliation:** updated value-stream-index (152 VS / 460 PA / 4,476 workflows,
+family subtotals + grand total, value-stream-blocks, coverage note, detailed map, footer),
+workflow-gap-analysis (Pass 17 §3 rows #65–#70, §4 table, family-subtotal-impact table with new
+After-Pass-17 column, §5 validation, §6 deferred-gaps + future-flag update, header),
+workflow-criticality-classification (1,145/4,476 classified; 3,331 unclassified all proposed;
+phase table 673/2,504/154), workflow-criticality-proposed (regenerated, 3,331),
+workflow-system-touchpoint-map footer (v69.0, 4,476 / 152 VS / VS-79–VS-156 scope),
+workflow-dependency-map header + footer (v3.4, 152 VS / 4,476 workflows / VS-151–VS-156 noted),
+README (tree, key metrics, classification line, coverage note, ASCII diagrams), executive-summary
+counts, requirement-workflow-matrix total, workflows/README master-index count + family
+reconciliation, WORKFLOW-FORMAT-GUIDE index line, and VS-133 PA-file volume lines. Validator:
+0 errors.
+
+---
+
 ## 2026-06-17 — Workflow gap analysis (Pass 16): add VS-147–VS-150 (96 workflows W4385–W4480)
 
 A sixteenth gap-analysis pass added **four value streams / twelve process areas / ninety-six

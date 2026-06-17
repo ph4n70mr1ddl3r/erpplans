@@ -2,9 +2,10 @@
 
 > Classifies 1,145 unique operational workflows into criticality tiers (the confirmed register
 > holds 1,168 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
-> a `##` parent). An additional 3,091 workflows (4,236 total − 1,145 classified) remain
-> unclassified pending review — of which 2,995 carry a keyword-driven proposed tier and 96
-> (added in Pass 15 as VS-143–VS-146, W4289–W4384) are pending their first proposal.
+> a `##` parent). An additional 3,331 workflows (4,476 total − 1,145 classified) remain
+> unclassified pending review — all 3,331 carry a keyword-driven proposed tier in
+> [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via
+> `07-methodology/classify-workflows.py`).
 >
 > Back to [Workflow Index](README.md)
 
@@ -759,7 +760,7 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 
 ### Proposed classification (keyword-driven, pending human review)
 
-The **2,995** workflows not yet in the confirmed register above have been assigned a *proposed*
+The **3,331** workflows not yet in the confirmed register above have been assigned a *proposed*
 tier by [`07-methodology/classify-workflows.py`](../../07-methodology/classify-workflows.py) using
 conservative keyword rules; see the companion file
 [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). On review, promote/demote
@@ -767,21 +768,21 @@ rows by moving them into the confirmed sections above.
 
 | Phase | Label | Proposed Count |
 |---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) — proposed | 622 |
-| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,227 |
-| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 146 |
-| **Proposed Total** | | **2,995** |
+| Phase 1 | Go-Live Critical (Tier 1) — proposed | 673 |
+| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,504 |
+| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 154 |
+| **Proposed Total** | | **3,331** |
 
 | Coverage | Workflows |
 |---|---|
 | Confirmed (hand-reviewed) | 1,168 rows (1,145 unique `##` workflows) |
-| Proposed (keyword, pending review) | 2,995 |
-| Without even a proposal | 96 (Pass 15: VS-143–VS-146, W4289–W4384) |
-| **Grand Total** | **4,236** unique `##` workflows (1,145 confirmed + 3,091 unclassified = 2,995 proposed + 96 pending) |
+| Proposed (keyword, pending review) | 3,331 |
+| Without even a proposal | 0 |
+| **Grand Total** | **4,476** unique `##` workflows (1,145 confirmed + 3,331 unclassified, all proposed) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,168 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,236 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,168 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,476 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-06-14 addition:** Value streams VS-79 through VS-88 (240 workflows, W2753–W2992) were added covering Tax Management & BIR Statutory Reporting, Payment Operations & Acquirer Settlement, Cash-in-Transit & Armored Car Operations, Sari-Sari Store & MSME Micro-Wholesale, Occupational Health & Employee Wellness, Labor Relations & Collective Bargaining, Mandatory Discount & Tax Credit Recovery, Anti-Financial Crime (AML/KYC/ABC), Customs Trade Compliance & Tariff Optimization, and Document Control & Records Retention. These 240 workflows are currently **unclassified** (counted in the unclassified total) pending criticality review; many warrant Tier 1 classification (BIR tax filing, AML/STR reporting, CBA administration, mandatory-discount tax credit recovery, CIT operations) and will be assigned in a follow-up classification pass.
 >

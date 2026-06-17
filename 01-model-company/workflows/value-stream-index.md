@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 23 pending rework (VS-69/70/71 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-150 | 62 | Fully detailed (sixteen gap-analysis passes, 2026-06-14/15/16/17) |
+| Gap analysis | VS-89 – VS-156 | 68 | Fully detailed (seventeen gap-analysis passes, 2026-06-14/15/16/17) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 146 Value Streams · 442 Process Areas · 4332 Workflows
+8 Families · 152 Value Streams · 460 Process Areas · 4476 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), and a sixteenth pass on 2026-06-17 (142 → 146 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), and a seventeenth pass on 2026-06-17 (146 → 152 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -62,7 +62,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-111](VS-111-packaging-pallet-and-returnable-transport-item-management/README.md) | Packaging, Pallet & Returnable Transport Item (RTI) Management | Gap analysis | 3 | 24 |
   | [VS-136](VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/README.md) | Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering | Gap analysis | 3 | 24 |
   | [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **403** |
+  | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **427** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
@@ -97,7 +98,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
   | [VS-140](VS-140-field-sales-outside-sales-and-route-to-market-force-management/README.md) | Field Sales, Outside Sales & Route-to-Market Force Management | Gap analysis | 3 | 24 |
   | [VS-145](VS-145-garden-center-live-goods-and-plant-nursery/README.md) | Garden Center, Live Goods & Plant Nursery Operations | Gap analysis | 3 | 24 |
   | [VS-149](VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/README.md) | Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **1242** |
+  | [VS-156](VS-156-in-store-value-added-services-and-financial-agency-operations/README.md) | In-Store Value-Added Services & Financial Agency Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **1266** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -118,7 +120,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-125](VS-125-cross-channel-fraud-management-payment-fraud-protection/README.md) | Cross-Channel Fraud Management & Payment Fraud Protection | Gap analysis | 3 | 24 |
 |  | [VS-142](VS-142-cash-on-delivery-operations-driver-cash-handling-and-reconciliation/README.md) | Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation | Gap analysis | 3 | 24 |
 |  | [VS-148](VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/README.md) | Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **555** |
+  | [VS-153](VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/README.md) | Captive Insurance, Reinsurance & Enterprise Risk Financing | Gap analysis | 3 | 24 |
+  | [VS-154](VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/README.md) | Home Construction Finance, Loan Brokerage & Mortgage Referral Services | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **603** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 24 |
@@ -173,7 +177,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
   | [VS-133](VS-133-operational-excellence-process-mining-continuous-improvement/README.md) | Operational Excellence, Process Mining & Continuous Improvement Program | Gap analysis | 3 | 24 |
   | [VS-146](VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md) | Customer Mystery Shopping & Service Quality Assurance Program | Gap analysis | 3 | 24 |
   | [VS-147](VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md) | Customer Safety, Premises Liability & In-Store Risk Management | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **792** |
+  | [VS-152](VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md) | Corporate Social Responsibility, Foundation & Community Investment | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **816** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -185,8 +190,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Gap analysis | 3 | 24 |
   | [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | Gap analysis | 3 | 24 |
   | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **326** |
-| | | | **Grand Total** | **4332** | |
+  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **350** |
+| | | | **Grand Total** | **4476** | |
 
 ---
 
@@ -372,6 +378,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-143.1** [Bulky/White-Goods Delivery Network, Scheduling & Capacity](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/PA-143.1-bulky-delivery-network-scheduling-and-capacity.md) — 8 workflows
 - **PA-143.2** [Delivery Execution, Installation & In-Home Service Operations](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/PA-143.2-delivery-execution-installation-and-in-home-service.md) — 8 workflows
 - **PA-143.3** [Haul-Away, Old-Unit Recycling, Reverse Logistics & Analytics](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/PA-143.3-haul-away-old-unit-recycling-reverse-logistics-and-analytics.md) — 8 workflows
+
+**[VS-155: Trade-In, Buy-Back & Certified Pre-Owned Product Resale](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md)** (24 workflows)
+
+- **PA-155.1** [Trade-In/Buy-Back Program Design, Valuation & Pricing](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/PA-155.1-tradein-buyback-program-design-valuation-and-pricing.md) — 8 workflows
+- **PA-155.2** [Take-Back, Inspection, Refurbishment & Certification](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/PA-155.2-takeback-inspection-refurbishment-and-certification.md) — 8 workflows
+- **PA-155.3** [Resale Listing, Fulfillment, Warranty & Analytics](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/PA-155.3-resale-listing-fulfillment-warranty-and-analytics.md) — 8 workflows
 
 ### Sell & Serve
 
@@ -581,6 +593,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-149.2** [SCO & Scan-&-Go Daily Operations & Customer Experience](./VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/PA-149.2-sco-and-scan-go-daily-operations-and-customer-experience.md) — 8 workflows
 - **PA-149.3** [Loss Prevention, Cash, Compliance & Analytics](./VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/PA-149.3-loss-prevention-cash-compliance-and-analytics.md) — 8 workflows
 
+**[VS-156: In-Store Value-Added Services & Financial Agency Operations](./VS-156-in-store-value-added-services-and-financial-agency-operations/README.md)** (24 workflows)
+
+- **PA-156.1** [Value-Added Service & Financial Agency Product Setup & Partner Contracts](./VS-156-in-store-value-added-services-and-financial-agency-operations/PA-156.1-value-added-service-and-financial-agency-product-setup-and-partner-contracts.md) — 8 workflows
+- **PA-156.2** [Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load](./VS-156-in-store-value-added-services-and-financial-agency-operations/PA-156.2-counter-operations-bills-payment-remittance-e-money-and-mobile-load.md) — 8 workflows
+- **PA-156.3** [Settlement, Reconciliation, Compliance (AML/BSP) & Analytics](./VS-156-in-store-value-added-services-and-financial-agency-operations/PA-156.3-settlement-reconciliation-compliance-and-analytics.md) — 8 workflows
+
 ### Finance
 
 **[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (42 workflows)
@@ -702,6 +720,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-148.1** [Lease Portfolio Identification, Recognition & PFRS 16 Transition](./VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/PA-148.1-lease-portfolio-identification-recognition-and-pfrs-16-transition.md) — 8 workflows
 - **PA-148.2** [ROU Asset & Lease Liability Measurement, Modification & Reporting](./VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/PA-148.2-rou-asset-and-lease-liability-measurement-modification-and-reporting.md) — 8 workflows
 - **PA-148.3** [Lease Administration, Compliance & Optimization Analytics](./VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/PA-148.3-lease-administration-compliance-and-optimization-analytics.md) — 8 workflows
+
+**[VS-153: Captive Insurance, Reinsurance & Enterprise Risk Financing](./VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/README.md)** (24 workflows)
+
+- **PA-153.1** [Captive Feasibility, Formation & Domicile/Governance](./VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/PA-153.1-captive-feasibility-formation-and-domicile-governance.md) — 8 workflows
+- **PA-153.2** [Captive Underwriting, Risk Transfer & Reinsurance Program](./VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/PA-153.2-captive-underwriting-risk-transfer-and-reinsurance-program.md) — 8 workflows
+- **PA-153.3** [Captive Claims, Finance, Regulatory & Portfolio Analytics](./VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/PA-153.3-captive-claims-finance-regulatory-and-portfolio-analytics.md) — 8 workflows
+
+**[VS-154: Home Construction Finance, Loan Brokerage & Mortgage Referral Services](./VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/README.md)** (24 workflows)
+
+- **PA-154.1** [Construction Finance Product, Lender Network & Brokerage Setup](./VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/PA-154.1-construction-finance-product-lender-network-and-brokerage-setup.md) — 8 workflows
+- **PA-154.2** [Customer Loan Origination, Underwriting & Closing](./VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/PA-154.2-customer-loan-origination-underwriting-and-closing.md) — 8 workflows
+- **PA-154.3** [Loan Servicing, Referral Economics, Compliance & Analytics](./VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/PA-154.3-loan-servicing-referral-economics-compliance-and-analytics.md) — 8 workflows
 
 
 ### People
@@ -1027,6 +1057,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-147.2** [In-Store Customer Safety Operations & Hazard Control](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/PA-147.2-in-store-customer-safety-operations-and-hazard-control.md) — 8 workflows
 - **PA-147.3** [Customer Incident Response, Claims & Safety Analytics](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/PA-147.3-customer-incident-response-claims-and-safety-analytics.md) — 8 workflows
 
+**[VS-152: Corporate Social Responsibility, Foundation & Community Investment](./VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md)** (24 workflows)
+
+- **PA-152.1** [CSR Strategy, Governance & Foundation Operations](./VS-152-corporate-social-responsibility-foundation-and-community-investment/PA-152.1-csr-strategy-governance-and-foundation-operations.md) — 8 workflows
+- **PA-152.2** [Community Investment, Disaster Response & Volunteer Programs](./VS-152-corporate-social-responsibility-foundation-and-community-investment/PA-152.2-community-investment-disaster-response-and-volunteer-programs.md) — 8 workflows
+- **PA-152.3** [CSR Impact Measurement, Reporting & Stakeholder Engagement](./VS-152-corporate-social-responsibility-foundation-and-community-investment/PA-152.3-csr-impact-measurement-reporting-and-stakeholder-engagement.md) — 8 workflows
+
 ### Technology & Data
 
 **[VS-27: IT Operations & Security](./VS-27-it-operations-security/README.md)** (62 workflows)
@@ -1095,6 +1131,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-137.2** [Digital Asset Management, Rich Content & SDS/Certificate Lifecycle](./VS-137-product-information-management-and-digital-asset-management/PA-137.2-digital-asset-management-rich-content-and-sds-certificate-lifecycle.md) — 8 workflows
 - **PA-137.3** [Content Syndication, Channel Publishing & PIM Analytics](./VS-137-product-information-management-and-digital-asset-management/PA-137.3-content-syndication-channel-publishing-and-pim-analytics.md) — 8 workflows
 
+**[VS-151: Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md)** (24 workflows)
+
+- **PA-151.1** [Auto-ID Standards, GS1 Governance & Label/Tag Specification](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.1-auto-id-standards-gs1-governance-and-label-tag-specification.md) — 8 workflows
+- **PA-151.2** [Label & Price-Tag Production, Printing & In-Store Application](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.2-label-and-price-tag-production-printing-and-application.md) — 8 workflows
+- **PA-151.3** [EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.3-eas-rfid-tagging-source-tagging-and-loss-prevention-integration.md) — 8 workflows
+
 
 ---
 
@@ -1125,4 +1167,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, 
 ```
 
 
-*Total: 4332 workflows across 146 value streams · Date: 2026-06-17*
+*Total: 4476 workflows across 152 value streams · Date: 2026-06-17*

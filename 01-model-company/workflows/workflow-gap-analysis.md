@@ -2,7 +2,7 @@
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
 > Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15),
-> Pass 13 and Pass 14 (2026-06-16), Pass 15 and Pass 16 (2026-06-17)).
+> Pass 13 and Pass 14 (2026-06-16), Pass 15 and Pass 16 (2026-06-17), and Pass 17 (2026-06-17)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -132,6 +132,12 @@ identify capability gaps not addressed by any existing value stream.
 | 62 | **Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management** | A 5-entity group operating ~205 mostly-**leased** sites (200 stores + 4 DCs + HQ, many leased from its own BuildRight Property Mgmt Inc.) plus leased forklifts/fleet/IT/POS/fixtures — a large heterogeneous lease portfolio recognized under **PFRS 16** as right-of-use assets and lease liabilities (since 2019); mis-recognition distorts EBITDA/EBIT, leverage covenants, and the audited PFRS financials, with heavy disclosure/judgment areas (discount rate, term, renewal options, variable payments) | **New gap (Pass 16)** — 'right-of-use', 'lease liability', and 'ROU asset' each appeared in **zero** PA files as dedicated workflow headers and 'PFRS 16' in only 3 (scattered single-step mentions) — conflated with VS-42 (lessee commercial lease admin), VS-17.3 (tax deduction), VS-18 (cash), VS-20.1 (lease intake), VS-35 (owned assets), VS-29 (contract master) — no value stream owned the *PFRS 16 recognition/measurement/disclosure program* | **FILLED — VS-148** |
 | 63 | **Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations** | A 200-store, 600-terminal, 2.8M-monthly-transaction big-box retailer under wage (DOLE minimum/13th-month) pressure with a self-service-conditioned customer base — SCO/scan-&-go/unattended is a strategic wage-and-queue lever, but without a dedicated program leaks margin (SCO loss benchmarks 2–5× staffed-POS shrink from scan-avoidance/swap/weight-manipulation), creates cash/tender-reconciliation exposure, and risks Consumer Act (RA 7394) price-integrity and BIR CAS/e-invoicing non-compliance | **New gap (Pass 16)** — 'scan-and-go', 'scan-go', 'unattended', and 'self-checkout' each appeared in **zero** PA files as dedicated workflow headers (only scattered single-step mentions) — conflated with VS-08 (staffed POS), VS-07 (store execution), VS-23 (broad shrink LP), VS-09.3 (amenity), VS-109 (project deployment) — no value stream owned the *SCO/scan-&-go/unattended operating program* | **FILLED — VS-149** |
 | 64 | **Drug-Free Workplace & Substance Abuse Program** | ~6,715 employees across 5 entities/~205 sites plus ~10–20% contingent labor and a large **safety-sensitive** population (forklift/reach operators, delivery drivers under LTFRB/DOTC, paint/chemical handlers) inside a premises-liability-exposed customer environment (VS-147) — DOLE D.O. 53-04 and RA 9165 Art. V make a drug-free workplace program a legal obligation (non-compliance → DOLE finding/penalty + officers' personal RA 9165 liability), and an impaired operator/driver is a catastrophic safety risk | **New gap (Pass 16)** — 'drug test', 'drug-free workplace', 'substance abuse', 'reasonable suspicion', and 'random drug testing' each appeared in **zero** PA files as dedicated workflow headers — sprinkled as single steps inside VS-83 (clinic/exam), VS-19.1 (pre-employment onboarding), VS-24 (post-incident), VS-06.2 (driver), VS-22 (DOLE documentation), VS-56 (partner driver) — no value stream owned the *end-to-end drug-free workplace program* | **FILLED — VS-150** |
+| 65 | **Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations** | At 35,000 active SKUs, 600 POS terminals, 200 stores, and 134.4M annual POS line items, the physical item-identification and labeling infrastructure (GS1/GTIN governance, label/price-tag format & production, shelf-edge/hang-tag/bulk-yard application, EAS/RFID tagging & detection) makes every SKU scannable, correctly priced (RA 7394 price-tag compliance), loss-protected (< 1.5% shrink target ≈ PHP 0.9B/yr), and traceable — a 1% scan-fail/misprice rate is ~1.3M failure events/yr (checkout friction + revenue leakage) | **New gap (Pass 17)** — 'auto-ID', 'barcode governance', 'RFID operations', 'price-tag labeling', and 'EAS operations' each appeared in **zero** PA files as dedicated workflow headers and **zero** VS directory names; the terms were scattered across VS-29 (W1345 barcode/GS1), VS-71 (authentication tags), VS-08 (POS scan), VS-23 (EAS/exception), VS-04/VS-05 (RFID bin/lot), VS-115 (calibration), VS-111 (transport labeling) — no value stream owned the *labeling & auto-ID operating discipline* (GS1 governance, label spec/production, in-store application, EAS/RFID operations, RA 7394 price-tag compliance, read-rate/label-conformance, fraud-vector control) | **FILLED — VS-151** |
+| 66 | **Corporate Social Responsibility, Foundation & Community Investment** | A PHP 62.3B retailer operating across 200 Philippine communities with a stated ESG posture (VS-25) and a cooperative/community sourcing program (VS-94) requires a structured social-impact/community-investment discipline (the BuildRight Foundation, housing/shelter/livelihood/education/disaster-relief programs, employee volunteerism & payroll-giving, NGO/LGU partnerships, impact measurement & reporting); CSR spend benchmarks 0.5–2% of net profit (PHP ~0.2B–0.8B/yr) and ungoverned spend leaks value or fails measurable impact | **New gap (Pass 17)** — 'CSR' appeared across ~58 PA files, 'foundation' ~24, but as incidental *references*; 'CSR', 'social responsibility', 'foundation', and 'community investment' appeared in **zero** PA files as dedicated workflow headers — no value stream owned the *CSR/Foundation operating discipline* (strategy/governance, Foundation SEC/BIR-donee/PCNC setup, community-investment portfolio, disaster relief, volunteerism, impact measurement/SROI, GRI/IRIS+ reporting) | **FILLED — VS-152** |
+| 67 | **Captive Insurance, Reinsurance & Enterprise Risk Financing** | At PHP 62.3B revenue, 205 typhoon/earthquake-prone sites, 600 POS, ~42.9K monthly ecommerce orders, ~6,715 employees, and ~5,200 trade accounts, the total cost of risk (property catastrophe, liability, fleet, crime, cyber, D&O, employee) is a material opex line, and the Philippine commercial market under-serves catastrophe/specialty lines — a captive that retains the predictable layer and reinsures the catastrophic layer is a standard risk-financing tool for large PH groups, reducing net cost of risk 10–25% | **Future business-model extension flagged in §6 of prior passes** — 'captive insurance', 'reinsurance', and 'self-insur' appeared in only 1–4 PA files as incidental references; this Pass 17 activates the previously-flagged future capability. Distinct from VS-26 (buys/claims commercial policies — this value stream operates the captive that underwrites/reinsures), VS-21.2 (measures risk — this finances it), and VS-18 (group cash — this manages captive capital) | **FILLED — VS-153** |
+| 68 | **Home Construction Finance, Loan Brokerage & Mortgage Referral Services** | Home building/renovation is capital-constrained — many B2C homeowners and small contractors cannot start or complete projects without financing; BuildRight's 'Home Building Partner' positioning, project/design capability (VS-66), installation (VS-12), and B2B trade base make a construction-loan/mortgage brokerage offering a natural adjacency that lifts basket size, conversion, and project completion, with referral economics (0.5–2% of loan value) on a multi-billion financing flow | **Future business-model extension flagged in §6 of prior passes** — 'construction loan', 'home loan', and 'mortgage' appeared in only 1–6 PA files as incidental references; this Pass 17 activates the previously-flagged future capability *within BuildRight's retail charter* (broker/referral, not lending). Distinct from VS-38 (in-house store credit), VS-16 (trade AR), VS-66 (project design), and VS-12 (the build the financing releases funds to) | **FILLED — VS-154** |
+| 69 | **Trade-In, Buy-Back & Certified Pre-Owned / Refurbished Product Resale** | Power tools, appliances, and equipment (~3,500 hand tools, ~1,750 power tools, ~1,750 appliances) have residual value and a price-sensitive secondhand market in the Philippines; a trade-in program drives new-purchase attach, captures the budget segment with certified pre-owned, differentiates on sustainability (VS-25/VS-73), and creates a circular revenue stream | **Future business-model extension flagged in §6 of prior passes** — 'trade-in', 'buy-back', 'pre-owned', and 'second-hand' appeared in 0–10 PA files as incidental references; this Pass 17 activates the previously-flagged future capability in a BuildRight-charter-consistent way (certified resale, not an open C2C marketplace). Distinct from VS-32 (defective returns for refund), VS-73 (end-of-life disposal/recycling), VS-12.1 (repair for the owning customer — this refurbishes for resale), and VS-05.3 (disposition of BuildRight's own unsold stock) | **FILLED — VS-155** |
+| 70 | **In-Store Value-Added Services & Financial Agency Operations** | 200 provincial stores serving communities where bills-payment, domestic remittance, e-money cash-in/out, and mobile load are high-demand footfall drivers; ~600 customer-service counters with existing cash handling; a trust/community brand; and a commission-revenue + basket-linkage opportunity — but financial-agency operations carry BSP regulatory exposure (consumer protection, AML), cash-settlement risk, and data-privacy obligations | **New gap (Pass 17)** — 'bills payment', 'e-money', 'cash-in', and 'value-added service' appeared in 0–2 PA files as incidental references and in **zero** PA files as dedicated workflow headers — no value stream owned the *financial-agency/VAS operating discipline* (product/partner portfolio, BSP agent accreditation, counter operations/KYC, settlement/reconciliation/commission, AML/BSP compliance, fraud, analytics). Distinct from VS-80 (BuildRight's own merchandise payment rail), VS-08.2 (in-store retail cash), VS-86 (AML program — this executes it as agent), VS-142 (COD — BuildRight's own cash), and VS-146 (project financing) | **FILLED — VS-156** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -358,21 +364,34 @@ The 96 new workflows added in Pass 15 are currently **unclassified** (counted in
 
 The 96 new workflows added in Pass 16 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 15 batches were handled. Several Pass 16 workflows are anticipated Tier 1 (premises-liability/CAPA/BFP Fire Code/Consumer Act controls in VS-147, PFRS 16 recognition/disclosure/reconciliation controls in VS-148, scan-avoidance/weight-security/BIR CAS/Consumer Act price-integrity controls in VS-149, and DOLE D.O. 53-04/chain-of-custody/MRO/due-process/RA 10173 controls in VS-150).
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14 + Pass 15 + Pass 16)
+**Pass 17** (W4481–W4624): six value streams, 18 process areas, 144 workflows — the largest single pass, combining three genuinely-uncovered operational disciplines with the three capabilities explicitly flagged as *future business-model extensions* in §6 of prior passes. Each gap's defining terms appeared in zero or near-zero PA files as dedicated workflow headers with no dedicated owner; the three future-flagged capabilities are activated here *within BuildRight's retail charter* (captive = BuildRight's own risk financing; construction finance = broker/referral not lending; resale = certified pre-owned not an open C2C marketplace). VS numbering was shifted to VS-151–VS-156 (W4481–W4624) to avoid colliding with VS-143–VS-150 / W4289–W4480 allocated by Passes 15–16. The pass strengthens five families (Technology & Data +24, Governance & Assurance +24, Finance +48, Make & Move +24, Sell & Serve +24):
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 | After Pass 15 | After Pass 16 (current) |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 | 428 | 428 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 | 403 | 403 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 | 1,218 | **1,242** (+24) |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | 531 | 531 | **555** (+24) |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | 290 | 314 | **338** (+24) |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 | 248 | 248 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 | 768 | **792** (+24) |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 | 326 |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** | **4,332** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | 142 | **146** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | 430 | **442** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Technology & Data | 3 | 24 | W4481–W4504 |
+| [VS-152](VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md) | Corporate Social Responsibility, Foundation & Community Investment | Governance & Assurance | 3 | 24 | W4505–W4528 |
+| [VS-153](VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/README.md) | Captive Insurance, Reinsurance & Enterprise Risk Financing | Finance | 3 | 24 | W4529–W4552 |
+| [VS-154](VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/README.md) | Home Construction Finance, Loan Brokerage & Mortgage Referral Services | Finance | 3 | 24 | W4553–W4576 |
+| [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | Make & Move | 3 | 24 | W4577–W4600 |
+| [VS-156](VS-156-in-store-value-added-services-and-financial-agency-operations/README.md) | In-Store Value-Added Services & Financial Agency Operations | Sell & Serve | 3 | 24 | W4601–W4624 |
+
+The 144 new workflows added in Pass 17 are **unclassified** and carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via `07-methodology/classify-workflows.py`), exactly as prior batches; they will be confirmed into the register during a follow-up criticality review. Several Pass 17 workflows are anticipated Tier 1 (RA 7394 price-tag/EAS-cash-integrity and read-rate/labeling-conformance controls in VS-151; Foundation safeguarding/PSEA and fund-use/due-diligence controls in VS-152; captive risk-transfer/capital-adequacy/RBC controls in VS-153; BSP brokerage/anti-predatory/privacy controls in VS-154; safety-screen/data-wipe/warranty-liability controls in VS-155; BSP-agent/KYC-AML/cash-SoD controls in VS-156).
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14 + Pass 15 + Pass 16 + Pass 17)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 | After Pass 15 | After Pass 16 | After Pass 17 (current) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 | 428 | 428 | 428 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 | 403 | 403 | **427** (+24) |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 | 1,218 | 1,242 | **1,266** (+24) |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | 531 | 531 | 555 | **603** (+48) |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | 290 | 314 | 338 | 338 |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 | 248 | 248 | 248 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 | 768 | 792 | **816** (+24) |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 | 326 | **350** (+24) |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** | **4,332** | **4,476** (+144) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | 142 | 146 | **152** (+6) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | 430 | 442 | **460** (+18) |
 
 Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
 VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
@@ -508,7 +527,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (4,332) matches actual PA workflow header count (4,332). ✅
+- Grand total (4,476) matches actual PA workflow header count (4,476). ✅
 - All 1,168 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -609,10 +628,26 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   real estate for housing; hard-goods inventory/standard replenishment/store waste for live goods;
   reactive CX/self-reported store standards/financial audit/process improvement for service-quality
   assurance).
+- **Auto-ID/Barcode/RFID/Price-Tag Labeling & EAS Operations**, **Corporate Social
+  Responsibility/Foundation & Community Investment**, and **In-Store Value-Added Services &
+  Financial Agency Operations** — **filled** by VS-151, VS-152, and VS-156 (Pass 17); three
+  genuinely-uncovered operational disciplines whose defining terms appeared in zero or near-zero
+  PA files as dedicated workflow headers with no dedicated owner (auto-ID/labeling scattered across
+  VS-29/VS-71/VS-08/VS-23/VS-115; CSR referenced ~58 times but never owned; bills-payment/e-money
+  at 0–2 references).
+- **Captive Insurance/Reinsurance & Enterprise Risk Financing**, **Home Construction Finance/Loan
+  Brokerage & Mortgage Referral**, and **Trade-In/Buy-Back & Certified Pre-Owned Product Resale**
+  — **filled** by VS-153, VS-154, and VS-155 (Pass 17); the three capabilities previously flagged
+  as future business-model extensions in this section, now activated within BuildRight's retail
+  charter (captive = own risk-financing vehicle; construction finance = broker/referral not lending;
+  resale = certified pre-owned not an open C2C marketplace).
 - No further capability gaps are currently outstanding against the model company profile after
-  fifteen gap-analysis passes. Future business-model changes (e.g., used-material marketplace,
-  customer construction-loan brokerage, captive insurance underwriting) may be re-evaluated in a
-  future revision.
+  seventeen gap-analysis passes. Future business-model changes (e.g., further captive-cell
+  expansion beyond the initial risk-financing scope, retail-banking/joint-venture deposit-taking,
+  or a full open secondhand C2C marketplace platform) may be re-evaluated in a future revision; the
+  three previously-flagged future capabilities (used-material/trade-in resale, customer
+  construction-loan brokerage, captive insurance) were **filled in Pass 17** as VS-155, VS-154, and
+  VS-153 respectively.
 
 ### Candidate gaps considered but rejected in Pass 7 (adequate coverage)
 
