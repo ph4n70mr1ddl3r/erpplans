@@ -4,6 +4,64 @@
 
 ---
 
+## 2026-06-18 — Workflow gap analysis (Pass 18): add VS-157–VS-161 (120 workflows W4625–W4744)
+
+A focused gap-analysis pass (5 value streams, 15 process areas, 120 workflows) closing five
+further genuinely-unowned disciplines re-surfaced by running the established gap methodology
+(defining terms in zero PA files as dedicated workflow headers, no dedicated owner, conflated with
+adjacent covered coverage) after seventeen prior passes had been judged complete. Two are
+**single-workflow elevations** (VS-157 elevates the over-stuffed W487 in VS-15.1; VS-158 elevates
+the heavily-referenced W85 in VS-17.4), one is a **scattered-slice consolidation** (VS-161 unifies
+the TPRM slices spread across VS-21/VS-86/VS-91/VS-119/VS-125), and two are **genuinely uncovered**
+(VS-159 corporate security/executive protection; VS-160 immigration/global mobility). Strengthens
+Finance (603 → 651), Governance & Assurance (816 → 864), and People (338 → 362).
+
+- **VS-157 — Revenue Recognition (PFRS 15) & Complex Contract Accounting** (Finance, W4625–W4648):
+  the enterprise PFRS 15 five-step recognition discipline across the full multi-element-arrangement
+  portfolio (loyalty points, gift-card breakage, bundles, product+installation, consignment/VMI
+  sell-through, subscription, extended warranty, retail media, marketplace commissions, COD, VAS,
+  trade-in, construction-finance referral). The discipline existed only as the single over-stuffed
+  workflow W487 in VS-15.1 (referenced across 12 PA files, explicitly covering eleven revenue
+  streams with no dedicated PFRS 15 accounting owner). Distinct from VS-118 (revenue-leakage
+  protection) and VS-17.4 (FP&A reporting).
+- **VS-158 — Product Costing, Landed-Cost & Cost Accounting** (Finance, W4649–W4672): the per-unit
+  cost-accounting operating system beneath ~PHP 42–45B COGS — standard-cost setup, import
+  landed-cost build-up, catch-weight/cut-to-length unit cost, kit/BOM roll, private-label
+  fully-burdened cost, PPV/landed-cost/conversion variance, margin analytics, project/service/
+  intercompany costing, cost-master governance. The discipline existed only as the single workflow
+  W85 in VS-17.4 (referenced across 25 PA files as the catch-all cost reference). Distinct from
+  VS-05 (inventory transactions) and VS-17.4 (FP&A).
+- **VS-159 — Corporate Security, Executive Protection & Travel Risk Management** (Governance &
+  Assurance, W4673–W4696): the corporate-security & executive-protection program — protective
+  intelligence, the GSOC, executive protection, principal travel, event security, K&R/extortion
+  response, employee travel-risk/duty-of-care, corporate investigations, insider threat, workplace
+  violence, and coordinated crisis response. 'executive protection', 'protective intelligence',
+  'corporate security', 'travel security', 'kidnap & ransom' each appeared in zero PA files.
+  Distinct from retail-shrink LP (VS-23), customer premises safety (VS-147), cyber (VS-27.3), BCP
+  (VS-26), and the physical-security audit (VS-21.3 W358).
+- **VS-160 — Global Mobility, Immigration & Foreign Worker Compliance** (People, W4697–W4720): the
+  cross-border/provincial mobility and DOLE Alien Employment Permit / Bureau of Immigration 9G
+  Pre-Arranged Employee Visa & ACR I-Card foreign-worker program, plus assignment payroll/tax/
+  statutory benefits, relocation, and repatriation. 'immigration', '9G visa', 'alien employment',
+  'expatriate', 'international assignment', 'employee mobility' each appeared in zero PA files.
+  Distinct from VS-19 (PH employees), VS-122 (vendor-side sourcing), VS-98 (contingent workforce),
+  VS-103 (domestic HR shared services), and VS-144 (staff housing).
+- **VS-161 — Third-Party & Supplier Risk Management (TPRM)** (Governance & Assurance, W4721–W4744):
+  the unified cross-domain enterprise third-party-risk backbone across ~800–1,000 vendors + 3PL/
+  SaaS/payment/BPO/CIT/sourcing-agent/marketplace/EPC third parties and all risk domains (financial,
+  cyber, operational, compliance, privacy, ESG/human-rights, concentration, fourth-party), with the
+  single inventory, tiering, due diligence, continuous monitoring, resilience/exit, and
+  regulator-facing evidence program. Each risk domain owned only its slice (W1328 supply, W334
+  audit, W2942 ABC, W3052 privacy, W3863 fraud, W3733 integrity); no owner held the whole.
+  Distinct from VS-03/VS-67 (commercial vendor management) and each domain slice.
+
+Counts reconciled across all documents: **4,596 workflows across 157 value streams / 475 process
+areas** (was 4,476 / 152 / 460). The 120 new workflows are unclassified and carry a keyword-driven
+proposed tier in `workflow-criticality-proposed.md` (regenerated via `classify-workflows.py`),
+exactly as prior batches. `validate-repo.sh` passes with 0 errors.
+
+---
+
 ## 2026-06-17 — Workflow gap analysis (Pass 17): add VS-151–VS-156 (144 workflows W4481–W4624)
 
 The largest single gap-analysis pass (6 value streams, 18 process areas, 144 workflows),

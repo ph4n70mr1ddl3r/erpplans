@@ -2,7 +2,7 @@
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
 > Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15),
-> Pass 13 and Pass 14 (2026-06-16), Pass 15 and Pass 16 (2026-06-17), and Pass 17 (2026-06-17)).
+> Pass 13 and Pass 14 (2026-06-16), Pass 15 and Pass 16 (2026-06-17), Pass 17 (2026-06-17), and Pass 18 (2026-06-18)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -138,6 +138,11 @@ identify capability gaps not addressed by any existing value stream.
 | 68 | **Home Construction Finance, Loan Brokerage & Mortgage Referral Services** | Home building/renovation is capital-constrained — many B2C homeowners and small contractors cannot start or complete projects without financing; BuildRight's 'Home Building Partner' positioning, project/design capability (VS-66), installation (VS-12), and B2B trade base make a construction-loan/mortgage brokerage offering a natural adjacency that lifts basket size, conversion, and project completion, with referral economics (0.5–2% of loan value) on a multi-billion financing flow | **Future business-model extension flagged in §6 of prior passes** — 'construction loan', 'home loan', and 'mortgage' appeared in only 1–6 PA files as incidental references; this Pass 17 activates the previously-flagged future capability *within BuildRight's retail charter* (broker/referral, not lending). Distinct from VS-38 (in-house store credit), VS-16 (trade AR), VS-66 (project design), and VS-12 (the build the financing releases funds to) | **FILLED — VS-154** |
 | 69 | **Trade-In, Buy-Back & Certified Pre-Owned / Refurbished Product Resale** | Power tools, appliances, and equipment (~3,500 hand tools, ~1,750 power tools, ~1,750 appliances) have residual value and a price-sensitive secondhand market in the Philippines; a trade-in program drives new-purchase attach, captures the budget segment with certified pre-owned, differentiates on sustainability (VS-25/VS-73), and creates a circular revenue stream | **Future business-model extension flagged in §6 of prior passes** — 'trade-in', 'buy-back', 'pre-owned', and 'second-hand' appeared in 0–10 PA files as incidental references; this Pass 17 activates the previously-flagged future capability in a BuildRight-charter-consistent way (certified resale, not an open C2C marketplace). Distinct from VS-32 (defective returns for refund), VS-73 (end-of-life disposal/recycling), VS-12.1 (repair for the owning customer — this refurbishes for resale), and VS-05.3 (disposition of BuildRight's own unsold stock) | **FILLED — VS-155** |
 | 70 | **In-Store Value-Added Services & Financial Agency Operations** | 200 provincial stores serving communities where bills-payment, domestic remittance, e-money cash-in/out, and mobile load are high-demand footfall drivers; ~600 customer-service counters with existing cash handling; a trust/community brand; and a commission-revenue + basket-linkage opportunity — but financial-agency operations carry BSP regulatory exposure (consumer protection, AML), cash-settlement risk, and data-privacy obligations | **New gap (Pass 17)** — 'bills payment', 'e-money', 'cash-in', and 'value-added service' appeared in 0–2 PA files as incidental references and in **zero** PA files as dedicated workflow headers — no value stream owned the *financial-agency/VAS operating discipline* (product/partner portfolio, BSP agent accreditation, counter operations/KYC, settlement/reconciliation/commission, AML/BSP compliance, fraud, analytics). Distinct from VS-80 (BuildRight's own merchandise payment rail), VS-08.2 (in-store retail cash), VS-86 (AML program — this executes it as agent), VS-142 (COD — BuildRight's own cash), and VS-146 (project financing) | **FILLED — VS-156** |
+| 71 | **Revenue Recognition (PFRS 15) & Complex Contract Accounting** | ~PHP 62.3B revenue with a fast-expanding multi-element-arrangement portfolio (loyalty points on 2.8M monthly POS transactions, gift-card breakage, ~515K ecommerce orders/yr with mixed-basket fulfillment, bundles, product+installation, consignment/VMI sell-through, subscription, extended warranty, retail-media, marketplace commissions, COD, VAS/bills-payment, trade-in, construction-finance referral) — PFRS 15 five-step recognition, principal-vs-agent, SSP/allocation, variable consideration, financing component, contract-cost capitalization, and AFS disclosure are high-judgment, auditor-scrutinized areas that distort EBITDA and the audited PFRS financials if mis-applied | **New gap (Pass 18)** — the discipline existed only as the single over-stuffed workflow W487 in VS-15.1 (referenced across 12 PA files, explicitly acknowledging it covers 'complex scenarios' for eleven revenue streams with 'no PFRS 15 accounting assessment'), plus one-off recognition workflows per channel (W2014/W1971/W1992/W4618/W1771) and deferred-revenue accounting sprinkled across VS-13/VS-54/VS-17.4 — no value stream owned the *end-to-end contract-accounting discipline*. Distinct from VS-118 (revenue-leakage protection at the transaction), VS-17.4 (FP&A reporting), and each channel value stream (which operates the channel) | **FILLED — VS-157** |
+| 72 | **Product Costing, Landed-Cost & Cost Accounting** | ~PHP 42–45B annual COGS, ~40% import (volatile freight/duty/FX), heavy commodity exposure (steel/cement/lumber/copper), catch-weight/cut-to-length selling at 600 POS, private-label growth, kitting/BOM, and large B2B/G2G project costing — the per-unit cost layer beneath every pricing/assortment/markdown/bid/private-label decision and the PFRS inventory provision | **New gap (Pass 18)** — the discipline existed only as the single workflow W85 in VS-17.4 (referenced across 25 PA files as the catch-all cost reference) — no value stream owned the *cost-accounting operating system* (standard-cost setup, import landed-cost build-up, catch-weight unit cost, kit/BOM roll, PL fully-burdened cost, PPV/landed-cost/conversion variance, margin analytics, project/service/intercompany costing, cost-master governance). Distinct from VS-05 (inventory transactions), VS-01.2/VS-101 (pricing that consumes margin), VS-106 (commodity hedging), and VS-17.4 (FP&A) | **FILLED — VS-158** |
+| 73 | **Corporate Security, Executive Protection & Travel Risk Management** | A high-profile PHP 62.3B Filipino family corporation (named CEO/board), 200 stores across Philippine regions with elevated kidnap/extortion/civil-unrest exposure, executive and buyer travel (domestic inter-island + international sourcing VS-122), high-value cash/inventory, and an increasingly public brand — corporate security, executive protection, protective intelligence, travel-risk/duty-of-care, corporate investigations, and K&R response are a recognized gap in Philippine large-enterprise risk management | **New gap (Pass 18)** — 'executive protection', 'protective intelligence', 'corporate security', 'travel security', and 'kidnap & ransom' each appeared in **zero** PA files (the single 'threat intelligence' reference is cyber VS-27.3 W397); site-level physical security (store W71/W171, DC W797) and its audit (VS-21.3 W358), retail-shrink LP (VS-23), customer premises safety (VS-147), cyber (VS-27.3), and crisis comms (VS-14.3) cover adjacent ground — no value stream owned the *corporate-security & executive-protection program* | **FILLED — VS-159** |
+| 74 | **Global Mobility, Immigration & Foreign Worker Compliance** | A family corporation operating global sourcing (VS-122 — likely with seconded experts), potential foreign executives/specialists across the 5-entity structure, provincial inter-island transfers across a 200-store footprint, and 10–15 new stores/yr — Philippine immigration/labor law (DOLE Alien Employment Permit, BI 9G Pre-Arranged Employee Visa & ACR I-Card, minimum-wage parity for foreign workers, tax-treaty/19-series residency rules) carries real compliance, penalty, and officer-personal-liability exposure | **New gap (Pass 18)** — 'immigration', '9G visa', 'alien employment', 'expatriate', 'international assignment', and 'employee mobility' each appeared in **zero** PA files as dedicated workflow headers (a single incidental 'work permit' reference); VS-19 (PH employees), VS-122 (vendor-side sourcing), VS-98 (contingent workforce), VS-103 (domestic HR shared services) cover adjacent ground — no value stream owned the *foreign-worker immigration & global-mobility program* | **FILLED — VS-160** |
+| 75 | **Third-Party & Supplier Risk Management (TPRM)** | ~800–1,000 merchandise vendors, ~80% third-party logistics/fleet, heavy SaaS/cloud and payment dependencies, BPO/contact-center, CIT and security-guard agencies, sourcing agents, marketplace sellers, and professional/EPC contractors — a single significant third-party failure (financial collapse, cyber breach, regulatory action, concentration shock, modern-slavery exposure) can halt operations, breach data, or trigger regulator action; TPRM is a board-level discipline cited in BSP/NPC/ISO 31000/NIST CSF/SOC 2 supply-chain criteria | **New gap (Pass 18)** — each risk domain owned only its *slice* (W1328 supply-side criticality in VS-21.2, W334 audit in VS-21.1, W2942 ABC in VS-86.3, W3052 privacy in VS-91.2, W3863 fraud in VS-125.1, W3733 integrity in VS-119.3, human-rights in VS-131, commercial in VS-03/VS-67) — no value stream owned the *unified cross-domain enterprise TPRM program* (single inventory, cross-domain tiering, continuous monitoring, fourth-party mapping, concentration, resilience/exit, regulator-facing evidence) | **FILLED — VS-161** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -377,21 +382,33 @@ The 96 new workflows added in Pass 16 are currently **unclassified** (counted in
 
 The 144 new workflows added in Pass 17 are **unclassified** and carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via `07-methodology/classify-workflows.py`), exactly as prior batches; they will be confirmed into the register during a follow-up criticality review. Several Pass 17 workflows are anticipated Tier 1 (RA 7394 price-tag/EAS-cash-integrity and read-rate/labeling-conformance controls in VS-151; Foundation safeguarding/PSEA and fund-use/due-diligence controls in VS-152; captive risk-transfer/capital-adequacy/RBC controls in VS-153; BSP brokerage/anti-predatory/privacy controls in VS-154; safety-screen/data-wipe/warranty-liability controls in VS-155; BSP-agent/KYC-AML/cash-SoD controls in VS-156).
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14 + Pass 15 + Pass 16 + Pass 17)
+**Pass 18** (W4625–W4744): five value streams, 15 process areas, 120 workflows — a focused pass closing five further genuinely-unowned disciplines that re-running the established gap methodology (defining terms in zero PA files as dedicated workflow headers, no dedicated owner, conflated with adjacent covered coverage) surfaced after seventeen prior passes had been judged complete. Two are *single-workflow elevations* following the Pass 1/5/7/8/10/11 pattern (VS-157 elevates the over-stuffed W487 in VS-15.1; VS-158 elevates the heavily-referenced W85 in VS-17.4), one is a *scattered-slice consolidation* following the Pass 10/12 pattern (VS-161 unifies the TPRM slices spread across VS-21/VS-86/VS-91/VS-119/VS-125), and two are *genuinely uncovered* with zero defining-term references (VS-159 corporate security/executive protection; VS-160 immigration/global mobility). The pass strengthens four families (Finance +48, Governance & Assurance +48, People +24):
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 | After Pass 15 | After Pass 16 | After Pass 17 (current) |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 | 428 | 428 | 428 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 | 403 | 403 | **427** (+24) |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 | 1,218 | 1,242 | **1,266** (+24) |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | 531 | 531 | 555 | **603** (+48) |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | 290 | 314 | 338 | 338 |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 | 248 | 248 | 248 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 | 768 | 792 | **816** (+24) |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 | 326 | **350** (+24) |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** | **4,332** | **4,476** (+144) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | 142 | 146 | **152** (+6) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | 430 | 442 | **460** (+18) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-157](VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/README.md) | Revenue Recognition (PFRS 15) & Complex Contract Accounting | Finance | 3 | 24 | W4625–W4648 |
+| [VS-158](VS-158-product-costing-landed-cost-and-cost-accounting/README.md) | Product Costing, Landed-Cost & Cost Accounting | Finance | 3 | 24 | W4649–W4672 |
+| [VS-159](VS-159-corporate-security-executive-protection-and-travel-risk-management/README.md) | Corporate Security, Executive Protection & Travel Risk Management | Governance & Assurance | 3 | 24 | W4673–W4696 |
+| [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | People | 3 | 24 | W4697–W4720 |
+| [VS-161](VS-161-third-party-and-supplier-risk-management-tprm/README.md) | Third-Party & Supplier Risk Management (TPRM) | Governance & Assurance | 3 | 24 | W4721–W4744 |
+
+The 120 new workflows added in Pass 18 are **unclassified** and carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via `07-methodology/classify-workflows.py`), exactly as prior batches; they will be confirmed into the register during a follow-up criticality review. Several Pass 18 workflows are anticipated Tier 1 (PFRS 15 recognition/cut-off/disclosure and go-live-gate controls in VS-157; standard-cost-roll/landed-cost/cost-SoD controls in VS-158; K&R-response/executive-protection/lawful-evidence controls in VS-159; DOLE-AEP/BI-9G/no-work-before-visa/duty-of-care controls in VS-160; TPRM tiering/cyber-attestation/DPA/concentration-limit controls in VS-161).
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14 + Pass 15 + Pass 16 + Pass 17 + Pass 18)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 | After Pass 15 | After Pass 16 | After Pass 17 | After Pass 18 (current) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 | 428 | 428 | 428 | 428 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 | 403 | 403 | 427 | 427 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 | 1,218 | 1,242 | 1,266 | 1,266 |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | 531 | 531 | 555 | 603 | **651** (+48) |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | 290 | 314 | 338 | 338 | **362** (+24) |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 | 248 | 248 | 248 | 248 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 | 768 | 792 | 816 | **864** (+48) |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 | 326 | 350 | 350 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** | **4,332** | **4,476** | **4,596** (+120) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | 142 | 146 | 152 | **157** (+5) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | 430 | 442 | 460 | **475** (+15) |
 
 Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
 VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
@@ -527,7 +544,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (4,476) matches actual PA workflow header count (4,476). ✅
+- Grand total (4,596) matches actual PA workflow header count (4,596). ✅
 - All 1,168 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -641,8 +658,17 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   as future business-model extensions in this section, now activated within BuildRight's retail
   charter (captive = own risk-financing vehicle; construction finance = broker/referral not lending;
   resale = certified pre-owned not an open C2C marketplace).
+- **Revenue Recognition (PFRS 15) & Complex Contract Accounting**, **Product Costing, Landed-Cost &
+  Cost Accounting**, **Corporate Security, Executive Protection & Travel Risk Management**, **Global
+  Mobility, Immigration & Foreign Worker Compliance**, and **Third-Party & Supplier Risk Management
+  (TPRM)** — **filled** by VS-157, VS-158, VS-159, VS-160, and VS-161 (Pass 18); five further
+  genuinely-unowned disciplines surfaced by re-running the gap methodology after Pass 17 — two
+  single-workflow elevations (W487 revenue recognition in VS-15.1; W85 product costing in VS-17.4),
+  one scattered-slice consolidation (TPRM across VS-21/VS-86/VS-91/VS-119/VS-125), and two
+  genuinely-uncovered programs (corporate security/executive protection; immigration/global
+  mobility), each with defining terms in zero PA files as dedicated workflow headers.
 - No further capability gaps are currently outstanding against the model company profile after
-  seventeen gap-analysis passes. Future business-model changes (e.g., further captive-cell
+  eighteen gap-analysis passes. Future business-model changes (e.g., further captive-cell
   expansion beyond the initial risk-financing scope, retail-banking/joint-venture deposit-taking,
   or a full open secondhand C2C marketplace platform) may be re-evaluated in a future revision; the
   three previously-flagged future capabilities (used-material/trade-in resale, customer
@@ -805,4 +831,4 @@ tower).
 
 ---
 
-*Date: 2026-06-17 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*
+*Date: 2026-06-18 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*

@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 136 active value streams were produced in four blocks. Use this to gauge content maturity
+The 157 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 23 pending rework (VS-69/70/71 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-156 | 68 | Fully detailed (seventeen gap-analysis passes, 2026-06-14/15/16/17) |
+| Gap analysis | VS-89 – VS-161 | 73 | Fully detailed (eighteen gap-analysis passes, 2026-06-14/15/16/17/18) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 152 Value Streams · 460 Process Areas · 4476 Workflows
+8 Families · 157 Value Streams · 475 Process Areas · 4596 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), and a seventeenth pass on 2026-06-17 (146 → 152 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -122,7 +122,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-148](VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/README.md) | Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management | Gap analysis | 3 | 24 |
   | [VS-153](VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/README.md) | Captive Insurance, Reinsurance & Enterprise Risk Financing | Gap analysis | 3 | 24 |
   | [VS-154](VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/README.md) | Home Construction Finance, Loan Brokerage & Mortgage Referral Services | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **603** |
+  | [VS-157](VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/README.md) | Revenue Recognition (PFRS 15) & Complex Contract Accounting | Gap analysis | 3 | 24 |
+  | [VS-158](VS-158-product-costing-landed-cost-and-cost-accounting/README.md) | Product Costing, Landed-Cost & Cost Accounting | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **651** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 24 |
@@ -135,7 +137,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
   | [VS-141](VS-141-employee-transport-shuttle-and-daily-commute-management/README.md) | Employee Transport, Shuttle & Daily Commute Management | Gap analysis | 3 | 24 |
   | [VS-144](VS-144-employee-accommodation-dormitory-and-staff-housing/README.md) | Employee Accommodation, Dormitory & Staff Housing Operations | Gap analysis | 3 | 24 |
   | [VS-150](VS-150-drug-free-workplace-and-substance-abuse-program/README.md) | Drug-Free Workplace & Substance Abuse Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **338** |
+  | [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **362** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -178,7 +181,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
   | [VS-146](VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md) | Customer Mystery Shopping & Service Quality Assurance Program | Gap analysis | 3 | 24 |
   | [VS-147](VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md) | Customer Safety, Premises Liability & In-Store Risk Management | Gap analysis | 3 | 24 |
   | [VS-152](VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md) | Corporate Social Responsibility, Foundation & Community Investment | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **816** |
+  | [VS-159](VS-159-corporate-security-executive-protection-and-travel-risk-management/README.md) | Corporate Security, Executive Protection & Travel Risk Management | Gap analysis | 3 | 24 |
+  | [VS-161](VS-161-third-party-and-supplier-risk-management-tprm/README.md) | Third-Party & Supplier Risk Management (TPRM) | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **864** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -192,7 +197,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
   | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
   | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **350** |
-| | | | **Grand Total** | **4476** | |
+| | | | **Grand Total** | **4596** | |
 
 ---
 
@@ -733,6 +738,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-154.2** [Customer Loan Origination, Underwriting & Closing](./VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/PA-154.2-customer-loan-origination-underwriting-and-closing.md) — 8 workflows
 - **PA-154.3** [Loan Servicing, Referral Economics, Compliance & Analytics](./VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/PA-154.3-loan-servicing-referral-economics-compliance-and-analytics.md) — 8 workflows
 
+**[VS-157: Revenue Recognition (PFRS 15) & Complex Contract Accounting](./VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/README.md)** (24 workflows)
+
+- **PA-157.1** [Multi-Element Arrangement Identification & Performance Obligation Assessment](./VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/PA-157.1-multi-element-arrangement-identification-and-performance-obligation-assessment.md) — 8 workflows
+- **PA-157.2** [Standalone Selling Price, Allocation & Deferred-Revenue Measurement](./VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/PA-157.2-standalone-selling-price-allocation-and-deferred-revenue-measurement.md) — 8 workflows
+- **PA-157.3** [Period Close, Disclosure, Audit & New-Revenue-Stream Onboarding](./VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/PA-157.3-period-close-disclosure-audit-and-new-revenue-stream-onboarding.md) — 8 workflows
+
+**[VS-158: Product Costing, Landed-Cost & Cost Accounting](./VS-158-product-costing-landed-cost-and-cost-accounting/README.md)** (24 workflows)
+
+- **PA-158.1** [Standard-Cost Setup, Landed-Cost & Item Cost Roll](./VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.1-standard-cost-setup-landed-cost-and-item-cost-roll.md) — 8 workflows
+- **PA-158.2** [Cost Variance, Actual-vs-Standard & Margin Analytics](./VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.2-cost-variance-actual-vs-standard-and-margin-analytics.md) — 8 workflows
+- **PA-158.3** [Specialized Costing (Project, Service, Intercompany) & Cost Governance](./VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.3-specialized-costing-project-service-intercompany-and-cost-governance.md) — 8 workflows
+
 
 ### People
 
@@ -810,6 +827,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-150.1** [Drug-Free Workplace Policy, Framework & DOLE Compliance](./VS-150-drug-free-workplace-and-substance-abuse-program/PA-150.1-drug-free-workplace-policy-framework-and-dole-compliance.md) — 8 workflows
 - **PA-150.2** [Drug Testing Operations, Results & Case Management](./VS-150-drug-free-workplace-and-substance-abuse-program/PA-150.2-drug-testing-operations-results-and-case-management.md) — 8 workflows
 - **PA-150.3** [Rehabilitation, Return-to-Duty, Privacy & Program Analytics](./VS-150-drug-free-workplace-and-substance-abuse-program/PA-150.3-rehabilitation-return-to-duty-privacy-and-program-analytics.md) — 8 workflows
+
+**[VS-160: Global Mobility, Immigration & Foreign Worker Compliance](./VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md)** (24 workflows)
+
+- **PA-160.1** [Mobility Strategy, Policy & Assignment Framework](./VS-160-global-mobility-immigration-and-foreign-worker-compliance/PA-160.1-mobility-strategy-policy-and-assignment-framework.md) — 8 workflows
+- **PA-160.2** [Immigration, Visa & Foreign-Worker Compliance Operations](./VS-160-global-mobility-immigration-and-foreign-worker-compliance/PA-160.2-immigration-visa-and-foreign-worker-compliance-operations.md) — 8 workflows
+- **PA-160.3** [Assignment Administration, Tax/Payroll, Repatriation & Analytics](./VS-160-global-mobility-immigration-and-foreign-worker-compliance/PA-160.3-assignment-administration-tax-payroll-repatriation-and-analytics.md) — 8 workflows
 
 ### Asset & Infrastructure
 
@@ -1063,6 +1086,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-152.2** [Community Investment, Disaster Response & Volunteer Programs](./VS-152-corporate-social-responsibility-foundation-and-community-investment/PA-152.2-community-investment-disaster-response-and-volunteer-programs.md) — 8 workflows
 - **PA-152.3** [CSR Impact Measurement, Reporting & Stakeholder Engagement](./VS-152-corporate-social-responsibility-foundation-and-community-investment/PA-152.3-csr-impact-measurement-reporting-and-stakeholder-engagement.md) — 8 workflows
 
+**[VS-159: Corporate Security, Executive Protection & Travel Risk Management](./VS-159-corporate-security-executive-protection-and-travel-risk-management/README.md)** (24 workflows)
+
+- **PA-159.1** [Corporate Security Strategy, Threat Intelligence & Risk Framework](./VS-159-corporate-security-executive-protection-and-travel-risk-management/PA-159.1-corporate-security-strategy-threat-intelligence-and-risk-framework.md) — 8 workflows
+- **PA-159.2** [Executive Protection, Principal Travel & Event Security](./VS-159-corporate-security-executive-protection-and-travel-risk-management/PA-159.2-executive-protection-principal-travel-and-event-security.md) — 8 workflows
+- **PA-159.3** [Investigations, Insider Threat, Workplace Violence & Crisis Response](./VS-159-corporate-security-executive-protection-and-travel-risk-management/PA-159.3-investigations-insider-threat-workplace-violence-and-crisis-response.md) — 8 workflows
+
+**[VS-161: Third-Party & Supplier Risk Management (TPRM)](./VS-161-third-party-and-supplier-risk-management-tprm/README.md)** (24 workflows)
+
+- **PA-161.1** [Third-Party Inventory, Tiering & Cross-Domain Risk Framework](./VS-161-third-party-and-supplier-risk-management-tprm/PA-161.1-third-party-inventory-tiering-and-cross-domain-risk-framework.md) — 8 workflows
+- **PA-161.2** [Due Diligence, Continuous Monitoring & Evidence Lifecycle](./VS-161-third-party-and-supplier-risk-management-tprm/PA-161.2-due-diligence-continuous-monitoring-and-evidence-lifecycle.md) — 8 workflows
+- **PA-161.3** [Concentration, Resilience, Exit & TPRM Governance/Analytics](./VS-161-third-party-and-supplier-risk-management-tprm/PA-161.3-concentration-resilience-exit-and-tprm-governance-analytics.md) — 8 workflows
+
 ### Technology & Data
 
 **[VS-27: IT Operations & Security](./VS-27-it-operations-security/README.md)** (62 workflows)
@@ -1167,4 +1202,4 @@ Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, 
 ```
 
 
-*Total: 4476 workflows across 152 value streams · Date: 2026-06-17*
+*Total: 4596 workflows across 157 value streams · Date: 2026-06-18*

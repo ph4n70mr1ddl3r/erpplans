@@ -29,8 +29,8 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      4,476 workflows organized by value stream
-│   │   ├── value-stream-index.md              Master index (8 families · 152 value streams · 460 process areas)
+│   ├── workflows/                      4,596 workflows organized by value stream
+│   │   ├── value-stream-index.md              Master index (8 families · 157 value streams · 475 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
@@ -176,7 +176,22 @@ erpplans/
 │   │   ├── VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/ 24 workflows (3 process areas)
 │   │   ├── VS-144-employee-accommodation-dormitory-and-staff-housing/ 24 workflows (3 process areas)
 │   │   ├── VS-145-garden-center-live-goods-and-plant-nursery/ 24 workflows (3 process areas)
-│   │   └── VS-146-customer-mystery-shopping-and-service-quality-assurance/ 24 workflows (3 process areas)
+│   │   ├── VS-146-customer-mystery-shopping-and-service-quality-assurance/ 24 workflows (3 process areas)
+│   │   ├── VS-147-customer-safety-premises-liability-and-in-store-risk-management/ 24 workflows (3 process areas)
+│   │   ├── VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/ 24 workflows (3 process areas)
+│   │   ├── VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/ 24 workflows (3 process areas)
+│   │   ├── VS-150-drug-free-workplace-and-substance-abuse-program/ 24 workflows (3 process areas)
+│   │   ├── VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/ 24 workflows (3 process areas)
+│   │   ├── VS-152-corporate-social-responsibility-foundation-and-community-investment/ 24 workflows (3 process areas)
+│   │   ├── VS-153-captive-insurance-reinsurance-and-enterprise-risk-financing/ 24 workflows (3 process areas)
+│   │   ├── VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/ 24 workflows (3 process areas)
+│   │   ├── VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/ 24 workflows (3 process areas)
+│   │   ├── VS-156-in-store-value-added-services-and-financial-agency-operations/ 24 workflows (3 process areas)
+│   │   ├── VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/ 24 workflows (3 process areas)
+│   │   ├── VS-158-product-costing-landed-cost-and-cost-accounting/ 24 workflows (3 process areas)
+│   │   ├── VS-159-corporate-security-executive-protection-and-travel-risk-management/ 24 workflows (3 process areas)
+│   │   ├── VS-160-global-mobility-immigration-and-foreign-worker-compliance/ 24 workflows (3 process areas)
+│   │   └── VS-161-third-party-and-supplier-risk-management-tprm/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -216,7 +231,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **4,476** across 152 value streams, 460 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **4,596** across 157 value streams, 475 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -227,10 +242,10 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 4,476 fully specified across 152 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,145 of 4,476 workflows classified** (26%; the confirmed register holds 1,168 rows incl. 23 `###` parent/summary sub-workflows); 3,331 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 4,596 fully specified across 157 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,145 of 4,596 workflows classified** (25%; the confirmed register holds 1,168 rows incl. 23 `###` parent/summary sub-workflows); 3,451 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), and a seventeenth pass on 2026-06-17 (146 → 152 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
+| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
 
 ## Document Relationships
 
@@ -250,7 +265,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-    │  erp-requirements.md ←→ workflows/ (4,476 WF)    │
+    │  erp-requirements.md ←→ workflows/ (4,596 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -262,6 +277,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
     │                value-stream-index.md              │
-    │            (152 VS · 460 process areas)            │
+    │            (157 VS · 475 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

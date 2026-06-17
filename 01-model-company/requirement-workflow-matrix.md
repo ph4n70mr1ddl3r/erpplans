@@ -1008,7 +1008,7 @@
 
 - **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 4,476 workflows across 152 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: spans the full 4,596 workflows across 157 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
