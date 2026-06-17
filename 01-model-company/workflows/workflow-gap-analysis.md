@@ -2,7 +2,7 @@
 
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
 > Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15),
-> Pass 13 and Pass 14 (2026-06-16)).
+> Pass 13 and Pass 14 (2026-06-16), Pass 15 and Pass 16 (2026-06-17)).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -128,6 +128,10 @@ identify capability gaps not addressed by any existing value stream.
 | 58 | **Employee Accommodation, Dormitory & Staff Housing** | ~6,715 employees across ~205 distributed provincial/island sites (200 stores + 4 DCs + HQ) on 2–3 shifts incl. the 10 PM–6 AM window, plus transferees and the 10–15 new-store/yr expansion — staff housing is a frontline-attrition and site-staffing lever (alongside VS-141 daily transport) carrying welfare, BFP/OSH, and cost-recovery obligations | **New gap (Pass 15)** — 'staff dormitory', 'staff house', 'bunkhouse', 'employee housing', and 'company barracks' each appeared in **zero** PA files as dedicated workflow headers (5 incidental mentions) — only adjacent coverage exists (VS-141 daily commute, VS-138 commercial facilities, VS-20.3/VS-97 buildings, VS-34 transactional procurement) — no value stream owned the *workforce-housing program* | **FILLED — VS-144** |
 | 59 | **Garden Center, Live Goods & Plant Nursery Operations** | Garden & Outdoor (~3% of SKUs = ~1,050 live-plant/nursery SKUs across 200 store garden centers) is *perishable biological merchandise* requiring daily care (watering/pruning/acclimatization), with visible decline, pest/disease, and live-goods shrink benchmarks of 8–20% — fundamentally unlike hard-goods inventory (VS-05) and frequently vendor-consigned/seasonal/regulated (phytosanitary-BPI, pesticide-FPA, restricted-species) | **New gap (Pass 15)** — 'live goods', 'plant nursery', 'plant care', 'live-goods shrink/mortality', and 'live-goods markdown-on-decline' each appeared in **zero** PA files as dedicated workflow headers; only the single W1487 (garden seasonal rotation/VMI) in VS-07.1 existed — no value stream owned the *live-goods operating discipline* | **FILLED — VS-145** |
 | 60 | **Customer Mystery Shopping & Service Quality Assurance** | 2.8M monthly POS transactions across 200 stores + ecommerce/app + B2B/field/contact-center — service quality is a primary controllable lever on conversion, basket, loyalty, and the 'Your Home Building Partner' positioning, but is only credible as *independent, objective, evidence-based assurance* (not self-reported store metrics), and carries its own integrity (shopper collusion/gaming) and RA 10173 consent/fairness dimensions | **New gap (Pass 15)** — 'mystery shopping', 'service audit', 'service quality assurance', and 'service standards compliance' each appeared in **zero** PA files as dedicated workflow headers (~13 incidental mentions) — scattered as single steps inside VS-13 (reactive CX/complaints), VS-07 (self-reported standards), VS-21 (financial-control audit), VS-133 (process improvement), VS-124 (selling-skills) — no value stream owned the *independent service-quality assurance program* | **FILLED — VS-146** |
+| 61 | **Customer Safety, Premises Liability & In-Store Risk Management** | ~205 high-traffic public sites (200 stores at 8,000–15,000 sqm + 4 DCs will-call + doorstep) running 2.8M monthly POS transactions where customers/trade-pros/contractors share the floor with **forklifts, reach trucks, lumber/tile/cement loads, overhead racking, paint/chemical aisles, and a lumber yard** — the customer premises-liability exposure (slip/trip/fall, falling/shifted merchandise, powered-equipment contact, parking, chemical exposure, crowd crush, child/PWD harm) is structurally one of BuildRight's largest and most litigation-exposed operational risks | **New gap (Pass 16)** — 'premises liability', 'customer safety', 'falling merchandise', 'aisle safety', and 'forklift-in-sales-area' each appeared in **zero** PA files as dedicated workflow headers — sprinkled as single steps inside VS-24 (employee/occupational HSE), VS-23 (shrink/theft LP), VS-07 (self-reported housekeeping), VS-138 (building IFM), VS-20/VS-109 (site design as a project) — no value stream owned the *customer-facing premises-liability & in-store safety program* | **FILLED — VS-147** |
+| 62 | **Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management** | A 5-entity group operating ~205 mostly-**leased** sites (200 stores + 4 DCs + HQ, many leased from its own BuildRight Property Mgmt Inc.) plus leased forklifts/fleet/IT/POS/fixtures — a large heterogeneous lease portfolio recognized under **PFRS 16** as right-of-use assets and lease liabilities (since 2019); mis-recognition distorts EBITDA/EBIT, leverage covenants, and the audited PFRS financials, with heavy disclosure/judgment areas (discount rate, term, renewal options, variable payments) | **New gap (Pass 16)** — 'right-of-use', 'lease liability', and 'ROU asset' each appeared in **zero** PA files as dedicated workflow headers and 'PFRS 16' in only 3 (scattered single-step mentions) — conflated with VS-42 (lessee commercial lease admin), VS-17.3 (tax deduction), VS-18 (cash), VS-20.1 (lease intake), VS-35 (owned assets), VS-29 (contract master) — no value stream owned the *PFRS 16 recognition/measurement/disclosure program* | **FILLED — VS-148** |
+| 63 | **Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations** | A 200-store, 600-terminal, 2.8M-monthly-transaction big-box retailer under wage (DOLE minimum/13th-month) pressure with a self-service-conditioned customer base — SCO/scan-&-go/unattended is a strategic wage-and-queue lever, but without a dedicated program leaks margin (SCO loss benchmarks 2–5× staffed-POS shrink from scan-avoidance/swap/weight-manipulation), creates cash/tender-reconciliation exposure, and risks Consumer Act (RA 7394) price-integrity and BIR CAS/e-invoicing non-compliance | **New gap (Pass 16)** — 'scan-and-go', 'scan-go', 'unattended', and 'self-checkout' each appeared in **zero** PA files as dedicated workflow headers (only scattered single-step mentions) — conflated with VS-08 (staffed POS), VS-07 (store execution), VS-23 (broad shrink LP), VS-09.3 (amenity), VS-109 (project deployment) — no value stream owned the *SCO/scan-&-go/unattended operating program* | **FILLED — VS-149** |
+| 64 | **Drug-Free Workplace & Substance Abuse Program** | ~6,715 employees across 5 entities/~205 sites plus ~10–20% contingent labor and a large **safety-sensitive** population (forklift/reach operators, delivery drivers under LTFRB/DOTC, paint/chemical handlers) inside a premises-liability-exposed customer environment (VS-147) — DOLE D.O. 53-04 and RA 9165 Art. V make a drug-free workplace program a legal obligation (non-compliance → DOLE finding/penalty + officers' personal RA 9165 liability), and an impaired operator/driver is a catastrophic safety risk | **New gap (Pass 16)** — 'drug test', 'drug-free workplace', 'substance abuse', 'reasonable suspicion', and 'random drug testing' each appeared in **zero** PA files as dedicated workflow headers — sprinkled as single steps inside VS-83 (clinic/exam), VS-19.1 (pre-employment onboarding), VS-24 (post-incident), VS-06.2 (driver), VS-22 (DOLE documentation), VS-56 (partner driver) — no value stream owned the *end-to-end drug-free workplace program* | **FILLED — VS-150** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -343,21 +347,32 @@ The 48 new workflows added in Pass 14 are currently **unclassified** (counted in
 
 The 96 new workflows added in Pass 15 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 14 batches were handled. Several Pass 15 workflows are anticipated Tier 1 (RA 9275 refrigerant-recovery and DOLE OSH heavy-lifting/customer-premises liability controls in VS-143, BFP fire-safety/DOLE-OSH-housing and welfare/anti-harassment controls in VS-144, FPA pesticide/BPI restricted-species and refrigerant-style safety controls in VS-145, and shopper-integrity/RA 10173 consent and independent-assurance controls in VS-146).
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14 + Pass 15)
+**Pass 16** (W4385–W4480): four value streams, 12 process areas, 96 workflows — a balanced pass adding +24 to each of four operating families (Governance & Assurance, Finance, Sell & Serve, People) after fifteen prior passes had been judged complete. Re-running the established gap methodology (defining terms appearing in **zero** PA files as dedicated workflow headers, with only incidental mentions, each conflated with an adjacent covered capability) surfaced four further genuinely-unowned operational disciplines that had been overlooked because the surrounding coverage made them appear owned:
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 | After Pass 15 (current) |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 | 428 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 | **403** (+24) |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 | **1,218** (+24) |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | 531 | 531 |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | 290 | **314** (+24) |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 | 248 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 | **768** (+24) |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** (+96) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | **142** (+4) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | **430** (+12) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-147](VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md) | Customer Safety, Premises Liability & In-Store Risk Management | Governance & Assurance | 3 | 24 | W4385–W4408 |
+| [VS-148](VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/README.md) | Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management | Finance | 3 | 24 | W4409–W4432 |
+| [VS-149](VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/README.md) | Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations | Sell & Serve | 3 | 24 | W4433–W4456 |
+| [VS-150](VS-150-drug-free-workplace-and-substance-abuse-program/README.md) | Drug-Free Workplace & Substance Abuse Program | People | 3 | 24 | W4457–W4480 |
+
+The 96 new workflows added in Pass 16 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 15 batches were handled. Several Pass 16 workflows are anticipated Tier 1 (premises-liability/CAPA/BFP Fire Code/Consumer Act controls in VS-147, PFRS 16 recognition/disclosure/reconciliation controls in VS-148, scan-avoidance/weight-security/BIR CAS/Consumer Act price-integrity controls in VS-149, and DOLE D.O. 53-04/chain-of-custody/MRO/due-process/RA 10173 controls in VS-150).
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14 + Pass 15 + Pass 16)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 | After Pass 15 | After Pass 16 (current) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 | 428 | 428 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 | 403 | 403 |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 | 1,218 | **1,242** (+24) |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | 531 | 531 | **555** (+24) |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | 290 | 314 | **338** (+24) |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 | 248 | 248 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 | 768 | **792** (+24) |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 | 326 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** | **4,332** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | 142 | **146** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | 430 | **442** (+12) |
 
 Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
 VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
@@ -493,7 +508,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (4,236) matches actual PA workflow header count (4,236). ✅
+- Grand total (4,332) matches actual PA workflow header count (4,332). ✅
 - All 1,168 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅

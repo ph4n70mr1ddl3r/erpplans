@@ -4,6 +4,75 @@
 
 ---
 
+## 2026-06-17 — Workflow gap analysis (Pass 16): add VS-147–VS-150 (96 workflows W4385–W4480)
+
+A sixteenth gap-analysis pass added **four value streams / twelve process areas / ninety-six
+workflows**, each filling a genuinely-uncovered operational discipline whose defining terms
+appeared in **zero** PA files as dedicated workflow headers (verified via repo-wide grep) and
+which had been conflated with adjacent covered capabilities. The pass was deliberately balanced
+(+24 to each of four operating families: Governance & Assurance, Finance, Sell & Serve, People).
+New totals: **146 value streams · 442 process areas · 4,332 workflows**.
+
+| VS | Value Stream | Family | Workflows | W-range |
+|---|---|---|---|---|
+| [VS-147](01-model-company/workflows/VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md) | Customer Safety, Premises Liability & In-Store Risk Management | Governance & Assurance | 24 | W4385–W4408 |
+| [VS-148](01-model-company/workflows/VS-148-lease-accounting-pfrs-16-and-right-of-use-asset-management/README.md) | Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management | Finance | 24 | W4409–W4432 |
+| [VS-149](01-model-company/workflows/VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/README.md) | Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations | Sell & Serve | 24 | W4433–W4456 |
+| [VS-150](01-model-company/workflows/VS-150-drug-free-workplace-and-substance-abuse-program/README.md) | Drug-Free Workplace & Substance Abuse Program | People | 24 | W4457–W4480 |
+
+Each gap is profile-grounded and distinct from adjacent covered value streams (see the per-VS
+README for the distinctness rationale):
+
+- **VS-147 Customer Safety, Premises Liability & In-Store Risk Management** — owns the
+  *customer-facing* premises-liability & in-store safety program across ~205 high-traffic public
+  sites where customers/trade-pros share the floor with forklifts, overhead racking, and a
+  lumber/tile/chemical yard; distinct from VS-24 (employee/occupational HSE), VS-23 (shrink LP),
+  VS-07 (self-reported housekeeping), and VS-138 (building IFM). Defining terms 'premises
+  liability', 'customer safety', 'falling merchandise', 'aisle safety' appeared in zero PA-file
+  headers.
+- **VS-148 Lease Accounting (PFRS 16/IFRS 16) & Right-of-Use Asset Management** — owns the PFRS 16
+  recognition/measurement/disclosure program (right-of-use assets & lease liabilities) across the
+  5-entity group's ~205 leased sites plus leased equipment/fleet/IT; distinct from VS-42 (lessee
+  commercial lease admin), VS-17.3 (tax deduction), VS-35 (owned assets), and VS-97 (lessor view).
+  Defining terms 'right-of-use', 'lease liability', 'ROU asset' appeared in zero PA-file headers.
+- **VS-149 Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations** — owns the
+  self-service/unattended checkout operating program (SCO lanes, mobile scan-&-go, computer-vision,
+  unattended formats); distinct from VS-08 (staffed POS), VS-23 (broad shrink LP), VS-80
+  (payment-acquirer rails), and VS-109 (project deployment). Defining terms 'scan-and-go',
+  'unattended', 'self-checkout' appeared in zero PA-file headers.
+- **VS-150 Drug-Free Workplace & Substance Abuse Program** — owns the end-to-end DOLE D.O. 53-04 /
+  RA 9165 Art. V drug-free workplace program (policy, testing matrix, collection/lab/MRO, case &
+  due-process, rehabilitation, return-to-duty, confidentiality); distinct from VS-83 (clinic/exam),
+  VS-19.1 (pre-employment onboarding), VS-24 (post-incident HSE), and VS-06.2 (driver fleet).
+  Defining terms 'drug test', 'drug-free workplace', 'reasonable suspicion' appeared in zero PA-file
+  headers.
+
+All 96 new workflows are fully detailed (Trigger / Frequency / Volume-with-×-math / Owner /
+Participants / Steps RACI / System Touchpoints / Time Estimate / Pain Points-Risks / Automation
+Opportunity / Controls / Cross-references) and carry **no boilerplate**. They are currently
+**unclassified** (unclassified total: 3,091 → 3,187, of which the 96 Pass-16 workflows are pending
+their first keyword-driven proposal) and will be tier-assigned in a follow-up criticality review,
+exactly as the Pass 1–Pass 15 batches were handled.
+
+Consistency updates applied across count-bearing current-state docs (historical CHANGELOG /
+gap-analysis table entries preserved as-is): `value-stream-index.md` (architecture line, blocks
+table, coverage note, 4 family subtotals + family-table VS rows, 4 VS + 12 PA detailed rows,
+grand total, footer), `workflows/README.md` (Quick Stats, master-index count, family-subtotal
+reconciliation, Pass-16 narrative), root `README.md` (counts, retired-VS pass note,
+classification/unclassified line, diagrams), `executive-summary.md` (counts), and
+`workflow-gap-analysis.md` (header, §3 gap rows 61–64, §4 Pass-16 section + family-subtotal-impact
+column, §5 grand-total). The criticality-classification/dependency-map/touchpoint-map/
+requirement-workflow-matrix were **not** altered (the new workflows are unclassified and carry no
+new requirement mappings; `validate-repo.sh` confirms zero dangling references and grand-total /
+header-count match).
+
+`07-methodology/validate-repo.sh` passes with **0 errors** (3 informational warnings) after the
+additions: grand total 4,332 matches actual PA workflow header count 4,332; all classified IDs
+resolve; no dangling references; no placeholder/boilerplate content; Automation Opportunity &
+Controls field adoption rose from 360 → 456 workflows.
+
+---
+
 ## 2026-06-17 — Workflow gap analysis (Pass 15): add VS-143–VS-146 (96 workflows W4289–W4384)
 
 A fifteenth gap-analysis pass added **four value streams / twelve process areas / ninety-six
