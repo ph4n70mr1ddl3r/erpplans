@@ -2,8 +2,9 @@
 
 > Classifies 1,145 unique operational workflows into criticality tiers (the confirmed register
 > holds 1,168 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
-> a `##` parent). An additional 2,995 workflows (4,140 total − 1,145 classified) remain
-> unclassified pending review.
+> a `##` parent). An additional 3,091 workflows (4,236 total − 1,145 classified) remain
+> unclassified pending review — of which 2,995 carry a keyword-driven proposed tier and 96
+> (added in Pass 15 as VS-143–VS-146, W4289–W4384) are pending their first proposal.
 >
 > Back to [Workflow Index](README.md)
 
@@ -775,12 +776,12 @@ rows by moving them into the confirmed sections above.
 |---|---|
 | Confirmed (hand-reviewed) | 1,168 rows (1,145 unique `##` workflows) |
 | Proposed (keyword, pending review) | 2,995 |
-| Without even a proposal | 0 |
-| **Grand Total** | **4,140** unique `##` workflows (1,145 confirmed + 2,995 proposed) |
+| Without even a proposal | 96 (Pass 15: VS-143–VS-146, W4289–W4384) |
+| **Grand Total** | **4,236** unique `##` workflows (1,145 confirmed + 3,091 unclassified = 2,995 proposed + 96 pending) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,168 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,140 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,168 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,236 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-06-14 addition:** Value streams VS-79 through VS-88 (240 workflows, W2753–W2992) were added covering Tax Management & BIR Statutory Reporting, Payment Operations & Acquirer Settlement, Cash-in-Transit & Armored Car Operations, Sari-Sari Store & MSME Micro-Wholesale, Occupational Health & Employee Wellness, Labor Relations & Collective Bargaining, Mandatory Discount & Tax Credit Recovery, Anti-Financial Crime (AML/KYC/ABC), Customs Trade Compliance & Tariff Optimization, and Document Control & Records Retention. These 240 workflows are currently **unclassified** (counted in the unclassified total) pending criticality review; many warrant Tier 1 classification (BIR tax filing, AML/STR reporting, CBA administration, mandatory-discount tax credit recovery, CIT operations) and will be assigned in a follow-up classification pass.
 >
@@ -1592,4 +1593,4 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W690 | Digital Transformation Initiative Portfolio Management | Innovation & Digital Transformation |
 | W691 | Emerging Technology Scouting & Proof-of-Concept Evaluation | Innovation & Digital Transformation |
 
-*Date: 2026-06-17 | Workflow Criticality Classification v7.12 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 2,995 workflows remain unclassified (4,140 unique `##` workflows − 1,145 classified) and carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (Pass 14: 2,995 proposed across 622 Tier 1 / 2,227 Tier 2 / 146 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-142 were added across fourteen gap-analysis passes (W2993–W4288). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
+*Date: 2026-06-17 | Workflow Criticality Classification v7.13 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,091 workflows remain unclassified (4,236 unique `##` workflows − 1,145 classified), of which 2,995 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (Pass 14: 2,995 proposed across 622 Tier 1 / 2,227 Tier 2 / 146 Tier 3) and 96 added in Pass 15 (VS-143–VS-146, W4289–W4384) are pending their first proposal. The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-146 were added across fifteen gap-analysis passes (W2993–W4384). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*

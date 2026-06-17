@@ -4,6 +4,45 @@
 
 ---
 
+## 2026-06-17 — Workflow gap analysis (Pass 15): add VS-143–VS-146 (96 workflows W4289–W4384)
+
+A fifteenth gap-analysis pass added **four value streams / twelve process areas / ninety-six
+workflows**, each filling a genuinely-uncovered operational discipline whose defining terms
+appeared in **zero** PA files as dedicated workflow headers (verified via repo-wide grep) and
+which had been conflated with adjacent covered capabilities. The pass was deliberately balanced
+(+24 to each of four operating families). New totals: **142 value streams · 430 process areas ·
+4,236 workflows**.
+
+| VS | Value Stream | Family | Workflows | W-range |
+|---|---|---|---|---|
+| [VS-143](01-model-company/workflows/VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | Make & Move | 24 | W4289–W4312 |
+| [VS-144](01-model-company/workflows/VS-144-employee-accommodation-dormitory-and-staff-housing/README.md) | Employee Accommodation, Dormitory & Staff Housing Operations | People | 24 | W4313–W4336 |
+| [VS-145](01-model-company/workflows/VS-145-garden-center-live-goods-and-plant-nursery/README.md) | Garden Center, Live Goods & Plant Nursery Operations | Sell & Serve | 24 | W4337–W4360 |
+| [VS-146](01-model-company/workflows/VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md) | Customer Mystery Shopping & Service Quality Assurance Program | Governance & Assurance | 24 | W4361–W4384 |
+
+Each gap is profile-grounded and distinct from adjacent covered value streams (see the per-VS
+README for the distinctness rationale). All 96 new workflows are fully detailed (Trigger /
+Frequency / Volume-with-×-math / Owner / Participants / Steps RACI / System Touchpoints / Time
+Estimate / Pain Points-Risks / Automation Opportunity / Controls / Cross-references) and carry
+**no boilerplate**. They are currently **unclassified** (counted in the unclassified total:
+2,995 → 3,091, of which 96 are pending their first keyword-driven proposal) and will be
+tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 14 batches were
+handled.
+
+Consistency updates applied across all count-bearing current-state docs (historical CHANGELOG /
+gap-analysis table entries preserved as-is): `value-stream-index.md` (architecture line, blocks
+table, 4 family subtotals, decision-tree family lists, 4 VS + 12 PA detailed rows, footer,
+coverage note), `workflows/README.md` (Quick Stats + full per-family navigation reconstruction —
+also corrected pre-existing stale Pass-11/12 family subtotals and misplaced VS-129/130/132/133
+rows), root `README.md`, `executive-summary.md`, `workflow-criticality-classification.md`
+(v7.12 → v7.13), `workflow-criticality-proposed.md`, `workflow-dependency-map.md` (v3.2 → v3.3),
+`workflow-system-touchpoint-map.md` (v67.0 → v68.0), `requirement-workflow-matrix.md` (v58 → v59),
+`WORKFLOW-FORMAT-GUIDE.md`, and VS-133 narrative counts. `workflow-gap-analysis.md` §3/§4/§5/§6
+updated with the Pass 15 record, candidate-gap rows #57–60, and the family-subtotal table's
+After-Pass-15 column.
+
+---
+
 ## 2026-06-17 — Consistency review: correct unclassified-workflow count (2,972 → 2,995) and collapse provenance footers
 
 A full-repo review found the **unclassified-workflow count reported as 2,972 in five places but

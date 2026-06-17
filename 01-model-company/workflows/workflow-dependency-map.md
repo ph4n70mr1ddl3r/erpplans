@@ -1,9 +1,9 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 4,140 total workflows, 1,145 are classified into
+> relationships for system functions. Of 4,236 total workflows, 1,145 are classified into
 > criticality tiers (the confirmed register holds 1,168 rows, incl. 23 `###` parent/summary
-> sub-workflows); 2,995 remain unclassified and default to Tier 2 pending review.
+> sub-workflows); 3,091 remain unclassified (2,995 proposed + 96 added in Pass 15) and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
@@ -704,7 +704,7 @@ value streams. They depend on the Tier-1 core but are not themselves go-live blo
 | VS-130 Corporate Development, M&A & Divestiture | Executes inorganic growth; consumes strategy (VS-33), capex (VS-40), treasury (VS-18); secures PCC clearance via VS-129 and legal/IP via VS-100. Depends on VS-100, VS-17 (finance), VS-36 (governance). |
 | VS-131 Human Rights & Responsible Supply Chain Due Diligence | Due-diligence overlay on global sourcing (VS-122) and the vendor base (VS-03/VS-67); feeds ESG reporting (VS-25) and ethics intake (VS-119). Depends on VS-122, VS-03, VS-25. |
 | VS-132 Corporate Political Engagement & Election Compliance | Governance of political activity/associations (VS-104), B2G (VS-46), and comms (VS-14); anti-graft/ABC interface (VS-86/VS-119). Depends on VS-104, VS-119, VS-36. |
-| VS-133 Operational Excellence, Process Mining & CI | Continuous-improvement OS over the ~4,140 workflows; mines ERP event logs (VS-15/VS-10/VS-04); shares benefit tracking with VS-17.4 and VS-135. Depends on VS-21 (audit), VS-17, VS-30 (innovation). |
+| VS-133 Operational Excellence, Process Mining & CI | Continuous-improvement OS over the ~4,236 workflows; mines ERP event logs (VS-15/VS-10/VS-04); shares benefit tracking with VS-17.4 and VS-135. Depends on VS-21 (audit), VS-17, VS-30 (innovation). |
 | VS-134 Organizational Change Management & Digital Adoption | People-side of transformation; equips PMO portfolio (VS-112), HR/EX (VS-103), training (VS-19.4), and the service desk (VS-27); runs a DAP over cloud ERP. Depends on VS-103, VS-133, VS-112. |
 | VS-135 Technology Business Management, IT Financial Mgmt & FinOps | Financial governance of tech spend; consumes ITAM (VS-99), EA portfolio (VS-113), FP&A (VS-17.4), procurement (VS-34), and cloud ops (VS-27). Depends on VS-17, VS-27, VS-99. |
 | VS-136 Supply Chain Network Design, MEIO & Flow Engineering | Structural network/inventory engineering; consumes supply planning (VS-02), S&OP (VS-127), logistics (VS-06), DC ops (VS-04), and real estate (VS-97/VS-20). Depends on VS-02, VS-28 (analytics), VS-01. |
@@ -761,4 +761,4 @@ for the programs with the heaviest cross-cutting footprint:
 | VS-135 | VS-17(46), VS-27(33), VS-99(30) |
 | VS-136 | VS-02(63), VS-28(31), VS-01(31) |
 
-*Date: 2026-06-16 | Workflow Dependency Map v3.2 — covers prerequisite relationships across all 138 value streams / 4,140 workflows. §1–§7 cover the 1,168 confirmed-classified register rows (1,145 unique workflows); §8 adds the VS-79–VS-142 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 2,995 workflows (including the 96 added in Pass 13 as VS-137–VS-140, W4145–W4240, and the 48 added in Pass 14 as VS-141–VS-142, W4241–W4288) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the fourteen-pass history.*
+*Date: 2026-06-17 | Workflow Dependency Map v3.3 — covers prerequisite relationships across all 142 value streams / 4,236 workflows. §1–§7 cover the 1,168 confirmed-classified register rows (1,145 unique workflows); §8 adds the VS-79–VS-146 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 3,091 workflows (including the 96 added in Pass 13 as VS-137–VS-140, W4145–W4240, the 48 added in Pass 14 as VS-141–VS-142, W4241–W4288, and the 96 added in Pass 15 as VS-143–VS-146, W4289–W4384) carry a keyword-driven proposed tier (or pending) in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the fifteen-pass history.*

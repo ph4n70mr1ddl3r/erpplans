@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 23 pending rework (VS-69/70/71 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-142 | 54 | Fully detailed (fourteen gap-analysis passes, 2026-06-14/15/16) |
+| Gap analysis | VS-89 – VS-146 | 58 | Fully detailed (fifteen gap-analysis passes, 2026-06-14/15/16/17) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 138 Value Streams · 418 Process Areas · 4140 Workflows
+8 Families · 142 Value Streams · 430 Process Areas · 4236 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), and a fourteenth pass on 2026-06-16 (136 → 138 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), and a fifteenth pass on 2026-06-17 (138 → 142 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -61,7 +61,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-110](VS-110-freight-procurement-carrier-management-and-freight-audit/README.md) | Freight Procurement, Carrier Management & Freight Audit | Gap analysis | 3 | 24 |
 |  | [VS-111](VS-111-packaging-pallet-and-returnable-transport-item-management/README.md) | Packaging, Pallet & Returnable Transport Item (RTI) Management | Gap analysis | 3 | 24 |
   | [VS-136](VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/README.md) | Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **379** |
+  | [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **403** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
@@ -94,7 +95,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-124](VS-124-sales-enablement-product-knowledge-clienteling/README.md) | Sales Enablement, Product Knowledge Mastery & Clienteling | Gap analysis | 3 | 24 |
   | [VS-139](VS-139-trade-show-exhibition-and-field-event-marketing/README.md) | Trade Show, Exhibition & Field Event Marketing | Gap analysis | 3 | 24 |
   | [VS-140](VS-140-field-sales-outside-sales-and-route-to-market-force-management/README.md) | Field Sales, Outside Sales & Route-to-Market Force Management | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **1194** |
+  | [VS-145](VS-145-garden-center-live-goods-and-plant-nursery/README.md) | Garden Center, Live Goods & Plant Nursery Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **1218** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -125,7 +127,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-123](VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/README.md) | Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline | Gap analysis | 3 | 24 |
   | [VS-134](VS-134-organizational-change-management-digital-adoption-transformation-enablement/README.md) | Organizational Change Management, Digital Adoption & Transformation Enablement | Gap analysis | 3 | 24 |
   | [VS-141](VS-141-employee-transport-shuttle-and-daily-commute-management/README.md) | Employee Transport, Shuttle & Daily Commute Management | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **290** |
+  | [VS-144](VS-144-employee-accommodation-dormitory-and-staff-housing/README.md) | Employee Accommodation, Dormitory & Staff Housing Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **314** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -165,7 +168,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-130](VS-130-corporate-development-ma-divestiture/README.md) | Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions | Gap analysis | 3 | 24 |
 |  | [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Gap analysis | 3 | 24 |
   | [VS-133](VS-133-operational-excellence-process-mining-continuous-improvement/README.md) | Operational Excellence, Process Mining & Continuous Improvement Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **744** |
+  | [VS-146](VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md) | Customer Mystery Shopping & Service Quality Assurance Program | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **768** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -178,7 +182,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
   | [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | Gap analysis | 3 | 24 |
   | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **326** |
-| | | | **Grand Total** | **4140** | |
+| | | | **Grand Total** | **4236** | |
 
 ---
 
@@ -358,6 +362,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-136.2** [Multi-Echelon Inventory Optimization & Service-Level Engineering](./VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/PA-136.2-multi-echelon-inventory-optimization-and-service-level-engineering.md) — 8 workflows
 - **PA-136.3** [Network & Inventory Performance Analytics, Simulation & Continuous Re-Optimization](./VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/PA-136.3-network-and-inventory-performance-analytics-and-re-optimization.md) — 8 workflows
 
+
+**[VS-143: Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md)** (24 workflows)
+
+- **PA-143.1** [Bulky/White-Goods Delivery Network, Scheduling & Capacity](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/PA-143.1-bulky-delivery-network-scheduling-and-capacity.md) — 8 workflows
+- **PA-143.2** [Delivery Execution, Installation & In-Home Service Operations](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/PA-143.2-delivery-execution-installation-and-in-home-service.md) — 8 workflows
+- **PA-143.3** [Haul-Away, Old-Unit Recycling, Reverse Logistics & Analytics](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/PA-143.3-haul-away-old-unit-recycling-reverse-logistics-and-analytics.md) — 8 workflows
 
 ### Sell & Serve
 
@@ -555,6 +565,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-140.3** [Field Sales Performance, Compensation & Route Analytics](./VS-140-field-sales-outside-sales-and-route-to-market-force-management/PA-140.3-field-sales-performance-compensation-and-route-analytics.md) — 8 workflows
 
 
+**[VS-145: Garden Center, Live Goods & Plant Nursery Operations](./VS-145-garden-center-live-goods-and-plant-nursery/README.md)** (24 workflows)
+
+- **PA-145.1** [Live-Goods Assortment, Sourcing & Nursery Operations](./VS-145-garden-center-live-goods-and-plant-nursery/PA-145.1-live-goods-assortment-sourcing-and-nursery-operations.md) — 8 workflows
+- **PA-145.2** [In-Store Garden Center Care, Merchandising & Sell-Through](./VS-145-garden-center-live-goods-and-plant-nursery/PA-145.2-in-store-garden-center-care-merchandising-and-sell-through.md) — 8 workflows
+- **PA-145.3** [Live-Goods Shrink, Markdown, Compliance & Analytics](./VS-145-garden-center-live-goods-and-plant-nursery/PA-145.3-live-goods-shrink-markdown-compliance-and-analytics.md) — 8 workflows
+
 ### Finance
 
 **[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (42 workflows)
@@ -736,6 +752,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-141.2** [Shuttle Service, Route & Daily Commute Operations](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.2-shuttle-service-route-and-daily-commute-operations.md) — 8 workflows
 - **PA-141.3** [Transport Vendor, Safety, Cost & Commute Analytics](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.3-transport-vendor-safety-cost-and-commute-analytics.md) — 8 workflows
 
+
+**[VS-144: Employee Accommodation, Dormitory & Staff Housing Operations](./VS-144-employee-accommodation-dormitory-and-staff-housing/README.md)** (24 workflows)
+
+- **PA-144.1** [Housing Strategy, Portfolio & Policy Framework](./VS-144-employee-accommodation-dormitory-and-staff-housing/PA-144.1-housing-strategy-portfolio-and-policy-framework.md) — 8 workflows
+- **PA-144.2** [Dormitory/Accommodation Operations, Occupancy & Resident Welfare](./VS-144-employee-accommodation-dormitory-and-staff-housing/PA-144.2-dormitory-operations-occupancy-and-resident-welfare.md) — 8 workflows
+- **PA-144.3** [Housing Facility Maintenance, Vendor, Cost & Housing Analytics](./VS-144-employee-accommodation-dormitory-and-staff-housing/PA-144.3-housing-facility-maintenance-vendor-cost-and-analytics.md) — 8 workflows
 
 ### Asset & Infrastructure
 
@@ -971,6 +993,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-133.3** [Productivity, Benefit Realization & OpEx Analytics](./VS-133-operational-excellence-process-mining-continuous-improvement/PA-133.3-productivity-benefit-realization-and-opex-analytics.md) — 8 workflows
 
 
+**[VS-146: Customer Mystery Shopping & Service Quality Assurance Program](./VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md)** (24 workflows)
+
+- **PA-146.1** [Service-Quality Assurance Strategy, Standards & Program Design](./VS-146-customer-mystery-shopping-and-service-quality-assurance/PA-146.1-service-quality-assurance-strategy-standards-and-design.md) — 8 workflows
+- **PA-146.2** [Mystery Shopping, Service Audit & Measurement Operations](./VS-146-customer-mystery-shopping-and-service-quality-assurance/PA-146.2-mystery-shopping-service-audit-and-measurement-operations.md) — 8 workflows
+- **PA-146.3** [Findings Remediation, Recognition & Service-Quality Analytics](./VS-146-customer-mystery-shopping-and-service-quality-assurance/PA-146.3-findings-remediation-recognition-and-service-quality-analytics.md) — 8 workflows
+
 ### Technology & Data
 
 **[VS-27: IT Operations & Security](./VS-27-it-operations-security/README.md)** (62 workflows)
@@ -1058,15 +1086,15 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140)
-Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140, VS-145)
+Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136, VS-143)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125, VS-142)
-Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141, VS-144)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138)
-Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133)
+Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133, VS-146)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
 
-*Total: 4140 workflows across 138 value streams · Date: 2026-06-16*
+*Total: 4236 workflows across 142 value streams · Date: 2026-06-17*

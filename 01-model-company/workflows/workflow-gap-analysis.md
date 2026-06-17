@@ -124,6 +124,10 @@ identify capability gaps not addressed by any existing value stream.
 | 54 | **Field Sales, Outside Sales & Route-to-Market Force Management** | ~40% B2B revenue (~PHP 25B/yr) across ~5,000 trade accounts + ~200 corporate accounts is project-driven, relationship-driven, and specification-driven, won or lost at the jobsite/architect's office/developer's procurement — a field sales force covering territories, calling accounts, estimating/quoting, and pursuing project bids/specifications is the primary revenue engine for the B2B segment; a mis-sized/mis-routed/under-enabled force forfeits B2B share and lets the ~5,000-account base churn unnoticed | **New gap (Pass 13)** — field/outside-sales/territory terms appeared in only ~1–3 PA files (VS-82, VS-11) with **zero** dedicated workflow headers; field activity happens inside trade-account/B2B-project workflows but no value stream owned the *field-sales operating model* (force-sizing/territory design, quota/coverage, route/call planning, daily field activity, CRM pipeline/forecast, field compensation, enablement/coaching, performance/route analytics) | **FILLED — VS-140** |
 | 55 | **Employee Transport, Shuttle & Daily Commute Management** | ~6,715 employees across 205 distributed sites (200 stores + 4 DCs + HQ) on 2–3 shifts/day including the 10 PM–6 AM night-differential window; provincial/island sites have thin or unsafe after-hours public transport, and commute difficulty is a documented frontline attrition driver at the 15–20% turnover rate — an owned daily people-movement discipline directly affects attendance, safety, payroll (transport allowance), and retention | **New gap (Pass 14)** — 'employee shuttle', 'staff shuttle', 'company bus', 'shuttle route', 'transport allowance', and 'daily commute' each appeared in **zero** PA files as dedicated workflow headers; only adjacent coverage exists (VS-19.1 *business travel* ~600–960 trips/yr, VS-18.2 petty-cash *errand* transport, VS-138 *building* services, VS-06 *goods* fleet) — no value stream owned the *daily people-movement discipline* (commute-need assessment, transport policy/allowance, shuttle fleet/routes/manifest, driver/vendor/safety, late-night/women-safe transport, cost allocation, commute-EX/analytics) | **FILLED — VS-141** |
 | 56 | **Cash-on-Delivery (COD) Operations, Driver Cash Handling & Reconciliation** | The Philippines is a COD-dominant ecommerce market and BuildRight accepts COD (profile §8.1) across ~42,900 ecommerce orders/month plus MSME (VS-82) and trade deliveries (VS-74); at a 30–50% COD share that is ~13,000–21,000 COD orders/month, each carrying physical cash through a multi-party field chain with float, short-pay/refusal, and theft/fraud exposure — unreconciled COD cash directly distorts revenue, inventory, and AR, with leakage benchmarked at 0.3–1.0% of COD GMV | **New gap (Pass 14)** — 'COD operations', 'driver cash handling', 'COD reconciliation', and 'cash-on-delivery settlement' each appeared in **zero** PA files as dedicated workflow headers; only W2837 (MSME-segment COD in VS-82) and W1202 (store daily cash collection) existed, with COD scattered as single steps across VS-06.3/VS-08.2/VS-10.2/VS-16.3/VS-80/VS-56 — no value stream owned the *enterprise COD cash-chain discipline* (policy/limits, doorstep collection/custody, driver/3PL remittance & reconciliation, settlement/float, fraud, analytics) | **FILLED — VS-142** |
+| 57 | **Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling** | Appliances (1,750 SKUs, 5%) + furniture (1,750) + large-format tile + lumber packs + solar water heaters are *scheduled, two-person, in-home* deliveries with installation, old-unit haul-away, and refrigerant/e-waste/scrap recycling — a distinct bulky last-mile + reverse-logistics chain where a failed window or a mishandled refrigerant charge costs a sale (VS-16), a return (VS-32), a safety incident (VS-24), and a DENR/RA 9275/RA 11898 exposure | **New gap (Pass 15)** — 'bulky delivery', 'appliance installation', 'haul-away', 'old-unit recycling', and 'refrigerant recovery' each appeared in **zero** PA files as dedicated workflow headers; only adjacent coverage exists (VS-06.3 generic last-mile, VS-12 generic install/tool-rental, VS-32 customer returns, VS-73 store waste) — no value stream owned the *bulky delivery + install + haul-away + recycling program* | **FILLED — VS-143** |
+| 58 | **Employee Accommodation, Dormitory & Staff Housing** | ~6,715 employees across ~205 distributed provincial/island sites (200 stores + 4 DCs + HQ) on 2–3 shifts incl. the 10 PM–6 AM window, plus transferees and the 10–15 new-store/yr expansion — staff housing is a frontline-attrition and site-staffing lever (alongside VS-141 daily transport) carrying welfare, BFP/OSH, and cost-recovery obligations | **New gap (Pass 15)** — 'staff dormitory', 'staff house', 'bunkhouse', 'employee housing', and 'company barracks' each appeared in **zero** PA files as dedicated workflow headers (5 incidental mentions) — only adjacent coverage exists (VS-141 daily commute, VS-138 commercial facilities, VS-20.3/VS-97 buildings, VS-34 transactional procurement) — no value stream owned the *workforce-housing program* | **FILLED — VS-144** |
+| 59 | **Garden Center, Live Goods & Plant Nursery Operations** | Garden & Outdoor (~3% of SKUs = ~1,050 live-plant/nursery SKUs across 200 store garden centers) is *perishable biological merchandise* requiring daily care (watering/pruning/acclimatization), with visible decline, pest/disease, and live-goods shrink benchmarks of 8–20% — fundamentally unlike hard-goods inventory (VS-05) and frequently vendor-consigned/seasonal/regulated (phytosanitary-BPI, pesticide-FPA, restricted-species) | **New gap (Pass 15)** — 'live goods', 'plant nursery', 'plant care', 'live-goods shrink/mortality', and 'live-goods markdown-on-decline' each appeared in **zero** PA files as dedicated workflow headers; only the single W1487 (garden seasonal rotation/VMI) in VS-07.1 existed — no value stream owned the *live-goods operating discipline* | **FILLED — VS-145** |
+| 60 | **Customer Mystery Shopping & Service Quality Assurance** | 2.8M monthly POS transactions across 200 stores + ecommerce/app + B2B/field/contact-center — service quality is a primary controllable lever on conversion, basket, loyalty, and the 'Your Home Building Partner' positioning, but is only credible as *independent, objective, evidence-based assurance* (not self-reported store metrics), and carries its own integrity (shopper collusion/gaming) and RA 10173 consent/fairness dimensions | **New gap (Pass 15)** — 'mystery shopping', 'service audit', 'service quality assurance', and 'service standards compliance' each appeared in **zero** PA files as dedicated workflow headers (~13 incidental mentions) — scattered as single steps inside VS-13 (reactive CX/complaints), VS-07 (self-reported standards), VS-21 (financial-control audit), VS-133 (process improvement), VS-124 (selling-skills) — no value stream owned the *independent service-quality assurance program* | **FILLED — VS-146** |
 
 ### Candidate gaps considered but rejected (adequate coverage)
 
@@ -328,21 +332,32 @@ The 96 new workflows added in Pass 13 are currently **unclassified** (counted in
 
 The 48 new workflows added in Pass 14 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 13 batches were handled. Several Pass 14 workflows are anticipated Tier 1 (LTFRB-franchise/insurance/out-of-service and women-safe/after-dark transport controls in VS-141, and SoD/daily-reconciliation/custody/bonding and BIR cash-receipting/float-provision controls in VS-142).
 
-### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14)
+**Pass 15** (W4289–W4384): four value streams, 12 process areas, 96 workflows — a deliberately balanced pass adding +24 to each of four operating families (Make & Move, People, Sell & Serve, Governance & Assurance) after fourteen prior passes had been judged complete. Re-running the established gap methodology (defining terms appearing in **zero** PA files as dedicated workflow headers, with only incidental mentions, each conflated with an adjacent covered capability) surfaced four further genuinely-unowned operational disciplines that had been overlooked because the surrounding coverage made them appear owned:
 
-| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 (current) |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 |
-| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 |
-| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 |
-| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | **531** (+24) |
-| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | **290** (+24) |
-| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 |
-| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 |
-| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 |
-| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** (+48) |
-| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | **138** (+2) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | **418** (+6) |
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | Make & Move | 3 | 24 | W4289–W4312 |
+| [VS-144](VS-144-employee-accommodation-dormitory-and-staff-housing/README.md) | Employee Accommodation, Dormitory & Staff Housing Operations | People | 3 | 24 | W4313–W4336 |
+| [VS-145](VS-145-garden-center-live-goods-and-plant-nursery/README.md) | Garden Center, Live Goods & Plant Nursery Operations | Sell & Serve | 3 | 24 | W4337–W4360 |
+| [VS-146](VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md) | Customer Mystery Shopping & Service Quality Assurance Program | Governance & Assurance | 3 | 24 | W4361–W4384 |
+
+The 96 new workflows added in Pass 15 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 14 batches were handled. Several Pass 15 workflows are anticipated Tier 1 (RA 9275 refrigerant-recovery and DOLE OSH heavy-lifting/customer-premises liability controls in VS-143, BFP fire-safety/DOLE-OSH-housing and welfare/anti-harassment controls in VS-144, FPA pesticide/BPI restricted-species and refrigerant-style safety controls in VS-145, and shopper-integrity/RA 10173 consent and independent-assurance controls in VS-146).
+
+### Family subtotal impact (cumulative after Pass 1 + Pass 2 + Pass 3 + Pass 4 + Pass 5 + Pass 6 + Pass 7 + Pass 8 + Pass 9 + Pass 10 + Pass 11 + Pass 12 + Pass 13 + Pass 14 + Pass 15)
+
+| Family | After Pass 3 | After Pass 4 | After Pass 5 | After Pass 6 | After Pass 7 | After Pass 8 | After Pass 9 | After Pass 10 | After Pass 11 | After Pass 12 | After Pass 13 | After Pass 14 | After Pass 15 (current) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Plan & Source | 308 | 332 | 356 | 356 | 356 | 356 | 380 | 404 | 428 | 428 | 428 | 428 | 428 |
+| Make & Move | 307 | 307 | 307 | 355 | 355 | 355 | 355 | 355 | 355 | 379 | 379 | 379 | **403** (+24) |
+| Sell & Serve | 1,098 | 1,098 | 1,122 | 1,122 | 1,122 | 1,122 | 1,146 | 1,146 | 1,146 | 1,146 | 1,194 | 1,194 | **1,218** (+24) |
+| Finance | 411 | 411 | 435 | 435 | 459 | 483 | 483 | 507 | 507 | 507 | 507 | 531 | 531 |
+| People | 146 | 194 | 194 | 194 | 194 | 194 | 242 | 242 | 242 | 266 | 266 | 290 | **314** (+24) |
+| Asset & Infrastructure | 128 | 128 | 152 | 200 | 200 | 224 | 224 | 224 | 224 | 224 | 248 | 248 | 248 |
+| Governance & Assurance | 552 | 576 | 576 | 576 | 600 | 648 | 648 | 648 | 720 | 744 | 744 | 744 | **768** (+24) |
+| Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 |
+| **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** (+96) |
+| Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | **142** (+4) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | **430** (+12) |
 
 Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
 VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
@@ -478,7 +493,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (4,140) matches actual PA workflow header count (4,140). ✅
+- Grand total (4,236) matches actual PA workflow header count (4,236). ✅
 - All 1,168 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
@@ -570,9 +585,19 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   both were genuinely-unowned disciplines whose defining terms appeared in zero PA files as
   dedicated workflow headers and had been conflated with adjacent covered capabilities (business
   travel/goods fleet/facilities for transport; acquirer settlement/last-mile/in-store cash for COD).
-- No further capability gaps are currently outstanding against the model company profile.
-  Future business-model changes (e.g., used-material marketplace, customer construction-loan
-  brokerage, captive insurance underwriting) may be re-evaluated in a future revision.
+- **Bulky & White-Goods Delivery/Installation/Haul-Away/Recycling**, **Employee Accommodation/
+  Dormitory/Staff Housing**, **Garden Center/Live Goods/Plant Nursery**, and **Customer Mystery
+  Shopping/Service Quality Assurance** — **filled** by VS-143, VS-144, VS-145, and VS-146 (Pass 15);
+  all four were genuinely-unowned operational disciplines whose defining terms appeared in zero
+  PA files as dedicated workflow headers and had been conflated with adjacent covered capabilities
+  (generic last-mile/install/returns/waste for bulky delivery; daily commute/commercial facilities/
+  real estate for housing; hard-goods inventory/standard replenishment/store waste for live goods;
+  reactive CX/self-reported store standards/financial audit/process improvement for service-quality
+  assurance).
+- No further capability gaps are currently outstanding against the model company profile after
+  fifteen gap-analysis passes. Future business-model changes (e.g., used-material marketplace,
+  customer construction-loan brokerage, captive insurance underwriting) may be re-evaluated in a
+  future revision.
 
 ### Candidate gaps considered but rejected in Pass 7 (adequate coverage)
 
@@ -730,4 +755,4 @@ tower).
 
 ---
 
-*Date: 2026-06-16 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*
+*Date: 2026-06-17 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*
