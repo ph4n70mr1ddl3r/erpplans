@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 23 pending rework (VS-69/70/71 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-140 | 52 | Fully detailed (thirteen gap-analysis passes, 2026-06-14/15/16) |
+| Gap analysis | VS-89 – VS-142 | 54 | Fully detailed (fourteen gap-analysis passes, 2026-06-14/15/16) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---

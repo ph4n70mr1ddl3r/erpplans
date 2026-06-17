@@ -1008,11 +1008,11 @@
 
 - **Total requirements**: 733 across 38 categories (R1–R32 plus additional gap-closure categories)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 4,092 workflows across 136 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: spans the full 4,140 workflows across 138 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6
 
 ---
 
-*Date: 2026-06-15 (v57 — gap-analysis Pass 12: added VS-133–VS-136 (96 workflows W4049–W4144: Operational Excellence/Process Mining/Continuous Improvement, Organizational Change Management/Digital Adoption/Transformation Enablement, Technology Business Management/IT Financial Management/Cloud FinOps, Supply Chain Network Design/Multi-Echelon Inventory Optimization/Flow Engineering); updated totals to 3,996 workflows / 132 value streams. Requirement-to-workflow mappings for the Pass 7–Pass 12 value streams (VS-113–VS-136) will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v56 added VS-129–VS-132 via Pass 11; prior v55 added VS-125–VS-128 via Pass 10; prior v54 added VS-121–VS-124 via Pass 9; prior v53 added VS-109–VS-112 via Pass 6; prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
+*Date: 2026-06-17 (v58 — consistency review: reconciled gap-analysis Pass 13 (VS-137–VS-140, 96 workflows W4145–W4240) and Pass 14 (VS-141–VS-142, 48 workflows W4241–W4288) across the cross-reference docs; updated totals to 4,140 workflows / 138 value streams. Requirement-to-workflow mappings for the Pass 7–Pass 14 value streams (VS-113–VS-142) will be added during the next classification pass; existing 733 requirement mappings remain valid. Prior v57 added VS-133–VS-136 via Pass 12; prior v56 added VS-129–VS-132 via Pass 11; prior v55 added VS-125–VS-128 via Pass 10; prior v54 added VS-121–VS-124 via Pass 9; prior v53 added VS-109–VS-112 via Pass 6; prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*

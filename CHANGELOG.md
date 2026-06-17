@@ -4,6 +4,56 @@
 
 ---
 
+## 2026-06-17 — Consistency review: reconcile Pass 13/14 (VS-137–VS-142) across cross-reference docs
+
+Pass 13 (VS-137–VS-140) and Pass 14 (VS-141–VS-142) added the value-stream directories,
+PA files, and most cross-reference updates, but several orientation/index docs and the
+criticality proposal still described the repository as if gap analysis had stopped at
+Pass 12 (VS-136) or Pass 13. The validator passed (these are summary/prose sections and
+the proposed-tier file it does not fully cross-check), but the prose was stale, the
+proposed-tier register was missing VS-141/VS-142, and the Pass-14 entry's claim that the
+new workflows "carry a keyword-driven proposed tier in `workflow-criticality-proposed.md`"
+was not yet true. This commit finishes the reconciliation so every doc agrees on the
+current **138 value streams / 418 process areas / 4,140 workflows** state.
+
+Fixes:
+
+- **`workflow-criticality-proposed.md`** — regenerated via `classify-workflows.py` (title
+  bumped Pass 13 → Pass 14) so it now includes VS-141/VS-142; 2,947 → **2,995** proposed
+  workflows (Tier 1 615→622 · Tier 2 2,188→2,227 · Tier 3 144→146). The classification
+  file's "0 workflows without a proposal" claim is now true (was false: the 48 Pass-14
+  workflows previously had none).
+- **`workflow-criticality-classification.md`** — header total 4,092→4,140 and unclassified
+  2,924→2,972; proposed-summary table refreshed to match the regenerated proposal
+  (613/2,096/142/2,947 → 622/2,227/146/2,995) and the stale prose "2,851 workflows not
+  yet confirmed" → 2,995; Grand-Total coverage 4,092→4,140; domain-breakdown prose
+  4,092→4,140; footer bumped v7.10→v7.11 and corrected the stale opening summary
+  (1,167 classified / Tier 1 439 / 22 parent-summary → 1,168 / 440 / 23 — matching the
+  authoritative `## Summary` table and the validator) and appended Pass 13 & Pass 14 to
+  the per-pass narrative.
+- **`workflow-dependency-map.md`** — header 4,092→4,140 total and 2,924→2,972 unclassified
+  (the previous state was internally inconsistent with the file's own 2,972 footer);
+  §8 scope VS-79–VS-140 → VS-79–VS-142; VS-133 row "~3,996 workflows" → "~4,140 workflows".
+- **`requirement-workflow-matrix.md`** — "4,092 workflows across 136 value streams" →
+  4,140 / 138; footer bumped v57→v58, totals 3,996/132 → 4,140/138, mapping scope
+  VS-113–VS-136 → VS-113–VS-142.
+- **`workflows/README.md`** — stats block (136/412/4,092/439 → 138/418/4,140/440), nav
+  "all 136 value streams" → 138, family-subtotal reconciliation
+  (…+507+266…=4,092 → …+531+290…=4,140), and a Pass 13/14 addendum to the retirement
+  note (previously stopped at Pass 12).
+- **`value-stream-index.md`** — block table "VS-89 – VS-140 | 52 | thirteen passes" →
+  "VS-89 – VS-142 | 54 | fourteen passes".
+- **VS-133 `PA-133.1` & `PA-133.3`** — enterprise-scale Volume rows "~3,900 workflows
+  across 132 value streams" → "~4,140 / 138".
+
+Validator: **0 errors**, 3 informational warnings (unchanged). Narrative figures
+(138 value streams, 418 process areas, 4,140 workflows, 1,168 classified / 2,972
+unclassified, fourteen passes) are now consistent across README, executive-summary,
+value-stream-index, dependency-map, touchpoint-map, classification, proposed register,
+and requirement-workflow-matrix.
+
+---
+
 ## 2026-06-16 — Workflow gap analysis (Pass 14): add VS-141–VS-142 (48 workflows W4241–W4288)
 
 A fourteenth gap-analysis pass — deliberately smaller (2 value streams, 48 workflows) — closed
