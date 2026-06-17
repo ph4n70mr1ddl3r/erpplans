@@ -842,7 +842,7 @@
 
 ---
 
-*Document Version: 21.0 | Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 730.*
+*Document Version: 21.0 | Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 733 (a later 2026-06-09 review added WHL-001–003 DC operations to R4, bringing the total from 730 to 733; reconciled with requirement-workflow-matrix.md and the validator, both of which count 733).*
 
 ---
 

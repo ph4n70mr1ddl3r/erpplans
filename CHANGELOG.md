@@ -4,6 +4,34 @@
 
 ---
 
+## 2026-06-17 — Consistency review: correct stale requirement total in `erp-requirements.md` (730 → 733)
+
+The `erp-requirements.md` v21.0 footer (line 845) stated **"total unique requirements: 730"**, but
+the document header, `requirement-workflow-matrix.md`, `executive-summary.md`, `README.md`, and
+the validator all count **733**. The figure was correct when written (commit `254f1e8`, 2026-06-09
+07:10), but a later review the same day (commit `f34a520`, "implement all 6 recommendations",
+2026-06-09 22:26) added the new **WHL-001–003** DC-operations requirements to R4 (Warehouse
+Management) without updating the footer, taking the total 730 → 733. (The companion
+`requirement-workflow-matrix.md` Coverage-Validation block was corrected to 733 in an earlier
+commit; this footer was the lone holdout.)
+
+Verified the count three ways before editing:
+- 733 total requirement table rows and **733 unique IDs** under the precise regex
+  `^\| [A-Z]+-\d+[a-z]? ` — i.e. **zero real duplicates**.
+- The three apparent duplicates surfaced by a coarser `[A-Z]+-\d+` extraction (NFR-022,
+  POS-014, PUR-025) are false positives: they are distinct letter-suffixed requirements
+  (NFR-022a BIR CAS Registration, POS-014a SC/PWD Discount, PUR-025a Commodity Index,
+  PUR-025b Supplier Innovation) that the truncating regex collapsed.
+- `requirement-workflow-matrix.md` independently holds 733 unique requirement IDs.
+
+Fix: updated the footer total to **733** with a concise note recording the WHL-001–003
+addition and the reconciliation. The requirement count (733) is now consistent across
+`erp-requirements.md` (header + footer), `requirement-workflow-matrix.md`, `executive-summary.md`,
+and `README.md`. Validator Check 4 (requirement-IDs-in-matrix vs defined) already passed at 733/733
+and is unaffected.
+
+---
+
 ## 2026-06-17 — Consistency review: reconcile Pass 13/14 (VS-137–VS-142) across cross-reference docs
 
 Pass 13 (VS-137–VS-140) and Pass 14 (VS-141–VS-142) added the value-stream directories,
