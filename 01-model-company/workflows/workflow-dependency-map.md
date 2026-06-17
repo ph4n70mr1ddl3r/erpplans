@@ -1,8 +1,9 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 4,140 total workflows, 1,168 are classified into
-> criticality tiers; 2,972 remain unclassified and default to Tier 2 pending review.
+> relationships for system functions. Of 4,140 total workflows, 1,145 are classified into
+> criticality tiers (the confirmed register holds 1,168 rows, incl. 23 `###` parent/summary
+> sub-workflows); 2,995 remain unclassified and default to Tier 2 pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >
@@ -760,4 +761,4 @@ for the programs with the heaviest cross-cutting footprint:
 | VS-135 | VS-17(46), VS-27(33), VS-99(30) |
 | VS-136 | VS-02(63), VS-28(31), VS-01(31) |
 
-*Date: 2026-06-16 | Workflow Dependency Map v3.2 — covers prerequisite relationships across all 138 value streams / 4,140 workflows. §1–§7 cover the 1,168 confirmed-classified workflows; §8 adds the VS-79–VS-142 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 2,972 workflows (including the 96 added in Pass 13 as VS-137–VS-140, W4145–W4240, and the 48 added in Pass 14 as VS-141–VS-142, W4241–W4288) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the fourteen-pass history.*
+*Date: 2026-06-16 | Workflow Dependency Map v3.2 — covers prerequisite relationships across all 138 value streams / 4,140 workflows. §1–§7 cover the 1,168 confirmed-classified register rows (1,145 unique workflows); §8 adds the VS-79–VS-142 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 2,995 workflows (including the 96 added in Pass 13 as VS-137–VS-140, W4145–W4240, and the 48 added in Pass 14 as VS-141–VS-142, W4241–W4288) carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the fourteen-pass history.*

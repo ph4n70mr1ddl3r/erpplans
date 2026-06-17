@@ -35,7 +35,7 @@ ALL_HEADERS=$(grep -rohP '^#{2,3} W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/wo
 STALE_CLASSIFIED=$(comm -23 <(echo "$CLASSIFIED") <(echo "$ALL_HEADERS") | grep -cP '^W' || true)
 SUB_CLASSIFIED=$(comm -12 <(grep -rohP '^### W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^### //;s/\.$//' | sort -u) <(echo "$CLASSIFIED") | grep -cP '^W' || true)
 
-echo "  Classified: $CLASSIFIED_COUNT | Grand total: $GRAND_TOTAL | Documented unclassified: $DOC_UNCLASS ($SUB_CLASSIFIED classified rows are ### parent/summary workflows)"
+echo "  Classified register rows: $CLASSIFIED_COUNT (incl. $SUB_CLASSIFIED parent/summary sub-workflow rows → $((CLASSIFIED_COUNT - SUB_CLASSIFIED)) unique workflows classified) | Grand total (unique workflows): $GRAND_TOTAL"
 
 if [ "$STALE_CLASSIFIED" -eq 0 ]; then
     ok "All $CLASSIFIED_COUNT classified workflow IDs resolve to a header in a PA file"

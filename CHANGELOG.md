@@ -4,6 +4,44 @@
 
 ---
 
+## 2026-06-17 — Consistency review: correct unclassified-workflow count (2,972 → 2,995) and collapse provenance footers
+
+A full-repo review found the **unclassified-workflow count reported as 2,972 in five places but
+2,995 elsewhere**, while `WORKFLOW-FORMAT-GUIDE.md` still cited a stale **2,659** proposed count
+(pre-Pass-13/14). Root cause: the confirmed criticality register holds **1,168 rows**, of which
+**23 are `###` parent/summary sub-workflows** (e.g. W2, W5B, W9A) double-counted against a `##`
+parent. Unique `##` workflows classified = **1,145**, so true unclassified = 4,140 − 1,145 =
+**2,995** (not 4,140 − 1,168 = 2,972). The validator's Check 1 echo was also printing the
+row-arithmetic "Documented unclassified: 2,972" figure, contradicting the correct unique-workflow
+count it printed in the same section.
+
+Fixes:
+
+- **`workflow-criticality-classification.md`** — header reframed to "1,145 unique workflows
+  classified (1,168 register rows, incl. 23 `###` parent/summary sub-workflows)"; the Summary
+  Coverage table now reads "1,168 rows (1,145 unique)" so **1,145 + 2,995 = 4,140** reconciles
+  explicitly; the provenance footer (which enumerated all fourteen gap-analysis passes inline in
+  one ~2,300-char line) was collapsed to a concise pointer — the full per-pass history remains in
+  `workflow-gap-analysis.md` and this CHANGELOG. Version bumped v7.11 → v7.12.
+- **`README.md`**, **`workflow-dependency-map.md`**, **`workflow-system-touchpoint-map.md`** —
+  every current-state "2,972 unclassified" corrected to **2,995**, with the row-vs-unique
+  distinction noted wherever subtraction is shown (4,140 − 1,145).
+- **`WORKFLOW-FORMAT-GUIDE.md`** — layout diagram corrected 2,659 → **2,995** proposed.
+- **`executive-summary.md`** — collapsed the giant per-pass date footer to a pointer; corrected
+  the `07-methodology/` label from "COMPLETE" to "partial" (its README lists 7 methodology docs
+  still pending platform selection).
+- **`07-methodology/validate-repo.sh`** — Check 1 echo no longer prints the misleading
+  "Documented unclassified" row-arithmetic figure; it now states register-rows vs unique
+  classified, and the real unclassified count (2,995) is printed by the existing WARN.
+
+Validator result: **0 errors, 3 warnings** (the three warnings are the tracked, pre-existing
+Expansion-block boilerplate and Automation/Controls-adoption items — unchanged by this commit).
+A separate scan for broken markdown links surfaced one apparent hit in `CHANGELOG.md` that was
+verified to be a **false positive**: the `](../value-stream-index.md)` text sits inside an inline
+code span illustrating the standardized PA-footer template, so it is literal code, not a live link.
+
+---
+
 ## 2026-06-17 — Consistency review: correct stale requirement total in `erp-requirements.md` (730 → 733)
 
 The `erp-requirements.md` v21.0 footer (line 845) stated **"total unique requirements: 730"**, but

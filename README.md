@@ -224,7 +224,7 @@ erpplans/
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
 | Workflows | 4,140 fully specified across 138 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,168 of 4,140 workflows classified** (28%); 2,972 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
+| Criticality classification | **1,145 of 4,140 workflows classified** (28%; the confirmed register holds 1,168 rows incl. 23 `###` parent/summary sub-workflows); 2,995 remain unclassified pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), and a fourteenth pass on 2026-06-16 (136 → 138 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
 
