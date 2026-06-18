@@ -19,11 +19,13 @@
 | Goods Receipts (DC) | 200 | 1.5x | 300 |
 | DSD Goods Receipts (Store) | ~20 | 1.5x | ~30 |
 | Purchase Orders Created | 40–50 | 2.0x (batch days) | 80–100 |
-| AP Invoices Processed | 217 | 2.0x (month-end) | 433 |
+| AP Invoices Processed | ~300 | 2.0x (month-end) | ~600 |
 | Ecommerce Orders | ~1,430 | 3.0x (sale events) | ~4,290 |
 | Customer Registrations | ~150 | — | ~450 |
 
 > **Note:** Each physical delivery to a store fulfills 2–3 replenishment orders grouped into one shipment, reconciling to 2–3 deliveries/store/week from ~25 replenishment orders/store/month.
+>
+> **AP volume note:** the daily figure is total AP — ~6,715 merchandise invoices (3-way match per W7) + ~2,000–3,000 non-PO/recurring invoices (2-way match per W7C) = ~8,500–9,500/month per `model-company-profile.md` §10.2; ~300/day is the midpoint (÷30 operating days), with month-end close pushing peak to ~600/day.
 
 ### 1.2 Data Storage Estimates (Annual Growth)
 
@@ -34,7 +36,7 @@
 | Inventory Movements | ~3,000,000 | ~6 GB |
 | Journal Entries + Lines | ~1,500,000 | ~3 GB |
 | Purchase Orders + Lines | ~233,000 | ~0.6 GB |
-| AP/AR Documents | ~1,440,000 | ~4 GB |
+| AP/AR Documents & Lines | ~1,440,000 | ~4 GB |
 | Ecommerce Orders + Lines | ~515,000 | ~1.5 GB |
 | Master Data (all types) | ~700,000 | ~0.7 GB |
 | **Total Annual Increment** | | **~100 GB** |
@@ -151,4 +153,4 @@
 
 ---
 
-*Document Version: 4.2 | Date: 2026-06-18 | Integration architecture diagram designated as canonical source; canonical payroll cycle reconciled to semi-monthly 15th & 30th (per model-company-profile.md §11.2); bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); counts reconciled with README.md*
+*Document Version: 4.3 | Date: 2026-06-18 | AP daily-volume figure reconciled to total AP (merchandise + non-PO) per model-company-profile.md §10.2 (~8,500–9,500/month; was merchandise-only 217/day); annual AP/AR storage row relabelled "Documents & Lines" so the ~1.44M record count (≈9–10 lines/doc over ~150K invoice docs) is self-consistent with the corrected daily figure — record count and ~4 GB size unchanged. Prior: integration architecture diagram designated as canonical source; canonical payroll cycle reconciled to semi-monthly 15th & 30th (per model-company-profile.md §11.2); bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); counts reconciled with README.md.*

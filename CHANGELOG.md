@@ -4,6 +4,28 @@
 
 ---
 
+## 2026-06-18 — Data-volumes AP figure reconciliation
+
+Resolved the one outstanding cross-reference ambiguity flagged in the prior consistency review
+(the data-volumes AP figures did not reconcile with the canonical `model-company-profile.md`
+§10.2/§10.3). **No workflow, requirement, or control content changed.** `validate-repo.sh` still
+reports 0 errors / 3 informational warnings.
+
+- **`data-volumes-and-integrations.md` §1.1 (Daily Volumes)**: the "AP Invoices Processed" row
+  stated 217/day (×2.0 peak = 433), which only matched the *merchandise-only* invoice stream by
+  rounding (6,715 ÷ 30 ≈ 224) and silently dropped the ~2,000–3,000 non-PO/recurring invoices.
+  Since the row is unlabeled and sits alongside other *total* rows (e.g. Ecommerce Orders),
+  reconciled it to **total AP** per profile §10.2: ~8,500–9,500/month → midpoint **~300/day**,
+  peak **~600/day** (month-end). Added an "AP volume note" tying the figure to profile §10.2
+  and the W7/W7C split.
+- **`data-volumes-and-integrations.md` §1.2 (Data Storage)**: the "AP/AR Documents" row carried
+  ~1,440,000 annual records — roughly 9–10× the ~150K annual invoice-document count (108K AP +
+  42K AR), i.e. it is line-level records, not documents. Relabelled to **"AP/AR Documents &
+  Lines"** so the count is self-consistent with the corrected daily total (~150K docs × ~9.6
+  lines/doc ≈ 1.44M) and with the neighbouring "Purchase Orders + Lines" / "Ecommerce Orders +
+  Lines" rows. The record count (~1,440,000), size (~4 GB), annual total (~100 GB), and 7-year
+  retention (~700 GB) are all unchanged.
+
 ## 2026-06-18 — Gap-analysis structural consistency: restore missing Pass 12 table, fix family counts and stale figures
 
 A documentation-consistency pass focused on `workflow-gap-analysis.md` plus two small cross-reference
