@@ -85,7 +85,7 @@
 | Store format | Big-box only | Multi-format (Depot + Express) | Simpler model; single format tests one scenario thoroughly |
 | Loyalty earn rate | 1 point per PHP 100 | Tiered earn by membership | Simpler to implement and communicate; standard in Philippine retail |
 | BOPIS hold period | 5 days | 3 days or 7 days | 5 days balances customer convenience with inventory hold cost |
-| A8.1 | POS terminals per store | 3 | 1–5 variable | 3 handles ~467 daily transactions across 10 operating hours with reasonable queues |
+| POS terminals per store | 3 | 1–5 variable | 3 handles ~467 daily transactions across 10 operating hours with reasonable queues |
 | POS sync architecture | Near-real-time event streaming | Nightly batch or periodic sync | Real-time inventory accuracy across 200 stores; prevents overselling; supports omnichannel ATP; Philippine internet reliability requires offline resilience rather than batch dependency |
 | POS offline data model | Local embedded data store | Flat file cache | Full SKU catalog + customer cache enables comprehensive offline selling; not just emergency mode |
 | POS fulfillment model | Multi-origin / mixed-basket | Store-only or store+DC only | Customer convenience: buy some items in-store, order others for delivery from DC or vendor from same transaction; competitive necessity for omnichannel retail |

@@ -1,6 +1,6 @@
 #!/bin/bash
 # validate-repo.sh — Cross-reference validation for BuildRight Depot ERP Plans
-# Checks consistency of workflow counts, requirement IDs, and cross-references
+# Checks consistency of workflow counts, requirement IDs, cross-references, and table structure
 
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -239,6 +239,45 @@ TOTAL_WF=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/
 AUTO_COUNT=$(grep -rohP '^### Automation Opportunity$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 CTRL_COUNT=$(grep -rohP '^### Controls$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 warn "Automation Opportunity present on $AUTO_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($AUTO_COUNT/$TOTAL_WF)*100}")%); Controls present on $CTRL_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($CTRL_COUNT/$TOTAL_WF)*100}")%). Target: 100% on all fully-detailed workflows (see WORKFLOW-FORMAT-GUIDE.md 'Standard analysis fields')"
+
+# --- Check 13: Markdown table structural integrity ---
+echo "--- Check 13: Markdown table structural integrity ---"
+# Two regressions that silently garble rendered tables without breaking any plain-text count
+# elsewhere in this script:
+#  (a) a table data row whose opening '|' is preceded by whitespace (e.g. '  | [VS-136]...')
+#      shifts every column right by one — this corrupted 27 value-stream-index.md architecture
+#      rows in the gap-analysis block before detection. Repo convention: every table row starts
+#      at column 0 with '|'.
+#  (b) within a table, a data row whose unescaped-pipe count differs from the header row
+#      (missing/extra trailing pipe, a step number merged into the description cell, or an
+#      unescaped '|' inside a cell). '\|' is treated as a literal escaped pipe, per CommonMark.
+SUMMARY_DOCS="$REPO_ROOT/README.md $REPO_ROOT/01-model-company/*.md $REPO_ROOT/01-model-company/workflows/*.md $REPO_ROOT/07-methodology/*.md"
+LEADING_WS=$(grep -rlP '^ +\|' $SUMMARY_DOCS 2>/dev/null || true)
+LEADING_WS_COUNT=$(echo -n "$LEADING_WS" | grep -cP '\.md' || true)
+if [ "$LEADING_WS_COUNT" -eq 0 ]; then
+    ok "No table rows with leading whitespace before the opening '|' (column-shift risk)"
+else
+    error "$LEADING_WS_COUNT doc(s) have table rows with leading whitespace before '|' (column-shift risk):"
+    echo "$LEADING_WS" | sed 's/^/    /'
+fi
+COL_MISMATCH=$(awk '
+FNR==1{intable=0;hdr=0;prev=""}
+function ncells(s){ t=s; gsub(/\\[|]/,"",t); return gsub(/[|]/,"",t)-1 }
+{
+  if ($0 ~ /^[|]/) {
+    if ($0 ~ /^\|[[:space:]:|-]+\|$/) { hdr=ncells(prev); intable=1; next }
+    if (intable) { c=ncells($0); if(hdr>0 && c!=hdr) printf "%s:%d header=%d row=%d: %.50s\n",FILENAME,FNR,hdr,c,$0 }
+    prev=$0; next
+  }
+  intable=0; hdr=0; prev=""
+}' $SUMMARY_DOCS 2>/dev/null)
+COL_MISMATCH_COUNT=$(echo -n "$COL_MISMATCH" | grep -cP ':' || true)
+if [ "$COL_MISMATCH_COUNT" -eq 0 ]; then
+    ok "All summary-doc table rows match their header column count"
+else
+    error "$COL_MISMATCH_COUNT summary-doc table row(s) have a column count differing from their header:"
+    echo "$COL_MISMATCH" | sed 's/^/    /' | head -20
+fi
 
 echo ""
 echo "=== Validation Complete ==="

@@ -4,6 +4,48 @@
 
 ---
 
+## 2026-06-18 — Markdown table structural-integrity review
+
+A repo-wide sweep for table-rendering inconsistencies surfaced a class of bug that `validate-repo.sh`
+did not previously catch: markdown table rows whose rendered columns silently diverge from their
+header, even though every plain-text count (workflows, requirements, controls, cross-references)
+stayed correct. **No workflow, requirement, control, or numeric total changed.** `validate-repo.sh`
+still reports 0 errors / 3 informational warnings, now joined by a new Check 13 that prevents this
+whole class from recurring.
+
+- **`workflows/value-stream-index.md` (architecture table)** — 27 gap-analysis rows (VS-133–VS-161,
+added across passes 13–18) were missing their leading `|` and wrote `  | [VS-NN](…) | …` instead of
+  `|  | [VS-NN](…) | …`. Under GFM this lands the VS link in the **Family** column and shifts every
+  subsequent column (Name→VS, Block→Name, …), garbling 27 of 157 rows in the canonical navigation
+  table. Restored the leading `|` on all 27; the per-family VS counts now reconcile with
+  `workflows/README.md` (8 families · 157 value streams · 475 process areas · 4,596 workflows).
+- **`erp-requirements.md` COM-011** — the BIR TIN format example read `XXX-XXX-XXX-T00`, a corrupted
+  string that matches neither the 3- nor 4-segment Philippine TIN format documented in
+  `data-migration-mapping.md` (§§ vendor/employee lists: `XXX-XXX-XXX` / `XXX-XXX-XXX-XXX`).
+  Corrected to `XXX-XXX-XXX or XXX-XXX-XXX-XXX` to match the canonical migration field validation.
+- **`assumptions-and-design-decisions.md` (Design Decisions table)** — one row carried a stray
+  `A8.1 |` assumption-ID prefix left over from the 5-column A1–A6 assumption tables, giving the
+  4-column Design Decisions table a 5-column row ("POS terminals per store" landed in the Choice
+  column). There is no A7/A8 section and `A8.1` is referenced nowhere else, so the prefix was removed.
+- **PA-file table structure (13 PA files across VS-01/03/05/10/11/22/23/28/34/38/39/40/48)** —
+  mechanical fixes to step/RACI tables that rendered with shifted or empty trailing columns:
+  - 15 rows wrote the step number merged into the description cell (`| 3. text | owner | approver |
+    time |`, 4 cells under a 5-column header) — split into a proper `| 3 | text | … |` step cell.
+    Concentrated in VS-48 (Retail Media Network) and VS-40 (Capex), with single rows in VS-03/34.
+  - 16 further rows used `| 3. | text` (correct 5-cell count, cosmetic trailing dot) — normalised to
+    `| 3 | text` for a uniform step-number style across VS-11/34/38/39/40.
+  - Missing/duplicate trailing pipes and a missing leading pipe in VS-10 `PA-10.2` rows 12a/12b,
+    VS-05 `PA-05.2` row 7, VS-10 `PA-10.1` "Volume" row, VS-01 `PA-01.1` sub-step 7a, and the
+    VS-22/VS-23 README total rows (which used `| | **Total** | **N** | |` vs the `| | **Total** |
+    **N** |` form used by the other 150+ value-stream READMEs).
+  - VS-28 `PA-28.3` row 1 used literal `|actual − forecast|` math delimiters inside a table cell,
+    which GFM reads as column separators; escaped to `\|actual − forecast\|`.
+- **`07-methodology/validate-repo.sh`** — added **Check 13 (Markdown table structural integrity)**
+  with two guards: (a) flags any summary-doc table row whose opening `|` is preceded by whitespace
+  (the value-stream-index column-shift bug), and (b) verifies every summary-doc table row's
+  unescaped-pipe count matches its header (missing/extra pipes, merged cells, unescaped in-cell
+  `|`). Both pass on the current tree.
+
 ## 2026-06-18 — Data-volumes AP figure reconciliation
 
 Resolved the one outstanding cross-reference ambiguity flagged in the prior consistency review
