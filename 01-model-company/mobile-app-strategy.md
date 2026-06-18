@@ -3,7 +3,7 @@
 > Defines the mobile application strategy for BuildRight Depot's customers and employees.
 > This document informs the ERP evaluation by specifying mobile integration requirements.
 > Cross-references: [NFR-032](erp-requirements.md) (Customer Mobile App Daily Operations),
-> [W615](workflows/VS-27-it-operations-security/PA-27.2-infrastructure-and-platform.md) (Mobile App Daily Operations),
+> [W615](workflows/VS-27-it-operations-security/PA-27.1-service-management.md) (Mobile App Daily Operations),
 > [W395](workflows/VS-27-it-operations-security/PA-27.2-infrastructure-and-platform.md) (Mobile App Store Management),
 > [W725](workflows/VS-10-ecommerce-digital/PA-10.1-ecommerce-platform-operations.md) (Ecommerce Platform Daily Health Monitoring).
 

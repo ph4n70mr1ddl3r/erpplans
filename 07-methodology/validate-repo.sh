@@ -28,7 +28,7 @@ echo "--- Check 1: Unclassified workflow headers ---"
 # real workflow header in a PA file (catching stale classification references).
 CLASSIFIED=$(grep -oP '^\| (W\d+[A-Z]?) \|' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md | sed -E 's/^\| //;s/ \|$//' | sort -u)
 CLASSIFIED_COUNT=$(echo "$CLASSIFIED" | grep -cP '^W' || true)
-GRAND_TOTAL=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | head -1)
+GRAND_TOTAL=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | tail -1)
 DOC_UNCLASS=$((GRAND_TOTAL - CLASSIFIED_COUNT))
 
 ALL_HEADERS=$(grep -rohP '^#{2,3} W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/*.md 2>/dev/null | sed -E 's/^#{2,3} //;s/\.$//' | sort -u)
@@ -82,7 +82,7 @@ ok "PA workflow count checks complete"
 # --- Check 3: Cross-reference key figures ---
 echo "--- Check 3: Key figure consistency ---"
 # Check total workflows in value-stream-index
-TOTAL_VS=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | head -1)
+TOTAL_VS=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | tail -1)
 README_TOTAL=$(grep -oP '1,\d{3}' "$REPO_ROOT"/README.md | head -1)
 if [ -n "$TOTAL_VS" ]; then
     ok "Value stream index total: $TOTAL_VS workflows"
@@ -200,7 +200,7 @@ fi
 
 # --- Check 9: Grand total in value-stream-index matches actual PA file count ---
 echo "--- Check 9: Grand total vs actual workflow count ---"
-GRAND_TOTAL=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | head -1)
+GRAND_TOTAL=$(grep 'Grand Total' "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md | grep -oP '\d+' | tail -1)
 ACTUAL_WFS=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l)
 if [ "$GRAND_TOTAL" = "$ACTUAL_WFS" ]; then
     ok "Grand total ($GRAND_TOTAL) matches actual PA workflow header count ($ACTUAL_WFS)"

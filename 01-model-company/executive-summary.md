@@ -1,12 +1,12 @@
 # BuildRight Depot Corp. — Executive Summary
 
-> One-page overview of the model company and monolithic ERP system architecture for C-suite stakeholders.
+> One-page overview of the model company and unified cloud ERP system architecture for C-suite stakeholders.
 
 ---
 
 ## The Company
 
-**BuildRight Depot Corp.** is a model big-box hardware/home improvement retail chain in the Philippines, operating with all its capabilities and systems running under an optimized, monolithic model ERP platform provided by a theoretical software vendor.
+**BuildRight Depot Corp.** is a model big-box hardware/home improvement retail chain in the Philippines, operating with all its capabilities and systems running under an optimized, unified cloud ERP platform provided by a theoretical software vendor.
 
 | Parameter | Value |
 |---|---|
@@ -27,13 +27,13 @@
 
 
 
-## Monolithic ERP System
+## Unified Cloud ERP System
 
-BuildRight is supported by a single, fully optimized monolithic ERP system running the entire business end-to-end:
+BuildRight is supported by a single, fully optimized unified cloud ERP system running the entire business end-to-end:
 
 | Platform | Provider | Status |
 |---|---|---|
-| Model Monolithic ERP | Theoretical Software Vendor | Fully Operational |
+| Unified Cloud ERP | Theoretical Software Vendor | Fully Operational |
 
 ---
 

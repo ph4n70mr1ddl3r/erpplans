@@ -20,7 +20,7 @@
 | DSD Goods Receipts (Store) | ~20 | 1.5x | ~30 |
 | Purchase Orders Created | 40–50 | 2.0x (batch days) | 80–100 |
 | AP Invoices Processed | 217 | 2.0x (month-end) | 433 |
-| Ecommerce Orders | ~1,400 | 3.0x (sale events) | ~4,200 |
+| Ecommerce Orders | ~1,430 | 3.0x (sale events) | ~4,290 |
 | Customer Registrations | ~150 | — | ~450 |
 
 > **Note:** Each physical delivery to a store fulfills 2–3 replenishment orders grouped into one shipment, reconciling to 2–3 deliveries/store/week from ~25 replenishment orders/store/month.

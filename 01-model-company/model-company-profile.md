@@ -730,6 +730,7 @@ The following external systems are actively integrated with the core ERP system.
 | **DOLE** | Department of Labor and Employment (Philippines) |
 | **DSD** | Direct Store Delivery |
 | **EOQ** | Economic Order Quantity |
+| **ERP Platform** | The single, cloud-deployed, single-vendor ERP platform running BuildRight's entire business end-to-end (financials, procurement, inventory, POS, WMS, ecommerce, HR, treasury). The canonical term used across all documents is **“unified cloud ERP”**. |
 | **EWT** | Expanded Withholding Tax (Philippines) |
 | **GMV** | Gross Merchandise Value |
 | **IC** | Intercompany |

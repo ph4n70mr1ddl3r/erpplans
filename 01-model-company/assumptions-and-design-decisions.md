@@ -67,7 +67,7 @@
 | A6.1c | POS multi-origin fulfillment | Mixed-basket with items from store, DC, vendor, other stores | Single POS transaction can contain items fulfilled from multiple origins; unified financial posting | POS-044, POS-045 |
 | A6.1d | POS terminal-to-terminal LAN sync | Peer sync when WAN down | Prevents overselling across terminals in same store during offline period | POS-046 |
 | A6.2 | No strict PH data residency | Asia-Pacific hosting recommended | Philippines has no mandatory data residency law; latency matters more | Technical Guidelines §2.1 |
-| A6.3 | Ecommerce platform | Monolithic ERP Native Module | Fully integrated native ecommerce module provided by the monolithic ERP platform to ensure real-time inventory and pricing sync | This document |
+| A6.3 | Ecommerce platform | Unified Cloud ERP Native Module | Fully integrated native ecommerce module provided by the unified cloud ERP platform to ensure real-time inventory and pricing sync | This document |
 | A6.4 | Mobile app: branded native app | iOS + Android | Required for BOPIS pickup notifications, loyalty, and customer engagement; built on ERP-provided APIs or third-party | This document |
 | A6.5 | 7-year data retention | BIR requirement | Drives storage sizing (~700 GB uncompressed over 7 years) | Profile §15.3 |
 

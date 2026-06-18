@@ -4,6 +4,55 @@
 
 ---
 
+## 2026-06-18 — Cross-reference consistency & stale-figure cleanup
+
+A housekeeping pass correcting stale figures and broken references that had accumulated in the
+cross-reference layer behind the gap-analysis passes. **No workflow, requirement, or control
+content changed** — all counts were re-verified against `07-methodology/validate-repo.sh`, which
+still reports 0 errors / 3 informational warnings.
+
+- **workflow-criticality-classification.md** (v7.13 → v7.14): the footer and the `## Summary`
+  "Proposed classification" block still cited the Pass-14 totals (4,236 workflows / 3,091
+  unclassified / 2,995–3,331 proposed); updated to the current 4,596 / 3,451 unclassified, all
+  3,451 proposed (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3) through Pass 18 (VS-89–VS-161,
+  W2993–W4744). Added a layout note clarifying that each tier's count spans the original
+  `## Tier N` register plus the later `### Tier N Additions` batch.
+- **workflow-criticality-proposed.md**: regenerated via the fixed `classify-workflows.py`. The
+  title no longer carries a stale "Pass 14" label, and all 3,451 value-stream links now resolve —
+  previously every one of the 157 distinct links was malformed (unpadded number, human title,
+  raw spaces/ampersands) and pointed at non-existent paths.
+- **classify-workflows.py**: the VS-folder slug is now looked up from the real folders and used in
+  the generated link (`[VS-01](VS-01-merchandise-strategy/README.md)`); the hardcoded "Pass 14"
+  title string was removed.
+- **value-stream-index.md**: the 8 family subtotal rows and the grand-total row had their workflow
+  counts landing in the wrong table column (Process Areas) due to a missing cell; subtotals now
+  sit in the Workflows column, per-family process-area subtotals are shown (summing to 475), and
+  the grand total reads 475 PAs / 4,596 workflows. The Expansion-block note is corrected from
+  "23 pending rework" to 22 (VS-73 is now also detailed).
+- **WORKFLOW-FORMAT-GUIDE.md**: the Repository Layout block stated 142 VS / 430 PAs / 3,331
+  proposed; updated to 157 VS / 475 PAs / 3,451 proposed.
+- **requirement-workflow-matrix.md** (v59 → v60): footer totals updated from 4,236 workflows /
+  142 value streams to 4,596 / 157 through Pass 18, with the incremental-mapping caveat clarified.
+- **mobile-app-strategy.md**: the W615 cross-reference pointed at PA-27.2 but W615 lives in
+  PA-27.1; corrected.
+- **data-volumes-and-integrations.md**: the daily ecommerce-order figure (~1,400/day → ~4,200
+  peak) was inconsistent with the 42,900/month and ~515,000/year figures in the same document;
+  corrected to ~1,430/day (~4,290 peak).
+- **model-company-profile.md**: added an "ERP Platform" glossary entry; this is now the
+  canonical term — **"unified cloud ERP"** — replacing the previously-listed "monolithic ERP" /
+  "model ERP" variants.
+- **ERP platform term standardized**: the same single cloud-deployed, single-vendor platform was
+  described inconsistently as "monolithic ERP" (executive-summary, technical-guidelines,
+  assumptions, NFR-030, VS-22.2, VS-27.2) and "unified cloud ERP" (README, model-company-profile,
+  gap-analysis, VS-113/VS-130/VS-134/VS-135). "Monolithic" is an architecture anti-pattern term
+  that mischaracterizes a modern cloud suite, so all 13 occurrences across 6 files were
+  standardized to the canonical "unified cloud ERP" (system/platform as context dictates). The
+  VS-27.2 "single point of failure" observation is preserved verbatim (a single-instance
+  unified platform still has one blast radius, hence the HA-clustering/DR mitigation).
+- **validate-repo.sh**: Checks 1 / 3 / 9 read the Grand Total line's first number; they now read
+  the last number (the Workflows column) so the two-total grand-total row validates correctly.
+  The computed grand total is unchanged (4,596).
+
 ## 2026-06-18 — Workflow gap analysis (Pass 18): add VS-157–VS-161 (120 workflows W4625–W4744)
 
 A focused gap-analysis pass (5 value streams, 15 process areas, 120 workflows) closing five

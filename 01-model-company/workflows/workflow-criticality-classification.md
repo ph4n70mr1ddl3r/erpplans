@@ -7,6 +7,10 @@
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via
 > `07-methodology/classify-workflows.py`).
 >
+> **Layout note:** each tier's workflows are split into the original register (`## Tier N`) and a
+> later `### Tier N Additions` batch added in subsequent review passes; the per-tier counts in the
+> section headings and the [`## Summary`](#summary) table include both batches.
+>
 > Back to [Workflow Index](README.md)
 
 ---
@@ -760,7 +764,7 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 
 ### Proposed classification (keyword-driven, pending human review)
 
-The **3,331** workflows not yet in the confirmed register above have been assigned a *proposed*
+The **3,451** workflows not yet in the confirmed register above have been assigned a *proposed*
 tier by [`07-methodology/classify-workflows.py`](../../07-methodology/classify-workflows.py) using
 conservative keyword rules; see the companion file
 [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). On review, promote/demote
@@ -768,10 +772,10 @@ rows by moving them into the confirmed sections above.
 
 | Phase | Label | Proposed Count |
 |---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) — proposed | 673 |
-| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,504 |
-| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 154 |
-| **Proposed Total** | | **3,331** |
+| Phase 1 | Go-Live Critical (Tier 1) — proposed | 688 |
+| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,608 |
+| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 155 |
+| **Proposed Total** | | **3,451** |
 
 | Coverage | Workflows |
 |---|---|
@@ -1594,4 +1598,4 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W690 | Digital Transformation Initiative Portfolio Management | Innovation & Digital Transformation |
 | W691 | Emerging Technology Scouting & Proof-of-Concept Evaluation | Innovation & Digital Transformation |
 
-*Date: 2026-06-17 | Workflow Criticality Classification v7.13 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,091 workflows remain unclassified (4,236 unique `##` workflows − 1,145 classified), of which 2,995 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (Pass 14: 2,995 proposed across 622 Tier 1 / 2,227 Tier 2 / 146 Tier 3) and 96 added in Pass 15 (VS-143–VS-146, W4289–W4384) are pending their first proposal. The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-146 were added across fifteen gap-analysis passes (W2993–W4384). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
+*Date: 2026-06-18 | Workflow Criticality Classification v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
