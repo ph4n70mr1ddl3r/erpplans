@@ -306,7 +306,7 @@ defining terms and only incidental single-workflow references to the broader cap
 | [VS-124](VS-124-sales-enablement-product-knowledge-clienteling/README.md) | Sales Enablement, Product Knowledge Mastery & Clienteling | Sell & Serve | 3 | 24 | W3833–W3856 |
 
 **Pass 10** (W3857–W3952): four value streams, 12 process areas, 96 workflows, distributed across
-four families (Finance, Technology & Data, Plan & Source). Each gap had been
+three families (Finance, Technology & Data, Plan & Source). Each gap had been
 previously overlooked because it was genuinely unowned as a program — its defining terms appeared
 in zero or near-zero PA files with only incidental single-step references to the broader capability
 scattered across multiple adjacent value streams:
@@ -326,6 +326,17 @@ scattered across multiple adjacent value streams:
 | [VS-130](VS-130-corporate-development-ma-divestiture/README.md) | Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions | Governance & Assurance | 3 | 24 | W3977–W4000 |
 | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Plan & Source | 3 | 24 | W4001–W4024 |
 | [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Governance & Assurance | 3 | 24 | W4025–W4048 |
+
+**Pass 12** (W4049–W4144): four value streams, 12 process areas, 96 workflows, deliberately strengthening three of the four thinnest-by-workflow families (**People** +24, **Technology & Data** +24, **Make & Move** +24) and adding the cross-cutting operational-excellence discipline to **Governance & Assurance** (+24). Each gap had been previously overlooked because it was a genuinely-unowned *enterprise-management discipline* whose defining terms appeared in zero PA files as dedicated workflow headers (process mining / operational excellence / continuous improvement; change management / OCM / adoption; finops / cloud cost / TBM / IT financial management; multi-echelon / inventory optimization / network design), with only incidental single-step references to the broader capability scattered across multiple adjacent value streams. None of the four follows the single-workflow-elevation pattern of Passes 1/5/7/8/10/11; all four are genuinely-unowned enterprise-management disciplines with no dedicated owner:
+
+| VS | Value Stream | Family | Process Areas | Workflows | W-range |
+|---|---|---|---|---|---|
+| [VS-133](VS-133-operational-excellence-process-mining-continuous-improvement/README.md) | Operational Excellence, Process Mining & Continuous Improvement Program | Governance & Assurance | 3 | 24 | W4049–W4072 |
+| [VS-134](VS-134-organizational-change-management-digital-adoption-transformation-enablement/README.md) | Organizational Change Management, Digital Adoption & Transformation Enablement | People | 3 | 24 | W4073–W4096 |
+| [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | Technology & Data | 3 | 24 | W4097–W4120 |
+| [VS-136](VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/README.md) | Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering | Make & Move | 3 | 24 | W4121–W4144 |
+
+The 96 new workflows added in Pass 12 are currently **unclassified** (counted in the unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the Pass 1–Pass 11 batches were handled. Several Pass 12 workflows are anticipated Tier 1 (process-mining event-log integrity / change-of-state controls in VS-133, go-live-readiness / hypercare / sponsor-activation controls in VS-134, cloud-commit / showback-integrity / budget-gate controls in VS-135, and service-level / safety-stock / network-resilience controls in VS-136).
 
 **Pass 13** (W4145–W4240): four value streams, 12 process areas, 96 workflows, strengthening the two thinnest families by workflow count (**Asset & Infrastructure** and **Technology & Data**) and adding two genuine, B2B-relevant gaps to **Sell & Serve** (the largest family). Each gap had been previously overlooked because it was a genuinely-unowned *shared-service or B2B-growth discipline* whose defining terms appeared in zero or near-zero PA files as dedicated workflow headers ('product information management'/'PIM'/'digital asset management'/'DAM', 'integrated facilities management'/'IFM'/'building automation'/'BMS', 'trade show'/'exhibition'/'field event', 'field sales'/'outside sales'/'route-to-market'), with only incidental references to the broader capability scattered across multiple adjacent value streams. None of the four follows the single-workflow-elevation pattern of Passes 1/5/7/8/10/11; all four are genuinely-unowned disciplines with no dedicated owner:
 
@@ -382,7 +393,7 @@ The 96 new workflows added in Pass 16 are currently **unclassified** (counted in
 
 The 144 new workflows added in Pass 17 are **unclassified** and carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via `07-methodology/classify-workflows.py`), exactly as prior batches; they will be confirmed into the register during a follow-up criticality review. Several Pass 17 workflows are anticipated Tier 1 (RA 7394 price-tag/EAS-cash-integrity and read-rate/labeling-conformance controls in VS-151; Foundation safeguarding/PSEA and fund-use/due-diligence controls in VS-152; captive risk-transfer/capital-adequacy/RBC controls in VS-153; BSP brokerage/anti-predatory/privacy controls in VS-154; safety-screen/data-wipe/warranty-liability controls in VS-155; BSP-agent/KYC-AML/cash-SoD controls in VS-156).
 
-**Pass 18** (W4625–W4744): five value streams, 15 process areas, 120 workflows — a focused pass closing five further genuinely-unowned disciplines that re-running the established gap methodology (defining terms in zero PA files as dedicated workflow headers, no dedicated owner, conflated with adjacent covered coverage) surfaced after seventeen prior passes had been judged complete. Two are *single-workflow elevations* following the Pass 1/5/7/8/10/11 pattern (VS-157 elevates the over-stuffed W487 in VS-15.1; VS-158 elevates the heavily-referenced W85 in VS-17.4), one is a *scattered-slice consolidation* following the Pass 10/12 pattern (VS-161 unifies the TPRM slices spread across VS-21/VS-86/VS-91/VS-119/VS-125), and two are *genuinely uncovered* with zero defining-term references (VS-159 corporate security/executive protection; VS-160 immigration/global mobility). The pass strengthens four families (Finance +48, Governance & Assurance +48, People +24):
+**Pass 18** (W4625–W4744): five value streams, 15 process areas, 120 workflows — a focused pass closing five further genuinely-unowned disciplines that re-running the established gap methodology (defining terms in zero PA files as dedicated workflow headers, no dedicated owner, conflated with adjacent covered coverage) surfaced after seventeen prior passes had been judged complete. Two are *single-workflow elevations* following the Pass 1/5/7/8/10/11 pattern (VS-157 elevates the over-stuffed W487 in VS-15.1; VS-158 elevates the heavily-referenced W85 in VS-17.4), one is a *scattered-slice consolidation* following the Pass 10/12 pattern (VS-161 unifies the TPRM slices spread across VS-21/VS-86/VS-91/VS-119/VS-125), and two are *genuinely uncovered* with zero defining-term references (VS-159 corporate security/executive protection; VS-160 immigration/global mobility). The pass strengthens three families (Finance +48, Governance & Assurance +48, People +24):
 
 | VS | Value Stream | Family | Process Areas | Workflows | W-range |
 |---|---|---|---|---|---|
@@ -485,7 +496,7 @@ live in those two families. Three of the four gaps (VS-117 elevating W447, VS-11
 VS-119 extending W2943) follow the Pass-1/Pass-5/Pass-7 pattern of elevating a single workflow to
 a dedicated end-to-end program; the fourth (VS-120) is a genuinely-uncovered statutory program.
 
-The 96 new workflows added in Pass 8 are currently **unclassified** (counted in the 2,445-workflow
+The 96 new workflows added in Pass 8 are currently **unclassified** (counted in the
 unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
 Pass 1 (VS-89–VS-92), Pass 2 (VS-93–VS-96), Pass 3 (VS-97–VS-100), Pass 4 (VS-101–VS-104),
 Pass 5 (VS-105–VS-108), Pass 6 (VS-109–VS-112), and Pass 7 (VS-113–VS-116) batches were handled.
@@ -511,7 +522,7 @@ people-attraction and selling-effectiveness* disciplines that naturally live in 
 Source, and Sell & Serve. None of the four follows the single-workflow-elevation pattern; all four
 are genuinely-uncovered strategic disciplines with no dedicated owner.
 
-The 96 new workflows added in Pass 9 are currently **unclassified** (counted in the 2,541-workflow
+The 96 new workflows added in Pass 9 are currently **unclassified** (counted in the
 unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
 Pass 1–Pass 8 batches were handled. Several Pass 9 workflows are anticipated Tier 1 (candidate
 consent/RA 10173 and equal-opportunity controls in VS-121, sourcing sanctions/ABC and
@@ -531,7 +542,7 @@ VS-118/VS-86 for fraud; VS-13/VS-29/VS-107/VS-10/VS-75 for the customer view; VS
 VS-106 for planning; VS-30.2/VS-27.3/VS-91/VS-113/VS-21 for AI). None of the four follows the
 single-workflow-elevation pattern of Passes 1/5/7/8; all four are genuinely-unowned programs.
 
-The 96 new workflows added in Pass 10 are currently **unclassified** (counted in the 2,637-workflow
+The 96 new workflows added in Pass 10 are currently **unclassified** (counted in the
 unclassified total) and will be tier-assigned in a follow-up criticality review, exactly as the
 Pass 1–Pass 9 batches were handled. Several Pass 10 workflows are anticipated Tier 1 (chargeback
 representment/recovery and deduction-authorization/SoD controls in VS-125, identity-resolution/
@@ -781,7 +792,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   VS-113 (Enterprise Architecture); emerging and not yet a standalone operational program for the
   current model company.
 
-### Candidate gaps considered but rejected in Pass 12 (adequate coverage)
+### Candidate gaps considered in Pass 12 (four elevated to dedicated value streams; remainder rejected as adequately covered)
 
 - **Continuous improvement / process improvement (as part of VS-30 or VS-21)** — *considered*
 within VS-30 (innovation/automation) and VS-21 (audit) but elevated here to a dedicated value
@@ -822,12 +833,16 @@ sourcing depth.
 but rejected as adequately covered across VS-12 (W440 power-tool service & repair center,
 W1170–W1253 installation dispatch/quality), VS-13 (W1363 VIP support hotline, W1364 DIY help
 center, W1290 appliance warranty/after-sales coordination), and VS-53 (warranty).
-- **Lease accounting / IFRS 16 / right-of-use asset management** — *considered* but rejected as
-adequately covered: W275 (IFRS 16/PFRS 16 lease accounting) in VS-17 and W1872/W1875 (PFRS 16
-month-end and lease-accounting policy) in VS-42 own the discipline.
-- **Supplier risk / supply-chain resilience** — *considered* but rejected as adequately covered by
+- **Lease accounting / IFRS 16 / right-of-use asset management** — *considered* in Pass 12 and rejected as
+adequately covered (W275 (IFRS 16/PFRS 16 lease accounting) in VS-17 and W1872/W1875 (PFRS 16
+month-end and lease-accounting policy) in VS-42), then **re-evaluated and filled in Pass 16 as
+VS-148** (gap #62) once the dedicated PFRS 16 recognition / measurement / disclosure program was
+judged distinct from the existing single-workflow coverage.
+- **Supplier risk / supply-chain resilience** — *considered* in Pass 12 and rejected as adequately covered by
 VS-02.3 (W558 supplier risk, W729 disruption response, W763 vendor diversification, W250 control
-tower).
+tower), then **re-evaluated and filled in Pass 18 as VS-161** (gap #75, TPRM) once the unified
+cross-domain enterprise third-party-risk program was judged distinct from the per-domain slices
+(supply-side in VS-21, ABC in VS-86, privacy in VS-91, ethics in VS-119, fraud in VS-125).
 
 ---
 

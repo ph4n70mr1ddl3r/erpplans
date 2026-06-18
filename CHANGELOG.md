@@ -4,6 +4,43 @@
 
 ---
 
+## 2026-06-18 — Gap-analysis structural consistency: restore missing Pass 12 table, fix family counts and stale figures
+
+A documentation-consistency pass focused on `workflow-gap-analysis.md` plus two small cross-reference
+fixes surfaced by reviewing the cross-reference layer end-to-end. **No workflow, requirement, or
+control content changed** — every correction reconciles the gap-analysis narrative to the
+authoritative per-pass data already established elsewhere (the other §4 tables, the family-subtotal
+table, and §3). `validate-repo.sh` still reports 0 errors / 3 informational warnings.
+
+- **Restored the missing Pass 12 entry in §4 "New Value Streams Added".** The section jumped
+  Pass 11 → Pass 13, omitting the per-value-stream table for Pass 12 (VS-133–VS-136, W4049–W4144)
+  even though Pass 12 was referenced everywhere else (intro, gap rows #47–#50, the family-subtotal
+  table, and the post-subtotal narrative). Added the table — VS-133 Operational Excellence
+  (Governance & Assurance), VS-134 OCM (People), VS-135 TBM/FinOps (Technology & Data), VS-136
+  Network Design/MEIO (Make & Move) — with the verified W-range allocation and a matching
+  unclassified-status note, so all eighteen passes now have a §4 table.
+- **Fixed two family-count mismatches in the §4 pass intros.** Pass 10 said "distributed across
+  four families" but listed three (Finance, Technology & Data, Plan & Source) — the family-subtotal
+  table confirms only three families moved. Pass 18 said "strengthens four families" but listed
+  three (Finance +48, Governance & Assurance +48, People +24). Both corrected to "three families".
+- **Removed stale per-pass unclassified totals.** The Pass 8/9/10 status notes each carried a
+  present-tense "currently unclassified (counted in the N-workflow unclassified total)" with a
+  stale running figure (2,445 / 2,541 / 2,637) that no longer matches the current 3,451 unclassified
+  total and was inconsistent with every other pass's "counted in the unclassified total" wording.
+  Normalized all three to the sibling-pass wording.
+- **Reconciled two stale "rejected as adequately covered" entries.** §6 listed Lease
+  accounting/IFRS 16 and Supplier risk/supply-chain resilience as rejected in Pass 12, but both
+  were subsequently re-evaluated and **filled** (VS-148 in Pass 16; VS-161 TPRM in Pass 18). Added
+  "re-evaluated and filled in Pass N as VS-NNN" notes so the entries no longer contradict §3/§4.
+  Also reworded that subsection header, which had labelled four *elevated* Pass 12 capabilities as
+  "rejected".
+- **`workflow-dependency-map.md` §2.8**: the "Warehouse Operations Chain" heading was indented by
+  two spaces, which breaks GitHub Markdown heading rendering (it would not render as an `###`
+  heading nor appear in the document outline). De-indented to column 0.
+- **`VS-15-procure-to-pay/PA-15.1`**: the W7C note referenced "the ~6,000–6,000 figure in the
+  model-company-profile §10.2" — a garbled figure (the profile states ~6,715 merchandise invoices).
+  Corrected to "~6,715".
+
 ## 2026-06-18 — Content consistency pass: payroll dates, bank list, stale ranges, W40 category, stale date stamps
 
 A content-level consistency pass following the cross-reference housekeeping earlier today. **No

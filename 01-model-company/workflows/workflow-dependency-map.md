@@ -323,7 +323,7 @@ W196 (Route Planning)
   → W431 (LGU Truck Ban Governance)
 ```
 
-  ### 2.8 Warehouse Operations Chain
+### 2.8 Warehouse Operations Chain
 
 ```
 W585 (DC Dock Scheduling & Appointment Management)
