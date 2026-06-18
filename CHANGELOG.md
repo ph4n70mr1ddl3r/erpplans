@@ -4,6 +4,55 @@
 
 ---
 
+## 2026-06-18 — Content consistency pass: payroll dates, bank list, stale ranges, W40 category, stale date stamps
+
+A content-level consistency pass following the cross-reference housekeeping earlier today. **No
+workflow, requirement, or control content changed**; every correction reconciles existing prose to
+a canonical figure already established elsewhere in the repo. `validate-repo.sh` still reports
+0 errors / 3 informational warnings.
+
+- **Payroll cut-off dates standardized** to the canonical semi-monthly **15th & 30th**
+  (per `model-company-profile.md` §11.2 and `assumptions-and-design-decisions.md`; the dominant
+  figure already used in VS-10, VS-15, VS-19.3). Previously `data-volumes-and-integrations.md`
+  (Batch Windows + Peak Load Calendar), `erp-requirements.md` FIN-076, and four workflow PA files
+  (VS-18.1 ×3, VS-19.2 ×1) stated "14th & 28th" — two different cut-off pairs for the same
+  5-entity payroll.
+- **Bank list reconciled to 4 banks** (BDO, BPI, Metrobank, Chinabank) — the canonical model per
+  `model-company-profile.md` §10.4, FIN-043, and VS-18.2. `erp-requirements.md` FIN-009 and both
+  copies of the integration architecture diagram (`data-volumes-and-integrations.md` §2 canonical
+  and `technical-guidelines.md` §3.2 convenience copy) previously listed only three.
+- **`workflow-system-touchpoint-map.md`**: the "Gap-Analysis Value Streams" section heading and
+  prose were still at the Pass-14 snapshot (VS-79–VS-142 / "fourteen passes" / 64 VS / 1,536
+  workflows) while the footer had already moved to Pass-18. Reconciled heading + prose to
+  VS-79–VS-161 / eighteen passes / 83 VS / 1,992 workflows, added the missing VS-143–VS-161
+  primary-module rows, and fixed a phantom "Treasury / Cash Management" module label on the
+  VS-142 row (not a defined module in the table above).
+- **`workflow-dependency-map.md` §8**: heading, prose, and the §8.1 anchor table were stale
+  (claimed VS-79–VS-142 / VS-79–136 / "twelve passes" / 58 VS / 1,392 workflows with
+  under-counted reference figures). Re-ran the `grep`-based reference count over the full
+  VS-79–VS-161 PA-file range and republished all ten anchor counts (e.g. VS-17 817 → 1449,
+  VS-21 657 → 1181); reconciled all range labels and pass/VS/workflow totals. Added a note
+  clarifying that the curated §8.3/§8.4 program tables (built incrementally through VS-142/VS-136)
+  will be extended to VS-143–VS-161 in a follow-up; §8.1 counts already cover the full range.
+- **`workflow-criticality-classification.md`**: W40 (Regular Price Change Execution) moved from
+  "Core Finance" to "Core Merchandising & Pricing" — a pricing workflow previously misfiled under
+  Finance while its sibling W13 sat in Merchandising. Subsection counts updated (Core Finance
+  31→30; Core Merchandising & Pricing 1→2); tier totals unchanged.
+- **`technical-guidelines.md`**: POS offline-storage figure clarified from the ambiguous "~1,000
+  txns/store/day at peak" to the documented 467 avg/day × 2.0 peak factor = ~933 peak-day, with
+  the 1,500-buffer framed as an extended-outage safety margin; HQ bandwidth rationale reconciled
+  from "300 users" to "~315 HQ staff (≈300 concurrent users)" per profile §3.3.
+- **`workflows/README.md`**: Quick Stats tier rows reconciled with the "1,145 unique + 23
+  parent/summary sub-workflow rows = 1,168" register reconciliation used elsewhere; the
+  ~2,000-word duplicated gap-analysis Note (stale-dated 2026-06-14) replaced with a concise
+  pointer to `workflow-gap-analysis.md`.
+- **Stale document date/version stamps** reconciled to 2026-06-18 on files whose content already
+  reflected the 06-18 state but whose footers still read 06-09/06-15: `model-company-profile.md`
+  (2.14→2.15), `assumptions-and-design-decisions.md`, `technical-guidelines.md` (2.1→2.2),
+  `mobile-app-strategy.md` (v3→v3.1), `WORKFLOW-FORMAT-GUIDE.md`, `data-volumes-and-integrations.md`
+  (4.1→4.2), `workflow-criticality-classification.md` (v7.14→v7.15),
+  `workflow-system-touchpoint-map.md` (70.0→70.1), `workflow-dependency-map.md` (v3.5→v3.6).
+
 ## 2026-06-18 — Cross-reference consistency & stale-figure cleanup
 
 A housekeeping pass correcting stale figures and broken references that had accumulated in the

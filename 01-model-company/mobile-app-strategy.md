@@ -154,4 +154,4 @@ Each ERP evaluation should address:
 
 ---
 
-*Date: 2026-06-09 (v3 — added workflow cross-references; added NFR-032 reference; added W615/W725/W395 integration notes; added evaluation question for POS-022; updated date)*
+*Date: 2026-06-18 (v3.1 — corrected W615 cross-reference from PA-27.2 to PA-27.1; v3 — added workflow cross-references, NFR-032 reference, W615/W725/W395 integration notes, POS-022 evaluation question)*

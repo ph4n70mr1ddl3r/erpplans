@@ -140,4 +140,4 @@ workflows/
 
 ---
 
-*Date: 2026-06-15*
+*Date: 2026-06-18 (Repository Layout counts reconciled to 157 value streams / 475 process areas / 3,451 proposed; classified-register reconciliation note aligned with workflow-criticality-classification.md)*

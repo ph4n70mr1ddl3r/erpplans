@@ -67,8 +67,8 @@
 │       │             │             │              │                   │
 │  ┌────▼─────┐ ┌────▼─────┐ ┌────▼─────┐  ┌────▼──────┐            │
 │  │   Banks   │ │ BIR/eFPS │ │ SSS/PH/  │  │ Delivery  │            │
-│  │(BDO,BPI,  │ │ (Tax     │ │ Pag-IBIG │  │ Partners  │            │
-│  │  MB)      │ │ filing)  │ │ (Stat.)  │  │(Lalamove, │            │
+│  │(BDO, BPI, │ │ (Tax     │ │ Pag-IBIG │  │ Partners  │            │
+│  │MB, CB)    │ │ filing)  │ │ (Stat.)  │  │(Lalamove, │            │
 │  └──────────┘ └──────────┘ └──────────┘  │ Transp.)  │            │
 │                                           └───────────┘            │
 │       ┌─────────────┐         ┌─────────────────┐                  │
@@ -132,7 +132,7 @@
 | Day-end close per store | Daily at 23:30 local | 5–10 minutes per store | 23:30–00:30 |
 | Week-on-week sales report generation | Weekly (Monday 06:00) | 10–20 minutes | 06:00–07:00 |
 | Month-end close | Last day of month + 5 working days | 2–4 hours for heavy jobs | 22:00–03:00 (off-peak) |
-| Payroll processing (5 entities) | Semi-monthly (14th & 28th) | 1–2 hours per entity | 20:00–23:00 |
+| Payroll processing (5 entities) | Semi-monthly (15th & 30th) | 1–2 hours per entity | 20:00–23:00 |
 | VAT / tax report generation | Monthly (by 10th) | 30–60 minutes | Evening batch |
 | BIR eFPS tax filing file export | Monthly / Quarterly | < 30 minutes | On-demand |
 | Full inventory reindex / valuation | Monthly (1st) | 30–60 minutes | 01:00–03:00 |
@@ -145,10 +145,10 @@
 |---|---|---|
 | Month-end (last 3 days) | Close, accruals, reconciliation | +30% AP/AR processing, heavy reporting |
 | Bi-monthly sale events | Promotional pricing, traffic surge | +100% POS volume, +200% ecommerce |
-| Payroll dates (14th & 28th) | Payroll runs, bank file generation | Heavy HR/payroll module usage |
+| Payroll dates (15th & 30th) | Payroll runs, bank file generation | Heavy HR/payroll module usage |
 | Q1 inventory count (Jan) | Annual wall-to-wall physical count | Heavy inventory module, RF gun usage |
 | Christmas season (Nov–Dec) | Peak retail period | Sustained +50% volume across all channels |
 
 ---
 
-*Document Version: 4.1 | Date: 2026-06-09 | Integration architecture diagram designated as canonical source; counts reconciled with README.md*
+*Document Version: 4.2 | Date: 2026-06-18 | Integration architecture diagram designated as canonical source; canonical payroll cycle reconciled to semi-monthly 15th & 30th (per model-company-profile.md §11.2); bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); counts reconciled with README.md*

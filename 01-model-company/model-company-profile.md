@@ -750,4 +750,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.14 | Date: 2026-06-09 | Glossary designated as single source of truth; counts reconciled with README.md*
+*Document Version: 2.15 | Date: 2026-06-18 | Glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*

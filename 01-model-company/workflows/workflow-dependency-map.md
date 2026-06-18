@@ -637,36 +637,36 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-## 8. Cross-Cutting Program Dependencies (VS-79–VS-142)
+## 8. Cross-Cutting Program Dependencies (VS-79–VS-161)
 
-> The Statutory deepening (VS-79–VS-88) and twelve gap-analysis passes (2026-06-14/15)
-> together added 58 value streams / 1,392 workflows that are predominantly
+> The Statutory deepening (VS-79–VS-88) and eighteen gap-analysis passes (2026-06-14 through 2026-06-18)
+> together added 83 value streams / 1,992 workflows that are predominantly
 > **cross-cutting overlays** on the Tier-1 core: governance,
 > assurance, finance-deepening, and technology-platform programs that consume master
 > data and transactions from the foundational value streams. This section captures the
 > VS-level prerequisite wiring declared inline in their PA files, so the dependency graph
 > is no longer limited to the original 1,168 classified workflows. Mined by
-> `grep` over every `links to VS-NN` / `VS-NN` reference in VS-79–VS-142 PA files.
+> `grep` over every `links to VS-NN` / `VS-NN` reference in VS-79–VS-161 PA files.
 
 ### 8.1 Anchor value streams (where the gap-analysis programs hook in)
 
-The foundational value streams most referenced by VS-79–VS-142. These confirm that the
+The foundational value streams most referenced by VS-79–VS-161. These confirm that the
 **gap-analysis programs are largely Tier 2/3 overlays** (they sit *on top of*
 Record-to-Report, Audit, IT Ops, Analytics, HR, and Legal), with the **statutory exceptions
 called out in §8.2** that are themselves Tier 1.
 
-| Anchor VS | Value Stream | References from VS-79–136 |
+| Anchor VS | Value Stream | References from VS-79–VS-161 |
 |---|---|---|
-| VS-17 | Record-to-Report | 817 |
-| VS-21 | Internal Audit & Risk | 657 |
-| VS-28 | Data, Analytics & BI | 542 |
-| VS-27 | IT Operations & Security | 538 |
-| VS-19 | Hire-to-Retire | 488 |
-| VS-36 | Corporate Governance | 460 |
-| VS-100 | Legal Operations, Litigation & IP | 458 |
-| VS-33 | Strategic Planning | 423 |
-| VS-01 | Merchandise Strategy | 407 |
-| VS-03 | Vendor Management & Procurement | 361 |
+| VS-17 | Record-to-Report | 1449 |
+| VS-21 | Internal Audit & Risk | 1181 |
+| VS-100 | Legal Operations, Litigation & IP | 955 |
+| VS-27 | IT Operations & Security | 877 |
+| VS-28 | Data, Analytics & BI | 784 |
+| VS-19 | Hire-to-Retire | 775 |
+| VS-36 | Corporate Governance | 633 |
+| VS-01 | Merchandise Strategy | 628 |
+| VS-33 | Strategic Planning | 582 |
+| VS-03 | Vendor Management & Procurement | 484 |
 
 ### 8.2 Cross-cutting Tier-1 statutory / revenue-critical programs
 
@@ -761,4 +761,6 @@ for the programs with the heaviest cross-cutting footprint:
 | VS-135 | VS-17(46), VS-27(33), VS-99(30) |
 | VS-136 | VS-02(63), VS-28(31), VS-01(31) |
 
-*Date: 2026-06-18 | Workflow Dependency Map v3.5 — covers prerequisite relationships across all 157 value streams / 4,596 workflows. §1–§7 cover the 1,168 confirmed-classified register rows (1,145 unique workflows); §8 adds the VS-79–VS-161 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 3,451 workflows (including the 120 added in Pass 18 as VS-157–VS-161, W4625–W4744, and the 144 added in Pass 17 as VS-151–VS-156, W4481–W4624) all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the eighteen-pass history.*
+> **Note on §8.3 / §8.4 coverage:** the curated program tables above (§8.3 platform/governance programs through VS-142; §8.4 top-anchor edges through VS-136) were built incrementally as each gap-analysis pass landed. VS-143–VS-161 program dependencies follow the same cross-cutting pattern and are documented inline in their PA files (`links to VS-NN` references); they will be tabulated here in a follow-up pass. The §8.1 anchor reference counts above already reflect the full VS-79–VS-161 range.
+
+*Date: 2026-06-18 | Workflow Dependency Map v3.6 — covers prerequisite relationships across all 157 value streams / 4,596 workflows. §1–§7 cover the 1,168 confirmed-classified register rows (1,145 unique workflows); §8 adds the VS-79–VS-161 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA files. The remaining 3,451 workflows (including the 120 added in Pass 18 as VS-157–VS-161, W4625–W4744, and the 144 added in Pass 17 as VS-151–VS-156, W4481–W4624) all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the eighteen-pass history.*

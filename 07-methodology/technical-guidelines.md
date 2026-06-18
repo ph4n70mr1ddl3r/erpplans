@@ -17,7 +17,7 @@ The following is the POS hardware specification that meets the business requirem
 | **Receipt Printer** | 80mm thermal printer (BIR-registered format) |
 | **Cash Drawer** | Triggered by POS; 4-bill / 8-coin compartments |
 | **Payment Device** | PIN pad for card (EMV/chip & contactless); e-wallet QR support |
-| **Offline Storage** | Must store ≥ 8 hours of transactions locally (~1,000 txns per store per day at peak, buffered to ~1,500 capacity for safety margin) |
+| **Offline Storage** | Must store ≥ 8 hours of transactions locally (~933 peak-day transactions per store = 467 avg/day × 2.0 peak factor, buffered to ~1,500 capacity for an extended-outage safety margin) |
 | **Local Data Store** | Embedded local database on each terminal containing: active SKU catalog (barcode, description, price, UOM, promo rules, flags), cached customer records (loyalty members + trade accounts), terminal configuration; enables full offline selling with accurate pricing and customer recognition |
 | **Connectivity** | Primary link + failover connectivity; POS operates offline with full capability during WAN outage; store LAN enables terminal-to-terminal sync when WAN is down |
 | **Central Management** | Centrally managed (MDM or equivalent); OTA updates across 600 terminals |
@@ -97,7 +97,7 @@ ERP's data sync requirements.
 |---|---|---|---|
 | Store | 200 | ≥ 2 Mbps stable + failover link | POS sync, price updates, inventory updates |
 | DC | 4 | ≥ 10 Mbps stable, redundant | WMS real-time operations, ~80 RF guns per DC |
-| HQ | 1 | ≥ 100 Mbps | 300 users, reporting, batch processing |
+| HQ | 1 | ≥ 100 Mbps | ~315 HQ staff (≈300 concurrent users), reporting, batch processing |
 | **Total WAN** | **205** | **~540 Mbps aggregate** | |
 
 ### 2.3 DR & Business Continuity Reference
@@ -158,8 +158,8 @@ define what connects. The table below details how these systems are integrated.
 │       │             │             │              │                   │
 │  ┌────▼─────┐ ┌────▼─────┐ ┌────▼─────┐  ┌────▼──────┐            │
 │  │   Banks   │ │ BIR/eFPS │ │ SSS/PH/  │  │ Delivery  │            │
-│  │(BDO,BPI,  │ │ (Tax     │ │ Pag-IBIG │  │ Partners  │            │
-│  │  MB)      │ │ filing)  │ │ (Stat.)  │  │(Lalamove, │            │
+│  │(BDO, BPI, │ │ (Tax     │ │ Pag-IBIG │  │ Partners  │            │
+│  │MB, CB)    │ │ filing)  │ │ (Stat.)  │  │(Lalamove, │            │
 │  └──────────┘ └──────────┘ └──────────┘  │ Transp.)  │            │
 │                                           └───────────┘            │
 │       ┌─────────────┐         ┌─────────────────┐                  │
@@ -189,4 +189,4 @@ These are the active security controls implemented across the unified cloud ERP 
 
 ---
 
-*Document Version: 2.1 | Date: 2026-06-09 | Integration diagram canonical reference updated; counts reconciled with README.md*
+*Document Version: 2.2 | Date: 2026-06-18 | Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); HQ concurrent-users figure reconciled with model-company-profile.md §3.3 (315 staff); counts reconciled with README.md*

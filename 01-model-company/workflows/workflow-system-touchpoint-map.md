@@ -47,11 +47,10 @@
 
 ---
 
-## Gap-Analysis Value Streams (VS-79–VS-142) — Primary ERP Module Coverage
+## Gap-Analysis Value Streams (VS-79–VS-161) — Primary ERP Module Coverage
 
-> The Statutory deepening (VS-79–VS-88) and fourteen gap-analysis passes together added 64 value streams / 1,536 workflows whose per-workflow system
-> touchpoints are documented inline in each PA file. Rather than append ~1,200 more workflow IDs
-> to the already-dense module rows above (which would make them unreadable), this section gives
+> The Statutory deepening (VS-79–VS-88) and eighteen gap-analysis passes (2026-06-14 through 2026-06-18) together added 83 value streams / 1,992 workflows whose per-workflow system
+> touchpoints are documented inline in each PA file. Rather than append the remaining ~2,000 gap-analysis workflow IDs to the already-dense module rows above (which would make them unreadable), this section gives
 > the **primary ERP module mapping per value stream** for orientation; drill into the PA file for
 > per-workflow module/object detail. Module names match the section headings in the table above.
 
@@ -120,8 +119,27 @@
 | VS-139 | Trade Show, Exhibition & Field Event Marketing | CRM / Loyalty; Marketing / Campaigns; Vendor Contract Management; Financials |
 | VS-140 | Field Sales, Outside Sales & Route-to-Market Force Management | CRM / Loyalty; Customer Account Mgmt; Corporate Account Mgmt; Reporting / Analytics |
 | VS-141 | Employee Transport, Shuttle & Daily Commute Management | HR & Payroll; Fleet Management; Vendor Contract Management; Financials |
-| VS-142 | Cash-on-Delivery (COD) Operations & Driver Cash Reconciliation | Financials; Ecommerce; Treasury / Cash Management; Internal Audit |
+| VS-142 | Cash-on-Delivery (COD) Operations & Driver Cash Reconciliation | Financials; Ecommerce; Internal Audit; Loss Prevention |
+| VS-143 | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling | Warehouse Management; Ecommerce; Services / Rental; Data Privacy & Compliance |
+| VS-144 | Employee Accommodation, Dormitory & Staff Housing | HR & Payroll; Facility Maintenance; Real Estate |
+| VS-145 | Garden Center, Live Goods & Plant Nursery | Inventory; Pricing / Merchandising; POS / Retail; Regulatory Operations |
+| VS-146 | Customer Mystery Shopping & Service Quality Assurance | Customer Experience; Reporting / Analytics; Internal Audit |
+| VS-147 | Customer Safety, Premises Liability & In-Store Risk Management | Loss Prevention; HSE / Safety; Reporting / Analytics |
+| VS-148 | Lease Accounting (PFRS 16) & Right-of-Use Asset Management | Financials; Real Estate |
+| VS-149 | Self-Checkout, Scan-&-Go & Unattended Retail Technology | POS / Retail; Loss Prevention; IT Operations |
+| VS-150 | Drug-Free Workplace & Substance Abuse Program | HR & Payroll; HSE / Safety |
+| VS-151 | Auto-ID, Barcode, RFID, Labeling & EAS Operations | Master Data; IT Operations; Loss Prevention; POS / Retail |
+| VS-152 | Corporate Social Responsibility, Foundation & Community Investment | Marketing / Campaigns; Governance / Strategy; Financials |
+| VS-153 | Captive Insurance, Reinsurance & Enterprise Risk Financing | Financials; Governance / Strategy |
+| VS-154 | Home Construction Finance, Loan Brokerage & Mortgage Referral | Financials; CRM / Loyalty; Services / Rental |
+| VS-155 | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | Inventory; POS / Retail; Procurement |
+| VS-156 | In-Store Value-Added Services & Financial Agency Operations | POS / Retail; Financials; Services / Rental; Regulatory Operations |
+| VS-157 | Revenue Recognition (PFRS 15) & Complex Contract Accounting | Financials; Reporting / Analytics |
+| VS-158 | Product Costing, Landed-Cost & Cost Accounting | Financials; Inventory; Reporting / Analytics |
+| VS-159 | Corporate Security, Executive Protection & Travel Risk Management | Loss Prevention; Governance / Strategy; HSE / Safety |
+| VS-160 | Global Mobility, Immigration & Foreign Worker Compliance | HR & Payroll; Regulatory Operations |
+| VS-161 | Third-Party & Supplier Risk Management (TPRM) | Procurement; Internal Audit; Vendor Contract Management; Governance / Strategy |
 
 ---
 
-*Document Version: 70.0 | Date: 2026-06-18 | Reconciled to 4,596 workflows across 157 value streams. The module-to-workflow rows above cover the foundational + confirmed-classified workflows (1,168 register rows; 1,145 unique); the gap-analysis value streams VS-79–VS-161 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 3,451 workflows not yet in the confirmed register (including the 120 added in Pass 18 as VS-157–VS-161, W4625–W4744, and the 144 added in Pass 17 as VS-151–VS-156, W4481–W4624) all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the eighteen-pass history.*
+*Document Version: 70.1 | Date: 2026-06-18 | Reconciled to 4,596 workflows across 157 value streams. Section heading/prose corrected from the stale Pass-14 snapshot (VS-79–VS-142 / 64 VS / 1,536 workflows) to Pass-18 (VS-79–VS-161 / 83 VS / 1,992 workflows); VS-143–VS-161 primary-module rows added; VS-142 phantom "Treasury / Cash Management" module label (not a defined row) replaced. The module-to-workflow rows above cover the foundational + confirmed-classified workflows (1,168 register rows; 1,145 unique); the gap-analysis value streams VS-79–VS-161 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 3,451 workflows not yet in the confirmed register (including the 120 added in Pass 18 as VS-157–VS-161, W4625–W4744, and the 144 added in Pass 17 as VS-151–VS-156, W4481–W4624) all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the eighteen-pass history.*

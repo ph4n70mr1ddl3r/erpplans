@@ -98,4 +98,4 @@
 
 ---
 
-*Date: 2026-06-09*
+*Date: 2026-06-18 ("unified cloud ERP" terminology standardized across all documents; counts reconciled with README.md and model-company-profile.md)*
