@@ -265,7 +265,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-    │  erp-requirements.md ←→ workflows/ (4,596 WF)    │
+   │  erp-requirements.md ←→ workflows/ (4,596 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -276,7 +276,7 @@ erpplans/
    │  assumptions-and-      workflow-system-           │
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
-    │                value-stream-index.md              │
-    │            (157 VS · 475 process areas)            │
+   │                value-stream-index.md              │
+   │            (157 VS · 475 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

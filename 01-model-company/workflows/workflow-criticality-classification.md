@@ -226,6 +226,8 @@ Failure in any of these workflows would disrupt store operations or legal compli
 | W480 | CAAP Height Clearance Permit Compliance | Mandatory CAAP clearances for store structures/signage near aerodromes |
 | W54A | BIR Computerized Accounting System (CAS) Registration | Mandatory BIR CAS permit per entity/location; legal prerequisite for POS invoice/receipt numbering and books-of-accounts generation |
 
+### Core Master Data Governance (16 workflows)
+
 | ID | Workflow | Operational Significance |
 |---|---|---|
 | W252 | Centralized Item Master Creation & Governance | 55K SKUs; single source of truth |

@@ -4,6 +4,51 @@
 
 ---
 
+## 2026-06-19 — Cross-reference consistency & structural cleanup
+
+A whole-repo review for inconsistencies, redundancies, and ambiguities surfaced seven issues across the
+cross-reference layer. **No workflow, requirement, control, value stream, or numeric grand total changed.**
+`validate-repo.sh` still reports 0 errors / 3 informational warnings.
+
+- **`workflows/workflow-gap-analysis.md` §4 (family-subtotal table)** — the cumulative *Process areas* row
+  drifted at Pass 9 and Pass 10: it read `… 352 | 356 | 368 | 388 …` but Pass 9 and Pass 10 each added
+  4 value streams × 3 process areas = 12 PAs, so the correct progression is `… 352 | 364 | 376 | 388 …`.
+  The error cancelled by Pass 11 (which is why the final 475 total and every other row reconciled),
+  and the workflows / value-streams / per-family rows were always correct. Now verified: every per-step
+  delta matches the per-pass PA additions stated in the §4 headers (12, 12, 12, 12, 12, 12, 12, 12, 12,
+  12, 6, 12, 12, 18, 15).
+- **`workflows/workflow-criticality-classification.md` (Tier 1)** — the `### Core Compliance & IT (29
+  workflows)` heading understated its section: a second 16-row sub-table of foundational master-data
+  governance workflows (W252 item, W253 customer, W254 location, W287 vendor, W288 financial, W289
+  pricing, … W405 data-privacy-consent masters) had been appended under the same heading, giving the
+  section 45 rows and leaving those 16 masters unplaced under the wrong domain. Split into two
+  subsections: `### Core Compliance & IT (29 workflows)` and a new `### Core Master Data Governance
+  (16 workflows)`. Tier totals are unchanged (Tier 1 main = 156 = 30+14+13+7+23+2+7+6+5+29+16+4; +284
+  Additions = 440).
+- **`workflows/workflow-gap-analysis.md` §3 / §6 structure** — four *Candidate gaps considered but
+  rejected* subsections (Pass 7, Pass 9, Pass 8, Pass 12) were orphaned at the end of §6 *Remaining
+  (deferred) gaps* — a section about gaps deferred then filled, not about candidates rejected as
+  already-covered. Moved all four into §3 *Gaps Identified* alongside the existing Pass-5-elevations,
+  Pass-6, and generic *rejected* subsections, and reordered them to numeric pass order (7, 8, 9, 12).
+- **`workflows/workflow-dependency-map.md` §8.4** — single-digit value-stream references used mixed
+  forms: most rows wrote `VS-1`, `VS-2`, `VS-3`, `VS-4`, `VS-6`, `VS-7`, `VS-8` (no leading zero), while
+  the VS-131 and VS-136 rows wrote `VS-01`, `VS-02`, `VS-03` (leading zero). Normalised all 11 affected
+  rows to the leading-zero form (`VS-01`–`VS-09`) used by directory names, `value-stream-index.md`,
+  `workflow-gap-analysis.md`, and the §8.3 prose.
+- **`README.md` (Document Relationships diagram)** — three rows of the CROSS-REFERENCE LAYER ASCII box
+  (`erp-requirements.md ←→ workflows/`, `value-stream-index.md`, `157 VS · 475 process areas`) carried a
+  4-space leading indent that pushed their left `│` border one column right of every other row, breaking
+  the box outline. Restored column-3 alignment.
+- **`workflows/value-stream-index.md` (detailed map)** — collapsed 8 stray double-blank-line gaps: one
+  before VS-143 (within Make & Move), three within-family (before VS-144/145/146), three before family
+  section headings (### Make & Move, ### People, ### Governance & Assurance — the other five family
+  headings used a single blank), and one before the closing separator. All VS/PA separators now use a
+  single blank line uniformly.
+- **`workflows/workflow-dependency-map.md`** — removed a duplicate `---` horizontal rule between §7
+  and §8 (rendered as two stacked `<hr>`s).
+
+---
+
 ## 2026-06-18 — Markdown table structural-integrity review
 
 A repo-wide sweep for table-rendering inconsistencies surfaced a class of bug that `validate-repo.sh`

@@ -190,6 +190,164 @@ Pass 5 specifically targeted capabilities that existed only as a single workflow
 - **Strategic / key account management** — *previously* sprinkled across VS-11/VS-43/VS-46/VS-13; now the dedicated **VS-107** program.
 - **Own-generation / prosumer solar** — *previously* the single monitoring workflows W111 (energy) and W173 (solar) in VS-07/VS-20.3; now the dedicated **VS-108** program.
 
+### Candidate gaps considered but rejected in Pass 7 (adequate coverage)
+
+- **Tax controversy / BIR audit defense / CTA appeal** — covered by W77 (BIR Audit Response) in
+  VS-22, with a detailed LOA → investigation → FAN → protest → CTA-appeal lifecycle (separate from
+  VS-79 tax filing).
+- **Real Property Tax (RPT) assessment, payment & appeal** — covered by W119 (RPT Management) in
+  VS-79 and referenced across VS-97/VS-42/VS-76 as owner/lessor/LGU.
+- **Insurance claims management & subrogation** — covered by the dedicated PA-26.3 (Insurance
+  Claims and Policy Management) in VS-26, including adjuster, settlement, and subrogation.
+- **Special / custom / made-to-order lifecycle** — covered by W744 (Store-Level Special Order
+  Follow-Up), W545 (special orders), and W38 (special order fulfillment) across VS-09/VS-11.
+- **Merchandise allocation / initial distribution** — covered for new stores (VS-37 allocation
+  planning) and cross-dock (VS-04); replenishment allocation in VS-02.
+- **Loyalty points liability / breakage / reward economics** — covered by VS-13 (loyalty) and
+  VS-17.4 (W1405 PFRS 15 deferred-revenue allocation, breakage accounting).
+- **Market development funds / co-op advertising / vendor-funded marketing** — covered by W513
+  (co-op advertising) in VS-39 and VS-14 marketing.
+- **Trade show / exhibition / industry-event representation** — covered by W1899 (Trade Show
+  Participation & Industry Event Representation) in VS-43.3 and W1292 (Builder's Expo) in VS-07.1.
+- **Fire & life-safety systems management** — covered across VS-24 (HSE), VS-20.3 (facilities),
+  and VS-07.2 (store facility/safety), including BFP FSIC and suppression inspections.
+- **Data platform / data engineering / analytics operations** — covered by VS-28.2 (Data
+  Engineering and Quality) and VS-27.2 (Infrastructure and Platform).
+- **Management accounting / cost center / profitability analytics** — covered by VS-17.4 FP&A
+  (W1405 Store-Level P&L/Contribution Margin, W85 Product Costing & Margin Analysis Review) and
+  VS-33.2 corporate performance management (W1655/W1656 store/category performance review).
+- **Performance/capacity of PA 53-file 'calibration' mentions** — *considered as elevation*
+  (like Pass 5 elevated W324 SCF) but elevated here to a dedicated value stream (VS-115) because the
+  references had no owning PA and spanned revenue, quality, compliance, and HSE impact.
+
+### Candidate gaps considered but rejected in Pass 8 (adequate coverage)
+
+- **Product Information Management (PIM) / Digital Asset Management (DAM) / product-content
+  production** — covered by PA-01.3 (Product Information & Content: W50 PIM, W1346 multilingual
+  localization, W1345 barcode/GS1, W1465 SDS, W1466 seasonal content staging), VS-10 (ecommerce),
+  and VS-48 (retail media). The 'content factory' (photo studio, syndication to marketplaces) is
+  substantially covered across VS-01.3/VS-10/VS-65.
+- **Vendor compliance / routing guide / ASN / inbound appointment / compliance chargeback** —
+  covered by VS-110.2 (Freight Execution, Routing Guide & Visibility), W1168 (DSD Receiving & Vendor
+  Compliance), VS-04 (DC receiving), VS-03 (vendor mgmt), and VS-67 (vendor scorecard).
+- **Fleet asset lifecycle / telematics / vehicle management** — covered comprehensively by VS-06
+  (W199 telematics, W799 vehicle acquisition/registration/disposal, W1348 preventive maintenance,
+  W1349 tires, W197 driver, W653 accident) and VS-61 (W2310–W2333 fleet cost/TCO).
+- **Organized retail crime (ORC) / refund & return fraud / loyalty-points / gift-card fraud** —
+  covered comprehensively by VS-23 (W840/W1542/W1337 ORC, W841/W1336 refund fraud, W1475 coupon
+  abuse, W1476 gift-card fraud, W1338 employee theft).
+- **Product liability / consumer-safety incident / customer-injury claims** — covered by W185
+  (Product Liability & Consumer Safety Incident Management) in VS-22.3, W863 (Third-Party Liability
+  & Customer Incident Insurance Response) and W1566 (Store-Level Slip-and-Fall/Customer-Injury
+  Claims) in VS-26.3, VS-100 (legal/litigation), and VS-89 (recall).
+- **B2B project job costing / progress billing / retention money** — covered by VS-11 (W165
+  Project Retention & Milestone Billing, W918 Project Budget & Cost-Variance, W1134 Retention
+  Release, W1288/W1426 Progress Billing & Milestone Collection, W1024 Material Escrow).
+- **Diversity, Equity, Inclusion & Belonging (DEIB)** — covered by dedicated workflows W3343
+  (VS-103.2) and W719 (VS-19.1).
+- **Carbon / GHG / Scope 1-2-3 / net-zero accounting** — covered by W192 (GHG Tracking in
+  VS-25.1) and W3466 (GHG Reduction & Scope 2 Attribution in VS-108.3), within the ESG (VS-25) and
+  renewable (VS-108) programs.
+- **Pricing / markdown / price optimization** — covered by VS-01.2 (Pricing & Promotions),
+  VS-57 (Competitive Price Intelligence), and VS-101 (Merchandise Financial Planning/OTB/Margin).
+- **Energy & utilities consumption management / procurement** — covered by W111 (utility bill),
+  VS-25.1 (environmental monitoring), VS-108 (own generation); the *RA 11285 statutory
+  compliance / ISO-50001 / ECM program* dimension is now filled by VS-120.
+- **Tool / equipment repair & service center** — covered by VS-12 (Installation & Repair Services).
+- **AI / model-risk governance / responsible AI** — covered by VS-30.2 (AI/ML & Automation) and
+  VS-113 (Enterprise Architecture); emerging and not yet a standalone operational program for the
+  current model company.
+
+### Candidate gaps considered but rejected in Pass 9 (adequate coverage)
+
+- **In-store events / DIY workshops / community engagement** — covered comprehensively by PA-12.3
+  (Workshops & Events, 10 workflows: W147/W906/W1289/W1377/W1378/W1379/W1556/W1557 incl. instructor
+  recruitment, registration/waitlist, vendor demo days, TESDA/school career-day participation, and
+  seasonal workshop series with conversion-funnel management).
+- **Supplier ESG / sustainable sourcing / responsible procurement** — covered by VS-25.2 (W195
+  Sustainable Sourcing & Ethical Vendor Audit, W1176 Green Procurement & Sustainable Vendor
+  Certification, W1480 Supplier Diversity), VS-78 green-building product curation, and source-side
+  audits in VS-122.2/VS-31/VS-41; three dedicated workflows within ESG plus the new global-sourcing
+  source-side governance make this substantially covered.
+- **Organizational design / capability framework / strategic workforce planning** — covered by
+  VS-103.3 (People Analytics, Workforce Planning & HR Technology) for workforce planning and
+  VS-102.1 (Job Architecture, Pay Structure & Market Benchmarking) for job architecture/org-design
+  inputs, with VS-33.1 corporate planning linkage; the *strategic* org-design layer is owned across
+  these rather than as a standalone value stream.
+- **B2B punchout / hosted catalog / procurement integration** — covered by W1242 (E-Commerce B2B
+  Corporate Punchout Catalog & Procurement Integration, cXML/OCI) in VS-10.1 plus VS-11 trade/B2B
+  and VS-65 marketplace integration.
+- **Vendor EDI / ASN / B2B integration** — covered by VS-03.4 (Vendor Portal & Collaboration),
+  VS-110.2 (Freight Execution/Routing Guide/Visibility), VS-15.1 (Invoice Processing & Matching),
+  and the integration architecture in VS-113; EDI/ASN is a system-of-record integration discipline
+  distributed across these rather than a standalone operational value stream.
+- **Insurance program / risk financing / total cost of risk** — covered by PA-26.3 (Insurance
+  Claims & Policy Management, incl. W862 annual renewal and W1565 annual portfolio review/coverage-
+  gap analysis/market benchmarking) in VS-26.
+- **Construction-site / jobsite HSE (DOLE D.O. 13)** — covered by W789 (Construction Safety
+  Management & DOLE DO 13 Compliance) in VS-20.2 for BuildRight construction projects, with field
+  safety for dispatched crews in VS-12.1/VS-24.
+- **Open innovation / R&D / corporate venture / pilot-to-scale** — covered by VS-30.1 (Emerging
+  Technology & PoC, incl. W691 scouting/evaluation and W690 digital-transformation portfolio) and
+  VS-30.2 (AI/ML & Automation); emerging tech is owned there rather than as a standalone value
+  stream.
+- **Clienteling-adjacent: personalization / recommendation engine / customer 360** — covered by
+  W200 (AI personalization/recommendation) in VS-30.2, VS-13.3 (Customer Data & CRM), and the new
+  VS-124 clienteling tool (W3844); the *data/ML* layer is owned across these, while VS-124 owns the
+  *associate-side selling* discipline that was the genuine gap.
+
+### Candidate gaps considered in Pass 12 (four elevated to dedicated value streams; remainder rejected as adequately covered)
+
+- **Continuous improvement / process improvement (as part of VS-30 or VS-21)** — *considered*
+within VS-30 (innovation/automation) and VS-21 (audit) but elevated here to a dedicated value
+stream (VS-133) because the *continuous-improvement operating system* (methodology, pipeline,
+process mining, benefit realization, culture) had no owning PA and is distinct from emerging-tech
+scouting (VS-30), audit assurance (VS-21), and project delivery (VS-112).
+- **Digital adoption / training (as part of VS-19.4 or VS-27.1)** — *considered* within VS-19.4
+(L&D) and VS-27.1 (service desk/hypercare) but elevated here (VS-134) because the *people-side-
+of-change discipline* (stakeholder mapping, change-impact/readiness, sponsor activation,
+resistance, change-saturation, DAP, adoption sustainment) had no owning PA and is distinct from
+training content delivery (VS-19.4/VS-124), project delivery (VS-112), HR operations (VS-103),
+and IT service management (VS-27.1).
+- **Cloud cost optimization / IT budgeting (as part of VS-99 or VS-17.4)** — *considered* within
+VS-99 (IT asset lifecycle) and VS-17.4 (corporate FP&A) but elevated here (VS-135) because the
+*technology-financial discipline* (TBM taxonomy, FinOps inform/optimize/operate, showback/
+chargeback, unit economics, value realization) had no owning PA and is distinct from asset
+inventory/disposal (VS-99), application-landscape design (VS-113), platform operations (VS-27),
+and enterprise FP&A (VS-17.4/VS-33).
+- **Inventory optimization / network review (as part of VS-02)** — *considered* within VS-02
+(the single periodic W183 network-review workflow exists) but elevated here (VS-136) because the
+*network/inventory-engineering discipline* (network modeling/design, MEIO, safety-stock/service-
+level optimization, simulation, continuous re-optimization) had no owning PA beyond the single
+periodic review and is distinct from operational replenishment (VS-02), the S&OP consensus cycle
+(VS-127), inventory transactions/lifecycle (VS-05), and logistics execution (VS-06).
+- **In-store experiential / field / event / brand-activation marketing** — *considered* but
+rejected as adequately covered: VS-14 marketing already owns local store marketing (W1551),
+builder's expo (W1292), grand-opening events (W1523), DIY workshops/community events (W1260),
+and barangay outreach; a dedicated experiential value stream would overlap.
+- **Loyalty coalition / partner rewards / redemption-catalog fulfillment** — *considered* but
+rejected as adequately covered by VS-13 (loyalty) workflows W674/W902/W926/W1186/W1434 and VS-14
+W902 (partner reward catalog) — partner management, cross-promotion, reward fulfillment, and
+settlement are comprehensively owned there.
+- **Strategic sourcing / category strategy / should-cost (non-merchandise)** — *considered* but
+rejected as adequately covered: VS-03 (vendor management) and VS-15 (procure-to-pay) own sourcing
+and category management; VS-110 (freight) and VS-122 (global sourcing) own category-specific
+sourcing depth.
+- **Customer technical product support / after-sales technical service center** — *considered*
+but rejected as adequately covered across VS-12 (W440 power-tool service & repair center,
+W1170–W1253 installation dispatch/quality), VS-13 (W1363 VIP support hotline, W1364 DIY help
+center, W1290 appliance warranty/after-sales coordination), and VS-53 (warranty).
+- **Lease accounting / IFRS 16 / right-of-use asset management** — *considered* in Pass 12 and rejected as
+adequately covered (W275 (IFRS 16/PFRS 16 lease accounting) in VS-17 and W1872/W1875 (PFRS 16
+month-end and lease-accounting policy) in VS-42), then **re-evaluated and filled in Pass 16 as
+VS-148** (gap #62) once the dedicated PFRS 16 recognition / measurement / disclosure program was
+judged distinct from the existing single-workflow coverage.
+- **Supplier risk / supply-chain resilience** — *considered* in Pass 12 and rejected as adequately covered by
+VS-02.3 (W558 supplier risk, W729 disruption response, W763 vendor diversification, W250 control
+tower), then **re-evaluated and filled in Pass 18 as VS-161** (gap #75, TPRM) once the unified
+cross-domain enterprise third-party-risk program was judged distinct from the per-domain slices
+(supply-side in VS-21, ABC in VS-86, privacy in VS-91, ethics in VS-119, fraud in VS-125).
+
 ---
 
 ## 4. New Value Streams Added
@@ -419,7 +577,7 @@ The 120 new workflows added in Pass 18 are **unclassified** and carry a keyword-
 | Technology & Data | 182 | 182 | 182 | 182 | 230 | 230 | 230 | 278 | 278 | 302 | 326 | 326 | 326 | 326 | 350 | 350 |
 | **Grand total** | **3,132** | **3,228** | **3,324** | **3,420** | **3,516** | **3,612** | **3,708** | **3,804** | **3,900** | **3,996** | **4,092** | **4,140** | **4,236** | **4,332** | **4,476** | **4,596** (+120) |
 | Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | 142 | 146 | 152 | **157** (+5) |
-| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 356 | 368 | 388 | 400 | 412 | 418 | 430 | 442 | 460 | **475** (+15) |
+| Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 364 | 376 | 388 | 400 | 412 | 418 | 430 | 442 | 460 | **475** (+15) |
 
 Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
 VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
@@ -685,164 +843,6 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
   three previously-flagged future capabilities (used-material/trade-in resale, customer
   construction-loan brokerage, captive insurance) were **filled in Pass 17** as VS-155, VS-154, and
   VS-153 respectively.
-
-### Candidate gaps considered but rejected in Pass 7 (adequate coverage)
-
-- **Tax controversy / BIR audit defense / CTA appeal** — covered by W77 (BIR Audit Response) in
-  VS-22, with a detailed LOA → investigation → FAN → protest → CTA-appeal lifecycle (separate from
-  VS-79 tax filing).
-- **Real Property Tax (RPT) assessment, payment & appeal** — covered by W119 (RPT Management) in
-  VS-79 and referenced across VS-97/VS-42/VS-76 as owner/lessor/LGU.
-- **Insurance claims management & subrogation** — covered by the dedicated PA-26.3 (Insurance
-  Claims and Policy Management) in VS-26, including adjuster, settlement, and subrogation.
-- **Special / custom / made-to-order lifecycle** — covered by W744 (Store-Level Special Order
-  Follow-Up), W545 (special orders), and W38 (special order fulfillment) across VS-09/VS-11.
-- **Merchandise allocation / initial distribution** — covered for new stores (VS-37 allocation
-  planning) and cross-dock (VS-04); replenishment allocation in VS-02.
-- **Loyalty points liability / breakage / reward economics** — covered by VS-13 (loyalty) and
-  VS-17.4 (W1405 PFRS 15 deferred-revenue allocation, breakage accounting).
-- **Market development funds / co-op advertising / vendor-funded marketing** — covered by W513
-  (co-op advertising) in VS-39 and VS-14 marketing.
-- **Trade show / exhibition / industry-event representation** — covered by W1899 (Trade Show
-  Participation & Industry Event Representation) in VS-43.3 and W1292 (Builder's Expo) in VS-07.1.
-- **Fire & life-safety systems management** — covered across VS-24 (HSE), VS-20.3 (facilities),
-  and VS-07.2 (store facility/safety), including BFP FSIC and suppression inspections.
-- **Data platform / data engineering / analytics operations** — covered by VS-28.2 (Data
-  Engineering and Quality) and VS-27.2 (Infrastructure and Platform).
-- **Management accounting / cost center / profitability analytics** — covered by VS-17.4 FP&A
-  (W1405 Store-Level P&L/Contribution Margin, W85 Product Costing & Margin Analysis Review) and
-  VS-33.2 corporate performance management (W1655/W1656 store/category performance review).
-- **Performance/capacity of PA 53-file 'calibration' mentions** — *considered as elevation*
-  (like Pass 5 elevated W324 SCF) but elevated here to a dedicated value stream (VS-115) because the
-  references had no owning PA and spanned revenue, quality, compliance, and HSE impact.
-
-### Candidate gaps considered but rejected in Pass 9 (adequate coverage)
-
-- **In-store events / DIY workshops / community engagement** — covered comprehensively by PA-12.3
-  (Workshops & Events, 10 workflows: W147/W906/W1289/W1377/W1378/W1379/W1556/W1557 incl. instructor
-  recruitment, registration/waitlist, vendor demo days, TESDA/school career-day participation, and
-  seasonal workshop series with conversion-funnel management).
-- **Supplier ESG / sustainable sourcing / responsible procurement** — covered by VS-25.2 (W195
-  Sustainable Sourcing & Ethical Vendor Audit, W1176 Green Procurement & Sustainable Vendor
-  Certification, W1480 Supplier Diversity), VS-78 green-building product curation, and source-side
-  audits in VS-122.2/VS-31/VS-41; three dedicated workflows within ESG plus the new global-sourcing
-  source-side governance make this substantially covered.
-- **Organizational design / capability framework / strategic workforce planning** — covered by
-  VS-103.3 (People Analytics, Workforce Planning & HR Technology) for workforce planning and
-  VS-102.1 (Job Architecture, Pay Structure & Market Benchmarking) for job architecture/org-design
-  inputs, with VS-33.1 corporate planning linkage; the *strategic* org-design layer is owned across
-  these rather than as a standalone value stream.
-- **B2B punchout / hosted catalog / procurement integration** — covered by W1242 (E-Commerce B2B
-  Corporate Punchout Catalog & Procurement Integration, cXML/OCI) in VS-10.1 plus VS-11 trade/B2B
-  and VS-65 marketplace integration.
-- **Vendor EDI / ASN / B2B integration** — covered by VS-03.4 (Vendor Portal & Collaboration),
-  VS-110.2 (Freight Execution/Routing Guide/Visibility), VS-15.1 (Invoice Processing & Matching),
-  and the integration architecture in VS-113; EDI/ASN is a system-of-record integration discipline
-  distributed across these rather than a standalone operational value stream.
-- **Insurance program / risk financing / total cost of risk** — covered by PA-26.3 (Insurance
-  Claims & Policy Management, incl. W862 annual renewal and W1565 annual portfolio review/coverage-
-  gap analysis/market benchmarking) in VS-26.
-- **Construction-site / jobsite HSE (DOLE D.O. 13)** — covered by W789 (Construction Safety
-  Management & DOLE DO 13 Compliance) in VS-20.2 for BuildRight construction projects, with field
-  safety for dispatched crews in VS-12.1/VS-24.
-- **Open innovation / R&D / corporate venture / pilot-to-scale** — covered by VS-30.1 (Emerging
-  Technology & PoC, incl. W691 scouting/evaluation and W690 digital-transformation portfolio) and
-  VS-30.2 (AI/ML & Automation); emerging tech is owned there rather than as a standalone value
-  stream.
-- **Clienteling-adjacent: personalization / recommendation engine / customer 360** — covered by
-  W200 (AI personalization/recommendation) in VS-30.2, VS-13.3 (Customer Data & CRM), and the new
-  VS-124 clienteling tool (W3844); the *data/ML* layer is owned across these, while VS-124 owns the
-  *associate-side selling* discipline that was the genuine gap.
-
-### Candidate gaps considered but rejected in Pass 8 (adequate coverage)
-
-- **Product Information Management (PIM) / Digital Asset Management (DAM) / product-content
-  production** — covered by PA-01.3 (Product Information & Content: W50 PIM, W1346 multilingual
-  localization, W1345 barcode/GS1, W1465 SDS, W1466 seasonal content staging), VS-10 (ecommerce),
-  and VS-48 (retail media). The 'content factory' (photo studio, syndication to marketplaces) is
-  substantially covered across VS-01.3/VS-10/VS-65.
-- **Vendor compliance / routing guide / ASN / inbound appointment / compliance chargeback** —
-  covered by VS-110.2 (Freight Execution, Routing Guide & Visibility), W1168 (DSD Receiving & Vendor
-  Compliance), VS-04 (DC receiving), VS-03 (vendor mgmt), and VS-67 (vendor scorecard).
-- **Fleet asset lifecycle / telematics / vehicle management** — covered comprehensively by VS-06
-  (W199 telematics, W799 vehicle acquisition/registration/disposal, W1348 preventive maintenance,
-  W1349 tires, W197 driver, W653 accident) and VS-61 (W2310–W2333 fleet cost/TCO).
-- **Organized retail crime (ORC) / refund & return fraud / loyalty-points / gift-card fraud** —
-  covered comprehensively by VS-23 (W840/W1542/W1337 ORC, W841/W1336 refund fraud, W1475 coupon
-  abuse, W1476 gift-card fraud, W1338 employee theft).
-- **Product liability / consumer-safety incident / customer-injury claims** — covered by W185
-  (Product Liability & Consumer Safety Incident Management) in VS-22.3, W863 (Third-Party Liability
-  & Customer Incident Insurance Response) and W1566 (Store-Level Slip-and-Fall/Customer-Injury
-  Claims) in VS-26.3, VS-100 (legal/litigation), and VS-89 (recall).
-- **B2B project job costing / progress billing / retention money** — covered by VS-11 (W165
-  Project Retention & Milestone Billing, W918 Project Budget & Cost-Variance, W1134 Retention
-  Release, W1288/W1426 Progress Billing & Milestone Collection, W1024 Material Escrow).
-- **Diversity, Equity, Inclusion & Belonging (DEIB)** — covered by dedicated workflows W3343
-  (VS-103.2) and W719 (VS-19.1).
-- **Carbon / GHG / Scope 1-2-3 / net-zero accounting** — covered by W192 (GHG Tracking in
-  VS-25.1) and W3466 (GHG Reduction & Scope 2 Attribution in VS-108.3), within the ESG (VS-25) and
-  renewable (VS-108) programs.
-- **Pricing / markdown / price optimization** — covered by VS-01.2 (Pricing & Promotions),
-  VS-57 (Competitive Price Intelligence), and VS-101 (Merchandise Financial Planning/OTB/Margin).
-- **Energy & utilities consumption management / procurement** — covered by W111 (utility bill),
-  VS-25.1 (environmental monitoring), VS-108 (own generation); the *RA 11285 statutory
-  compliance / ISO-50001 / ECM program* dimension is now filled by VS-120.
-- **Tool / equipment repair & service center** — covered by VS-12 (Installation & Repair Services).
-- **AI / model-risk governance / responsible AI** — covered by VS-30.2 (AI/ML & Automation) and
-  VS-113 (Enterprise Architecture); emerging and not yet a standalone operational program for the
-  current model company.
-
-### Candidate gaps considered in Pass 12 (four elevated to dedicated value streams; remainder rejected as adequately covered)
-
-- **Continuous improvement / process improvement (as part of VS-30 or VS-21)** — *considered*
-within VS-30 (innovation/automation) and VS-21 (audit) but elevated here to a dedicated value
-stream (VS-133) because the *continuous-improvement operating system* (methodology, pipeline,
-process mining, benefit realization, culture) had no owning PA and is distinct from emerging-tech
-scouting (VS-30), audit assurance (VS-21), and project delivery (VS-112).
-- **Digital adoption / training (as part of VS-19.4 or VS-27.1)** — *considered* within VS-19.4
-(L&D) and VS-27.1 (service desk/hypercare) but elevated here (VS-134) because the *people-side-
-of-change discipline* (stakeholder mapping, change-impact/readiness, sponsor activation,
-resistance, change-saturation, DAP, adoption sustainment) had no owning PA and is distinct from
-training content delivery (VS-19.4/VS-124), project delivery (VS-112), HR operations (VS-103),
-and IT service management (VS-27.1).
-- **Cloud cost optimization / IT budgeting (as part of VS-99 or VS-17.4)** — *considered* within
-VS-99 (IT asset lifecycle) and VS-17.4 (corporate FP&A) but elevated here (VS-135) because the
-*technology-financial discipline* (TBM taxonomy, FinOps inform/optimize/operate, showback/
-chargeback, unit economics, value realization) had no owning PA and is distinct from asset
-inventory/disposal (VS-99), application-landscape design (VS-113), platform operations (VS-27),
-and enterprise FP&A (VS-17.4/VS-33).
-- **Inventory optimization / network review (as part of VS-02)** — *considered* within VS-02
-(the single periodic W183 network-review workflow exists) but elevated here (VS-136) because the
-*network/inventory-engineering discipline* (network modeling/design, MEIO, safety-stock/service-
-level optimization, simulation, continuous re-optimization) had no owning PA beyond the single
-periodic review and is distinct from operational replenishment (VS-02), the S&OP consensus cycle
-(VS-127), inventory transactions/lifecycle (VS-05), and logistics execution (VS-06).
-- **In-store experiential / field / event / brand-activation marketing** — *considered* but
-rejected as adequately covered: VS-14 marketing already owns local store marketing (W1551),
-builder's expo (W1292), grand-opening events (W1523), DIY workshops/community events (W1260),
-and barangay outreach; a dedicated experiential value stream would overlap.
-- **Loyalty coalition / partner rewards / redemption-catalog fulfillment** — *considered* but
-rejected as adequately covered by VS-13 (loyalty) workflows W674/W902/W926/W1186/W1434 and VS-14
-W902 (partner reward catalog) — partner management, cross-promotion, reward fulfillment, and
-settlement are comprehensively owned there.
-- **Strategic sourcing / category strategy / should-cost (non-merchandise)** — *considered* but
-rejected as adequately covered: VS-03 (vendor management) and VS-15 (procure-to-pay) own sourcing
-and category management; VS-110 (freight) and VS-122 (global sourcing) own category-specific
-sourcing depth.
-- **Customer technical product support / after-sales technical service center** — *considered*
-but rejected as adequately covered across VS-12 (W440 power-tool service & repair center,
-W1170–W1253 installation dispatch/quality), VS-13 (W1363 VIP support hotline, W1364 DIY help
-center, W1290 appliance warranty/after-sales coordination), and VS-53 (warranty).
-- **Lease accounting / IFRS 16 / right-of-use asset management** — *considered* in Pass 12 and rejected as
-adequately covered (W275 (IFRS 16/PFRS 16 lease accounting) in VS-17 and W1872/W1875 (PFRS 16
-month-end and lease-accounting policy) in VS-42), then **re-evaluated and filled in Pass 16 as
-VS-148** (gap #62) once the dedicated PFRS 16 recognition / measurement / disclosure program was
-judged distinct from the existing single-workflow coverage.
-- **Supplier risk / supply-chain resilience** — *considered* in Pass 12 and rejected as adequately covered by
-VS-02.3 (W558 supplier risk, W729 disruption response, W763 vendor diversification, W250 control
-tower), then **re-evaluated and filled in Pass 18 as VS-161** (gap #75, TPRM) once the unified
-cross-domain enterprise third-party-risk program was judged distinct from the per-domain slices
-(supply-side in VS-21, ABC in VS-86, privacy in VS-91, ethics in VS-119, fraud in VS-125).
 
 ---
 

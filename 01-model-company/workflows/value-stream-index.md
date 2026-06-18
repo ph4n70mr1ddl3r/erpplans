@@ -290,7 +290,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-131.2** [Supply Chain Human Rights Risk Assessment, Auditing & Remediation](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.2-supply-chain-human-rights-risk-assessment-auditing-and-remediation.md) — 8 workflows
 - **PA-131.3** [Responsible Sourcing Governance, Reporting & Stakeholder Engagement](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.3-responsible-sourcing-governance-reporting-and-stakeholder-engagement.md) — 8 workflows
 
-
 ### Make & Move
 
 **[VS-04: DC & Warehouse Operations](./VS-04-dc-warehouse/README.md)** (45 workflows)
@@ -376,7 +375,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-136.1** [Supply Chain Network Strategy, Modeling & Design](./VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/PA-136.1-supply-chain-network-strategy-modeling-and-design.md) — 8 workflows
 - **PA-136.2** [Multi-Echelon Inventory Optimization & Service-Level Engineering](./VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/PA-136.2-multi-echelon-inventory-optimization-and-service-level-engineering.md) — 8 workflows
 - **PA-136.3** [Network & Inventory Performance Analytics, Simulation & Continuous Re-Optimization](./VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/PA-136.3-network-and-inventory-performance-analytics-and-re-optimization.md) — 8 workflows
-
 
 **[VS-143: Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations](./VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md)** (24 workflows)
 
@@ -585,7 +583,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-140.2** [Field Sales Daily Operations, Account Coverage & Pipeline](./VS-140-field-sales-outside-sales-and-route-to-market-force-management/PA-140.2-field-sales-daily-operations-account-coverage-and-pipeline.md) — 8 workflows
 - **PA-140.3** [Field Sales Performance, Compensation & Route Analytics](./VS-140-field-sales-outside-sales-and-route-to-market-force-management/PA-140.3-field-sales-performance-compensation-and-route-analytics.md) — 8 workflows
 
-
 **[VS-145: Garden Center, Live Goods & Plant Nursery Operations](./VS-145-garden-center-live-goods-and-plant-nursery/README.md)** (24 workflows)
 
 - **PA-145.1** [Live-Goods Assortment, Sourcing & Nursery Operations](./VS-145-garden-center-live-goods-and-plant-nursery/PA-145.1-live-goods-assortment-sourcing-and-nursery-operations.md) — 8 workflows
@@ -750,7 +747,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-158.2** [Cost Variance, Actual-vs-Standard & Margin Analytics](./VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.2-cost-variance-actual-vs-standard-and-margin-analytics.md) — 8 workflows
 - **PA-158.3** [Specialized Costing (Project, Service, Intercompany) & Cost Governance](./VS-158-product-costing-landed-cost-and-cost-accounting/PA-158.3-specialized-costing-project-service-intercompany-and-cost-governance.md) — 8 workflows
 
-
 ### People
 
 **[VS-19: Hire-to-Retire](./VS-19-hire-to-retire/README.md)** (74 workflows)
@@ -814,7 +810,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-141.1** [Transport Strategy, Policy & Commute-Allowance Framework](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.1-transport-strategy-policy-and-commute-allowance-framework.md) — 8 workflows
 - **PA-141.2** [Shuttle Service, Route & Daily Commute Operations](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.2-shuttle-service-route-and-daily-commute-operations.md) — 8 workflows
 - **PA-141.3** [Transport Vendor, Safety, Cost & Commute Analytics](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.3-transport-vendor-safety-cost-and-commute-analytics.md) — 8 workflows
-
 
 **[VS-144: Employee Accommodation, Dormitory & Staff Housing Operations](./VS-144-employee-accommodation-dormitory-and-staff-housing/README.md)** (24 workflows)
 
@@ -895,7 +890,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-138.1** [Facilities Management Strategy, IFM Provider & SLA Governance](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.1-facilities-management-strategy-ifm-provider-and-sla-governance.md) — 8 workflows
 - **PA-138.2** [Hard & Soft FM Service Operations (Cleaning, Pest, Security, Grounds, Workplace)](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.2-hard-and-soft-fm-service-operations.md) — 8 workflows
 - **PA-138.3** [Building Automation, Energy Control & Facilities Analytics](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.3-building-automation-energy-control-and-facilities-analytics.md) — 8 workflows
-
 
 ### Governance & Assurance
 
@@ -1067,7 +1061,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-133.2** [Process Mining, Process Analysis & Improvement Project Execution](./VS-133-operational-excellence-process-mining-continuous-improvement/PA-133.2-process-mining-analysis-and-improvement-execution.md) — 8 workflows
 - **PA-133.3** [Productivity, Benefit Realization & OpEx Analytics](./VS-133-operational-excellence-process-mining-continuous-improvement/PA-133.3-productivity-benefit-realization-and-opex-analytics.md) — 8 workflows
 
-
 **[VS-146: Customer Mystery Shopping & Service Quality Assurance Program](./VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md)** (24 workflows)
 
 - **PA-146.1** [Service-Quality Assurance Strategy, Standards & Program Design](./VS-146-customer-mystery-shopping-and-service-quality-assurance/PA-146.1-service-quality-assurance-strategy-standards-and-design.md) — 8 workflows
@@ -1172,7 +1165,6 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-151.2** [Label & Price-Tag Production, Printing & In-Store Application](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.2-label-and-price-tag-production-printing-and-application.md) — 8 workflows
 - **PA-151.3** [EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.3-eas-rfid-tagging-source-tagging-and-loss-prevention-integration.md) — 8 workflows
 
-
 ---
 
 ## Cross-Reference Documents
@@ -1200,6 +1192,5 @@ Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-3
 Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133, VS-146)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
-
 
 *Total: 4596 workflows across 157 value streams · Date: 2026-06-18*
