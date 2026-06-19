@@ -4,6 +4,71 @@
 
 ---
 
+## 2026-06-19 — BIR record retention canonicalized to 10 years (TRAIN/NIRC) across all documents
+
+Resolves the retention-period inconsistency flagged in the prior pass (7 years in the
+foundational summary docs vs 10 years in the newer detailed workflow docs). Under the
+**National Internal Revenue Code (NIRC) Sec. 235 as amended by the TRAIN Act (RA 10963)**,
+books of accounts and the supporting accounting/invoice records (including CAS/e-invoice
+records under RR 11-2024) must be **preserved for 10 years** (5 + 5). 10 years is now the
+single canonical retention period for BIR/tax/accounting records, applied to ~85 references
+across ~45 files. `validate-repo.sh` still reports **0 errors / 3 informational warnings**
+(unchanged). **No workflow, requirement, control, value stream, or grand-total count changed.**
+
+**Canonical sources updated** (these are the figures every other doc references):
+
+- **`erp-requirements.md`** — `NFR-006` Data Retention `7 years (BIR)` → **`10 years (BIR per
+  TRAIN/NIRC — Sec. 235, as amended by RA 10963)`**; `DOC-005` → 10-year; `DOC-008` `BIR 7-year`
+  → `BIR 10-year`; `FIN-062` (Form 2307 vendor certificates) `5-year retention per BIR` →
+  **10-year** (2307 retention aligns with the books-of-accounts period).
+- **`assumptions-and-design-decisions.md` A6.5** — `7-year data retention` → **10-year**;
+  storage sizing recomputed **~700 GB over 7 years → ~1,000 GB over 10 years** (~100 GB/year).
+- **`model-company-profile.md` §15.3** — `Data retention | 7 years` → **10 years** (v2.18).
+- **`data-volumes-and-integrations.md` §1.2** — storage row relabelled **`10-Year Retention |
+  ~1,000 GB (uncompressed); ~700 GB with compression`** (was 7-Year / ~700 GB / ~500 GB)
+  (v4.4).
+- **`technical-guidelines.md` §2.3** — `Data retention | 7 years` and `Data backup | … +
+  7-year archive` → **10 years** (v2.3).
+- **`requirement-workflow-matrix.md`** — `NFR-006`, `DOC-005`, `POS-052` rows and the
+  NFR column-convention example updated 7 → 10.
+
+**Detailed workflow documents** (VS-NN/PA-NN.N files) updated from 7 → 10 where they state a
+BIR/tax/accounting-records retention: VS-01.1, VS-03.2, VS-03.4, VS-07.1, VS-07.2, VS-07.4,
+VS-08.1, VS-08.3, VS-09.1, VS-10.1, VS-10.2, VS-13.1, VS-15.1, VS-16.3, VS-17.1, VS-17.3,
+VS-17.4, VS-19.5, VS-22.1, VS-22.2, VS-24.2, VS-26.3, VS-27.1, VS-27.2, VS-27.3, VS-28.2,
+VS-29.2, VS-30.3, VS-35.2, VS-35.3, VS-40.3, VS-43.1, VS-59.1, VS-59.2, VS-71.1, VS-74.2,
+VS-76.2, VS-76.3, VS-157.3, VS-158.3. VS-17.3 / VS-22.1 NIRC references corrected from the
+outdated "minimum 5 years per NIRC" to **"10 years per NIRC (TRAIN RA 10963)"**.
+
+**Storage-sizing downstream updates:** the data-warehouse / backup-capacity figure that was
+sized to the 7-year horizon is recomputed to the 10-year horizon in `VS-28/PA-28.2` (`700 GB
+over 7-year` → `1,000 GB over 10-year`; DW volume `~700 GB` → `~1,000 GB`; backup capacity
+check `700 GB` → `1,000 GB`).
+
+**Deliberately left as 7 years (not BIR accounting records — different regulatory/operational
+context):**
+
+- **CCTV footage prosecution tier** (`LP-002`, `VS-23/PA-23.2`) — governed by criminal-procedure
+  prescriptive periods, not BIR; the VS-23.2 parenthetical was reworded from "(aligned with
+  BIR/legal requirements)" to explicitly note CCTV is separate from the 10-year BIR
+  accounting-records retention, removing the misleading BIR tie.
+- **Fixed-asset depreciation useful lives** (`VS-35.1` forklifts 7 years; `VS-40.3` generator
+  7 years, signage 7–10 years) — PFRS useful-life estimates, not retention.
+- **IT hardware useful life** (`VS-27.1` POS terminals 5–7 years) — hardware refresh cycle.
+- **Vehicle resale cycle** (`VS-06.2` 6–7 years) — fleet economics.
+- **CREATE Act Income Tax Holiday** (`VS-17.3` 4–7 years) — tax-incentive duration.
+- **Store-remodel / refurbishment cycle** (`VS-109`, `workflow-gap-analysis.md` 5–7 years) and
+  **coastal-paint maintenance cycle** (`VS-09.2` 5–7 years inland) — operational cycles.
+- **Metrology legal-for-trade retention** (`VS-115.1` 3–7 years) — weights-&-measures rule.
+- **Corporate legal correspondence** (`VS-36.1` 7 years) — corporate-governance retention, not a
+  BIR accounting record.
+- **DENR environmental/timber-sourcing documentation** (`VS-25.1` 7-year DENR audit archive) and
+  **rainwater-harvesting ROI payback** (`VS-25.1` 3–7 years) — DENR-governed / financial
+  payback, not BIR.
+
+---
+
+
 ## 2026-06-19 — Whole-repo consistency review pass: TOC count drift, stale POS/documented-workflow figures, AP-volume scope ambiguity
 
 A top-to-bottom read of every summary/cross-reference document and a sample of high-traffic

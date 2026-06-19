@@ -108,8 +108,8 @@ ERP's data sync requirements.
 | RTO (back-office) | ≤ 4 hours | Core ERP functions |
 | POS offline endurance | ≥ 8 hours | Must continue selling without connectivity |
 | POS sync on reconnection | Automatic | No manual intervention; reconcile all offline transactions |
-| Data backup | Daily | 30-day rolling + 7-year archive |
-| Data retention | 7 years | BIR requirement |
+| Data backup | Daily | 30-day rolling + 10-year archive |
+| Data retention | 10 years | BIR requirement (TRAIN/NIRC — Sec. 235, as amended by RA 10963) |
 
 ---
 
@@ -189,4 +189,4 @@ These are the active security controls implemented across the unified cloud ERP 
 
 ---
 
-*Document Version: 2.2 | Date: 2026-06-18 | Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); HQ concurrent-users figure reconciled with model-company-profile.md §3.3 (315 staff); counts reconciled with README.md*
+*Document Version: 2.3 | Date: 2026-06-19 | §2.3 Data-retention row and §2.3 backup archive updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.2: Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); HQ concurrent-users figure reconciled with model-company-profile.md §3.3 (315 staff); counts reconciled with README.md*

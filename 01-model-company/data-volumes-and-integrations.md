@@ -40,7 +40,7 @@
 | Ecommerce Orders + Lines | ~515,000 | ~1.5 GB |
 | Master Data (all types) | ~700,000 | ~0.7 GB |
 | **Total Annual Increment** | | **~100 GB** |
-| **7-Year Retention** | | **~700 GB** (uncompressed); ~500 GB with compression |
+| **10-Year Retention** | | **~1,000 GB** (uncompressed); ~700 GB with compression |
 
 ---
 
@@ -153,4 +153,4 @@
 
 ---
 
-*Document Version: 4.3 | Date: 2026-06-18 | AP daily-volume figure reconciled to total AP (merchandise + non-PO) per model-company-profile.md §10.2 (~8,500–9,500/month; was merchandise-only 217/day); annual AP/AR storage row relabelled "Documents & Lines" so the ~1.44M record count (≈9–10 lines/doc over ~150K invoice docs) is self-consistent with the corrected daily figure — record count and ~4 GB size unchanged. Prior: integration architecture diagram designated as canonical source; canonical payroll cycle reconciled to semi-monthly 15th & 30th (per model-company-profile.md §11.2); bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); counts reconciled with README.md.*
+*Document Version: 4.4 | Date: 2026-06-19 | BIR record retention corrected from 7 years to **10 years** (TRAIN/NIRC — Sec. 235, as amended by RA 10963): the retention storage row is relabelled **10-Year Retention** and recomputed to **~1,000 GB uncompressed (~700 GB compressed)** at ~100 GB/year × 10 (was 7-Year/~700 GB/~500 GB); aligns with NFR-006, A6.5, profile §15.3, technical-guidelines §2.3. Prior v4.3: AP daily-volume figure reconciled to total AP (merchandise + non-PO) per model-company-profile.md §10.2 (~8,500–9,500/month; was merchandise-only 217/day); annual AP/AR storage row relabelled "Documents & Lines" so the ~1.44M record count (≈9–10 lines/doc over ~150K invoice docs) is self-consistent with the corrected daily figure — record count and ~4 GB size unchanged. Prior: integration architecture diagram designated as canonical source; canonical payroll cycle reconciled to semi-monthly 15th & 30th (per model-company-profile.md §11.2); bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); counts reconciled with README.md.*

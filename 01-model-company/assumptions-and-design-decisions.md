@@ -69,7 +69,7 @@
 | A6.2 | No strict PH data residency | Asia-Pacific hosting recommended | Philippines has no mandatory data residency law; latency matters more | Technical Guidelines §2.1 |
 | A6.3 | Ecommerce platform | Unified Cloud ERP Native Module | Fully integrated native ecommerce module provided by the unified cloud ERP platform to ensure real-time inventory and pricing sync | This document |
 | A6.4 | Mobile app: branded native app | iOS + Android | Required for BOPIS pickup notifications, loyalty, and customer engagement; built on ERP-provided APIs or third-party | This document |
-| A6.5 | 7-year data retention | BIR requirement | Drives storage sizing (~700 GB uncompressed over 7 years) | Profile §15.3 |
+| A6.5 | 10-year data retention | BIR requirement (TRAIN/NIRC — Sec. 235, as amended by RA 10963) | Drives storage sizing (~1,000 GB uncompressed over 10 years) | Profile §15.3 |
 
 
 
@@ -98,4 +98,4 @@
 
 ---
 
-*Date: 2026-06-18 ("unified cloud ERP" terminology standardized across all documents; counts reconciled with README.md and model-company-profile.md)*
+*Date: 2026-06-19 (v2 — A6.5 data-retention assumption updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)** and storage-sizing recomputed to ~1,000 GB uncompressed over 10 years (was 7 years / ~700 GB); aligns with NFR-006, profile §15.3, data-volumes §1.2, technical-guidelines §2.3. v1: "unified cloud ERP" terminology standardized across all documents; counts reconciled with README.md and model-company-profile.md)*

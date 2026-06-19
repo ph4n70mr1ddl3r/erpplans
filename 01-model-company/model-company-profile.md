@@ -691,7 +691,7 @@ The following external systems are actively integrated with the core ERP system.
 | System uptime (POS) | 99.9% |
 | System uptime (back office) | 99.5% |
 | Concurrent users (peak) | ~1,000–1,500 |
-| Data retention | 7 years (BIR requirement) |
+| Data retention | 10 years (BIR requirement per TRAIN/NIRC — Sec. 235, as amended by RA 10963) |
 
 ---
 
@@ -767,4 +767,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.17 | Date: 2026-06-19 | §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.18 | Date: 2026-06-19 | §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
