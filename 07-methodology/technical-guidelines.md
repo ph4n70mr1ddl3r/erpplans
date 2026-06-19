@@ -125,7 +125,7 @@ define what connects. The table below details how these systems are integrated.
 | POS ↔ ERP | Event-driven API (near-real-time, < 30 sec latency) | POS publishes transaction events continuously; nightly reconciliation batch validates completeness; offline events queued locally and replayed on reconnection |
 | Ecommerce ↔ ERP | REST API | Real-time for orders; near-real-time for inventory |
 | Payment Gateway → ERP | Webhook / API | Real-time payment confirmation |
-| Bank ↔ ERP | File-based (CSV/XML) or API | Bank-specific formats (BDO, BPI, Metrobank) |
+| Bank ↔ ERP | File-based (CSV/XML) or API | Bank-specific formats (BDO, BPI, Metrobank, Chinabank) |
 | BIR eFPS ← ERP | File export | BIR-formatted tax return files |
 | SSS / PhilHealth / Pag-IBIG ← ERP | File export | Monthly contribution files with PRN |
 | Delivery Partners ↔ ERP | API | Real-time order dispatch and status tracking |
@@ -140,7 +140,7 @@ define what connects. The table below details how these systems are integrated.
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                        BUILDRIGHT DEPOT CORP                        │
-│                      INTEGRATION TOUCHPOINTS                        │
+│                      INTEGRATION ARCHITECTURE                       │
 │                                                                     │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────┐   │
 │  │ 600 POS  │  │ 4 WMS    │  │ Ecommerce │  │ Loyalty Engine   │   │

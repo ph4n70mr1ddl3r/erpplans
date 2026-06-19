@@ -4,6 +4,59 @@
 
 ---
 
+## 2026-06-19 — Operational bank-list reconciliation (3 → 4 banks) & minor figure drift
+
+The 2026-06-18 bank-list reconciliation that standardised the operational bank list to
+**4 banks (BDO, BPI, Metrobank, Chinabank)** in the canonical sources — `model-company-profile.md`
+§10, `erp-requirements.md` FIN-009 (lines 59 & 72), and both integration-architecture diagrams —
+was not propagated to the **operational-banking** prose in one methodology doc and six workflow
+PA files, which still named only three banks. The drift was invisible to `validate-repo.sh`
+(which checks counts/IDs/structure, not named-bank lists in prose). This commit aligns every
+*operational-banking* reference (AP disbursement, payroll, treasury, bank-statement import, bank
+master/payment-file-format configuration, IT bank-endpoint health-checks, FX counterparties, escrow
+receipt, AAB tax remittance) with the 4-bank canonical list. `validate-repo.sh` still reports
+**0 errors / 3 informational warnings** (unchanged). No workflow, requirement, control, value
+stream, or grand total changed.
+
+- **`07-methodology/technical-guidelines.md`** — §3.1 Integration Methods table, *Bank ↔ ERP* row:
+`Bank-specific formats (BDO, BPI, Metrobank)` → `(BDO, BPI, Metrobank, Chinabank)`. This row
+literally describes the bank integration depicted by the adjacent §3.2 diagram, which already
+shows four banks `(BDO, BPI, MB, CB)` — the row was the lone 3-bank hold-out in the file (its
+own v2.2 footer already claimed "reconciled to 4 banks"). Also renamed the §3.2 duplicate
+diagram's banner `INTEGRATION TOUCHPOINTS` → `INTEGRATION ARCHITECTURE` so the "duplicate for
+convenience" is faithful to the canonical diagram in `data-volumes-and-integrations.md` (the
+title text is not referenced anywhere else; box alignment unchanged — both words are 12 chars).
+- **`VS-17 PA-17.3` (Tax & Statutory)** — bank list cited as `AAB (BDO, BPI, Metrobank per
+FIN-009)` but FIN-009 lists four banks; added Chinabank so the citation matches its source.
+- **`VS-29 PA-29.1` (Foundational Masters)** — two spots in the bank-master/payment-file-format
+workflow: `~15–20 active bank accounts across 5 entities and 3 banking partners (BDO, BPI,
+Metrobank)` → `4 banking partners (… Chinabank)` (the count 15–20 across 5 entities × 4 banks
+≈ 1/entity/bank still holds), and the AP payment-file-format step `(BDO, BPI, Metrobank — each
+uses different file layouts)` → `(…, Chinabank …)` so all four operational file layouts are
+configured.
+- **`VS-27 PA-27.2` (Infrastructure & Platform)** — three spots in the daily ERP health-check
+workflow (W380 bank-endpoint monitoring): the Volume row `bank integrations (BDO, BPI,
+Metrobank)`, the Background `banking systems (BDO, BPI, Metrobank for payroll, AP, treasury)`,
+and step 7 `(a) BDO, BPI, Metrobank file transmission` — all now include Chinabank so the
+monitoring covers every operational bank endpoint.
+- **`VS-18 PA-18.3` (FX & Investments)** — two spots: `Counterparty banks: BDO, BPI, Metrobank
+(same banks used for operational accounts per FIN-009)` → adds Chinabank (the parenthetical
+already ties the counterparty set to the FIN-009 operational list), and the concentration-risk
+note `forward contracts are placed with 3 banks` → `4 banks`.
+- **`VS-11 PA-11.2` (Project Sales & B2B)** — escrow step 2 `customer deposits funds via bank
+transfer (BDO, BPI, Metrobank)` → adds Chinabank (BuildRight's receiving operational accounts).
+- **`erp-requirements.md` VPP-006** — vendor-count figure `~800 vendors` → `~800–1,000 vendors`
+to match the range used by the sibling vendor-portal/compliance requirements (PUR-027, FIN-062,
+PUR-040) and `model-company-profile.md` §6.5 / `assumptions-and-design-decisions.md` A4.3.
+
+Deliberately **left as-is** (not defects): the distinct *card-acquiring* bank set
+`BDO, BPI, Metrobank, EastWest Bank` in VS-15.2 (acquiring is a separate commercial
+relationship from operational banking); the *financing-partner* bank sets in VS-08.1, VS-09.1,
+VS-11.2 §financing-narrative, and VS-14.3 (`+ Security Bank` / `+ PSBank` / `+ Home Credit` —
+consumer/project financing partners, a legitimately varying subset); and VS-18.3 / VS-14.1
+references to "major Philippine banks / credit-card issuers (BDO, BPI, Metrobank)" as general
+market context (the top-3 PH banks by size, not a claim about BuildRight's bank list).
+
 ## 2026-06-19 — Whole-repo consistency review: documentation hygiene & number-format drift
 
 A top-to-bottom review of every summary/cross-reference document plus the two methodology
