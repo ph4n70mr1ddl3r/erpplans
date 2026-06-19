@@ -4,6 +4,36 @@
 
 ---
 
+## 2026-06-20 — Workflow gap analysis (Pass 24): add VS-174–VS-176 (72 workflows W5033–W5104)
+
+A twenty-fourth gap-analysis pass, re-running the established methodology (defining terms
+appearing in **zero** PA files as dedicated workflow headers and in **zero** VS directory names,
+no dedicated owner, conflated with adjacent covered coverage), surfaced three further genuinely-
+unowned *customer-facing value-added service* disciplines relevant to BuildRight's operations after
+twenty-three prior passes had been judged complete. Re-running the methodology across ~20 candidate
+domains found most already owned by a dedicated value stream — confirming the model is near-
+saturated — leaving three clean, operationally-material adjacencies, each genuinely-uncovered with
+**zero** dedicated workflow headers and only a single incidental reference (or none):
+
+- **[VS-174 — Self-Storage, Portable Container & Mobile-Storage Operations](01-model-company/workflows/VS-174-self-storage-portable-container-and-mobile-storage-operations/README.md)** (Sell & Serve, W5033–W5056, 24 workflows) — the customer-facing storage-rental program that converts BuildRight's ~205 parking-rich sites and ~40% B2B / ~55% B2C customer base (for whom storage is a *direct consequence of the purchase* — renovations, jobsite staging, disaster recovery) into a high-margin recurring-revenue service: portfolio & business-model strategy; site selection & unit/container capacity planning; unit-type mix, rate card & yield/occupancy management; portable/mobile container fleet; facility build-out, security & access; the lease/rental agreement & deposit/insurance program; the customer rental lifecycle (inquiry, reservation, move-in, access-control, billing, delinquency, move-out); portable-container delivery/placement/relocation/pickup; **abandoned-unit lien sale & contents-disposition compliance**; storage customer service; facility maintenance; **stored-goods restrictions & BFP fire/life-safety**; and occupancy/yield/cross-sell analytics. The defining terms ('self-storage', 'storage unit', 'portable storage', 'mobile storage', 'storage container', 'storage rental', 'storage lien', 'storage lease') each appeared in **zero** PA files; adjacent coverage was only conflated slices (VS-04 merchandise warehousing, VS-77 jobsite staging, VS-164 small-parcel lockers, VS-111 BuildRight's own pallets, VS-97 the store/DC portfolio, VS-162 vehicle rental). Distinct from VS-04/VS-97 (BuildRight's own real estate), VS-164 (small-parcel lockers), VS-162 (titled-vehicle rental), and VS-111 (own RTIs).
+- **[VS-175 — Propane, LPG Cylinder Exchange & Gas Refill Operations](01-model-company/workflows/VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/README.md)** (Sell & Serve, W5057–W5080, 24 workflows) — the customer-facing flammable-gas cylinder program spanning the merchandise BuildRight sells (BBQ/patio grills, heaters, camping stoves, torches, forklifts) and one of the Philippines' largest consumer-fuel markets: program strategy; bulk LPG supply & pricing; **returnable cylinder fleet, RA 10862 standardization & DTI-BPS compliance**; cage/yard design & **BFP Fire-Code infrastructure**; retail pricing, exchange fee & refill tariff; **DOE retailer accreditation & metrology compliance**; HAZMAT/PPE & emergency-response program; the **full-for-empty exchange transaction at POS**; refill/re-valve/hydrostatic-test vendor coordination; in-store cage daily ops; customer-owned-cylinder refill; leak/damage inspection & condemnation; fleet replenishment & rebalancing; delivery/exchange-at-home & forklift/bulk-account service; **daily BFP/OSH safety inspection & emergency response**; cylinder deposit/float & asset reconciliation; and utilization/margin/ROI analytics. The defining terms ('propane', 'LPG', 'cylinder exchange', 'gas refill', 'LP gas', 'cylinder fleet', 'cylinder deposit') each appeared in **zero** PA files; the only adjacent reference was the single **W1063** (Store-Level Customer Welding Gas Cylinder Exchange & Refill) in VS-09.1 covering *industrial welding gas* for the fabrication counter, not the consumer/retail LPG program. Distinct from VS-09 (welding-gas refill), VS-114 (DG/Hazmat transport compliance), VS-111 (own RTIs), VS-24/VS-147 (safety policy/premises liability), and VS-12/VS-38.
+- **[VS-176 — Blueprint, Reprographics & Large-Format Plan Printing Services](01-model-company/workflows/VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md)** (Sell & Serve, W5081–W5104, 24 workflows) — the contractor/design-professional-facing reprographics service supporting BuildRight's ~40% B2B base (contractors, architects, engineers, developers, government-project buyers) who live in large-format drawings: service strategy & catalog; large-format printer/plotter/scanner equipment selection & procurement; pricing/cost-per-sqm & tariff; print media/consumables; service counter & self-service workstation; **cloud/mobile print-submission portal & file-format standardization**; **copyright/IP & sensitive-document handling**; equipment maintenance & calibration (VS-115); the print-job lifecycle (intake/quoting, printing, scanning/digitization, copying/binding/folding, file storage/reprint-on-demand, pickup/delivery); **bulk/tender bid-set & project plan-room reproduction**; job billing/prepaid/credit; print-quality & **scale/dimensional verification**; **customer-document confidentiality, RA 10173 data-privacy & secure disposal**; software/cloud administration; CX/rework; capacity forecasting; and ROI/cross-sell analytics. The defining terms ('blueprint', 'reprographics', 'large-format printing', 'plan printing', 'plotter', 'engineering print', 'plan copying', 'plan scanning') each appeared in **zero** PA files; adjacent coverage was only conflated (VS-66 *creates* designs, VS-14 produces BuildRight's *own* promo print, VS-09 covers *physical* fabrication, VS-46/VS-11 consume bid-set needs as a step). Distinct from VS-66 (design), VS-14 (marketing print), VS-09 (physical fabrication), and VS-29/VS-137 (product data/assets).
+
+**Counts:** 169 → **172 value streams** · 511 → **520 process areas** · 4,884 → **4,956 workflows**
+(W5033–W5104, 3 value streams × 3 process areas × 8 workflows). All 72 new workflows are
+**unclassified** and carry a keyword-driven proposed tier in the regenerated
+[`workflow-criticality-proposed.md`](01-model-company/workflows/workflow-criticality-proposed.md)
+(3,739 → 3,811 unclassified); the family impact is Sell & Serve +72 (VS-174 + VS-175 + VS-176).
+
+`07-methodology/validate-repo.sh` still reports **0 errors / 3 informational warnings** after the
+additions (Check 9 grand total 4,956 = actual PA header count 4,956; Check 1 all 3,811 proposed IDs
+resolve to headers and do not duplicate the confirmed register; no dangling references; Check 14
+no templated doubled-word pain-point labels). All cross-document counts reconciled (README,
+executive-summary, value-stream-index, workflows/README, criticality classification, dependency
+map, requirement-workflow-matrix, WORKFLOW-FORMAT-GUIDE, workflow-gap-analysis).
+
+---
+
 ## 2026-06-20 — Workflow gap analysis (Pass 23): add VS-173 (24 workflows W5009–W5032)
 
 A twenty-third gap-analysis pass, re-running the established methodology (defining terms

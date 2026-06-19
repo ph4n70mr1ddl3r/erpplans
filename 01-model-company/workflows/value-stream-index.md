@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 169 active value streams were produced in four blocks. Use this to gauge content maturity
+The 172 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 22 pending rework (VS-69/70/71/73 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-173 | 85 | Fully detailed (twenty-three gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
+| Gap analysis | VS-89 – VS-176 | 88 | Fully detailed (twenty-four gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 169 Value Streams · 511 Process Areas · 4,884 Workflows
+8 Families · 172 Value Streams · 520 Process Areas · 4,956 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams), and a twenty-first pass on 2026-06-19 (163 → 165 value streams), and a twenty-second pass on 2026-06-19 (165 → 168 value streams), and a twenty-third pass on 2026-06-20 (168 → 169 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams), and a twenty-first pass on 2026-06-19 (163 → 165 value streams), and a twenty-second pass on 2026-06-19 (165 → 168 value streams), and a twenty-third pass on 2026-06-20 (168 → 169 value streams), and a twenty-fourth pass on 2026-06-20 (169 → 172 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -104,7 +104,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-168](VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/README.md) | In-Store Audio, Ambient Media & Music Royalty Licensing | Gap analysis | 3 | 24 |
 |  | [VS-171](VS-171-customer-pickup-loading-zone-and-will-call-counter-operations/README.md) | Customer Pickup, Loading Zone & Will-Call Counter Operations | Gap analysis | 3 | 24 |
 |  | [VS-172](VS-172-third-party-installer-and-contractor-network-pro-referral-management/README.md) | Third-Party Installer & Contractor Network (Pro-Referral) Management | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **119** | **1386** |
+|  | [VS-174](VS-174-self-storage-portable-container-and-mobile-storage-operations/README.md) | Self-Storage, Portable Container & Mobile-Storage Operations | Gap analysis | 3 | 24 |
+|  | [VS-175](VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/README.md) | Propane, LPG Cylinder Exchange & Gas Refill Operations | Gap analysis | 3 | 24 |
+|  | [VS-176](VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md) | Blueprint, Reprographics & Large-Format Plan Printing Services | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **128** | **1458** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -209,7 +212,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **511** | **4,884** |
+| | | | **Grand Total** | **520** | **4,956** |
 
 ---
 
@@ -642,6 +645,24 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-172.1** [Installer/Contractor Network Strategy, Recruitment & Vetting](./VS-172-third-party-installer-and-contractor-network-pro-referral-management/PA-172.1-installer-contractor-network-strategy-recruitment-and-vetting.md) — 8 workflows
 - **PA-172.2** [Pro-Referral Matchmaking, Project Routing & Lead Management](./VS-172-third-party-installer-and-contractor-network-pro-referral-management/PA-172.2-pro-referral-matchmaking-project-routing-and-lead-management.md) — 8 workflows
 - **PA-172.3** [Network Performance, Quality, Compliance & Analytics](./VS-172-third-party-installer-and-contractor-network-pro-referral-management/PA-172.3-network-performance-quality-compliance-and-analytics.md) — 8 workflows
+
+**[VS-174: Self-Storage, Portable Container & Mobile-Storage Operations](./VS-174-self-storage-portable-container-and-mobile-storage-operations/README.md)** (24 workflows)
+
+- **PA-174.1** [Storage Portfolio Strategy, Site Selection & Unit/Container Capacity Planning](./VS-174-self-storage-portable-container-and-mobile-storage-operations/PA-174.1-storage-portfolio-strategy-site-and-unit-capacity-planning.md) — 8 workflows
+- **PA-174.2** [Customer Rental Lifecycle — Move-In, Access, Billing & Move-Out](./VS-174-self-storage-portable-container-and-mobile-storage-operations/PA-174.2-customer-rental-lifecycle-move-in-access-billing-and-move-out.md) — 8 workflows
+- **PA-174.3** [Storage Operations, Maintenance, Safety & Analytics](./VS-174-self-storage-portable-container-and-mobile-storage-operations/PA-174.3-storage-operations-maintenance-safety-and-analytics.md) — 8 workflows
+
+**[VS-175: Propane, LPG Cylinder Exchange & Gas Refill Operations](./VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/README.md)** (24 workflows)
+
+- **PA-175.1** [LPG Program Strategy, Bulk Supply, Cylinder Fleet & Regulatory Setup](./VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/PA-175.1-lpg-program-strategy-supply-cylinder-fleet-and-compliance-setup.md) — 8 workflows
+- **PA-175.2** [Cylinder Exchange & Refill Operations](./VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/PA-175.2-cylinder-exchange-and-refill-operations.md) — 8 workflows
+- **PA-175.3** [LPG Safety, Compliance, Cylinder Reconciliation & Analytics](./VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/PA-175.3-safety-compliance-cylinder-reconciliation-and-analytics.md) — 8 workflows
+
+**[VS-176: Blueprint, Reprographics & Large-Format Plan Printing Services](./VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md)** (24 workflows)
+
+- **PA-176.1** [Reprographics Service Strategy, Equipment & Catalog Setup](./VS-176-blueprint-reprographics-and-large-format-plan-printing-services/PA-176.1-reprographics-service-strategy-equipment-and-catalog-setup.md) — 8 workflows
+- **PA-176.2** [Customer Reprographics Job Lifecycle](./VS-176-blueprint-reprographics-and-large-format-plan-printing-services/PA-176.2-customer-reprographics-job-lifecycle.md) — 8 workflows
+- **PA-176.3** [Print Quality, Compliance, Document Security & Analytics](./VS-176-blueprint-reprographics-and-large-format-plan-printing-services/PA-176.3-quality-compliance-security-and-analytics.md) — 8 workflows
 
 ### Finance
 
@@ -1277,4 +1298,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
-*Total: 4,884 workflows across 169 value streams · Date: 2026-06-20*
+*Total: 4,956 workflows across 172 value streams · Date: 2026-06-20*
