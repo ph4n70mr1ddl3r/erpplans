@@ -4,6 +4,60 @@
 
 ---
 
+## 2026-06-19 — Cross-document figure consistency review (bank list, bank-account count, headcount, AP annual total) & ambiguity resolution
+
+A whole-repo cross-reference review of the overview and high-traffic workflow documents found
+a family of **stale figures that contradicted the canonical bank list / headcount / AP volume**
+established in earlier passes, plus one ambiguity. None were caught by `validate-repo.sh`
+(which checks counts, IDs, cross-references, and table structure — not whether a free-text
+figure matches the canonical value). `validate-repo.sh` still reports **0 errors / 3
+informational warnings** (unchanged). No workflow, requirement, control, value stream, or
+grand total changed.
+
+- **`VS-18/PA-18.1` (Cash Positioning & Forecasting)** — W233 (Cash Flow Forecasting &
+Liquidity Management) carried a stale, pre-bank-reconciliation footprint: the Volume field
+and three surrounding prose lines said "~50 bank accounts" and listed **Security Bank** as
+the fourth bank. The canonical footprint (used 9× elsewhere in the same file and across
+`VS-18/PA-18.2`, `model-company-profile.md` §10.4, `data-volumes-and-integrations.md`,
+`erp-requirements.md` FIN-009, and `technical-guidelines.md`) is **~210 bank accounts across
+4 banks (BDO, BPI, Metrobank, Chinabank)**. All four references in W233 were corrected to
+~210 accounts and Chinabank. (Security Bank legitimately remains where it is a *customer*
+financing partner rather than BuildRight's own bank — e.g. `VS-14/PA-14.3` co-branded card,
+`VS-09/PA-09.1` home-improvement loan referrals — and was left untouched.)
+- **`VS-15/PA-15.2` (Vendor Payment & Reconciliation)** — the LC-management pain point said
+"maintaining LC facilities across **3 banks**"; corrected to **4 banks** to match the
+canonical banking footprint (`VS-18/PA-18.2`: "4 banking relationships (BDO, BPI,
+Metrobank, Chinabank)").
+- **`VS-19/PA-19.2` (Payroll & Compensation)** — W1527 (SSS/PhilHealth/Pag-IBIG Contribution
+Filing) Volume field said "~5,800–6,500 employees"; corrected to **~6,715 employees**, the
+canonical total headcount (`model-company-profile.md` §4; `README.md`).
+- **`model-company-profile.md` §15.1 + `VS-22/PA-22.3`** — the annual AP-invoice figure was
+**~78,000**, which implies ~6,500/month and is inconsistent with the canonical monthly
+merchandise-AP figure of ~6,715 (§10.2). Corrected to **~80,500** (= ~6,715 × 12) in both
+the §15.1 Transactional Volumes table and the downstream EIS-onboarding Volume field in
+`VS-22/PA-22.3`.
+- **`model-company-profile.md` §9.1 (ambiguity resolution)** — the Customer Segments table
+listed "Ecommerce | 5%" of revenue, which reads as a direct contradiction of §9.4 / §8.5 /
+assumptions A1.4, where ecommerce is ~2.9% of revenue (Year-1 actual, ramping to ~5% in Year 2).
+Rather than alter the pervasive "55% B2C / 30% Trade / 10% Corporate / 5% Ecommerce" split
+(cited in 9+ workflow/analytics docs), the table is now annotated as the **strategic target
+segment mix** (steady-state, ~95% in-store / ~5% ecommerce = Year-2 target), explicitly
+distinguished from the **Year-1 actual** revenue split in §9.4 (~97.1% in-store / ~2.9%
+ecommerce). The apparent 5%-vs-2.9% conflict is thereby resolved without churning the
+many downstream "55% B2C" references.
+- **`workflows/workflow-gap-analysis.md`** — header readability: "Pass 15 and Pass 16
+(2026-06-17), Pass 17 (2026-06-17)" collapsed to "Pass 15, Pass 16, and Pass 17 (all
+2026-06-17)" since all three share the same date.
+
+> **Deliberately not changed:** the monthly total-AP figure "~8,500–9,500" (§10.2 + ~12
+> downstream references across 8 files). 6,715 + 2,000–3,000 sums to ~8,700–9,700, so the
+> stated total is ~2% soft at each bound — but it is an explicitly approximate ("~") figure
+> that was deliberately canonicalized in the v4.3 data-volumes reconciliation and is used
+> consistently repo-wide, so it was preserved rather than rippling a new range through 12+
+> locations.
+
+---
+
 ## 2026-06-19 — Volume-unit consistency review (monthly figures mislabeled as daily) & wording fixes
 
 A prose-level review of the overview and high-traffic workflow documents found a small

@@ -367,6 +367,14 @@ The company operates through **5 legal entities** organized as follows:
 | **Corporate / Institutional (B2B)** | 10% | Developers, government projects, large enterprises |
 | **Ecommerce** | 5% | Online B2C & B2B |
 
+> **Segment-vs-revenue note:** This table is the **strategic target segment mix** (steady state):
+> in-store channels (Walk-in + Trade + Corporate) at ~95% and ecommerce at ~5%, matching the
+> Year-2 penetration target in §8.5. The **Year-1 actual** revenue split is lower on ecommerce —
+> in-store ~97.1% / ecommerce ~2.9% (§9.4) — because ecommerce is still ramping (§8.5 ramp:
+> ~3% Year 1 → ~5% Year 2 → ~7% Year 3); the segment mix above shifts toward ecommerce as that
+> ramp completes. The pervasive “55% B2C / 30% Trade / 10% Corporate” in-store split is cited
+> consistently across the workflow and analytics documents.
+
 ### 9.2 Customer Data
 | Parameter | Value |
 |---|---|
@@ -648,7 +656,7 @@ The following external systems are actively integrated with the core ERP system.
 | Goods Receipts (Inbound) | ~6,000 | ~72,000 |
 | Ecommerce Orders | ~42,900 | ~515,000 |
 | AR Invoices | ~3,500 | ~42,000 |
-| AP Invoices | ~6,715 | ~78,000 |
+| AP Invoices | ~6,715 | ~80,500 |
 | Journal Entries (Auto) | ~12,000 | ~144,000 |
 | Payroll Runs | 10 (5 entities × 2) | 120 |
 
