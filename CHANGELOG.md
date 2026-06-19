@@ -4,6 +4,47 @@
 
 ---
 
+## 2026-06-19 — Content-quality & cross-reference drift review (pass 2)
+
+A second whole-repo review, this one focused on content-level defects the validator did not
+previously catch: templated doubled-word pain-point labels, one-off typos/redundancies, a
+percentage-rounding error, and drift in the dependency map's §8.1 anchor reference counts.
+**No workflow, requirement, control, value stream, or numeric grand total changed.**
+`validate-repo.sh` still reports 0 errors / 3 informational warnings, now joined by a new
+Check 14 that prevents the main defect class from recurring.
+
+- **12 PA files (VS-99/107/114/116/121/123/130/135)** — templated Pain Points bullets of the form
+  `**<Word>-risk risk**:` (the generator appended the noun "risk" after a descriptor that already
+  ended in `-risk`): Untransferred, Welfare, Rehire, Vendor, Migration, Separation, Operational,
+  Hidden, Retire, Pilot, Unmanaged, Systemic. Collapsed to the sibling-correct `**<Word> risk**:`
+  form used by every surrounding bullet (e.g. "Strategy-misalignment risk"). No collisions after
+  the fix. Same sweep corrected `**Finencing risk**` → `**Financing risk**` (VS-130.1).
+- **4 further one-off typos / redundancies in PA and cross-reference files:**
+  - `workflow-system-touchpoint-map.md` — W421 glossed `batch/shade shade reconciliation`; removed
+    the duplicate `shade` (W421's canonical name in VS-11.2 is "Batch/Shade Reconciliation").
+  - VS-154.1 — `Project Design design the construction draw-schedule` → `designs` (subject-verb).
+  - VS-19.4 — `target department Department Supervisor` → `target department's Department Supervisor`.
+  - VS-04.1 — `cross-dock dock assignments` / `cross-dock dock doors` → `cross-dock assignments` /
+    `cross-dock doors` (the cross-dock *is* a dock; "dock" appeared twice).
+  - (`Build Build Build`, the Philippine infrastructure program, was reviewed and left as-is — it is
+    a correct proper noun, not a duplication.)
+- **`workflow-criticality-classification.md` (Summary table)** — the `% of Classified` column had two
+  rounding errors: Phase 1 read 37.6% (440/1,168 = 37.67% → 37.7%) and Phase 2 read 42.8%
+  (499/1,168 = 42.72% → 42.7%); Phase 3 19.6% was already correct. Corrected; the three still sum to
+  100.0%. (v7.16)
+- **`workflow-dependency-map.md` §8.1** — the ten anchor "references from VS-79–VS-161" counts were
+  stated as mined from `VS-79–VS-161 PA files`, but were actually mined from PA **and** README files
+  in those directories; three had also drifted since v3.6 as content was edited. Recomputed all ten
+  against the current files and corrected the §8 prose to say "PA and README files". Changes:
+  VS-21 1181→1184, VS-27 877→878, VS-03 484→486; the other seven (VS-17/100/28/19/36/01/33) were
+  already exact. (v3.7)
+- **`07-methodology/validate-repo.sh`** — added **Check 14 (templated doubled-word pain-point
+  labels)**: flags any PA file containing `**<word>[-| ]risk risk**`, the exact artifact fixed above.
+  Zero false positives (proper nouns like "Build Build Build" are excluded by the required "risk risk"
+  suffix).
+
+---
+
 ## 2026-06-19 — Cross-reference consistency & structural cleanup
 
 A whole-repo review for inconsistencies, redundancies, and ambiguities surfaced seven issues across the

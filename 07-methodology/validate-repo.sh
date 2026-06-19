@@ -279,6 +279,25 @@ else
     echo "$COL_MISMATCH" | sed 's/^/    /' | head -20
 fi
 
+# --- Check 14: Templated doubled-word pain-point labels ("X-risk risk") ---
+echo "--- Check 14: Templated doubled-word pain-point labels ---"
+# A content-generation artifact left 12 Pain Points bullets of the form
+#   - **<Word>-risk risk**: ...
+# across the gap-analysis block (VS-99/107/114/116/121/123/130/135): the template appended
+# the noun "risk" after a descriptor that already ended in "-risk". The sibling bullets in
+# every affected file use the form "**<compound-modifier> risk**:" (e.g. "Strategy-misalignment
+# risk"), so this regex catches the drift unambiguously with no false positives (proper nouns
+# like the Philippine "Build Build Build" program are excluded by the required "-risk risk"
+# / " risk risk" suffix). Scans every PA file's bold pain-point label.
+DOUBLED_RISK=$(grep -rnP '\*\*[A-Za-z][A-Za-z-]*[- ]risk risk\b' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
+DOUBLED_RISK_COUNT=$(echo -n "$DOUBLED_RISK" | grep -cP 'PA-' || true)
+if [ "$DOUBLED_RISK_COUNT" -eq 0 ]; then
+    ok "No templated '**X-risk risk**' pain-point labels detected"
+else
+    error "$DOUBLED_RISK_COUNT PA file(s) contain a templated '**<word>-risk risk**' pain-point label:"
+    echo "$DOUBLED_RISK" | sed 's/^/    /' | head -20
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
