@@ -111,7 +111,7 @@ number never needs a VS prefix.
 ```
 workflows/
 ├── README.md                         Navigation hub & quick stats
-├── value-stream-index.md              Master index (8 families · 157 VS · 475 PAs)
+├── value-stream-index.md              Master index (8 families · 160 VS · 484 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
 ├── workflow-criticality-classification.md  Tier 1/2/3 priorities (1,168 confirmed rows; 3,451 proposed in workflow-criticality-proposed.md)
@@ -141,4 +141,4 @@ workflows/
 
 ---
 
-*Date: 2026-06-19 (Repository Layout counts reconciled to 157 value streams / 475 process areas / 3,451 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
+*Date: 2026-06-19 (Repository Layout counts reconciled to 160 value streams / 484 process areas / 3,523 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*

@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 157 active value streams were produced in four blocks. Use this to gauge content maturity
+The 160 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 157 Value Streams · 475 Process Areas · 4,596 Workflows
+8 Families · 160 Value Streams · 484 Process Areas · 4,668 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -99,7 +99,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-145](VS-145-garden-center-live-goods-and-plant-nursery/README.md) | Garden Center, Live Goods & Plant Nursery Operations | Gap analysis | 3 | 24 |
 |  | [VS-149](VS-149-self-checkout-scan-and-go-and-unattended-retail-technology-operations/README.md) | Self-Checkout, Scan-&-Go & Unattended Retail Technology Operations | Gap analysis | 3 | 24 |
 |  | [VS-156](VS-156-in-store-value-added-services-and-financial-agency-operations/README.md) | In-Store Value-Added Services & Financial Agency Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **106** | **1266** |
+|  | [VS-162](VS-162-customer-pickup-truck-and-cargo-van-rental/README.md) | Customer Pickup Truck & Cargo Van Rental (Self-Haul) Operations | Gap analysis | 3 | 24 |
+|  | [VS-164](VS-164-smart-locker-and-automated-parcel-collection-network/README.md) | Smart Locker & Automated Parcel Collection Network | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **112** | **1314** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -149,7 +151,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-112](VS-112-corporate-project-and-program-management-office/README.md) | Corporate Project & Program Management Office (PMO) | Gap analysis | 3 | 24 |
 |  | [VS-120](VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/README.md) | Energy Efficiency, Conservation & RA 11285 Compliance Program | Gap analysis | 3 | 24 |
 |  | [VS-138](VS-138-integrated-facilities-management-workplace-services-and-building-automation/README.md) | Integrated Facilities Management, Workplace Services & Building Automation | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **30** | **248** |
+|  | [VS-163](VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md) | Electric Vehicle (EV) Charging Station Host Network Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **33** | **272** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 48 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 28 |
@@ -197,7 +200,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **475** | **4,596** |
+| | | | **Grand Total** | **484** | **4,668** |
 
 ---
 
@@ -601,6 +604,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-156.2** [Counter Operations — Bills Payment, Remittance, E-Money & Mobile Load](./VS-156-in-store-value-added-services-and-financial-agency-operations/PA-156.2-counter-operations-bills-payment-remittance-e-money-and-mobile-load.md) — 8 workflows
 - **PA-156.3** [Settlement, Reconciliation, Compliance (AML/BSP) & Analytics](./VS-156-in-store-value-added-services-and-financial-agency-operations/PA-156.3-settlement-reconciliation-compliance-and-analytics.md) — 8 workflows
 
+**[VS-162: Customer Pickup Truck & Cargo Van Rental (Self-Haul) Operations](./VS-162-customer-pickup-truck-and-cargo-van-rental/README.md)** (24 workflows)
+
+- **PA-162.1** [Rental Fleet Strategy, Acquisition & Lifecycle Management](./VS-162-customer-pickup-truck-and-cargo-van-rental/PA-162.1-rental-fleet-strategy-acquisition-and-lifecycle-management.md) — 8 workflows
+- **PA-162.2** [Rental Transaction, Counter Operations & Customer Onboarding](./VS-162-customer-pickup-truck-and-cargo-van-rental/PA-162.2-rental-transaction-counter-operations-and-customer-onboarding.md) — 8 workflows
+- **PA-162.3** [Incident, Damage, Compliance & Rental Analytics](./VS-162-customer-pickup-truck-and-cargo-van-rental/PA-162.3-incident-damage-compliance-and-rental-analytics.md) — 8 workflows
+
+**[VS-164: Smart Locker & Automated Parcel Collection Network](./VS-164-smart-locker-and-automated-parcel-collection-network/README.md)** (24 workflows)
+
+- **PA-164.1** [Locker Network Strategy, Siting & Deployment](./VS-164-smart-locker-and-automated-parcel-collection-network/PA-164.1-locker-network-strategy-siting-and-deployment.md) — 8 workflows
+- **PA-164.2** [Collection Operations, Replenishment & Access Management](./VS-164-smart-locker-and-automated-parcel-collection-network/PA-164.2-collection-operations-replenishment-and-access-management.md) — 8 workflows
+- **PA-164.3** [Maintenance, Integration, Compliance & Network Analytics](./VS-164-smart-locker-and-automated-parcel-collection-network/PA-164.3-maintenance-integration-compliance-and-network-analytics.md) — 8 workflows
+
 ### Finance
 
 **[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (42 workflows)
@@ -890,6 +905,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-138.1** [Facilities Management Strategy, IFM Provider & SLA Governance](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.1-facilities-management-strategy-ifm-provider-and-sla-governance.md) — 8 workflows
 - **PA-138.2** [Hard & Soft FM Service Operations (Cleaning, Pest, Security, Grounds, Workplace)](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.2-hard-and-soft-fm-service-operations.md) — 8 workflows
 - **PA-138.3** [Building Automation, Energy Control & Facilities Analytics](./VS-138-integrated-facilities-management-workplace-services-and-building-automation/PA-138.3-building-automation-energy-control-and-facilities-analytics.md) — 8 workflows
+
+**[VS-163: Electric Vehicle (EV) Charging Station Host Network Operations](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md)** (24 workflows)
+
+- **PA-163.1** [Charging Network Strategy, Siting & Host Partnering](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/PA-163.1-charging-network-strategy-siting-and-host-partnering.md) — 8 workflows
+- **PA-163.2** [Station Deployment, Energy Integration & Roaming/Payment](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/PA-163.2-station-deployment-energy-integration-and-roaming-payment.md) — 8 workflows
+- **PA-163.3** [Operations, Maintenance, Compliance & Network Analytics](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/PA-163.3-operations-maintenance-compliance-and-network-analytics.md) — 8 workflows
 
 ### Governance & Assurance
 
@@ -1183,14 +1204,14 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140, VS-145)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140, VS-145, VS-149, VS-156, VS-162, VS-164)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136, VS-143)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125, VS-142)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141, VS-144)
-Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138)
+Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138, VS-163)
 Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133, VS-146)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
-*Total: 4,596 workflows across 157 value streams · Date: 2026-06-19*
+*Total: 4,668 workflows across 160 value streams · Date: 2026-06-19*

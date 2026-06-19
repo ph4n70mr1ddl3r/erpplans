@@ -4,6 +4,38 @@
 
 ---
 
+## 2026-06-19 — Workflow gap analysis (Pass 19): add VS-162–VS-164 (72 workflows W4745–W4816)
+
+A nineteenth gap-analysis pass, re-running the established methodology (defining terms appearing in
+**zero** PA files as dedicated workflow headers, no dedicated owner, conflated with adjacent covered
+coverage), surfaced three further genuinely-unowned operational disciplines relevant to BuildRight's
+operations. Each is a distinct big-box-retail operational capability that the surrounding coverage
+made appear owned:
+
+- **[VS-162 — Customer Pickup Truck & Cargo Van Rental (Self-Haul) Operations](01-model-company/workflows/VS-162-customer-pickup-truck-and-cargo-van-rental/README.md)** (Sell & Serve, W4745–W4768, 24 workflows) — the "Load N Go" big-box self-haul rental (2–3 trucks + 1 van per store ≈ 600–800 vehicles group-wide) that converts the "I can't get it home" bulky-merchandise basket-abandonment (lumber/tile/appliance/furniture — ~36% of SKUs) into a same-day completed sale plus rental/fuel/LDW income. 'pickup truck rental' / 'cargo van rental' / 'self-haul rental' appeared in zero PA files; distinct from VS-06 (goods delivery fleet), VS-12.2 (item/tool rental), VS-74/VS-56 (delivery services), VS-141 (employee transport) — this rents a titled registered motor vehicle to a customer to self-drive under motor-vehicle-liability law (LTO registration, CTPL/RA 10006, driver-license verification, LDW/deductible, telematics, theft/non-return recovery).
+- **[VS-163 — Electric Vehicle (EV) Charging Station Host Network Operations](01-model-company/workflows/VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md)** (Asset & Infrastructure, W4769–W4792, 24 workflows) — BuildRight as the property host & network operator deploying EV charging across ~205 large parking-rich sites, converging its EV-charger merchandise (Electrical category), rooftop solar/prosumer program (VS-108), energy-efficiency/RA 11285 program (VS-120), and sustainability brand (VS-25) under the RA 11697 (EVIDA, 2022) electrification tailwind — capturing the dwell-time basket, own-solar energy sales, decarbonization, and property future-proofing. 'EV charging station host' / 'EVSE host network' / 'OCPI roaming' appeared in zero PA files; distinct from VS-108 (own-consumption generation — this *sells* energy/services to EV drivers), VS-120 (own energy efficiency), VS-06/VS-61 (own diesel fleet fueling — this also owns the forward green-fleet charging path), VS-138 (general facilities). Covers strategy/CPO-partnering, siting, ERB/Meralco utility interconnection, solar/storage peak-shaving, OCPP/OCPI CSMS & roaming, billing/payment/loyalty, EVSE maintenance, accessibility (RA 7277), safety, compliance, and network/decarbonization analytics.
+- **[VS-164 — Smart Locker & Automated Parcel Collection Network](01-model-company/workflows/VS-164-smart-locker-and-automated-parcel-collection-network/README.md)** (Sell & Serve, W4793–W4816, 24 workflows) — a network of automated self-service collection lockers (in-store, parking-lot drive-up, and off-site transit/condo/mall) extending BOPIS beyond the counter and beyond store hours, unlocking returns drop-off and a 3P-parcel-pickup revenue stream (the Amazon-Hub / Lazada-locker model) for ~42,900 ecommerce orders/month and ~2.8M monthly footfall. 'smart locker network' / 'automated parcel collection' / 'returns locker' appeared in zero PA files; distinct from VS-10 (the BOPIS fulfillment *transaction* at the counter — this owns the *locker network infrastructure & channel*), VS-149 (in-store unattended *selling* tech — this owns outdoor/transit/off-site *parcel lockers*), VS-93/VS-60 (fulfillment), VS-32 (returns — this owns the *locker returns-drop-off channel*). Covers network strategy/vendor, siting/capacity, BOPIS-to-locker staging & access-control, returns drop-off, overflow/abandonment, 3P carrier integration, ERP/OMS/loyalty integration, security/anti-theft, accessibility (RA 7277/BP 344), privacy (RA 10173), uptime/SLA, and analytics.
+
+**Counts:** 157 → **160 value streams** · 475 → **484 process areas** · 4,596 → **4,668 workflows**
+(W4745–W4816, 3 value streams × 3 process areas × 8 workflows). All 72 new workflows are
+**unclassified** and carry a keyword-driven proposed tier in the regenerated
+[`workflow-criticality-proposed.md`](01-model-company/workflows/workflow-criticality-proposed.md);
+the family impact is Sell & Serve +48 and Asset & Infrastructure +24.
+
+**Candidates considered but rejected as adequately covered / out of charter** (documented in
+[`workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md)): heavy/pro
+construction equipment rental (covered by W1094 partner-coordination model in VS-09.1 + W1062
+scaffolding); self-storage/mobile-storage containers, in-store cafe/F&B, notary/blueprint/photo/
+coin-machine, and pet/aquarium/pharmacy/dry-cleaning (out of the home-improvement retail charter).
+
+`07-methodology/validate-repo.sh` still reports **0 errors / 3 informational warnings** after the
+additions (Check 9 grand total 4,668 = actual PA header count 4,668; Check 1 all 3,523 proposed IDs
+resolve to headers). All cross-document totals (README, executive-summary, value-stream-index,
+workflows/README, criticality classification, dependency map, touchpoint map,
+requirement-workflow-matrix) were reconciled to the new counts.
+
+---
+
 ## 2026-06-19 — Whole-repo consistency review: broken anchors, scope ambiguities, vendor/TIN reconciliation & en-dash normalization
 
 A full-repository read-through surfaced and resolved six classes of inconsistency. The
@@ -477,7 +509,6 @@ cross-reference layer. **No workflow, requirement, control, value stream, or num
   single blank line uniformly.
 - **`workflows/workflow-dependency-map.md`** — removed a duplicate `---` horizontal rule between §7
   and §8 (rendered as two stacked `<hr>`s).
-
 ---
 
 ## 2026-06-18 — Markdown table structural-integrity review
