@@ -222,10 +222,10 @@ def main():
         by_tier[tier].append((wnum, name, vsnum))
 
     total = sum(counts.values())
-    print(f"Proposed classification for {total} unclassified workflows:")
-    print(f"  Tier 1 (core/statutory): {counts[1]}")
-    print(f"  Tier 2 (standard support): {counts[2]}")
-    print(f"  Tier 3 (advanced/opt):   {counts[3]}")
+    print(f"Proposed classification for {total:,} unclassified workflows:")
+    print(f"  Tier 1 (core/statutory): {counts[1]:,}")
+    print(f"  Tier 2 (standard support): {counts[2]:,}")
+    print(f"  Tier 3 (advanced/opt):   {counts[3]:,}")
 
     if not args.write:
         print("\n(dry-run; pass --write to generate workflow-criticality-proposed.md)")
@@ -244,8 +244,8 @@ def main():
                  "else defaults to Tier 2 (the documented safe default for unclassified workflows). "
                  "On review, promote/demote rows by moving them into the confirmed register.")
     lines.append("")
-    lines.append(f"**Workflow coverage:** {total} unclassified workflows · "
-                 f"Tier 1: {counts[1]} · Tier 2: {counts[2]} · Tier 3: {counts[3]}")
+    lines.append(f"**Workflow coverage:** {total:,} unclassified workflows · "
+                 f"Tier 1: {counts[1]:,} · Tier 2: {counts[2]:,} · Tier 3: {counts[3]:,}")
     lines.append("")
     for tier, label in [(1, "Tier 1 — Core / statutory / revenue-critical (proposed)"),
                         (2, "Tier 2 — Standard support / cost control (proposed)"),

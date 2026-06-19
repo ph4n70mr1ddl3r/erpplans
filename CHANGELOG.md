@@ -4,6 +4,48 @@
 
 ---
 
+## 2026-06-19 — Whole-repo consistency review: documentation hygiene & number-format drift
+
+A top-to-bottom review of every summary/cross-reference document plus the two methodology
+scripts and a sample of workflow PA files, looking for inconsistencies, redundancies, and
+ambiguities the validator does not already catch. `validate-repo.sh` still reports **0 errors /
+3 informational warnings** (the three tracked, pre-existing Expansion-block boilerplate and
+Automation/Controls-adoption items). **No workflow, requirement, control, value stream, or
+numeric grand total changed.**
+
+- **`README.md` (folder-structure tree)** — the `workflows/` subtree omitted three files that
+  exist and are referenced elsewhere in the README: `workflows/README.md` (navigation hub & quick
+  stats), `workflow-criticality-proposed.md`, and `workflow-gap-analysis.md`. Added all three so the
+  tree is a complete map of the directory. Also aligned the `workflow-criticality-classification.md`
+  leaf label from "Phase 1/2/3 implementation priorities" to "Tier 1/2/3 confirmed priorities
+  (1,168 rows)" to match the wording used in `workflows/README.md` and the classification doc itself
+  (Phase↔Tier mapping is documented in the classification Summary table).
+- **`07-methodology/README.md`** — Contents table omitted `classify-workflows.py` (referenced from
+  `workflow-criticality-classification.md`, `workflow-criticality-proposed.md`, `workflow-gap-analysis.md`,
+  and CHANGELOG). Added it; refreshed the `validate-repo.sh` description to reflect the current 14
+  checks; clarified that the integration diagram in `technical-guidelines.md` is a reference copy
+  (canonical lives in `data-volumes-and-integrations.md`); updated the stale footer date 2026-06-09
+  → 2026-06-19.
+- **Number-format consistency** — grand totals were written without thousands separators in four
+  spots (`4596`, `1168`, `1145`, `3451`) versus the dominant comma form (`4,596` 21×, `1,168` 15×,
+  `1,145` 13×, `3,451` 14×). Standardised on the comma form in `value-stream-index.md` (architecture
+  banner, Grand-Total table cell, footer) and in the auto-generated `workflow-criticality-proposed.md`.
+- **`07-methodology/classify-workflows.py`** — emit comma-formatted counts (`{n:,}`) in both the
+  stdout summary and the generated header line, so regeneration no longer reintroduces the
+  non-comma form. Regenerated `workflow-criticality-proposed.md`; only the header summary line
+  changed (`3451` → `3,451`, `2608` → `2,608`; counts unchanged: 688 / 2,608 / 155).
+- **`07-methodology/validate-repo.sh`** — made the grand-total extraction robust to comma-formatted
+  cells. Checks 1, 3, and 9 extracted the total via `grep -oP '\d+' | tail -1`, which silently
+  grabbed `596` from `4,596` once the Grand-Total cell was comma-formatted (Check 9 then reported
+  a false `Grand total (596) != actual (4596)`). Switched all three to `grep -oP '\d[\d,]*' | tail -1 |
+  tr -d ','` so the validator tracks the documented number style instead of fighting it.
+
+Findings reviewed and deliberately **left as-is** (not defects): the deliberate canonical/reference
+  duplication of the integration architecture diagram between `data-volumes-and-integrations.md`
+  and `technical-guidelines.md` (cross-referenced); the Phase↔Tier terminology mapping; per-doc
+  footer dates that reflect each file's last substantive edit; VS-49–VS-52 historical references in
+  CHANGELOG/gap-analysis (all clearly marked retired).
+
 ## 2026-06-19 — Content-quality & cross-reference drift review (pass 2)
 
 A second whole-repo review, this one focused on content-level defects the validator did not

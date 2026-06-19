@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 157 Value Streams · 475 Process Areas · 4596 Workflows
+8 Families · 157 Value Streams · 475 Process Areas · 4,596 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
@@ -197,7 +197,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **475** | **4596** |
+| | | | **Grand Total** | **475** | **4,596** |
 
 ---
 
@@ -1193,4 +1193,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
-*Total: 4596 workflows across 157 value streams · Date: 2026-06-18*
+*Total: 4,596 workflows across 157 value streams · Date: 2026-06-19*

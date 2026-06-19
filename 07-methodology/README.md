@@ -9,8 +9,9 @@
 
 | Document | Description |
 |---|---|
-| [technical-guidelines.md](technical-guidelines.md) | POS hardware specs, infrastructure & deployment reference, integration architecture, security requirements |
-| [validate-repo.sh](validate-repo.sh) | Cross-reference validation script — checks workflow counts, requirement IDs, and cross-references |
+| [technical-guidelines.md](technical-guidelines.md) | POS hardware specs, infrastructure & deployment reference, integration architecture (reference copy; canonical diagram lives in `01-model-company/data-volumes-and-integrations.md`), security requirements |
+| [validate-repo.sh](validate-repo.sh) | Cross-reference validation script — 14 checks covering workflow counts, requirement/control IDs, classification register, dangling workflow references, markdown table structure, and boilerplate/tier-1 chain consistency |
+| [classify-workflows.py](classify-workflows.py) | Keyword-driven criticality classifier — regenerates `01-model-company/workflows/workflow-criticality-proposed.md` (Tier 1/2/3 proposal for every workflow not in the hand-confirmed register) |
 
 ## Future Additions (Post-Platform Selection)
 
@@ -27,4 +28,4 @@ during implementation:
 
 ---
 
-*Date: 2026-06-09*
+*Date: 2026-06-19*

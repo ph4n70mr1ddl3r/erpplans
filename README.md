@@ -30,11 +30,14 @@ erpplans/
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
 │   ├── workflows/                      4,596 workflows organized by value stream
+│   │   ├── README.md                           Navigation hub & quick stats
 │   │   ├── value-stream-index.md              Master index (8 families · 157 value streams · 475 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
-│   │   ├── workflow-criticality-classification.md  Phase 1/2/3 implementation priorities
+│   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (1,168 rows)
+│   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal for unclassified workflows
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
 │   │   ├── workflow-system-touchpoint-map.md    ERP module-to-workflow cross-reference
+│   │   ├── workflow-gap-analysis.md            Gap-analysis methodology & 18-pass history
 │   │   ├── VS-01-merchandise-strategy/         46 workflows (3 process areas)
 │   │   ├── VS-02-supply-planning/               37 workflows (3 process areas)
 │   │   ├── VS-03-vendor-management/             81 workflows (4 process areas)
