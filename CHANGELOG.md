@@ -4,6 +4,71 @@
 
 ---
 
+## 2026-06-19 — Whole-repo consistency review pass: TOC count drift, stale POS/documented-workflow figures, AP-volume scope ambiguity
+
+A top-to-bottom read of every summary/cross-reference document and a sample of high-traffic
+workflow PA files, looking for inconsistencies, ambiguities, and stale figures that
+`validate-repo.sh` does not already catch (it checks counts, IDs, cross-references, and table
+structure — not whether a free-text figure matches its canonical value, nor whether a TOC
+category count matches its actual row count). `validate-repo.sh` still reports **0 errors / 3
+informational warnings** (unchanged). **No workflow, requirement, control, value stream, or
+numeric grand total changed.**
+
+- **`01-model-company/erp-requirements.md` (Table of Contents)** — the per-category counts had
+  drifted out of sync with the actual row counts as letter-suffixed requirements were added in
+  later rounds, so the TOC over-summed (to ~754 vs the stated 733 total). Corrected five rows so
+  the TOC now sums to exactly 733 and every count matches the actual prefix-row count:
+  - **R3 Procurement** `PUR … 43` → **45** (PUR-025a/b added: 43 base + 2 suffixed).
+  - **R4 Warehouse Management** `WMS-001 – WMS-023 | 23` → **`WMS-001 – WMS-023, WHL-001 – WHL-003 | 26`** — the 3 WHL rows live in the R4 section but were previously uncounted in the TOC (WHL was a "ghost" prefix not mapped to any TOC row).
+  - **R5 POS & Retail** `117` → **118** (POS-014a, POS-022a added).
+  - **R14 Non-Functional** `41` → **42** (NFR-022a added).
+  - **Additional (Various)** `87` → **59** — the 13 listed prefixes (COM, ENG, ESG, HAZ, HSE, LOG, MER, MKT, MNT, PRJ, PROP, REG, AUD) actually total 59; the old 87 was stale and contributed the bulk of the TOC over-sum. (WHL moved into the R4 row above.) The `> Total: 733 …` line and the Must/Should/Nice split (431/296/6) were already correct and unchanged.
+- **`VS-22/PA-22.1` (Regulatory Permits & Licenses)** — the BIR EIS e-invoicing narrative said
+  *"~5–10M POS transactions monthly across 200 stores"*. The canonical POS volume (per
+  `data-volumes-and-integrations.md` §1.1, `model-company-profile.md` §5, and `VS-08/PA-08.2`)
+  is **~2.8M POS transactions/month (~93,000/day)**. The 5–10M figure was ~2–4× too high
+  (likely a stale draft figure); corrected to *~2.8M POS transactions monthly (~93,000/day)*.
+- **`VS-133/README.md` + `workflows/workflow-gap-analysis.md` §3 (gap #47, VS-133)** — both
+  narrative justifications for VS-133 (Operational Excellence) cited a stale *documented
+  workflows* count in present tense: README said *"BuildRight runs ~3,900 documented workflows"*
+  and the gap-analysis said *"running ~3,996 documented workflows"* (snapshots from Pass 9 and
+  Pass 10 respectively). Every other figure in the same paragraphs (6,715 employees, PHP 62.3B,
+  200 stores, 4 DCs, 2.8M transactions) is current, so the workflow count is the lone stale
+  figure; both corrected to **~4,596** (current grand total) so the two narratives agree with
+  each other and with the rest of the repository.
+- **`model-company-profile.md` §15.1 (ambiguity resolution)** — the Transactional Volumes table
+  row `AP Invoices | ~6,715 | ~80,500` is the merchandise-only AP figure (3-way match per W7,
+  per the 2026-06-19 AP-annual-total reconciliation), but the unqualified label read as **total**
+  AP and contradicted the ~8,500–9,500/month total-AP figure in §10.2 and
+  `data-volumes-and-integrations.md` §1.1. Relabelled to **`AP Invoices (merchandise, 3-way
+  match per W7)`** and added a scope note pointing to the total-AP basis in §10.2 and
+  `data-volumes-and-integrations.md` §1.1. The numeric figure (~6,715 / ~80,500) is unchanged
+  (deliberately canonicalized earlier). Document version bumped 2.16 → 2.17.
+- **`requirement-workflow-matrix.md` (ambiguity resolution)** — added a *Column convention*
+  note under How-to-Read clarifying that the 3rd column is **Priority** (M/S/N) for every
+  section except **R14 NFR**, which uses the **Target** spec value (99.9%, < 3 sec, 7 years,
+  etc.) since the target is the operative spec for an NFR; NFR priorities remain in
+  `erp-requirements.md` R14. Previously a reader scanning the priority column encountered 17
+  NFR rows whose 3rd cell held a target value rather than M/S/N — locally clear from the R14
+  header but inconsistent with the top-level legend.
+
+> **Known inconsistency deliberately left for a domain decision — BIR record retention: 7 vs 10
+> years.** The foundational summary documents use **7 years (BIR)** as the canonical retention
+> period — `NFR-006`, `DOC-005`, `model-company-profile.md` §15.3, `assumptions-and-design-
+> decisions.md` A6.5 (which drives the ~700 GB / 7-year storage sizing), `technical-guidelines.md`
+> §2.3, and ~6 internal-control references — while the newer detailed workflow documents use **10
+> years (BIR)** for the same tax/accounting records: `VS-22/PA-22.1` (e-invoicing), `VS-88`
+> (Document Control, incl. README and PA-88.2/88.3), and `PRJ-002` (project close-out). Under
+> TRAIN (RA 10963) the BIR retention for books of accounts and accounting/e-invoice records is
+> **10 years** (5 + 5); the 7-year figure in the foundational docs is the older/conservative
+> number. Reconciling this is a **substantive tax-compliance and storage-sizing decision** (it
+> changes NFR-006, A6.5 storage math, and multiple control references) and is deferred to a
+> domain review rather than made unilaterally in a documentation-consistency pass. Flagged here
+> so the next reviewer can decide which figure to canonicalize.
+
+---
+
+
 ## 2026-06-19 — Cross-document figure consistency review (bank list, bank-account count, headcount, AP annual total) & ambiguity resolution
 
 A whole-repo cross-reference review of the overview and high-traffic workflow documents found

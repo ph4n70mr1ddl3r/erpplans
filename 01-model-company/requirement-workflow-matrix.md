@@ -14,6 +14,11 @@
 - **Primary Workflows**: Workflows where this requirement is directly exercised and system touchpoints are listed
 - **Supporting Workflows**: Workflows that indirectly involve this requirement
 
+> **Column convention:** every section except R14 uses the 3rd column for **Priority** (M / S / N).
+> R14 (Non-Functional Requirements) uses the 3rd column for the **Target** spec value
+> (e.g. 99.9%, < 3 sec, 7 years), since the target is the operative spec for an NFR; NFR
+> priorities (Must / Should / Nice) are listed in [`erp-requirements.md`](erp-requirements.md) R14.
+
 ---
 
 ## R1. Financial Management (FIN)
@@ -1015,4 +1020,4 @@
 
 ---
 
-*Date: 2026-06-18 (v60 — consistency review: reconciled cross-reference totals to 4,596 workflows / 157 value streams through gap-analysis Pass 18 (VS-157–VS-161, W4625–W4744). Requirement-to-workflow mappings currently reference the core foundational workflows; mappings extending to the Expansion / Statutory / Gap-analysis value streams (VS-53–VS-161) are added incrementally and remain pending for the later passes. All 733 existing requirement mappings remain valid and reconcile with erp-requirements.md. Prior v59 reconciled Pass 13–15 (VS-137–VS-146) at the then-current 4,236-workflow / 142-value-stream totals; prior v58 added VS-137–VS-140 via Pass 13 and VS-141–VS-142 via Pass 14; prior v57 added VS-133–VS-136 via Pass 12; prior v56 added VS-129–VS-132 via Pass 11; prior v55 added VS-125–VS-128 via Pass 10; prior v54 added VS-121–VS-124 via Pass 9; prior v53 added VS-109–VS-112 via Pass 6; prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*
+*Date: 2026-06-19 (v61 — added a "Column convention" note under How to Read clarifying that the 3rd column is Priority (M/S/N) for every section except R14 NFR, which uses the Target spec value; NFR priorities remain in erp-requirements.md R14. Prior v60 — consistency review: reconciled cross-reference totals to 4,596 workflows / 157 value streams through gap-analysis Pass 18 (VS-157–VS-161, W4625–W4744). Requirement-to-workflow mappings currently reference the core foundational workflows; mappings extending to the Expansion / Statutory / Gap-analysis value streams (VS-53–VS-161) are added incrementally and remain pending for the later passes. All 733 existing requirement mappings remain valid and reconcile with erp-requirements.md. Prior v59 reconciled Pass 13–15 (VS-137–VS-146) at the then-current 4,236-workflow / 142-value-stream totals; prior v58 added VS-137–VS-140 via Pass 13 and VS-141–VS-142 via Pass 14; prior v57 added VS-133–VS-136 via Pass 12; prior v56 added VS-129–VS-132 via Pass 11; prior v55 added VS-125–VS-128 via Pass 10; prior v54 added VS-121–VS-124 via Pass 9; prior v53 added VS-109–VS-112 via Pass 6; prior v52 added VS-105–VS-108 via Pass 5; prior v51 added VS-101–VS-104 via Pass 4; prior v50 added VS-97–VS-100 via Pass 3; prior v49 reconciled 733 requirements / 431 Must / 296 Should / 6 Nice across 38 categories after the VS-49/50/51/52 retirement; total requirements reconciled with erp-requirements.md)*

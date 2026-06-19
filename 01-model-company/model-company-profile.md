@@ -656,9 +656,15 @@ The following external systems are actively integrated with the core ERP system.
 | Goods Receipts (Inbound) | ~6,000 | ~72,000 |
 | Ecommerce Orders | ~42,900 | ~515,000 |
 | AR Invoices | ~3,500 | ~42,000 |
-| AP Invoices | ~6,715 | ~80,500 |
+| AP Invoices (merchandise, 3-way match per W7) | ~6,715 | ~80,500 |
 | Journal Entries (Auto) | ~12,000 | ~144,000 |
 | Payroll Runs | 10 (5 entities × 2) | 120 |
+
+> **AP volume scope:** the ~6,715 monthly / ~80,500 annual figure above is merchandise
+> invoices (3-way match per W7). Total AP, including ~2,000–3,000 non-PO/recurring invoices
+> (2-way match per W7C), is ~8,500–9,500/month (~300/day, ~9,000/month peak-normalized) —
+> see §10.2 and [`data-volumes-and-integrations.md`](data-volumes-and-integrations.md) §1.1, which
+> report AP on the total-invoice basis.
 
 ### 15.2 Master Data
 
@@ -761,4 +767,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.16 | Date: 2026-06-19 | Glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.17 | Date: 2026-06-19 | §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*

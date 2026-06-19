@@ -12,9 +12,9 @@
 |---|---|---|---|
 | [R1](#r1-financial-management) | Financial Management | FIN-001 – FIN-079 | 79 |
 | [R2](#r2-inventory-management) | Inventory Management | INV-001 – INV-027 | 27 |
-| [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-043 | 43 |
-| [R4](#r4-warehouse-management) | Warehouse Management | WMS-001 – WMS-023 | 23 |
-| [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-121 | 117 |
+| [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-043 (incl. PUR-025a/b) | 45 |
+| [R4](#r4-warehouse-management) | Warehouse Management | WMS-001 – WMS-023, WHL-001 – WHL-003 | 26 |
+| [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-121 (incl. POS-014a, POS-022a) | 118 |
 | [R6](#r6-ecommerce-integration) | Ecommerce Integration | ECOM-001 – ECOM-033 | 33 |
 | [R7](#r7-supply-chain-planning) | Supply Chain Planning | SCP-001 – SCP-020 | 20 |
 | [R8](#r8-hr--payroll) | HR & Payroll | HR-001 – HR-054 | 54 |
@@ -23,7 +23,7 @@
 | [R11](#r11-intercompany--transfer-pricing) | Intercompany & Transfer Pricing | IC-001 – IC-005 | 5 |
 | [R12](#r12-document-management) | Document Management | DOC-001 – DOC-011 | 11 |
 | [R13](#r13-master-data-management) | Master Data Management | MDM-001 – MDM-033 | 33 |
-| [R14](#r14-non-functional-requirements) | Non-Functional Requirements | NFR-001 – NFR-041 | 41 |
+| [R14](#r14-non-functional-requirements) | Non-Functional Requirements | NFR-001 – NFR-041 (incl. NFR-022a) | 42 |
 | [R15](#r15-installation--value-added-services) | Installation & Services | SRV-001 – SRV-005 | 5 |
 | [R16](#r16-wholesale--reseller-operations) | Wholesale & Reseller | WSL-001 – WSL-008 | 8 |
 | [R17](#r17-corporate-governance-legal--strategy) | Governance, Legal & Strategy | GOV-001 – GOV-056 | 55 |
@@ -37,7 +37,7 @@
 | [R30](#r30-business-intelligence--analytics-operations) | BI & Analytics Operations | BIA-001 – BIA-007 | 7 |
 | [R31](#r31-customer-credit--collections-management) | Customer Credit & Collections | CCR-001 – CCR-008 | 8 |
 | R32 | Operational Gap Closure (Round 21) | Mixed | — |
-| — | Additional (COM, ENG, ESG, HAZ, HSE, LOG, MER, MKT, MNT, PRJ, PROP, REG, AUD) | Various | 87 |
+| — | Additional (COM, ENG, ESG, HAZ, HSE, LOG, MER, MKT, MNT, PRJ, PROP, REG, AUD) | Various | 59 |
 
 > **Total: 733 unique requirements** across 38 prefix categories. Requirements marked with
 > priority: **Must Have** (431), **Should Have** (296), **Nice to Have** (6).
