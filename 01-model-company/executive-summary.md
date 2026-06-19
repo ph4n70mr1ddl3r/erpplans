@@ -79,4 +79,4 @@ erpplans/
 
 ---
 
-*Date: 2026-06-19 (updated counts: 733 requirements, 4,788 workflows across 165 value streams; VS-49–VS-52 retired after placeholder-content review; VS-89–VS-169 added across twenty-one gap-analysis passes — see [CHANGELOG.md](../CHANGELOG.md) and [`workflow-gap-analysis.md`](workflows/workflow-gap-analysis.md) for per-pass detail).*
+*Date: 2026-06-19 (updated counts: 733 requirements, 4,860 workflows across 168 value streams; VS-49–VS-52 retired after placeholder-content review; VS-89–VS-172 added across twenty-two gap-analysis passes — see [CHANGELOG.md](../CHANGELOG.md) and [`workflow-gap-analysis.md`](workflows/workflow-gap-analysis.md) for per-pass detail).*

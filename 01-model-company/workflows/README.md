@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Value Streams | 165 |
-| Process Areas | 499 |
-| Workflows | 4,788 |
+| Value Streams | 168 |
+| Process Areas | 508 |
+| Workflows | 4,860 |
 | Classified (Tier 1) | 440 |
 | Classified (Tier 2) | 499 |
 | Classified (Tier 3) | 229 |
@@ -23,7 +23,7 @@
 
 | Document | Purpose |
 |---|---|
-| [value-stream-index.md](value-stream-index.md) | **Master index** — all 165 value streams with workflow counts |
+| [value-stream-index.md](value-stream-index.md) | **Master index** — all 168 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
 | [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal for the remaining unclassified workflows |
@@ -73,7 +73,7 @@
 | [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | 24 |
 | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | 24 |
 
-### Sell & Serve (1,338 workflows)
+### Sell & Serve (1,386 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-07](VS-07-store-operations/README.md) | Store Operations | 144 |
@@ -114,8 +114,10 @@
 | [VS-162](VS-162-customer-pickup-truck-and-cargo-van-rental/README.md) | Customer Pickup Truck & Cargo Van Rental (Self-Haul) Operations | 24 |
 | [VS-164](VS-164-smart-locker-and-automated-parcel-collection-network/README.md) | Smart Locker & Automated Parcel Collection Network | 24 |
 | [VS-168](VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/README.md) | In-Store Audio, Ambient Media & Music Royalty Licensing | 24 |
+| [VS-171](VS-171-customer-pickup-loading-zone-and-will-call-counter-operations/README.md) | Customer Pickup, Loading Zone & Will-Call Counter Operations | 24 |
+| [VS-172](VS-172-third-party-installer-and-contractor-network-pro-referral-management/README.md) | Third-Party Installer & Contractor Network (Pro-Referral) Management | 24 |
 
-### Finance (651 workflows)
+### Finance (675 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 42 |
@@ -142,6 +144,7 @@
 | [VS-154](VS-154-home-construction-finance-loan-brokerage-and-mortgage-referral/README.md) | Home Construction Finance, Loan Brokerage & Mortgage Referral Services | 24 |
 | [VS-157](VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/README.md) | Revenue Recognition (PFRS 15) & Complex Contract Accounting | 24 |
 | [VS-158](VS-158-product-costing-landed-cost-and-cost-accounting/README.md) | Product Costing, Landed-Cost & Cost Accounting | 24 |
+| [VS-170](VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/README.md) | Inventory Pledge, Asset-Based Lending & Trust-Receipt (Warehouse-Receipt) Financing | 24 |
 
 ### People (410 workflows)
 | VS | Value Stream | Workflows |
@@ -232,9 +235,9 @@
 | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | 24 |
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 
-*Family subtotal reconciliation: 428 + 427 + 1,338 + 651 + 410 + 272 + 912 + 350 = 4,788*
+*Family subtotal reconciliation: 428 + 427 + 1,386 + 675 + 410 + 272 + 912 + 350 = 4,860*
 
-> **Note (2026-06-19):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across twenty-one gap-analysis passes (2026-06-14 through 2026-06-19, VS-89–VS-169; W2993–W4936). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
+> **Note (2026-06-19):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across twenty-two gap-analysis passes (2026-06-14 through 2026-06-19, VS-89–VS-172; W2993–W5008). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 
 *Back to [Model Company](../) · [Repository README](../../README.md)*
 
