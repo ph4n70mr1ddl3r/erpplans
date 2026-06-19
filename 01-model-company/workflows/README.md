@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Value Streams | 160 |
-| Process Areas | 484 |
-| Workflows | 4,668 |
+| Value Streams | 163 |
+| Process Areas | 493 |
+| Workflows | 4,740 |
 | Classified (Tier 1) | 440 |
 | Classified (Tier 2) | 499 |
 | Classified (Tier 3) | 229 |
@@ -23,7 +23,7 @@
 
 | Document | Purpose |
 |---|---|
-| [value-stream-index.md](value-stream-index.md) | **Master index** — all 160 value streams with workflow counts |
+| [value-stream-index.md](value-stream-index.md) | **Master index** — all 163 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
 | [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal for the remaining unclassified workflows |
@@ -142,7 +142,7 @@
 | [VS-157](VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/README.md) | Revenue Recognition (PFRS 15) & Complex Contract Accounting | 24 |
 | [VS-158](VS-158-product-costing-landed-cost-and-cost-accounting/README.md) | Product Costing, Landed-Cost & Cost Accounting | 24 |
 
-### People (362 workflows)
+### People (386 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 74 |
@@ -158,6 +158,7 @@
 | [VS-144](VS-144-employee-accommodation-dormitory-and-staff-housing/README.md) | Employee Accommodation, Dormitory & Staff Housing Operations | 24 |
 | [VS-150](VS-150-drug-free-workplace-and-substance-abuse-program/README.md) | Drug-Free Workplace & Substance Abuse Program | 24 |
 | [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | 24 |
+| [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | 24 |
 
 ### Asset & Infrastructure (272 workflows)
 | VS | Value Stream | Workflows |
@@ -174,7 +175,7 @@
 | [VS-138](VS-138-integrated-facilities-management-workplace-services-and-building-automation/README.md) | Integrated Facilities Management, Workplace Services & Building Automation | 24 |
 | [VS-163](VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md) | Electric Vehicle (EV) Charging Station Host Network Operations | 24 |
 
-### Governance & Assurance (864 workflows)
+### Governance & Assurance (912 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 48 |
@@ -210,6 +211,8 @@
 | [VS-152](VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md) | Corporate Social Responsibility, Foundation & Community Investment | 24 |
 | [VS-159](VS-159-corporate-security-executive-protection-and-travel-risk-management/README.md) | Corporate Security, Executive Protection & Travel Risk Management | 24 |
 | [VS-161](VS-161-third-party-and-supplier-risk-management-tprm/README.md) | Third-Party & Supplier Risk Management (TPRM) | 24 |
+| [VS-165](VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/README.md) | PCAB Contractor Licensing & RA 4566 Construction Contractor Compliance | 24 |
+| [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | 24 |
 
 ### Technology & Data (350 workflows)
 | VS | Value Stream | Workflows |
@@ -227,9 +230,9 @@
 | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | 24 |
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 
-*Family subtotal reconciliation: 428 + 427 + 1,314 + 651 + 362 + 272 + 864 + 350 = 4,668*
+*Family subtotal reconciliation: 428 + 427 + 1,314 + 651 + 386 + 272 + 912 + 350 = 4,740*
 
-> **Note (2026-06-19):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across nineteen gap-analysis passes (2026-06-14 through 2026-06-19, VS-89–VS-164; W2993–W4816). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
+> **Note (2026-06-19):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across twenty gap-analysis passes (2026-06-14 through 2026-06-19, VS-89–VS-167; W2993–W4888). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 
 *Back to [Model Company](../) · [Repository README](../../README.md)*
 

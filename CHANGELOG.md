@@ -4,6 +4,47 @@
 
 ---
 
+## 2026-06-19 — Workflow gap analysis (Pass 20): add VS-165–VS-167 (72 workflows W4817–W4888)
+
+A twentieth gap-analysis pass, re-running the established methodology (defining terms appearing in
+**zero** PA files as dedicated workflow headers, no dedicated owner, conflated with adjacent covered
+coverage or reduced to a single-domain slice), surfaced three further genuinely-unowned operational
+disciplines relevant to BuildRight's operations after nineteen prior passes had been judged complete.
+One is a genuinely-uncovered statutory licensing regime and two are scattered-slice consolidations
+following the proven VS-161 TPRM pattern:
+
+- **[VS-165 — PCAB Contractor Licensing & RA 4566 Construction Contractor Compliance](01-model-company/workflows/VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/README.md)** (Governance & Assurance, W4817–W4840, 24 workflows) — BuildRight as a *licensed construction contractor* under RA 4566 (Contractors' License Law): obtaining/maintaining/renewing its own PCAB license for the installation (VS-12), design-build (VS-66), government delivery-and-install bids (VS-46/VS-11.2), bulky install (VS-143), and own-construction (VS-20) work where it is the contractor of record — a go-to-market precondition with criminal liability (Sec. 6/8) for unlicensed contracting. 'PCAB license' / 'RA 4566' / 'PCAB project registration' appeared in zero PA files for BuildRight's *own* license; every existing PCAB reference verifies *someone else's* license (customer trade-pro W590 in VS-09.1/VS-43.1; vendor/contractor eligibility W162 in VS-11.2/VS-46.1; employee PCAB tracking VS-19.4). Covers licensing strategy/entity-eligibility, application & registration, category/upgrade, annual renewal & calendar, CIAP board engagement, multi-entity coverage, **project registration per contract**, performance/surety bonding linkage (VS-116), construction safety & health (DOLE D.O. 13), bid-support license proof, subcontractor license cascading, warranty/acceptance/retention, **mechanic's-lien rights & lien waivers**, inspection response, license-condition monitoring, PRC engineer-of-record credentialing, **unlicensed-contracting risk control**, JV/consortium & foreign-contractor licensing, penalty/reinstatement, and analytics.
+- **[VS-166 — Regulatory License, Permit & Accreditation Portfolio Management](01-model-company/workflows/VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md)** (Governance & Assurance, W4841–W4864, 24 workflows) — the unified cross-domain discipline owning a single register of **every statutory license/permit/certification/accreditation** held by the 5 entities across ~205 sites (LGU business/mayor's permit, barangay clearance, BFP FSIC, DENR ECC/hazwaste-generator, BIR + CAS permit + ATP, DTI-BPS, PCAB, PhilGEPS, FDA-adjacent/FPA/BPI, PEZA/BOI, SSS/PhilHealth/Pag-IBIG, DOLE OSH, LTO/LTFRB, BSP agency, NPC) numbering in the thousands — with the renewal calendar, expiry-risk engine, evidence repository, regulator-change monitor, multi-site renewal campaigns, inspection-response hub, third-party permit-service (fixer/consultant) management, lapsed-permit remediation, and executive compliance dashboard. 'license portfolio' / 'permit portfolio' / 'regulatory inventory' / 'centralized compliance calendar' appeared in zero PA files; each compliance domain owned its execution slice (VS-22/76/79/114/117/138/165/46/06) but none owned the unified register (the VS-161 TPRM consolidation pattern).
+- **[VS-167 — Workforce Background Screening, Credentialing & Personnel Vetting](01-model-company/workflows/VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md)** (People, W4865–W4888, 24 workflows) — the unified cross-category screening discipline covering employees (~6,715 + ~1,200–1,600 hires/yr), contingent/outsourced labor (~10–20%), vendor/3PL site-access personnel (drivers/delivery/service), and executives — through a centralized screening program, role-based packages, screening-vendor governance, consent/RA 10173 compliance, adverse-action/fair-chance due process, and ongoing re-screening, to control negligent-hiring and insider-risk exposure. 'background screening program' / 'pre-employment screening' / 'credentialing' / 'workforce vetting' appeared in zero PA files for a cross-category program; the only existing screen was the single **contingent-worker** workflow W3223 in VS-98.2 (a slice), plus an onboarding step in VS-121 and license-only driver checks W1400 — unified here following the VS-161 pattern.
+
+**Counts:** 160 → **163 value streams** · 484 → **493 process areas** · 4,668 → **4,740 workflows**
+(W4817–W4888, 3 value streams × 3 process areas × 8 workflows). All 72 new workflows are
+**unclassified** and carry a keyword-driven proposed tier in the regenerated
+[`workflow-criticality-proposed.md`](01-model-company/workflows/workflow-criticality-proposed.md)
+(3,523 → 3,595 unclassified); the family impact is Governance & Assurance +48 (VS-165 + VS-166)
+and People +24 (VS-167).
+
+**Candidates considered but rejected as adequately covered / out of charter** (documented in
+[`workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md)): timber & forest-
+products legality / FSC-PEFC chain-of-custody (owned by VS-25.2 sustainable sourcing + VS-131 human-
+rights DD, explicitly cross-referenced); customer/vendor bankruptcy & insolvency claims (covered by
+VS-16 AR/collections W287/W16.3); trade promotion management / trade spend / vendor deductions
+(covered by VS-39/VS-14/VS-58); BIR e-invoicing / CAS permit-to-use / ATP (6 dedicated workflows in
+VS-79/VS-08.3); energy-supply procurement / RCOA / WESM (owned by VS-120.1); centralized SEC
+reportorial / corporate-secretary (covered by VS-36 + VS-100.3); in-store specialty services (key
+cutting/locksmith/engraving/LPG — covered by VS-09/VS-114); mechanic's-lien management (folded into
+VS-165 PA-165.2 W4831); conflict minerals / 3TG (covered by VS-131 + VS-25.2); guest WiFi /
+captive-portal (out of charter, VS-27/VS-14); and employee pension / gift-card escheat beyond gift
+cards / lone-worker safety (covered or too narrow).
+
+`07-methodology/validate-repo.sh` still reports **0 errors / 3 informational warnings** after the
+additions (Check 9 grand total 4,740 = actual PA header count 4,740; Check 1 all 3,595 proposed IDs
+resolve to headers). All cross-document totals (README, executive-summary, value-stream-index,
+workflows/README, criticality classification, dependency map, touchpoint map,
+requirement-workflow-matrix) were reconciled to the new counts.
+
+---
+
 ## 2026-06-19 — Workflow gap analysis (Pass 19): add VS-162–VS-164 (72 workflows W4745–W4816)
 
 A nineteenth gap-analysis pass, re-running the established methodology (defining terms appearing in

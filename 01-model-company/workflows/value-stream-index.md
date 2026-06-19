@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 160 active value streams were produced in four blocks. Use this to gauge content maturity
+The 163 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 22 pending rework (VS-69/70/71/73 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-161 | 73 | Fully detailed (eighteen gap-analysis passes, 2026-06-14/15/16/17/18) |
+| Gap analysis | VS-89 – VS-167 | 79 | Fully detailed (twenty gap-analysis passes, 2026-06-14/15/16/17/18/19) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 160 Value Streams · 484 Process Areas · 4,668 Workflows
+8 Families · 163 Value Streams · 493 Process Areas · 4,740 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -140,7 +140,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-144](VS-144-employee-accommodation-dormitory-and-staff-housing/README.md) | Employee Accommodation, Dormitory & Staff Housing Operations | Gap analysis | 3 | 24 |
 |  | [VS-150](VS-150-drug-free-workplace-and-substance-abuse-program/README.md) | Drug-Free Workplace & Substance Abuse Program | Gap analysis | 3 | 24 |
 |  | [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **41** | **362** |
+|  | [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **44** | **386** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -186,7 +187,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-152](VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md) | Corporate Social Responsibility, Foundation & Community Investment | Gap analysis | 3 | 24 |
 |  | [VS-159](VS-159-corporate-security-executive-protection-and-travel-risk-management/README.md) | Corporate Security, Executive Protection & Travel Risk Management | Gap analysis | 3 | 24 |
 |  | [VS-161](VS-161-third-party-and-supplier-risk-management-tprm/README.md) | Third-Party & Supplier Risk Management (TPRM) | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **99** | **864** |
+|  | [VS-165](VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/README.md) | PCAB Contractor Licensing & RA 4566 Construction Contractor Compliance | Gap analysis | 3 | 24 |
+|  | [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **105** | **912** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -200,7 +203,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **484** | **4,668** |
+| | | | **Grand Total** | **493** | **4,740** |
 
 ---
 
@@ -844,6 +847,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-160.2** [Immigration, Visa & Foreign-Worker Compliance Operations](./VS-160-global-mobility-immigration-and-foreign-worker-compliance/PA-160.2-immigration-visa-and-foreign-worker-compliance-operations.md) — 8 workflows
 - **PA-160.3** [Assignment Administration, Tax/Payroll, Repatriation & Analytics](./VS-160-global-mobility-immigration-and-foreign-worker-compliance/PA-160.3-assignment-administration-tax-payroll-repatriation-and-analytics.md) — 8 workflows
 
+**[VS-167: Workforce Background Screening, Credentialing & Personnel Vetting](./VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md)** (24 workflows)
+
+- **PA-167.1** [Screening Program Strategy, Policy & Governance](./VS-167-workforce-background-screening-credentialing-and-personnel-vetting/PA-167.1-screening-program-strategy-policy-and-governance.md) — 8 workflows
+- **PA-167.2** [Vetting Operations Across Workforce Categories](./VS-167-workforce-background-screening-credentialing-and-personnel-vetting/PA-167.2-vetting-operations-across-workforce-categories.md) — 8 workflows
+- **PA-167.3** [Screening Analytics, Risk & Program Assurance](./VS-167-workforce-background-screening-credentialing-and-personnel-vetting/PA-167.3-screening-analytics-risk-and-program-assurance.md) — 8 workflows
+
 ### Asset & Infrastructure
 
 **[VS-20: Real Estate & Construction](./VS-20-real-estate-construction/README.md)** (32 workflows)
@@ -1112,6 +1121,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-161.2** [Due Diligence, Continuous Monitoring & Evidence Lifecycle](./VS-161-third-party-and-supplier-risk-management-tprm/PA-161.2-due-diligence-continuous-monitoring-and-evidence-lifecycle.md) — 8 workflows
 - **PA-161.3** [Concentration, Resilience, Exit & TPRM Governance/Analytics](./VS-161-third-party-and-supplier-risk-management-tprm/PA-161.3-concentration-resilience-exit-and-tprm-governance-analytics.md) — 8 workflows
 
+**[VS-165: PCAB Contractor Licensing & RA 4566 Construction Contractor Compliance](./VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/README.md)** (24 workflows)
+
+- **PA-165.1** [PCAB Licensing Strategy, Entity Registration & Lifecycle](./VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/PA-165.1-pcab-licensing-strategy-entity-registration-and-lifecycle.md) — 8 workflows
+- **PA-165.2** [Project Registration, Bonding & Statutory Contractor Compliance](./VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/PA-165.2-project-registration-bonding-and-statutory-contractor-compliance.md) — 8 workflows
+- **PA-165.3** [Contractor Compliance, Inspection Response & Analytics](./VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/PA-165.3-contractor-compliance-inspection-response-and-analytics.md) — 8 workflows
+
+**[VS-166: Regulatory License, Permit & Accreditation Portfolio Management](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md)** (24 workflows)
+
+- **PA-166.1** [Portfolio Strategy, Inventory, Governance & Regulatory Intelligence](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/PA-166.1-portfolio-strategy-inventory-governance-and-regulatory-intelligence.md) — 8 workflows
+- **PA-166.2** [Renewal Execution, Inspection Coordination & Multi-Site Campaigns](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/PA-166.2-renewal-execution-inspection-coordination-and-multi-site-campaigns.md) — 8 workflows
+- **PA-166.3** [Compliance Reporting, Analytics, Cost & Program Assurance](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/PA-166.3-compliance-reporting-analytics-cost-and-program-assurance.md) — 8 workflows
+
 ### Technology & Data
 
 **[VS-27: IT Operations & Security](./VS-27-it-operations-security/README.md)** (62 workflows)
@@ -1208,10 +1229,10 @@ Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136, VS-143)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125, VS-142)
-Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141, VS-144)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141, VS-144, VS-150, VS-160, VS-167)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138, VS-163)
-Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133, VS-146)
+Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133, VS-146, VS-147, VS-152, VS-159, VS-161, VS-165, VS-166)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
-*Total: 4,668 workflows across 160 value streams · Date: 2026-06-19*
+*Total: 4,740 workflows across 163 value streams · Date: 2026-06-19*
