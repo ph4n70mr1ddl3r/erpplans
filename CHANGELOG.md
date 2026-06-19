@@ -4,6 +4,46 @@
 
 ---
 
+## 2026-06-19 — Workflow gap analysis (Pass 21): add VS-168–VS-169 (48 workflows W4889–W4936)
+
+A twenty-first gap-analysis pass, re-running the established methodology (defining terms appearing in
+**zero** PA files as dedicated workflow headers, no dedicated owner, conflated with adjacent covered
+coverage), surfaced two further genuinely-unowned operational disciplines relevant to BuildRight's
+operations after twenty prior passes had been judged complete. Both are operational disciplines the
+surrounding coverage made appear owned:
+
+- **[VS-168 — In-Store Audio, Ambient Media & Music Royalty Licensing](01-model-company/workflows/VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/README.md)** (Sell & Serve, W4889–W4912, 24 workflows) — the always-on in-store ambient channel across ~205 sites (200 stores + 4 DCs + HQ): the licensed background-music program (FILSCAP / OPM and international-society royalty licensing under RA 8293, the Intellectual Property Code), the public-address (PA) paging & live-announcement protocol, the BuildRight-owned in-store digital-signage content (distinct from VS-48 vendor-paid retail-media ads), the ambient-scent/sensory program, and the AV-equipment lifecycle + analytics linking ambient media to footfall/dwell/basket and the "Your Home Building Partner" CX. 'music licensing', 'FILSCAP', 'background music', 'in-store audio', and 'ambient media' each appeared in zero PA files as dedicated workflow headers — only one incidental 'FILSCAP' system-list mention in VS-07.1 and a PA-announcement *step* embedded inside store daily management. Distinct from VS-14 (brand/campaign/PR), VS-07 (one PA step), VS-48 (vendor-paid retail media), VS-138 (building maintenance), and VS-27 (network). Covers strategy/brand-sound, music programming, **royalty licensing & statutory reporting (RA 8293/FILSCAP)**, commercial-music-service vendor selection, signage content strategy, ambient scent, budget/co-fund, multi-entity governance, **PA daily ops & announcement protocol**, background-music daily ops, signage publishing, **AV equipment PM**, seasonal/event deployment, **emergency override (links VS-24/VS-147)**, localization, content refresh/asset library, performance analytics, equipment lifecycle/refresh capex, technology/integration architecture, **royalty compliance audit & true-up**, accessibility & regulatory (RA 7394/RA 10173), vendor SLA/TPRM, innovation (AI music/programmatic signage), and program assurance.
+- **[VS-169 — Employee Uniform, Workwear & PPE-Issuance Program](01-model-company/workflows/VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md)** (People, W4913–W4936, 24 workflows) — the unified branded-apparel and personal-protective-equipment program across ~6,715 employees plus ~10–20% contingent/outsourced labor and vendor/3PL site-access personnel: role-based uniform/workwear standards, branded-apparel design & procurement, the PPE issuance/fit-testing/training program, industrial laundering (in-house vs vendor), sizing/fit, damage/loss/replacement, promotion/transfer re-issuance, separation/end-of-employment return & recovery, multi-entity consistency, and the cost/compliance/sustainability analytics. 'uniform program', 'workwear program', 'PPE issuance program', 'uniform allowance', and 'industrial laundering' each appeared in zero PA files as dedicated workflow headers ('uniform' referenced incidentally across ~29 PA files with no owner). Distinct from VS-19 (one onboarding-kit step), VS-24 (the PPE *requirement* — this owns the issuance/fit/launder/replacement program that fulfills it), VS-102 (an allowance), VS-98 (the contingent worker), VS-34/VS-03 (transactional procurement). Covers strategy/operating model, role-based standards & brand design, **PPE standards & hazard-based issuance matrix (DOLE-OSH)**, allowance/replenishment policy, vendor selection/contracting, sizing/fit, branded-apparel design/procurement/quality, multi-entity governance, **new-hire issuance & onboarding kit**, **role-based PPE issuance/fit-testing/training**, **contingent/vendor-personnel provision**, **industrial laundering**, PPE inspection/maintenance/replacement/end-of-life, damage/loss/replacement, role-change re-issuance, **separation return & recovery**, cost/TCO analytics, **PPE compliance & DOLE audit**, vendor SLA & TPRM, inventory/distribution, employee satisfaction/fit, sustainability (textile recycling/eco-uniform), data privacy (RA 10173 sizing/health data), and program assurance.
+
+**Counts:** 163 → **165 value streams** · 493 → **499 process areas** · 4,740 → **4,788 workflows**
+(W4889–W4936, 2 value streams × 3 process areas × 8 workflows). All 48 new workflows are
+**unclassified** and carry a keyword-driven proposed tier in the regenerated
+[`workflow-criticality-proposed.md`](01-model-company/workflows/workflow-criticality-proposed.md)
+(3,595 → 3,643 unclassified); the family impact is Sell & Serve +24 (VS-168) and People +24 (VS-169).
+
+**Candidates considered but rejected as adequately covered / out of charter** (documented in
+[`workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md)): in-store
+specialty services (key cutting/glass cutting/pipe threading/tool sharpening/cylinder exchange —
+covered by VS-09/VS-114); customer building-permit facilitation (W1056/W1070); loading assistance /
+will-call / bulk pickup (W950/W773/W1193); gift registry / wish list (W1039/W934); color matching /
+paint formula (W981/W898/W1485); rain check / price match / layaway (W772/W61/W75); loyalty /
+referral / alumni / recognition / suggestion-program (VS-13/W715/W3780/W630/W2891); in-store café /
+vending / concession partner (W177); mailroom/courier & reprographics (W4183/VS-30.3); signage asset
+& building-envelope (covered across VS-14/VS-55/VS-138/VS-151); scrap/salvage & circular economy
+(VS-73); customer-facing calibration service (W1082/VS-115); freight forwarding / intercompany /
+transfer-pricing (W3503/W727/VS-72); ATM host / lotto / pawnshop / gold-buying / self-storage /
+pharmacy (out of BuildRight's home-improvement retail charter); and music/audio itself — *not*
+rejected but **filled here** as VS-168 after confirming its defining terms appeared in zero PA files.
+
+`07-methodology/validate-repo.sh` still reports **0 errors / 3 informational warnings** after the
+additions (Check 9 grand total 4,788 = actual PA header count 4,788; Check 1 all 3,643 proposed IDs
+resolve to headers and do not duplicate the confirmed register; no dangling references). All
+cross-document totals (README, executive-summary, value-stream-index, workflows/README, criticality
+classification, dependency map, touchpoint map, requirement-workflow-matrix, format guide) were
+reconciled to the new counts.
+
+---
+
 ## 2026-06-19 — Workflow gap analysis (Pass 20): add VS-165–VS-167 (72 workflows W4817–W4888)
 
 A twentieth gap-analysis pass, re-running the established methodology (defining terms appearing in

@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 163 active value streams were produced in four blocks. Use this to gauge content maturity
+The 165 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 22 pending rework (VS-69/70/71/73 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-167 | 79 | Fully detailed (twenty gap-analysis passes, 2026-06-14/15/16/17/18/19) |
+| Gap analysis | VS-89 – VS-169 | 81 | Fully detailed (twenty-one gap-analysis passes, 2026-06-14/15/16/17/18/19) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 163 Value Streams · 493 Process Areas · 4,740 Workflows
+8 Families · 165 Value Streams · 499 Process Areas · 4,788 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams), and a twenty-first pass on 2026-06-19 (163 → 165 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -101,7 +101,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-156](VS-156-in-store-value-added-services-and-financial-agency-operations/README.md) | In-Store Value-Added Services & Financial Agency Operations | Gap analysis | 3 | 24 |
 |  | [VS-162](VS-162-customer-pickup-truck-and-cargo-van-rental/README.md) | Customer Pickup Truck & Cargo Van Rental (Self-Haul) Operations | Gap analysis | 3 | 24 |
 |  | [VS-164](VS-164-smart-locker-and-automated-parcel-collection-network/README.md) | Smart Locker & Automated Parcel Collection Network | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **112** | **1314** |
+|  | [VS-168](VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/README.md) | In-Store Audio, Ambient Media & Music Royalty Licensing | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **113** | **1338** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -141,7 +142,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-150](VS-150-drug-free-workplace-and-substance-abuse-program/README.md) | Drug-Free Workplace & Substance Abuse Program | Gap analysis | 3 | 24 |
 |  | [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | Gap analysis | 3 | 24 |
 |  | [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **44** | **386** |
+|  | [VS-169](VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md) | Employee Uniform, Workwear & PPE-Issuance Program | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **45** | **410** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -203,7 +205,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **493** | **4,740** |
+| | | | **Grand Total** | **499** | **4,788** |
 
 ---
 
@@ -619,6 +621,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-164.2** [Collection Operations, Replenishment & Access Management](./VS-164-smart-locker-and-automated-parcel-collection-network/PA-164.2-collection-operations-replenishment-and-access-management.md) — 8 workflows
 - **PA-164.3** [Maintenance, Integration, Compliance & Network Analytics](./VS-164-smart-locker-and-automated-parcel-collection-network/PA-164.3-maintenance-integration-compliance-and-network-analytics.md) — 8 workflows
 
+**[VS-168: In-Store Audio, Ambient Media & Music Royalty Licensing](./VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/README.md)** (24 workflows)
+
+- **PA-168.1** [In-Store Audio, Ambient Media Strategy & Music Royalty Compliance](./VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/PA-168.1-in-store-audio-ambient-media-strategy-and-music-royalty-compliance.md) — 8 workflows
+- **PA-168.2** [In-Store Audio, PA & Media Daily Operations](./VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/PA-168.2-in-store-audio-pa-and-media-daily-operations.md) — 8 workflows
+- **PA-168.3** [Ambient Media Analytics, Technology & Program Assurance](./VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/PA-168.3-ambient-media-analytics-technology-and-program-assurance.md) — 8 workflows
+
 ### Finance
 
 **[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (42 workflows)
@@ -852,6 +860,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-167.1** [Screening Program Strategy, Policy & Governance](./VS-167-workforce-background-screening-credentialing-and-personnel-vetting/PA-167.1-screening-program-strategy-policy-and-governance.md) — 8 workflows
 - **PA-167.2** [Vetting Operations Across Workforce Categories](./VS-167-workforce-background-screening-credentialing-and-personnel-vetting/PA-167.2-vetting-operations-across-workforce-categories.md) — 8 workflows
 - **PA-167.3** [Screening Analytics, Risk & Program Assurance](./VS-167-workforce-background-screening-credentialing-and-personnel-vetting/PA-167.3-screening-analytics-risk-and-program-assurance.md) — 8 workflows
+
+**[VS-169: Employee Uniform, Workwear & PPE-Issuance Program](./VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md)** (24 workflows)
+
+- **PA-169.1** [Uniform & Workwear Program Strategy, Policy & Sourcing](./VS-169-employee-uniform-workwear-and-ppe-issuance-program/PA-169.1-uniform-workwear-program-strategy-policy-and-sourcing.md) — 8 workflows
+- **PA-169.2** [Uniform, Workwear & PPE Issuance, Laundering & Lifecycle Operations](./VS-169-employee-uniform-workwear-and-ppe-issuance-program/PA-169.2-uniform-workwear-ppe-issuance-laundering-and-lifecycle-operations.md) — 8 workflows
+- **PA-169.3** [Uniform/PPE Program Analytics, Compliance & Assurance](./VS-169-employee-uniform-workwear-and-ppe-issuance-program/PA-169.3-uniform-ppe-program-analytics-compliance-and-assurance.md) — 8 workflows
 
 ### Asset & Infrastructure
 
@@ -1225,14 +1239,14 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Decision Tree: Where Does a New Workflow Go?
 
 ```
-Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140, VS-145, VS-149, VS-156, VS-162, VS-164)
+Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140, VS-145, VS-149, VS-156, VS-162, VS-164, VS-168)
 Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136, VS-143)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125, VS-142)
-Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141, VS-144, VS-150, VS-160, VS-167)
+Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141, VS-144, VS-150, VS-160, VS-167, VS-169)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138, VS-163)
 Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133, VS-146, VS-147, VS-152, VS-159, VS-161, VS-165, VS-166)
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
-*Total: 4,740 workflows across 163 value streams · Date: 2026-06-19*
+*Total: 4,788 workflows across 165 value streams · Date: 2026-06-19*
