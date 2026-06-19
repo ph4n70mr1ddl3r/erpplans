@@ -4,6 +4,68 @@
 
 ---
 
+## 2026-06-19 — Whole-repo consistency review: broken anchors, scope ambiguities, vendor/TIN reconciliation & en-dash normalization
+
+A full-repository read-through surfaced and resolved six classes of inconsistency. The
+validator (`07-methodology/validate-repo.sh`) continues to report **0 errors / 3 informational
+warnings** (unchanged — the warnings track known in-progress content gaps: boilerplate
+analysis fields, Automation/Controls field adoption, and unclassified workflows).
+
+**1. Broken cross-document anchor links (factual defects).** Two documents linked to a
+profile heading using the wrong slug: `model-company-profile.md#143-integration-touchpoints`.
+The actual heading is `### 14.3 Active Integration Touchpoints`, whose anchor is
+`#143-active-integration-touchpoints`. Fixed in:
+
+- `07-methodology/technical-guidelines.md` §3.1 (intro to the Integration Methods table)
+- `01-model-company/erp-requirements.md` NFR-012 (Integration Capability)
+
+**2. Goods Receipts scope ambiguity (`model-company-profile.md` §15.1).** The
+`Goods Receipts (Inbound) ~6,000 / ~72,000` row was DC-only, but §7.1 also documents
+~500–600 DSD receipts/month and `data-volumes-and-integrations.md` §1.1 reports the two
+streams separately. This was the same merchandise-vs-total scope ambiguity previously
+resolved for AP invoices. Added a **Goods Receipts scope** note (mirroring the existing
+AP scope note) clarifying that total inbound incl. DSD is ~6,500–6,600/month
+(~79,000–79,200/year). (Profile v2.18 → v2.19.)
+
+**3. Vendor master inconsistencies (`data-migration-mapping.md` §2.2).** Two reconciliations:
+
+- **Target record count** `~1,000 active vendors` → `~800–1,000 active vendors (per
+  model-company-profile.md §6.5)` — the migration template previously stated only the upper
+  bound of the canonical range.
+- **Vendor TIN cleansing rule** `Validate format (XXX-XXX-XXX-XXX)` → `Validate format
+  (XXX-XXX-XXX or XXX-XXX-XXX-XXX)` — accepts both Philippine TIN formats per COM-011 and
+  the §3 Data Cleansing Rules table, which already listed both.
+
+(v2.2 → v2.3.)
+
+**4. TOC round-range label (`erp-requirements.md`).** The TOC row `R19–R24 | Operational
+Gap Closure (Rounds 11–21)` was misleading: R19–R24 actually covers Rounds 11, 13, 14, 16,
+17, 19, and R32 separately covers Round 21. Reworded to `Rounds 11–19` so it no longer
+contradicts the R32 row (`Round 21`). (No requirement count or ID changed — 733 across 38
+categories, all priorities unchanged.)
+
+**5. Repository Layout completeness (`WORKFLOW-FORMAT-GUIDE.md`).** The `workflows/` layout
+diagram listed 7 support files but omitted `README.md` (the navigation hub & quick-stats
+entry point documented elsewhere as the start-here file). Added `README.md` as the first
+entry so the diagram lists all 8 support files actually present.
+
+**6. En-dash normalization for numeric ranges (repo-wide typography).** Approximate numeric
+ranges written with a hyphen (`~800-1,000`, `~30-60`, `~5,000-8,000`) were normalized to the
+en-dash form (`~800–1,000`, `~30–60`, `~5,000–8,000`) used by the dominant convention across
+the workflow PA files and support docs. 584 substitutions across 63 files; the pattern is
+narrow (`~<digits/commas>-<digits/commas>` only) so it does not touch requirement IDs
+(`POS-013`), value-stream IDs (`VS-07`), day-offsets (`T-7`/`T-14`), compound modifiers
+(`30-day`, `5-year`), or unsuffixed numeric ranges. Non-tilde ranges (e.g. `80-95%`, `20-30
+SKUs`) are deliberately left for a future pass — they require a richer pattern to avoid
+colliding with ID/version tokens.
+
+**Version stamps bumped** on the four substantively-edited files (`model-company-profile.md`,
+`data-migration-mapping.md`, `technical-guidelines.md`, `WORKFLOW-FORMAT-GUIDE.md`);
+`erp-requirements.md` uses per-section stamps and its changes are cross-reference hygiene
+only.
+
+---
+
 ## 2026-06-19 — BIR record retention canonicalized to 10 years (TRAIN/NIRC) across all documents
 
 Resolves the retention-period inconsistency flagged in the prior pass (7 years in the
@@ -208,7 +270,7 @@ aligning with the canonical daily volume and with the correct phrasing already u
 - **`VS-27/PA-27.2` (Infrastructure & Platform)** — two spots in the data-warehouse ETL
 monitoring workflow: the Volume field `~2.8M POS events/day` → `~93,000 POS
 transactions/day (~2.8M/month)`, and the Storage-growth pain point `at ~2.8M POS
-transactions/day, data warehouse storage grows ~100-200 GB/month` → `at ~2.8M POS
+transactions/day, data warehouse storage grows ~100–200 GB/month` → `at ~2.8M POS
 transactions/month (~93,000/day)`. (The sibling figures on the same row — ~1,400 ecommerce
 orders/day, ~18,000 PO lines/month, ~9,500 AP invoices/month — were already correct.)
 - **`VS-08/PA-08.2` (Payment & Cash Management)** — W537 (POS Card Terminal & Acquirer

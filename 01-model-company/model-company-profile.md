@@ -665,6 +665,12 @@ The following external systems are actively integrated with the core ERP system.
 > (2-way match per W7C), is ~8,500–9,500/month (~300/day, ~9,000/month peak-normalized) —
 > see §10.2 and [`data-volumes-and-integrations.md`](data-volumes-and-integrations.md) §1.1, which
 > report AP on the total-invoice basis.
+>
+> **Goods Receipts scope:** the ~6,000 monthly / ~72,000 annual figure above is DC receiving
+> only (~200/day across 4 DCs). DSD store receiving adds ~500–600 receipts/month (~20/day;
+> cement, lumber, sand, gravel per §7.1), bringing total inbound goods receipts to
+> ~6,500–6,600/month (~79,000–79,200/year). [`data-volumes-and-integrations.md`](data-volumes-and-integrations.md) §1.1
+> reports the two streams separately (DC vs. DSD).
 
 ### 15.2 Master Data
 
@@ -767,4 +773,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.18 | Date: 2026-06-19 | §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.19 | Date: 2026-06-19 | §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*

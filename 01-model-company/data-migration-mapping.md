@@ -45,7 +45,7 @@
 |---|---|---|---|
 | Vendor Code | Accounting vendor list | Assign new ERP codes or retain existing; maintain cross-reference | Uniqueness |
 | Vendor Name | Accounting + PO data | Standardize: trim whitespace, proper case; deduplicate | Non-blank; no duplicates |
-| TIN (Tax Identification Number) | Accounting vendor list | Validate format (XXX-XXX-XXX-XXX); flag missing TIN | Valid TIN format; non-blank |
+| TIN (Tax Identification Number) | Accounting vendor list | Validate format (XXX-XXX-XXX or XXX-XXX-XXX-XXX); flag missing TIN | Valid TIN format; non-blank |
 | Business Address | Accounting vendor list | Standardize address format; validate city/province | Non-blank |
 | Payment Terms | PO data / contracts | Map to standard terms (Net 30, Net 60, LC, TT); default Net 30 | Valid term code |
 | Currency | PO data | PHP for local; USD for import vendors | Valid currency code |
@@ -55,7 +55,7 @@
 | Vendor Category | Manual mapping | Link to merchandise category for reporting | Valid category |
 | Status (Active/Inactive) | Accounting + PO data | Vendors with POs in last 12 months = Active; flag others for review | Boolean |
 
-**Target record count**: ~1,000 active vendors
+**Target record count**: ~800–1,000 active vendors (per `model-company-profile.md` §6.5)
 
 ### 2.3 Customer Master — Loyalty Members (from ecommerce platform)
 
@@ -171,4 +171,4 @@
 
 ---
 
-*Date: 2026-06-09 (v2.2 — counts reconciled with README.md; canonical glossary reference added)*
+*Date: 2026-06-19 (v2.3 — §2.2 vendor-master target count reconciled to `model-company-profile.md` §6.5 range `~800–1,000 active vendors` (was `~1,000`); vendor TIN cleansing rule updated to accept both Philippine TIN formats (`XXX-XXX-XXX or XXX-XXX-XXX-XXX`) per COM-011 / §3, was 12-digit only. Prior v2.2: counts reconciled with README.md; canonical glossary reference added)*

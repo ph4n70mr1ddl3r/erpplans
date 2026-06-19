@@ -117,7 +117,7 @@ ERP's data sync requirements.
 
 ### 3.1 Integration Methods by Touchpoint
 
-The model company's [integration touchpoints](../01-model-company/model-company-profile.md#143-integration-touchpoints)
+The model company's [integration touchpoints](../01-model-company/model-company-profile.md#143-active-integration-touchpoints)
 define what connects. The table below details how these systems are integrated.
 
 | Touchpoint | Suggested Method | Notes |
@@ -189,4 +189,4 @@ These are the active security controls implemented across the unified cloud ERP 
 
 ---
 
-*Document Version: 2.3 | Date: 2026-06-19 | §2.3 Data-retention row and §2.3 backup archive updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.2: Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); HQ concurrent-users figure reconciled with model-company-profile.md §3.3 (315 staff); counts reconciled with README.md*
+*Document Version: 2.4 | Date: 2026-06-19 | §3.1 fixed broken in-page anchor `#143-integration-touchpoints` → `#143-active-integration-touchpoints` to match the `### 14.3 Active Integration Touchpoints` heading in `model-company-profile.md` (same fix applied to NFR-012 in `erp-requirements.md`). Prior v2.3: §2.3 Data-retention row and §2.3 backup archive updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.2: Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); HQ concurrent-users figure reconciled with model-company-profile.md §3.3 (315 staff); counts reconciled with README.md*
