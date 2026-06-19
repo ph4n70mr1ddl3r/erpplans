@@ -4,6 +4,55 @@
 
 ---
 
+## 2026-06-19 — Volume-unit consistency review (monthly figures mislabeled as daily) & wording fixes
+
+A prose-level review of the overview and high-traffic workflow documents found a small
+family of **volume figures stated with the wrong time unit** — the canonical monthly POS
+total (~2.8M transactions/month, i.e. ~93,000/day per `data-volumes-and-integrations.md` §1.1)
+was written as a *daily* figure in four places, and one per-store card figure carried the
+same monthly-as-daily error. None were caught by `validate-repo.sh` (which checks counts,
+IDs, cross-references, and table structure — not the unit attached to a free-text figure).
+Two further wording fixes resolved an overclaim and an ambiguity. `validate-repo.sh` still
+reports **0 errors / 3 informational warnings** (unchanged). No workflow, requirement,
+control, value stream, or grand total changed.
+
+- **`01-model-company/erp-requirements.md`** — NFR-031 (Data Warehouse & ETL Daily
+Operations, W614): `~2.8M POS events/day` → `~93,000 POS transactions/day (~2.8M/month)`,
+aligning with the canonical daily volume and with the correct phrasing already used in
+`VS-08/PA-08.2` (W1425: “~2.8M POS transactions/month = ~93,000/day”) and `VS-08/PA-08.1`
+(W533: “~93,333 events/day”).
+- **`VS-27/PA-27.2` (Infrastructure & Platform)** — two spots in the data-warehouse ETL
+monitoring workflow: the Volume field `~2.8M POS events/day` → `~93,000 POS
+transactions/day (~2.8M/month)`, and the Storage-growth pain point `at ~2.8M POS
+transactions/day, data warehouse storage grows ~100-200 GB/month` → `at ~2.8M POS
+transactions/month (~93,000/day)`. (The sibling figures on the same row — ~1,400 ecommerce
+orders/day, ~18,000 PO lines/month, ~9,500 AP invoices/month — were already correct.)
+- **`VS-08/PA-08.2` (Payment & Cash Management)** — W537 (POS Card Terminal & Acquirer
+Settlement) Volume field: `~5,000 card transactions/day/store` → `~5,000 card
+transactions/store/month (~167/day/store)`. 5,000 is the correct *per-store monthly* figure
+(1.0M card txns ÷ 200 stores); the daily per-store figure is ~167 (5,000 ÷ 30).
+- **`01-model-company/workflows/workflow-dependency-map.md`** — intro overclaim fix: the
+old phrasing “3,451 remain unclassified, all carrying a keyword-driven proposed tier, **and
+default to Tier 2** pending review” read as if all 3,451 unclassified workflows are Tier 2,
+contradicting the actual proposed distribution (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3 in
+`workflow-criticality-proposed.md`). Reworded to state that each carries a keyword-driven
+proposed tier and that Tier 2 is the *conservative catch-all default* — accurately
+describing the classifier rule without implying all are Tier 2.
+- **`01-model-company/model-company-profile.md`** — §18 Glossary scope clarified: the old
+header claimed to be the single source of truth for “**all** terms used across the
+repository”, but the glossary holds ~25 business terms while many industry/IT acronyms
+(VAT, GL, KPI, SLA, etc.) are used inline without an entry. Reworded to scope the claim to
+model-company / Philippine-retail / ERP-domain terms (industry acronyms used inline).
+Document version bumped 2.15 → 2.16.
+
+*Spot-checked but left unchanged (verified correct, not drift):* the **4 acquiring banks**
+named in `VS-15/PA-15.2` (BDO, BPI, Metrobank, EastWest) and `FIN-075` are intentionally a
+*different* commercial relationship from the **4 operational banks** (BDO, BPI, Metrobank,
+Chinabank per `FIN-009`) — already documented in the 2026-06-19 bank-list entry above; and
+all other `/day` and `per day` figures spot-checked across the requirements and workflow
+files (e.g. ~50–200 SKUs/store/day, ~60–100 routes/day, 80–120 calls/day) are legitimately
+small daily values.
+
 ## 2026-06-19 — Operational bank-list reconciliation (3 → 4 banks) & minor figure drift
 
 The 2026-06-18 bank-list reconciliation that standardised the operational bank list to

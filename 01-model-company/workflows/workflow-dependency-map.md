@@ -3,7 +3,9 @@
 > Directed dependency graph of classified operational workflows, showing prerequisite
 > relationships for system functions. Of 4,596 total workflows, 1,145 are classified into
 > criticality tiers (the confirmed register holds 1,168 rows, incl. 23 `###` parent/summary
-> sub-workflows); 3,451 remain unclassified, all carrying a keyword-driven proposed tier, and default to Tier 2 pending review.
+> sub-workflows); 3,451 remain unclassified; each carries a keyword-driven proposed tier in
+> [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (Tier 2 is the conservative
+> catch-all default) pending review.
 > Use this map to understand data dependencies
 > between workflows during business-as-usual operations.
 >

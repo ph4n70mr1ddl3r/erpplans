@@ -717,7 +717,10 @@ The following external systems are actively integrated with the core ERP system.
 
 ## 18. Glossary
 
-> This glossary is the **single source of truth** for all terms used across the repository. Other documents reference this section rather than duplicating definitions.
+> This glossary is the **single source of truth** for the model-company, Philippine-retail,
+> and ERP-domain terms used across the repository; widely-understood industry acronyms (e.g.
+> API, KPI, SLA, SaaS) are used inline without a dedicated entry. Other documents reference
+> this section for business-term definitions rather than duplicating them.
 
 | Term | Definition |
 |---|---|
@@ -750,4 +753,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.15 | Date: 2026-06-18 | Glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.16 | Date: 2026-06-19 | Glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
