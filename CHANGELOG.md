@@ -4,6 +4,36 @@
 
 ---
 
+## 2026-06-20 — Workflow gap analysis (Pass 23): add VS-173 (24 workflows W5009–W5032)
+
+A twenty-third gap-analysis pass, re-running the established methodology (defining terms
+appearing in **zero** PA files as dedicated workflow headers, no dedicated owner, conflated with
+adjacent covered coverage or reduced to scattered single-workflow slices), surfaced one further
+genuinely-unowned corporate-finance discipline relevant to BuildRight's operations after twenty-two
+prior passes had been judged complete. Re-running the methodology across ~15 candidate domains
+(FX/interest-rate risk, identity & access management, software asset management, performance/
+affiliate marketing, workforce management, contact center, talent/succession, propane/LPG, import
+logistics, strategic sourcing, pension/retirement, carbon, and more) found each already owned by a
+dedicated value stream — confirming the model is near-saturated — leaving **Investor Relations** as
+the single clean scattered-slice gap (the VS-161 TPRM / VS-166 license-portfolio pattern):
+
+- **[VS-173 — Investor Relations, Capital Markets & Securities Disclosure](01-model-company/workflows/VS-173-investor-relations-capital-markets-and-securities-disclosure/README.md)** (Finance, W5009–W5032, 24 workflows) — the shareholder-, analyst- and market-facing communications & disclosure program that sustains BuildRight's equity story, valuation, cost of capital and securities-law compliance across the 5-entity holding group: IR strategy & equity-story/capital-markets narrative; investor/shareholder database, ownership intelligence & targeting; earnings/results/guidance communications; investor events, analyst days & roadshows; sell-side analyst & credit-rating-agency relationships; the IR website/portal; ESG-investor & sustainable-finance communications (VS-25); **corporate disclosure controls, materiality & selective/fair-disclosure (Reg-FD-equivalent) program**; **annual report, General Information Sheet & SEC-statutory investor disclosure**; material-event/ad-hoc disclosure & rumor response; **Annual Stockholders' Meeting (ASHM) investor notice, proxy statement & information circular**; capital-markets/securities-offering transaction disclosure; **insider list, trading-window & securities-trading compliance (RA 8799 Securities Regulation Code)**; related-party, beneficial-ownership & group-structure disclosure; **share register, stock ledger & cap-table administration**; stock transfer & investor-position reconciliation; **dividend & distribution program (declaration-to-payment, DRIP/election, unclaimed property)**; shareholder services & self-service portal; investor-perception/sentiment analytics; peer/valuation/capital-structure benchmarking; and crisis/activist/transaction IR response. The defining terms ('investor relations', 'SEC reporting', 'SEC filing', 'securities disclosure', 'equity story', 'capital markets narrative', 'sell-side analyst', 'credit rating agency', 'proxy statement', 'cap table') each appeared in **zero** PA files as dedicated workflow headers; the only adjacent coverage was the scattered single-workflow slices **W327** (dividend *payment* in VS-18.1 — the cash mechanic, not the dividend program), **W482** (ASHM *logistics* in VS-17.1, not investor/proxy content), **W4684** (AGM *security* in VS-159, not the investor-facing event), **W4524** (foundation *annual report* in VS-152, not the group), and **W3373** (policy/industry *analyst* relations in VS-104, not financial-analyst/investor relations). Distinct from VS-18 (treasury/dividend cash-mechanic W327), VS-17 (R2R/ASHM logistics W482), VS-104 (policy/regulator analyst relations W3373), VS-36 (board governance), VS-25/VS-152 (ESG/CSR reporting), VS-159 (AGM security W4684), VS-130 (M&A), VS-100 (legal — RA 8799), and VS-79 (BIR).
+
+**Counts:** 168 → **169 value streams** · 508 → **511 process areas** · 4,860 → **4,884 workflows**
+(W5009–W5032, 1 value stream × 3 process areas × 8 workflows). All 24 new workflows are
+**unclassified** and carry a keyword-driven proposed tier in the regenerated
+[`workflow-criticality-proposed.md`](01-model-company/workflows/workflow-criticality-proposed.md)
+(3,715 → 3,739 unclassified); the family impact is Finance +24 (VS-173).
+
+`07-methodology/validate-repo.sh` still reports **0 errors / 3 informational warnings** after the
+additions (Check 9 grand total 4,884 = actual PA header count 4,884; Check 1 all 3,739 proposed IDs
+resolve to headers and do not duplicate the confirmed register; no dangling references; Check 14
+no templated doubled-word pain-point labels). All cross-document counts reconciled (README,
+executive-summary, value-stream-index, workflows/README, criticality classification, dependency
+map, requirement-workflow-matrix, WORKFLOW-FORMAT-GUIDE, workflow-gap-analysis).
+
+---
+
 ## 2026-06-19 — Workflow gap analysis (Pass 22): add VS-170–VS-172 (72 workflows W4937–W5008)
 
 A twenty-second gap-analysis pass, re-running the established methodology (defining terms

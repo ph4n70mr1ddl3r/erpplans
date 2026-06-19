@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 168 active value streams were produced in four blocks. Use this to gauge content maturity
+The 169 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Templated; 22 pending rework (VS-69/70/71/73 detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-172 | 84 | Fully detailed (twenty-two gap-analysis passes, 2026-06-14/15/16/17/18/19) |
+| Gap analysis | VS-89 – VS-173 | 85 | Fully detailed (twenty-three gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 168 Value Streams · 508 Process Areas · 4,860 Workflows
+8 Families · 169 Value Streams · 511 Process Areas · 4,884 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams), and a twenty-first pass on 2026-06-19 (163 → 165 value streams), and a twenty-second pass on 2026-06-19 (165 → 168 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams), and a twenty-first pass on 2026-06-19 (163 → 165 value streams), and a twenty-second pass on 2026-06-19 (165 → 168 value streams), and a twenty-third pass on 2026-06-20 (168 → 169 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -130,7 +130,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-157](VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/README.md) | Revenue Recognition (PFRS 15) & Complex Contract Accounting | Gap analysis | 3 | 24 |
 |  | [VS-158](VS-158-product-costing-landed-cost-and-cost-accounting/README.md) | Product Costing, Landed-Cost & Cost Accounting | Gap analysis | 3 | 24 |
 |  | [VS-170](VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/README.md) | Inventory Pledge, Asset-Based Lending & Trust-Receipt (Warehouse-Receipt) Financing | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **75** | **675** |
+|  | [VS-173](VS-173-investor-relations-capital-markets-and-securities-disclosure/README.md) | Investor Relations, Capital Markets & Securities Disclosure | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **76** | **699** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 24 |
@@ -208,7 +209,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **508** | **4,860** |
+| | | | **Grand Total** | **511** | **4,884** |
 
 ---
 
@@ -794,6 +795,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-170.2** [Trust-Receipt, Warehouse-Receipt & Import Inventory Financing Operations](./VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/PA-170.2-trust-receipt-warehouse-receipt-and-import-inventory-financing-operations.md) — 8 workflows
 - **PA-170.3** [Collateral Release, Reconciliation, Compliance & Analytics](./VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/PA-170.3-collateral-release-reconciliation-compliance-and-analytics.md) — 8 workflows
 
+**[VS-173: Investor Relations, Capital Markets & Securities Disclosure](./VS-173-investor-relations-capital-markets-and-securities-disclosure/README.md)** (24 workflows)
+
+- **PA-173.1** [Investor Relations Program, Shareholder Communications & Capital-Markets Engagement](./VS-173-investor-relations-capital-markets-and-securities-disclosure/PA-173.1-investor-relations-program-shareholder-communications-and-capital-markets-engagement.md) — 8 workflows
+- **PA-173.2** [Corporate Disclosure, Securities & SEC/Regulatory Compliance](./VS-173-investor-relations-capital-markets-and-securities-disclosure/PA-173.2-corporate-disclosure-securities-and-regulatory-compliance.md) — 8 workflows
+- **PA-173.3** [Shareholder Services, Equity Records, Dividend & IR Analytics](./VS-173-investor-relations-capital-markets-and-securities-disclosure/PA-173.3-shareholder-services-equity-records-dividend-and-ir-analytics.md) — 8 workflows
+
 ### People
 
 **[VS-19: Hire-to-Retire](./VS-19-hire-to-retire/README.md)** (74 workflows)
@@ -1270,4 +1277,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
-*Total: 4,860 workflows across 168 value streams · Date: 2026-06-19*
+*Total: 4,884 workflows across 169 value streams · Date: 2026-06-20*
