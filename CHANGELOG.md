@@ -4,6 +4,38 @@
 
 ---
 
+## 2026-06-20 — Workflow gap analysis (Pass 25): add VS-177 (24 workflows W5105–W5128)
+
+A twenty-fifth gap-analysis pass, re-running the established methodology (defining terms
+appearing in **zero** PA files as dedicated workflow headers, no dedicated owner, conflated with
+adjacent covered coverage), surfaced one further genuinely-unowned operational discipline after
+twenty-four prior passes had been judged complete. Re-running the methodology across ~15 candidate
+domains (corporate mailroom/reception, customer restroom/comfort-room facility, HQ visitor
+hospitality, dock/yard/appointment management, in-store digital wayfinding/kiosk, customer
+layaway/raincheck, employee recognition/alumni, ARTA/Citizens-Charter, etc.) found all but one
+already owned by a dedicated value stream — confirming the model is near-saturated — leaving one
+clean, operationally-material gap that follows the combined **single-workflow-elevation +
+scattered-slice-consolidation** pattern (the Pass-1/5/7/8/10/11/22/23 elevation pattern and the
+VS-161/166/171 consolidation pattern):
+
+- **[VS-177 — Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network](01-model-company/workflows/VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md)** (Sell & Serve, W5105–W5128, 24 workflows) — the field-management discipline that oversees BuildRight's **200-store, six-region chain** between corporate strategy (VS-33) and single-store daily execution (VS-07): field-organization strategy & operating model; **regional/district territory design & store-group assignment**; field staffing/span-of-control & regional-manager workforce planning; field-leader onboarding/certification; **multi-store P&L governance, store grading & performance tiering**; new-store stabilization & maturity-ramp field support (links VS-37); **underperforming/distressed-store diagnosis & turnaround**; field comp/incentive; **regional/district store-visit cadence, routing & itinerary planning**; store-visit execution & **retail-standards audit/compliance scoring**; store-manager coaching/development; retail-execution field audit (planogram/price/signage — links VS-55/VS-118/VS-151); competitor/market field intelligence (links VS-57); field action-item tracking & CAP closure; field communication/regional meetings/best-practice sharing; the **store operations support center (store hotline)** for store→HQ issue intake/triage/resolution/escalation; **exception & override authorization handling** (SoD/abuse-prevention); store grievance/concern/feedback resolution (anti-retaliation); cross-functional store-issue coordination (Merch/IT/HR/Facilities/LP); store knowledge base & field self-service; **field & store-operations performance dashboard with comp-store analytics**; and field-retail-ops continuous improvement/benchmarking. The **Regional Manager** role already appears as the accountable/informed party across **~66 PA files** (VS-07 daily mgmt/delay-incident/delivery review, VS-37 opening, VS-109 remodel, VS-146 mystery-shopping remediation, VS-23 LP) yet the field-management discipline existed only as the scattered single workflows **W1030** (Multi-Store District Manager Weekly Review, VS-07.1), **W2369** (Regional Operations Follow-Up, VS-63.2), **W3836** (Sales Coaching/Field Enablement, VS-124), and **W1214** (Store Performance Scorecard Weekly Review & Regional Benchmarking); the defining terms ('field retail', 'field operations', 'retail execution', 'multi-store management', 'store operations support', 'store support center', 'store hotline', 'store escalation', 'district manager', 'field coach', 'store turnaround', 'new-store stabilization') each appeared in **zero** PA files as dedicated workflow headers. Distinct from VS-07 (single-store ops — this owns the *multi-store field layer above the store*), VS-33 (corporate strategy/portfolio KPIs — this *executes* strategy store-by-store), VS-63 (HQ→store broadcast/task direction — this also owns the reverse store→HQ *support/escalation* direction and the field-visit/coaching discipline), and VS-146 (independent assurance — this is the *first-line field-management* that acts on those findings).
+
+**Counts:** 172 → **173 value streams** · 520 → **523 process areas** · 4,956 → **4,980 workflows**
+(W5105–W5128, 1 value stream × 3 process areas × 8 workflows). All 24 new workflows are
+**unclassified** and carry a keyword-driven proposed tier in the regenerated
+[`workflow-criticality-proposed.md`](01-model-company/workflows/workflow-criticality-proposed.md)
+(3,811 → 3,835 unclassified); the family impact is Sell & Serve +24 (VS-177).
+
+`07-methodology/validate-repo.sh` still reports **0 errors / 3 informational warnings** after the
+additions (Check 9 grand total 4,980 = actual PA header count 4,980; Check 1 all 3,835 proposed IDs
+resolve to headers and do not duplicate the confirmed register; no dangling references; Check 13
+all summary-doc table rows match their header column count; Check 14 no templated doubled-word
+pain-point labels). All cross-document counts reconciled (README, executive-summary,
+value-stream-index, workflows/README, criticality classification, dependency map,
+requirement-workflow-matrix, WORKFLOW-FORMAT-GUIDE, workflow-gap-analysis).
+
+---
+
 ## 2026-06-20 — Workflow gap analysis (Pass 24): add VS-174–VS-176 (72 workflows W5033–W5104)
 
 A twenty-fourth gap-analysis pass, re-running the established methodology (defining terms
