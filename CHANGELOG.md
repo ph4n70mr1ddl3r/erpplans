@@ -3610,3 +3610,14 @@ basket benchmark, price-elasticity analysis, dynamic-pricing rules, and RA 10667
 **VS-58 (24 workflows, 3 PAs)** grounded in DTI promo-permit compliance (RA 7394), coupon-liability accounting (PFRS 15),
 vendor co-op funding, and coupon-fraud-prevention design (unique-code, stacking-cap, margin-floor). All 48 workflows'
 three analysis fields rewritten; Automation + Controls added. 10 Expansion VSs remaining.
+
+## 2026-06-20 — Expansion-block content rework (Pass 13 of 22): VS-53 Warranty & Guarantee Management
+
+Continuing the substantive content rework. **Cumulative (passes 1–13): boilerplate 528→216 workflows (59% resolved), 22→9 VSs;
+Automation/Controls 1,104→1,416 (28%).** validate-repo.sh: 0 errors / 3 warnings.
+
+**VS-53 (24 workflows, 3 PAs)** grounded in RA 7394 Consumer Act warranty provisions (disclosure, cooling-off, implied
+warranty), PFRS 15 extended-warranty revenue recognition (deferred revenue over coverage period), the vendor-claim
+escalation workflow (14-day SLA), CTL-37 warranty-claim-validity control, and the performance-guarantee vendor-recovery
+mechanism. All 24 workflows' three analysis fields rewritten; Automation + Controls added. Steps preserved (already detailed
+with 3–4 steps each). 9 Expansion VSs remaining.
