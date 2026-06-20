@@ -4,6 +4,35 @@
 
 ---
 
+## 2026-06-20 — Third hand-confirmation batch: 8 operational support VSs (192 workflows)
+
+Third review batch: **VS-40 Capex, VS-43 Trade Pro, VS-55 Planogram, VS-63 Store Comms,
+VS-64 Seasonal, VS-65 Marketplace, VS-83 Occupational Health, VS-84 Labor Relations**
+(192 workflows). Genuine review: **21 → Tier 1** (statutory DOLE/NLRC/PFRS mandates the
+keyword rules missed), **30 → Tier 3** (analytics/analytics the classifier defaulted to T2),
+**141 confirmed Tier 2**. `validate-repo.sh`: **0/2** (Check 1 unclassified 3,452 → **3,260**;
+classified 1,552 → **1,744** rows / **1,721** unique; 31% → **35%**).
+
+**Key additions:**
+- **VS-83/84 (People) = 17 statutory T1 workflows**: DOLE occupational-health reporting
+  (injury case opening, EC documentation, AMR/OHS statistics, exposure monitoring, Mental Health
+  Act RA 11036 compliance), DOLE/NLRC labor-relations mandatory processes (union certification,
+  CBA conciliation/registration, 2-notice-rule discipline, SENA, arbitration/reinstatement,
+  strike-lockout notice). These are textbook statutory T1 that the People-family keyword rules
+  (focused on payroll/benefits/SSS) missed.
+- **VS-40 Capex = 3 statutory T1** (PFRS: capitalization-vs-expense determination, capitalized
+  interest, CIP-to-asset conversion) — the classifier had 96% T2, missing these PFRS accounting
+  hard dependencies.
+- **VS-63 = 1 T1** (emergency communication protocol — BCP-critical).
+- **30 T3 demotions** concentrated in VS-55 Planogram (7 analytics: space/productivity/heatmap
+  analysis, ROI/dashboard), VS-65 Marketplace (5: channel P&L/commission/dashboard/competitor
+  comparison), VS-64 Seasonal (6: post-season/forecast/customer-behavior/markdown/planogram/
+  profitability analytics).
+
+**Count cascade** across current-state citations.
+**Progress**: 576 of 3,836 confirmed (15.0%); 3,260 remaining (65.4% covered). Three complete
+batches in one session.
+
 ## 2026-06-20 — Second criticality hand-confirmation batch: 8 support & governance VSs (192 workflows)
 
 Second review batch: the 8 family-decisive Tier-2 VSs — **VS-100 Legal Ops, VS-104 Govt Affairs,
