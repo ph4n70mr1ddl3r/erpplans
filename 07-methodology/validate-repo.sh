@@ -346,6 +346,50 @@ else
     echo "$BAD_FOOTER" | sed 's#.*/workflows/##' | sed 's/^/    /' | head -20
 fi
 
+# --- Check 17: Orphan workflow bodies (ghost workflows) ---
+echo "--- Check 17: Orphan workflow bodies (ghost workflows) ---"
+# A ghost workflow is a complete workflow body (Trigger/Owner/Steps table) sitting inside a ## W
+# block with NO introducing ### header — neither a '### W<num><letter>.' sub-workflow header nor
+# a named narrative sub-process header (e.g. '### IC Invoice Dispute Resolution'). Legitimate
+# multi-Trigger workflows always introduce each extra body with a ### header, so an orphan
+# Trigger table (one whose nearest preceding header is a field-section header like '### Steps'
+# or another field table) signals a workflow whose ## W header was lost in generation — making
+# it invisible to every count, the index, the classification, and the dependency map.
+# A 2026-06-20 scan found exactly one: VS-12 PA-12.2 W1376 (a 'Tool Rental Reservation, Waitlist
+# & Scheduling' body). Reported as a WARN (not ERROR): the fix requires allocating a new W-number
+# and updating the 4,980 grand total + index + classification + cross-reference docs — a
+# substantive change with cascading impacts, not a mechanical normalization.
+GHOST=$(python3 - "$REPO_ROOT" <<'PY'
+import os,re,sys
+ROOT=sys.argv[1]+"/01-model-company/workflows"
+FIELD={'### Steps','### System Touchpoints','### Pain Points / Risks','### Time Estimate','### Cross-references','### Controls','### Automation Opportunity','### Staffing Implication','### Background'}
+def is_field_section(h):
+    return re.sub(r' \(.*$','',h) in FIELD
+out=[]
+for d in sorted(os.listdir(ROOT)):
+    if not d.startswith("VS-"): continue
+    for f in sorted(os.listdir(f"{ROOT}/{d}")):
+        if not (f.startswith("PA-") and f.endswith(".md")): continue
+        last=None; cur=None; tc=0
+        for ln in open(f"{ROOT}/{d}/{f}").read().split("\n"):
+            if re.match(r'^## W\d+[A-Z]?\. ', ln): cur=ln; tc=0; last=ln; continue
+            if re.match(r'^### ', ln): last=ln; continue
+            if '| **Trigger** |' in ln:
+                tc+=1
+                if tc==1: continue
+                if last is None or is_field_section(last.strip()):
+                    out.append(f"{d}/{f}: orphan Trigger table inside {cur[:55]}")
+print("\n".join(out))
+PY
+)
+GHOST_COUNT=$(echo -n "$GHOST" | grep -cP 'PA-' || true)
+if [ "$GHOST_COUNT" -eq 0 ]; then
+    ok "No orphan workflow bodies (ghost workflows) detected"
+else
+    warn "$GHOST_COUNT orphan workflow body/bodies (Trigger table with no introducing ### header — a workflow missing its ## W header; invisible to counts/index/classification; needs W-number allocation to fix):"
+    echo "$GHOST" | sed 's/^/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

@@ -4,6 +4,62 @@
 
 ---
 
+## 2026-06-20 — Defect-class exhaustion audit + validator Check 17 (ghost-workflow detection)
+
+A third pass hunting for more mechanical inconsistencies of the same class as the prior two
+rounds (VS-161 Automation typo, VS-10 Risks synonym, footer format/duplicates). Investigated
+**six** further candidate defect classes systematically; found that the mechanical-defect well
+is now **effectively dry** — the only remaining issue is the one already-known substantive
+gap (the VS-12 ghost), which is not mechanically fixable. Added a validator check to lock in
+that finding so the class can't silently regress. **No content changed.** `validate-repo.sh`:
+**0 errors / 4 informational warnings** (was 3; the new 4th is the ghost, surfaced explicitly).
+
+**Defect classes audited (with findings):**
+
+1. **Ghost workflows** (workflow body with no `## W` header) — scanned all 523 PAs with a refined
+   detector: a Trigger table whose nearest preceding header is a field-section header (not a
+   sub-workflow `### W<x><letter>` or named narrative `###` sub-process). Result: **exactly 1** —
+   the known VS-12 PA-12.2 W1376 ('Tool Rental Reservation, Waitlist & Scheduling'). Not a
+   cluster; a one-off. Confirmed not mechanically fixable (needs W-number allocation +
+   grand-total/index/classification/dependency-map updates).
+2. **Multi-Trigger workflows** (13 PAs where Trigger-table count ≠ `## W` count) — investigated
+   each; **all 13 are legitimate**, split across two valid patterns: (a) letter-suffixed
+   sub-workflows (`### W2A.`, `### W3B.`, `### W5A–W5G`...) and (b) named narrative sub-processes
+   (`### IC Invoice Dispute Resolution`, `### Phase 1: Campaign Planning`). Normalizing these
+   would destroy valid structure — correctly left untouched.
+3. **Workflows missing `### Steps`** (23 candidates) — investigated each; **0 real defects**.
+   4 use the legitimate parenthetically-qualified form (`### Steps (Sub-process)`); 12 use the
+   valid field-table convention (`| **Steps** |` + `| # | Activity |`, present in 523 PAs —
+   standard, not a quirk); 7 (all VS-19) genuinely lack Steps and need authoring (substantive,
+   not mechanical). My initial 'W4762 is a quirk' reading was wrong — `| **Steps** |` is the
+   documented Core-block field-table style.
+4. **Orphan `###` field-section headers** (before any `## W`) — **0 found**.
+5. **Broken markdown link syntax** in PAs — **0 found**.
+6. **W-number allocation gaps** (9 numeric gaps: W408–419, W450–459, W1573–1599, W2022–2117...)
+   and **0 duplicate W-numbers** (4,980 distinct = 4,980 headers, perfect uniqueness). The gaps
+   are almost certainly intentional reservation/allocation artifacts from the 25-pass
+   gap-analysis evolution; classifying each as 'documented-reserved' vs 'accidental' requires
+   reading the gap-analysis allocation narrative per range — substantive analysis, not
+   mechanical. Left as-is.
+
+**Validator addition:**
+
+- **Check 17** (new, reporting-only WARN) — orphan-workflow-body (ghost) detection. Implements
+  the refined detector from class #1 above: flags any Trigger table inside a `## W` block whose
+  nearest preceding header is a field-section header (i.e. no introducing `### W<x><letter>` or
+  named sub-process header). Verified it returns exactly 1 (the VS-12 ghost) with zero false
+  positives, and accepts both legitimate multi-Trigger patterns. Reported as WARN not ERROR
+  because the fix is substantive (W-number allocation + cascading cross-reference updates).
+
+- **`07-methodology/README.md`** — validator description updated from '16 checks' to '17 checks'.
+
+**Bottom line:** three rounds of mechanical consistency work have now cleaned every defect of
+this class (typo/synonym/duplicate/format-drift where the content body is intact). What
+remains is genuinely substantive: the VS-12 ghost workflow, the VS-19 missing-Steps workflows,
+the W-number-gap classification, and the Expansion-block content rework (the original 3
+warnings). None of these are safely doable as mechanical fixes without risking new
+inconsistency.
+
 ## 2026-06-20 — More mechanical consistency fixes: header synonym, footer format/duplicates, + Checks 15–16
 
 A second pass of "find the same defect class as the VS-161 Automation typo" — mechanical
