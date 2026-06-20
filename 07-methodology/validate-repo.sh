@@ -241,6 +241,7 @@ TOTAL_WF=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/
 AUTO_COUNT=$(grep -rohP '^### Automation Opportunity$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 CTRL_COUNT=$(grep -rohP '^### Controls$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 warn "Automation Opportunity present on $AUTO_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($AUTO_COUNT/$TOTAL_WF)*100}")%); Controls present on $CTRL_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($CTRL_COUNT/$TOTAL_WF)*100}")%). Target: 100% on all fully-detailed workflows (see WORKFLOW-FORMAT-GUIDE.md 'Standard analysis fields')"
+echo "  Overlap note: the three adoption warnings (Checks 1, 10, 12) share one root cause — the Expansion block (VS-53–VS-78, minus VS-69/70/71/73 which are already reworked) is simultaneously (a) unclassified, (b) verbatim boilerplate, and (c) missing these two fields. Reworking that block moves all three numbers at once; see value-stream-index.md 'Value-Stream Blocks (origin)' for the maturity map."
 
 # --- Check 13: Markdown table structural integrity ---
 echo "--- Check 13: Markdown table structural integrity ---"
@@ -298,6 +299,27 @@ if [ "$DOUBLED_RISK_COUNT" -eq 0 ]; then
 else
     error "$DOUBLED_RISK_COUNT PA file(s) contain a templated '**<word>-risk risk**' pain-point label:"
     echo "$DOUBLED_RISK" | sed 's/^/    /' | head -20
+fi
+
+# --- Check 15: Analysis-field header canonicalization ---
+echo "--- Check 15: Analysis-field header canonicalization ---"
+# WORKFLOW-FORMAT-GUIDE.md defines exactly two analysis subsection headers: '### Automation
+# Opportunity' and '### Controls'. A 2026-06-20 review found 8 VS-161 workflows whose header
+# read '### Automation Option' (a typo) — the workflow-specific content body was present, but
+# the misspelled header was invisible to Check 12's exact-match adoption count, silently
+# undercounting Automation adoption and creating a sibling-header inconsistency inside the PA.
+# This check flags any ### header beginning 'Automation' or 'Control' that is not the
+# canonical exact form, so the Check 12 adoption counts stay trustworthy and the typo class
+# cannot recur undetected.
+BAD_AUTO=$(grep -rnP '^### Automation(?! Opportunity$)' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
+BAD_CTRL=$(grep -rnP '^### Control(?!s$)' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
+BAD_COUNT=$(echo -n "$BAD_AUTO"$'\n'"$BAD_CTRL" | grep -cP 'PA-' || true)
+if [ "$BAD_COUNT" -eq 0 ]; then
+    ok "All Automation/Controls analysis-field headers use the canonical exact form"
+else
+    error "$BAD_COUNT non-canonical analysis-field header(s) (should be '### Automation Opportunity' / '### Controls') — invisible to Check 12's adoption count:"
+    echo "$BAD_AUTO" | sed 's/^/    /' | head -20
+    echo "$BAD_CTRL" | sed 's/^/    /' | head -20
 fi
 
 echo ""

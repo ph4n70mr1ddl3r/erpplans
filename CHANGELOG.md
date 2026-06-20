@@ -4,6 +4,38 @@
 
 ---
 
+## 2026-06-20 — VS-161 'Automation Option' typo fix + new validator Check 15 (field-header canonicalization)
+
+A follow-up to the morning's consistency review, surfaced by asking what the three informational
+validator warnings actually were and how to improve them. While investigating why
+`workflow-system-touchpoint-map.md`/Check 12 reported VS-161 with only 16/24 `### Automation
+Opportunity` fields, found that the 8 "missing" workflows were **not missing** — they carried
+the analysis-field body in full but had a **misspelled header** `### Automation Option` (should
+be `### Automation Opportunity`). No content changed; only the header. **No grand totals
+changed.** `validate-repo.sh` still reports **0 errors / 3 informational warnings**.
+
+**1. VS-161 PA-161.1/.2/.3 — 8 typo'd field headers corrected.** `### Automation Option` →
+`### Automation Opportunity` (1 in PA-161.1, 1 in PA-161.2, 6 in PA-161.3). Each workflow's
+analysis-field body was already present and workflow-specific; only the heading was wrong. The
+typo was invisible to Check 12's exact-match adoption count (which is why VS-161 showed as a
+partial-coverage outlier: 7/7/2 of 8). Effect: Automation adoption count **1,096 → 1,104**, now
+matching Controls exactly (1,104/1,104); VS-161 is now 8/8/8 across all three PAs.
+
+**2. `07-methodology/validate-repo.sh` — new Check 15 (analysis-field header canonicalization).**
+A regression guard for the typo class above: flags any `###` header beginning `Automation` or
+`Control` that is not the canonical exact form (`### Automation Opportunity` / `### Controls`),
+using a negative-lookahead (`^### Automation(?! Opportunity$)`) so the canonical forms are
+excluded and variants/bare/misspellings are caught. Reported as an ERROR (it silently corrupts
+the Check 12 adoption count and creates a sibling-header inconsistency). Verified green on the
+post-fix repo and verified to fire when the typo is reintroduced. Also added a one-line
+**overlap note** to Check 12's warning explaining that the three adoption warnings (Checks 1,
+10, 12) share one root cause — the Expansion block (VS-53–VS-78, minus VS-69/70/71/73) is
+simultaneously unclassified, verbatim boilerplate, and missing the two fields — so one rework
+pass moves all three.
+
+**3. `07-methodology/README.md`** — validator description updated from "14 checks" to "15
+checks".
+
 ## 2026-06-20 — Cross-reference consistency review: stale Pass-19 snapshots, touchpoint-map VS-162–VS-177 gap, and index/doc defects
 
 A top-to-bottom read of every summary and cross-reference document (and a sample of PA files)
