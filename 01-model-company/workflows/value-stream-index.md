@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 172 active value streams were produced in four blocks. Use this to gauge content maturity
+The 173 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
 *Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -28,7 +28,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 8 Families · 173 Value Streams · 523 Process Areas · 4,980 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The four capability gaps — plus additional uncovered capabilities — were subsequently filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams), and a twenty-first pass on 2026-06-19 (163 → 165 value streams), and a twenty-second pass on 2026-06-19 (165 → 168 value streams), and a twenty-third pass on 2026-06-20 (168 → 169 value streams), and a twenty-fourth pass on 2026-06-20 (169 → 172 value streams), and a twenty-fifth pass on 2026-06-20 (172 → 173 value streams). Full per-pass detail (including candidates considered and rejected-as-covered) is in [CHANGELOG.md](../../CHANGELOG.md) and [workflow-gap-analysis.md](workflow-gap-analysis.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-five gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 173 value streams (VS-89–VS-177; W2993–W5128). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|

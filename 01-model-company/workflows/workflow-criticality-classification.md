@@ -766,7 +766,7 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 
 ### Proposed classification (keyword-driven, pending human review)
 
-The **3,595** workflows not yet in the confirmed register above have been assigned a *proposed*
+The **3,835** workflows not yet in the confirmed register above have been assigned a *proposed*
 tier by [`07-methodology/classify-workflows.py`](../../07-methodology/classify-workflows.py) using
 conservative keyword rules; see the companion file
 [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). On review, promote/demote
@@ -774,15 +774,15 @@ rows by moving them into the confirmed sections above.
 
 | Phase | Label | Proposed Count |
 |---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) — proposed | 688 |
-| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,608 |
-| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 155 |
-| **Proposed Total** | | **3,595** |
+| Phase 1 | Go-Live Critical (Tier 1) — proposed | 741 |
+| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,927 |
+| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 167 |
+| **Proposed Total** | | **3,835** |
 
 | Coverage | Workflows |
 |---|---|
 | Confirmed (hand-reviewed) | 1,168 rows (1,145 unique `##` workflows) |
-| Proposed (keyword, pending review) | 3,595 |
+| Proposed (keyword, pending review) | 3,835 |
 | Without even a proposal | 0 |
 | **Grand Total** | **4,980** unique `##` workflows (1,145 confirmed + 3,835 unclassified, all proposed) |
 
@@ -1600,4 +1600,4 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W690 | Digital Transformation Initiative Portfolio Management | Innovation & Digital Transformation |
 | W691 | Emerging Technology Scouting & Proof-of-Concept Evaluation | Innovation & Digital Transformation |
 
-*Date: 2026-06-19 | Workflow Criticality Classification v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
+*Date: 2026-06-20 | Workflow Criticality Classification v7.17 — §Summary *Proposed classification* subsection reconciled to the regenerated proposed register: unclassified **3,595 → 3,835** (per-tier **688 / 2,608 / 155 → 741 / 2,927 / 167**), now matching [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) exactly. The drift accumulated across Passes 19–25 (VS-162–VS-177, +240 workflows) because only the proposed file was being regenerated, not this mirror. The Confirmed Total (1,168 rows / 1,145 unique) and Grand Total (4,980) were already correct. v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*

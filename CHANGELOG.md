@@ -4,6 +4,58 @@
 
 ---
 
+## 2026-06-20 — Whole-repo consistency review: stale counts (3,595/172/675), missing VS-170–VS-177 tree entries, and triplicated pass-history
+
+A full-repository read-through (all indexes, navigation hubs, and cross-reference doc
+headers) surfaced and resolved four classes of drift left over from the rapid Pass 19–25
+expansion (VS-162–VS-177). The validator (`07-methodology/validate-repo.sh`) continues to
+report **0 errors / 3 informational warnings** (unchanged — the warnings track known
+in-progress content gaps: boilerplate analysis fields, Automation/Controls field adoption,
+and the unclassified-workflow proposed register).
+
+**1. Stale unclassified-workflow count 3,595 → 3,835.** The summary-doc mirrors of the
+keyword-driven proposal had not been refreshed since Pass 18, so they under-stated the
+unclassified population by exactly the 240 workflows added in Passes 19–25
+(4,980 − 1,145 classified = 3,835). Fixed:
+
+- `workflow-dependency-map.md` header (`3,595 remain unclassified` → `3,835`).
+- `workflow-criticality-classification.md` §Summary *Proposed classification* subsection:
+  the prose figure, the per-tier proposed breakdown **688 / 2,608 / 155 → 741 / 2,927 / 167**
+  (now matching the regenerated `workflow-criticality-proposed.md` header exactly), the
+  *Proposed Total* cell, and the Coverage table row. (The *Grand Total* line —
+  `4,980 (1,145 confirmed + 3,835 unclassified)` — was already correct.)
+
+**2. Stale value-stream count 172 → 173.** Two summary-doc prose lines still named the
+pre-Pass-25 total:
+
+- `value-stream-index.md` §*Value-Stream Blocks (origin)* intro (`The 172 active value
+  streams` → `173`; the block table beneath already summed to 173).
+- `workflows/README.md` §*Navigation* (`all 172 value streams` → `173`).
+
+**3. `workflows/README.md` Finance family under-counted (675 → 699; VS-173 missing).**
+The Finance family header read `### Finance (675 workflows)` and listed 25 value streams,
+but the master `value-stream-index.md` Finance subtotal is **699** (26 streams) —
+**VS-173 (Investor Relations, Capital Markets & Securities Disclosure)** was missing from
+the navigation hub. Added the VS-173 row and corrected the header, so the family reconciles
+with the master subtotal and the grand-total reconciliation line
+(`428 + 427 + 1,482 + 699 + 410 + 272 + 912 + 350 = 4,980`).
+
+**4. `README.md` folder-structure tree truncated at VS-169.** The tree pre-dated Passes
+19–25 and omitted VS-170–VS-177 (8 value streams). Appended all eight entries
+(VS-170 … VS-177) so the tree matches the 173-value-stream directory inventory.
+
+**5. Redundancy — triplicated gap-analysis pass history.** The 25-pass history
+(VS-49–VS-52 retirement → VS-89–VS-177 fill, with per-pass value-stream count transitions)
+was duplicated verbatim in both `README.md` (*Coverage & Known Gaps* → *Retired VS numbers*)
+and `value-stream-index.md` (*Coverage note*) — a triplicated maintenance hazard that was
+the direct root cause of the 172-vs-173 drift in items 2 above (updated in only one of the
+three places per pass). Condensed both summary-doc copies to a one-sentence summary
+("84 → 173 active value streams across twenty-five passes") that links to the canonical
+per-pass detail already maintained in `workflow-gap-analysis.md` §3–§4 and `CHANGELOG.md`.
+Also consolidated the redundant date repetition in the `workflow-gap-analysis.md` header
+(Pass 19–22 all on 2026-06-19, Pass 23–25 all on 2026-06-20).
+
+---
 ## 2026-06-20 — Workflow gap analysis (Pass 25): add VS-177 (24 workflows W5105–W5128)
 
 A twenty-fifth gap-analysis pass, re-running the established methodology (defining terms

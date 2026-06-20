@@ -23,7 +23,7 @@
 
 | Document | Purpose |
 |---|---|
-| [value-stream-index.md](value-stream-index.md) | **Master index** — all 172 value streams with workflow counts |
+| [value-stream-index.md](value-stream-index.md) | **Master index** — all 173 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
 | [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal for the remaining unclassified workflows |
@@ -121,7 +121,7 @@
 | [VS-176](VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md) | Blueprint, Reprographics & Large-Format Plan Printing Services | 24 |
 | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | 24 |
 
-### Finance (675 workflows)
+### Finance (699 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 42 |
@@ -149,6 +149,7 @@
 | [VS-157](VS-157-revenue-recognition-pfrs-15-and-complex-contract-accounting/README.md) | Revenue Recognition (PFRS 15) & Complex Contract Accounting | 24 |
 | [VS-158](VS-158-product-costing-landed-cost-and-cost-accounting/README.md) | Product Costing, Landed-Cost & Cost Accounting | 24 |
 | [VS-170](VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/README.md) | Inventory Pledge, Asset-Based Lending & Trust-Receipt (Warehouse-Receipt) Financing | 24 |
+| [VS-173](VS-173-investor-relations-capital-markets-and-securities-disclosure/README.md) | Investor Relations, Capital Markets & Securities Disclosure | 24 |
 
 ### People (410 workflows)
 | VS | Value Stream | Workflows |

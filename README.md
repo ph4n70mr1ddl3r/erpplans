@@ -202,7 +202,15 @@ erpplans/
 │   │   ├── VS-166-regulatory-license-permit-and-accreditation-portfolio-management/ 24 workflows (3 process areas)
 │   │   ├── VS-167-workforce-background-screening-credentialing-and-personnel-vetting/ 24 workflows (3 process areas)
 │   │   ├── VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/ 24 workflows (3 process areas)
-│   │   └── VS-169-employee-uniform-workwear-and-ppe-issuance-program/ 24 workflows (3 process areas)
+│   │   ├── VS-169-employee-uniform-workwear-and-ppe-issuance-program/ 24 workflows (3 process areas)
+│   │   ├── VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/ 24 workflows (3 process areas)
+│   │   ├── VS-171-customer-pickup-loading-zone-and-will-call-counter-operations/ 24 workflows (3 process areas)
+│   │   ├── VS-172-third-party-installer-and-contractor-network-pro-referral-management/ 24 workflows (3 process areas)
+│   │   ├── VS-173-investor-relations-capital-markets-and-securities-disclosure/ 24 workflows (3 process areas)
+│   │   ├── VS-174-self-storage-portable-container-and-mobile-storage-operations/ 24 workflows (3 process areas)
+│   │   ├── VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/ 24 workflows (3 process areas)
+│   │   ├── VS-176-blueprint-reprographics-and-large-format-plan-printing-services/ 24 workflows (3 process areas)
+│   │   └── VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
@@ -256,7 +264,7 @@ erpplans/
 | Workflows | 4,980 fully specified across 173 value streams | `workflows/value-stream-index.md` |
 | Criticality classification | **1,145 of 4,980 workflows classified** (23%; the confirmed register holds 1,168 rows incl. 23 `###` parent/summary sub-workflows); 3,835 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The gaps were filled across nine gap-analysis passes on 2026-06-14 (84 → 120 value streams), tenth, eleventh, and twelfth passes on 2026-06-15 (120 → 124 → 128 → 132 value streams), a thirteenth pass on 2026-06-16 (132 → 136 value streams), a fourteenth pass on 2026-06-16 (136 → 138 value streams), a fifteenth pass on 2026-06-17 (138 → 142 value streams), a sixteenth pass on 2026-06-17 (142 → 146 value streams), a seventeenth pass on 2026-06-17 (146 → 152 value streams), and an eighteenth pass on 2026-06-18 (152 → 157 value streams), and a nineteenth pass on 2026-06-19 (157 → 160 value streams), and a twentieth pass on 2026-06-19 (160 → 163 value streams), and a twenty-first pass on 2026-06-19 (163 → 165 value streams), and a twenty-second pass on 2026-06-19 (165 → 168 value streams), and a twenty-third pass on 2026-06-20 (168 → 169 value streams), and a twenty-fourth pass on 2026-06-20 (169 → 172 value streams), and a twenty-fifth pass on 2026-06-20 (172 → 173 value streams); see [CHANGELOG.md](CHANGELOG.md) and [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) for per-pass detail | — |
+| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across twenty-five gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 173 value streams (VS-89–VS-177; W2993–W5128). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
 
