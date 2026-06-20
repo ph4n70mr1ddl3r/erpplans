@@ -3539,3 +3539,16 @@ Preserved the field tables and Steps tables (already specific); expanded thin St
 Each workflow's analysis fields now name the specific ERP module/object, real cross-references
 (VS-02/03/15/28/29/31/39/79/88/100/131 etc.), named risks with mitigations, and scaling math.
 21 remaining Expansion VSs to go.
+
+## 2026-06-20 — Expansion-block content rework (Pass 2 of 22): VS-76 Multi-Region LGU & Local Regulatory Compliance
+
+Continuing the substantive content rework. **validate-repo.sh: 0 errors / 3 warnings**
+(cumulative across passes 1–2: boilerplate 528→480 workflows, 22→20 VSs; Automation/Controls
+1,104→1,152, 22%→23%).
+
+**VS-76 (24 workflows, 3 PAs)** — rewrote all 24 workflows' three analysis fields from boilerplate
+to workflow-specific content grounded in Philippine regulatory law (RA 7160 Local Government Code,
+RA 9514 Fire Code, RA 10667 Competition Act, RA 7394 Consumer Act, PD 856 Sanitary Code, RA 11058
+OSH, RA 10121 DRRM, RA 11032 Ease of Doing Business). Added Automation Opportunity + Controls to
+all 24, with real cross-references to VS-22/29/35/69/79/88/100/104/129/132/138/156/166/209.
+Field tables and Steps preserved; thin Steps expanded. 19 Expansion VSs remaining.
