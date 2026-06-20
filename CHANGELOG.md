@@ -4,6 +4,54 @@
 
 ---
 
+## 2026-06-20 — Consistency review: stale Expansion-block status, validator overlap-note, dept count, matrix traceability claims
+
+A whole-repo review for inconsistencies, redundancies, and ambiguities beyond the mechanical
+defect classes already exhausted. The validator already passed (**0 errors / 2 warnings**), but
+several **documentation** claims had drifted out of sync with the content after the
+Expansion-block rework completed. This is a documentation-only reconciliation — no counts,
+IDs, or workflow bodies changed. `validate-repo.sh` still reports **0 errors / 2 warnings**
+(Check 10 already passed; only its *comment* and the Check 12 *overlap note* were stale).
+
+**1. Stale "Expansion-block pending rework" claims** — the rework completed 2026-06-20
+(commit `96a53df`; Check 10 now passes with zero boilerplate), but four locations still
+described it as unfinished:
+- `value-stream-index.md` "Value-Stream Blocks (origin)": the intro paragraph and the
+  Expansion table row both said `Templated; ... pending rework` → updated to `Fully detailed
+  (22 templated VSs de-boilerplated 2026-06-20; VS-69/70/71/73 were pre-detailed)`, matching
+  the Core / Statutory / Gap-analysis rows.
+- `WORKFLOW-FORMAT-GUIDE.md` "Standard analysis fields": `the in-progress Expansion-block
+  rework` → completed, plus an accurate field-adoption map (present on VS-53–VS-78 except
+  VS-69–VS-71, and on VS-133–VS-177; absent from Core, Statutory, and VS-89–VS-132).
+- `VS-73 README.md` + `PA-73.1`: `reference implementation for the remaining Expansion-block
+  rework` → past tense (VS-73 *was* the reference; the rework is now complete).
+
+**2. Validator Check 12 overlap-note contradicted Check 10.** The note claimed the three
+adoption warnings (Checks 1, 10, 12) shared one root cause and that the Expansion block was
+*"simultaneously (a) unclassified, (b) verbatim boilerplate, and (c) missing these two fields"*.
+After the rework, (b) is false (Check 10 passes) and (c) is false for 23 of 26 Expansion VSs.
+Rewrote the note to the truth: only Checks 1 and 12 still warn, and they no longer share a
+root cause — Check 1's 3,836 unclassified span the Expansion + gap-analysis blocks, while
+Check 12's field-adoption gap is concentrated in Core + Statutory + early gap-analysis
+(VS-89–VS-132) + VS-69–VS-71 (105 of 173 VSs). Also updated Check 10's header/comment from
+`unfinished templated workflows / never finished` to `regression guard`, since the check now
+passes and guards against reintroduction.
+
+**3. `model-company-profile.md` §11.1 — "18 HQ departments rolls up" vs table "17 departments".**
+The §3.3 list has 18 line items (incl. Executive Office), but Executive Office *is* the 7
+executives, so only the **other 17** departments roll up. The reconciliation table already
+read "17 departments (the 7 executives themselves are counted in Executive Office)"; fixed
+the prose to match (`18` → `other 17`). The §3.3 sum (18 depts = 357) and the table total
+(350 + 7 = 357) were already correct.
+
+**4. `requirement-workflow-matrix.md` overclaimed workflow coverage.** The header said
+*"every workflow tests at least one requirement"* and the Coverage Validation section said
+*"Total workflows referenced: spans the full 4,981 workflows"*. Both contradicted the version
+note (which honestly states mappings are core-foundational only, with VS-53–VS-177 pending).
+Only ~927 distinct workflows are actually referenced. Aligned the header and Coverage
+Validation with the version note. No requirement mapping changed; all 733 requirements
+remain fully mapped.
+
 ## 2026-06-20 — Restore VS-12 ghost workflow W1318 (the one tractable substantive fix)
 
 Asked whether the four remaining substantive items were "easily fixable." Investigated each

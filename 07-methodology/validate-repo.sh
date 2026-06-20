@@ -210,14 +210,14 @@ else
     error "Grand total ($GRAND_TOTAL) does NOT match actual PA workflow header count ($ACTUAL_WFS)"
 fi
 
-# --- Check 10: Boilerplate analysis fields (unfinished templated workflows) ---
+# --- Check 10: Boilerplate analysis fields (regression guard) ---
 echo "--- Check 10: Boilerplate analysis fields ---"
-# A block of value streams (VS-53..VS-78) was generated from a template and never finished:
-# the three analysis fields that deliver a workflow's value — Pain Points, System Touchpoints,
-# and Time Estimate — are verbatim boilerplate copied across all their workflows. This check
-# surfaces them as WARNINGS (not errors, since the content is not yet reworked) and lists the
-# affected value streams for prioritised rework. See WORKFLOW-FORMAT-GUIDE.md "Quality bar for
-# the three analysis fields".
+# The Expansion block (VS-53..VS-78) was originally generated from a template whose three
+# value-delivering analysis fields — Pain Points, System Touchpoints, and Time Estimate — were
+# verbatim boilerplate copied across every workflow. A 2026-06-20 rework rewrote all 22
+# templated value streams to workflow-specific content, so this check now passes; it is
+# retained as a regression guard that surfaces any boilerplate reintroduced by a future
+# generation artifact. See WORKFLOW-FORMAT-GUIDE.md "Quality bar for the three analysis fields".
 BP_MARKER='Operational variability mitigated by standard procedures and system controls'
 BP_FILES=$(grep -rlF "$BP_MARKER" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
 BP_INSTANCES=$(grep -rhF "$BP_MARKER" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ' || true)
@@ -227,7 +227,7 @@ else
     BP_FILE_COUNT=$(echo -n "$BP_FILES" | grep -cP 'PA-' || true)
     BP_VS_LIST=$(echo "$BP_FILES" | sed -E 's#.*/(VS-[0-9]+-[^/]+)/.*#\1#' | sort -u)
     BP_VS_COUNT=$(echo -n "$BP_VS_LIST" | grep -cP '^VS-' || true)
-    warn "$BP_INSTANCES workflows across $BP_FILE_COUNT PA files in $BP_VS_COUNT value streams use verbatim boilerplate for Pain Points / System Touchpoints / Time Estimate (templated, pending rework per WORKFLOW-FORMAT-GUIDE.md):"
+    warn "$BP_INSTANCES workflows across $BP_FILE_COUNT PA files in $BP_VS_COUNT value streams use verbatim boilerplate for Pain Points / System Touchpoints / Time Estimate (regression — the 2026-06-20 Expansion-block rework removed all known boilerplate; see WORKFLOW-FORMAT-GUIDE.md):"
     echo "$BP_VS_LIST" | sed 's/^/    /'
 fi
 
@@ -235,13 +235,14 @@ fi
 echo "--- Check 12: Automation Opportunity & Controls field adoption ---"
 # Per WORKFLOW-FORMAT-GUIDE.md these are now standard analysis fields for any fully-detailed
 # workflow. Each should appear as an ### subsection under its workflow. Adoption is tracked
-# (not enforced as an error) so the Expansion-block rework and the original Core/Statutory/
-# Gap-analysis VSs can be measured against the VS-73 reference implementation.
+# (not enforced as an error) so progress across the Core, Statutory, and early gap-analysis
+# (VS-89–VS-132) blocks — which predate these fields — can be measured against the VS-73
+# reference implementation.
 TOTAL_WF=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 AUTO_COUNT=$(grep -rohP '^### Automation Opportunity$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 CTRL_COUNT=$(grep -rohP '^### Controls$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 warn "Automation Opportunity present on $AUTO_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($AUTO_COUNT/$TOTAL_WF)*100}")%); Controls present on $CTRL_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($CTRL_COUNT/$TOTAL_WF)*100}")%). Target: 100% on all fully-detailed workflows (see WORKFLOW-FORMAT-GUIDE.md 'Standard analysis fields')"
-echo "  Overlap note: the three adoption warnings (Checks 1, 10, 12) share one root cause — the Expansion block (VS-53–VS-78, minus VS-69/70/71/73 which are already reworked) is simultaneously (a) unclassified, (b) verbatim boilerplate, and (c) missing these two fields. Reworking that block moves all three numbers at once; see value-stream-index.md 'Value-Stream Blocks (origin)' for the maturity map."
+echo "  Overlap note: Check 10 now passes — the Expansion-block rework (completed 2026-06-20) eliminated all verbatim boilerplate, so the two remaining warnings no longer share one root cause. Check 1's unclassified total (3,836) spans the Expansion block (VS-53–VS-78) and the gap-analysis block (VS-89–VS-177), neither yet tier-reviewed. Check 12's field-adoption gap is concentrated in the blocks written before these fields became standard: Core (VS-01–VS-48), Statutory (VS-79–VS-88), the early gap-analysis passes (VS-89–VS-132), and VS-69–VS-71 — 105 of 173 value streams. The rest of the Expansion block and VS-133–VS-177 already carry both fields. See value-stream-index.md 'Value-Stream Blocks (origin)' for the maturity map."
 
 # --- Check 13: Markdown table structural integrity ---
 echo "--- Check 13: Markdown table structural integrity ---"

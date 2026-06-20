@@ -481,7 +481,7 @@ The company operates through **5 legal entities** organized as follows:
 ### 11.1 Organizational Structure
 
 BuildRight Holdings, Inc. is led by a CEO/President and six executive officers — together
-the **Executive Office (7)** in §3.3. Each of the 18 HQ departments rolls up to one of
+the **Executive Office (7)** in §3.3. Each of the other 17 HQ departments rolls up to one of
 these seven; the tree below shows the primary executive remits, and the table that follows
 accounts for **every** department so no reporting line is left implicit.
 

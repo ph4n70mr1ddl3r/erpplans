@@ -8,14 +8,14 @@
 ## Value-Stream Blocks (origin)
 
 The 173 active value streams were produced in four blocks. Use this to gauge content maturity
-at a glance — the *Core*, *Statutory*, and *Gap-analysis* blocks are fully detailed; the
-*Expansion* block is templated and pending the rework tracked by `validate-repo.sh` Check 10.
+at a glance — all four blocks are now fully detailed; the *Expansion* block was templated but
+was de-boilerplated on 2026-06-20 (the regression guard is `validate-repo.sh` Check 10).
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 | Block | VS range | Count | Maturity |
 |---|---|---|---|
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
-| Expansion | VS-53 – VS-78 | 26 | Templated; 22 pending rework (VS-69/70/71/73 detailed) |
+| Expansion | VS-53 – VS-78 | 26 | Fully detailed (22 templated VSs de-boilerplated 2026-06-20; VS-69/70/71/73 were pre-detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
 | Gap analysis | VS-89 – VS-177 | 89 | Fully detailed (twenty-five gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |

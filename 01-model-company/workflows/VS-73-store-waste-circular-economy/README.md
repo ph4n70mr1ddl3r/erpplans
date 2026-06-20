@@ -57,7 +57,7 @@ match, spill severity-decision tree, monthly Safety inspection).
 > **Rework status (2026-06-15):** all 24 workflows reworked to the full standard — generic
 > boilerplate System Touchpoints / Pain Points / Time Estimate replaced with workflow-specific
 > content, and **Automation Opportunity** + **Controls** fields added throughout. This value
-> stream is the reference implementation for the remaining Expansion-block rework (see
+> stream is the reference implementation used by the 2026-06-20 Expansion-block rework (now complete) (see
 > `WORKFLOW-FORMAT-GUIDE.md` "Standard analysis fields" and `validate-repo.sh` Check 10 & 12).
 
 ---

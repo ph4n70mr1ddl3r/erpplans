@@ -2,8 +2,10 @@
 
 > Maps each ERP requirement from [erp-requirements.md](erp-requirements.md) to the operational
 > workflows from the [workflows/](workflows/value-stream-index.md) directory that exercise it.
-> Ensures complete traceability: every requirement is validated by at least one workflow,
-> and every workflow tests at least one requirement.
+> Ensures complete traceability from requirements to workflows: every requirement is validated
+> by at least one workflow. Workflow-side coverage is currently limited to the core foundational
+> workflows; mappings for the Expansion / Statutory / Gap-analysis value streams (VS-53–VS-177)
+> are added incrementally (see the Coverage Validation section and the version note).
 
 ---
 
@@ -1013,7 +1015,7 @@
 
 - **Total requirements**: 733 across 38 distinct requirement-ID prefixes, organized into 32 sections (R1–R32, of which R19–R24 and R32 are gap-closure rounds)
 - **Requirements with primary workflow mapping**: All ✅
-- **Total workflows referenced**: spans the full 4,981 workflows across 173 value streams (see [value-stream-index.md](workflows/value-stream-index.md))
+- **Total workflows referenced**: the core foundational workflows; mappings for the Expansion / Statutory / Gap-analysis value streams (VS-53–VS-177) are added incrementally and remain pending. The full 4,981-workflow / 173-value-stream inventory is in [value-stream-index.md](workflows/value-stream-index.md)
 - **Must Have requirements**: 431 (any scored 0 is a disqualifier)
 - **Should Have requirements**: 296
 - **Nice to Have requirements**: 6

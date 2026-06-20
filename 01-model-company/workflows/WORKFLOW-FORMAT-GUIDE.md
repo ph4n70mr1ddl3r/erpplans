@@ -42,7 +42,7 @@ following fields.
 
 ### Standard analysis fields (add to every fully-detailed workflow)
 
-These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (Core / Statutory / Gap-analysis blocks, and the in-progress Expansion-block rework). See VS-73 for the reference implementation, and `validate-repo.sh` Check 12 for adoption tracking.
+These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 they are present on the reworked Expansion block (VS-53–VS-78, except VS-69–VS-71) and on VS-133–VS-177; the Core, Statutory, and early gap-analysis (VS-89–VS-132) blocks do not yet carry them — see `validate-repo.sh` Check 12 for adoption tracking.
 
 | Field | Meaning |
 |---|---|
