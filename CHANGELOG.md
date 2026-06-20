@@ -3577,3 +3577,14 @@ in BIR transfer-pricing regulations (RR 19-2020 / RMO 72-2019), the 5-entity int
 cost-pool allocation methodology, IC invoice/netting/settlement, and IC profit elimination. All 48
 workflows' three analysis fields rewritten; Automation + Controls added. Field tables and Steps
 preserved (VS-72's Steps were already detailed and rich). 16 Expansion VSs remaining.
+
+## 2026-06-20 — Expansion-block content rework (Passes 7–8 of 22): VS-54 Gift Card & Stored Value, VS-63 Store Communication & Task Management
+
+Continuing the substantive content rework. **Cumulative (passes 1–8): boilerplate 528→336 workflows, 22→14 VSs;
+Automation/Controls 1,104→1,296 (26%).** validate-repo.sh: 0 errors / 3 warnings.
+
+**VS-54 (24 workflows, 3 PAs)** grounded in BSP stored-value-product regulations, PFRS 15 breakage accounting
+(liability→revenue at redemption, expected-breakage estimation), AMLA KYC on high-value cash purchases, RA 7394
+Consumer Act (5-year expiry minimum, lost-card protection). **VS-63 (24 workflows, 3 PAs)** grounded in the
+HQ→store communication cascade, the W571 store-comms platform, task-compliance tracking, and information-overload
+management. All 48 workflows' three analysis fields rewritten; Automation + Controls added. 14 Expansion VSs remaining.
