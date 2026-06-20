@@ -3588,3 +3588,14 @@ Automation/Controls 1,104→1,296 (26%).** validate-repo.sh: 0 errors / 3 warnin
 Consumer Act (5-year expiry minimum, lost-card protection). **VS-63 (24 workflows, 3 PAs)** grounded in the
 HQ→store communication cascade, the W571 store-comms platform, task-compliance tracking, and information-overload
 management. All 48 workflows' three analysis fields rewritten; Automation + Controls added. 14 Expansion VSs remaining.
+
+## 2026-06-20 — Expansion-block content rework (Passes 9–10 of 22): VS-60 Omnichannel Order Routing, VS-61 Fuel & Fleet Cost
+
+Continuing the substantive content rework. **Cumulative (passes 1–10): boilerplate 528→288 workflows (45% resolved), 22→12 VSs;
+Automation/Controls 1,104→1,344 (27%).** validate-repo.sh: 0 errors / 3 warnings.
+
+**VS-60 (24 workflows, 3 PAs)** grounded in the unified order management (W536), real-time ATP, the 4-source routing
+model (store/DC/vendor-drop-ship/dark-store), split-basket fulfillment, and SLA-driven orchestration. **VS-61
+(24 workflows, 3 PAs)** grounded in fleet TCO (fuel/toll/maintenance/insurance/driver), DOE weekly fuel-price reporting,
+fuel-card controls, backhaul utilization, and own-vs-3PL benchmarking. All 48 workflows' three analysis fields rewritten;
+Automation + Controls added. 12 Expansion VSs remaining.
