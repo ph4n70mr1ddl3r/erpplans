@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Value Streams | 177 |
-| Process Areas | 535 |
-| Workflows | 5,077 |
+| Value Streams | 181 |
+| Process Areas | 547 |
+| Workflows | 5,173 |
 | Classified (Tier 1) | 684 |
 | Classified (Tier 2) | 1,354 |
 | Classified (Tier 3) | 402 |
@@ -35,7 +35,7 @@
 
 ## Value Streams by Family
 
-### Plan & Source (428 workflows)
+### Plan & Source (452 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 46 |
@@ -52,8 +52,9 @@
 | [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | 24 |
 | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | 24 |
 | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | 24 |
+| [VS-182](VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md) | B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations) | 24 |
 
-### Make & Move (427 workflows)
+### Make & Move (451 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 45 |
@@ -74,7 +75,7 @@
 | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | 24 |
 | [VS-180](VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md) | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | 24 |
 
-### Sell & Serve (1,483 workflows)
+### Sell & Serve (1,507 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-07](VS-07-store-operations/README.md) | Store Operations | 144 |
@@ -121,8 +122,9 @@
 | [VS-175](VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/README.md) | Propane, LPG Cylinder Exchange & Gas Refill Operations | 24 |
 | [VS-176](VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md) | Blueprint, Reprographics & Large-Format Plan Printing Services | 24 |
 | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | 24 |
+| [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | 24 |
 
-### Finance (699 workflows)
+### Finance (723 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 42 |
@@ -153,7 +155,7 @@
 | [VS-173](VS-173-investor-relations-capital-markets-and-securities-disclosure/README.md) | Investor Relations, Capital Markets & Securities Disclosure | 24 |
 | [VS-181](VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/README.md) | B2B Project Financing, Escrow Account Orchestration & Lien Release | 24 |
 
-### People (410 workflows)
+### People (434 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 74 |
@@ -171,8 +173,9 @@
 | [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | 24 |
 | [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | 24 |
 | [VS-169](VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md) | Employee Uniform, Workwear & PPE-Issuance Program | 24 |
+| [VS-183](VS-183-dual-training-system-dts-and-tesda-partnership-program/README.md) | Dual Training System (DTS) & TESDA Partnership Program | 24 |
 
-### Asset & Infrastructure (272 workflows)
+### Asset & Infrastructure (320 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | 32 |
@@ -187,8 +190,9 @@
 | [VS-138](VS-138-integrated-facilities-management-workplace-services-and-building-automation/README.md) | Integrated Facilities Management, Workplace Services & Building Automation | 24 |
 | [VS-163](VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md) | Electric Vehicle (EV) Charging Station Host Network Operations | 24 |
 | [VS-178](VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md) | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | 24 |
+| [VS-184](VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md) | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | 24 |
 
-### Governance & Assurance (912 workflows)
+### Governance & Assurance (936 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 48 |
@@ -244,7 +248,7 @@
 | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | 24 |
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 
-Family subtotal reconciliation: 428 + 451 + 1,483 + 723 + 410 + 296 + 936 + 350 = 5,077
+Family subtotal reconciliation: 452 + 451 + 1,507 + 723 + 434 + 320 + 936 + 350 = 5,173
 
 > **Note (2026-06-20):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across twenty-five gap-analysis passes (2026-06-14 through 2026-06-20, VS-89–VS-177; W2993–W5128). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

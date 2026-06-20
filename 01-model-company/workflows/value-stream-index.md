@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 173 Value Streams · 523 Process Areas · 4,981 Workflows
+8 Families · 177 Value Streams · 547 Process Areas · 5,173 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-five gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 173 value streams (VS-89–VS-181; W2993–W5224). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -46,7 +46,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | Gap analysis | 3 | 24 |
 |  | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | Gap analysis | 3 | 24 |
 |  | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **43** | **428** |
+|  | [VS-182](VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md) | B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations) | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **46** | **452** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | Core | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | Core | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | Core | 3 | 36 |
@@ -108,7 +109,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-175](VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/README.md) | Propane, LPG Cylinder Exchange & Gas Refill Operations | Gap analysis | 3 | 24 |
 |  | [VS-176](VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md) | Blueprint, Reprographics & Large-Format Plan Printing Services | Gap analysis | 3 | 24 |
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **133** | **1483** |
+|  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **136** | **1507** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -151,7 +153,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | Gap analysis | 3 | 24 |
 |  | [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | Gap analysis | 3 | 24 |
 |  | [VS-169](VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md) | Employee Uniform, Workwear & PPE-Issuance Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **47** | **410** |
+|  | [VS-183](VS-183-dual-training-system-dts-and-tesda-partnership-program/README.md) | Dual Training System (DTS) & TESDA Partnership Program | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **50** | **434** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -213,7 +216,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **535** | **5,077** |
+| | | | **Grand Total** | **547** | **5,173** |
 
 ---
 
@@ -305,6 +308,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-131.1** [Human Rights Policy, Salient-Risk Identification & Due Diligence Framework](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.1-human-rights-policy-salient-risk-identification-and-due-diligence-framework.md) — 8 workflows
 - **PA-131.2** [Supply Chain Human Rights Risk Assessment, Auditing & Remediation](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.2-supply-chain-human-rights-risk-assessment-auditing-and-remediation.md) — 8 workflows
 - **PA-131.3** [Responsible Sourcing Governance, Reporting & Stakeholder Engagement](./VS-131-human-rights-responsible-supply-chain-due-diligence/PA-131.3-responsible-sourcing-governance-reporting-and-stakeholder-engagement.md) — 8 workflows
+
+**[VS-182: B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations)](./VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md)** (24 workflows)
+
+- **PA-182.1** [Custom Project Sourcing Intake & Quotation](./VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/PA-182.1-custom-project-sourcing-intake-and-quotation.md) — 8 workflows
+- **PA-182.2** [Indent Order Financing & LC Orchestration](./VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/PA-182.2-indent-order-financing-and-lc-orchestration.md) — 8 workflows
+- **PA-182.3** [Direct Port-to-Jobsite Customs & Logistics](./VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/PA-182.3-direct-port-to-jobsite-customs-and-logistics.md) — 8 workflows
 
 ### Make & Move
 
@@ -671,6 +680,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-176.2** [Customer Reprographics Job Lifecycle](./VS-176-blueprint-reprographics-and-large-format-plan-printing-services/PA-176.2-customer-reprographics-job-lifecycle.md) — 8 workflows
 - **PA-176.3** [Print Quality, Compliance, Document Security & Analytics](./VS-176-blueprint-reprographics-and-large-format-plan-printing-services/PA-176.3-quality-compliance-security-and-analytics.md) — 8 workflows
 
+**[VS-177: Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network](./VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md)** (24 workflows)
+
+- **PA-177.1** [Field Organization, Territory Design & Regional/District Store Management](./VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/PA-177.1-field-organization-territory-design-and-regional-district-store-management.md) — 8 workflows
+- **PA-177.2** [Store Visit, Field Coaching & Retail Standards Execution](./VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/PA-177.2-store-visit-field-coaching-and-retail-standards-execution.md) — 8 workflows
+- **PA-177.3** [Store Support Center, Escalation & Field Operations Analytics](./VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/PA-177.3-store-support-center-escalation-and-field-operations-analytics.md) — 8 workflows
+
+**[VS-185: B2B Cooperative Credit & Procurement Partnerships](./VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md)** (24 workflows)
+
+- **PA-185.1** [Cooperative Account Onboarding & Credit Limits](./VS-185-b2b-cooperative-credit-and-procurement-partnerships/PA-185.1-cooperative-account-onboarding-and-credit-limits.md) — 8 workflows
+- **PA-185.2** [Member Transaction Routing & Verification](./VS-185-b2b-cooperative-credit-and-procurement-partnerships/PA-185.2-member-transaction-routing-and-verification.md) — 8 workflows
+- **PA-185.3** [Cooperative Rebate & Purchase Volume Reconciliation](./VS-185-b2b-cooperative-credit-and-procurement-partnerships/PA-185.3-cooperative-rebate-and-purchase-volume-reconciliation.md) — 8 workflows
+
 ### Finance
 
 **[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (42 workflows)
@@ -929,6 +950,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-169.2** [Uniform, Workwear & PPE Issuance, Laundering & Lifecycle Operations](./VS-169-employee-uniform-workwear-and-ppe-issuance-program/PA-169.2-uniform-workwear-ppe-issuance-laundering-and-lifecycle-operations.md) — 8 workflows
 - **PA-169.3** [Uniform/PPE Program Analytics, Compliance & Assurance](./VS-169-employee-uniform-workwear-and-ppe-issuance-program/PA-169.3-uniform-ppe-program-analytics-compliance-and-assurance.md) — 8 workflows
 
+**[VS-183: Dual Training System (DTS) & TESDA Partnership Program](./VS-183-dual-training-system-dts-and-tesda-partnership-program/README.md)** (24 workflows)
+
+- **PA-183.1** [DTS Accreditation & TVI Onboarding](./VS-183-dual-training-system-dts-and-tesda-partnership-program/PA-183.1-dts-accreditation-and-tvi-onboarding.md) — 8 workflows
+- **PA-183.2** [Student-Trainee Lifecycle & Store Rotation](./VS-183-dual-training-system-dts-and-tesda-partnership-program/PA-183.2-student-trainee-lifecycle-and-store-rotation.md) — 8 workflows
+- **PA-183.3** [DTS Tax-Incentive Compliance & Reporting](./VS-183-dual-training-system-dts-and-tesda-partnership-program/PA-183.3-dts-tax-incentive-compliance-and-reporting.md) — 8 workflows
+
 ### Asset & Infrastructure
 
 **[VS-20: Real Estate & Construction](./VS-20-real-estate-construction/README.md)** (32 workflows)
@@ -997,6 +1024,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-178.1** [Land Feasibility, Site Acquisition & Title Consolidation](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.1-land-feasibility-site-acquisition-and-title-consolidation.md) — 8 workflows
 - **PA-178.2** [Agrarian Reform & Land Use Conversion](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.2-agrarian-reform-ncip-ancestral-domain-and-land-use-conversion-operations.md) — 8 workflows
 - **PA-178.3** [Property Joint-Ventures & LGU Zoning Compliance](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.3-property-joint-ventures-lgu-zoning-compliance-and-site-development-governance.md) — 8 workflows
+
+**[VS-184: Post-Disaster Store Infrastructure Reconstruction & Rehabilitation](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md)** (24 workflows)
+
+- **PA-184.1** [Structural Damage & Insurance Appraisal Coordination](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/PA-184.1-structural-damage-and-insurance-appraisal-coordination.md) — 8 workflows
+- **PA-184.2** [Rebuilding Project Execution & Safety Clearance](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/PA-184.2-rebuilding-project-execution-and-safety-clearance.md) — 8 workflows
+- **PA-184.3** [Temporary Facility & Parking Lot Sales Mobilization](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/PA-184.3-temporary-facility-and-parking-lot-sales-mobilization.md) — 8 workflows
 **[VS-163: Electric Vehicle (EV) Charging Station Host Network Operations](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md)** (24 workflows)
 
 - **PA-163.1** [Charging Network Strategy, Siting & Host Partnering](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/PA-163.1-charging-network-strategy-siting-and-host-partnering.md) — 8 workflows
