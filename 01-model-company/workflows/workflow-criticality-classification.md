@@ -1,9 +1,9 @@
 # Workflow Criticality Classification
 
-> Classifies 2,297 unique operational workflows into criticality tiers (the confirmed register
-> holds 2,320 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
+> Classifies 2,417 unique operational workflows into criticality tiers (the confirmed register
+> holds 2,440 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
 > a `##` parent). An additional 2,684 workflows (4,981 total − 2,297 classified) remain
-> unclassified pending review — all 2,684 carry a keyword-driven proposed tier in
+> unclassified pending review — all 2,564 carry a keyword-driven proposed tier in
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via
 > `07-methodology/classify-workflows.py`).
 >
@@ -35,7 +35,7 @@
 
 ---
 
-## Tier 1: Core Operations (672 Workflows)
+## Tier 1: Core Operations (684 Workflows)
 
 These 440 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
@@ -258,7 +258,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (1,258 Workflows)
+## Tier 2: Standard Support (1,354 Workflows)
 
 These 499 workflows are needed for standard operational support, cost controls, and category management.
 
@@ -549,7 +549,7 @@ These 499 workflows are needed for standard operational support, cost controls, 
 
 ---
 
-## Tier 3: Advanced Optimization (390 Workflows)
+## Tier 3: Advanced Optimization (402 Workflows)
 
 These 229 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
 
@@ -756,17 +756,17 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 672 | 29.0% |
-| Phase 2 | Operational Excellence (Tier 2) | 1,258 | 54.2% |
-| Phase 3 | Innovation & Optimization (Tier 3) | 390 | 16.8% |
-| **Confirmed Total** | | **2,320** | 100% |
+| Phase 1 | Go-Live Critical (Tier 1) | 684 | 28.0% |
+| Phase 2 | Operational Excellence (Tier 2) | 1,354 | 55.5% |
+| Phase 3 | Innovation & Optimization (Tier 3) | 402 | 16.5% |
+| **Confirmed Total** | | **2,440** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 2,297 are canonical `##` workflows.
+> own classification row; the remaining 2,417 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
-The **2,684** workflows not yet in the confirmed register above have been assigned a *proposed*
+The **2,564** workflows not yet in the confirmed register above have been assigned a *proposed*
 tier by [`07-methodology/classify-workflows.py`](../../07-methodology/classify-workflows.py) using
 conservative keyword rules; see the companion file
 [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). On review, promote/demote
@@ -774,17 +774,17 @@ rows by moving them into the confirmed sections above.
 
 | Phase | Label | Proposed Count |
 |---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) — proposed | 514 |
-| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,023 |
-| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 147 |
-| **Proposed Total** | | **2,684** |
+| Phase 1 | Go-Live Critical (Tier 1) — proposed | 507 |
+| Phase 2 | Operational Excellence (Tier 2) — proposed | 1,912 |
+| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 145 |
+| **Proposed Total** | | **2,564** |
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 2,320 rows (2,297 unique `##` workflows) |
-| Proposed (keyword, pending review) | 2,684 |
+| Confirmed (hand-reviewed) | 2,440 rows (2,417 unique `##` workflows) |
+| Proposed (keyword, pending review) | 2,564 |
 | Without even a proposal | 0 |
-| **Grand Total** | **4,981** unique `##` workflows (2,297 confirmed + 2,684 unclassified, all proposed) |
+| **Grand Total** | **4,981** unique `##` workflows (2,417 confirmed + 2,564 unclassified, all proposed) |
 
 ### Domain Breakdown
 
@@ -3274,4 +3274,200 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 
 ---
 
-*Date: 2026-06-20 | Workflow Criticality Classification v7.24 — sixth batch (Sales & Transformation): 8 VSs (VS-124/130/132/134/137/140/155/159, 192 workflows). **10 → T1** (PCC merger notification, political-contribution/election-compliance/anti-graft, corporate-security K&R/active-assailant/investigations); **24 → T3**; **158 T2**. Confirmed 2,128→2,320 rows (2,105→2,297 unique; T1 662→672, T2 1,100→1,258, T3 366→390); unclassified 2,876→2,684 (46.1%); proposed 514/2,023/147 (zero drift). `validate-repo.sh`: 0/2. Prior v7.23 — fifth batch (Shared Services & Specialized Support): 8 VSs (VS-103/106/107/109/115/116/119/123, 192 workflows). **18 → Tier 1** (PFRS 9 hedge accounting, DTI Weights & Measures, bid/performance-bond statutory issuance/claim/dispute, whistleblower speak-up/investigation/anti-retaliation/external-reporting, TESDA apprenticeship compliance); **36 → Tier 3** (analytics); **138 T2**. Confirmed 1,936→2,128 rows (1,913→2,105 unique; T1 644→662, T2 962→1,100, T3 330→366); unclassified 3,068→2,876 (42.3%); proposed 518/2,209/149 (zero drift). `validate-repo.sh`: 0/2. Prior v7.22 — fourth hand-confirmation batch (Mixed Operations): 8 VSs (VS-57/58/66/69/70/71/74/101, 192 workflows). **15 → Tier 1** (typhoon-BCP emergency, anti-counterfeit enforcement, electrical-permit compliance, OTB financial gate); **36 → Tier 3** (analytics); **141 T2**. Confirmed 1,744→1,936 rows (1,721→1,913 unique; T1 629→644, T2 821→962, T3 294→330); unclassified 3,260→3,068 (38.4%); proposed 525/2,389/154 (zero drift). `validate-repo.sh`: 0/2. Prior v7.21 — third hand-confirmation batch (Operational Support): 8 VSs (VS-40/43/55/63/64/65/83/84, 192 workflows). **21 → Tier 1** (PFRS capex capitalization/interest/conversion, DOLE occupational-health reporting/exposure-monitoring/Mental-Health-Act, DOLE/NLRC labor-relations mandatory: union certification, CBA conciliation/ratification, 2-notice-rule/discipline/SENA, reinstatement, strike-lockout notice, emergency-comm-protocol); **30 → Tier 3** (space/productivity/clearance/channel analytics, churn prediction, planogram/seasonal analytics, engagement surveys, ROI analyses); **141 confirmed Tier 2**. Confirmed 1,552→1,744 rows (1,529→1,721 unique; T1 608→629, T2 680→821, T3 264→294); unclassified 3,452→3,260 (34.6%); proposed regenerated (535/2,566/159, no drift). `validate-repo.sh`: 0/2. Prior v7.20 — second hand-confirmation batch (Support & Governance): 8 family-decisive Tier-2 VSs (VS-100/104/112/113/126/129/133/139, 192 workflows) promoted from the keyword proposal after genuine review calibrated to the register's existing optimization/analytics=Tier 3 placement. **14 → Tier 1** (statutory execution the keyword rules missed: litigation hold/filing/enforcement & loss-contingency, corporate-secretarial/SEC, regulatory-investigation defense, merger-notification/PCC pre-filing, PCC investigation/dawn-raid/litigation/penalty, political-activity/lobbying disclosure, CDP DSAR/consumer-rights, event-permit/prize-withholding); **29 → Tier 3** (analytics/optimization defaulted to Tier 2: process/task mining, cost-out & productivity programs, OpEx maturity, CDP recommendation/CLV/attribution analytics, IP/legal/portfolio analytics); **149 confirmed Tier 2**. Confirmed 1,360→1,552 rows (1,337→1,529 unique; T1 594→608, T2 531→680, T3 235→264); unclassified 3,644→3,452 (30.7% classified); proposed regenerated (543/2,747/162). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.19 — first hand-confirmation batch: the 8 wholly-statutory value streams (VS-79/85/89/91/114/117/118/125, 192 workflows) promoted from the keyword proposal into the confirmed register after genuine tier review — 154 confirmed Tier 1 (statutory execution), 32 demoted to Tier 2 (program support: training / reporting / change-monitoring / cost-or-insurance recovery), 6 demoted to Tier 3 (analytics / continuous improvement); see the 'Statutory-Compliance Classification Pass' block above. Confirmed 1,168→1,360 rows (1,145→1,337 unique; Tier 1 440→594, Tier 2 499→531, Tier 3 229→235); unclassified 3,836→3,644; proposed register regenerated via `classify-workflows.py --write` (now 548 / 2,929 / 167 — which also dissolved one row of prior proposed-file drift). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.18 — grand total reconciled to 4,981 unique workflows (1,145 confirmed + 3,836 unclassified) after restoring the VS-12 PA-12.2 ghost workflow's missing `## W1318.` header (Tool Rental Reservation, Waitlist & Scheduling); the §Summary table and intro/banner above now read 4,981/3,836, the proposed register was regenerated via `classify-workflows.py --write`, and `validate-repo.sh` Check 17 (ghost detection) now reports 0. Prior v7.17 — §Summary *Proposed classification* subsection reconciled to the regenerated proposed register: unclassified **3,595 → 3,835** (per-tier **688 / 2,608 / 155 → 741 / 2,927 / 167**), now matching [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) exactly. The drift accumulated across Passes 19–25 (VS-162–VS-177, +240 workflows) because only the proposed file was being regenerated, not this mirror. The Confirmed Total (1,168 rows / 1,145 unique) and Grand Total (4,980) were already correct. v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
+### Final Family-Decisive Classification Pass (120 workflows; VS-165/169/172/176/177)
+
+> **Hand-reviewed 2026-06-20 (batch 7, final).** The last 5 family-decisive ≥92%-Tier-2 VSs:
+> PCAB contractor licensing, uniform/workwear/PPE, third-party installer network, blueprint
+> reprographics, field retail operations. **12 → Tier 1** (PCAB license annual-renewal/project-
+> registration/audit-response/personnel-credentialing, DOLE PPE compliance, data-privacy for
+> employee health/sizing data, PCAB installer verification, copyright/IP controls, document
+> confidentiality, store exception-override authorization); **12 → Tier 3** (analytics/CI);
+> **96 T2**. → 2,564 unclassified (48.5%). **All 53 family-decisive VSs now confirmed.**
+
+#### Tier 1 (12)
+
+**Governance & Assurance** (6)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4818 | PCAB License Application, Documentation Package & Registration Issuance (RA 4566) | VS-165 |
+| W4820 | PCAB Annual License Renewal, Registration Compliance & Expiry Calendar | VS-165 |
+| W4824 | License Lapse/Revocation Prevention, Condition Breach Reporting & Reinstatement | VS-165 |
+| W4825 | PCAB Project Registration per Contract & Notice-of-Award Filing | VS-165 |
+| W4833 | CIAP/PCAB & LGU Construction Inspection/Audit Response & Corrective Action | VS-165 |
+| W4835 | Technical-Personnel Credentialing — PRC Engineer-of-Record, Responsible Officers & PCAB-Required Staff | VS-165 |
+
+**People** (2)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4930 | PPE Compliance, Usage & DOLE-Compliance Audit | VS-169 |
+| W4935 | Data Privacy & Employee Records (Sizing/Health Data, RA 10173) | VS-169 |
+
+**Sell & Serve** (4)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4987 | Contractor Vetting, PCAB License (RA 4566) & Insurance Verification | VS-172 |
+| W5087 | Copyright, IP & Sensitive-Document Handling Policy & Controls | VS-176 |
+| W5100 | Customer Document Confidentiality, RA 10173 Data-Privacy & Secure Disposal | VS-176 |
+| W5123 | Exception & Override Authorization Handling (Store→HQ Approval Workflow) | VS-177 |
+
+
+#### Tier 2 (96)
+
+**Governance & Assurance** (16)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4817 | PCAB Licensing Strategy, Entity Eligibility & Contractor-Category Decision | VS-165 |
+| W4819 | License Category, Classification & Size/Capacity Upgrade Management | VS-165 |
+| W4821 | CIAP/PCAB Board Engagement, Petitions & Regulatory Liaison | VS-165 |
+| W4822 | Multi-Entity License Coverage, Affiliate & Entity-Level Licensing Decisions | VS-165 |
+| W4823 | PCAB License Compliance Recordkeeping, Evidence Repository & Audit Trail | VS-165 |
+| W4826 | Performance & Surety Bonding for PCAB-Licensed Project Work | VS-165 |
+| W4827 | Construction Safety & Health Program (COSP) & DOLE D.O. 13 Compliance for Licensed Work | VS-165 |
+| W4828 | Bidding/Bid-Support License Proof, Capacity Pre-Check & PhilGEPS Eligibility Sync | VS-165 |
+| W4829 | Subcontractor License Verification, Approved-Subcontractor List & Cascading Compliance | VS-165 |
+| W4830 | Project Warranty Period, Acceptance Certificate & Retention/Maintenance Obligations | VS-165 |
+| W4831 | Construction Payment Security — Mechanic's-Lien Rights, Lien Waivers & Payment-Bond Claims | VS-165 |
+| W4832 | Government/Institutional Project Closeout, Audited Records & Statutory Turnover | VS-165 |
+| W4834 | License-Condition Compliance Monitoring (Insurance, Technical Capacity, CPD, Personnel) | VS-165 |
+| W4836 | Unlicensed-Contracting Risk Control — In-Scope/Out-of-Scope Boundary & Material-Supply-vs-Install Decision | VS-165 |
+| W4837 | Joint Ventures, Consortiums & Foreign Contractor Licensing | VS-165 |
+| W4838 | Penalty/Violation Management, Administrative Proceedings & Reinstatement | VS-165 |
+
+**People** (20)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4913 | Uniform, Workwear & PPE Program Strategy & Operating Model | VS-169 |
+| W4914 | Role-Based Uniform / Workwear Standards & Brand-Guideline Design | VS-169 |
+| W4915 | PPE Standards, Role Hazard Assessment & Issuance Matrix | VS-169 |
+| W4916 | Uniform Allowance, Replenishment Cycle & Policy Framework | VS-169 |
+| W4917 | Uniform / Workwear / PPE Vendor Selection & Contracting | VS-169 |
+| W4918 | Sizing, Fit & Body-Measurement Program | VS-169 |
+| W4919 | Branded Apparel Design, Procurement & Quality | VS-169 |
+| W4920 | Multi-Entity Program Governance & Cross-Company Standards | VS-169 |
+| W4921 | New-Hire Uniform / Workwear Issuance & Onboarding Kit | VS-169 |
+| W4922 | Role-Based PPE Issuance, Fit-Testing & Training | VS-169 |
+| W4923 | Contingent / Outsourced & Vendor-Personnel Uniform & PPE Provision | VS-169 |
+| W4924 | Uniform / Workwear Laundering Service — In-House vs Vendor (Industrial Laundry) | VS-169 |
+| W4925 | PPE Inspection, Maintenance, Replacement & End-of-Life | VS-169 |
+| W4926 | Uniform Damage, Loss & Replacement Processing | VS-169 |
+| W4927 | Promotion / Transfer / Role-Change Uniform Re-Issuance | VS-169 |
+| W4928 | Separation / End-of-Employment Uniform Return & Recovery | VS-169 |
+| W4931 | Uniform Quality, Vendor SLA & Performance Governance | VS-169 |
+| W4932 | Uniform / PPE Inventory, Stock-Level & Distribution Management | VS-169 |
+| W4933 | Employee Satisfaction, Fit & Comfort Feedback | VS-169 |
+| W4934 | Sustainability — Textile Recycling, Eco-Uniform & Circularity | VS-169 |
+
+**Sell & Serve** (60)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4985 | Installer & Contractor Network Strategy, Trade-Coverage & Capacity Design | VS-172 |
+| W4986 | Contractor Recruitment, Pipeline & Trade-Segment Sourcing | VS-172 |
+| W4988 | Contractor Background, Reference & Quality-Capability Due Diligence | VS-172 |
+| W4989 | Installer Network Onboarding, Agreement & Tier Classification | VS-172 |
+| W4990 | Pro-Referral Marketplace Platform, Profile & Catalog Management | VS-172 |
+| W4991 | Trade-Coverage Gap Analysis, Geographic Expansion & Recruitment Targeting | VS-172 |
+| W4992 | Network Governance, Code-of-Conduct & Installer Relationship Management | VS-172 |
+| W4993 | Customer "Find-a-Pro" Request Intake, Qualification & Consent | VS-172 |
+| W4994 | Installer Matchmaking, Routing & Lead Distribution | VS-172 |
+| W4995 | Lead Handoff, Customer-Installer Communication & Quote Management | VS-172 |
+| W4996 | Project Booking, Scope Confirmation & Materials-Link Sales Attach | VS-172 |
+| W4997 | Referral Fee, Commission & Settlement Management | VS-172 |
+| W4998 | Project Execution Tracking, Milestone & Completion Verification | VS-172 |
+| W4999 | Installer Capacity, Calendar & Workload Balancing | VS-172 |
+| W5000 | Lost/Declined Lead Recovery, Alternate Referral & Demand Capture | VS-172 |
+| W5001 | Customer Rating, Review & Feedback Collection | VS-172 |
+| W5003 | Quality Assurance, Workmanship Inspection & Site Audit | VS-172 |
+| W5004 | Warranty, Defect Liability & Post-Installation Service Obligation | VS-172 |
+| W5005 | Dispute Resolution, Complaint Handling & Installer Discipline/Removal | VS-172 |
+| W5006 | License, Insurance & Compliance Continuous Monitoring | VS-172 |
+| W5008 | Installer Network Risk, TPRM & Data Privacy Assurance | VS-172 |
+| W5081 | Reprographics Service Strategy, Catalog & Business-Model Design | VS-176 |
+| W5082 | Large-Format Printer/Plotter/Scanner Equipment Selection, Procurement & Setup | VS-176 |
+| W5083 | Reprographics Pricing, Cost-per-SQM & Service Tariff Strategy | VS-176 |
+| W5084 | Print Media, Toner/Ink & Consumables Procurement & Inventory Management | VS-176 |
+| W5085 | Reprographics Service Counter, Layout & Self-Service Workstation Setup | VS-176 |
+| W5086 | Cloud/Mobile Print-Submission Portal & File-Format Standardization | VS-176 |
+| W5088 | Equipment Maintenance, Vendor Service Contract & Calibration Management | VS-176 |
+| W5089 | Customer Print-Job Intake, File Check, Quotation & Order Confirmation | VS-176 |
+| W5090 | Large-Format Plan Printing, Plotting & Print-Quality Control | VS-176 |
+| W5091 | Document Scanning, Archiving & Large-Format Digitization Service | VS-176 |
+| W5092 | Plan Copying, Binding, Folding & Reproduction Service | VS-176 |
+| W5093 | Customer File Storage, Reprint-on-Demand & Version Control Service | VS-176 |
+| W5094 | Customer Job Notification, Pickup, Delivery & Will-Call Management | VS-176 |
+| W5095 | Bulk/Tender Bid-Set, Project Plan-Room & Multi-Set Reproduction Service | VS-176 |
+| W5096 | Customer Job Billing, Prepaid Account & Credit-Term Management | VS-176 |
+| W5097 | Print Quality, Color/Scale Accuracy & Dimensional Verification | VS-176 |
+| W5101 | Software License, Cloud Subscription & Print-Management System Administration | VS-176 |
+| W5102 | Reprographics Customer Satisfaction, Complaint & Rework Management | VS-176 |
+| W5103 | Service Demand Seasonality, Capacity Forecasting & Staffing | VS-176 |
+| W5105 | Field Retail Operations Strategy, Charter & Operating-Model Design | VS-177 |
+| W5106 | Regional/District Territory Design, Alignment & Store-Group Assignment | VS-177 |
+| W5107 | Field Organization Staffing, Span-of-Control & Regional-Manager Workforce Planning | VS-177 |
+| W5108 | Regional/District Manager Onboarding, Certification & Capability Building | VS-177 |
+| W5109 | Multi-Store P&L Governance, Store Grading & Performance Tiering | VS-177 |
+| W5110 | New-Store Stabilization, Maturity Ramp & Field Handover Support | VS-177 |
+| W5111 | Underperforming/Distressed-Store Diagnosis & Turnaround Program | VS-177 |
+| W5112 | Field Compensation, Incentive & Multi-Store Performance Recognition | VS-177 |
+| W5113 | Regional/District Store-Visit Cadence, Routing & Itinerary Planning | VS-177 |
+| W5114 | Store-Visit Execution, Retail-Standards Audit & Compliance Scoring | VS-177 |
+| W5115 | Store-Manager Coaching, Development & Performance Conversations | VS-177 |
+| W5116 | Retail-Execution Field Audit (Planogram/Price/Signage/Merchandising Standards) | VS-177 |
+| W5117 | Competitor & Market Field Intelligence Collection | VS-177 |
+| W5118 | Field Action-Item Tracking, Follow-Up & CAP Closure | VS-177 |
+| W5119 | Field Communication, Regional Meetings & Best-Practice Sharing | VS-177 |
+| W5121 | Store Operations Support Center (Store Hotline) Setup, Staffing & Operating Model | VS-177 |
+| W5122 | Store Issue Intake, Triage, Resolution & Escalation Management | VS-177 |
+| W5124 | Store Grievance, Concern & Feedback Resolution Channel | VS-177 |
+| W5125 | Cross-Functional Store-Issue Coordination (Merch/IT/HR/Facilities/LP) | VS-177 |
+| W5126 | Store Knowledge Base, SOP Support & Field Self-Service Enablement | VS-177 |
+
+
+#### Tier 3 (12)
+
+**Governance & Assurance** (2)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4839 | Contractor Compliance Analytics — Bid Win-Rate, Project Margin, Penalty/Reputation, License Economics | VS-165 |
+| W4840 | PCAB Compliance Governance, Board Reporting & Program Continuous Improvement | VS-165 |
+
+**People** (2)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4929 | Uniform / PPE Program Cost, Spend & TCO Analytics | VS-169 |
+| W4936 | Program Maturity, Benchmarking & Continuous Improvement | VS-169 |
+
+**Sell & Serve** (8)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5002 | Installer Performance Scorecard & KPI Management | VS-172 |
+| W5007 | Network Health, Revenue Impact & Program Analytics | VS-172 |
+| W5098 | Reprographics Equipment Performance, Utilization & Downtime Management | VS-176 |
+| W5099 | Consumables Yield, Print-Cost Accounting & Margin Analytics | VS-176 |
+| W5104 | Reprographics Program Performance, ROI & Cross-Sell Analytics | VS-176 |
+| W5120 | Field Coaching Quality, Visit Effectiveness & Standards-Compliance Analytics | VS-177 |
+| W5127 | Field & Store Operations Performance Dashboard & Comp-Store Analytics | VS-177 |
+| W5128 | Field Retail Operations Continuous Improvement, Benchmarking & Program Review | VS-177 |
+
+
+**Promotion audit (12 → Tier 1):**
+- **Governance & Assurance** (6): W4818, W4820, W4824, W4825, W4833, W4835
+- **People** (2): W4930, W4935
+- **Sell & Serve** (4): W4987, W5087, W5100, W5123
+
+**Demotion audit (12 → Tier 3):**
+- **Governance & Assurance** (2): W4839, W4840
+- **People** (2): W4929, W4936
+- **Sell & Serve** (8): W5002, W5007, W5098, W5099, W5104, W5120, W5127, W5128
+
+---
+
+*Date: 2026-06-20 | Workflow Criticality Classification v7.25 — seventh & final family-decisive batch: 5 VSs (VS-165/169/172/176/177, 120 workflows). **12 → T1** (PCAB license/registration/renewal/project-filing/audit-response/personnel, DOLE PPE, RA 10173 health-data, PCAB installer verification, copyright/IP, doc confidentiality, store override auth); **12 → T3**; **96 T2**. Confirmed 2,320→2,440 rows (2,297→2,417 unique; T1 672→684, T2 1,258→1,354, T3 390→402); unclassified 2,684→2,564 (48.5%); proposed 507/1,912/145. **All 53 family-decisive VSs confirmed.** `validate-repo.sh`: 0/2. Prior v7.24 — sixth batch. **10 → T1** (PCC merger notification, political-contribution/election-compliance/anti-graft, corporate-security K&R/active-assailant/investigations); **24 → T3**; **158 T2**. Confirmed 2,128→2,320 rows (2,105→2,297 unique; T1 662→672, T2 1,100→1,258, T3 366→390); unclassified 2,876→2,684 (46.1%); proposed 514/2,023/147 (zero drift). `validate-repo.sh`: 0/2. Prior v7.23 — fifth batch (Shared Services & Specialized Support): 8 VSs (VS-103/106/107/109/115/116/119/123, 192 workflows). **18 → Tier 1** (PFRS 9 hedge accounting, DTI Weights & Measures, bid/performance-bond statutory issuance/claim/dispute, whistleblower speak-up/investigation/anti-retaliation/external-reporting, TESDA apprenticeship compliance); **36 → Tier 3** (analytics); **138 T2**. Confirmed 1,936→2,128 rows (1,913→2,105 unique; T1 644→662, T2 962→1,100, T3 330→366); unclassified 3,068→2,876 (42.3%); proposed 518/2,209/149 (zero drift). `validate-repo.sh`: 0/2. Prior v7.22 — fourth hand-confirmation batch (Mixed Operations): 8 VSs (VS-57/58/66/69/70/71/74/101, 192 workflows). **15 → Tier 1** (typhoon-BCP emergency, anti-counterfeit enforcement, electrical-permit compliance, OTB financial gate); **36 → Tier 3** (analytics); **141 T2**. Confirmed 1,744→1,936 rows (1,721→1,913 unique; T1 629→644, T2 821→962, T3 294→330); unclassified 3,260→3,068 (38.4%); proposed 525/2,389/154 (zero drift). `validate-repo.sh`: 0/2. Prior v7.21 — third hand-confirmation batch (Operational Support): 8 VSs (VS-40/43/55/63/64/65/83/84, 192 workflows). **21 → Tier 1** (PFRS capex capitalization/interest/conversion, DOLE occupational-health reporting/exposure-monitoring/Mental-Health-Act, DOLE/NLRC labor-relations mandatory: union certification, CBA conciliation/ratification, 2-notice-rule/discipline/SENA, reinstatement, strike-lockout notice, emergency-comm-protocol); **30 → Tier 3** (space/productivity/clearance/channel analytics, churn prediction, planogram/seasonal analytics, engagement surveys, ROI analyses); **141 confirmed Tier 2**. Confirmed 1,552→1,744 rows (1,529→1,721 unique; T1 608→629, T2 680→821, T3 264→294); unclassified 3,452→3,260 (34.6%); proposed regenerated (535/2,566/159, no drift). `validate-repo.sh`: 0/2. Prior v7.20 — second hand-confirmation batch (Support & Governance): 8 family-decisive Tier-2 VSs (VS-100/104/112/113/126/129/133/139, 192 workflows) promoted from the keyword proposal after genuine review calibrated to the register's existing optimization/analytics=Tier 3 placement. **14 → Tier 1** (statutory execution the keyword rules missed: litigation hold/filing/enforcement & loss-contingency, corporate-secretarial/SEC, regulatory-investigation defense, merger-notification/PCC pre-filing, PCC investigation/dawn-raid/litigation/penalty, political-activity/lobbying disclosure, CDP DSAR/consumer-rights, event-permit/prize-withholding); **29 → Tier 3** (analytics/optimization defaulted to Tier 2: process/task mining, cost-out & productivity programs, OpEx maturity, CDP recommendation/CLV/attribution analytics, IP/legal/portfolio analytics); **149 confirmed Tier 2**. Confirmed 1,360→1,552 rows (1,337→1,529 unique; T1 594→608, T2 531→680, T3 235→264); unclassified 3,644→3,452 (30.7% classified); proposed regenerated (543/2,747/162). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.19 — first hand-confirmation batch: the 8 wholly-statutory value streams (VS-79/85/89/91/114/117/118/125, 192 workflows) promoted from the keyword proposal into the confirmed register after genuine tier review — 154 confirmed Tier 1 (statutory execution), 32 demoted to Tier 2 (program support: training / reporting / change-monitoring / cost-or-insurance recovery), 6 demoted to Tier 3 (analytics / continuous improvement); see the 'Statutory-Compliance Classification Pass' block above. Confirmed 1,168→1,360 rows (1,145→1,337 unique; Tier 1 440→594, Tier 2 499→531, Tier 3 229→235); unclassified 3,836→3,644; proposed register regenerated via `classify-workflows.py --write` (now 548 / 2,929 / 167 — which also dissolved one row of prior proposed-file drift). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.18 — grand total reconciled to 4,981 unique workflows (1,145 confirmed + 3,836 unclassified) after restoring the VS-12 PA-12.2 ghost workflow's missing `## W1318.` header (Tool Rental Reservation, Waitlist & Scheduling); the §Summary table and intro/banner above now read 4,981/3,836, the proposed register was regenerated via `classify-workflows.py --write`, and `validate-repo.sh` Check 17 (ghost detection) now reports 0. Prior v7.17 — §Summary *Proposed classification* subsection reconciled to the regenerated proposed register: unclassified **3,595 → 3,835** (per-tier **688 / 2,608 / 155 → 741 / 2,927 / 167**), now matching [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) exactly. The drift accumulated across Passes 19–25 (VS-162–VS-177, +240 workflows) because only the proposed file was being regenerated, not this mirror. The Confirmed Total (1,168 rows / 1,145 unique) and Grand Total (4,980) were already correct. v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
