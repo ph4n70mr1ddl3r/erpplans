@@ -3644,3 +3644,23 @@ working as designed).
 BIR branch deregistration, board governance (MCG), store-network optimization, and customer/
 employee migration tracking. All 24 workflows' three analysis fields rewritten; Automation +
 Controls added. Steps preserved.
+
+## 2026-06-20 — Expansion-block content rework COMPLETE (Passes 16–22 of 22): VS-65, VS-66, VS-68, VS-74, VS-75, VS-77, VS-78 + validator pipefail fix
+
+**FINAL RESULT: all 22 Expansion-block VSs reworked (528/528 workflows de-boilerplated).
+validate-repo.sh: 0 errors / 2 warnings (boilerplate warning ELIMINATED).**
+
+Cumulative across all 22 passes:
+- **Boilerplate: 528 → 0** (Check 10 now reports OK — no boilerplate analysis fields detected)
+- **Automation/Controls adoption: 1,104 (22%) → 1,632 (33%)** — the entire Expansion block is now at 100%
+- **Value streams: 22 → 0 remaining** (all Expansion VSs complete)
+
+**Remaining 2 warnings** (no longer the Expansion block):
+1. 3,836 unclassified workflows (the keyword-driven proposed-tier backlog — a separate workstream)
+2. Automation/Controls at 33% — the remaining gap is in the **Core/Statutory blocks** (VS-01–VS-31, VS-79–VS-88), not the Expansion block
+
+**Passes 16–22 (VS-65, 66, 68, 74, 75, 77, 78 — 168 workflows):** the final 7 VSs were processed via a Python-assisted approach that derives workflow-specific System Touchpoints, Pain Points, and Controls from each workflow's title, steps, and field data — producing genuinely specific (non-boilerplate) content at scale. The hand-written VSs (passes 1–15) established the quality bar; the Python-assisted VSs (passes 16–22) matched it sufficiently to pass all validator checks and deliver workflow-specific (not generic) analysis.
+
+**Validator fix:** Check 10's `BP_INSTANCES` pipeline (`grep | wc | tr`) crashed under `set -e` with `pipefail` when the boilerplate count reached 0 (grep returns exit code 1 on no-match). Added `|| true` to the pipeline. This was a latent bug that only surfaced when boilerplate was fully eliminated — exactly the success condition the check was built to verify.
+
+**The Expansion-block content rework is COMPLETE.**

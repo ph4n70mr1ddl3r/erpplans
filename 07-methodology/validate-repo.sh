@@ -220,7 +220,7 @@ echo "--- Check 10: Boilerplate analysis fields ---"
 # the three analysis fields".
 BP_MARKER='Operational variability mitigated by standard procedures and system controls'
 BP_FILES=$(grep -rlF "$BP_MARKER" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
-BP_INSTANCES=$(grep -rhF "$BP_MARKER" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
+BP_INSTANCES=$(grep -rhF "$BP_MARKER" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ' || true)
 if [ "$BP_INSTANCES" -eq 0 ]; then
     ok "No boilerplate analysis fields detected"
 else
