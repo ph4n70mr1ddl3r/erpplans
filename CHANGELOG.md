@@ -3552,3 +3552,16 @@ RA 9514 Fire Code, RA 10667 Competition Act, RA 7394 Consumer Act, PD 856 Sanita
 OSH, RA 10121 DRRM, RA 11032 Ease of Doing Business). Added Automation Opportunity + Controls to
 all 24, with real cross-references to VS-22/29/35/69/79/88/100/104/129/132/138/156/166/209.
 Field tables and Steps preserved; thin Steps expanded. 19 Expansion VSs remaining.
+
+## 2026-06-20 — Expansion-block content rework (Passes 3–4 of 22): VS-62 Product Sample & Display, VS-55 Planogram & Space Optimization
+
+Continuing the substantive content rework. **Cumulative (passes 1–4): boilerplate 528→432 workflows, 22→18 VSs;
+Automation/Controls 1,104→1,200, 22%→24%.** validate-repo.sh: 0 errors / 3 warnings.
+
+**VS-62 (24 workflows, 3 PAs)** and **VS-55 (24 workflows, 3 PAs)** — rewrote all 48 workflows' three
+analysis fields from boilerplate to workflow-specific content with real cross-references
+(VS-01/04/05/08/09/13/14/17/28/29/33/39/40/44/55/57/62/63/75/91/99/109/128/133/137/146/158/177).
+Added Automation Opportunity + Controls to all 48. VS-55 grounded in the canonical sales/sqm +
+margin/sqm space-productivity frame and the W86 planogram-compliance standard; VS-62 grounded in
+the sample-SKU→parent-SKU attribution model and the sample-to-order conversion analytics.
+17 Expansion VSs remaining.
