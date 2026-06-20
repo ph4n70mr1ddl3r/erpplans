@@ -221,7 +221,10 @@ erpplans/
 ├── CHANGELOG.md                 ← Revision history
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
-    └── technical-guidelines.md       POS hardware, infrastructure, integration, security
+    ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
+    ├── validate-repo.sh              Cross-reference validation (17 checks)
+    ├── classify-workflows.py         Keyword-driven criticality classifier
+    └── add-automation-controls.py    Automation/Controls field adder
 ```
 
 ## The Model Company at a Glance

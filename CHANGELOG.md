@@ -4,6 +4,46 @@
 
 ---
 
+## 2026-06-20 — Consistency review #2: PA-subtotal correction, README folder-tree completeness
+
+A second whole-repo consistency review (following the first on 2026-06-20).
+`validate-repo.sh` still reports **0 errors / 2 warnings** (unchanged). No count-cascade
+— all grand totals remain: **4,981 workflows / 173 value streams / 523 process areas /**
+**2,440 register rows / 2,417 unique classified / 2,564 unclassified / 733 requirements /**
+**67 controls / 6,757 headcount**.
+
+**1. value-stream-index.md family PA subtotals corrected** — the per-family process-area
+subtotals were internally inconsistent with the Grand Total (523) that the file correctly
+states in its header. Three families were under by 2 each because their header-row VS
+(VS-07 Sell & Serve, VS-15 Finance, VS-19 People) had a non-3 PA count that the subtotal
+computation missed. Fixed:
+- Sell & Serve: 131 → **133** (VS-07 header row: 4 PAs)
+- Finance: 76 → **78** (VS-15 header row: 2 PAs; VS-17: 4 PAs)
+- People: 45 → **47** (VS-19 header row: 5 PAs)
+
+Individual VS-row PA counts were already correct; only the subtotal lines were stale.
+The family subtotals now sum to the stated Grand Total of 523 (43+48+133+78+47+33+105+36).
+
+**2. Root README folder tree now lists `07-methodology/` scripts** — the tree showed only
+`README.md` and `technical-guidelines.md` but omitted `validate-repo.sh`,
+`classify-workflows.py`, and `add-automation-controls.py`, all three of which are
+referenced extensively across the repository (CHANGELOG, technique docs, validator)
+and are listed in `07-methodology/README.md`'s own Contents table.
+
+**Other findings (reviewed; no action):**
+- Coverage percentage (49%) is a presentation rounding of 48.5%; left as-is
+- The 25-pass gap-analysis CHANGELOG detail (~3,800 lines) is expected for a living
+  regulatory/business-process specification of this scope
+- `WORKFLOW-FORMAT-GUIDE.md` §Standard analysis fields field-adoption map is accurate
+- VS-73 README rework-status note correctly marked "now complete"
+- `requirement-workflow-matrix.md` header & Coverage Validation section aligned with
+  the version-note honesty (core-foundational only) per the prior 2026-06-20 review
+- All cross-reference documents have no stale counts
+- No remaining boilerplate, ghost workflows, or dangling references
+- `workflows/README.md` family workflow subtotals verified correct (428+427+1,483+699+410+272+912+350=4,981)
+
+---
+
 ## 2026-06-20 — Third hand-confirmation batch: 8 operational support VSs (192 workflows)
 
 Third review batch: **VS-40 Capex, VS-43 Trade Pro, VS-55 Planogram, VS-63 Store Comms,
