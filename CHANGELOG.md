@@ -3524,3 +3524,18 @@ field-adoption — all three now explicitly tracked and decreasing toward zero).
 
 ---
 
+
+## 2026-06-20 — Expansion-block content rework (Pass 1 of 22): VS-67 Vendor Scorecard & Performance Analytics
+
+Starting the substantive content rework that resolves the three tracked adoption warnings
+(boilerplate analysis fields, missing Automation/Controls, unclassified). VS-67 is the template
+establishing the per-VS pace and quality bar. **validate-repo.sh: 0 errors / 3 warnings**
+(boilerplate 528→504 workflows, 22→21 VSs; Automation/Controls adoption 1,104→1,128, 22%→23%).
+
+**VS-67 (24 workflows, 3 PAs)** — rewrote all 24 workflows' System Touchpoints, Pain Points/Risks,
+and Time Estimate fields from verbatim boilerplate to workflow-specific content, and added the
+Automation Opportunity + Controls fields to all 24 — matching the VS-73 reference standard.
+Preserved the field tables and Steps tables (already specific); expanded thin Steps where present.
+Each workflow's analysis fields now name the specific ERP module/object, real cross-references
+(VS-02/03/15/28/29/31/39/79/88/100/131 etc.), named risks with mitigations, and scaling math.
+21 remaining Expansion VSs to go.
