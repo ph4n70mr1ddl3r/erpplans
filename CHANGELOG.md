@@ -4,6 +4,59 @@
 
 ---
 
+## 2026-06-20 — First criticality hand-confirmation batch: 8 wholly-statutory VSs (192 workflows)
+
+Prompted by "can the 2 validator warnings be easily fixed?" — they can't be fixed *mechanically*
+(3,836 unclassified; 3,349 missing analysis fields), but Check 1 (unclassified count) can be
+reduced by genuine hand-review of the keyword proposals. This is the first such batch: the
+8 value streams the classifier forces to a blanket Tier 1 via `FAMILY_DEFAULTS` — **VS-79
+Tax/BIR, VS-85 Mandatory Discount, VS-89 Product Recall, VS-91 Data Privacy, VS-114 DG/Hazmat,
+VS-117 DTI-BPS Standards, VS-118 Revenue Assurance, VS-125 Fraud** (192 workflows). Not a
+rubber-stamp: reviewed each workflow against the tier definitions and **demoted 38** off the
+blanket Tier 1 (program-support: training, reporting, change-monitoring, cost/insurance
+recovery → Tier 2; analytics/CI → Tier 3). Result: **154 Tier 1 / 32 Tier 2 / 6 Tier 3**.
+`validate-repo.sh`: **0 errors / 2 warnings** (Check 1 unclassified 3,836 → **3,644**; classified
+1,168 → **1,360** rows / **1,337** unique; 23% → **27%** classified).
+
+**Why these 8 VSs first:** they are the only wholly-statutory VSs (per-VS proposed-tier analysis
+showed 100% Tier 1 for each), so the family context makes genuine review fast and confident —
+every workflow is a statutory/regulatory/revenue-protection obligation, and the only judgment
+was execution-vs-support, not whether the domain is core.
+
+**The 38 demotions (the actual review work),** grouped:
+- *→ Tier 2 (32):* training (W2903, W3056, W3879), KPI/reporting (W2920, W3696, W3707, W3864,
+  W3880), regulatory-change monitoring (W2919, W3596, W3671), policy/approval-matrix & risk-
+  taxonomy (W3690, W3695, W3858, W3862), vendor/lab/tool governance (W3680, W3863), audit/
+  records (W3014, W3600, W3878), cost-allocation/reimbursement policy (W2917), de-id/test-data
+  technique (W3054), post-incident review (W3062), insurance/cost recovery (W3015, W3061, W3615),
+  post-recall surveillance (W3012), vendor recall reimbursement (W3009), DG transport audit
+  (W3608), fraud controls assurance (W3878).
+- *→ Tier 3 (6):* analytics/CI/enhancement-only (W3016 recall lessons-learned, W3616 DG analytics,
+  W3685 & W3688 certification analytics/CI, W3710 RA tooling/automation, W3712 RA maturity/CI).
+
+**Count cascade** across current-state citations (historical version-notes preserved):
+- `workflow-criticality-classification.md`: new `### Statutory-Compliance Classification Pass` block
+  (192 rows, grouped by tier then family, with a demotion audit); tier section headers
+  440/499/229 → 594/531/235; §Summary confirmed 1,168→1,360 (43.7/39.0/17.3%); proposed
+  741/2,927(typo)/167 → **548/2,929/167** (the regenerate also dissolved one row of prior
+  proposed-file drift documented in v7.17); intro banner 1,145→1,337 unique / 3,836→3,644;
+  v7.19 footer clause.
+- `workflow-criticality-proposed.md`: regenerated via `classify-workflows.py --write` (the 192
+  confirmed are auto-excluded).
+- `workflows/README.md` Quick Stats (tier counts + classified total); root `README.md` Coverage
+  table (1,145→1,337, 23%→27%, 1,168→1,360, 3,836→3,644) + folder-structure row.
+- `workflow-dependency-map.md` intro (1,145→1,337, 1,168→1,360, 3,836→3,644) + footer: §1–§7
+  edge-scope kept at 1,168 *as of v4.1* with a note that the 192 newly-classified are pending
+  edge-incorporation (edges were NOT invented — classification ≠ dependency mapping).
+- `workflow-system-touchpoint-map.md` footer (1,168→1,360, 1,145→1,337, 3,836→3,644);
+  `workflow-gap-analysis.md` validator-snapshot line (1,168→1,360).
+
+**Scope honesty:** this moves 4.8% of the unclassified backlog (192 of 3,644 remaining). The next
+highest-leverage batches (by the same family-decisive analysis) are the wholly-Tier-2 VSs at
+≥96% proposed Tier 2 (e.g. VS-100/106/107/112/113/116/123/124/126/129/133/134/139/176) —
+mechanically confirmable as Tier 2 with spot-checks. The mixed-tier VSs (e.g. VS-127/128/136)
+need fuller per-workflow review.
+
 ## 2026-06-20 — Consistency review: stale Expansion-block status, validator overlap-note, dept count, matrix traceability claims
 
 A whole-repo review for inconsistencies, redundancies, and ambiguities beyond the mechanical
