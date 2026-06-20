@@ -303,23 +303,47 @@ fi
 
 # --- Check 15: Analysis-field header canonicalization ---
 echo "--- Check 15: Analysis-field header canonicalization ---"
-# WORKFLOW-FORMAT-GUIDE.md defines exactly two analysis subsection headers: '### Automation
-# Opportunity' and '### Controls'. A 2026-06-20 review found 8 VS-161 workflows whose header
-# read '### Automation Option' (a typo) — the workflow-specific content body was present, but
-# the misspelled header was invisible to Check 12's exact-match adoption count, silently
-# undercounting Automation adoption and creating a sibling-header inconsistency inside the PA.
-# This check flags any ### header beginning 'Automation' or 'Control' that is not the
-# canonical exact form, so the Check 12 adoption counts stay trustworthy and the typo class
-# cannot recur undetected.
+# WORKFLOW-FORMAT-GUIDE.md canonicalizes the analysis subsection headers. This check guards the
+# three that have NO legitimate variant form in the repo, so the Check 12 adoption counts stay
+# trustworthy and the typo/synonym class cannot recur undetected:
+#   '### Automation Opportunity'  — guarded (a 2026-06-20 review found 8 VS-161 '### Automation Option' typos)
+#   '### Controls'                — guarded
+#   '### Pain Points / Risks'     — guarded (a 2026-06-20 review found 2 VS-10 '### Risks & Exceptions' synonyms)
+# NOT guarded: '### Steps', '### System Touchpoints', '### Time Estimate', '### Cross-references' — these have
+# legitimate parenthetically-qualified sub-forms (e.g. '### System Touchpoints (Yard)') used as per-sub-area
+# labels inside complex workflows; normalizing them would create duplicate headers and destroy semantics.
 BAD_AUTO=$(grep -rnP '^### Automation(?! Opportunity$)' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
 BAD_CTRL=$(grep -rnP '^### Control(?!s$)' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
-BAD_COUNT=$(echo -n "$BAD_AUTO"$'\n'"$BAD_CTRL" | grep -cP 'PA-' || true)
+BAD_RISK=$(grep -rnP '^### .*Risk' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | grep -vP '### Pain Points / Risks( \(|$)' || true)
+BAD_COUNT=$(echo -n "$BAD_AUTO"$'\n'"$BAD_CTRL"$'\n'"$BAD_RISK" | grep -cP 'PA-' || true)
 if [ "$BAD_COUNT" -eq 0 ]; then
-    ok "All Automation/Controls analysis-field headers use the canonical exact form"
+    ok "All Automation/Controls/Pain-Points analysis-field headers use the canonical exact form"
 else
-    error "$BAD_COUNT non-canonical analysis-field header(s) (should be '### Automation Opportunity' / '### Controls') — invisible to Check 12's adoption count:"
+    error "$BAD_COUNT non-canonical analysis-field header(s) (should be '### Automation Opportunity' / '### Controls' / '### Pain Points / Risks') — invisible to Check 12's adoption count:"
     echo "$BAD_AUTO" | sed 's/^/    /' | head -20
     echo "$BAD_CTRL" | sed 's/^/    /' | head -20
+    echo "$BAD_RISK" | sed 's/^/    /' | head -20
+fi
+
+# --- Check 16: PA file footer format ---
+echo "--- Check 16: PA file footer format ---"
+# WORKFLOW-FORMAT-GUIDE.md and the established convention (493+ PA files) require every PA file to
+# END with the standardized navigation footer:
+#   *Workflow Count: N · Back to **[VS-NN: <Name>](./README.md)** · [Value Stream Index](../value-stream-index.md)*
+# A 2026-06-20 review found 30 PA files in VS-168–VS-177 (Pass 21–25) that deviated — 18 had a
+# simpler '*Back to [VS-NN README]*' footer and 12 had NO footer at all — and 50 Core-block files
+# (VS-01–VS-31) with duplicate (2–3) mid-file footer lines from a generation artifact. This check
+# flags any PA whose last non-empty line is not the standardized footer, so the format cannot drift.
+BAD_FOOTER=$(for pafile in "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md; do
+  last=$(grep -vE '^[[:space:]]*$' "$pafile" | tail -1)
+  echo "$last" | grep -qP '^\*Workflow Count: \d+ · Back to \*\*\[VS-\d+: .+\]\(\./README\.md\)\*\* · \[Value Stream Index\]\(\.\./value-stream-index\.md\)\*$' || echo "$pafile"
+done)
+BAD_FOOTER_COUNT=$(echo -n "$BAD_FOOTER" | grep -cP 'PA-' || true)
+if [ "$BAD_FOOTER_COUNT" -eq 0 ]; then
+    ok "All PA files end with the standardized navigation footer"
+else
+    error "$BAD_FOOTER_COUNT PA file(s) do not end with the standardized footer (*Workflow Count: N · Back to... · Value Stream Index*):"
+    echo "$BAD_FOOTER" | sed 's#.*/workflows/##' | sed 's/^/    /' | head -20
 fi
 
 echo ""

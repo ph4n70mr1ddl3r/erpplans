@@ -4,6 +4,67 @@
 
 ---
 
+## 2026-06-20 — More mechanical consistency fixes: header synonym, footer format/duplicates, + Checks 15–16
+
+A second pass of "find the same defect class as the VS-161 Automation typo" — mechanical
+inconsistencies (typos/synonyms/duplicates of canonical elements) where the content body is
+intact and only the structural marker is wrong. Investigated five candidate classes; fixed the
+three that were safe (content-intact, zero false-positive, no collision risk) and deliberately
+**skipped two** that would have worsened things (documented below). **No grand totals changed** —
+733 requirements / 4,980 workflows / 173 VS / 523 PA / 67 controls / 6,757 headcount all
+unchanged. `validate-repo.sh`: **0 errors / 3 informational warnings** (unchanged), now with
+two new regression guards (Checks 15–16).
+
+**1. VS-10 PA-10.1 — `### Risks & Exceptions` → `### Pain Points / Risks` (2 headers).** W266
+and W267 used a synonym header instead of the canonical `### Pain Points / Risks`; the content
+body (risk bullets with mitigations) was already correct. Same shape as the VS-161 Automation
+typo. VS-10 PA-10.1 now has 33/33 canonical `### Pain Points / Risks`.
+
+**2. VS-168–VS-177 (30 PA files) — footer normalized to the established convention.** The
+Pass 21–25 gap-analysis block had been authored with a non-standard footer: 18 files used a
+simple `*Back to [VS-NN README](./README.md)*` and 12 had **no footer at all**. Normalized all
+30 to the standardized `*Workflow Count: N · Back to **[VS-NN: <Name>](./README.md)** · [Value
+Stream Index](../value-stream-index.md)*` (VS name + workflow count derived per-file, so correct
+by construction). All 523 PA files now end with the standardized footer.
+
+**3. VS-01–VS-31 Core block (50 PA files) — removed 55 duplicate mid-file footers.** A
+content-generation artifact had left 2–3 copies of the footer line in 51 Core PA files, with
+the extras sitting **mid-file between two workflows** (e.g. VS-04 PA-04.1 had footers at lines
+582/644/867). Removed the 55 stray copies that were followed by a `## W` workflow header
+(precise `(?=## W)` lookahead), leaving exactly one EOF footer per file and preserving the
+Core block's `---` inter-workflow divider convention. All 4,980 `## W` headers verified intact.
+
+**4. `validate-repo.sh` — extended Check 15 + new Check 16 (regression guards).**
+- **Check 15** now guards three canonical analysis-field headers (was two): added
+  `### Pain Points / Risks` (catches the `### Risks & Exceptions` synonym class). Scoped to the
+  three headers with no legitimate variant form; `### Steps` / `### System Touchpoints` / `###
+  Time Estimate` / `### Cross-references` are intentionally NOT guarded because they have
+  legitimate parenthetically-qualified sub-forms (e.g. `### System Touchpoints (Yard)`).
+- **Check 16** (new) verifies every PA file ends with the standardized navigation footer —
+catches both the missing-footer (VS-174–177) and simple-footer (VS-168–173) drift classes,
+  and any future malformation.
+
+**Investigated and deliberately SKIPPED (would worsen, not improve):**
+- **Parenthetically-qualified subsection headers** (`### System Touchpoints (Yard)`, `### System
+  Touchpoints (W574 — ...)`, `### Pain Points / Risks (W22A)`) — 46+ instances across 23 PAs.
+  Bulk-normalizing to the base form would (a) create duplicate headers in 17 workflows that
+  have a base section + a qualified sub-section, and (b) destroy meaningful per-sub-area labels
+  (W3's Yard vs DC-Scheduling vs 3PL-Partner touchpoints are genuinely distinct). Needs
+  per-workflow judgment, not mechanical normalization.
+- **Doubled `---` separators** in Core-block PAs — pre-existing (verified at HEAD), and a
+  substitution that only removes text cannot have created them. Left as a separate, cosmetic
+  pre-existing pattern.
+
+**Discovered but NOT fixed (needs substantive work, out of scope for mechanical fixes):**
+- **VS-12 PA-12.2 has a ghost workflow** — 9 `## W` headers (matches the index) but 10 field
+tables: a complete workflow body ("Tool Rental Reservation, Waitlist & Scheduling") at line
+  ~288 has **no `## W###.` header**, so it's invisible to every count, the index, the
+  classification, and the dependency map. Its stray footer was therefore NOT removed (the
+  `(?=## W)` lookahead correctly skipped it). Properly fixing it requires allocating a new
+  W-number and updating the grand total (4980→4981) + index + classification + every
+  cross-reference doc that states 4,980 — a substantive change with cascading impacts, not a
+  mechanical fix. Left as-is and documented here for separate handling.
+
 ## 2026-06-20 — VS-161 'Automation Option' typo fix + new validator Check 15 (field-header canonicalization)
 
 A follow-up to the morning's consistency review, surfaced by asking what the three informational
