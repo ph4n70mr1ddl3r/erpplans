@@ -109,21 +109,30 @@ The company operates through **5 legal entities** organized as follows:
 |---|---|
 | **Location** | Davao City, Philippines |
 | **Office Size** | ~3,000 sqm |
-| **HQ Headcount** | 315 |
+| **HQ Headcount** | 357 |
 
 #### HQ Departments
-- **Executive Office**: CEO, CFO, COO, CIO, CMO (5)
-- **Merchandising & Buying**: Category managers, buyers, pricing analysts (~40)
-- **Finance & Accounting**: GL, AP, AR, treasury, tax, logistics finance (~37)
-- **Supply Chain & Logistics**: Planning, DC ops, fleet, procurement (~31)
-- **Information Technology**: Infrastructure, applications, data, security, helpdesk (~33)
-- **Human Resources**: Recruitment, compensation, training, payroll, benefits (~18)
-- **Marketing**: Brand, promotions, ecommerce, digital, content (~23)
-- **Store Operations**: Regional managers, operations standards, facilities coordination (~24)
-- **Legal & Compliance**: Corporate secretary, regulatory, data protection officer (~9)
-- **Internal Audit**: (~5)
-- **Customer Service / Call Center**: (~30)
-- **Regional Loss Prevention**: LP Officers (~20)
+
+> Rebalanced to the **minimum** staffing required to cover the roles and volumes referenced across the workflow catalog (see `headcount-reality-check.md`). Six functions previously rolled into an un-enumerated ~40-person bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and four transactional functions (Finance, IT, HR, Legal) were increased to resolve contradictions the workflows themselves exposed (e.g., AP "~10 clerks" cannot fit inside a 37-person Finance team; IT field support flagged inadequate for a 200-store archipelago footprint). Store (5,800) and DC (600) headcounts are unchanged.
+
+- **Executive Office**: CEO, CFO, COO, CIO, CMO, CHRO, VP Legal & Compliance (7)
+- **Merchandising & Buying**: Category managers, buyers, pricing analysts, planners (40)
+- **Finance & Accounting**: Controller, GL (per-entity), AP/AR, treasury, tax, FP&A, logistics finance (46)
+- **Supply Chain & Logistics**: Planning, DC ops, fleet, procurement, imports, S&OP (35)
+- **Information Technology**: Infrastructure, applications, data/BI, security, privacy, helpdesk (50)
+- **Human Resources**: Recruitment, compensation, training, payroll, benefits, labor relations (26)
+- **Marketing**: Brand, promotions, ecommerce, digital, content, loyalty, insights (25)
+- **Store Operations**: Regional managers, operations standards, facilities coordination (24)
+- **Legal & Compliance**: Corporate secretary, regulatory, DPO, AML/MLRO, contracts, government affairs (14)
+- **Internal Audit & Risk**: (7)
+- **Customer Service / Call Center**: (30)
+- **Regional Loss Prevention**: LP Officers (20)
+- **Health, Safety & Environment**: Safety officers, company nurse, wellness (10)
+- **Quality Management**: Incoming inspection, vendor QA, metrology (4)
+- **Facilities & Real Estate**: Facilities, maintenance, property/lease admin (8)
+- **Sustainability / ESG**: Environmental, social, governance reporting (3)
+- **Strategy / Corporate Planning**: Annual planning, CPM, competitive intelligence (3)
+- **Trade / Account Management**: Trade professional program, key accounts (5)
 
 ---
 
@@ -133,10 +142,10 @@ The company operates through **5 legal entities** organized as follows:
 |---|---|
 | Store Personnel | 5,800 (200 stores × 29) |
 | Distribution Center Personnel | 600 (4 DCs × 150) |
-| Corporate HQ Personnel | 315 (fully staffed with recommended DPO, Tax, and IT roles) |
-| **Total Company Headcount** | **6,715** |
+| Corporate HQ Personnel | 357 (rebalanced to minimum workflow-coverage levels — see §3.3 and `headcount-reality-check.md`) |
+| **Total Company Headcount** | **6,757** |
 
-> **Revenue per employee**: ~PHP 9.28M/year (~PHP 62.3B ÷ 6,715) — driven by BuildRight's optimized store staffing model (29 per store). The headcount per store was increased from 28 to 29 to implement the recommendation for an additional Stock Associate (4 total per store) to ensure adequate coverage for continuous replenishment, cycle counting, and omnichannel fulfillment. HQ headcount was expanded to 315 to include a dedicated Data Protection Officer (W53), Regulatory Officer (W54), Tax Accountant (W90), Logistics Finance Analyst (W277), and dedicated IT Helpdesk staff (W48). Regional Loss Prevention (20 Officers) is now explicitly included to manage variance investigation across the 200-store chain.
+> **Revenue per employee**: ~PHP 9.22M/year (~PHP 62.3B ÷ 6,757) — driven by BuildRight's optimized store staffing model (29 per store). The headcount per store was increased from 28 to 29 to implement the recommendation for an additional Stock Associate (4 total per store) to ensure adequate coverage for continuous replenishment, cycle counting, and omnichannel fulfillment. HQ headcount was rebalanced from 315 to 357: the six functions previously rolled into an un-enumerated bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and Finance, IT, HR, and Legal were increased to the minimum required to cover the roles and transaction volumes referenced across the workflow catalog (e.g., dedicated DPO W53, Regulatory Officer W54, Tax Accountant W90, Logistics Finance Analyst W277, IT Helpdesk W48, AML/MLRO, and Regional Loss Prevention's 20 Officers for variance investigation across the 200-store chain).
 
 ---
 
@@ -487,7 +496,7 @@ BuildRight Holdings, Inc.
 | Parameter | Value |
 |---|---|
 | **Payroll Frequency** | Semi-monthly (15th and 30th) |
-| **Total Employees** | 6,715 |
+| **Total Employees** | 6,757 |
 | **Payroll Entities** | 5 (one per legal entity) |
 | **Statutory Benefits** | SSS, PhilHealth, Pag-IBIG (HDMF) |
 | **13th Month Pay** | Mandatory (1/12 of annual basic salary, paid by Dec 24) |
@@ -682,7 +691,7 @@ The following external systems are actively integrated with the core ERP system.
 | Customers (B2B Corporate) | 200 |
 | Vendors / Suppliers | 1,000 |
 | Locations (Stores + DCs + HQ) | 205 |
-| Employees | 6,715 |
+| Employees | 6,757 |
 | Chart of Accounts | ~500–800 per entity |
 | GL Accounts (consolidated) | ~2,000–3,000 |
 
@@ -731,7 +740,7 @@ The following external systems are actively integrated with the core ERP system.
 7. **Offline POS resilience**: Stores must sell during outages
 8. **Intercompany automation**: 5-entity consolidation
 9. **Supply chain optimization**: Demand planning, auto-replenishment
-10. **User adoption**: ~6,715 users across varying tech literacy levels
+10. **User adoption**: ~6,757 users across varying tech literacy levels
 
 ---
 

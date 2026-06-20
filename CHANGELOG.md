@@ -4,6 +4,58 @@
 
 ---
 
+## 2026-06-20 — HQ headcount rebalance (minimum workflow-coverage): HQ 315 → 357; total 6,715 → 6,757
+
+A cross-reference of the stated HQ department headcounts (`model-company-profile.md`
+§3.3/§4) against the actual roles, volumes, and responsibilities referenced across all
+704 workflow files (documented in the new `01-model-company/headcount-reality-check.md`)
+found that HQ (315) was (a) missing six functions that appear heavily in the workflows,
+(b) understaffed in four transactional functions the workflows themselves flag as stretched,
+and (c) internally inconsistent (the §11.1 org chart lists CEO + 6 reports but §3.3 said
+"Executive Office (5)"). Per direction to apply the **minimum** increase that resolves the
+gaps (not the comfortable ~440–470 range the analysis also estimates), HQ was rebalanced
+**315 → 357** and total company headcount **6,715 → 6,757**; revenue/employee
+**~PHP 9.28M → ~PHP 9.22M/year**.
+
+**HQ department table changes (§3.3):**
+- **Executive Office** 5 → 7 (reconciled with the §11.1 org chart: CEO + CFO/COO/CIO/CMO/CHRO/VP Legal).
+- Four transactional functions increased to resolve contradictions the workflows expose:
+  **Finance & Accounting** 37 → 46, **Information Technology** 33 → 50, **Human Resources**
+  18 → 26, **Legal & Compliance** 9 → 14 (e.g., AP "~10 clerks" cannot fit a 37-person
+  Finance team; IT flagged inadequate for 200-store archipelago field support; 5-entity
+  payroll/tax; AML/MLRO + privacy staff).
+- Modest relief: **Supply Chain & Logistics** 31 → 35, **Marketing** 23 → 25, **Internal Audit** 5 → 7.
+- Six functions previously rolled into an un-enumerated ~40-person bucket are now explicit:
+  **Health, Safety & Environment** (10), **Quality Management** (4), **Facilities & Real
+  Estate** (8), **Sustainability / ESG** (3), **Strategy / Corporate Planning** (3),
+  **Trade / Account Management** (5).
+- Unchanged: Merchandising & Buying (40), Store Operations (24), Loss Prevention (20),
+  Customer Service (30); Store (5,800) and DC (600) headcounts.
+
+**Files updated:**
+- `model-company-profile.md` §3.3 (HQ department table + rebalance note), §4 (total +
+  revenue/employee footnote), §11.2 (Total Employees), §15 metrics (Employees, users). The
+  §10.2 / §15.1 Transactional-Volumes AP rows were left at the merchandise-invoice figure
+  (~6,715 invoices/month — a coincidentally-equal but **unrelated** data point).
+- `assumptions-and-design-decisions.md` A2.6 (revenue/employee 9.28 → 9.22).
+- `executive-summary.md`, `README.md` (Employees / Total Headcount).
+- `workflows/VS-22-compliance-regulatory/PA-22.1` HQ staffing feasibility table (department
+  counts aligned to the rebalanced figures; the AP "10 clerks" and IT field-support caveats
+  now resolve cleanly).
+- `workflows/VS-133.../PA-133.3` (revenue/employee target).
+- `07-methodology/technical-guidelines.md` §2.2 HQ bandwidth basis (~315 → ~357 HQ staff;
+  ≈300 → ≈320 concurrent users; ≥100 Mbps unchanged).
+- Bulk update of employee-context "~6,715 employees/staff/users" references across ~100
+  workflow files → 6,757 (**266 replacements**, context-aware — only employee references;
+  invoice references preserved). The merchandise-AP invoice figure ~6,715 invoices/month
+  (in VS-15, VS-17.3, VS-18.2, VS-30.2, VS-67, §10.2, §15.1, `data-volumes-and-integrations.md`)
+  was deliberately **left unchanged**.
+- New: `01-model-company/headcount-reality-check.md` — the full gap analysis (role-family
+  extraction across all 704 workflow files, department coverage matrix, missing-roles
+  register) retained as the record of why the rebalance was needed.
+
+---
+
 ## 2026-06-20 — Whole-repo consistency review: stale counts (3,595/172/675), missing VS-170–VS-177 tree entries, and triplicated pass-history
 
 A full-repository read-through (all indexes, navigation hubs, and cross-reference doc
@@ -188,7 +240,7 @@ operations after twenty prior passes had been judged complete. Both are operatio
 surrounding coverage made appear owned:
 
 - **[VS-168 — In-Store Audio, Ambient Media & Music Royalty Licensing](01-model-company/workflows/VS-168-in-store-audio-ambient-media-and-music-royalty-licensing/README.md)** (Sell & Serve, W4889–W4912, 24 workflows) — the always-on in-store ambient channel across ~205 sites (200 stores + 4 DCs + HQ): the licensed background-music program (FILSCAP / OPM and international-society royalty licensing under RA 8293, the Intellectual Property Code), the public-address (PA) paging & live-announcement protocol, the BuildRight-owned in-store digital-signage content (distinct from VS-48 vendor-paid retail-media ads), the ambient-scent/sensory program, and the AV-equipment lifecycle + analytics linking ambient media to footfall/dwell/basket and the "Your Home Building Partner" CX. 'music licensing', 'FILSCAP', 'background music', 'in-store audio', and 'ambient media' each appeared in zero PA files as dedicated workflow headers — only one incidental 'FILSCAP' system-list mention in VS-07.1 and a PA-announcement *step* embedded inside store daily management. Distinct from VS-14 (brand/campaign/PR), VS-07 (one PA step), VS-48 (vendor-paid retail media), VS-138 (building maintenance), and VS-27 (network). Covers strategy/brand-sound, music programming, **royalty licensing & statutory reporting (RA 8293/FILSCAP)**, commercial-music-service vendor selection, signage content strategy, ambient scent, budget/co-fund, multi-entity governance, **PA daily ops & announcement protocol**, background-music daily ops, signage publishing, **AV equipment PM**, seasonal/event deployment, **emergency override (links VS-24/VS-147)**, localization, content refresh/asset library, performance analytics, equipment lifecycle/refresh capex, technology/integration architecture, **royalty compliance audit & true-up**, accessibility & regulatory (RA 7394/RA 10173), vendor SLA/TPRM, innovation (AI music/programmatic signage), and program assurance.
-- **[VS-169 — Employee Uniform, Workwear & PPE-Issuance Program](01-model-company/workflows/VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md)** (People, W4913–W4936, 24 workflows) — the unified branded-apparel and personal-protective-equipment program across ~6,715 employees plus ~10–20% contingent/outsourced labor and vendor/3PL site-access personnel: role-based uniform/workwear standards, branded-apparel design & procurement, the PPE issuance/fit-testing/training program, industrial laundering (in-house vs vendor), sizing/fit, damage/loss/replacement, promotion/transfer re-issuance, separation/end-of-employment return & recovery, multi-entity consistency, and the cost/compliance/sustainability analytics. 'uniform program', 'workwear program', 'PPE issuance program', 'uniform allowance', and 'industrial laundering' each appeared in zero PA files as dedicated workflow headers ('uniform' referenced incidentally across ~29 PA files with no owner). Distinct from VS-19 (one onboarding-kit step), VS-24 (the PPE *requirement* — this owns the issuance/fit/launder/replacement program that fulfills it), VS-102 (an allowance), VS-98 (the contingent worker), VS-34/VS-03 (transactional procurement). Covers strategy/operating model, role-based standards & brand design, **PPE standards & hazard-based issuance matrix (DOLE-OSH)**, allowance/replenishment policy, vendor selection/contracting, sizing/fit, branded-apparel design/procurement/quality, multi-entity governance, **new-hire issuance & onboarding kit**, **role-based PPE issuance/fit-testing/training**, **contingent/vendor-personnel provision**, **industrial laundering**, PPE inspection/maintenance/replacement/end-of-life, damage/loss/replacement, role-change re-issuance, **separation return & recovery**, cost/TCO analytics, **PPE compliance & DOLE audit**, vendor SLA & TPRM, inventory/distribution, employee satisfaction/fit, sustainability (textile recycling/eco-uniform), data privacy (RA 10173 sizing/health data), and program assurance.
+- **[VS-169 — Employee Uniform, Workwear & PPE-Issuance Program](01-model-company/workflows/VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md)** (People, W4913–W4936, 24 workflows) — the unified branded-apparel and personal-protective-equipment program across ~6,757 employees plus ~10–20% contingent/outsourced labor and vendor/3PL site-access personnel: role-based uniform/workwear standards, branded-apparel design & procurement, the PPE issuance/fit-testing/training program, industrial laundering (in-house vs vendor), sizing/fit, damage/loss/replacement, promotion/transfer re-issuance, separation/end-of-employment return & recovery, multi-entity consistency, and the cost/compliance/sustainability analytics. 'uniform program', 'workwear program', 'PPE issuance program', 'uniform allowance', and 'industrial laundering' each appeared in zero PA files as dedicated workflow headers ('uniform' referenced incidentally across ~29 PA files with no owner). Distinct from VS-19 (one onboarding-kit step), VS-24 (the PPE *requirement* — this owns the issuance/fit/launder/replacement program that fulfills it), VS-102 (an allowance), VS-98 (the contingent worker), VS-34/VS-03 (transactional procurement). Covers strategy/operating model, role-based standards & brand design, **PPE standards & hazard-based issuance matrix (DOLE-OSH)**, allowance/replenishment policy, vendor selection/contracting, sizing/fit, branded-apparel design/procurement/quality, multi-entity governance, **new-hire issuance & onboarding kit**, **role-based PPE issuance/fit-testing/training**, **contingent/vendor-personnel provision**, **industrial laundering**, PPE inspection/maintenance/replacement/end-of-life, damage/loss/replacement, role-change re-issuance, **separation return & recovery**, cost/TCO analytics, **PPE compliance & DOLE audit**, vendor SLA & TPRM, inventory/distribution, employee satisfaction/fit, sustainability (textile recycling/eco-uniform), data privacy (RA 10173 sizing/health data), and program assurance.
 
 **Counts:** 163 → **165 value streams** · 493 → **499 process areas** · 4,740 → **4,788 workflows**
 (W4889–W4936, 2 value streams × 3 process areas × 8 workflows). All 48 new workflows are
@@ -230,7 +282,7 @@ following the proven VS-161 TPRM pattern:
 
 - **[VS-165 — PCAB Contractor Licensing & RA 4566 Construction Contractor Compliance](01-model-company/workflows/VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/README.md)** (Governance & Assurance, W4817–W4840, 24 workflows) — BuildRight as a *licensed construction contractor* under RA 4566 (Contractors' License Law): obtaining/maintaining/renewing its own PCAB license for the installation (VS-12), design-build (VS-66), government delivery-and-install bids (VS-46/VS-11.2), bulky install (VS-143), and own-construction (VS-20) work where it is the contractor of record — a go-to-market precondition with criminal liability (Sec. 6/8) for unlicensed contracting. 'PCAB license' / 'RA 4566' / 'PCAB project registration' appeared in zero PA files for BuildRight's *own* license; every existing PCAB reference verifies *someone else's* license (customer trade-pro W590 in VS-09.1/VS-43.1; vendor/contractor eligibility W162 in VS-11.2/VS-46.1; employee PCAB tracking VS-19.4). Covers licensing strategy/entity-eligibility, application & registration, category/upgrade, annual renewal & calendar, CIAP board engagement, multi-entity coverage, **project registration per contract**, performance/surety bonding linkage (VS-116), construction safety & health (DOLE D.O. 13), bid-support license proof, subcontractor license cascading, warranty/acceptance/retention, **mechanic's-lien rights & lien waivers**, inspection response, license-condition monitoring, PRC engineer-of-record credentialing, **unlicensed-contracting risk control**, JV/consortium & foreign-contractor licensing, penalty/reinstatement, and analytics.
 - **[VS-166 — Regulatory License, Permit & Accreditation Portfolio Management](01-model-company/workflows/VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md)** (Governance & Assurance, W4841–W4864, 24 workflows) — the unified cross-domain discipline owning a single register of **every statutory license/permit/certification/accreditation** held by the 5 entities across ~205 sites (LGU business/mayor's permit, barangay clearance, BFP FSIC, DENR ECC/hazwaste-generator, BIR + CAS permit + ATP, DTI-BPS, PCAB, PhilGEPS, FDA-adjacent/FPA/BPI, PEZA/BOI, SSS/PhilHealth/Pag-IBIG, DOLE OSH, LTO/LTFRB, BSP agency, NPC) numbering in the thousands — with the renewal calendar, expiry-risk engine, evidence repository, regulator-change monitor, multi-site renewal campaigns, inspection-response hub, third-party permit-service (fixer/consultant) management, lapsed-permit remediation, and executive compliance dashboard. 'license portfolio' / 'permit portfolio' / 'regulatory inventory' / 'centralized compliance calendar' appeared in zero PA files; each compliance domain owned its execution slice (VS-22/76/79/114/117/138/165/46/06) but none owned the unified register (the VS-161 TPRM consolidation pattern).
-- **[VS-167 — Workforce Background Screening, Credentialing & Personnel Vetting](01-model-company/workflows/VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md)** (People, W4865–W4888, 24 workflows) — the unified cross-category screening discipline covering employees (~6,715 + ~1,200–1,600 hires/yr), contingent/outsourced labor (~10–20%), vendor/3PL site-access personnel (drivers/delivery/service), and executives — through a centralized screening program, role-based packages, screening-vendor governance, consent/RA 10173 compliance, adverse-action/fair-chance due process, and ongoing re-screening, to control negligent-hiring and insider-risk exposure. 'background screening program' / 'pre-employment screening' / 'credentialing' / 'workforce vetting' appeared in zero PA files for a cross-category program; the only existing screen was the single **contingent-worker** workflow W3223 in VS-98.2 (a slice), plus an onboarding step in VS-121 and license-only driver checks W1400 — unified here following the VS-161 pattern.
+- **[VS-167 — Workforce Background Screening, Credentialing & Personnel Vetting](01-model-company/workflows/VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md)** (People, W4865–W4888, 24 workflows) — the unified cross-category screening discipline covering employees (~6,757 + ~1,200–1,600 hires/yr), contingent/outsourced labor (~10–20%), vendor/3PL site-access personnel (drivers/delivery/service), and executives — through a centralized screening program, role-based packages, screening-vendor governance, consent/RA 10173 compliance, adverse-action/fair-chance due process, and ongoing re-screening, to control negligent-hiring and insider-risk exposure. 'background screening program' / 'pre-employment screening' / 'credentialing' / 'workforce vetting' appeared in zero PA files for a cross-category program; the only existing screen was the single **contingent-worker** workflow W3223 in VS-98.2 (a slice), plus an onboarding step in VS-121 and license-only driver checks W1400 — unified here following the VS-161 pattern.
 
 **Counts:** 160 → **163 value streams** · 484 → **493 process areas** · 4,668 → **4,740 workflows**
 (W4817–W4888, 3 value streams × 3 process areas × 8 workflows). All 72 new workflows are
@@ -447,7 +499,7 @@ numeric grand total changed.**
   narrative justifications for VS-133 (Operational Excellence) cited a stale *documented
   workflows* count in present tense: README said *"BuildRight runs ~3,900 documented workflows"*
   and the gap-analysis said *"running ~3,996 documented workflows"* (snapshots from Pass 9 and
-  Pass 10 respectively). Every other figure in the same paragraphs (6,715 employees, PHP 62.3B,
+  Pass 10 respectively). Every other figure in the same paragraphs (6,757 employees, PHP 62.3B,
   200 stores, 4 DCs, 2.8M transactions) is current, so the workflow count is the lone stale
   figure; both corrected to **~4,596** (current grand total) so the two narratives agree with
   each other and with the rest of the repository.
@@ -509,7 +561,7 @@ financing partner rather than BuildRight's own bank — e.g. `VS-14/PA-14.3` co-
 canonical banking footprint (`VS-18/PA-18.2`: "4 banking relationships (BDO, BPI,
 Metrobank, Chinabank)").
 - **`VS-19/PA-19.2` (Payroll & Compensation)** — W1527 (SSS/PhilHealth/Pag-IBIG Contribution
-Filing) Volume field said "~5,800–6,500 employees"; corrected to **~6,715 employees**, the
+Filing) Volume field said "~5,800–6,500 employees"; corrected to **~6,757 employees**, the
 canonical total headcount (`model-company-profile.md` §4; `README.md`).
 - **`model-company-profile.md` §15.1 + `VS-22/PA-22.3`** — the annual AP-invoice figure was
 **~78,000**, which implies ~6,500/month and is inconsistent with the canonical monthly
@@ -1340,7 +1392,7 @@ B2B-growth surface. Each gap's defining terms appeared in **zero** PA files as d
 headers, and each had been conflated with an adjacent covered capability:
 
 - **VS-141 — Employee Transport, Shuttle & Daily Commute Management** (People, W4241–W4264):
-  the daily people-movement discipline for ~6,715 staff across 205 sites on 2–3 shifts (incl.
+  the daily people-movement discipline for ~6,757 staff across 205 sites on 2–3 shifts (incl.
   night). 'employee shuttle', 'company bus', 'transport allowance', and 'daily commute' appeared
   in zero PA files as headers; only adjacent coverage existed — VS-19.1 *business travel*,
   VS-18.2 *errand* petty-cash transport, VS-138 *building* services, VS-06 *goods* fleet. None
@@ -1705,7 +1757,7 @@ single workflow" or fit the uniform 8×3=24 pattern; and whether to add a machin
 
 A ninth workflow **gap-analysis** pass was performed against the model company's operations
 (BuildRight Depot Corp. — Philippine hardware/DIY/home-improvement big-box retailer: 200 stores,
-4 DCs, 35,000 active SKUs, ~PHP 62.3B annual revenue, 5 legal entities, ~6,715 employees). After
+4 DCs, 35,000 active SKUs, ~PHP 62.3B annual revenue, 5 legal entities, ~6,757 employees). After
 Passes 1–8 had filled the genuinely-uncovered *operational* and *statutory* capabilities across
 Make & Move, Asset & Infrastructure, Technology & Data, Finance, and Governance & Assurance,
 Pass 9 targeted the remaining genuinely-uncovered **strategic people-attraction and selling-
@@ -2565,7 +2617,7 @@ stream (10 × 24 = 240 new workflows, W2753–W2992):
 - **VS-80: Payment Operations, Acquirer & Settlement Management** (Finance) — Acquirer/PSP/e-wallet/BNPL partner lifecycle; settlement reconciliation & chargeback representment; PCI-DSS, 3DS, tokenization & payment fraud governance across ~2.8M POS transactions/month.
 - **VS-81: Cash-in-Transit, Vault & Armored Car Operations** (Make & Move) — Smart-safe and pickup planning for ~1.2M monthly cash transactions; armored car/vault execution; CIT insurance, risk & cash analytics.
 - **VS-82: Sari-Sari Store & MSME Micro-Wholesale Program** (Sell & Serve) — Acquisition & micro-distribution for the Philippines' ~1.3M sari-sari stores; last-mile micro-wholesale ordering & delivery; MSME credit, digital enablement & growth.
-- **VS-83: Occupational Health, Safety Clinic & Employee Wellness** (People) — Clinic operations & medical case management; pre-employment/APE/DOLE hazard exams & disease surveillance; mental health (RA 11036), EAP & wellness for 6,715 employees.
+- **VS-83: Occupational Health, Safety Clinic & Employee Wellness** (People) — Clinic operations & medical case management; pre-employment/APE/DOLE hazard exams & disease surveillance; mental health (RA 11036), EAP & wellness for 6,757 employees.
 - **VS-84: Labor Relations & Collective Bargaining Management** (People) — Union recognition & CBA negotiation/administration; grievance handling, 2-notice rule & DOLE conciliation/NLRC; employee voice & partnership governance.
 - **VS-85: Mandatory Discount, Eligibility & Tax Credit Recovery** (Governance & Assurance) — SC/PWD/Solo Parent discount program (RA 9994/10754/11861); VAT-exempt & zero-rated customer certification; tax credit recovery via BIR Form 2552 & TCC. Program layer over W170/W217/W432.
 - **VS-86: Anti-Financial Crime, AML/KYC & Anti-Corruption** (Governance & Assurance) — First-line KYC/CDD/PEP/sanctions screening; AML transaction monitoring, CTR/STR filing with AMLC; anti-bribery, gifts & conflict-of-interest (AMLA RA 9160/10365, RA 3019, ISO 37001). Operational counterpart to audit workflows W159/W354.

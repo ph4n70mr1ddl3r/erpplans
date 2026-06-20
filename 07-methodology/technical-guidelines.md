@@ -84,7 +84,7 @@ The following is the infrastructure topology that satisfies the NFRs in [erp-req
 | 200 store locations with POS | Requires reliable connectivity or robust offline mode |
 | 4 DCs with WMS/RF guns | Low-latency connection needed for real-time pick/ship |
 | 600 POS terminals | Centralized management is essential |
-| 6,715 employees | HR/payroll can be cloud-hosted |
+| 6,757 employees | HR/payroll can be cloud-hosted |
 | Philippine regulatory filing | BIR, SSS, PhilHealth, Pag-IBIG file generation |
 | Data residency | No strict PH data residency requirement, but Asia-Pacific hosting recommended for latency |
 
@@ -97,7 +97,7 @@ ERP's data sync requirements.
 |---|---|---|---|
 | Store | 200 | ≥ 2 Mbps stable + failover link | POS sync, price updates, inventory updates |
 | DC | 4 | ≥ 10 Mbps stable, redundant | WMS real-time operations, ~80 RF guns per DC |
-| HQ | 1 | ≥ 100 Mbps | ~315 HQ staff (≈300 concurrent users), reporting, batch processing |
+| HQ | 1 | ≥ 100 Mbps | ~357 HQ staff (≈320 concurrent users), reporting, batch processing |
 | **Total WAN** | **205** | **~540 Mbps aggregate** | |
 
 ### 2.3 DR & Business Continuity Reference
@@ -189,4 +189,4 @@ These are the active security controls implemented across the unified cloud ERP 
 
 ---
 
-*Document Version: 2.4 | Date: 2026-06-19 | §3.1 fixed broken in-page anchor `#143-integration-touchpoints` → `#143-active-integration-touchpoints` to match the `### 14.3 Active Integration Touchpoints` heading in `model-company-profile.md` (same fix applied to NFR-012 in `erp-requirements.md`). Prior v2.3: §2.3 Data-retention row and §2.3 backup archive updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.2: Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); HQ concurrent-users figure reconciled with model-company-profile.md §3.3 (315 staff); counts reconciled with README.md*
+*Document Version: 2.4 | Date: 2026-06-19 | §3.1 fixed broken in-page anchor `#143-integration-touchpoints` → `#143-active-integration-touchpoints` to match the `### 14.3 Active Integration Touchpoints` heading in `model-company-profile.md` (same fix applied to NFR-012 in `erp-requirements.md`). Prior v2.3: §2.3 Data-retention row and §2.3 backup archive updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.2: Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); HQ concurrent-users figure reconciled with model-company-profile.md §3.3 (357 staff); counts reconciled with README.md*

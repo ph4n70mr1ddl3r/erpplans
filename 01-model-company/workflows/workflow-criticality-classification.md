@@ -175,7 +175,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 | ID | Workflow | Operational Significance |
 |---|---|---|
-| W10 | Payroll Processing | 6,715 employees; 5 entities × 2 runs/month |
+| W10 | Payroll Processing | 6,757 employees; 5 entities × 2 runs/month |
 | W15 | Recruitment & Employee Onboarding | ~1,200–1,600 hires/year |
 | W34 | Store Shift Scheduling | Store workforce management |
 | W43 | Employee Separation & Offboarding | Offboarding compliance |

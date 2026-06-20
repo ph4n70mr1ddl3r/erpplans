@@ -90,7 +90,7 @@
 | YTD Earnings & Deductions | Payroll system | Migrate year-to-date for BIR annual reconciliation (1702/1604) | Sum validates to payroll register |
 | Leave Balances | Payroll system | Migrate VL/SL balances as of go-live | Non-negative |
 
-**Target record count**: 6,715 employees
+**Target record count**: 6,757 employees
 
 ### 2.5 Financial Balances (from legacy accounting)
 
