@@ -4,6 +4,52 @@
 
 ---
 
+## 2026-06-20 — Profile consistency: org-chart department ownership, Merchandising role mix, and headcount-reality-check scope correction
+
+Targeted reductions of inconsistency, ambiguity, and redundancy in `model-company-profile.md`
+and `headcount-reality-check.md`. **No headcount totals changed** (HQ 357 / company 6,757).
+The validator (`07-methodology/validate-repo.sh`) still reports **0 errors / 3 informational
+warnings** (unchanged).
+
+**1. §11.1 Organizational Structure — all 18 HQ departments now mapped to a C-suite owner.**
+The org chart previously assigned primary remits to only 6 of the 18 HQ departments, leaving
+9 (Internal Audit, Customer Service, Regional LP, HSE, Quality, Facilities, Sustainability,
+Strategy, Trade Account Management) with no visible reporting line. Added a department→executive
+ownership table that accounts for all 18, with a reconciliation row showing the department
+buckets sum to 350 and the 7 executives (Executive Office) bring HQ to 357. Assignments are
+consistent with workflow role references (e.g., LP and Trade Account Management report to
+"VP Operations"; Internal Audit facilitates reviews with CEO/CFO). Added an Internal-Audit
+independence note: the Head of IA reports functionally to the Board's Audit Committee
+(dotted line) and administratively to the CEO — the CFO association is financial-reporting
+coordination only.
+
+**2. §13.1 Merchandising team breakdown now sums to 40.** The prior list named only ~22
+roles (VP + 5 Category Managers + 10–12 Buyers + 3 Pricing Analysts + 2 Planners) inside a
+40-person department, leaving ~18 unexplained — an inconsistency flagged in
+`headcount-reality-check.md` §5(4). Replaced with a 10-role-line table that sums to exactly
+40, rebalanced toward planning/pricing/assortment per the reality-check's own recommendation
+§7.4 ("shift headcount from buyers into planners/pricing analysts/assortment"): Buyers 10
+(bottom of the prior 10–12 range), Planners/Allocators 2→5, Pricing Analysts 3→4, plus
+explicit Assortment & Space (3), Direct Sourcing/Import (3), Private Brand (3), Promotions
+(2), and Merch Ops/Master Data (4) lines.
+
+**3. `headcount-reality-check.md` scope correction.** The scope line cited "704 workflow
+files / 181 value streams". 181 was incorrect — the canonical count is **173 value streams**
+(the CHANGELOG progression tops out at 173 and never reached 181; verified: 173 VS
+directories). Corrected to "704 workflow markdown files (523 process-area specs across 173
+value streams)", which also disambiguates the 704 (total markdown files in the workflow tree)
+from the 4,980 W-numbered workflows. Annotated §5(4) as **Resolved** to keep the gap record
+consistent with the now-expanded §13.1.
+
+**4. Document version footer** bumped v2.19 → v2.20 (date 2026-06-19 → 2026-06-20); the
+prior HQ-rebalance commit had updated §3.3/§4 without bumping the footer, so this records
+that too.
+
+**Files updated:** `01-model-company/model-company-profile.md` (§11.1, §13.1, footer);
+`01-model-company/headcount-reality-check.md` (scope line, §5(4)).
+
+---
+
 ## 2026-06-20 — HQ headcount rebalance (minimum workflow-coverage): HQ 315 → 357; total 6,715 → 6,757
 
 A cross-reference of the stated HQ department headcounts (`model-company-profile.md`

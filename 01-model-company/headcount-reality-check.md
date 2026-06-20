@@ -2,7 +2,7 @@
 
 > **STATUS — ACTIONED 2026-06-20.** This analysis identified that HQ (315) was understaffed and omitted 6 functions. Per direction to apply the **minimum** increase that resolves the gaps, HQ was rebalanced **315 → 357** and total **6,715 → 6,757** (see `model-company-profile.md` §3.3/§4 and the CHANGELOG entry for 2026-06-20). The comfortable/fully-cushioned range estimated below (~440–470) was **not** adopted; the implemented 357 is the floor that (a) fixes the Executive inconsistency, (b) breaks out the 6 hidden departments explicitly, and (c) relieves only the contradictions the workflows themselves expose (e.g., AP "10 clerks", IT archipelago field support). The analysis below is retained as the gap record.
 
-**Scope:** Cross-reference the stated HQ department headcounts (`model-company-profile.md` §3.3 / §4) against the actual job roles, volumes, and responsibilities referenced across all **704 workflow files / 181 value streams**.
+**Scope:** Cross-reference the stated HQ department headcounts (`model-company-profile.md` §3.3 / §4) against the actual job roles, volumes, and responsibilities referenced across all **704 workflow markdown files (523 process-area specs across 173 value streams)**.
 
 **Method:** Extracted every `Owner` / `Participants` role title from all workflow PA files (~16,400 internal role mentions after normalization), clustered into role families, mapped to departments, and sized against stated transaction volumes (AP/AR/PO volumes, user counts, store/DC counts, statutory filing frequency).
 
@@ -127,7 +127,7 @@ These specialized roles appear repeatedly in workflows but have **no home in the
 1. **Executive count mismatch** — §11.1 org chart shows CEO + **6** direct reports (CFO, COO, CIO, CMO, CHRO, VP Legal), but §3.3 lists "Executive Office (5)" omitting CHRO and VP Legal.
 2. **Department sum ≠ HQ total** — enumerated departments sum to ~275; stated HQ is 315. The ~40 gap is the 6 un-enumerated functions (HSE, Quality, Facilities/RE, Sustainability, Strategy, Trade Acct Mgmt).
 3. **Revenue/employee footnote** (§4) claims HQ "expanded to 315 to include DPO, Tax Accountant, Logistics Finance Analyst, IT Helpdesk, Regional LP" — but these additions are not reflected in the department line items (Finance still shows ~37, IT ~33), so the expansion is double-counted or invisible.
-4. **Buying team** (§13.1) names VP + 5 Category Managers + 10–12 Buyers + 3 Pricing Analysts + 2 Planners (~22), yet the department is sized at ~40 — the other ~18 are unexplained.
+4. **Buying team** (§13.1) named only VP + 5 Category Managers + 10–12 Buyers + 3 Pricing Analysts + 2 Planners (~22) against a 40-person department — the other ~18 were unexplained. **Resolved 2026-06-20:** §13.1 now breaks the 40 into ten role lines (VP, 5 Category Managers, 10 Buyers, 5 Planners/Allocators, 4 Pricing Analysts, 3 Assortment & Space, 3 Direct Sourcing, 3 Private Brand, 2 Promotions, 4 Merch Ops/MD) that sum to 40, rebalanced toward planning/pricing/assortment per §7.4.
 5. **Store staffing 29/store** is internally consistent (§12.1) and defensible; the rationale (4 Stock Associates for replenishment/omnichannel) is sound. No change recommended there.
 
 ---

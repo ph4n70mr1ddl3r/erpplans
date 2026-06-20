@@ -480,6 +480,11 @@ The company operates through **5 legal entities** organized as follows:
 
 ### 11.1 Organizational Structure
 
+BuildRight Holdings, Inc. is led by a CEO/President and six executive officers — together
+the **Executive Office (7)** in §3.3. Each of the 18 HQ departments rolls up to one of
+these seven; the tree below shows the primary executive remits, and the table that follows
+accounts for **every** department so no reporting line is left implicit.
+
 ```
 BuildRight Holdings, Inc.
 ├── CEO / President
@@ -490,6 +495,22 @@ BuildRight Holdings, Inc.
 │   ├── CHRO — HR, Org Development
 │   └── VP Legal & Compliance
 ```
+
+| Executive | HQ Departments Overseen | Dept HC |
+|---|---|---|
+| CEO / President | Merchandising & Buying; Strategy / Corporate Planning | 43 |
+| CFO | Finance & Accounting; Internal Audit & Risk ¹ | 53 |
+| COO | Store Operations; Supply Chain & Logistics; Facilities & Real Estate; Quality Management; Regional Loss Prevention; Customer Service / Call Center; Trade / Account Management | 126 |
+| CIO | Information Technology | 50 |
+| CMO | Marketing | 25 |
+| CHRO | Human Resources; Health, Safety & Environment | 36 |
+| VP Legal & Compliance | Legal & Compliance; Sustainability / ESG | 17 |
+| **Total** | **17 departments** (the 7 executives themselves are counted in Executive Office) | **350 + 7 = 357** |
+
+> Department headcounts are taken from §3.3. **¹ Internal Audit independence:** the Head of
+> Internal Audit reports **functionally to the Board's Audit Committee** (dotted line) and
+> administratively to the CEO; the CFO association above denotes financial-reporting
+> coordination only — not a line that would impair audit independence.
 
 ### 11.2 Payroll Parameters (Philippines)
 
@@ -570,12 +591,26 @@ BuildRight Holdings, Inc.
 
 ## 13. Merchandising & Category Management
 
-### 13.1 Buying Team Structure
-- **VP for Merchandising**
-  - 5 Category Managers (each overseeing 2–3 product categories)
-  - 10–12 Buyers
-  - 3 Pricing Analysts
-  - 2 Merchandise Planners
+### 13.1 Merchandising Team Structure (40 total)
+
+> Sized at 40 in §3.3; reports to the CEO (§11.1). The breakdown below sums to exactly 40
+> and rebalances the mix toward planning, pricing, and assortment analytics — per
+> `headcount-reality-check.md` §7.4 — to match the 35,000-SKU assortment complexity. (The
+> prior list named only ~22 roles inside a 40-person department, leaving ~18 unexplained.)
+
+| Role | Count | Responsibility |
+|---|---|---|
+| VP for Merchandising | 1 | Category P&L ownership; reports to CEO |
+| Category Managers | 5 | Each owns 2–3 product categories and leads a buyer/planner pod |
+| Buyers (incl. Senior Buyers) | 10 | Vendor negotiation, assortment selection, PO placement |
+| Merchandise Planners / Allocators | 5 | Demand forecasting, open-to-buy, store/DC allocation |
+| Pricing Analysts | 4 | Competitive price tracking, SRP/margin analysis, promo pricing |
+| Assortment & Space Analysts | 3 | Planogram / space management, assortment rationalization |
+| Direct Sourcing / Import Buyers | 3 | Import vendor management, landed cost, LC/customs coordination |
+| Private Brand Team | 3 | Own-brand development & vendor-QA liaison (links to VS-41) |
+| Promotions & Vendor-Funding Coordinator | 2 | Promo setup, co-op / vendor-funded markdowns |
+| Merchandising Operations & Master Data | 4 | Item master, pricing-system admin, vendor setup, reporting |
+| **Total** | **40** | |
 
 ### 13.2 Seasonal Calendar (Philippines)
 
@@ -782,4 +817,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.19 | Date: 2026-06-19 | §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.20 | Date: 2026-06-20 | §11.1 org chart now maps **all 18 HQ departments** to their C-suite owner (previously only 6 of 18 had a visible reporting line) with a 357-headcount reconciliation row and an Internal-Audit independence note; §13.1 Merchandising team breakdown expanded to sum explicitly to **40** (rebalanced toward planning/pricing/assortment per `headcount-reality-check.md` §7.4). Prior v2.19: §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
