@@ -1,9 +1,9 @@
 # Workflow Criticality Classification
 
-> Classifies 1,337 unique operational workflows into criticality tiers (the confirmed register
-> holds 1,360 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
-> a `##` parent). An additional 3,644 workflows (4,981 total − 1,337 classified) remain
-> unclassified pending review — all 3,644 carry a keyword-driven proposed tier in
+> Classifies 1,529 unique operational workflows into criticality tiers (the confirmed register
+> holds 1,552 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
+> a `##` parent). An additional 3,452 workflows (4,981 total − 1,529 classified) remain
+> unclassified pending review — all 3,452 carry a keyword-driven proposed tier in
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via
 > `07-methodology/classify-workflows.py`).
 >
@@ -35,7 +35,7 @@
 
 ---
 
-## Tier 1: Core Operations (594 Workflows)
+## Tier 1: Core Operations (608 Workflows)
 
 These 440 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
@@ -258,7 +258,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (531 Workflows)
+## Tier 2: Standard Support (680 Workflows)
 
 These 499 workflows are needed for standard operational support, cost controls, and category management.
 
@@ -549,7 +549,7 @@ These 499 workflows are needed for standard operational support, cost controls, 
 
 ---
 
-## Tier 3: Advanced Optimization (235 Workflows)
+## Tier 3: Advanced Optimization (264 Workflows)
 
 These 229 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
 
@@ -756,17 +756,17 @@ These 229 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 594 | 43.7% |
-| Phase 2 | Operational Excellence (Tier 2) | 531 | 39.0% |
-| Phase 3 | Innovation & Optimization (Tier 3) | 235 | 17.3% |
-| **Confirmed Total** | | **1,360** | 100% |
+| Phase 1 | Go-Live Critical (Tier 1) | 608 | 39.2% |
+| Phase 2 | Operational Excellence (Tier 2) | 680 | 43.8% |
+| Phase 3 | Innovation & Optimization (Tier 3) | 264 | 17.0% |
+| **Confirmed Total** | | **1,552** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 1,337 are canonical `##` workflows.
+> own classification row; the remaining 1,529 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
-The **3,644** workflows not yet in the confirmed register above have been assigned a *proposed*
+The **3,452** workflows not yet in the confirmed register above have been assigned a *proposed*
 tier by [`07-methodology/classify-workflows.py`](../../07-methodology/classify-workflows.py) using
 conservative keyword rules; see the companion file
 [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). On review, promote/demote
@@ -774,17 +774,17 @@ rows by moving them into the confirmed sections above.
 
 | Phase | Label | Proposed Count |
 |---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) — proposed | 548 |
-| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,929 |
-| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 167 |
-| **Proposed Total** | | **3,644** |
+| Phase 1 | Go-Live Critical (Tier 1) — proposed | 543 |
+| Phase 2 | Operational Excellence (Tier 2) — proposed | 2,747 |
+| Phase 3 | Innovation & Optimization (Tier 3) — proposed | 162 |
+| **Proposed Total** | | **3,452** |
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 1,360 rows (1,337 unique `##` workflows) |
-| Proposed (keyword, pending review) | 3,644 |
+| Confirmed (hand-reviewed) | 1,552 rows (1,529 unique `##` workflows) |
+| Proposed (keyword, pending review) | 3,452 |
 | Without even a proposal | 0 |
-| **Grand Total** | **4,981** unique `##` workflows (1,337 confirmed + 3,644 unclassified, all proposed) |
+| **Grand Total** | **4,981** unique `##` workflows (1,529 confirmed + 3,452 unclassified, all proposed) |
 
 ### Domain Breakdown
 
@@ -1848,4 +1848,289 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 
 ---
 
-*Date: 2026-06-20 | Workflow Criticality Classification v7.19 — first hand-confirmation batch: the 8 wholly-statutory value streams (VS-79/85/89/91/114/117/118/125, 192 workflows) promoted from the keyword proposal into the confirmed register after genuine tier review — 154 confirmed Tier 1 (statutory execution), 32 demoted to Tier 2 (program support: training / reporting / change-monitoring / cost-or-insurance recovery), 6 demoted to Tier 3 (analytics / continuous improvement); see the 'Statutory-Compliance Classification Pass' block above. Confirmed 1,168→1,360 rows (1,145→1,337 unique; Tier 1 440→594, Tier 2 499→531, Tier 3 229→235); unclassified 3,836→3,644; proposed register regenerated via `classify-workflows.py --write` (now 548 / 2,929 / 167 — which also dissolved one row of prior proposed-file drift). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.18 — grand total reconciled to 4,981 unique workflows (1,145 confirmed + 3,836 unclassified) after restoring the VS-12 PA-12.2 ghost workflow's missing `## W1318.` header (Tool Rental Reservation, Waitlist & Scheduling); the §Summary table and intro/banner above now read 4,981/3,836, the proposed register was regenerated via `classify-workflows.py --write`, and `validate-repo.sh` Check 17 (ghost detection) now reports 0. Prior v7.17 — §Summary *Proposed classification* subsection reconciled to the regenerated proposed register: unclassified **3,595 → 3,835** (per-tier **688 / 2,608 / 155 → 741 / 2,927 / 167**), now matching [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) exactly. The drift accumulated across Passes 19–25 (VS-162–VS-177, +240 workflows) because only the proposed file was being regenerated, not this mirror. The Confirmed Total (1,168 rows / 1,145 unique) and Grand Total (4,980) were already correct. v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
+### Support & Governance Classification Pass (192 workflows; VS-100/104/112/113/126/129/133/139)
+
+> **Hand-reviewed 2026-06-20 (batch 2).** Eight family-decisive Tier-2 VSs (legal operations,
+> government affairs, PMO, enterprise architecture, customer-data platform, competition/
+> antitrust, operational excellence, trade-show marketing). The classifier's conservative
+> default put nearly all of these at Tier 2; genuine review against the tier definitions —
+> **calibrated to the existing register's placement** of optimization/analytics workflows in
+> Tier 3 (Route Optimization, Cost Optimization, Assortment Optimization, Retail Analytics &
+> AI, QAIP) and operational performance reviews in Tier 2 — yields:
+> **14 Tier 1** (statutory execution the keyword rules missed) · **149 Tier 2** (confirmed
+> standard support) · **29 Tier 3** (analytics / optimization / enhancement defaulted to T2).
+> The 14 promotions and 29 demotions are audited below; the remaining 149 confirm the
+> classifier's Tier 2 default. Result moves Check 1 unclassified 3,644 → 3,452.
+
+#### Tier 1 — Statutory execution (14 workflows)
+
+**Governance & Assurance** (12)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3261 | Settlement, Judgment & Loss Accrual Accounting | VS-100 |
+| W3262 | Litigation Hold Initiation & Evidence Coordination | VS-100 |
+| W3263 | Court Filing, Service & Judgment Enforcement | VS-100 |
+| W3275 | Legal Entity Management & Corporate Secretarial Support | VS-100 |
+| W3276 | Regulatory & Government Investigation Defense | VS-100 |
+| W3277 | Legal Risk Register, Loss Contingency & Disclosure | VS-100 |
+| W3360 | Political-Activity Compliance, Lobbying Disclosure & Ethics | VS-104 |
+| W3967 | Merger, Acquisition & Joint-Venture Notification (PCC Pre-Filing) Control | VS-129 |
+| W3970 | Competition Inquiry, Dawn Raid & Information Request Response | VS-129 |
+| W3971 | PCC Investigation, Preliminary Inquiry & Motu Proprio Matter Defense | VS-129 |
+| W3973 | Competition Litigation, Appeal (Court of Appeals / SC) & Judgment Management | VS-129 |
+| W3974 | Competition Penalty, Fine & Damages Payment & Disclosure Management | VS-129 |
+
+**Technology & Data** (1)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3900 | Data Subject Access Request (DSAR) & Consumer Rights Workflow | VS-126 |
+
+**Sell & Serve** (1)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4198 | Event Compliance, Permits & Promo-Prize Governance | VS-139 |
+
+
+#### Tier 2 — Standard support (149 workflows)
+
+**Governance & Assurance** (68)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3257 | Legal Matter Intake, Triage & Matter Master | VS-100 |
+| W3258 | Litigation Case Lifecycle & Pre-Trial Management | VS-100 |
+| W3259 | Outside Counsel Selection, Engagement & Billing | VS-100 |
+| W3260 | Alternative Dispute Resolution, Arbitration & Mediation | VS-100 |
+| W3265 | Trademark, Copyright & Industrial Design Portfolio Strategy | VS-100 |
+| W3266 | Trademark Search, Prosecution & IPOPHL Filing | VS-100 |
+| W3267 | IP Renewal, Maintenance & Portfolio Lifecycle | VS-100 |
+| W3268 | IP Enforcement, Cease-and-Desist & Infringement Action | VS-100 |
+| W3269 | Brand Licensing, Franchise & IP Commercialization | VS-100 |
+| W3270 | Trade Secret, Confidentiality & Non-Disclosure Management | VS-100 |
+| W3271 | Domain Name, Anti-Cybersquatting & Digital IP Protection | VS-100 |
+| W3273 | Contract Template, Clause Library & Legal Review Support | VS-100 |
+| W3274 | Contract Lifecycle Support & Obligation Tracking | VS-100 |
+| W3278 | Ethics, Whistleblower & Investigation Case Management | VS-100 |
+| W3279 | Legal Operations Technology & e-Billing | VS-100 |
+| W3353 | National Government Stakeholder Mapping & Relationship Management | VS-104 |
+| W3354 | Legislative & Regulatory Monitoring, Horizon Scanning & Impact Assessment | VS-104 |
+| W3355 | Public Policy Position Development & Advocacy Campaign Execution | VS-104 |
+| W3356 | Congressional & Executive-Agency Engagement (DTI/DOLE/BIR/BSP/NTC etc.) | VS-104 |
+| W3357 | Policy Submission, Consultation & Position-Paper Filing | VS-104 |
+| W3358 | Cross-Industry Coalition Building & Joint Advocacy | VS-104 |
+| W3359 | Government Affairs Calendar, Briefing & Executive Liaison | VS-104 |
+| W3361 | Industry Association Membership Strategy, Selection & Dues Management | VS-104 |
+| W3362 | Trade Association Leadership, Committee & Board Representation | VS-104 |
+| W3363 | Industry Standard, Code & Best-Practice Development Participation | VS-104 |
+| W3364 | Peer-Retailer Benchmarking, Knowledge Exchange & Industry Research | VS-104 |
+| W3365 | Industry Event, Conference & Award Program Participation | VS-104 |
+| W3366 | Supplier/Channel Industry Forum & Ecosystem Engagement | VS-104 |
+| W3367 | Association Sponsorship, Partnership & ROI Evaluation | VS-104 |
+| W3368 | Industry Relations Performance & Influence Reporting | VS-104 |
+| W3369 | Public Affairs Strategy & Issue Management (Non-Crisis) | VS-104 |
+| W3370 | Corporate Positioning & Stakeholder Narrative Development | VS-104 |
+| W3371 | Community Relations & Local Stakeholder Engagement (National Brand Level) | VS-104 |
+| W3372 | Think-Tank, Academic & Policy-Institution Partnership | VS-104 |
+| W3373 | Media & Analyst Relations for Policy/Industry Topics | VS-104 |
+| W3374 | Corporate Political & Regulatory Risk Assessment | VS-104 |
+| W3376 | External-Affairs Annual Plan, KPI & Board Reporting | VS-104 |
+| W3953 | Competition & Antitrust Compliance Program Strategy, Governance & Operating Model | VS-129 |
+| W3954 | Market Definition, Market Share & Market Power Assessment | VS-129 |
+| W3955 | Pricing & Promotional Conduct Competition Risk Assessment | VS-129 |
+| W3956 | Vendor / Trade-Partner Vertical-Restraint & RPM Risk Assessment | VS-129 |
+| W3957 | Association, Trade-Body & Competitor-Interaction Risk Assessment | VS-129 |
+| W3958 | Procurement, Buyer-Power & Supplier-Coordination Risk Assessment | VS-129 |
+| W3959 | Digital, Marketplace & Platform Competition Risk Assessment | VS-129 |
+| W3960 | Competition Law Training, Awareness & Culture Program | VS-129 |
+| W3961 | Pricing Decision & Competitor-Information-Exchange Controls | VS-129 |
+| W3962 | Vendor Agreement, RPM & Exclusivity Clause Review & Contract Controls | VS-129 |
+| W3963 | Joint Venture, Strategic Alliance & Cooperation Agreement Clearance | VS-129 |
+| W3964 | Trade / B2B Distribution, Resale & Channel Pricing Compliance Controls | VS-129 |
+| W3965 | Association Meeting & Industry-Gathering Compliance Protocol | VS-129 |
+| W3966 | Market-Allocation, Customer-Allocation & Territory Conduct Controls | VS-129 |
+| W3968 | Competition Compliance Monitoring, Audit & Continuous Improvement | VS-129 |
+| W3969 | Philippine Competition Commission (PCC) Relationship & Engagement Management | VS-129 |
+| W3972 | Leniency, Settlement & Commitment (Whistleblower) Program Management | VS-129 |
+| W3975 | Remediation, Conduct Change & Compliance-Monitoring Implementation | VS-129 |
+| W4049 | Operational Excellence Strategy, Charter & Operating Model | VS-133 |
+| W4050 | Enterprise Process Architecture, Ownership & RACI Governance | VS-133 |
+| W4051 | Continuous Improvement Methodology Standards (Lean / Six Sigma / Kaizen) | VS-133 |
+| W4052 | Improvement Opportunity Pipeline & Prioritization (Impact-Effort) | VS-133 |
+| W4053 | Cross-Functional Improvement Project Governance & Stage-Gate | VS-133 |
+| W4054 | Process KPI Library, Baseline Measurement & Target Setting | VS-133 |
+| W4055 | OpEx Capability Building, Green Belt / Black Belt Certification | VS-133 |
+| W4056 | Continuous Improvement Culture, Suggestion System & Recognition | VS-133 |
+| W4057 | Process Discovery & End-to-End Process Mapping | VS-133 |
+| W4060 | Process Re-Design, Standard Work & SOP Authoring | VS-133 |
+| W4063 | Control Design & Re-Engineering for Risk Reduction | VS-133 |
+| W4064 | Improvement Rollout, Change Management & Sustainment | VS-133 |
+| W4071 | Improvement Project Portfolio Review & Lessons Learned | VS-133 |
+
+**Asset & Infrastructure** (22)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3545 | Enterprise Project Portfolio Strategy & Governance | VS-112 |
+| W3546 | Project Intake, Classification & Portfolio Registration | VS-112 |
+| W3547 | Project Prioritization, Scoring & Resource Allocation | VS-112 |
+| W3548 | Stage-Gate Methodology & Project Lifecycle Standards | VS-112 |
+| W3549 | Program Management (Multi-Project Initiatives) | VS-112 |
+| W3550 | Project Portfolio Risk, Dependency & Conflict Management | VS-112 |
+| W3551 | Project Approval, Charter & Business Case Governance | VS-112 |
+| W3552 | Portfolio Dashboards, Reporting & Executive / Board Oversight | VS-112 |
+| W3553 | Project Manager Assignment, Resource & Capacity Planning | VS-112 |
+| W3554 | Project Planning, Scheduling & WBS Management | VS-112 |
+| W3555 | Project Budget & Cost Control | VS-112 |
+| W3556 | Project Scope, Change & Configuration Management | VS-112 |
+| W3557 | Project Quality, Deliverable & Acceptance Management | VS-112 |
+| W3558 | Project Risk, Issue & Decision Management | VS-112 |
+| W3559 | Project Communications & Stakeholder Management | VS-112 |
+| W3560 | Project Closure, Handover & Lessons Learned | VS-112 |
+| W3561 | Project Benefits Realization Tracking & Validation | VS-112 |
+| W3562 | Project Management Information System (PMIS) & Tooling | VS-112 |
+| W3564 | Program / Project Financial Performance vs Business Case | VS-112 |
+| W3566 | Project Management Standards, Templates & Methodology | VS-112 |
+| W3567 | Vendor / Contractor Project Performance & Governance | VS-112 |
+| W3568 | Enterprise Transformation & Change Management Portfolio | VS-112 |
+
+**Technology & Data** (37)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3569 | Enterprise Architecture Strategy, Framework & Governance | VS-113 |
+| W3570 | Architecture Principles, Standards & Reference Architecture | VS-113 |
+| W3571 | Architecture Review Board & Solution Architecture Review | VS-113 |
+| W3572 | Technology Standards & Approved Technology List | VS-113 |
+| W3573 | Architecture Compliance, Exception & Waiver Management | VS-113 |
+| W3574 | Architecture Capability, Skills & Center of Excellence | VS-113 |
+| W3575 | Architecture Repository, Documentation & Knowledge Management | VS-113 |
+| W3577 | Application Portfolio Management & Rationalization | VS-113 |
+| W3578 | Application Lifecycle, Retirement & Technical Debt Management | VS-113 |
+| W3579 | Integration Architecture & API Strategy | VS-113 |
+| W3580 | Solution Architecture for New Initiatives & Projects | VS-113 |
+| W3581 | Data Architecture & Information Strategy | VS-113 |
+| W3582 | Cloud & Infrastructure Architecture | VS-113 |
+| W3583 | Security Architecture | VS-113 |
+| W3584 | Architecture for ERP Platform & Core Systems Evolution | VS-113 |
+| W3585 | Technology Strategy & Multi-Year Technology Roadmap | VS-113 |
+| W3587 | Architecture for Digital Transformation Programs | VS-113 |
+| W3588 | Technology Investment Governance & Architecture ROI | VS-113 |
+| W3589 | Vendor & Platform Strategy for Enterprise Systems | VS-113 |
+| W3590 | Architecture Risk, Resilience & Disaster-Recovery Design | VS-113 |
+| W3591 | Enterprise Architecture Stakeholder Engagement & Communication | VS-113 |
+| W3881 | CDP Strategy, Architecture & Governance | VS-126 |
+| W3882 | Customer Data Ingestion & Source-System Integration | VS-126 |
+| W3883 | Customer Identity Resolution & Profile Stitching | VS-126 |
+| W3884 | Customer Golden Record & Master Profile Management | VS-126 |
+| W3885 | Customer Consent, Preference & Compliance Center | VS-126 |
+| W3886 | Customer Data Quality, Deduplication & Hygiene | VS-126 |
+| W3887 | CDP Data Model, Taxonomy & Segmentation Foundation | VS-126 |
+| W3888 | CDP Platform Operations, Security & Access Governance | VS-126 |
+| W3889 | Customer Segmentation & Targeting Operations | VS-126 |
+| W3891 | Audience Activation & Cross-Channel Syndication | VS-126 |
+| W3893 | Customer Journey Orchestration & Trigger Management | VS-126 |
+| W3897 | Customer 360 Consumption & Self-Service Access | VS-126 |
+| W3898 | B2B / Trade & Key-Account Profile Enrichment | VS-126 |
+| W3899 | Loyalty Program Data & Tier/Behavior Enrichment | VS-126 |
+| W3901 | Customer Data Privacy, Consent Audit & DPIA | VS-126 |
+| W3902 | Customer Data Retention, Archival & Purge | VS-126 |
+
+**Sell & Serve** (22)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4193 | Event Marketing Strategy & Channel Role | VS-139 |
+| W4194 | Annual Event Portfolio & Calendar Planning | VS-139 |
+| W4195 | Event Budget, Business Case & Sponsorship Funding | VS-139 |
+| W4196 | Event Audience, Targeting & Trade-Pro Invitation | VS-139 |
+| W4197 | Vendor Co-Funding, Co-Exhibition & MDF Coordination | VS-139 |
+| W4199 | Event Cross-Functional Team & Resource Planning | VS-139 |
+| W4200 | Event Brief, Objectives & Success-Metric Definition | VS-139 |
+| W4201 | Booth/Stand Design, Build & Logistics | VS-139 |
+| W4202 | Show Registration, Sponsorship & Space Contracting | VS-139 |
+| W4203 | Product Display, Demo & Sample Coordination | VS-139 |
+| W4204 | On-Site Sales, Engagement & Lead Capture | VS-139 |
+| W4205 | Hospitality, VIP & Account-Manager Meetings | VS-139 |
+| W4206 | Event Travel, Accommodation & Per-Diem Management | VS-139 |
+| W4207 | Show Teardown, Asset Recovery & Return Logistics | VS-139 |
+| W4208 | Health, Safety & Incident Management at Events | VS-139 |
+| W4209 | Hosted Trade Day & Contractor Event Operations | VS-139 |
+| W4210 | Product Launch & New-Arrival Showcase Events | VS-139 |
+| W4211 | Store Grand-Opening & In-Store Event Marketing | VS-139 |
+| W4212 | Partner, Association & Sponsored-Event Management | VS-139 |
+| W4213 | Digital & Hybrid Event / Webinar Operations | VS-139 |
+| W4214 | Lead Capture, Qualification & CRM Routing | VS-139 |
+| W4215 | Post-Event Nurture, Follow-Up & Sales Conversion | VS-139 |
+
+
+#### Tier 3 — Analytics / optimization / enhancement (29 workflows)
+
+**Governance & Assurance** (16)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3264 | Legal Matter Analytics & Loss Forecasting | VS-100 |
+| W3272 | IP Portfolio Valuation & Risk Analytics | VS-100 |
+| W3280 | Legal Department Performance & Cost Analytics | VS-100 |
+| W3375 | Government Affairs & Industry-Relations Budget, Spend & Analytics | VS-104 |
+| W3976 | Competition Compliance Program Analytics, Reporting & Board Oversight | VS-129 |
+| W4058 | Process Mining & Task Mining from ERP/System Event Logs | VS-133 |
+| W4059 | Bottleneck, Root-Cause & Value-Stream Analysis | VS-133 |
+| W4061 | Improvement Pilot Design, Execution & Hypothesis Testing | VS-133 |
+| W4062 | Process Automation & Digitization Opportunity Scoping | VS-133 |
+| W4065 | Benefit Case Modeling, Tracking & Realization Reporting | VS-133 |
+| W4066 | Process Performance Monitoring & Control Tower Dashboard | VS-133 |
+| W4067 | Productivity & Labor Efficiency Improvement Program | VS-133 |
+| W4068 | Cost-Out / Cost-Reduction Program Management | VS-133 |
+| W4069 | Cycle-Time, Throughput & Lead-Time Improvement Tracking | VS-133 |
+| W4070 | Quality, Defect & Rework Reduction Program | VS-133 |
+| W4072 | OpEx Maturity Assessment & Annual Program Review | VS-133 |
+
+**Asset & Infrastructure** (2)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3563 | Project Portfolio Performance & KPI Analytics | VS-112 |
+| W3565 | PMO Maturity Assessment & Continuous Improvement | VS-112 |
+
+**Technology & Data** (10)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W3576 | Architecture Maturity Assessment & Continuous Improvement | VS-113 |
+| W3586 | Emerging Technology Evaluation & Adoption Governance | VS-113 |
+| W3592 | Architecture Metrics, Portfolio Health & Technology Analytics | VS-113 |
+| W3890 | Real-Time Customer Profile & Next-Best-Action Serving | VS-126 |
+| W3892 | Personalization & Recommendation Engine Operations | VS-126 |
+| W3894 | Customer Lifetime Value, Churn & Propensity Modeling | VS-126 |
+| W3895 | Marketing Analytics, Attribution & Experimentation | VS-126 |
+| W3896 | Campaign & Offer Measurement (Lift, ROI) | VS-126 |
+| W3903 | Customer Analytics & Insights Reporting | VS-126 |
+| W3904 | CDP Value Realization, ROI & Continuous Improvement | VS-126 |
+
+**Sell & Serve** (1)
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W4216 | Event Performance, ROI & Portfolio Analytics | VS-139 |
+
+
+**Promotion audit (14 → Tier 1, statutory execution the keyword rules missed):**
+
+- **Governance & Assurance** (12): W3261, W3262, W3263, W3275, W3276, W3277, W3360, W3967, W3970, W3971, W3973, W3974
+- **Technology & Data** (1): W3900
+- **Sell & Serve** (1): W4198
+
+**Demotion audit (29 → Tier 3, analytics/optimization defaulted to Tier 2):**
+
+- **Governance & Assurance** (16): W3264, W3272, W3280, W3375, W3976, W4058, W4059, W4061, W4062, W4065, W4066, W4067, W4068, W4069, W4070, W4072
+- **Asset & Infrastructure** (2): W3563, W3565
+- **Technology & Data** (10): W3576, W3586, W3592, W3890, W3892, W3894, W3895, W3896, W3903, W3904
+- **Sell & Serve** (1): W4216
+
+---
+
+*Date: 2026-06-20 | Workflow Criticality Classification v7.20 — second hand-confirmation batch (Support & Governance): 8 family-decisive Tier-2 VSs (VS-100/104/112/113/126/129/133/139, 192 workflows) promoted from the keyword proposal after genuine review calibrated to the register's existing optimization/analytics=Tier 3 placement. **14 → Tier 1** (statutory execution the keyword rules missed: litigation hold/filing/enforcement & loss-contingency, corporate-secretarial/SEC, regulatory-investigation defense, merger-notification/PCC pre-filing, PCC investigation/dawn-raid/litigation/penalty, political-activity/lobbying disclosure, CDP DSAR/consumer-rights, event-permit/prize-withholding); **29 → Tier 3** (analytics/optimization defaulted to Tier 2: process/task mining, cost-out & productivity programs, OpEx maturity, CDP recommendation/CLV/attribution analytics, IP/legal/portfolio analytics); **149 confirmed Tier 2**. Confirmed 1,360→1,552 rows (1,337→1,529 unique; T1 594→608, T2 531→680, T3 235→264); unclassified 3,644→3,452 (30.7% classified); proposed regenerated (543/2,747/162). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.19 — first hand-confirmation batch: the 8 wholly-statutory value streams (VS-79/85/89/91/114/117/118/125, 192 workflows) promoted from the keyword proposal into the confirmed register after genuine tier review — 154 confirmed Tier 1 (statutory execution), 32 demoted to Tier 2 (program support: training / reporting / change-monitoring / cost-or-insurance recovery), 6 demoted to Tier 3 (analytics / continuous improvement); see the 'Statutory-Compliance Classification Pass' block above. Confirmed 1,168→1,360 rows (1,145→1,337 unique; Tier 1 440→594, Tier 2 499→531, Tier 3 229→235); unclassified 3,836→3,644; proposed register regenerated via `classify-workflows.py --write` (now 548 / 2,929 / 167 — which also dissolved one row of prior proposed-file drift). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.18 — grand total reconciled to 4,981 unique workflows (1,145 confirmed + 3,836 unclassified) after restoring the VS-12 PA-12.2 ghost workflow's missing `## W1318.` header (Tool Rental Reservation, Waitlist & Scheduling); the §Summary table and intro/banner above now read 4,981/3,836, the proposed register was regenerated via `classify-workflows.py --write`, and `validate-repo.sh` Check 17 (ghost detection) now reports 0. Prior v7.17 — §Summary *Proposed classification* subsection reconciled to the regenerated proposed register: unclassified **3,595 → 3,835** (per-tier **688 / 2,608 / 155 → 741 / 2,927 / 167**), now matching [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) exactly. The drift accumulated across Passes 19–25 (VS-162–VS-177, +240 workflows) because only the proposed file was being regenerated, not this mirror. The Confirmed Total (1,168 rows / 1,145 unique) and Grand Total (4,980) were already correct. v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*

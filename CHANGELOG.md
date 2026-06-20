@@ -4,6 +4,55 @@
 
 ---
 
+## 2026-06-20 — Second criticality hand-confirmation batch: 8 support & governance VSs (192 workflows)
+
+Second review batch: the 8 family-decisive Tier-2 VSs — **VS-100 Legal Ops, VS-104 Govt Affairs,
+VS-112 PMO, VS-113 Enterprise Architecture, VS-126 CDP, VS-129 Competition/Antitrust, VS-133
+Operational Excellence, VS-139 Trade Show** (192 workflows). Genuine review calibrated against
+the register's existing tier placement of optimization/analytics workflows (T3) vs operational
+performance reviews (T2). Result: **14 → Tier 1** (statutory execution the keyword rules missed),
+**29 → Tier 3** (analytics/optimization defaulted to T2), **149 confirmed Tier 2**.
+`validate-repo.sh`: **0 errors / 2 warnings** (Check 1 unclassified 3,644 → **3,452**; classified
+1,360 → **1,552** rows / **1,529** unique; 27% → **31%**).
+
+**Key findings (the value genuine review adds):**
+- **VS-133 OpEx/Process Mining is a textbook Tier-3 domain** — the tier definition explicitly
+  puts "optimization/enhancement" in Tier 3, and the register calibrates: Route/Cost/Assortment
+  Optimization and QAIP all sit in Tier 3. VS-133's 11 analytics/optimization-execution workflows
+  (process mining, cost-out, productivity, cycle-time, control-tower, maturity) are now T3.
+  Governance/standards/methodology/culture (13) stay T2. This was the batch's most impactful
+  correction — the classifier's conservative Tier-2 default had hidden the systematic T2→T3 gap.
+- **VS-126 CDP has 7 T3 analytics workflows** — CLV/churn/propensity modeling, recommendation
+  engine, attribution/experimentation, customer analytics — all match the register's "Retail
+  Analytics & AI-Driven Inventory Optimization" being T3. The classifier missed them because the
+  workflow names don't use T3 keywords ("Next-Best-Action Serving", "Propensity Modeling").
+- **14 statutory promotions to T1 across 5 VSs**: litigation hold/filing/enforcement & loss-
+  contingency accrual (VS-100), corporate secretarial/SEC reportorial (VS-100), regulatory
+  investigation defense (VS-100), merger-notification PCC pre-filing (VS-129), PCC investigation/
+  dawn-raid/litigation/penalty (VS-129), political-activity/lobbying disclosure (VS-104), CDP
+  DSAR/consumer-rights workflow (VS-126), event permit & promo-prize governance (VS-139).
+- **29 T3 demotions across all 8 VSs**: IP/legal/portfolio/pipeline analytics, PMO KPI/maturity
+  analytics, architecture maturity/metrics/emerging-tech, CDP ML/recommendation/attribution/
+  churn, competition-program analytics, OpEx cost-out/productivity/process-mining/maturity, event
+  ROI analytics — all consistent with the register's optimization/analytics = Tier 3 pattern.
+
+**Count cascade** across current-state citations:
+- `workflow-criticality-classification.md`: new `### Support & Governance Classification Pass` block
+  (192 rows, tier+family grouped, promotion + demotion audit); tier section headers 594/531/235
+  → 608/680/264; §Summary confirmed 1,360→1,552 (39.2/43.8/17.0%); proposed 548/2,929/167 →
+  543/2,747/162 = 3,452 (regeneration matched prediction exactly — not a single row of drift); intro
+  banner 1,337→1,529/1,360→1,552/3,644→3,452; v7.20 footer clause.
+- `workflow-criticality-proposed.md`: regenerated (543/2,747/162).
+- `workflows/README.md` Quick Stats; root `README.md` Coverage table (27%→31%).
+- `workflow-dependency-map.md`: intro (1,337→1,529, 1,360→1,552, 3,644→3,452); §8 note reverted
+  to honest "original 1,168 at v4.1, 384 pending"; §1–§7 edge-scope note expanded to cover both
+  batches.
+- `workflow-system-touchpoint-map.md` footer; `workflow-gap-analysis.md` validator-snapshot line.
+
+**Progress:** 384 of 3,836 confirmed (10.0%); 3,452 remain unclassified (69.3% covered). Two
+complete hand-confirmation batches in one session. Remaining unclassified: 3,452 (of which ~1,080
+are in family-decisive ≥92%-T2 VSs—mechanically confirmable; the rest are mixed-tier).
+
 ## 2026-06-20 — First criticality hand-confirmation batch: 8 wholly-statutory VSs (192 workflows)
 
 Prompted by "can the 2 validator warnings be easily fixed?" — they can't be fixed *mechanically*
