@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Fully detailed (22 templated VSs de-boilerplated 2026-06-20; VS-69/70/71/73 were pre-detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-181 | 93 | Fully detailed (twenty-six gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
+| Gap analysis | VS-89 – VS-189 | 97 | Fully detailed (twenty-eight gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 177 Value Streams · 547 Process Areas · 5,173 Workflows
+8 Families · 185 Value Streams · 559 Process Areas · 5,269 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-five gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 173 value streams (VS-89–VS-181; W2993–W5224). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-eight gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 185 value streams (VS-89–VS-189; W2993–W5416). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -64,7 +64,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-136](VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/README.md) | Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering | Gap analysis | 3 | 24 |
 |  | [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | Gap analysis | 3 | 24 |
 |  | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **48** | **427** |
+|  | [VS-180](VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md) | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **51** | **451** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
@@ -110,7 +111,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-176](VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md) | Blueprint, Reprographics & Large-Format Plan Printing Services | Gap analysis | 3 | 24 |
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
 |  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **136** | **1507** |
+|  | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **139** | **1531** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -137,7 +139,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-158](VS-158-product-costing-landed-cost-and-cost-accounting/README.md) | Product Costing, Landed-Cost & Cost Accounting | Gap analysis | 3 | 24 |
 |  | [VS-170](VS-170-inventory-pledge-asset-based-lending-and-trust-receipt-financing/README.md) | Inventory Pledge, Asset-Based Lending & Trust-Receipt (Warehouse-Receipt) Financing | Gap analysis | 3 | 24 |
 |  | [VS-173](VS-173-investor-relations-capital-markets-and-securities-disclosure/README.md) | Investor Relations, Capital Markets & Securities Disclosure | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **78** | **699** |
+|  | [VS-181](VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/README.md) | B2B Project Financing, Escrow Account Orchestration & Lien Release | Gap analysis | 3 | 24 |
+|  | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | Gap analysis | 3 | 24 |
+|  | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **87** | **771** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 74 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 24 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 24 |
@@ -166,7 +171,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-120](VS-120-energy-efficiency-conservation-and-ra-11285-compliance-program/README.md) | Energy Efficiency, Conservation & RA 11285 Compliance Program | Gap analysis | 3 | 24 |
 |  | [VS-138](VS-138-integrated-facilities-management-workplace-services-and-building-automation/README.md) | Integrated Facilities Management, Workplace Services & Building Automation | Gap analysis | 3 | 24 |
 |  | [VS-163](VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md) | Electric Vehicle (EV) Charging Station Host Network Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **33** | **272** |
+|  | [VS-178](VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md) | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | Gap analysis | 3 | 24 |
+|  | [VS-184](VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md) | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **39** | **320** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 48 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 28 |
@@ -202,7 +209,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-161](VS-161-third-party-and-supplier-risk-management-tprm/README.md) | Third-Party & Supplier Risk Management (TPRM) | Gap analysis | 3 | 24 |
 |  | [VS-165](VS-165-pcab-contractor-licensing-and-ra-4566-construction-contractor-compliance/README.md) | PCAB Contractor Licensing & RA 4566 Construction Contractor Compliance | Gap analysis | 3 | 24 |
 |  | [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **105** | **912** |
+|  | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | Gap analysis | 3 | 24 |
+|  | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **111** | **960** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -216,7 +225,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **547** | **5,173** |
+| | | | **Grand Total** | **559** | **5,269** |
 
 ---
 
@@ -692,6 +701,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-185.2** [Member Transaction Routing & Verification](./VS-185-b2b-cooperative-credit-and-procurement-partnerships/PA-185.2-member-transaction-routing-and-verification.md) — 8 workflows
 - **PA-185.3** [Cooperative Rebate & Purchase Volume Reconciliation](./VS-185-b2b-cooperative-credit-and-procurement-partnerships/PA-185.3-cooperative-rebate-and-purchase-volume-reconciliation.md) — 8 workflows
 
+**[VS-186: Compact & Heavy Construction Equipment Rental Fleet Operations](./VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md)** (24 workflows)
+
+- **PA-186.1** [Fleet Strategy, Acquisition & Yard Infrastructure](./VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/PA-186.1-equipment-rental-fleet-strategy-acquisition-and-yard-infrastructure.md) — 8 workflows
+- **PA-186.2** [Rental Transaction Lifecycle — Booking, Handover, Operation & Return](./VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/PA-186.2-equipment-rental-transaction-lifecycle.md) — 8 workflows
+- **PA-186.3** [Equipment Maintenance, Safety, Compliance & Fleet Utilization Analytics](./VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/PA-186.3-equipment-maintenance-safety-compliance-and-analytics.md) — 8 workflows
+
 ### Finance
 
 **[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (42 workflows)
@@ -855,6 +870,18 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-173.1** [Investor Relations Program, Shareholder Communications & Capital-Markets Engagement](./VS-173-investor-relations-capital-markets-and-securities-disclosure/PA-173.1-investor-relations-program-shareholder-communications-and-capital-markets-engagement.md) — 8 workflows
 - **PA-173.2** [Corporate Disclosure, Securities & SEC/Regulatory Compliance](./VS-173-investor-relations-capital-markets-and-securities-disclosure/PA-173.2-corporate-disclosure-securities-and-regulatory-compliance.md) — 8 workflows
 - **PA-173.3** [Shareholder Services, Equity Records, Dividend & IR Analytics](./VS-173-investor-relations-capital-markets-and-securities-disclosure/PA-173.3-shareholder-services-equity-records-dividend-and-ir-analytics.md) — 8 workflows
+
+**[VS-188: Trade Reseller Floor-Plan & Dealer Inventory Financing](./VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md)** (24 workflows)
+
+- **PA-188.1** [Program Strategy, Credit Framework & Dealer Onboarding](./VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/PA-188.1-floor-plan-program-strategy-credit-framework-and-onboarding.md) — 8 workflows
+- **PA-188.2** [Loan Origination, Disbursement & Inventory Collateral Tracking](./VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/PA-188.2-floor-plan-origination-disbursement-and-collateral-tracking.md) — 8 workflows
+- **PA-188.3** [Curtailment, Collections, Risk & Portfolio Analytics](./VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/PA-188.3-curtailment-collections-risk-and-portfolio-analytics.md) — 8 workflows
+
+**[VS-189: Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization](./VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md)** (24 workflows)
+
+- **PA-189.1** [Receivables Financing Strategy, Funder Relationships & Program Setup](./VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/PA-189.1-receivables-financing-strategy-funder-relationships-and-setup.md) — 8 workflows
+- **PA-189.2** [Invoice Sale, Factoring Drawdown, Notification & Cash Application](./VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/PA-189.2-invoice-sale-factoring-drawdown-notification-and-cash-application.md) — 8 workflows
+- **PA-189.3** [Collections, Recourse Management, Reconciliation & Portfolio Analytics](./VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/PA-189.3-collections-recourse-reconciliation-and-portfolio-analytics.md) — 8 workflows
 
 ### People
 
@@ -1253,6 +1280,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-166.1** [Portfolio Strategy, Inventory, Governance & Regulatory Intelligence](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/PA-166.1-portfolio-strategy-inventory-governance-and-regulatory-intelligence.md) — 8 workflows
 - **PA-166.2** [Renewal Execution, Inspection Coordination & Multi-Site Campaigns](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/PA-166.2-renewal-execution-inspection-coordination-and-multi-site-campaigns.md) — 8 workflows
 - **PA-166.3** [Compliance Reporting, Analytics, Cost & Program Assurance](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/PA-166.3-compliance-reporting-analytics-cost-and-program-assurance.md) — 8 workflows
+
+**[VS-187: Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program](./VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md)** (24 workflows)
+
+- **PA-187.1** [Program Strategy, Regulatory Setup & Partner Network](./VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/PA-187.1-stewardship-program-strategy-regulatory-setup-and-partner-network.md) — 8 workflows
+- **PA-187.2** [Customer Take-Back Operations — Collection, Handling & Reverse Logistics](./VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/PA-187.2-customer-take-back-operations-and-reverse-logistics.md) — 8 workflows
+- **PA-187.3** [Recovery, Disposal, Compliance Reporting & Stewardship Analytics](./VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/PA-187.3-recovery-disposal-compliance-reporting-and-analytics.md) — 8 workflows
 
 ### Technology & Data
 
