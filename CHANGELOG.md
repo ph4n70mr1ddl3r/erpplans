@@ -4,6 +4,54 @@
 
 ---
 
+## 2026-06-20 — Consistency review #4: cash-float conflict, stale adoption claim, stale counts, ambiguities
+
+A fourth whole-repo consistency review (following #1–#3 on 2026-06-20). `validate-repo.sh`
+still reports **0 errors / 2 warnings** across **18 checks**. This pass fixed the issues the
+validator does not cover — content-level inconsistencies, stale prose, and cross-document
+ambiguities surfaced by reading the docs (not by row/header counts). No count cascade: all
+canonical totals remain **4,981 workflows / 173 VS / 523 PA / 733 requirements / 67 controls /
+6,757 headcount**.
+
+**1. POS opening cash-float conflict (factual).** `VS-07 PA-07.1 W5A` step 4 stated
+**PHP 5,000/terminal** (PHP 15,000/store), contradicting the authoritative float-prep workflow
+`W764` (step 3: **PHP 20,000/terminal, PHP 60,000/store**, with a denomination breakdown) and
+`FIN-066`. Corrected W5A to **PHP 20,000/terminal** and disambiguated the **till float** (per
+W764) from the **petty-cash float** (PHP 20,000 per W25) — the two “PHP 20,000 floats” were
+previously indistinguishable by amount alone.
+
+**2. Stale Automation/Controls adoption claim.** `WORKFLOW-FORMAT-GUIDE.md` “Standard analysis
+fields” said the fields were present “on the reworked Expansion block (VS-53–VS-78, except
+VS-69–VS-71) and on VS-133–VS-177; the Core, Statutory, and early gap-analysis (VS-89–VS-132)
+blocks do not yet carry them.” Reality (validator Check 12 + file scan): **4,974/4,981 = 100%**
+across all four blocks; the 7 without are parent/summary sub-workflow rows. Rewrote the sentence.
+
+**3. Stale counts trimmed.** `requirement-workflow-matrix.md` v68 footer was a ~1,500-char
+run-on nesting v49–v68 with the boilerplate “mappings currently reference the core foundational
+workflows” sentence repeated ~6× (duplicating CHANGELOG) and a stale “unclassified 3,835→3,836”
+(the 2026-06-20 hand-confirmation batches reduced unclassified to **2,564**). Replaced with a
+concise v69 footer pointing to CHANGELOG for history. `headcount-reality-check.md` §2 table now
+carries a reading note that its “Stated” column is the **pre-rebalance (315-HQ)** allocation the
+analysis ran against (so its “❌ / 🔴” verdicts read as the historical gap record, not a current-
+state assessment).
+
+**4. Ambiguities resolved (`model-company-profile.md`).** §12.3 “Sales per Store per Month”
+clarified (≈ PHP 25.2M per §9.4, vs the round ~PHP 25M target); §11.1 table-total cell now makes
+the “17 departments here + Executive Office = 18 total HQ departments” relationship explicit
+(reconciling the “17”/“18” numbers in the same section); §12.1 added a Regional/District Manager
+field-layer note cross-referencing **VS-177**, resolving the “Regional Manager (~6)” vs
+“District Manager (~13)” tier ambiguity that recurred across requirements (POS-038, INV-023,
+FIN-065, …). Profile bumped to v2.21.
+
+**Other findings (reviewed; no action):**
+- The integration architecture diagram is intentionally duplicated (canonical in
+  `data-volumes-and-integrations.md §2`; convenience copy in `technical-guidelines.md §3.2`);
+  both already label it as such — left as-is.
+- The “VS-49–VS-52 retired / 25 passes” origin paragraph appears near-verbatim in 6 navigation
+  hubs — defensible for discoverability; left as-is.
+
+---
+
 ## 2026-06-20 — Consistency review #3: stale prose counts in criticality-classification, validator Check 18
 
 A third whole-repo consistency review (following #1 and #2 on 2026-06-20). `validate-repo.sh`

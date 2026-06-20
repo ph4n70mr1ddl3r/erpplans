@@ -18,6 +18,13 @@ The 6,757 total company headcount is **plausible overall**, but the **HQ allocat
 
 ## 2. Summary Table — Stated vs. Recommended
 
+> **Reading note:** the “Stated” column below reflects the **pre-rebalance (315-HQ) allocation**
+> this analysis was performed against — not the current state. The implemented rebalance (315 → 357)
+> lives in `model-company-profile.md` §3.3/§4: Executive Office is now 7 (not 5), Finance &
+> Accounting 46 (not 37), IT 50 (not 33), HR 26 (not 18), Legal & Compliance 14 (not 9), and the
+> six “hidden” departments are now broken out explicitly. The verdicts below are the **historical
+> gap record** that drove the rebalance, not a current-state assessment.
+
 | HQ Department | Stated | Realistic Range | Verdict | Key Driver |
 |---|---|---|---|---|
 | Executive Office | 5 | 7 | ❌ Inconsistent | Org chart (§11.1) lists CEO + 6 C-suite; §3.3 omits CHRO & VP Legal |

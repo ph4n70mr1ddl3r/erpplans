@@ -505,7 +505,7 @@ BuildRight Holdings, Inc.
 | CMO | Marketing | 25 |
 | CHRO | Human Resources; Health, Safety & Environment | 36 |
 | VP Legal & Compliance | Legal & Compliance; Sustainability / ESG | 17 |
-| **Total** | **17 departments** (the 7 executives themselves are counted in Executive Office) | **350 + 7 = 357** |
+| **Total** | **17 departments** here + Executive Office = **18 total HQ departments** (the 7 executives themselves are counted in Executive Office) | **350 + 7 = 357** |
 
 > Department headcounts are taken from §3.3. **¹ Internal Audit independence:** the Head of
 > Internal Audit reports **functionally to the Board's Audit Committee** (dotted line) and
@@ -556,6 +556,13 @@ BuildRight Holdings, Inc.
 | Customer Service Rep | 1 | Returns, BOPIS pickup, special orders |
 | Maintenance / Utility | 1 | Store upkeep |
 
+> **Field layer above the Store Manager.** Requirements and workflows reference two distinct
+> field-management tiers — **Regional Managers** (~6, each overseeing a Philippine region) and
+> **District Managers** (~10–15, each overseeing ~15 stores) — plus the ~20 Regional LP Officers.
+> Together they form the multi-store field layer above the single-store roles in this table; the
+> full field-retail operating model (territory design, visit cadence, coaching, turnaround, store
+> support center) is defined in **[VS-177](workflows/VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md)**.
+
 ### 12.2 Store-Level Processes
 - **Opening Procedures**: Cash float, system login, store walkthrough
 - **Daily Operations**: Replenishment from backroom, price checks, customer service
@@ -571,7 +578,7 @@ BuildRight Holdings, Inc.
 
 | KPI | Target |
 |---|---|
-| Sales per Store per Month | ~PHP 25M |
+| Sales per Store per Month | ~PHP 25M (≈ PHP 25.2M derived: PHP 5.04B in-store ÷ 200 — see §9.4) |
 | Sales per Sqm per Year | ~PHP 22,000–28,000 |
 | Gross Margin % | 28–32% |
 | Inventory Turns | 6–8x per year |
@@ -817,4 +824,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.20 | Date: 2026-06-20 | §11.1 org chart now maps **all 18 HQ departments** to their C-suite owner (previously only 6 of 18 had a visible reporting line) with a 357-headcount reconciliation row and an Internal-Audit independence note; §13.1 Merchandising team breakdown expanded to sum explicitly to **40** (rebalanced toward planning/pricing/assortment per `headcount-reality-check.md` §7.4). Prior v2.19: §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.21 | Date: 2026-06-20 | §12.1 added a Regional/District Manager field-layer note cross-referencing VS-177 (resolving the “Regional Manager (~6)” vs “District Manager (~13)” tier ambiguity that recurred across requirements); §12.3 “Sales per Store per Month” clarified (≈ PHP 25.2M per §9.4); §11.1 table-total cell made the “17 departments here + Executive Office = 18 total” relationship explicit. Prior v2.20: §11.1 org chart now maps **all 18 HQ departments** to their C-suite owner (previously only 6 of 18 had a visible reporting line) with a 357-headcount reconciliation row and an Internal-Audit independence note; §13.1 Merchandising team breakdown expanded to sum explicitly to **40** (rebalanced toward planning/pricing/assortment per `headcount-reality-check.md` §7.4). Prior v2.19: §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
