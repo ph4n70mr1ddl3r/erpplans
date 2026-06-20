@@ -877,7 +877,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
 - Grand total (4,981) matches actual PA workflow header count (4,981). ✅
-- All 1,936 classified workflow IDs resolve to a header. ✅
+- All 2,128 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
 - All cross-document counts reconciled (README, executive-summary, value-stream-index,

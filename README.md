@@ -263,7 +263,7 @@ erpplans/
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
 | Workflows | 4,981 fully specified across 173 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,913 of 4,981 workflows classified** (38%; the confirmed register holds 1,936 rows incl. 23 `###` parent/summary sub-workflows); 3,068 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
+| Criticality classification | **2,105 of 4,981 workflows classified** (42%; the confirmed register holds 2,128 rows incl. 23 `###` parent/summary sub-workflows); 2,876 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across twenty-five gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 173 value streams (VS-89–VS-177; W2993–W5128). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 
