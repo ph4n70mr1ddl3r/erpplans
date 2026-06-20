@@ -391,6 +391,69 @@ else
     echo "$GHOST" | sed 's/^/    /'
 fi
 
+# --- Check 18: Criticality-classification prose counts vs headings ---
+echo "--- Check 18: Criticality-classification prose counts vs headings ---"
+# validate-repo.sh's table-row checks (Check 1, 9) and the §Summary table proved trustworthy, but
+# the file's free-prose counts drifted: across six 2026-06-20 classification batches (v7.19→v7.25)
+# the per-tier body sentence 'These <N> workflows ...' under each '## Tier N: ... (M Workflows)'
+# heading froze at the v7.19 counts (440/499/229 = 1,168) while the headings correctly advanced to
+# 684/1,354/402 (= 2,440); the intro banner likewise held stale '2,684 unclassified (4,981 − 2,297)'
+# against a correct 2,564. Both contradicted the file's own Summary table. A table-row check cannot
+# see prose, so this check asserts the two stable prose invariants the Summary already encodes:
+#   (a) each tier heading's '(M Workflows)' == that section's 'These <N> workflows' sentence, and
+#   (b) the intro-banner arithmetic 'X unclassified = grand_total − classified' is self-consistent
+# and matches the §Summary totals. Errors here mean a future classification batch updated the
+# Summary table but forgot the surrounding prose — the exact v7.19→v7.25 regression.
+CLASS_FILE="$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md
+PROSE_DRIFT=$(python3 - "$CLASS_FILE" <<'PY'
+import re,sys
+f=open(sys.argv[1]).read()
+lines=f.split("\n")
+errs=[]
+# (a) heading count vs 'These N workflows' body sentence
+for i,ln in enumerate(lines):
+    m=re.match(r'^## Tier [123]: .*\(([0-9,]+) Workflows\)', ln)
+    if not m: continue
+    head=int(m.group(1).replace(",",""))
+    body=None
+    for j in range(i+1, min(i+6,len(lines))):
+        bm=re.match(r'^These ([0-9,]+) workflows', lines[j])
+        if bm:
+            body=int(bm.group(1).replace(",","")); break
+        if lines[j].strip() and not lines[j].startswith('>'):
+            # first non-blank non-quote prose line reached without a 'These N' sentence
+            break
+    if body is not None and body!=head:
+        errs.append(f"Tier heading says {head:,} but following prose says {body:,}: {ln[:55]}")
+# (b) intro-banner arithmetic self-consistency + match to the Grand Total row.
+# The Grand Total row states all three UNIQUE-count figures in one cell
+# ('4,981 unique ## workflows (2,417 confirmed + 2,564 unclassified)'); the intro banner uses
+# the same unique-count frame, so it must agree with THAT row — not the 'Confirmed Total'
+# (2,440) row, which counts register rows incl. 23 parent/summary sub-workflows.
+intro_m=re.search(r'An additional ([0-9,]+) workflows \(([0-9,]+) total . ([0-9,]+) classified\)', f)
+gt_m=re.search(r'\| \*\*Grand Total\*\* \| \*\*([0-9,]+)\*\* unique .##. workflows \(([0-9,]+) confirmed \+ ([0-9,]+) unclassified', f)
+if intro_m:
+    unc=int(intro_m.group(1).replace(",","")); tot=int(intro_m.group(2).replace(",","")); cls=int(intro_m.group(3).replace(",",""))
+    if tot-cls!=unc:
+        errs.append(f"Intro banner arithmetic wrong: {tot:,} total − {cls:,} classified = {tot-cls:,}, but states {unc:,} unclassified")
+    if gt_m:
+        g=int(gt_m.group(1).replace(",","")); c=int(gt_m.group(2).replace(",","")); u=int(gt_m.group(3).replace(",",""))
+        if tot!=g: errs.append(f"Intro banner grand total ({tot:,}) != Summary Grand Total unique ({g:,})")
+        if cls!=c: errs.append(f"Intro banner classified ({cls:,}) != Summary Grand Total confirmed-unique ({c:,})")
+        if unc!=u: errs.append(f"Intro banner unclassified ({unc:,}) != Summary Grand Total unclassified ({u:,})")
+else:
+    errs.append("Could not locate intro-banner 'An additional N workflows (M total − K classified)' sentence")
+print("\n".join(errs))
+PY
+)
+PROSE_DRIFT_COUNT=$(echo -n "$PROSE_DRIFT" | grep -cP '.' || true)
+if [ "$PROSE_DRIFT_COUNT" -eq 0 ]; then
+    ok "Criticality-classification prose counts (tier bodies + intro arithmetic) match headings/Summary"
+else
+    error "$PROSE_DRIFT_COUNT criticality-classification prose count(s) disagree with their heading or the Summary table:"
+    echo "$PROSE_DRIFT" | sed 's/^/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

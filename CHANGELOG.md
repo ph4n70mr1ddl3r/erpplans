@@ -4,6 +4,66 @@
 
 ---
 
+## 2026-06-20 — Consistency review #3: stale prose counts in criticality-classification, validator Check 18
+
+A third whole-repo consistency review (following #1 and #2 on 2026-06-20). `validate-repo.sh`
+now reports **0 errors / 2 warnings** across **18 checks** (was 17). No count cascade — all
+canonical grand totals remain: **4,981 workflows / 173 value streams / 523 process areas /
+2,440 register rows / 2,417 unique classified / 2,564 unclassified / 733 requirements /
+67 controls / 6,757 headcount**.
+
+The prior reviews hardened *table-row* and *grand-total* counts (Checks 1, 9, 13) but the
+*free-prose* counts in `workflow-criticality-classification.md` had drifted silently across
+the six 2026-06-20 classification batches (v7.19→v7.25): the Summary table and tier headings
+were advanced to the current totals, but the surrounding prose froze at earlier-batch values
+and directly contradicted them. A new validator check (Check 18) now locks these invariants.
+
+**1. `workflow-criticality-classification.md` — 5 stale prose counts corrected.** Every one
+contradicted a figure in the same file (Summary table or the section's own heading):
+- Intro banner: "An additional **2,684** workflows (**4,981 total − 2,297 classified**)** →
+  **2,564** workflows (**4,981 total − 2,417 classified**). The original was self-contradictory
+  in a single sentence ("2,684 remain unclassified … all 2,564 carry a proposed tier") and
+  held the v7.24 classified figure (2,297) against the correct v7.25 figure (2,417).
+- Tier 1 body: "These **440** workflows" → **684** (heading already said "684 Workflows").
+- Tier 2 body: "These **499** workflows" → **1,354** (heading already said "1,354 Workflows").
+- Tier 3 body: "These **229** workflows" → **402** (heading already said "402 Workflows").
+  (440/499/229 = 1,168 was the v7.19 baseline; the three body sentences never advanced with
+  the six subsequent batches that grew the register 1,168 → 2,440.)
+- Domain Breakdown note: "the **1,168** classified workflows" → **2,440**.
+
+**2. VS-133 PA files — 2 stale grand-total citations corrected.** `PA-133.1` and `PA-133.3`
+stated "~**4,980** workflows across 173 value streams" in their System-Touchpoints Volume
+field; the 4,980→4,981 cascade (W1318 restoration) updated the dependency-map's VS-133 row
+to ~4,981 but missed the two PA-file citations. Now both read **~4,981**.
+
+**3. `validate-repo.sh` — added Check 18 (regression guard).** Asserts the two stable prose
+invariants the §Summary table already encodes: (a) each `## Tier N: … (M Workflows)` heading's
+following `These <N> workflows` sentence has N == M, and (b) the intro-banner arithmetic
+`X unclassified = grand_total − classified` is self-consistent and matches the §Summary Grand
+Total row's unique-count figures (4,981 / 2,417 / 2,564 — *not* the Confirmed-Total 2,440
+register-row cell, which counts the 23 parent/summary sub-workflows). Verified the check fires
+on the exact v7.19→v7.25 regression (reintroducing "These 440" is caught) and passes on the
+corrected file.
+
+**Other findings (reviewed; no action):**
+- The 5 dated "**2026-06-14 addition**" notes in `workflow-criticality-classification.md`
+  (and the parallel per-pass narratives in `workflow-gap-analysis.md`) say workflows "are
+  currently unclassified … will be assigned in a follow-up classification pass." That
+  follow-up has since run (v7.19–v7.25; documented in the immediately-following "Previously
+  Unclassified Workflows — Now Classified" section and the §Summary table). Left intact as
+  historical record — consistent with the repo's documented principle of preserving dated
+  per-pass numbers (the same principle that leaves the gap-analysis progression table at its
+  Pass-25 endpoint of 4,980 with a footnote pointing to the current 4,981 truth).
+- `requirement-workflow-matrix.md`, `workflow-dependency-map.md`, `workflow-system-touchpoint-map.md`,
+  `executive-summary.md`, `headcount-reality-check.md`, and `internal-controls-matrix.md`
+  current-state counts all verified consistent (733 requirements / 38 prefixes; 67 controls =
+  31 P + 36 D; 6,757 headcount; dependency-map v4.1 scope note 1,168+1,272=2,440 ties out).
+- Family subtotals and per-VS workflow counts in `workflows/README.md` and `value-stream-index.md`
+  re-verified programmatically (428+427+1,483+699+410+272+912+350 = 4,981; 14+16+44+26+15+11+35+12 = 173 VS).
+- Coverage % (49%) is a presentation rounding of 48.5% (2,417/4,981); left as-is per review #2.
+
+---
+
 ## 2026-06-20 — Consistency review #2: PA-subtotal correction, README folder-tree completeness
 
 A second whole-repo consistency review (following the first on 2026-06-20).

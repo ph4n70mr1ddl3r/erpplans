@@ -2,7 +2,7 @@
 
 > Classifies 2,417 unique operational workflows into criticality tiers (the confirmed register
 > holds 2,440 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
-> a `##` parent). An additional 2,684 workflows (4,981 total − 2,297 classified) remain
+> a `##` parent). An additional 2,564 workflows (4,981 total − 2,417 classified) remain
 > unclassified pending review — all 2,564 carry a keyword-driven proposed tier in
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via
 > `07-methodology/classify-workflows.py`).
@@ -37,7 +37,7 @@
 
 ## Tier 1: Core Operations (684 Workflows)
 
-These 440 workflows are foundational to daily store and supply chain operations.
+These 684 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
 
 ### Core Finance (30 workflows)
@@ -260,7 +260,7 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ## Tier 2: Standard Support (1,354 Workflows)
 
-These 499 workflows are needed for standard operational support, cost controls, and category management.
+These 1,354 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -551,7 +551,7 @@ These 499 workflows are needed for standard operational support, cost controls, 
 
 ## Tier 3: Advanced Optimization (402 Workflows)
 
-These 229 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
+These 402 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
 
 ### Innovation & Digital Transformation (8 workflows)
 
@@ -788,7 +788,7 @@ rows by moving them into the confirmed sections above.
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 1,168 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,981 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 2,440 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,981 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-06-14 addition:** Value streams VS-79 through VS-88 (240 workflows, W2753–W2992) were added covering Tax Management & BIR Statutory Reporting, Payment Operations & Acquirer Settlement, Cash-in-Transit & Armored Car Operations, Sari-Sari Store & MSME Micro-Wholesale, Occupational Health & Employee Wellness, Labor Relations & Collective Bargaining, Mandatory Discount & Tax Credit Recovery, Anti-Financial Crime (AML/KYC/ABC), Customs Trade Compliance & Tariff Optimization, and Document Control & Records Retention. These 240 workflows are currently **unclassified** (counted in the unclassified total) pending criticality review; many warrant Tier 1 classification (BIR tax filing, AML/STR reporting, CBA administration, mandatory-discount tax credit recovery, CIT operations) and will be assigned in a follow-up classification pass.
 >
