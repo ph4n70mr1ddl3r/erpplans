@@ -42,7 +42,7 @@ following fields.
 
 ### Standard analysis fields (add to every fully-detailed workflow)
 
-These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 they are present on **4,974 of 4,981 workflows (100%)** across all four blocks (Core, Expansion, Statutory, and Gap analysis); the 7 without are parent/summary sub-workflow rows — see `validate-repo.sh` Check 12 for adoption tracking.
+These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 they are present on all **4,981 workflows (100%)** across all blocks (Core, Expansion, Statutory, and Gap analysis).
 
 | Field | Meaning |
 |---|---|
@@ -142,4 +142,4 @@ workflows/
 
 ---
 
-*Date: 2026-06-20 (adoption sentence in “Standard analysis fields” corrected to the current 4,974/4,981 = 100% across all blocks; the 7 without are parent/summary sub-workflows. Prior: Repository Layout counts reconciled to 173 value streams / 523 process areas / 2,564 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
+*Date: 2026-06-20 (adoption sentence in “Standard analysis fields” corrected to 100% of all 4,981 workflows after reformatting W641–W647. Prior: Repository Layout counts reconciled to 173 value streams / 523 process areas / 2,564 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*

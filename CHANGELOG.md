@@ -4,6 +4,17 @@
 
 ---
 
+## 2026-06-20 — Consistency review #5: W641–W647 standard formatting, 100% field adoption, validator Check 12 OK
+
+A fifth consistency review. `validate-repo.sh` now reports **0 errors / 1 warning** across **18 checks** (warnings reduced from 2 to 1; the only remaining warning is Check 1 for unclassified workflows pending review). All canonical totals remain: **4,981 workflows / 173 VS / 523 PA / 733 requirements / 67 controls / 6,757 headcount**.
+
+**1. Re-formatted W641–W647 to standard tables and subheadings.** Surfaced by Check 12, seven workflows in VS-19 (HMO, Service Desk, Data Privacy, Off-Cycle, Final Pay, 13th Month, and Strategic Planning) were using custom list bullet points (`- **Automation Opportunity**:`, `- **Controls**:`, `- **System Touchpoints**:`, `- **Time Estimate**:`, `- **Pain Points / Risks**:`) instead of standard markdown tables and `###` headers. Converted all seven to standard format, including splitting their pain-point semicolon lists into detailed risk-labeled bullet points.
+**2. 100% Automation/Controls Field Adoption.** With W641–W647 formatted correctly, `Automation Opportunity` and `Controls` fields are now verified present on all **4,981 / 4,981 (100%)** workflows in the repository.
+**3. `validate-repo.sh` Check 12 update.** Modified Check 12 to output `OK` (instead of `WARN`) when adoption is complete (100% of workflows have both sections).
+**4. `WORKFLOW-FORMAT-GUIDE.md` updated.** Rewrote the statistics paragraph under "Standard analysis fields" to reflect the actual 100% adoption truth.
+
+---
+
 ## 2026-06-20 — Consistency review #4: cash-float conflict, stale adoption claim, stale counts, ambiguities
 
 A fourth whole-repo consistency review (following #1–#3 on 2026-06-20). `validate-repo.sh`

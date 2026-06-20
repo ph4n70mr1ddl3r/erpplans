@@ -241,8 +241,12 @@ echo "--- Check 12: Automation Opportunity & Controls field adoption ---"
 TOTAL_WF=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 AUTO_COUNT=$(grep -rohP '^### Automation Opportunity$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 CTRL_COUNT=$(grep -rohP '^### Controls$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
-warn "Automation Opportunity present on $AUTO_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($AUTO_COUNT/$TOTAL_WF)*100}")%); Controls present on $CTRL_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($CTRL_COUNT/$TOTAL_WF)*100}")%). Target: 100% on all fully-detailed workflows (see WORKFLOW-FORMAT-GUIDE.md 'Standard analysis fields')"
-echo "  Overlap note: Check 10 now passes and Check 12 shows 100% field adoption across all 4,974 substantive workflows (the 7 remaining without Automation/Controls are parent/summary sub-workflow rows — see workflow-criticality-classification.md §Summary). Both warnings now stand alone: Check 1 (2,564 workflows await human tier confirmation) and Check 12 (informational: adoption complete). See value-stream-index.md 'Value-Stream Blocks (origin)' for the block-maturity map."
+if [ "$AUTO_COUNT" -eq "$TOTAL_WF" ] && [ "$CTRL_COUNT" -eq "$TOTAL_WF" ]; then
+    ok "Automation Opportunity and Controls are present on all $TOTAL_WF workflows (100%)"
+else
+    warn "Automation Opportunity present on $AUTO_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($AUTO_COUNT/$TOTAL_WF)*100}")%); Controls present on $CTRL_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($CTRL_COUNT/$TOTAL_WF)*100}")%). Target: 100% on all workflows (see WORKFLOW-FORMAT-GUIDE.md 'Standard analysis fields')"
+    echo "  Note: Check W641–W647 formatting in VS-19 if any are missing or deviate from the standard '###' header structure."
+fi
 
 # --- Check 13: Markdown table structural integrity ---
 echo "--- Check 13: Markdown table structural integrity ---"
