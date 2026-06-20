@@ -3565,3 +3565,15 @@ Added Automation Opportunity + Controls to all 48. VS-55 grounded in the canonic
 margin/sqm space-productivity frame and the W86 planogram-compliance standard; VS-62 grounded in
 the sample-SKU→parent-SKU attribution model and the sample-to-order conversion analytics.
 17 Expansion VSs remaining.
+
+## 2026-06-20 — Expansion-block content rework (Passes 5–6 of 22): VS-64 Seasonal Merchandise & Clearance, VS-72 Cross-Entity Shared Services
+
+Continuing the substantive content rework. **Cumulative (passes 1–6): boilerplate 528→384 workflows, 22→16 VSs;
+Automation/Controls 1,104→1,248 (crossed 25%).** validate-repo.sh: 0 errors / 3 warnings.
+
+**VS-64 (24 workflows, 3 PAs)** grounded in the Philippine 6-season retail calendar, sell-through-based
+markdown triggering, and the seasonal playbook feedback loop. **VS-72 (24 workflows, 3 PAs)** grounded
+in BIR transfer-pricing regulations (RR 19-2020 / RMO 72-2019), the 5-entity intercompany structure,
+cost-pool allocation methodology, IC invoice/netting/settlement, and IC profit elimination. All 48
+workflows' three analysis fields rewritten; Automation + Controls added. Field tables and Steps
+preserved (VS-72's Steps were already detailed and rich). 16 Expansion VSs remaining.
