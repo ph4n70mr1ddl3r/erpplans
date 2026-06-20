@@ -3599,3 +3599,14 @@ model (store/DC/vendor-drop-ship/dark-store), split-basket fulfillment, and SLA-
 (24 workflows, 3 PAs)** grounded in fleet TCO (fuel/toll/maintenance/insurance/driver), DOE weekly fuel-price reporting,
 fuel-card controls, backhaul utilization, and own-vs-3PL benchmarking. All 48 workflows' three analysis fields rewritten;
 Automation + Controls added. 12 Expansion VSs remaining.
+
+## 2026-06-20 — Expansion-block content rework (Passes 11–12 of 22): VS-57 Competitive Price Intelligence, VS-58 Coupon & Digital Promotions
+
+Continuing the substantive content rework. **Cumulative (passes 1–12): boilerplate 528→240 workflows (55% resolved), 22→10 VSs;
+Automation/Controls 1,104→1,392 (28%).** validate-repo.sh: 0 errors / 3 warnings.
+
+**VS-57 (24 workflows, 3 PAs)** grounded in competitor price intelligence (4–5 PH retail competitors), the 100-SKU
+basket benchmark, price-elasticity analysis, dynamic-pricing rules, and RA 10667 Competition Act conduct limits.
+**VS-58 (24 workflows, 3 PAs)** grounded in DTI promo-permit compliance (RA 7394), coupon-liability accounting (PFRS 15),
+vendor co-op funding, and coupon-fraud-prevention design (unique-code, stacking-cap, margin-floor). All 48 workflows'
+three analysis fields rewritten; Automation + Controls added. 10 Expansion VSs remaining.
