@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 173 Value Streams · 523 Process Areas · 4,980 Workflows
+8 Families · 173 Value Streams · 523 Process Areas · 4,981 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-five gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 173 value streams (VS-89–VS-177; W2993–W5128). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -69,7 +69,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
 |  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | Core | 3 | 61 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | Core | 3 | 52 |
-|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | Core | 3 | 39 |
+|  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | Core | 3 | 40 |
 |  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | Core | 3 | 64 |
 |  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | Core | 3 | 40 |
 |  | [VS-37](VS-37-store-opening-commissioning/README.md) | Store Opening & Commissioning | Core | 3 | 26 |
@@ -108,7 +108,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-175](VS-175-propane-lpg-cylinder-exchange-and-gas-refill-operations/README.md) | Propane, LPG Cylinder Exchange & Gas Refill Operations | Gap analysis | 3 | 24 |
 |  | [VS-176](VS-176-blueprint-reprographics-and-large-format-plan-printing-services/README.md) | Blueprint, Reprographics & Large-Format Plan Printing Services | Gap analysis | 3 | 24 |
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **131** | **1482** |
+| | | | **Subtotal** | **131** | **1483** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -213,7 +213,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **523** | **4,980** |
+| | | | **Grand Total** | **523** | **4,981** |
 
 ---
 
@@ -437,10 +437,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-11.2** [Project Sales & B2B](./VS-11-trade-project-wholesale/PA-11.2-project-sales-and-b2b.md) — 32 workflows
 - **PA-11.3** [Wholesale Operations](./VS-11-trade-project-wholesale/PA-11.3-wholesale-operations.md) — 10 workflows
 
-**[VS-12: Installation & Services](./VS-12-installation-services/README.md)** (39 workflows)
+**[VS-12: Installation & Services](./VS-12-installation-services/README.md)** (40 workflows)
 
 - **PA-12.1** [Installation & Repair Services](./VS-12-installation-services/PA-12.1-installation-and-repair-services.md) — 20 workflows
-- **PA-12.2** [Tool Rental & Equipment](./VS-12-installation-services/PA-12.2-tool-rental-and-equipment.md) — 9 workflows
+- **PA-12.2** [Tool Rental & Equipment](./VS-12-installation-services/PA-12.2-tool-rental-and-equipment.md) — 10 workflows
 - **PA-12.3** [Workshops & Events](./VS-12-installation-services/PA-12.3-workshops-and-events.md) — 10 workflows
 
 **[VS-13: Customer Experience & Loyalty](./VS-13-customer-experience/README.md)** (64 workflows)
@@ -1299,4 +1299,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
 ```
 
-*Total: 4,980 workflows across 173 value streams · Date: 2026-06-20*
+*Total: 4,981 workflows across 173 value streams · Date: 2026-06-20*

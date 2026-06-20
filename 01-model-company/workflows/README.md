@@ -11,7 +11,7 @@
 |---|---|
 | Value Streams | 173 |
 | Process Areas | 523 |
-| Workflows | 4,980 |
+| Workflows | 4,981 |
 | Classified (Tier 1) | 440 |
 | Classified (Tier 2) | 499 |
 | Classified (Tier 3) | 229 |
@@ -73,7 +73,7 @@
 | [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | 24 |
 | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | 24 |
 
-### Sell & Serve (1,482 workflows)
+### Sell & Serve (1,483 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-07](VS-07-store-operations/README.md) | Store Operations | 144 |
@@ -81,7 +81,7 @@
 | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 158 |
 | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 61 |
 | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 52 |
-| [VS-12](VS-12-installation-services/README.md) | Installation & Services | 39 |
+| [VS-12](VS-12-installation-services/README.md) | Installation & Services | 40 |
 | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 64 |
 | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | 40 |
 | [VS-37](VS-37-store-opening-commissioning/README.md) | Store Opening & Commissioning | 26 |
@@ -240,7 +240,7 @@
 | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | 24 |
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 
-*Family subtotal reconciliation: 428 + 427 + 1,482 + 699 + 410 + 272 + 912 + 350 = 4,980*
+*Family subtotal reconciliation: 428 + 427 + 1,483 + 699 + 410 + 272 + 912 + 350 = 4,981*
 
 > **Note (2026-06-20):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across twenty-five gap-analysis passes (2026-06-14 through 2026-06-20, VS-89–VS-177; W2993–W5128). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

@@ -21,9 +21,9 @@ Installation, tool rental, and DIY workshops extend the customer relationship be
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-12.1](PA-12.1-installation-and-repair-services.md) | Installation & Repair Services | 20 |
-| [PA-12.2](PA-12.2-tool-rental-and-equipment.md) | Tool Rental & Equipment | 9 |
+| [PA-12.2](PA-12.2-tool-rental-and-equipment.md) | Tool Rental & Equipment | 10 |
 | [PA-12.3](PA-12.3-workshops-and-events.md) | Workshops & Events | 10 |
-| | **Total** | **39** |
+| | **Total** | **40** |
 
 ## Key dependencies
 

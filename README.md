@@ -29,7 +29,7 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      4,980 workflows organized by value stream
+│   ├── workflows/                      4,981 workflows organized by value stream
 │   │   ├── README.md                           Navigation hub & quick stats
 │   │   ├── value-stream-index.md              Master index (8 families · 173 value streams · 523 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
@@ -49,7 +49,7 @@ erpplans/
 │   │   ├── VS-09-in-store-services/             158 workflows (3 process areas)
 │   │   ├── VS-10-ecommerce-digital/             61 workflows (3 process areas)
 │   │   ├── VS-11-trade-project-wholesale/       52 workflows (3 process areas)
-│   │   ├── VS-12-installation-services/         39 workflows (3 process areas)
+│   │   ├── VS-12-installation-services/         40 workflows (3 process areas)
 │   │   ├── VS-13-customer-experience/           64 workflows (3 process areas)
 │   │   ├── VS-14-marketing/                     40 workflows (3 process areas)
 │   │   ├── VS-15-procure-to-pay/                42 workflows (2 process areas)
@@ -251,7 +251,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **4,980** across 173 value streams, 523 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **4,981** across 173 value streams, 523 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -262,8 +262,8 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 4,980 fully specified across 173 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **1,145 of 4,980 workflows classified** (23%; the confirmed register holds 1,168 rows incl. 23 `###` parent/summary sub-workflows); 3,835 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 4,981 fully specified across 173 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **1,145 of 4,981 workflows classified** (23%; the confirmed register holds 1,168 rows incl. 23 `###` parent/summary sub-workflows); 3,836 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across twenty-five gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 173 value streams (VS-89–VS-177; W2993–W5128). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 
@@ -285,7 +285,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (4,980 WF)    │
+   │  erp-requirements.md ←→ workflows/ (4,981 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │

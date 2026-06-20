@@ -732,6 +732,16 @@ The 24 new workflows added in Pass 25 are **unclassified** and carry a keyword-d
 | Value streams | 96 | 100 | 104 | 108 | 112 | 116 | 120 | 124 | 128 | 132 | 136 | 138 | 142 | 146 | 152 | 157 | 160 | 163 | 165 | 168 | 169 | 172 | **173** (+1) |
 | Process areas | 292 | 304 | 316 | 328 | 340 | 352 | 364 | 376 | 388 | 400 | 412 | 418 | 430 | 442 | 460 | 475 | 484 | 493 | 499 | 508 | 511 | 520 | **523** (+3) |
 
+> **Note on the grand-total column:** the progression above records the `## W` header count
+> as it stood at the end of each gap-analysis pass, ending at **4,980** after Pass 25. A
+> subsequent consistency review (2026-06-20) restored a missing `## W1318.` header on a
+> complete Core-block workflow body in VS-12 PA-12.2 (Tool Rental Reservation, Waitlist &
+> Scheduling — long referenced by its siblings as W1318 but never counted because its header
+> had been lost in generation). The current canonical grand total is therefore **4,981**;
+> this table is not retroactively adjusted because W1318 is a Core-block workflow, not a
+> gap-analysis addition, so it was never part of any pass's +N increment. See the
+> [CHANGELOG](../../CHANGELOG.md) entry for 2026-06-20 and `validate-repo.sh` Check 17.
+
 Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
 VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
 VS-142 Cash-on-Delivery Operations & Driver Cash Reconciliation) — both operationally-critical,
@@ -866,7 +876,7 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (4,980) matches actual PA workflow header count (4,980). ✅
+- Grand total (4,981) matches actual PA workflow header count (4,981). ✅
 - All 1,168 classified workflow IDs resolve to a header. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅

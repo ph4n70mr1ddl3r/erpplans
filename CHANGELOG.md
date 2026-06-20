@@ -4,6 +4,49 @@
 
 ---
 
+## 2026-06-20 — Restore VS-12 ghost workflow W1318 (the one tractable substantive fix)
+
+Asked whether the four remaining substantive items were "easily fixable." Investigated each
+concretely and found **only one** is tractable as a mechanical fix — the VS-12 ghost — while
+the other three are genuinely substantive. Did the tractable one. This is the only change in
+this session that moves a **canonical grand total** (4,980 → 4,981). `validate-repo.sh`:
+**0 errors / 3 warnings** (down from 4 — Check 17 ghost detection now reports 0).
+
+**1. Restored `## W1318. Tool Rental Reservation, Waitlist & Scheduling`** (VS-12 PA-12.2).
+The ghost was a complete workflow body — Trigger, Background, Steps (6 real rows), System
+Touchpoints, Pain Points, Staffing, Time Estimate — sitting between W1376 and W1319 with **no
+`## W` header**, making it invisible to every count, the index, the classification, and the
+dependency map. Its identity was never in doubt: sibling workflows cross-reference "W1318
+(reservation & waitlist)" 11+ times, and numerically it slots immediately before `## W1319.`.
+Inserted the header (which also dissolved the stray mid-file footer the orphan had created).
+
+**2. Count cascade (4,980 → 4,981) across current-state citations**, carefully discriminating
+current-state claims (updated) from historical version-notes (preserved as-is):
+- Canonical sources: `value-stream-index.md` (Grand Total, VS-12 row 39→40, Sell & Serve
+  subtotal 1,482→1,483, PA-12.2 "9→10 workflows", header & footer lines), `workflows/README.md`
+  (Quick Stats, Sell & Serve heading, family-subtotal reconciliation, VS-12 row, PA-12.2 row,
+  VS-12 total), `README.md` (folder structure, Key Metrics, Coverage table, relationship diagram).
+- `workflow-criticality-classification.md` §Summary + intro/banner (3,835→3,836 unclassified);
+  the proposed register was **regenerated via `classify-workflows.py --write`** (now 3,836 rows,
+  W1318 included with a Tier-2 proposal matching its Tool-Rental-family peers).
+- `executive-summary.md`, `requirement-workflow-matrix.md` (current total),
+  `workflow-dependency-map.md` (intro + VS-133 "~4,981 workflows"), `workflow-system-touchpoint-map.md`,
+  `workflow-gap-analysis.md` (match-line), `WORKFLOW-FORMAT-GUIDE.md` (layout line).
+- Per-doc version-notes (`matrix` v68, `classification` v7.18): **prepended a new clause** noting
+  the W1318 restoration + 4,980→4,981, leaving the prior v67/v7.17 numbers intact as history.
+- `workflow-gap-analysis.md` §3 progression table: **left the Pass-25 endpoint at 4,980** (W1318
+  is a Core-block workflow, not a gap-analysis addition, so it was never part of any pass's
+  increment) and added a footnote explaining the current true total is 4,981.
+
+**Why the other three are NOT easily fixable (declined):**
+- **VS-19 "missing Steps" (W641–W647)** — investigated and found these are *duplicate + empty*:
+  W641/W643/W644 are 3 copies of the same injury workflow and W642/W646/W647 are 3 copies of the
+  same job-posting workflow, all with **zero** step rows. Fixing requires dedup **plus authoring
+  real process steps** plus a downward count cascade. Genuine content work, not mechanical.
+- **W-number allocation gaps (9 gaps)** — research/classification against the gap-analysis
+  narrative per range, not a fix that removes any inconsistency.
+- **Expansion-block rework (528 workflows)** — bespoke content authoring at scale.
+
 ## 2026-06-20 — Defect-class exhaustion audit + validator Check 17 (ghost-workflow detection)
 
 A third pass hunting for more mechanical inconsistencies of the same class as the prior two
