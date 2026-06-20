@@ -12,10 +12,10 @@
 | Value Streams | 173 |
 | Process Areas | 523 |
 | Workflows | 4,981 |
-| Classified (Tier 1) | 662 |
-| Classified (Tier 2) | 1,100 |
-| Classified (Tier 3) | 366 |
-| Classified total | 2,128 rows = 2,105 unique workflows + 23 parent/summary sub-workflow rows |
+| Classified (Tier 1) | 672 |
+| Classified (Tier 2) | 1,258 |
+| Classified (Tier 3) | 390 |
+| Classified total | 2,320 rows = 2,297 unique workflows + 23 parent/summary sub-workflow rows |
 
 ---
 
