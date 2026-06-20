@@ -4,6 +4,91 @@
 
 ---
 
+## 2026-06-20 — Cross-reference consistency review: stale Pass-19 snapshots, touchpoint-map VS-162–VS-177 gap, and index/doc defects
+
+A top-to-bottom read of every summary and cross-reference document (and a sample of PA files)
+looking for inconsistencies, redundancies, and ambiguities that `validate-repo.sh` does not
+already catch (it checks workflow/requirement/control IDs, cross-references, and table
+structure — not whether a free-text figure matches its canonical value, nor whether a
+cross-reference doc actually covers the value streams it claims to). **No workflow, requirement,
+control, value stream, or numeric grand total changed** — 733 requirements / 4,980 workflows /
+173 value streams / 523 process areas / 67 controls / 6,757 headcount all unchanged.
+`validate-repo.sh` still reports **0 errors / 3 informational warnings** (unchanged).
+
+**1. `workflow-system-touchpoint-map.md` — gap-analysis module table was 16 value streams behind.**
+The "Gap-Analysis Value Streams" section table ended at **VS-161**, so the 16 value streams
+added in Passes 19–25 (**VS-162–VS-177**: self-haul rental, EV charging, smart lockers, PCAB
+licensing, license-portfolio, workforce vetting, in-store audio, uniform/PPE, inventory-pledge/
+ABL financing, will-call/loading-zone, pro-referral network, investor relations, self-storage,
+LPG exchange, reprographics, field retail ops) had no primary-ERP-module row. Added all 16 rows
+with module mappings derived from each VS's README/PA content. The section heading
+("VS-79–VS-161"→"VS-79–VS-177"), intro note ("eighteen passes / 83 VS / 1,992 workflows" →
+"twenty-five passes / 99 VS / 2,376 workflows"), and footer were all pinned to the **Pass-19
+snapshot** (4,788 workflows / 165 VS / 3,643 unclassified / twenty-one-pass) and are updated to
+the current Pass-25 state (4,980 / 173 / 3,835 / twenty-five-pass). Also aligned two rows
+(VS-139, VS-152) that used "Marketing / Campaigns" to the canonical module heading
+"Marketing / Campaign" — the doc's own intro states module names must match the section headings.
+
+**2. VS-133 (Operational Excellence) PA files — stale enterprise-process-volume figures.**
+`PA-133.1` and `PA-133.3` carried "~4,788 workflows across 165 value streams" in their `Volume`
+field (the Pass-21 count); corrected to "~4,980 workflows across 173 value streams". These were
+the only two live PA files still quoting the old totals (the matrix version-history footer's
+"Prior vN … 4,788/165" notes are legitimate historical records and were left unchanged).
+
+**3. `workflow-dependency-map.md` §8 footer — contradictory VS range.** The §8 body (heading,
+intro, §8.1 anchor table, coverage note) is consistently labelled **VS-79–VS-161** (the Pass-18
+snapshot its anchor reference counts were mined over), but the v4.1 footer claimed §8 covers
+**"VS-79–VS-169"**, contradicting its own §8.1 labels. The §8.1 counts were not recomputed
+because the original mining methodology (grep over `links to VS-NN`/`VS-NN` in PA+README) is
+not reproducible from a plain re-count and overwriting them would introduce new error; instead
+the footer range is corrected to **VS-79–VS-161** with an explicit note that §8.1 covers
+VS-79–VS-161, the curated §8.2–§8.4 tables extend only through VS-142, and **VS-143–VS-177**
+program dependencies follow the same cross-cutting pattern and remain pending a follow-up
+tabulation pass (documented inline in their PA files) — matching the existing §8.3/§8.4
+coverage-note convention.
+
+**4. `requirement-workflow-matrix.md` Coverage Validation — ambiguous "38 categories" claim.**
+The line read "733 across 38 categories (R1–R32 plus additional gap-closure categories)", which
+is self-contradictory: R1–R32 is 32 sections, and the gap-closure rounds (R19–R24, R32) are
+*within* R1–R32, not additional to them. The "38" is the count of **distinct requirement-ID
+prefixes** (FIN, INV, PUR, … WSL), not section count. Reworded to "733 across 38 distinct
+requirement-ID prefixes, organized into 32 sections (R1–R32, of which R19–R24 and R32 are
+gap-closure rounds)" so the two numbers (38 prefixes / 32 sections) are no longer conflated.
+
+**5. `README.md` folder-structure tree — missing `headcount-reality-check.md`.** The file
+exists at `01-model-company/headcount-reality-check.md` and is referenced by `model-company-
+profile.md` §3.3/§4 and `assumptions-and-design-decisions.md` A2.6, but was absent from the
+README's canonical folder-structure index. Added with the description "HQ headcount vs.
+workflow-coverage gap analysis".
+
+**6. `WORKFLOW-FORMAT-GUIDE.md` — missing blank line before `### Cross-reference field`.** The
+heading directly followed a table row with no separating blank line (a markdown rendering
+hazard). Added the blank line.
+
+### Reviewed — no action needed
+
+- **All "single source of truth" metrics reconcile** across README, executive-summary,
+  model-company-profile, value-stream-index, workflows/README, classification, and dependency
+  map: 200 stores / 4 DCs / 5 entities / 6,757 headcount (5,800 store + 600 DC + 357 HQ,
+  18 HQ departments summing exactly to 357, org-chart table 350+7=357) / 35,000 SKUs /
+  600 POS terminals / 2.8M monthly transactions / PHP 62.3B revenue (1,800 ATV × 2.8M = 5.04B
+  in-store + 0.15B ecom = 5.19B/mo × 12) / 733 requirements (431 M / 296 S / 6 N) /
+  4,980 workflows / 173 VS / 523 PA / 67 controls (31 P / 36 D) / 1,168 classified rows
+  (1,145 unique + 23 sub-workflow; T1 440 / T2 499 / T3 229). Family subtotals
+  (428+427+1,482+699+410+272+912+350) and the 8-family/173-VS/523-PA architecture all tie out.
+- **No broken internal links** (`.md` file references or `#anchor` deep links) across the
+  summary documents; the `#143-active-integration-touchpoints` and `#18-glossary` anchors
+  resolve correctly.
+- **"38 categories" figure is correct** as a prefix count (verified: exactly 38 distinct
+  requirement-ID prefixes); only the matrix's *explanation* of it was wrong (fixed in #4).
+- **`headcount-reality-check.md` "704 workflow markdown files"** is accurate (523 PA + 173
+  per-VS README + 8 workflow support files = 704), and its retained "Stated 315" columns are
+  legitimate gap-record history under the ACTIONED banner.
+- **Per-VS README format variation** (Core VSs have "Why it matters"/"Owner & participants";
+  Expansion/Gap-analysis VSs are Overview-only) is a known content-maturity difference across
+  the four authoring blocks, documented as such in `value-stream-index.md`'s block-maturity
+  table — not a defect.
+
 ## 2026-06-20 — Profile consistency: org-chart department ownership, Merchandising role mix, and headcount-reality-check scope correction
 
 Targeted reductions of inconsistency, ambiguity, and redundancy in `model-company-profile.md`

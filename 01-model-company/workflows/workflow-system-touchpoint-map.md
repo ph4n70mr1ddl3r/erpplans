@@ -47,10 +47,10 @@
 
 ---
 
-## Gap-Analysis Value Streams (VS-79–VS-161) — Primary ERP Module Coverage
+## Gap-Analysis Value Streams (VS-79–VS-177) — Primary ERP Module Coverage
 
-> The Statutory deepening (VS-79–VS-88) and eighteen gap-analysis passes (2026-06-14 through 2026-06-18) together added 83 value streams / 1,992 workflows whose per-workflow system
-> touchpoints are documented inline in each PA file. Rather than append the remaining ~2,000 gap-analysis workflow IDs to the already-dense module rows above (which would make them unreadable), this section gives
+> The Statutory deepening (VS-79–VS-88) and twenty-five gap-analysis passes (2026-06-14 through 2026-06-20) together added 99 value streams / 2,376 workflows whose per-workflow system
+> touchpoints are documented inline in each PA file. Rather than append the ~2,376 gap-analysis workflow IDs to the already-dense module rows above (which would make them unreadable), this section gives
 > the **primary ERP module mapping per value stream** for orientation; drill into the PA file for
 > per-workflow module/object detail. Module names match the section headings in the table above.
 
@@ -116,7 +116,7 @@
 | VS-136 | Supply Chain Network Design, MEIO & Flow Engineering | Supply Chain Planning; Inventory Management; Reporting / Analytics; Real Estate |
 | VS-137 | Product Information Management (PIM) & Digital Asset Management (DAM) | Pricing / Merchandising; Ecommerce; Document Management; Reporting / Analytics |
 | VS-138 | Integrated Facilities Management, Workplace Services & Building Automation | Facility Maintenance; Real Estate; Reporting / Analytics; Vendor Contract Management |
-| VS-139 | Trade Show, Exhibition & Field Event Marketing | CRM / Loyalty; Marketing / Campaigns; Vendor Contract Management; Financials |
+| VS-139 | Trade Show, Exhibition & Field Event Marketing | CRM / Loyalty; Marketing / Campaign; Vendor Contract Management; Financials |
 | VS-140 | Field Sales, Outside Sales & Route-to-Market Force Management | CRM / Loyalty; Customer Account Mgmt; Corporate Account Mgmt; Reporting / Analytics |
 | VS-141 | Employee Transport, Shuttle & Daily Commute Management | HR & Payroll; Fleet Management; Vendor Contract Management; Financials |
 | VS-142 | Cash-on-Delivery (COD) Operations & Driver Cash Reconciliation | Financials; Ecommerce; Internal Audit; Loss Prevention |
@@ -129,7 +129,7 @@
 | VS-149 | Self-Checkout, Scan-&-Go & Unattended Retail Technology | POS / Retail; Loss Prevention; IT Operations |
 | VS-150 | Drug-Free Workplace & Substance Abuse Program | HR & Payroll; HSE / Safety |
 | VS-151 | Auto-ID, Barcode, RFID, Labeling & EAS Operations | Master Data; IT Operations; Loss Prevention; POS / Retail |
-| VS-152 | Corporate Social Responsibility, Foundation & Community Investment | Marketing / Campaigns; Governance / Strategy; Financials |
+| VS-152 | Corporate Social Responsibility, Foundation & Community Investment | Marketing / Campaign; Governance / Strategy; Financials |
 | VS-153 | Captive Insurance, Reinsurance & Enterprise Risk Financing | Financials; Governance / Strategy |
 | VS-154 | Home Construction Finance, Loan Brokerage & Mortgage Referral | Financials; CRM / Loyalty; Services / Rental |
 | VS-155 | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | Inventory; POS / Retail; Procurement |
@@ -139,7 +139,23 @@
 | VS-159 | Corporate Security, Executive Protection & Travel Risk Management | Loss Prevention; Governance / Strategy; HSE / Safety |
 | VS-160 | Global Mobility, Immigration & Foreign Worker Compliance | HR & Payroll; Regulatory Operations |
 | VS-161 | Third-Party & Supplier Risk Management (TPRM) | Procurement; Internal Audit; Vendor Contract Management; Governance / Strategy |
+| VS-162 | Customer Pickup Truck & Cargo Van Rental (Self-Haul) | Services / Rental; Fleet Management; POS / Retail; Financials (GL/AP/AR) |
+| VS-163 | Electric Vehicle (EV) Charging Station Host Network | Real Estate; Facility Maintenance; Financials (GL/AP/AR); IT Operations |
+| VS-164 | Smart Locker & Automated Parcel Collection Network | Ecommerce; Warehouse Management; IT Operations; POS / Retail |
+| VS-165 | PCAB Contractor Licensing & RA 4566 Construction Contractor Compliance | Regulatory Operations; Governance / Strategy; Vendor Contract Management |
+| VS-166 | Regulatory License, Permit & Accreditation Portfolio Management | Regulatory Operations; Governance / Strategy; Store Lifecycle |
+| VS-167 | Workforce Background Screening, Credentialing & Personnel Vetting | HR & Payroll; Data Privacy & Compliance; Loss Prevention; Vendor Contract Management |
+| VS-168 | In-Store Audio, Ambient Media & Music Royalty Licensing | Marketing / Campaign; POS / Retail; Governance / Strategy; IT Operations |
+| VS-169 | Employee Uniform, Workwear & PPE-Issuance Program | HR & Payroll; Procurement; Inventory Management; Master Data |
+| VS-170 | Inventory Pledge, Asset-Based Lending & Trust-Receipt Financing | Financials (GL/AP/AR); Inventory Management; Vendor Contract Management |
+| VS-171 | Customer Pickup, Loading Zone & Will-Call Counter Operations | POS / Retail; Warehouse Management; Ecommerce; Customer Experience |
+| VS-172 | Third-Party Installer & Contractor Network (Pro-Referral) Management | Services / Rental; Vendor Contract Management; CRM / Loyalty |
+| VS-173 | Investor Relations, Capital Markets & Securities Disclosure | Governance / Strategy; Financials (GL/AP/AR); Reporting / Analytics |
+| VS-174 | Self-Storage, Portable Container & Mobile-Storage Operations | Real Estate; Warehouse Management; Financials (GL/AP/AR); CRM / Loyalty |
+| VS-175 | Propane, LPG Cylinder Exchange & Gas Refill Operations | Inventory Management; HSE / Safety; POS / Retail; Regulatory Operations |
+| VS-176 | Blueprint, Reprographics & Large-Format Plan Printing Services | Services / Rental; POS / Retail; Pricing / Merchandising |
+| VS-177 | Field Retail Operations, Regional/District Management & Multi-Store Execution | Store Lifecycle; HR & Payroll; Reporting / Analytics; Governance / Strategy |
 
 ---
 
-*Document Version: 71.0 | Date: 2026-06-19 | Reconciled to 4,788 workflows across 165 value streams. Section heading/prose corrected from the stale Pass-14 snapshot (VS-79–VS-142 / 64 VS / 1,536 workflows) to Pass-19 (VS-79–VS-164 / 86 VS / 2,064 workflows); VS-143–VS-164 primary-module rows added; VS-142 phantom "Treasury / Cash Management" module label (not a defined row) replaced. The module-to-workflow rows above cover the foundational + confirmed-classified workflows (1,168 register rows; 1,145 unique); the gap-analysis value streams VS-79–VS-164 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 3,643 workflows not yet in the confirmed register (including the 48 added in Pass 21 as VS-168–VS-169, W4889–W4936, the 72 added in Pass 20 as VS-165–VS-167, W4817–W4888, the 72 added in Pass 19 as VS-162–VS-164, W4745–W4816, the 120 added in Pass 18 as VS-157–VS-161, W4625–W4744, and the 144 added in Pass 17 as VS-151–VS-156, W4481–W4624) all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twenty-one-pass history.*
+*Document Version: 72.0 | Date: 2026-06-20 | Reconciled to 4,980 workflows across 173 value streams. VS-162–VS-177 primary-module rows added (Pass 19–25: VS-162–VS-164 W4745–W4816, VS-165–VS-167 W4817–W4888, VS-168–VS-169 W4889–W4936, VS-170–VS-172 W4937–W5008, VS-173 W5009–W5032, VS-174–VS-176 W5033–W5104, VS-177 W5105–W5128); section heading and intro note updated from the prior Pass-19 snapshot (VS-79–VS-164 / 86 VS / 2,064 workflows) to the full Pass-25 coverage (VS-79–VS-177 / 99 VS / 2,376 workflows). The module-to-workflow rows above cover the foundational + confirmed-classified workflows (1,168 register rows; 1,145 unique); the gap-analysis value streams VS-79–VS-177 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 3,835 workflows not yet in the confirmed register all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twenty-five-pass history.*

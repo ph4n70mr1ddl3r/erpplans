@@ -48,6 +48,7 @@ These two fields were previously listed as "recommended"; a 2026-06-15 review fo
 |---|---|
 | **Automation Opportunity** | Steps that are manual today but are candidates for system automation — directly informs ERP design (purpose 2) |
 | **Controls** | Internal-control IDs (from [`internal-controls-matrix.md`](../internal-controls-matrix.md)) exercised by this workflow — closes the loop with the 67-control register |
+
 ### Cross-reference field
 
 | Field | Meaning |

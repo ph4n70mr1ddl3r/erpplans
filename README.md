@@ -213,6 +213,7 @@ erpplans/
 │   │   └── VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
+│   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
 │   ├── internal-controls-matrix.md     67 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
