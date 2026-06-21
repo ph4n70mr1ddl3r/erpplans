@@ -483,6 +483,46 @@ else
     echo "$BROKEN_INDEX_LINKS" | sed 's/^/    /'
 fi
 
+# --- Check 20: PA-file relative-link resolution ---
+echo "--- Check 20: PA-file relative-link resolution ---"
+# Every PA file carries two navigation links (a 'Part of **[VS-NN: ...](./README.md)** ...'
+# header line and a '*... · [Value Stream Index](../value-stream-index.md)*' footer) plus
+# occasional in-body cross-reference links. A 2026-06-21 review found exactly one stale across
+# all 565 PA files: VS-56 PA-56.1's header linked to '../value-stream.md' instead of
+# '../value-stream-index.md'. No other check sees this — Check 2 compares header COUNTS, Check 7
+# validates workflow-IDs, and Check 19 scopes only the index. This check resolves every
+# relative (./ or ../) intra-repo .md link inside every PA file so the drift cannot recur.
+BROKEN_PA_LINKS=$(python3 - "$REPO_ROOT" <<'PY'
+import os,re,sys,glob
+ROOT=sys.argv[1]
+out=[]
+total=0
+for f in sorted(glob.glob(f"{ROOT}/01-model-company/workflows/VS-*/PA-*.md")):
+    dirn=os.path.dirname(f)
+    txt=open(f,encoding='utf-8',errors='replace').read()
+    for m in re.finditer(r'\]\((\./|\.\.\/)[^)]*?\.md(?:\s+"[^"]*")?\)', txt):
+        target=m.group(0)[2:-1].split('"')[0].strip()  # strip ']( ... )' and any title attr
+        # ignore fragment-only links (no file before '#')
+        path_part=target.split('#')[0]
+        if not path_part: continue
+        total+=1
+        resolved=os.path.normpath(os.path.join(dirn,path_part))
+        if not os.path.exists(resolved):
+            out.append(f"{f.replace(ROOT+'/','')}: -> {target}")
+print(total, "\n".join(out), sep='\n')
+PY
+)
+# First line of output is the total count; remainder are the broken links
+PA_LINK_TOTAL=$(echo "$BROKEN_PA_LINKS" | head -1)
+BROKEN_PA_BODY=$(echo "$BROKEN_PA_LINKS" | tail -n +2)
+BROKEN_PA_COUNT=$(echo -n "$BROKEN_PA_BODY" | grep -cP 'PA-' || true)
+if [ "$BROKEN_PA_COUNT" -eq 0 ]; then
+    ok "All $PA_LINK_TOTAL relative links across all 565 PA files resolve to a file"
+else
+    error "$BROKEN_PA_COUNT PA-file relative link(s) do not resolve to a file:"
+    echo "$BROKEN_PA_BODY" | sed 's/^/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

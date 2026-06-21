@@ -236,7 +236,7 @@ erpplans/
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── validate-repo.sh              Cross-reference validation (19 checks)
+    ├── validate-repo.sh              Cross-reference validation (20 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     └── add-automation-controls.py    Automation/Controls field adder
 ```
