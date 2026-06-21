@@ -421,15 +421,16 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 **[VS-180: Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md)** (24 workflows)
 
-- **PA-180.1** [Emergency Material Allocation, Disaster Kit Staging](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.1-emergency-material-allocation-disaster-kit-assembly-and-staging-operations.md) — 8 workflows
-- **PA-180.2** [Price Freeze Governance & State of Calamity Controls](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.2-price-freeze-governance-state-of-calamity-controls-and-regulatory-reporting.md) — 8 workflows
-- **PA-180.3** [Priority Relief Routing & Partner Logistics](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.3-priority-relief-routing-lgu-coordination-and-humanitarian-partner-logistics.md) — 8 workflows
+- **PA-180.1** [Emergency Material Allocation, Disaster Kit Assembly & Staging Operations](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.1-emergency-material-allocation-disaster-kit-assembly-staging-operations.md) — 8 workflows
+- **PA-180.2** [Price Freeze Governance, State of Calamity Controls & Regulatory Reporting](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.2-price-freeze-governance-state-of-calamity-controls-regulatory-reporting.md) — 8 workflows
+- **PA-180.3** [Priority Relief Routing, LGU Coordination & Humanitarian Partner Logistics](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.3-priority-relief-routing-lgu-coordination-humanitarian-partner-logistics.md) — 8 workflows
 
 **[VS-191: Customer Construction Debris, Demolition Waste & Site Cleanup Operations](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md)** (24 workflows)
 
 - **PA-191.1** [Site Cleanup Service Design, Estimation & Crew Scheduling](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.1-site-cleanup-service-design-estimation-and-crew-scheduling.md) — 8 workflows
 - **PA-191.2** [Debris Collection, Segregation & DENR-Compliant Hauling Execution](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.2-debris-collection-segregation-and-denr-compliant-hauling-execution.md) — 8 workflows
 - **PA-191.3** [Diversion, Disposal, Settlement & Site Cleanup Analytics](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.3-diversion-disposal-settlement-and-site-cleanup-analytics.md) — 8 workflows
+
 **[VS-155: Trade-In, Buy-Back & Certified Pre-Owned Product Resale](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md)** (24 workflows)
 
 - **PA-155.1** [Trade-In/Buy-Back Program Design, Valuation & Pricing](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/PA-155.1-tradein-buyback-program-design-valuation-and-pricing.md) — 8 workflows
@@ -870,9 +871,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 **[VS-181: B2B Project Financing, Escrow Account Orchestration & Lien Release](./VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/README.md)** (24 workflows)
 
-- **PA-181.1** [B2B Project Escrow Onboarding & Credit Setup](./VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/PA-181.1-b2b-project-escrow-onboarding-contract-matching-and-credit-setup.md) — 8 workflows
-- **PA-181.2** [Milestone Inspection & Escrow Draw Processing](./VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/PA-181.2-milestone-inspection-joint-quantity-survey-and-escrow-draw-processing.md) — 8 workflows
-- **PA-181.3** [Waiver of Lien & Account Hold Management](./VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/PA-181.3-waiver-of-lien-progress-billing-reconciliation-and-account-hold-management.md) — 8 workflows
+- **PA-181.1** [B2B Project Escrow Onboarding, Contract Matching & Credit Setup](./VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/PA-181.1-b2b-project-escrow-onboarding-contract-matching-credit-setup.md) — 8 workflows
+- **PA-181.2** [Milestone Inspection, Joint Quantity Survey & Escrow Draw Processing](./VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/PA-181.2-milestone-inspection-joint-quantity-survey-escrow-draw-processing.md) — 8 workflows
+- **PA-181.3** [Waiver of Lien, Progress Billing Reconciliation & Account Hold Management](./VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/PA-181.3-waiver-of-lien-progress-billing-reconciliation-account-hold-management.md) — 8 workflows
+
 **[VS-173: Investor Relations, Capital Markets & Securities Disclosure](./VS-173-investor-relations-capital-markets-and-securities-disclosure/README.md)** (24 workflows)
 
 - **PA-173.1** [Investor Relations Program, Shareholder Communications & Capital-Markets Engagement](./VS-173-investor-relations-capital-markets-and-securities-disclosure/PA-173.1-investor-relations-program-shareholder-communications-and-capital-markets-engagement.md) — 8 workflows
@@ -1056,15 +1058,16 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 **[VS-178: Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md)** (24 workflows)
 
-- **PA-178.1** [Land Feasibility, Site Acquisition & Title Consolidation](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.1-land-feasibility-site-acquisition-and-title-consolidation.md) — 8 workflows
-- **PA-178.2** [Agrarian Reform & Land Use Conversion](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.2-agrarian-reform-ncip-ancestral-domain-and-land-use-conversion-operations.md) — 8 workflows
-- **PA-178.3** [Property Joint-Ventures & LGU Zoning Compliance](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.3-property-joint-ventures-lgu-zoning-compliance-and-site-development-governance.md) — 8 workflows
+- **PA-178.1** [Land Feasibility, Site Acquisition & Title Consolidation](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.1-land-feasibility-site-acquisition-title-consolidation.md) — 8 workflows
+- **PA-178.2** [Agrarian Reform, NCIP Ancestral Domain & Land Use Conversion Operations](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.2-agrarian-reform-ncip-ancestral-domain-land-use-conversion-operations.md) — 8 workflows
+- **PA-178.3** [Property Joint-Ventures, LGU Zoning Compliance & Site Development Governance](./VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/PA-178.3-property-joint-ventures-lgu-zoning-compliance-site-development-governance.md) — 8 workflows
 
 **[VS-184: Post-Disaster Store Infrastructure Reconstruction & Rehabilitation](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md)** (24 workflows)
 
 - **PA-184.1** [Structural Damage & Insurance Appraisal Coordination](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/PA-184.1-structural-damage-and-insurance-appraisal-coordination.md) — 8 workflows
 - **PA-184.2** [Rebuilding Project Execution & Safety Clearance](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/PA-184.2-rebuilding-project-execution-and-safety-clearance.md) — 8 workflows
 - **PA-184.3** [Temporary Facility & Parking Lot Sales Mobilization](./VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/PA-184.3-temporary-facility-and-parking-lot-sales-mobilization.md) — 8 workflows
+
 **[VS-163: Electric Vehicle (EV) Charging Station Host Network Operations](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md)** (24 workflows)
 
 - **PA-163.1** [Charging Network Strategy, Siting & Host Partnering](./VS-163-electric-vehicle-ev-charging-station-host-network-operations/PA-163.1-charging-network-strategy-siting-and-host-partnering.md) — 8 workflows
@@ -1280,9 +1283,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 **[VS-179: Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network](./VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md)** (24 workflows)
 
-- **PA-179.1** [Plastic Footprint Auditing & ERP Configuration](./VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/PA-179.1-plastic-footprint-auditing-erp-packaging-modeling-and-registration.md) — 8 workflows
-- **PA-179.2** [Outbound Plastic Recovery & Co-Processing](./VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/PA-179.2-outbound-plastic-recovery-partnerships-and-waste-to-energy-co-processing.md) — 8 workflows
-- **PA-179.3** [EPR Credit Trading & Annual Reporting](./VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/PA-179.3-epr-credit-trading-compliance-auditing-and-annual-reporting.md) — 8 workflows
+- **PA-179.1** [Plastic Footprint Auditing, ERP Packaging Modeling & Registration](./VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/PA-179.1-plastic-footprint-auditing-erp-packaging-modeling-registration.md) — 8 workflows
+- **PA-179.2** [Outbound Plastic Recovery Partnerships & Waste-to-Energy Co-Processing](./VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/PA-179.2-outbound-plastic-recovery-partnerships-waste-to-energy-co-processing.md) — 8 workflows
+- **PA-179.3** [EPR Credit Trading, Compliance Auditing & Annual Reporting](./VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/PA-179.3-epr-credit-trading-compliance-auditing-annual-reporting.md) — 8 workflows
+
 **[VS-166: Regulatory License, Permit & Accreditation Portfolio Management](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md)** (24 workflows)
 
 - **PA-166.1** [Portfolio Strategy, Inventory, Governance & Regulatory Intelligence](./VS-166-regulatory-license-permit-and-accreditation-portfolio-management/PA-166.1-portfolio-strategy-inventory-governance-and-regulatory-intelligence.md) — 8 workflows

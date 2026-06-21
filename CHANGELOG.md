@@ -4,6 +4,20 @@
 
 ---
 
+## 2026-06-21 — Consistency review #8: fix 12 stale PA links in the value-stream index + add validator Check 19 (link resolution)
+
+An eighth whole-repo consistency review. The seven prior reviews and `validate-repo.sh`'s 18 checks all passed, but a manual link-resolution audit of the summary docs surfaced two residual inconsistencies the mechanical checks could not see. Both are fixed below, and a new validator check is added so the larger of the two cannot recur. `validate-repo.sh` now reports **0 errors / 1 informational warning** across all **19** checks.
+
+**Canonical totals (unchanged):** 187 value streams · 565 process areas · 5,317 workflows · 733 requirements · 67 controls · W1–W5464 · VS-89–VS-191 · twenty-nine gap-analysis passes.
+
+**1. Fixed 12 broken PA-file links in `value-stream-index.md` (Detailed Value Stream Map).** The index's per-process-area links for the four Pass-26 value streams — **VS-178 / VS-179 / VS-180 / VS-181** (12 PA links) — pointed at slugs that included an extra `and` conjunction (e.g. `PA-178.1-land-feasibility-site-acquisition-and-title-consolidation.md`), while the files on disk — and the VS READMEs — use the conjunction-less form (e.g. `PA-178.1-land-feasibility-site-acquisition-title-consolidation.md`). Every other gap-analysis value stream's PA files *do* use the `and` form, so these four were the lone exception; the index hrefs were a stale artifact of generation. All 12 hrefs were corrected to the on-disk filenames, and the abbreviated display labels were simultaneously expanded to the canonical PA names used in each VS README (e.g. "Agrarian Reform & Land Use Conversion" → "Agrarian Reform, NCIP Ancestral Domain & Land Use Conversion Operations") for unambiguous naming. While editing the same region, four missing inter-block blank lines (after PA-191.3 / PA-181.3 / PA-184.3 / PA-179.3, in the Pass 26–29 block) were restored so every `**[VS-NN: …]**` header in the detailed map is preceded by a blank line as elsewhere. No files were renamed, so no other cross-references were affected.
+
+**2. Fixed a stale pending-mapping range in `requirement-workflow-matrix.md`.** The intro banner said workflow-side mappings for the "Expansion / Statutory / Gap-analysis value streams (VS-53–**VS-177**)" are added incrementally, but the matrix's own Coverage Validation section and v70 version note already correctly say **VS-53–VS-191**. The intro was corrected to VS-53–VS-191 (the v70 note had already extended the range when VS-178–VS-191 were added; the intro line was simply missed in that sweep).
+
+**3. Added `validate-repo.sh` Check 19 — PA/VS link resolution in `value-stream-index.md`.** Neither Check 2 (PA header **counts** vs index) nor Check 7 (workflow-**ID** references in cross-docs) validates that a markdown **file-path link** actually resolves, which is why the 12 stale links in item #1 shipped undetected. Check 19 resolves every intra-repo `./VS-…/(README|PA-….md)` link in the index (currently **752**) against the filesystem and errors on any that dangles. `README.md` and `07-methodology/README.md` were updated from "18 checks" to "19 checks". (CHANGELOG entries that historically say "18 checks" are left as the contemporaneous record.)
+
+---
+
 ## 2026-06-20 — Consistency review #7: close the two open work-in-progress items (Pass 26–29 criticality confirmation + dependency-map §8 extension)
 
 A seventh whole-repo consistency review that closes the two follow-up items flagged at the end of review #6. `validate-repo.sh` reports **0 errors / 1 informational warning** across all 18 checks throughout.

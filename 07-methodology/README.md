@@ -10,7 +10,7 @@
 | Document | Description |
 |---|---|
 | [technical-guidelines.md](technical-guidelines.md) | POS hardware specs, infrastructure & deployment reference, integration architecture (reference copy; canonical diagram lives in `01-model-company/data-volumes-and-integrations.md`), security requirements |
-| [validate-repo.sh](validate-repo.sh) | Cross-reference validation script — 18 checks covering workflow counts, requirement/control IDs, classification register, dangling workflow references, markdown table structure, analysis-field-header canonicalization, PA-footer format, orphan-workflow-body (ghost) detection, criticality-classification prose-count vs heading consistency, and boilerplate/tier-1 chain consistency |
+| [validate-repo.sh](validate-repo.sh) | Cross-reference validation script — 19 checks covering workflow counts, requirement/control IDs, classification register, dangling workflow references, markdown table structure, analysis-field-header canonicalization, PA-footer format, orphan-workflow-body (ghost) detection, criticality-classification prose-count vs heading consistency, boilerplate/tier-1 chain consistency, and value-stream-index PA/VS link resolution |
 | [classify-workflows.py](classify-workflows.py) | Keyword-driven criticality classifier — regenerates `01-model-company/workflows/workflow-criticality-proposed.md` (Tier 1/2/3 proposal for every workflow not in the hand-confirmed register) |
 | [add-automation-controls.py](add-automation-controls.py) | Automation/Controls field adder — inserts workflow-specific Automation Opportunity and Controls sections derived from steps/touchpoints |
 

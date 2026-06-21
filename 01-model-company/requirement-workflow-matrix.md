@@ -4,7 +4,7 @@
 > workflows from the [workflows/](workflows/value-stream-index.md) directory that exercise it.
 > Ensures complete traceability from requirements to workflows: every requirement is validated
 > by at least one workflow. Workflow-side coverage is currently limited to the core foundational
-> workflows; mappings for the Expansion / Statutory / Gap-analysis value streams (VS-53–VS-177)
+> workflows; mappings for the Expansion / Statutory / Gap-analysis value streams (VS-53–VS-191)
 > are added incrementally (see the Coverage Validation section and the version note).
 
 ---

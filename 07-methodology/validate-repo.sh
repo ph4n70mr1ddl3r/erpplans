@@ -458,6 +458,31 @@ else
     echo "$PROSE_DRIFT" | sed 's/^/    /'
 fi
 
+# --- Check 19: PA/VS link resolution in value-stream-index.md ---
+echo "--- Check 19: PA/VS link resolution in value-stream-index.md ---"
+# The index's 'Detailed Value Stream Map' lists every value stream and process area as a
+# markdown link to its README / PA file (./VS-NN-.../(README|PA-NN.X-...).md). A 2026-06-21
+# review found 12 such links stale for VS-178/179/180/181: the hrefs used slugs with an extra
+# 'and' conjunction (e.g. ...-and-title-consolidation.md) while the files on disk omit it
+# (...-title-consolidation.md) — a drift no other check sees (Check 2 compares header COUNTS,
+# not link TARGETS; Check 7 validates workflow-ID references, not file paths). This check
+# resolves every intra-repo markdown link in the index to its target file so the drift cannot
+# recur. (Scope is the index; the cross-reference docs' W-references are covered by Checks 6/7.)
+INDEX="$REPO_ROOT"/01-model-company/workflows/value-stream-index.md
+BROKEN_INDEX_LINKS=""
+TOTAL_INDEX_LINKS=$(grep -oP '\]\(\K\./VS-[^)]+\.md' "$INDEX" 2>/dev/null | wc -l | tr -d ' ')
+while IFS= read -r link; do
+    # link is relative to the index's own directory (workflows/)
+    [ -f "$REPO_ROOT"/01-model-company/workflows/"$link" ] || BROKEN_INDEX_LINKS="$BROKEN_INDEX_LINKS$link"$'\n'
+done < <(grep -oP '\]\(\K\./VS-[^)]+\.md' "$INDEX" 2>/dev/null || true)
+BROKEN_INDEX_COUNT=$(echo -n "$BROKEN_INDEX_LINKS" | grep -cP '\.md' || true)
+if [ "$BROKEN_INDEX_COUNT" -eq 0 ]; then
+    ok "All $TOTAL_INDEX_LINKS PA/VS links in value-stream-index.md resolve to a file"
+else
+    error "$BROKEN_INDEX_COUNT link(s) in value-stream-index.md do not resolve to a file:"
+    echo "$BROKEN_INDEX_LINKS" | sed 's/^/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
