@@ -14,6 +14,7 @@
 | [classify-workflows.py](classify-workflows.py) | Keyword-driven criticality classifier — regenerates `01-model-company/workflows/workflow-criticality-proposed.md` (Tier 1/2/3 proposal for every workflow not in the hand-confirmed register) |
 | [backfill-controls.py](backfill-controls.py) | `### Controls` blank-line normalizer + CTL-XX backfiller — reverses `internal-controls-matrix.md` into a workflow→control map and injects real CTL-XX references into Controls sections that lack them; also restores the missing blank line before the next `###` header |
 | [add-automation-controls.py](add-automation-controls.py) | Automation/Controls field generator — inserts workflow-specific Automation Opportunity and Controls sections derived from steps/touchpoints. Now CTL-map-aware and emits complete sentences (draft quality, refined per-workflow); companion to `backfill-controls.py` for retroactive CTL backfill |
+| [defragment-automation.py](defragment-automation.py) | One-time repair of legacy mid-phrase fragment Automation bullets — regenerates any section containing a generator-fragment bullet into complete `- System {action} of "{step}" (replaces manual Step N).` sentences. Idempotent; verified to destroy no hand-written content |
 
 ## Future Additions (Post-Platform Selection)
 

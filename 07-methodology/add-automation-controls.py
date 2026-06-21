@@ -119,6 +119,18 @@ def _step_summary(step_text, verb, max_len=80):
                 end = min(end, j + (0 if b == ')' else 1))
         snippet = s[idx:end] if end > idx else s[idx:]
     snippet = snippet.strip().strip(',;:')
+    # Strip markdown formatting that would render as stray/broken emphasis when the
+    # snippet is re-quoted: bold (**), code spans (`), and stray leading/trailing italics (*).
+    # This prevents the 'auto-review of "Review & Planning**"' artifact that arose when a
+    # step's bold-marker closer fell inside the captured snippet without its opener.
+    snippet = snippet.replace('**', '').replace('`', '').strip('* ')
+    # Balance parentheses: the boundary walk may cut at ':'/'.'/';' inside an open paren,
+    # leaving a dangling '(T-4 months' fragment. Drop the trailing unbalanced '(' segment
+    # (and any leading unmatched ')') so the re-quoted snippet reads as a complete phrase.
+    while snippet.count('(') > snippet.count(')'):
+        snippet = snippet[:snippet.rfind('(')].rstrip()
+    while snippet.count(')') > snippet.count('('):
+        snippet = snippet[snippet.find(')') + 1:].lstrip()
     if len(snippet) > max_len:
         snippet = snippet[:max_len].rsplit(' ', 1)[0] + '…'
     return snippet

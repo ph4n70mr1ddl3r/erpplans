@@ -548,7 +548,15 @@ BOILERPLATE = {
 }
 frag = 0; auto_bullets = 0
 ctrl_total = 0; ctrl_with_ctl = 0; ctrl_boiler = 0
-frag_re = re.compile(r'^- auto-\w+ \([^)]*[a-z0-9,)/-]\)\s*$')
+# Broad fragment detector: any bullet emitted by add-automation-controls.py in its legacy
+# fragment form. Matches every verb prefix in the generator's MANUAL_VERBS vocabulary
+# ('auto-X', 'rule-based auto-X', 'workflow notification', 'continuous audit', etc.)
+# followed by an opening paren — the signature of a mid-phrase snippet. The narrow regex
+# used at Check 21's introduction under-counted (it missed 'rule-based'/'workflow'/'continuous'
+# prefixes and nested parens); this broad form is aligned with defragment-automation.py and
+# catches every generator-fragment form so the metric is an honest regression guard.
+# Complete sentences (hand-written like VS-73, or regenerated '- System ...' drafts) never match.
+frag_re = re.compile(r'^- (?:auto-\w+|rule-based auto-\w+|rule-based authorization|workflow (?:notification|orchestration)|continuous audit|auto-flag for investigation) [\(\)]')
 for f in files:
     txt = open(f, encoding="utf-8", errors="replace").read()
     for m in re.finditer(r'^### Automation Opportunity\n(.*?)(?=^### |^---|^## |\Z)', txt, re.M | re.S):
