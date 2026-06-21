@@ -87,62 +87,154 @@ MANUAL_VERBS = {
     'request': 'auto-request', 'collect': 'auto-collect', 'capture': 'auto-capture',
     'measure': 'auto-measure', 'test': 'auto-test', 'audit': 'continuous audit',
     'investigate': 'auto-flag for investigation', 'register': 'auto-register',
-    'issue': 'auto-issue', 'renew': 'auto-renew', 'approve': 'auto-approve within tolerance',
+    'issue': 'auto-issue', 'renew': 'auto-renew',
     'reject': 'auto-reject outside tolerance',
 }
+# NOTE: 'approve' intentionally maps to 'rule-based auto-approval' (defined above). A previous
+# version had a duplicate 'approve' key ('auto-approve within tolerance') that Python silently
+# dropped; the single canonical mapping is retained here.
 
 
-def generate_automation(steps, touchpoints, pain_points, wf_name):
-    """Generate workflow-specific Automation Opportunity from step analysis."""
+def _step_summary(step_text, verb, max_len=80):
+    """Return a clean, boundary-respecting snippet of a step around `verb`.
+
+    The previous implementation took a fixed +/-2..4 word window that routinely cut off
+    mid-phrase (e.g. 'auto-review (account manager reviews application: (a) verify)'),
+    producing bullets that fail the quality bar in WORKFLOW-FORMAT-GUIDE.md. This version
+    extends to the next sentence/clause boundary (`.`, `;`, `:` followed by space, or a
+    closing paren) and trims to max_len on a word boundary, so every emitted bullet is a
+    complete, readable phrase.
+    """
+    s = step_text.strip()
+    # prefer the clause containing the verb
+    idx = s.lower().find(verb)
+    if idx < 0:
+        snippet = s
+    else:
+        # walk forward from the verb to the next boundary
+        end = len(s)
+        for b in ('. ', '; ', ': ', ')'):
+            j = s.find(b, idx)
+            if j != -1:
+                end = min(end, j + (0 if b == ')' else 1))
+        snippet = s[idx:end] if end > idx else s[idx:]
+    snippet = snippet.strip().strip(',;:')
+    if len(snippet) > max_len:
+        snippet = snippet[:max_len].rsplit(' ', 1)[0] + '…'
+    return snippet
+
+
+def generate_automation(steps, touchpoints, pain_points, wf_name, step_numbers=None):
+    """Generate workflow-specific Automation Opportunity from step analysis.
+
+    Emits COMPLETE sentences (capitalized, period-terminated) of the form
+    'System {auto-action} {step summary} (replaces manual Step N).' These are DRAFT
+    opportunities pending human refinement — the quality bar in WORKFLOW-FORMAT-GUIDE.md
+    expects a human to sharpen them to the specific module/object/integration. They must
+    nonetheless read as sentences, never as broken mid-phrase fragments.
+    """
     opportunities = []
     seen = set()
+    step_numbers = step_numbers or range(1, len(steps) + 1)
 
-    for step in steps:
+    for n, step in zip(step_numbers, steps):
         step_lower = step.lower()
         for verb, auto in MANUAL_VERBS.items():
             if verb in step_lower and auto not in seen:
-                # Build a short contextual snippet
-                words = step_lower.split()
-                idx = next((i for i, w in enumerate(words) if verb in w), None)
-                if idx is not None:
-                    lo = max(0, idx - 2)
-                    hi = min(len(words), idx + 4)
-                    context = ' '.join(words[lo:hi])
-                    opportunities.append(f"{auto} ({context})")
-                    seen.add(auto)
-                    break
+                snippet = _step_summary(step, verb)
+                if not snippet:
+                    continue
+                opportunities.append(
+                    f"System {auto} of \"{snippet}\" (replaces manual Step {n})."
+                )
+                seen.add(auto)
+                break
+        if len(opportunities) >= 3:
+            break
 
     if not opportunities:
-        # Derive from touchpoints or workflow name
+        # Derive from touchpoints or workflow name (these are already complete sentences)
         tp = touchpoints.lower()
         name_lower = wf_name.lower()
         if 'integration' in tp or 'api' in tp:
-            opportunities.append("auto-integration with real-time data sync")
+            opportunities.append("Real-time integration with auto-synced source data.")
         if 'report' in tp or 'dashboard' in tp or 'analytics' in name_lower:
-            opportunities.append("auto-report generation and scheduled distribution")
+            opportunities.append("Auto-generated report with scheduled distribution.")
         if 'approval' in tp or 'workflow' in tp:
-            opportunities.append("workflow automation with rule-based routing")
+            opportunities.append("Rule-based workflow routing with auto-approval within tolerance.")
         if not opportunities:
-            opportunities.append("workflow automation; system-driven processing with exception-based manual intervention")
+            opportunities.append(
+                "System-driven processing with exception-based manual intervention (draft — refine to the specific module/object)."
+            )
 
     return '\n'.join(f"- {o}" for o in opportunities[:3])
 
 
-def generate_controls(pain_points, wf_name, steps, owner):
-    """Generate Controls from pain-point mitigations and step patterns."""
+def build_workflow_to_controls():
+    """Reverse internal-controls-matrix.md into {workflow_base_id: [(CTL-XX, objective), ...]}.
+
+    Lazy-loaded and cached. Returns {} if the matrix is unavailable so generation still
+    produces a (boilerplate) Controls line rather than failing.
+    """
+    cache = getattr(build_workflow_to_controls, "_cache", None)
+    if cache is not None:
+        return cache
+    from collections import defaultdict
+    # REPO is the repository root (parent of 07-methodology/); the matrix lives under
+    # 01-model-company/. See module-level REPO/WORKFLOWS definitions.
+    matrix = REPO / "01-model-company" / "internal-controls-matrix.md"
+    wf_to_ctl = defaultdict(list)
+    if matrix.exists():
+        ctl_obj = {}
+        for line in open(matrix, encoding="utf-8"):
+            m = re.match(r"^\|\s*(CTL-\d+)\s*\|\s*(.+?)\s*\|\s*[PD]\s*\|", line)
+            if not m:
+                continue
+            cid, obj = m.group(1), m.group(2).strip().rstrip(";").strip()
+            ctl_obj[cid] = obj
+            for tok in re.findall(r"W\d+[A-Z]?(?:\.\d+[a-z]?)?", line):
+                base = re.match(r"(W\d+[A-Z]?)", tok).group(1)
+                wf_to_ctl[base].append((cid, obj))
+    build_workflow_to_controls._cache = wf_to_ctl
+    return wf_to_ctl
+
+
+def generate_controls(pain_points, wf_name, steps, owner, wf_id=None):
+    """Generate Controls from CTL-XX mapping, pain-point mitigations, and step patterns.
+
+    Preference order: (1) explicit CTL-XX references from the internal-controls matrix
+    for this workflow id (the auditable, traceable source); (2) mitigating controls named
+    in the pain points ('mitigated by …'); (3) a step-pattern-derived operational control.
+    The CTL-XX branch is what closes the loop with the 67-control register; without a
+    mapping the output is a clearly-labelled draft.
+    """
     controls = []
 
-    # Extract mitigating controls from pain points
+    # (1) CTL-XX mapping from the controls register (authoritative)
+    if wf_id:
+        wf_to_ctl = build_workflow_to_controls()
+        refs = wf_to_ctl.get(wf_id)
+        if refs:
+            seen, parts = set(), []
+            for cid, obj in refs:
+                if cid in seen:
+                    continue
+                seen.add(cid)
+                o = obj[:90].rstrip('.') + '.'
+                parts.append(f"{cid} ({o[0].lower() + o[1:]})")
+            controls.append("- " + "; ".join(parts))
+
+    # (2) Extract mitigating controls from pain points
     if pain_points:
         for line in pain_points.split('\n'):
             m = re.search(r'mitigated by\s+(.+?)(?:[.;]|$)', line, re.IGNORECASE)
             if m:
                 ctrl = m.group(1).strip()
-                if len(ctrl) > 5 and ctrl not in controls:
+                if len(ctrl) > 5 and f"operational: {ctrl}" not in controls:
                     controls.append(f"operational: {ctrl}")
 
-    # Derive from step patterns
-    if not controls:
+    # (3) Derive from step patterns
+    if len(controls) < 2:
         has_approval = any('approv' in s.lower() or 'review' in s.lower() for s in steps)
         has_reconcile = any('reconcil' in s.lower() for s in steps)
         if has_approval and has_reconcile:
@@ -151,10 +243,10 @@ def generate_controls(pain_points, wf_name, steps, owner):
             controls.append(f"operational: {owner or 'designated role'} review and approval gate")
         elif has_reconcile:
             controls.append("operational: periodic reconciliation against source documents")
-        if not controls:
+        if len(controls) < 2:
             controls.append("operational: standard operating procedures; system-enforced validation rules")
 
-    return '; '.join(controls[:3])
+    return '\n'.join(controls[:4])
 
 
 # ── insertion logic ────────────────────────────────────────────────────
@@ -174,10 +266,12 @@ def insert_fields(block):
     pain_points = extract_pain_points(block)
     owner = extract_owner(block)
     wf_name = workflow_name(block)
+    wf_id_match = re.match(r'W\d+[A-Z]?', wf_name)
+    wf_id = wf_id_match.group(0) if wf_id_match else None
 
     auto_text = generate_automation(steps, touchpoints, pain_points, wf_name)
-    ctrl_text = generate_controls(pain_points, wf_name, steps, owner)
-    insertion = f"\n### Automation Opportunity\n{auto_text}\n\n### Controls\n{ctrl_text}\n"
+    ctrl_text = generate_controls(pain_points, wf_name, steps, owner, wf_id=wf_id)
+    insertion = f"\n### Automation Opportunity\n{auto_text}\n\n### Controls\n{ctrl_text}\n\n"
 
     # Strategy 1: Insert after Pain Points section
     pp_hdr = re.search(r'^### Pain Points / Risks\s*$', block, re.MULTILINE)

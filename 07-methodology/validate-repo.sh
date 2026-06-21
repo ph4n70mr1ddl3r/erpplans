@@ -242,7 +242,7 @@ TOTAL_WF=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/
 AUTO_COUNT=$(grep -rohP '^### Automation Opportunity$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 CTRL_COUNT=$(grep -rohP '^### Controls$' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
 if [ "$AUTO_COUNT" -eq "$TOTAL_WF" ] && [ "$CTRL_COUNT" -eq "$TOTAL_WF" ]; then
-    ok "Automation Opportunity and Controls are present on all $TOTAL_WF workflows (100%)"
+    ok "Automation Opportunity and Controls headers are present on all $TOTAL_WF workflows (100% presence — content quality tracked by Check 21)"
 else
     warn "Automation Opportunity present on $AUTO_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($AUTO_COUNT/$TOTAL_WF)*100}")%); Controls present on $CTRL_COUNT / $TOTAL_WF workflows ($(awk "BEGIN{printf \"%.0f\", ($CTRL_COUNT/$TOTAL_WF)*100}")%). Target: 100% on all workflows (see WORKFLOW-FORMAT-GUIDE.md 'Standard analysis fields')"
     echo "  Note: Check W641–W647 formatting in VS-19 if any are missing or deviate from the standard '###' header structure."
@@ -521,6 +521,64 @@ if [ "$BROKEN_PA_COUNT" -eq 0 ]; then
 else
     error "$BROKEN_PA_COUNT PA-file relative link(s) do not resolve to a file:"
     echo "$BROKEN_PA_BODY" | sed 's/^/    /'
+fi
+
+# --- Check 21: Automation/Controls content quality (draft-field tracker) ---
+echo "--- Check 21: Automation/Controls content quality ---"
+# Checks 10/12/15 guard the analysis fields' PRESENCE and one legacy boilerplate string,
+# but a 2026-06-21 review found the bulk of the machine-generated `### Automation Opportunity`
+# and `### Controls` bodies (added repo-wide by add-automation-controls.py) are low-quality
+# DRAFT content: Automation bullets were emitted as mid-phrase fragments like
+#   '- auto-review (account manager reviews application: (a) verify)'
+# and ~89% of Controls sections cited no CTL-XX from the internal-controls register.
+# This check reports three live quality metrics so the backlog is tracked (not silently
+# claimed as '100% complete'). It is a WARN, not an ERROR: the fields' PRESENCE (Check 12)
+# is still 100%, and these are draft placeholders pending per-workflow human review — the
+# same treatment Check 1 gives unclassified workflows. Metrics:
+#   (a) Automation bullets that are broken fragments (auto-X (lowercase fragment, no period)
+#   (b) Controls sections citing >=1 real CTL-XX  (coverage of the 67-control register)
+#   (c) Controls sections that are pure boilerplate (no CTL-XX AND one of two known strings)
+QUALITY=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+files = glob.glob(f"{ROOT}/01-model-company/workflows/VS-*/PA-*.md")
+BOILERPLATE = {
+    "operational: standard operating procedures; system-enforced validation rules",
+    "operational: periodic reconciliation against source documents",
+}
+frag = 0; auto_bullets = 0
+ctrl_total = 0; ctrl_with_ctl = 0; ctrl_boiler = 0
+frag_re = re.compile(r'^- auto-\w+ \([^)]*[a-z0-9,)/-]\)\s*$')
+for f in files:
+    txt = open(f, encoding="utf-8", errors="replace").read()
+    for m in re.finditer(r'^### Automation Opportunity\n(.*?)(?=^### |^---|^## |\Z)', txt, re.M | re.S):
+        for line in m.group(1).split("\n"):
+            line = line.strip()
+            if line.startswith("- "):
+                auto_bullets += 1
+                if frag_re.match(line):
+                    frag += 1
+    for m in re.finditer(r'^### Controls\n(.*?)(?=^### |^---|^## |\Z)', txt, re.M | re.S):
+        ctrl_total += 1
+        body = m.group(1).strip()
+        has_ctl = bool(re.search(r'\bCTL-\d+', body))
+        if has_ctl:
+            ctrl_with_ctl += 1
+        elif any(b in body for b in BOILERPLATE) and '\n' not in body.strip():
+            ctrl_boiler += 1
+pct_ctl = (100 * ctrl_with_ctl // ctrl_total) if ctrl_total else 0
+print(f"{frag}|{auto_bullets}|{ctrl_with_ctl}|{ctrl_total}|{pct_ctl}|{ctrl_boiler}")
+PY
+)
+FRAG_BULLETS=$(echo "$QUALITY" | cut -d'|' -f1)
+AUTO_TOTAL=$(echo "$QUALITY" | cut -d'|' -f2)
+CTRL_WITH_CTL=$(echo "$QUALITY" | cut -d'|' -f3)
+CTRL_TOTAL=$(echo "$QUALITY" | cut -d'|' -f4)
+CTRL_PCT=$(echo "$QUALITY" | cut -d'|' -f5)
+CTRL_BOILER=$(echo "$QUALITY" | cut -d'|' -f6)
+warn "Automation/Controls draft-field quality: $FRAG_BULLETS/$AUTO_TOTAL Automation bullets are mid-phrase fragments (target 0); $CTRL_WITH_CTL/$CTRL_TOTAL Controls sections cite a CTL-XX ($CTRL_PCT% — target 100%); $CTRL_BOILER are pure-boilerplate. These are machine-generated DRAFT fields pending per-workflow human review (see WORKFLOW-FORMAT-GUIDE.md 'Quality bar'). Presence is still 100% (Check 12); this tracks content quality."
+if [ "$FRAG_BULLETS" -eq 0 ] && [ "$CTRL_WITH_CTL" -eq "$CTRL_TOTAL" ]; then
+    ok "All Automation bullets are complete sentences and every Controls section cites a CTL-XX"
 fi
 
 echo ""

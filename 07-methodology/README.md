@@ -10,9 +10,10 @@
 | Document | Description |
 |---|---|
 | [technical-guidelines.md](technical-guidelines.md) | POS hardware specs, infrastructure & deployment reference, integration architecture (reference copy; canonical diagram lives in `01-model-company/data-volumes-and-integrations.md`), security requirements |
-| [validate-repo.sh](validate-repo.sh) | Cross-reference validation script — 20 checks covering workflow counts, requirement/control IDs, classification register, dangling workflow references, markdown table structure, analysis-field-header canonicalization, PA-footer format, orphan-workflow-body (ghost) detection, criticality-classification prose-count vs heading consistency, boilerplate/tier-1 chain consistency, value-stream-index PA/VS link resolution, and PA-file relative-link resolution |
+| [validate-repo.sh](validate-repo.sh) | Cross-reference validation script — 21 checks covering workflow counts, requirement/control IDs, classification register, dangling workflow references, markdown table structure, analysis-field-header canonicalization, PA-footer format, orphan-workflow-body (ghost) detection, criticality-classification prose-count vs heading consistency, boilerplate/tier-1 chain consistency, value-stream-index PA/VS link resolution, PA-file relative-link resolution, and Automation/Controls draft-field content quality |
 | [classify-workflows.py](classify-workflows.py) | Keyword-driven criticality classifier — regenerates `01-model-company/workflows/workflow-criticality-proposed.md` (Tier 1/2/3 proposal for every workflow not in the hand-confirmed register) |
-| [add-automation-controls.py](add-automation-controls.py) | Automation/Controls field adder — inserts workflow-specific Automation Opportunity and Controls sections derived from steps/touchpoints |
+| [backfill-controls.py](backfill-controls.py) | `### Controls` blank-line normalizer + CTL-XX backfiller — reverses `internal-controls-matrix.md` into a workflow→control map and injects real CTL-XX references into Controls sections that lack them; also restores the missing blank line before the next `###` header |
+| [add-automation-controls.py](add-automation-controls.py) | Automation/Controls field generator — inserts workflow-specific Automation Opportunity and Controls sections derived from steps/touchpoints. Now CTL-map-aware and emits complete sentences (draft quality, refined per-workflow); companion to `backfill-controls.py` for retroactive CTL backfill |
 
 ## Future Additions (Post-Platform Selection)
 
