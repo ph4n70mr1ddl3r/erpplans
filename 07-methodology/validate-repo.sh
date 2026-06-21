@@ -589,6 +589,82 @@ if [ "$FRAG_BULLETS" -eq 0 ] && [ "$CTRL_WITH_CTL" -eq "$CTRL_TOTAL" ]; then
     ok "All Automation bullets are complete sentences and every Controls section cites a CTL-XX"
 fi
 
+# --- Check 22: Required-field completeness (WORKFLOW-FORMAT-GUIDE 9 fields) ---
+echo "--- Check 22: Required-field completeness ---"
+# WORKFLOW-FORMAT-GUIDE.md lists 9 required fields per workflow. No prior check enforces them
+# (Check 12 covers only Automation/Controls); a 2026-06-21 scan found ~1,067 missing-field
+# instances across ~1,000 workflows — a generation artifact where whole VS batches (VS-27/
+# 37/38/39/40/53/56/58/60/63) shipped missing analysis sections, undetected. This check
+# reports the gap as a WARN (same treatment as Check 21's draft-quality tracker) so the
+# backlog is measurable rather than invisible.
+#   Five fields are table-row form ('| **Field** |'): Trigger, Frequency, Volume, Owner, Participants.
+#   Three are ### sections: Steps, System Touchpoints, Pain Points / Risks.
+#   Time Estimate accepts either form (4924 use ###, 11 use the table row).
+# Each field is counted present if it appears in EITHER form within its workflow block.
+FIELDS=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+TABLE = ["Trigger", "Frequency", "Volume", "Owner", "Participants"]
+HEADER = ["Steps", "System Touchpoints", "Time Estimate", "Pain Points / Risks"]
+TIME_OK = True  # Time Estimate accepts either form
+missing = {f: 0 for f in TABLE + HEADER}
+worst_vs = {}
+total = 0
+for f in glob.glob(f"{ROOT}/01-model-company/workflows/VS-*/PA-*.md"):
+    vs = re.search(r"VS-(\d+)", f).group(1)
+    txt = open(f, encoding="utf-8", errors="replace").read()
+    for m in re.finditer(r"^## (W\d+[A-Z]?)\..*?(?=^## W|\Z)", txt, re.M | re.S):
+        block = m.group(0)
+        total += 1
+        for field in TABLE:
+            if not re.search(r"^\| \*\*" + re.escape(field) + r"\*\*", block, re.M):
+                missing[field] += 1
+                worst_vs.setdefault(field, {}).setdefault(vs, 0)
+                worst_vs[field][vs] += 1
+        # Steps: present if '### Steps' (exact or qualified) header OR any table with the
+        # '| # |' column header (every steps table uses it, regardless of whether the step
+        # IDs are bare numbers, '1a', or alpha-prefixed 'CS-1'/'NR-1'). Catches all
+        # legitimate forms: canonical flat table, multi-trigger '### Steps (...)',
+        # phase-grouped '### <Phase>' tables, cadence-grouped '### Daily/Weekly' tables,
+        # and non-numeric step-ID schemes. A strict 5-column-header or bare-number check
+        # would false-flag the qualified/phase/cadence/alpha-prefix forms.
+        if not (re.search(r"^### Steps(?: \([^)]*\))?\s*$", block, re.M) or
+                re.search(r"^\| # \|", block, re.M)):
+            missing["Steps"] += 1
+            worst_vs.setdefault("Steps", {}).setdefault(vs, 0)
+            worst_vs["Steps"][vs] += 1
+        # System Touchpoints / Pain Points: accept exact OR '### Field (qualifier)'
+        # (parenthetically-qualified sub-forms are legitimate per WORKFLOW-FORMAT-GUIDE.md).
+        for field in ("System Touchpoints", "Pain Points / Risks"):
+            if not re.search(r"^### " + re.escape(field) + r"(?: \([^)]*\))?\s*$", block, re.M):
+                missing[field] += 1
+                worst_vs.setdefault(field, {}).setdefault(vs, 0)
+                worst_vs[field][vs] += 1
+        # Time Estimate: accept either ### header (exact or qualified) or table row.
+        if not (re.search(r"^### Time Estimate(?: \([^)]*\))?\s*$", block, re.M) or
+                re.search(r"^\| \*\*Time Estimate\*\*", block, re.M)):
+            missing["Time Estimate"] += 1
+            worst_vs.setdefault("Time Estimate", {}).setdefault(vs, 0)
+            worst_vs["Time Estimate"][vs] += 1
+total_missing = sum(missing.values())
+worst_vs_str = max(worst_vs, key=lambda k: sum(worst_vs[k].values())) if worst_vs else "-"
+# Emit: total_missing|total|per-field counts|worst-vs
+parts = [str(total_missing), str(total)]
+for field in TABLE + HEADER:
+    parts.append(f"{field}:{missing[field]}")
+parts.append(f"worst:{worst_vs_str}")
+print("|".join(parts))
+PY
+)
+FIELD_TOTAL_MISSING=$(echo "$FIELDS" | cut -d'|' -f1)
+FIELD_TOTAL_WF=$(echo "$FIELDS" | cut -d'|' -f2)
+FIELD_DETAIL=$(echo "$FIELDS" | cut -d'|' -f3-)
+if [ "$FIELD_TOTAL_MISSING" -eq 0 ]; then
+    ok "All $FIELD_TOTAL_WF workflows have all 9 required fields"
+else
+    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). These are generation artifacts concentrated in a few VS batches (VS-27/37/38/39/40/53/56/58/60/63) pending per-workflow filling — Time Estimate is mechanically derivable; Pain Points / System Touchpoints / Participants are content fields requiring human authoring."
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

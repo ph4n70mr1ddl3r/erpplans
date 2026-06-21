@@ -9,6 +9,19 @@
 
 ---
 
+## 2026-06-21 — Required-field completeness: validator Check 22, backfill 410 Time Estimates, fix W2796 Volume
+
+A scan against the 9 required fields in `WORKFLOW-FORMAT-GUIDE.md` found **1,105 missing-field instances** across ~1,000 workflows — a generation artifact where whole VS batches (VS-27/37/38/39/40/53/56/58/60/63) shipped missing analysis sections, undetected because no prior check enforced required-field completeness (Check 12 covered only Automation/Controls). All structural/mechanically-derivable gaps are closed below; the content-field remainder is tracked as the honest backlog. `validate-repo.sh` now reports **0 errors / 3 informational warnings** across all **22** checks.
+
+**Canonical totals (unchanged):** 187 value streams · 565 process areas · 5,317 workflows · 733 requirements · 67 controls · W1–W5464.
+
+1. **Validator Check 22 (new)** — required-field completeness. Reports missing instances per field as a WARN. Detector accepts all legitimate forms: parenthetically-qualified section headers (`### Steps (...)`, `### System Touchpoints (Yard)`), phase/cadence-grouped step tables (`### Daily`/`### Weekly`), non-canonical columns, and alpha-prefixed step IDs (`CS-1`/`NR-1`) — verified that 16 initial "missing Steps" flags were all false positives on richly-structured workflows. Final reading: **645 missing** (all content fields — Participants 224, System Touchpoints 175, Pain Points 246; structural fields all 0).
+2. **`backfill-time-estimate.py` (new)** — mechanically derived **410 `### Time Estimate` sections** from each workflow's own per-step Durations, explicitly labelled a draft pending human annualization. Honest-draft principle: values come from already-authored step Durations; no fabricated throughput math (receipts/year etc. is domain content). Insertion lands inside the workflow body before the `---` separator, so Check 16 (PA-footer) is unaffected. Idempotent. Time Estimate gap: 410 → **0**.
+3. **Fixed 1 genuine structural defect** — `W2796` (VS-80 PA-80.3) was missing its `| **Volume** |` row (a dropped table row); restored from the Frequency field's "~600 terminals". Volume gap: 1 → **0**.
+4. **Deferred (content fields, require human authoring):** Participants (224), System Touchpoints (175), Pain Points / Risks (246) — **645 instances** across ~1,000 workflows in VS-27/37/38/39/40/53/56/58/60/63. These are the format guide's workflow-specific content fields ("name the specific module/object", "named specifically, with the mitigating control"); bulk-generating them would repeat the draft-content-claimed-as-complete mistake the prior reviews corrected. Check 22 now tracks this backlog measurably.
+
+---
+
 ## 2026-06-21 — Quality review: Automation/Controls draft fields, backfill CTL-XX, repo hygiene, validator Check 21
 
 A whole-repo **quality** review (distinct from the prior consistency reviews, which validated cross-reference *integrity*). The Automation/Controls fields were added repo-wide by a first-pass generator whose output was overwhelmingly draft quality, yet docs/validator reported it as "100% complete" — overstating maturity. All corrected below. `validate-repo.sh` now reports **0 errors / 2 informational warnings** across all **21** checks.
