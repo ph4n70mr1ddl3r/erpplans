@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 187 active value streams were produced in four blocks. Use this to gauge content maturity
+The 188 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — all four blocks are now fully detailed; the *Expansion* block was templated but
 was de-boilerplated on 2026-06-20 (the regression guard is `validate-repo.sh` Check 10).
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Fully detailed (22 templated VSs de-boilerplated 2026-06-20; VS-69/70/71/73 were pre-detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-191 | 103 | Fully detailed (twenty-nine gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
+| Gap analysis | VS-89 – VS-192 | 104 | Fully detailed (thirty gap-analysis passes, 2026-06-14/15/16/17/18/19/20/21) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 187 Value Streams · 565 Process Areas · 5,317 Workflows
+8 Families · 188 Value Streams · 568 Process Areas · 5,341 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-nine gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 187 value streams (VS-89–VS-191; W2993–W5464). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -66,7 +66,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | Gap analysis | 3 | 24 |
 |  | [VS-180](VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md) | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | Gap analysis | 3 | 24 |
 |  | [VS-191](VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md) | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **54** | **475** |
+|  | [VS-192](VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **57** | **499** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
@@ -227,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **374** |
-| | | | **Grand Total** | **565** | **5,317** |
+| | | | **Grand Total** | **568** | **5,341** |
 
 ---
 
@@ -430,6 +431,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-191.1** [Site Cleanup Service Design, Estimation & Crew Scheduling](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.1-site-cleanup-service-design-estimation-and-crew-scheduling.md) — 8 workflows
 - **PA-191.2** [Debris Collection, Segregation & DENR-Compliant Hauling Execution](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.2-debris-collection-segregation-and-denr-compliant-hauling-execution.md) — 8 workflows
 - **PA-191.3** [Diversion, Disposal, Settlement & Site Cleanup Analytics](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.3-diversion-disposal-settlement-and-site-cleanup-analytics.md) — 8 workflows
+
+**[VS-192: Green Fleet Transition, Electric Vehicle (EV) Fleet Operations & Sustainable Transportation](./VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md)** (24 workflows)
+
+- **PA-192.1** [Green Fleet Strategy, Electrification Roadmap & Capital Planning](./VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/PA-192.1-green-fleet-strategy-electrification-roadmap-and-capital-planning.md) — 8 workflows
+- **PA-192.2** [EV / Alt-Fuel Fleet Operations, Charging & Energy Management](./VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/PA-192.2-ev-alt-fuel-fleet-operations-charging-and-energy-management.md) — 8 workflows
+- **PA-192.3** [Green Fleet Performance, Compliance, Safety & Analytics](./VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/PA-192.3-green-fleet-performance-compliance-safety-and-analytics.md) — 8 workflows
 
 **[VS-155: Trade-In, Buy-Back & Certified Pre-Owned Product Resale](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md)** (24 workflows)
 
@@ -1407,4 +1414,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,317 workflows across 187 value streams · Date: 2026-06-20*
+*Total: 5,341 workflows across 188 value streams · Date: 2026-06-21*

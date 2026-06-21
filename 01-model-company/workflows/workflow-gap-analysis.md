@@ -3,7 +3,7 @@
 > Methodology and results of the operational workflow gap analysis (Pass 1, Pass 2, Pass 3, Pass 4,
 > Pass 5, Pass 6, Pass 7, Pass 8, Pass 9 (all 2026-06-14), Pass 10, Pass 11, and Pass 12 (2026-06-15),
 > Pass 13 and Pass 14 (2026-06-16), Pass 15, Pass 16, and Pass 17 (all 2026-06-17), Pass 18 (2026-06-18),
-> Pass 19, Pass 20, Pass 21, and Pass 22 (all 2026-06-19), and Pass 23, Pass 24, Pass 25, Pass 26, Pass 27, Pass 28, and Pass 29 (all 2026-06-20).
+> Pass 19, Pass 20, Pass 21, and Pass 22 (all 2026-06-19), Pass 23, Pass 24, Pass 25, Pass 26, Pass 27, Pass 28, and Pass 29 (all 2026-06-20), and Pass 30 (2026-06-21).
 > Companion document to [value-stream-index.md](value-stream-index.md) and
 > [workflow-criticality-classification.md](workflow-criticality-classification.md).
 
@@ -67,7 +67,7 @@ identify capability gaps not addressed by any existing value stream.
 
 ## 3. Gaps Identified
 
-> **Status (2026-06-20): all 103 gap-analysis value streams (VS-89–VS-191; W2993–W5464) are now**
+> **Status (2026-06-21): all 104 gap-analysis value streams (VS-89–VS-192; W2993–W5488) are now**
 > **fully classified.** They were confirmed into the criticality register across batches
 > v7.19–v7.26 (Statutory, Support & Governance, Operational Support, Mixed Operations, Shared
 > Services, Sales & Transformation, Final Family-Decisive, and Pass 26–29 Confirmation) — see
@@ -184,6 +184,15 @@ identify capability gaps not addressed by any existing value stream.
 | 103 | **Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization** | At ~40% B2B revenue (~PHP 25B/yr), ~5,200 trade accounts, Net 30–90 terms, and a COD/ecommerce AR base, trade receivables are BuildRight's second-largest balance-sheet asset after inventory; factoring/discounting/securitization releases that working capital immediately, diversifies funding, and can transfer customer credit risk | **New gap (Pass 28)** — 'factoring', 'invoice discounting', 'receivable sale', and 'securitization' each appeared in **zero** PA files as dedicated workflow headers (the lone 'securitization' reference was W3181 *lease-portfolio* securitization in VS-96). VS-105 is reverse factoring on BuildRight's *payables*, VS-170 is AR *pledged as collateral* (not sold), VS-18 is cash ops — no value stream owned BuildRight as a *seller* of its own trade receivables | **FILLED — VS-189** |
 | 104 | **Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection** | BuildRight operates a vast, safety-coupled OT estate across ~205 sites — 600 POS terminals (VS-08), WMS/RF at 4 DCs (VS-04), BMS/fire/life-safety/access-control panels (VS-138), standby generators & fuel systems, SCADA on the rooftop-solar prosumer plant (VS-108), EV-charging controllers (VS-163), smart-locker & SCO controllers (VS-164/VS-149), CCTV/EAS (VS-23), paint-mixing & cutting-station PLCs, lumber-yard automation, weighbridges, and IoT sensors (VS-69) — where a compromised fire panel, suppressed alarm, BMS lockout, or POS/SCO ransomware has direct safety-of-life, store-closure, and cash/revenue consequences that corporate IT controls do not address; OT cannot be patched on IT cadences and is increasingly converged with the corporate network | **New gap (Pass 29)** — 'operational technology security', 'OT cybersecurity', 'ICS security', 'SCADA security', 'building automation security', 'OT network segmentation', 'OT incident response', 'IEC 62443', and 'NIST SP 800-82' each appeared in **zero** PA files as dedicated workflow headers (the lone SCADA reference is the *generation-operations* workflow W3457 in VS-108, not a security discipline); VS-27.3 owns IT cybersecurity, VS-138 operates the BMS, VS-163/VS-164/VS-149 operate their connected-device channels, VS-115 calibrates measurement devices — no value stream owned the *cross-domain OT/ICS cybersecurity operating discipline* | **FILLED — VS-190** |
 | 105 | **Customer Construction Debris, Demolition Waste & Site Cleanup Operations** | BuildRight's 'Your Home Building Partner' positioning and ~45% B2B + B2C project revenue mean it routinely performs work that generates jobsite debris (drywall, tile/masonry rubble, lumber offcuts, concrete/cement debris, metal/pipe scraps, roofing, packaging) via installation (VS-12), customer design-build (VS-66), bulky white-goods install (VS-143), solar installation (VS-70), equipment rental return (VS-186), and disaster-recovery repair (VS-184); ungoverned this stream creates illegal-dumping liability under RA 9003/RA 6969, raises the ESG/circular-economy footprint (VS-25/VS-73/VS-179), and forfeits scrap/reprocessing recovery value | **New gap (Pass 29)** — a single-workflow elevation (the Pass-1/5/7/8/10/11/22/23/25 pattern): the only dedicated workflow was the single **W1086** (Customer Construction Waste Disposal & Skip/Dumpster Rental Coordination in VS-09.1); 'construction debris hauling', 'demolition waste', 'site cleanup', and 'C&D diversion' each appeared in **zero** PA files as dedicated workflow headers except W1086. VS-73 (store's own waste), VS-187 (household hazmat take-back at the store counter), VS-143.3 (old-appliance haul-away), VS-111 (own inbound packaging/RTI), VS-179 (EPR plastic packaging), VS-90 (transit damage claims) cover adjacent ground but none owned the *customer jobsite debris hauling & site cleanup service* | **FILLED — VS-191** |
+| 106 | **Green Fleet Transition, Electric Vehicle (EV) Fleet Operations & Sustainable Transportation** | The Philippines' Electric Vehicle Industry Development Act (RA 11667 / EVIDA, 2022) and its IRR establish a national EV roadmap that explicitly includes commercial/fleet adoption, corporate fleet EV-share expectations, and building/Parking-Space EV-readiness provisions that interact with BuildRight's EV-charging host network (VS-163) and rooftop-solar prosumer program (VS-108); at ~5,000 monthly store-replenishment orders, ~42,900 ecommerce orders/month, 10–15 new stores/yr, and ~6,757 employees across a 200-store archipelago, transportation is a material Scope 1 emissions and operating-cost line, and a structured green-fleet transition (electrification/alt-fuel roadmap, EV procurement & homologation, depot charging & grid coordination, TCO/lifecycle, RA 11697 EVIDA incentives, charging operations & smart-load, battery SoH/lifecycle, eco-driving, range-aware dispatch, charging–renewable integration, EV maintenance/roadside, GHG MRV, DOE/LTO/LTFRB compliance, HV/battery-fire safety, 3PL green clauses, charging billing, battery second-life/recycling) is the primary lever on both the ESG decarbonization commitment (VS-25) and the 12–14% EBITDA target | **New gap (Pass 30)** — 'fleet electrification', 'electric fleet', 'EV fleet', 'green fleet', and 'fleet decarbonization' each appeared in **zero** PA files as dedicated workflow headers, with only a forward-pointer inside VS-163 PA-163.1 step 1 ("BuildRight's own EV-fleet charging need (VS-06/VS-61 green-fleet transition)") and a single VS-25.3 ESG-reporting example mention; VS-06 operates the current diesel fleet, VS-61 owns diesel fuel/cost, VS-163 hosts customer EV charging, VS-108 generates own solar, VS-25 reports the footprint — none owned BuildRight's own *fleet decarbonization transition program* | **FILLED — VS-192** |
+
+### Pass 30 (W5465–W5488) — One new value stream
+
+Pass 30 adds one further genuinely-unowned operational discipline surfaced by re-running the established gap methodology after twenty-nine prior passes had been judged complete. It is genuinely uncovered and was in fact self-acknowledged as a forward-referenced need inside VS-163 without an owning value stream:
+
+- **VS-192 (Green Fleet Transition, Electric Vehicle (EV) Fleet Operations & Sustainable Transportation)**: Adds 3 process areas and 24 workflows (W5465–W5488) under the Make & Move family to own the multi-year decarbonization of BuildRight's own goods-moving and service fleet — the ~20% owned share of the outbound-distribution fleet (VS-06), the customer self-haul rental fleet (VS-162), the heavy/compact equipment rental fleet (VS-186), the contractor jobsite-delivery fleet (VS-74), and the employee shuttle fleet (VS-141) — plus the charging/alternative-fuel infrastructure, route-network redesign, and EVIDA/DOE/LTO compliance the transition requires (green-fleet strategy & emissions baseline, asset inventory & electrification-readiness, EV/alt-fuel procurement & homologation, depot/DC charging & grid coordination, TCO/lifecycle, RA 11697 EVIDA incentives & registration, capital governance, route re-design, daily charging & smart-load, charger O&M, battery SoH/lifecycle, eco-driving & telematics, range-aware dispatch, alt-fuel operations, charging–renewable integration, EV maintenance/roadside, GHG MRV, DOE/LTO/LTFRB compliance, HV/battery-fire safety, driver/technician training, 3PL green clauses, charging billing, battery second-life/recycling, performance analytics). Genuinely uncovered: 'fleet electrification', 'electric fleet', 'EV fleet', 'green fleet', and 'fleet decarbonization' each appeared in **zero** PA files as dedicated workflow headers, with only a forward-pointer inside VS-163 PA-163.1 step 1 — *"BuildRight's own EV-fleet charging need (VS-06/VS-61 green-fleet transition)"* — explicitly acknowledging the gap and the owner that did not yet exist, plus a single VS-25.3 ESG-reporting example mention. Distinct from VS-06 (operates the current diesel fleet — this transitions it), VS-61 (diesel fuel/cost — this owns electricity/alt-fuel energy), VS-163 (hosts EV charging for *customers* — this owns charging for BuildRight's *own* fleet, though the two share infrastructure), VS-108 (own-generation solar — this matches fleet charging load to it), VS-141 (employee shuttles — this decarbonizes them), and VS-25 (reports the footprint — this reduces it).
+
+The pass strengthens one family (Make & Move +24 via VS-192). The 24 new workflows are **unclassified** and carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via `07-methodology/classify-workflows.py`), exactly as prior batches; they will be confirmed into the register during a follow-up criticality review. Several Pass 30 workflows are anticipated Tier 1 (RA 11697 EVIDA registration/incentive and DOE/LTO/LTFRB franchise/inspection compliance controls, BFP Fire-Code/lithium-battery-fire and DOLE-OSH HV-work-permit controls, and GHG-MRV/greenwashing-disclosure-integrity controls).
 
 ### Pass 26 (W5129–W5224) — Four new value streams
 
@@ -801,27 +810,27 @@ The 24 new workflows added in Pass 25 are **unclassified** and carry a keyword-d
 > subsequent consistency review (2026-06-20) restored a missing `## W1318.` header on a
 > complete Core-block workflow body in VS-12 PA-12.2 (Tool Rental Reservation, Waitlist &
 > Scheduling — long referenced by its siblings as W1318 but never counted because its header
-> had been lost in generation). The W1318 restoration brought the total to **4,981**; Passes 26–29 (VS-178–VS-191; +96 + 96 + 96 + 48 = 336 workflows) subsequently extended the canonical grand total to **5,317** (187 value streams, 565 process areas), summarized in the Pass 26–29 progression table below. This table is not retroactively adjusted because W1318 is a Core-block workflow, not a
+> had been lost in generation). The W1318 restoration brought the total to **4,981**; Passes 26–30 (VS-178–VS-192; +96 + 96 + 96 + 48 + 24 = 360 workflows) subsequently extended the canonical grand total to **5,341** (188 value streams, 568 process areas), summarized in the Pass 26–30 progression table below. This table is not retroactively adjusted because W1318 is a Core-block workflow, not a
 > gap-analysis addition, so it was never part of any pass's +N increment. See the
 > [CHANGELOG](../../CHANGELOG.md) entry for 2026-06-20 and `validate-repo.sh` Check 17.
 
-#### Pass 26–29 progression (subsequent additions)
+#### Pass 26–30 progression (subsequent additions)
 
-| Family | After Pass 25 | +W1318 restoration | After Pass 26 | After Pass 27 | After Pass 28 | After Pass 29 (current) |
-|---|---|---|---|---|---|---|
-| Plan & Source | 428 | — | 428 | 452 | 452 | 452 |
-| Make & Move | 427 | — | 451 | 451 | 451 | 475 |
-| Sell & Serve | 1,482 | +1 | 1,483 | 1,507 | 1,531 | 1,531 |
-| Finance | 699 | — | 723 | 723 | 771 | 771 |
-| People | 410 | — | 410 | 434 | 434 | 434 |
-| Asset & Infrastructure | 272 | — | 296 | 320 | 320 | 320 |
-| Governance & Assurance | 912 | — | 936 | 936 | 960 | 960 |
-| Technology & Data | 350 | — | 350 | 350 | 350 | 374 |
-| **Grand total** | **4,980** | **+1** | **5,077** | **5,173** | **5,269** | **5,317** |
-| Value streams | 173 | — | 177 | 181 | 185 | 187 |
-| Process areas | 523 | — | 535 | 547 | 559 | 565 |
+| Family | After Pass 25 | +W1318 restoration | After Pass 26 | After Pass 27 | After Pass 28 | After Pass 29 | After Pass 30 (current) |
+|---|---|---|---|---|---|---|---|
+| Plan & Source | 428 | — | 428 | 452 | 452 | 452 | 452 |
+| Make & Move | 427 | — | 451 | 451 | 451 | 475 | 499 |
+| Sell & Serve | 1,482 | +1 | 1,483 | 1,507 | 1,531 | 1,531 | 1,531 |
+| Finance | 699 | — | 723 | 723 | 771 | 771 | 771 |
+| People | 410 | — | 410 | 434 | 434 | 434 | 434 |
+| Asset & Infrastructure | 272 | — | 296 | 320 | 320 | 320 | 320 |
+| Governance & Assurance | 912 | — | 936 | 936 | 960 | 960 | 960 |
+| Technology & Data | 350 | — | 350 | 350 | 350 | 374 | 374 |
+| **Grand total** | **4,980** | **+1** | **5,077** | **5,173** | **5,269** | **5,317** | **5,341** |
+| Value streams | 173 | — | 177 | 181 | 185 | 187 | 188 |
+| Process areas | 523 | — | 535 | 547 | 559 | 565 | 568 |
 
-The **+W1318 restoration** column records the single Core-block header restoration (VS-12 PA-12.2 Tool Rental Reservation, a Sell & Serve workflow) applied after Pass 25; it is shown as a separate column so each pass's +96/+48 increment stays cleanly attributable to the gap-analysis passes — Pass 26 (VS-178–VS-181), Pass 27 (VS-182–VS-185), Pass 28 (VS-186–VS-189), Pass 29 (VS-190–VS-191). Every column reconciles to its grand-total cell.
+The **+W1318 restoration** column records the single Core-block header restoration (VS-12 PA-12.2 Tool Rental Reservation, a Sell & Serve workflow) applied after Pass 25; it is shown as a separate column so each pass's +96/+48 increment stays cleanly attributable to the gap-analysis passes — Pass 26 (VS-178–VS-181), Pass 27 (VS-182–VS-185), Pass 28 (VS-186–VS-189), Pass 29 (VS-190–VS-191), Pass 30 (VS-192). Every column reconciles to its grand-total cell.
 
 Pass 14 deliberately closed the two remaining genuinely-clean gaps — **People** (266 → 290 via
 VS-141 Employee Transport/Shuttle & Daily Commute Management) and **Finance** (507 → 531 via
@@ -957,9 +966,9 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 `07-methodology/validate-repo.sh` passes with **0 errors** after the additions:
 
-- Grand total (5,317) matches actual PA workflow header count (5,317). ✅
+- Grand total (5,341) matches actual PA workflow header count (5,341). ✅
 - All 2,776 classified workflow IDs resolve to a header. ✅
-- All 2,564 unclassified workflows carry a keyword-driven proposed tier (workflow-criticality-proposed.md); 0 unclassified workflows remain without a proposal. ✅
+- All 2,588 unclassified workflows carry a keyword-driven proposed tier (workflow-criticality-proposed.md); 0 unclassified workflows remain without a proposal. ✅
 - No dangling workflow references in cross-reference docs. ✅
 - No placeholder/skeleton workflow content. ✅
 - All cross-document counts reconciled (README, executive-summary, value-stream-index,
@@ -1092,8 +1101,9 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 - **B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations)**, **Dual Training System (DTS) & TESDA Partnership Program**, **Post-Disaster Store Infrastructure Reconstruction & Rehabilitation**, and **B2B Cooperative Credit & Procurement Partnerships** — **filled** by VS-182, VS-183, VS-184, and VS-185 (Pass 27) as part of the operational catalog expansion to cover custom imports, vocational training partnerships, store reconstruction, and cooperative wholesale credit partnerships.
 - **Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection** — **filled** by VS-190 (Pass 29); genuinely uncovered with **zero** dedicated workflow headers across the entire repository for its defining terms ('operational technology security', 'OT cybersecurity', 'ICS security', 'SCADA security', 'IEC 62443', 'NIST SP 800-82'). VS-27.3 owns IT cybersecurity, VS-138 operates the BMS, VS-163/VS-164/VS-149 operate their connected-device channels, VS-115 calibrates measurement devices, VS-23 operates CCTV/EAS, VS-99 owns IT asset lifecycle — none owned the *cross-domain OT/ICS cybersecurity operating discipline* (asset inventory & IT/OT segmentation, OT-aware monitoring/vulnerability/patch/incident-response with fail-secure safety-preserving procedures, OT third-party remote-access, OT cyber supply-chain/SBOM, IEC 62443/NIST 800-82/BSP/NPC compliance).
 - **Customer Construction Debris, Demolition Waste & Site Cleanup Operations** — **filled** by VS-191 (Pass 29); a single-workflow elevation of **W1086** (Customer Construction Waste Disposal & Skip/Dumpster Rental Coordination in VS-09.1) following the Pass-1/5/7/8/10/11/22/23/25 pattern. VS-73 (store's own operational waste), VS-187 (household hazardous take-back at the store counter), VS-143.3 (old-appliance haul-away), VS-111 (own inbound packaging/RTI), VS-179 (EPR plastic packaging), VS-90 (transit damage claims), VS-109/VS-20 (debris from BuildRight's own store construction) cover adjacent ground but none owned the *customer jobsite debris hauling & site cleanup service* (service product/pricing, volume estimation, pre-job hazard & regulated-material assessment, crew/container dispatch, DENR-compliant C&D transporter permitting & manifest, multi-stream diversion routing, settlement, ESG/DENR/LGU reporting).
+- **Green Fleet Transition, Electric Vehicle (EV) Fleet Operations & Sustainable Transportation** — **filled** by VS-192 (Pass 30); genuinely uncovered with **zero** dedicated workflow headers across the entire repository for its defining terms ('fleet electrification', 'electric fleet', 'EV fleet', 'green fleet', 'fleet decarbonization'), and in fact self-acknowledged as a forward-referenced need inside VS-163 PA-163.1 step 1 (*"BuildRight's own EV-fleet charging need (VS-06/VS-61 green-fleet transition)"*) without an owning value stream, plus a single VS-25.3 ESG-reporting example mention. VS-06 operates the current diesel fleet, VS-61 owns diesel fuel/cost, VS-163 hosts customer EV charging, VS-108 generates own solar, VS-25 reports the footprint — none owned BuildRight's own *fleet decarbonization transition program* (green-fleet strategy & emissions baseline, electrification-readiness roadmap, EV/alt-fuel procurement & LTO homologation, depot/DC charging & grid coordination, TCO/lifecycle, RA 11667 EVIDA incentives & registration, capital governance, route re-design, daily charging & smart-load, charger O&M, battery SoH/lifecycle, eco-driving & telematics, range-aware dispatch, alt-fuel operations, charging–renewable integration, EV maintenance/roadside, GHG MRV, DOE/LTO/LTFRB compliance, HV/battery-fire DOLE-OSH safety, driver/technician training, 3PL green clauses, charging billing, battery second-life/recycling, performance analytics).
 - No further capability gaps are currently outstanding against the model company profile after
-  twenty-nine gap-analysis passes. Future business-model changes (e.g., further captive-cell
+  thirty gap-analysis passes. Future business-model changes (e.g., further captive-cell
   expansion beyond the initial risk-financing scope, retail-banking/joint-venture deposit-taking,
   or a full open secondhand C2C marketplace platform) may be re-evaluated in a future revision; the
   three previously-flagged future capabilities (used-material/trade-in resale, customer
@@ -1102,4 +1112,4 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 
 ---
 
-*Date: 2026-06-20 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*
+*Date: 2026-06-21 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*

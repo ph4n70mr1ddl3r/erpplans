@@ -2,7 +2,7 @@
 
 > **STATUS — ACTIONED 2026-06-20.** This analysis identified that HQ (315) was understaffed and omitted 6 functions. Per direction to apply the **minimum** increase that resolves the gaps, HQ was rebalanced **315 → 357** and total **6,715 → 6,757** (see `model-company-profile.md` §3.3/§4 and the CHANGELOG entry for 2026-06-20). The comfortable/fully-cushioned range estimated below (~440–470) was **not** adopted; the implemented 357 is the floor that (a) fixes the Executive inconsistency, (b) breaks out the 6 hidden departments explicitly, and (c) relieves only the contradictions the workflows themselves expose (e.g., AP "10 clerks", IT archipelago field support). The analysis below is retained as the gap record.
 
-**Scope:** Cross-reference the stated HQ department headcounts (`model-company-profile.md` §3.3 / §4) against the actual job roles, volumes, and responsibilities referenced across all workflow markdown files (**565 process-area specs across 187 value streams**).
+**Scope:** Cross-reference the stated HQ department headcounts (`model-company-profile.md` §3.3 / §4) against the actual job roles, volumes, and responsibilities referenced across all workflow markdown files (**568 process-area specs across 188 value streams**).
 
 **Method:** Extracted every `Owner` / `Participants` role title from all workflow PA files (~16,400 internal role mentions after normalization), clustered into role families, mapped to departments, and sized against stated transaction volumes (AP/AR/PO volumes, user counts, store/DC counts, statutory filing frequency).
 

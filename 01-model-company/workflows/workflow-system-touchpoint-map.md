@@ -63,7 +63,7 @@
 | VS-190 | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | IT Operations; Loss Prevention; HSE / Safety; Data Privacy & Compliance |
 | VS-191 | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | Services / Rental; Logistics / Transportation; HSE / Safety; Regulatory Operations |
 
-> The Statutory deepening (VS-79–VS-88) and twenty-nine gap-analysis passes (2026-06-14 through 2026-06-20) together added 113 value streams / 2,712 workflows whose per-workflow system
+> The Statutory deepening (VS-79–VS-88) and thirty gap-analysis passes (2026-06-14 through 2026-06-21) together added 114 value streams / 2,736 workflows whose per-workflow system
 > touchpoints are documented inline in each PA file. Rather than append the ~2,712 workflow IDs to the already-dense module rows above (which would make them unreadable), this section gives
 > the **primary ERP module mapping per value stream** for orientation; drill into the PA file for
 > per-workflow module/object detail. Module names match the section headings in the table above.
