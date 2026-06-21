@@ -29,11 +29,11 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            733 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      5,269 workflows organized by value stream
+│   ├── workflows/                      5,317 workflows organized by value stream
 │   │   ├── README.md                           Navigation hub & quick stats
-│   │   ├── value-stream-index.md              Master index (8 families · 185 value streams · 559 process areas)
+│   │   ├── value-stream-index.md              Master index (8 families · 187 value streams · 565 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
-│   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (2,440 rows)
+│   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (2,776 rows)
 │   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal for unclassified workflows
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
 │   │   ├── workflow-system-touchpoint-map.md    ERP module-to-workflow cross-reference
@@ -222,7 +222,9 @@ erpplans/
 │   │   ├── VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/ 24 workflows (3 process areas)
 │   │   ├── VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/ 24 workflows (3 process areas)
 │   │   ├── VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/ 24 workflows (3 process areas)
-│   │   └── VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/ 24 workflows (3 process areas)
+│   │   ├── VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/ 24 workflows (3 process areas)
+│   │   ├── VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/ 24 workflows (3 process areas)
+│   │   └── VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
@@ -266,7 +268,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **5,269** across 185 value streams, 559 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **5,317** across 187 value streams, 565 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 67 (31 preventive, 36 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
@@ -277,10 +279,10 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 5,269 fully specified across 185 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **2,417 of 5,269 workflows classified** (46%; the confirmed register holds 2,440 rows incl. 23 `###` parent/summary sub-workflows); 2,852 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
+| Workflows | 5,317 fully specified across 187 value streams | `workflows/value-stream-index.md` |
+| Criticality classification | **2,753 of 5,317 workflows classified** (52%; the confirmed register holds 2,776 rows incl. 23 `###` parent/summary sub-workflows); 2,564 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 67 controls mapped to workflows and requirements | `internal-controls-matrix.md` |
-| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across twenty-eight gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 185 value streams (VS-89–VS-189; W2993–W5416). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
+| Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across twenty-nine gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 187 value streams (VS-89–VS-191; W2993–W5464). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
 
@@ -300,7 +302,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (5,269 WF)    │
+   │  erp-requirements.md ←→ workflows/ (5,317 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (67 CTL)   classification.md          │
@@ -312,6 +314,6 @@ erpplans/
    │  design-decisions.md   touchpoint-map.md          │
    │                          ↕                        │
    │                value-stream-index.md              │
-   │            (185 VS · 559 process areas)            │
+   │            (187 VS · 565 process areas)            │
    └───────────────────────────────────────────────────┘
 ```

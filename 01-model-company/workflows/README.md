@@ -9,13 +9,13 @@
 
 | Metric | Value |
 |---|---|
-| Value Streams | 185 |
-| Process Areas | 559 |
-| Workflows | 5,269 |
-| Classified (Tier 1) | 684 |
-| Classified (Tier 2) | 1,354 |
-| Classified (Tier 3) | 402 |
-| Classified total | 2,440 rows = 2,417 unique workflows + 23 parent/summary sub-workflow rows |
+| Value Streams | 187 |
+| Process Areas | 565 |
+| Workflows | 5,317 |
+| Classified (Tier 1) | 801 |
+| Classified (Tier 2) | 1,549 |
+| Classified (Tier 3) | 426 |
+| Classified total | 2,776 rows = 2,753 unique workflows + 23 parent/summary sub-workflow rows |
 
 ---
 
@@ -23,7 +23,7 @@
 
 | Document | Purpose |
 |---|---|
-| [value-stream-index.md](value-stream-index.md) | **Master index** — all 185 value streams with workflow counts |
+| [value-stream-index.md](value-stream-index.md) | **Master index** — all 187 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
 | [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal for the remaining unclassified workflows |
@@ -54,7 +54,7 @@
 | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | 24 |
 | [VS-182](VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md) | B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations) | 24 |
 
-### Make & Move (451 workflows)
+### Make & Move (475 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 45 |
@@ -74,6 +74,7 @@
 | [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | 24 |
 | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | 24 |
 | [VS-180](VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md) | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | 24 |
+| [VS-191](VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md) | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | 24 |
 
 ### Sell & Serve (1,531 workflows)
 | VS | Value Stream | Workflows |
@@ -236,7 +237,7 @@
 | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | 24 |
 | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | 24 |
 
-### Technology & Data (350 workflows)
+### Technology & Data (374 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 62 |
@@ -251,10 +252,11 @@
 | [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | 24 |
 | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | 24 |
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
+| [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 452 + 451 + 1,531 + 771 + 434 + 320 + 960 + 350 = 5,269
+Family subtotal reconciliation: 452 + 475 + 1,531 + 771 + 434 + 320 + 960 + 374 = 5,317
 
-> **Note (2026-06-20):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across twenty-five gap-analysis passes (2026-06-14 through 2026-06-20, VS-89–VS-177; W2993–W5128). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
+> **Note (2026-06-20):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across twenty-nine gap-analysis passes (2026-06-14 through 2026-06-20, VS-89–VS-191; W2993–W5464). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 
 *Back to [Model Company](../) · [Repository README](../../README.md)*
 

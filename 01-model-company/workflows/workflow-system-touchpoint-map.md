@@ -47,7 +47,7 @@
 
 ---
 
-## Gap-Analysis Value Streams (VS-79–VS-185) — Primary ERP Module Coverage
+## Statutory & Gap-Analysis Value Streams (VS-79–VS-191) — Primary ERP Module Coverage
 | VS-178 | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | Real Estate; Regulatory Operations; Store Lifecycle; Governance / Strategy |
 | VS-179 | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | HSE / Safety; Inventory Management; Reporting / Analytics; Governance / Strategy |
 | VS-180 | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | Supply Chain Planning; Logistics / Transportation; Inventory Management; POS / Retail |
@@ -56,9 +56,15 @@
 | VS-183 | Dual Training System (DTS) & TESDA Partnership Program | HR & Payroll; Training & Development; HSE / Safety; Financials (GL/AP/AR) |
 | VS-184 | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | Real Estate; Engineering & Construction; Financials (GL/AP/AR); HSE / Safety |
 | VS-185 | B2B Cooperative Credit & Procurement Partnerships | Financials (GL/AP/AR); POS / Retail; B2B Sales / Trade |
+| VS-186 | Compact & Heavy Construction Equipment Rental Fleet Operations | Services / Rental; Inventory Management; HSE / Safety; Financials (GL/AP/AR) |
+| VS-187 | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back | HSE / Safety; Inventory Management; Regulatory Operations; Reporting / Analytics |
+| VS-188 | Trade Reseller Floor-Plan & Dealer Inventory Financing | Financials (GL/AP/AR); Inventory Management; B2B Sales / Trade |
+| VS-189 | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | Financials (GL/AP/AR); B2B Sales / Trade; Reporting / Analytics |
+| VS-190 | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | IT Operations; Loss Prevention; HSE / Safety; Data Privacy & Compliance |
+| VS-191 | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | Services / Rental; Logistics / Transportation; HSE / Safety; Regulatory Operations |
 
-> The Statutory deepening (VS-79–VS-88) and twenty-five gap-analysis passes (2026-06-14 through 2026-06-20) together added 99 value streams / 2,376 workflows whose per-workflow system
-> touchpoints are documented inline in each PA file. Rather than append the ~2,376 gap-analysis workflow IDs to the already-dense module rows above (which would make them unreadable), this section gives
+> The Statutory deepening (VS-79–VS-88) and twenty-nine gap-analysis passes (2026-06-14 through 2026-06-20) together added 113 value streams / 2,712 workflows whose per-workflow system
+> touchpoints are documented inline in each PA file. Rather than append the ~2,712 workflow IDs to the already-dense module rows above (which would make them unreadable), this section gives
 > the **primary ERP module mapping per value stream** for orientation; drill into the PA file for
 > per-workflow module/object detail. Module names match the section headings in the table above.
 
@@ -166,4 +172,4 @@
 
 ---
 
-*Document Version: 72.0 | Date: 2026-06-20 | Reconciled to 5,173 workflows across 181 value streams. VS-162–VS-181 primary-module rows added (Pass 19–26: VS-162–VS-164 W4745–W4816, VS-165–VS-167 W4817–W4888, VS-168–VS-169 W4889–W4936, VS-170–VS-172 W4937–W5008, VS-173 W5009–W5032, VS-174–VS-176 W5033–W5104, VS-177 W5105–W5128, VS-178–VS-181 W5129–W5224, VS-182–VS-185 W5225–W5320); section heading and intro note updated from the prior Pass-19 snapshot (VS-79–VS-164 / 86 VS / 2,064 workflows) to the full Pass-27 coverage (VS-79–VS-185 / 107 VS / 2,568 workflows). The module-to-workflow rows above cover the foundational + confirmed-classified workflows (2,440 register rows; 2,417 unique); the gap-analysis value streams VS-79–VS-185 are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 2,756 workflows not yet in the confirmed register all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twenty-five-pass history.*
+*Document Version: 73.0 | Date: 2026-06-20 | Reconciled to 5,317 workflows across 187 value streams. VS-162–VS-191 primary-module rows added (Pass 19–29: VS-162–VS-164 W4745–W4816, VS-165–VS-167 W4817–W4888, VS-168–VS-169 W4889–W4936, VS-170–VS-172 W4937–W5008, VS-173 W5009–W5032, VS-174–VS-176 W5033–W5104, VS-177 W5105–W5128, VS-178–VS-181 W5129–W5224, VS-182–VS-185 W5225–W5320, VS-186–VS-189 W5321–W5416, VS-190–VS-191 W5417–W5464); section heading and intro note updated from the prior Pass-19 snapshot (VS-79–VS-164 / 86 VS / 2,064 workflows) to the full Pass-29 coverage (VS-79–VS-191 / 113 VS / 2,712 workflows). The module-to-workflow rows above cover the foundational + confirmed-classified workflows (2,776 register rows; 2,753 unique); the VS-79–VS-191 value streams (Statutory & gap-analysis blocks) are mapped to their primary ERP modules in the summary section immediately above, with per-workflow module/object detail retained in each PA file. The 2,564 workflows not yet in the confirmed register all carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md). VS-49–VS-52 retired (numbers unused); see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twenty-nine-pass history.*

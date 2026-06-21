@@ -7,7 +7,7 @@
 
 ## Value-Stream Blocks (origin)
 
-The 173 active value streams were produced in four blocks. Use this to gauge content maturity
+The 187 active value streams were produced in four blocks. Use this to gauge content maturity
 at a glance — all four blocks are now fully detailed; the *Expansion* block was templated but
 was de-boilerplated on 2026-06-20 (the regression guard is `validate-repo.sh` Check 10).
 Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
@@ -17,7 +17,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Core | VS-01 – VS-48 | 48 | Fully detailed (original foundational model) |
 | Expansion | VS-53 – VS-78 | 26 | Fully detailed (22 templated VSs de-boilerplated 2026-06-20; VS-69/70/71/73 were pre-detailed) |
 | Statutory | VS-79 – VS-88 | 10 | Fully detailed (regulatory & finance deepening) |
-| Gap analysis | VS-89 – VS-189 | 97 | Fully detailed (twenty-eight gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
+| Gap analysis | VS-89 – VS-191 | 103 | Fully detailed (twenty-nine gap-analysis passes, 2026-06-14/15/16/17/18/19/20) |
 | — | VS-49 – VS-52 | — | Retired (placeholders removed 2026-06-14; numbers unused) |
 
 ---
@@ -25,10 +25,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 185 Value Streams · 559 Process Areas · 5,269 Workflows
+8 Families · 187 Value Streams · 565 Process Areas · 5,317 Workflows
 ```
 
-> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-eight gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 185 value streams (VS-89–VS-189; W2993–W5416). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
+> **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across twenty-nine gap-analysis passes (2026-06-14 → 2026-06-20), growing the active inventory from 84 to 187 value streams (VS-89–VS-191; W2993–W5464). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
 
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
@@ -65,7 +65,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-143](VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | Gap analysis | 3 | 24 |
 |  | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | Gap analysis | 3 | 24 |
 |  | [VS-180](VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md) | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **51** | **451** |
+|  | [VS-191](VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md) | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **54** | **475** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
@@ -224,8 +225,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | Gap analysis | 3 | 24 |
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **36** | **350** |
-| | | | **Grand Total** | **559** | **5,269** |
+|  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
+| | | | **Subtotal** | **39** | **374** |
+| | | | **Grand Total** | **565** | **5,317** |
 
 ---
 
@@ -422,6 +424,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-180.1** [Emergency Material Allocation, Disaster Kit Staging](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.1-emergency-material-allocation-disaster-kit-assembly-and-staging-operations.md) — 8 workflows
 - **PA-180.2** [Price Freeze Governance & State of Calamity Controls](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.2-price-freeze-governance-state-of-calamity-controls-and-regulatory-reporting.md) — 8 workflows
 - **PA-180.3** [Priority Relief Routing & Partner Logistics](./VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/PA-180.3-priority-relief-routing-lgu-coordination-and-humanitarian-partner-logistics.md) — 8 workflows
+
+**[VS-191: Customer Construction Debris, Demolition Waste & Site Cleanup Operations](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md)** (24 workflows)
+
+- **PA-191.1** [Site Cleanup Service Design, Estimation & Crew Scheduling](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.1-site-cleanup-service-design-estimation-and-crew-scheduling.md) — 8 workflows
+- **PA-191.2** [Debris Collection, Segregation & DENR-Compliant Hauling Execution](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.2-debris-collection-segregation-and-denr-compliant-hauling-execution.md) — 8 workflows
+- **PA-191.3** [Diversion, Disposal, Settlement & Site Cleanup Analytics](./VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/PA-191.3-diversion-disposal-settlement-and-site-cleanup-analytics.md) — 8 workflows
 **[VS-155: Trade-In, Buy-Back & Certified Pre-Owned Product Resale](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md)** (24 workflows)
 
 - **PA-155.1** [Trade-In/Buy-Back Program Design, Valuation & Pricing](./VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/PA-155.1-tradein-buyback-program-design-valuation-and-pricing.md) — 8 workflows
@@ -1361,6 +1369,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-151.2** [Label & Price-Tag Production, Printing & In-Store Application](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.2-label-and-price-tag-production-printing-and-application.md) — 8 workflows
 - **PA-151.3** [EAS/RFID Tagging, Source-Tagging & Loss-Prevention Integration](./VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/PA-151.3-eas-rfid-tagging-source-tagging-and-loss-prevention-integration.md) — 8 workflows
 
+**[VS-190: Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection](./VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md)** (24 workflows)
+
+- **PA-190.1** [OT Asset Inventory, Architecture & IT/OT Segmentation Governance](./VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/PA-190.1-ot-asset-inventory-architecture-and-it-ot-segmentation-governance.md) — 8 workflows
+- **PA-190.2** [OT Threat Detection, Vulnerability & Incident Response Operations](./VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/PA-190.2-ot-threat-detection-vulnerability-and-incident-response-operations.md) — 8 workflows
+- **PA-190.3** [OT Compliance, Third-Party Access & Cyber Resilience Analytics](./VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/PA-190.3-ot-compliance-third-party-access-and-cyber-resilience-analytics.md) — 8 workflows
+
 ---
 
 ## Cross-Reference Documents
@@ -1380,13 +1394,13 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 ```
 Does it involve a customer directly?     → Sell & Serve (VS-07 to VS-14, VS-37, VS-43–44, VS-46–48, VS-53, VS-55, VS-58, VS-60, VS-62–63, VS-65–66, VS-70, VS-75, VS-77–78, VS-82, VS-95, VS-107, VS-124, VS-139, VS-140, VS-145, VS-149, VS-156, VS-162, VS-164, VS-168, VS-171, VS-172, VS-174, VS-175, VS-176, VS-177)
-Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136, VS-143)
+Does it move physical goods?             → Make & Move (VS-04 to VS-06, VS-32, VS-56, VS-61, VS-74, VS-81, VS-90, VS-92, VS-93, VS-110, VS-111, VS-136, VS-143, VS-191)
 Does it involve planning or sourcing?    → Plan & Source (VS-01 to VS-03, VS-41, VS-45, VS-57, VS-64, VS-67, VS-94, VS-101, VS-106, VS-122, VS-127, VS-131)
 Does it involve money/financial flows?   → Finance (VS-15 to VS-18, VS-34, VS-38–40, VS-54, VS-68, VS-72, VS-79–80, VS-96, VS-105, VS-116, VS-118, VS-125, VS-142)
 Does it involve people/HR?               → People (VS-19, VS-83, VS-84, VS-98, VS-102, VS-103, VS-121, VS-123, VS-134, VS-141, VS-144, VS-150, VS-160, VS-167, VS-169)
 Does it involve buildings/fleet/assets?  → Asset & Infrastructure (VS-20, VS-35, VS-42, VS-59, VS-97, VS-108, VS-109, VS-112, VS-120, VS-138, VS-163)
 Does it involve control/governance/risk?     → Governance & Assurance (VS-21 to VS-26, VS-31, VS-33, VS-36, VS-69, VS-71, VS-73, VS-76, VS-85–89, VS-91, VS-100, VS-104, VS-114, VS-117, VS-119, VS-129, VS-130, VS-132, VS-133, VS-146, VS-147, VS-152, VS-159, VS-161, VS-165, VS-166)
-Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137)
+Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 4,981 workflows across 173 value streams · Date: 2026-06-20*
+*Total: 5,317 workflows across 187 value streams · Date: 2026-06-20*

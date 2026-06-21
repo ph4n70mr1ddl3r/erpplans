@@ -1,9 +1,9 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. Of 5,173 total workflows, 2,417 are classified into
-> criticality tiers (the confirmed register holds 2,440 rows, incl. 23 `###` parent/summary
-> sub-workflows); 2,756 remain unclassified; each carries a keyword-driven proposed tier in
+> relationships for system functions. Of 5,317 total workflows, 2,753 are classified into
+> criticality tiers (the confirmed register holds 2,776 rows, incl. 23 `###` parent/summary
+> sub-workflows); 2,564 remain unclassified; each carries a keyword-driven proposed tier in
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (Tier 2 is the conservative
 > catch-all default) pending review.
 > Use this map to understand data dependencies
@@ -637,36 +637,38 @@ The following circular data flows must be managed during steady-state operations
 
 ---
 
-## 8. Cross-Cutting Program Dependencies (VS-79–VS-161)
+## 8. Cross-Cutting Program Dependencies (VS-79–VS-191)
 
-> The Statutory deepening (VS-79–VS-88) and eighteen gap-analysis passes (2026-06-14 through 2026-06-18)
-> together added 83 value streams / 1,992 workflows that are predominantly
+> The Statutory deepening (VS-79–VS-88) and twenty-nine gap-analysis passes (2026-06-14 through 2026-06-20)
+> together added 113 value streams / 2,712 workflows that are predominantly
 > **cross-cutting overlays** on the Tier-1 core: governance,
 > assurance, finance-deepening, and technology-platform programs that consume master
 > data and transactions from the foundational value streams. This section captures the
 > VS-level prerequisite wiring declared inline in their PA files, so the dependency graph
-> is no longer limited to the original classified register (1,168 at v4.1; 1,272 workflows confirmed in seven 2026-06-20 classification batches are pending edge incorporation). Mined by
-> `grep` over every `links to VS-NN` / `VS-NN` reference in VS-79–VS-161 PA and README files.
+> is no longer limited to the original classified register. Mined by
+> `grep` over every `links to VS-NN` / `VS-NN` reference in VS-79–VS-191 PA and README files.
 
 ### 8.1 Anchor value streams (where the gap-analysis programs hook in)
 
-The foundational value streams most referenced by VS-79–VS-161. These confirm that the
+The foundational value streams most referenced by VS-79–VS-191. These confirm that the
 **gap-analysis programs are largely Tier 2/3 overlays** (they sit *on top of*
 Record-to-Report, Audit, IT Ops, Analytics, HR, and Legal), with the **statutory exceptions
-called out in §8.2** that are themselves Tier 1.
+called out in §8.2** that are themselves Tier 1. Counts are freshly recomputed across the full
+VS-79–VS-191 range (PA + README files); they supersede the v3.7 snapshot, which was mined over a
+narrower range and had drifted slightly as content was added.
 
-| Anchor VS | Value Stream | References from VS-79–VS-161 |
+| Anchor VS | Value Stream | References from VS-79–VS-191 |
 |---|---|---|
-| VS-17 | Record-to-Report | 1449 |
-| VS-21 | Internal Audit & Risk | 1184 |
-| VS-100 | Legal Operations, Litigation & IP | 955 |
-| VS-27 | IT Operations & Security | 878 |
-| VS-28 | Data, Analytics & BI | 784 |
-| VS-19 | Hire-to-Retire | 775 |
-| VS-36 | Corporate Governance | 633 |
-| VS-01 | Merchandise Strategy | 628 |
-| VS-33 | Strategic Planning | 582 |
-| VS-03 | Vendor Management & Procurement | 486 |
+| VS-17 | Record-to-Report | 1,969 |
+| VS-100 | Legal Operations, Litigation & IP | 1,591 |
+| VS-21 | Internal Audit & Risk | 1,538 |
+| VS-27 | IT Operations & Security | 1,227 |
+| VS-28 | Data, Analytics & BI | 1,114 |
+| VS-19 | Hire-to-Retire | 971 |
+| VS-13 | Customer Experience & Loyalty | 882 |
+| VS-24 | Health, Safety & Environment | 842 |
+| VS-22 | Compliance & Regulatory | 830 |
+| VS-07 | Store Operations | 819 |
 
 ### 8.2 Cross-cutting Tier-1 statutory / revenue-critical programs
 
@@ -683,6 +685,14 @@ must be sequenced with the core compliance chain in §4. Primary upstream edges:
 | VS-117 DTI-BPS Product Standards / PS Mark / ICC | VS-31 (quality), VS-03 (vendor cert), VS-87 (import clearance), VS-89 (recall) |
 | VS-118 Revenue Assurance & Pricing Integrity | VS-08 (POS), VS-17 (revenue), VS-21 (audit), VS-23 (shrink vector split) |
 | VS-125 Cross-Channel Fraud Management | VS-80 (payment ops), VS-13/10 (channels), VS-23 (physical shrink), VS-86 (AML) |
+| VS-178 Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion | VS-15 (capex/AP for acquisition), VS-17 (property accounting/RPT), VS-18 (treasury/funding), VS-20 (handoff to construction PMO), VS-97 (portfolio) |
+| VS-179 Extended Producer Responsibility (EPR) Compliance & Plastic Recovery | VS-01 (item-master packaging weights), VS-03 (supplier packaging cert), VS-25 (ESG reporting), VS-73 (store waste ops), VS-87 (customs/recovery) |
+| VS-180 Disaster Relief Supply Chain Logistics & Humanitarian Aid | VS-06 (fleet/freight), VS-04 (DC staging), VS-02 (supply/replenishment), VS-08 (price-lock execution), VS-79 (tax relief/BIR casualty loss) |
+| VS-187 Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back | VS-73 (store waste), VS-25 (ESG), VS-114 (DG transport), VS-179 (EPR), VS-31 (quality) |
+| VS-188 Trade Reseller Floor-Plan & Dealer Inventory Financing | VS-16 (AR), VS-18 (treasury/funding line), VS-17 (loan accounting/ECL), VS-03 (vendor dual-payee), VS-68 (credit risk) |
+| VS-189 Trade Accounts Receivable Factoring, Invoice Discounting & Securitization | VS-16 (AR eligibility), VS-18 (treasury), VS-17 (PFRS 9 true-sale), VS-80 (lockbox/cash app), VS-68 (credit risk) |
+| VS-190 Operational Technology (OT) / ICS Cybersecurity & Retail Tech Asset Protection | VS-27 (IT security), VS-23 (CCTV/EAS ops), VS-24 (life-safety), VS-99 (asset lifecycle), VS-26 (BCP/incident) |
+| VS-191 Customer Construction Debris, Demolition Waste & Site Cleanup | VS-06 (hauling/fleet), VS-12/66/143 (jobsite-generating services), VS-25 (ESG), VS-73 (waste), VS-111 (RTI/containers) |
 
 ### 8.3 Cross-cutting platform / governance programs (Tier 2/3 overlays) and consumers
 
@@ -704,7 +714,7 @@ value streams. They depend on the Tier-1 core but are not themselves go-live blo
 | VS-130 Corporate Development, M&A & Divestiture | Executes inorganic growth; consumes strategy (VS-33), capex (VS-40), treasury (VS-18); secures PCC clearance via VS-129 and legal/IP via VS-100. Depends on VS-100, VS-17 (finance), VS-36 (governance). |
 | VS-131 Human Rights & Responsible Supply Chain Due Diligence | Due-diligence overlay on global sourcing (VS-122) and the vendor base (VS-03/VS-67); feeds ESG reporting (VS-25) and ethics intake (VS-119). Depends on VS-122, VS-03, VS-25. |
 | VS-132 Corporate Political Engagement & Election Compliance | Governance of political activity/associations (VS-104), B2G (VS-46), and comms (VS-14); anti-graft/ABC interface (VS-86/VS-119). Depends on VS-104, VS-119, VS-36. |
-| VS-133 Operational Excellence, Process Mining & CI | Continuous-improvement OS over the ~5,173 workflows; mines ERP event logs (VS-15/VS-10/VS-04); shares benefit tracking with VS-17.4 and VS-135. Depends on VS-21 (audit), VS-17, VS-30 (innovation). |
+| VS-133 Operational Excellence, Process Mining & CI | Continuous-improvement OS over the ~5,317 workflows; mines ERP event logs (VS-15/VS-10/VS-04); shares benefit tracking with VS-17.4 and VS-135. Depends on VS-21 (audit), VS-17, VS-30 (innovation). |
 | VS-134 Organizational Change Management & Digital Adoption | People-side of transformation; equips PMO portfolio (VS-112), HR/EX (VS-103), training (VS-19.4), and the service desk (VS-27); runs a DAP over cloud ERP. Depends on VS-103, VS-133, VS-112. |
 | VS-135 Technology Business Management, IT Financial Mgmt & FinOps | Financial governance of tech spend; consumes ITAM (VS-99), EA portfolio (VS-113), FP&A (VS-17.4), procurement (VS-34), and cloud ops (VS-27). Depends on VS-17, VS-27, VS-99. |
 | VS-136 Supply Chain Network Design, MEIO & Flow Engineering | Structural network/inventory engineering; consumes supply planning (VS-02), S&OP (VS-127), logistics (VS-06), DC ops (VS-04), and real estate (VS-97/VS-20). Depends on VS-02, VS-28 (analytics), VS-01. |
@@ -760,7 +770,56 @@ for the programs with the heaviest cross-cutting footprint:
 | VS-134 | VS-103(57), VS-133(36), VS-27(21) |
 | VS-135 | VS-17(46), VS-27(33), VS-99(30) |
 | VS-136 | VS-02(63), VS-28(31), VS-01(31) |
+| VS-143 | VS-06(44), VS-17(34), VS-25(30) |
+| VS-144 | VS-17(38), VS-24(35), VS-19(34) |
+| VS-145 | VS-07(40), VS-05(34), VS-01(32) |
+| VS-146 | VS-13(75), VS-07(39), VS-21(36) |
+| VS-147 | VS-24(52), VS-21(34), VS-07(32) |
+| VS-148 | VS-17(65), VS-21(42), VS-18(36) |
+| VS-149 | VS-08(78), VS-23(57), VS-13(25) |
+| VS-150 | VS-24(51), VS-22(40), VS-19(18) |
+| VS-151 | VS-23(64), VS-04(34), VS-01(29) |
+| VS-152 | VS-17(36), VS-36(35), VS-21(33) |
+| VS-153 | VS-21(65), VS-17(58), VS-26(49) |
+| VS-154 | VS-11(39), VS-22(36), VS-21(33) |
+| VS-155 | VS-17(52), VS-12(48), VS-05(39) |
+| VS-156 | VS-22(55), VS-21(43), VS-17(37) |
+| VS-157 | VS-11(26), VS-17(22), VS-13(12) |
+| VS-158 | VS-17(39), VS-01(23), VS-11(13) |
+| VS-159 | VS-26(50), VS-21(32), VS-14(20) |
+| VS-160 | VS-19(52), VS-21(18), VS-17(14) |
+| VS-161 | VS-21(51), VS-03(26), VS-26(26) |
+| VS-162 | VS-06(30), VS-26(26), VS-23(22) |
+| VS-163 | VS-13(29), VS-17(29), VS-25(21) |
+| VS-164 | VS-10(45), VS-13(45), VS-23(36) |
+| VS-165 | VS-11(46), VS-46(41), VS-12(23) |
+| VS-166 | VS-21(39), VS-17(29), VS-28(24) |
+| VS-167 | VS-23(29), VS-21(27), VS-28(19) |
+| VS-168 | VS-14(45), VS-48(38), VS-07(33) |
+| VS-169 | VS-19(61), VS-24(48), VS-03(44) |
+| VS-170 | VS-18(72), VS-17(66), VS-05(53) |
+| VS-171 | VS-13(54), VS-24(50), VS-10(49) |
+| VS-172 | VS-13(37), VS-11(31), VS-28(25) |
+| VS-173 | VS-17(52), VS-18(52), VS-36(44) |
+| VS-174 | VS-16(40), VS-13(30), VS-23(30) |
+| VS-175 | VS-24(55), VS-17(33), VS-06(32) |
+| VS-176 | VS-17(27), VS-43(27), VS-13(23) |
+| VS-177 | VS-07(34), VS-23(29), VS-28(27) |
+| VS-178 | VS-15(8), VS-17(7), VS-18(7) |
+| VS-179 | VS-21(34), VS-03(29), VS-06(17) |
+| VS-180 | VS-06(45), VS-04(31), VS-03(19) |
+| VS-181 | VS-16(23), VS-04(20), VS-18(17) |
+| VS-182 | VS-18(10), VS-31(9), VS-17(7) |
+| VS-183 | VS-19(22), VS-17(9), VS-07(7) |
+| VS-184 | VS-35(6), VS-40(6), VS-24(5) |
+| VS-185 | VS-17(12), VS-08(10), VS-16(6) |
+| VS-186 | VS-12(23), VS-26(14), VS-06(9) |
+| VS-187 | VS-25(17), VS-24(10), VS-21(8) |
+| VS-188 | VS-17(18), VS-18(17), VS-16(16) |
+| VS-189 | VS-16(33), VS-18(27), VS-17(23) |
+| VS-190 | VS-26(28), VS-21(27), VS-24(20) |
+| VS-191 | VS-25(26), VS-06(20), VS-24(20) |
 
-> **Note on §8.3 / §8.4 coverage:** the curated program tables above (§8.3 platform/governance programs through VS-142; §8.4 top-anchor edges through VS-136) were built incrementally as each gap-analysis pass landed. VS-143–VS-161 program dependencies follow the same cross-cutting pattern and are documented inline in their PA files (`links to VS-NN` references); they will be tabulated here in a follow-up pass. The §8.1 anchor reference counts above already reflect the full VS-79–VS-161 range.
+> **Note on §8.3 / §8.4 coverage:** the curated program tables above cover every gap-analysis program in VS-79–VS-191 — §8.3 platform/governance programs (Tier 2/3 overlays) through VS-142, §8.4 top-anchor edges through VS-191, and §8.2 the Tier-1 statutory programs (including the Pass 26–29 additions VS-178/179/180/187/188/189/190/191). The §8.1 anchor reference counts are mined across the full VS-79–VS-191 range.
 
-*Date: 2026-06-20 | Workflow Dependency Map v4.1 — covers prerequisite relationships across all 181 value streams / 5,173 workflows (Pass 23 added VS-173, W5009–W5032; Pass 24 added VS-174–VS-176, W5033–W5104; Pass 25 added VS-177, W5105–W5128; Pass 26 added VS-178–VS-181, W5129–W5224; Pass 27 added VS-182–VS-185, W5225–W5320). §1–§7 cover the dependency edges among the 1,168 confirmed-classified register rows as of v4.1 (the 1,272 workflows confirmed in the seven 2026-06-20 classification batches — v7.19 statutory, v7.20 support & governance, v7.21 operational support, v7.22 mixed operations, v7.23 shared services, v7.24 sixth batch, v7.25 final family-decisive batch — are pending edge incorporation); §8 adds the VS-79–VS-161 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA and README files (§8.1 anchor counts cover VS-79–VS-161; curated program tables §8.2–§8.4 extend through VS-142 — VS-143–VS-181 program dependencies follow the same cross-cutting pattern and are pending a follow-up tabulation pass, documented inline in their PA files). v3.7 recomputed §8.1 anchor reference counts across all VS-79–VS-161 workflow files (PA + README) and corrected the §8 prose to match: the counts were always mined from PA *and* README files, not PA files alone (VS-21 1181→1184, VS-27 877→878, VS-03 484→486 drifted since v3.6; the other seven anchors were already exact). The remaining 2,756 proposed-tier workflows carry a keyword-driven tier proposal in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twenty-five-pass history.*
+*Date: 2026-06-20 | Workflow Dependency Map v4.3 — covers prerequisite relationships across all 187 value streams / 5,317 workflows (Pass 23 added VS-173, W5009–W5032; Pass 24 added VS-174–VS-176, W5033–W5104; Pass 25 added VS-177, W5105–W5128; Pass 26 added VS-178–VS-181, W5129–W5224; Pass 27 added VS-182–VS-185, W5225–W5320; Pass 28 added VS-186–VS-189, W5321–W5416; Pass 29 added VS-190–VS-191, W5417–W5464). §1–§7 cover the dependency edges among the 1,168 confirmed-classified register rows as of v4.1 (the 1,608 workflows confirmed since v4.1 — 1,272 across the seven 2026-06-20 classification batches v7.19 statutory, v7.20 support & governance, v7.21 operational support, v7.22 mixed operations, v7.23 shared services, v7.24 sixth batch, v7.25 final family-decisive batch, plus 336 in the Pass 26–29 confirmation v7.26 — are pending edge incorporation into the detailed step-level chains); §8 adds the VS-79–VS-191 cross-cutting program dependencies mined from inline `links to VS-NN` references in PA and README files (§8.1 anchor counts recomputed across the full VS-79–VS-191 range in v4.3; curated program tables §8.2–§8.4 now extend through VS-191, closing the prior VS-143–VS-191 follow-up tabulation gap). v4.3 recomputed §8.1 anchor reference counts across all VS-79–VS-191 workflow files (PA + README) — these supersede the v3.7 snapshot, which was mined over VS-79–VS-161 and had drifted slightly as content was added (the counts were always mined from PA *and* README files, not PA files alone). The remaining 2,564 proposed-tier workflows carry a keyword-driven tier proposal in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) and will be incorporated into the dependency graph during the next classification pass. The retired VS numbers (49–52) remain unused; see [`workflow-gap-analysis.md`](workflow-gap-analysis.md) for the twenty-nine-pass history.*

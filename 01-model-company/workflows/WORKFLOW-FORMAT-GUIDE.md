@@ -42,7 +42,7 @@ following fields.
 
 ### Standard analysis fields (add to every fully-detailed workflow)
 
-These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 they are present on all **4,981 workflows (100%)** across all blocks (Core, Expansion, Statutory, and Gap analysis).
+These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 they are present on all **5,317 workflows (100%)** across all blocks (Core, Expansion, Statutory, and Gap analysis).
 
 | Field | Meaning |
 |---|---|
@@ -112,10 +112,10 @@ number never needs a VS prefix.
 ```
 workflows/
 ├── README.md                         Navigation hub & quick stats
-├── value-stream-index.md              Master index (8 families · 173 VS · 523 PAs)
+├── value-stream-index.md              Master index (8 families · 187 VS · 565 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
-├── workflow-criticality-classification.md  Tier 1/2/3 priorities (2,440 confirmed rows; 2,564 proposed in workflow-criticality-proposed.md)
+├── workflow-criticality-classification.md  Tier 1/2/3 priorities (2,776 confirmed rows; 2,564 proposed in workflow-criticality-proposed.md)
 ├── workflow-criticality-proposed.md      Keyword-driven tier proposal (pending human review)
 ├── workflow-dependency-map.md         Prerequisite relationships, critical path
 ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
@@ -142,4 +142,4 @@ workflows/
 
 ---
 
-*Date: 2026-06-20 (adoption sentence in “Standard analysis fields” corrected to 100% of all 4,981 workflows after reformatting W641–W647. Prior: Repository Layout counts reconciled to 173 value streams / 523 process areas / 2,564 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
+*Date: 2026-06-20 (adoption sentence in “Standard analysis fields” corrected to 100% of all 5,317 workflows after reformatting W641–W647. Repository Layout counts reconciled to 187 value streams / 565 process areas / 2,564 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*

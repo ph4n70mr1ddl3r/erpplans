@@ -1,8 +1,8 @@
 # Workflow Criticality Classification
 
-> Classifies 2,417 unique operational workflows into criticality tiers (the confirmed register
-> holds 2,440 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
-> a `##` parent). An additional 2,564 workflows (4,981 total − 2,417 classified) remain
+> Classifies 2,753 unique operational workflows into criticality tiers (the confirmed register
+> holds 2,776 rows, of which 23 are `###` parent/summary sub-workflows double-counted against
+> a `##` parent). An additional 2,564 workflows (5,317 total − 2,753 classified) remain
 > unclassified pending review — all 2,564 carry a keyword-driven proposed tier in
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (regenerated via
 > `07-methodology/classify-workflows.py`).
@@ -35,9 +35,9 @@
 
 ---
 
-## Tier 1: Core Operations (684 Workflows)
+## Tier 1: Core Operations (801 Workflows)
 
-These 684 workflows are foundational to daily store and supply chain operations.
+These 801 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
 
 ### Core Finance (30 workflows)
@@ -258,9 +258,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (1,354 Workflows)
+## Tier 2: Standard Support (1,549 Workflows)
 
-These 1,354 workflows are needed for standard operational support, cost controls, and category management.
+These 1,549 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -549,9 +549,9 @@ These 1,354 workflows are needed for standard operational support, cost controls
 
 ---
 
-## Tier 3: Advanced Optimization (402 Workflows)
+## Tier 3: Advanced Optimization (426 Workflows)
 
-These 402 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
+These 426 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
 
 ### Innovation & Digital Transformation (8 workflows)
 
@@ -756,13 +756,13 @@ These 402 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 684 | 28.0% |
-| Phase 2 | Operational Excellence (Tier 2) | 1,354 | 55.5% |
-| Phase 3 | Innovation & Optimization (Tier 3) | 402 | 16.5% |
-| **Confirmed Total** | | **2,440** | 100% |
+| Phase 1 | Go-Live Critical (Tier 1) | 801 | 28.9% |
+| Phase 2 | Operational Excellence (Tier 2) | 1,549 | 55.8% |
+| Phase 3 | Innovation & Optimization (Tier 3) | 426 | 15.3% |
+| **Confirmed Total** | | **2,776** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 2,417 are canonical `##` workflows.
+> own classification row; the remaining 2,753 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -781,14 +781,14 @@ rows by moving them into the confirmed sections above.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 2,440 rows (2,417 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 2,776 rows (2,753 unique `##` workflows) |
 | Proposed (keyword, pending review) | 2,564 |
 | Without even a proposal | 0 |
-| **Grand Total** | **4,981** unique `##` workflows (2,417 confirmed + 2,564 unclassified, all proposed) |
+| **Grand Total** | **5,317** unique `##` workflows (2,753 confirmed + 2,564 unclassified, all proposed) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 2,440 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 4,981 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 2,776 classified workflows, and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,317 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-06-14 addition:** Value streams VS-79 through VS-88 (240 workflows, W2753–W2992) were added covering Tax Management & BIR Statutory Reporting, Payment Operations & Acquirer Settlement, Cash-in-Transit & Armored Car Operations, Sari-Sari Store & MSME Micro-Wholesale, Occupational Health & Employee Wellness, Labor Relations & Collective Bargaining, Mandatory Discount & Tax Credit Recovery, Anti-Financial Crime (AML/KYC/ABC), Customs Trade Compliance & Tariff Optimization, and Document Control & Records Retention. These 240 workflows are currently **unclassified** (counted in the unclassified total) pending criticality review; many warrant Tier 1 classification (BIR tax filing, AML/STR reporting, CBA administration, mandatory-discount tax credit recovery, CIT operations) and will be assigned in a follow-up classification pass.
 >
@@ -808,7 +808,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 > have been classified by value stream context, process area, and operational criticality.
 > Classification: **284 Tier 1** (core) · **293 Tier 2** (support) · **104 Tier 3** (optimization).
 
-### Tier 1 Additions (284 Workflows)
+### Tier 1 Additions (401 Workflows)
 
 #### Plan & Source
 
@@ -845,6 +845,15 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W938 | Vendor Managed Inventory (VMI) Periodic Data Accuracy Audit & Reconciliation | Vendor Management & Procurement |
 | W959 | Vendor Rebate Volume Tier Compliance Reconciliation & Shortfall Processing | Vendor Management & Procurement |
 | W962 | Vendor-Sponsored In-Store Display Compliance Audit & Chargeback | Vendor Management & Procurement |
+| W5229 | Custom Order Pro-Forma Invoice Generation and Downpayment Collection | B2B Bulk-Project Custom Import |
+| W5235 | Shipping Document Receipt Discrepancy Auditing and Bank Release | B2B Bulk-Project Custom Import |
+| W5236 | Bank Trust Receipt Financing Execution for Indent Orders | B2B Bulk-Project Custom Import |
+| W5238 | Import Duties Excise Tax and 12 Percent VAT Payment Processing | B2B Bulk-Project Custom Import |
+| W5239 | Bureau of Customs Formal Entry Filing and Single Administrative Document Release | B2B Bulk-Project Custom Import |
+| W5240 | Port Drayage Scheduling and Direct Container Delivery Mobilization | B2B Bulk-Project Custom Import |
+| W5243 | Direct Delivery Container Devanning and Joint Quantity Survey at Jobsite | B2B Bulk-Project Custom Import |
+| W5245 | Progressive Project Billing and Milestone Payment Collection | B2B Bulk-Project Custom Import |
+| W5246 | Landed Cost Reconciliation and Arm's-Length Transfer Price Accounting | B2B Bulk-Project Custom Import |
 
 #### Make & Move
 
@@ -860,6 +869,26 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W587 | Inventory Obsolescence Identification & Write-Off Management | Inventory Lifecycle |
 | W653 | Fleet Accident & Incident Management | Logistics & Fleet |
 | W799 | Vehicle Acquisition, Registration, Insurance & Disposal Lifecycle Management | Logistics & Fleet |
+| W5181 | DC Emergency Staging Zone Allocation & Fast-Track Pick Operations | Disaster Relief Supply Chain Logistics |
+| W5186 | ERP Price Freeze Configuration & Store-Level Price Lock Execution | Disaster Relief Supply Chain Logistics |
+| W5187 | Department of Trade and Industry (DTI) Price Compliance Reporting | Disaster Relief Supply Chain Logistics |
+| W5188 | Price Freeze Audit, Margin Impact Analysis & Financial Provisioning | Disaster Relief Supply Chain Logistics |
+| W5189 | Anti-Hoarding & Quantity-Limit Rules POS Configuration | Disaster Relief Supply Chain Logistics |
+| W5190 | State of Calamity LGU Regulatory Permit Clearance & Fee Deferrals | Disaster Relief Supply Chain Logistics |
+| W5191 | Emergency Import Tariffs/Customs Duty Deferral Application | Disaster Relief Supply Chain Logistics |
+| W5192 | Disaster Tax Relief & BIR Casualty Loss Deduction Certification | Disaster Relief Supply Chain Logistics |
+| W5197 | Disaster Area Store Reopening Safety Clearance & Structural Integrity Audit | Disaster Relief Supply Chain Logistics |
+| W5199 | Humanitarian Delivery Cash Reconciliation & Driver Safety Vetting | Disaster Relief Supply Chain Logistics |
+| W5200 | Post-Disaster Supply Chain Recovery, Lessons-Learned & BCP Update | Disaster Relief Supply Chain Logistics |
+| W5443 | Job Site Cleanup Pre-Job Hazard & Regulated-Material Assessment | Construction Debris & Site Cleanup |
+| W5445 | Skip/Dumpster & Container Fleet Sourcing, Placement & LGU Permit | Construction Debris & Site Cleanup |
+| W5447 | Subcontractor Hauler & Accredited-Disposer Vendor Onboarding | Construction Debris & Site Cleanup |
+| W5450 | Demolition Debris Load-Out, Dust/Noise & Neighbor Management | Construction Debris & Site Cleanup |
+| W5452 | DENR-Compliant C&D Transporter Permitting & Hauling Manifest | Construction Debris & Site Cleanup |
+| W5454 | Hazardous / Regulated Debris Discovery & Rerouting During Cleanup | Construction Debris & Site Cleanup |
+| W5456 | Hauling Safety, Spill Response & Road/Route Compliance | Construction Debris & Site Cleanup |
+| W5460 | ESG, GRI/IRIS+ & Decarbonization Reporting Feed | Construction Debris & Site Cleanup |
+| W5463 | DENR/LGU Periodic Waste Reporting & Permit Evidence | Construction Debris & Site Cleanup |
 
 #### Sell & Serve
 
@@ -956,6 +985,21 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W660 | Service Recovery & Customer Retention Program | Customer Experience & Loyalty |
 | W675 | Customer Data Platform Daily Operations & Data Quality Management | Customer Experience & Loyalty |
 | W996 | Store-Level Contractor Loyalty Tier Upgrade & VIP Retention Program Management | Customer Experience & Loyalty |
+| W5298 | Cooperative Board Resolution Collection & KYC Vetting | B2B Cooperative Credit & Procurement |
+| W5299 | Cooperative Development Authority (CDA) Status Verification | B2B Cooperative Credit & Procurement |
+| W5302 | Cooperative Group Credit Limit Allocation & System Activation | B2B Cooperative Credit & Procurement |
+| W5304 | Annual Cooperative Account Credit Limit Review & Renewal | B2B Cooperative Credit & Procurement |
+| W5305 | Cooperative Member Digital POS Account Association & Verification | B2B Cooperative Credit & Procurement |
+| W5306 | Cooperative Member Authorization and Purchase Order Match | B2B Cooperative Credit & Procurement |
+| W5307 | Real-time Credit Line Availability Check at Checkout | B2B Cooperative Credit & Procurement |
+| W5309 | Credit Billing to Central Cooperative Account and Invoice Dispatch | B2B Cooperative Credit & Procurement |
+| W5315 | Cooperative Patronage Dividend Tax Certification & Accounting | B2B Cooperative Credit & Procurement |
+| W5335 | Equipment Rental Billing, Deposit/Hold Management & Settlement | Construction Equipment Rental Fleet |
+| W5338 | Equipment Breakdown, Field Service Dispatch & Substitute Unit Provisioning | Construction Equipment Rental Fleet |
+| W5339 | Equipment LTO/LTFRB Registration, Crane/Rigging Permit & Roadworthiness Compliance | Construction Equipment Rental Fleet |
+| W5340 | Operator Safety Compliance, DOLE-OSH Equipment Certification & Plant-Equipment Logbook | Construction Equipment Rental Fleet |
+| W5341 | Equipment Rental Accident, Injury & Third-Party Damage Incident Management | Construction Equipment Rental Fleet |
+| W5344 | Cross-Store Equipment Rebalancing, Inter-DC Transport & Demand Seasonality Planning | Construction Equipment Rental Fleet |
 
 #### Finance
 
@@ -1018,6 +1062,28 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W589 | Weekly Cash Flow Forecast & Treasury Planning | Treasury & Cash |
 | W664 | Cash Flow Variance Analysis & Liquidity Stress Testing | Treasury & Cash |
 | W80 | FX Hedging & Forward Contract Management | Treasury & Cash |
+| W5202 | Project Purchase Order Matching & Contract Price Alignment | B2B Project Financing & Escrow |
+| W5205 | Project Credit Limit Allocation & Temporary Excess Approval | B2B Project Financing & Escrow |
+| W5208 | Project Onboarding Compliance Check (Anti-Money Laundering & Sanctions) | B2B Project Financing & Escrow |
+| W5209 | Project Material Goods Delivery Receipt (DR) Matching & Verification | B2B Project Financing & Escrow |
+| W5213 | Escrow Draw Fund Settlement Tracking, Cash Application & Match Reconciliation | B2B Project Financing & Escrow |
+| W5218 | Unconditional Progress Waiver of Lien Issuance (upon Fund Settlement) | B2B Project Financing & Escrow |
+| W5219 | Project Material Return, Credit Note & Reconciliation with Escrow draws | B2B Project Financing & Escrow |
+| W5224 | Project Account Financial Close, Final Waiver of Lien & Release of Escrow | B2B Project Financing & Escrow |
+| W5372 | Dealer Inventory Collateral Verification, Floor-Plan Audit & Stocking-List Reconciliation | Trade Reseller Floor-Plan Financing |
+| W5376 | BSP/SEC Lending-Company Compliance, Disclosure & Truth-in-Lending (RA 3765) Setup | Trade Reseller Floor-Plan Financing |
+| W5378 | Floor-Plan Disbursement to Vendor, Dual-Payee Check & Supplier Settlement | Trade Reseller Floor-Plan Financing |
+| W5381 | Dealer Stocking-List Audit, Physical Inventory Verification & Field Examination | Trade Reseller Floor-Plan Financing |
+| W5384 | Dealer Payment Processing, Cash Application & Loan Account Reconciliation | Trade Reseller Floor-Plan Financing |
+| W5386 | Dealer Collection, Workout, Restructuring & Skip-Tracing for Missing Collateral | Trade Reseller Floor-Plan Financing |
+| W5388 | Floor-Plan Portfolio Risk Rating, Concentration & Dealer Credit Limit Review | Trade Reseller Floor-Plan Financing |
+| W5392 | Regulatory Reporting, BSP Compliance Examination & Internal Audit Support | Trade Reseller Floor-Plan Financing |
+| W5400 | BSP/SEC Compliance, Truth-in-Lending & Assignment-Notification Legal Setup | Trade Receivables Factoring |
+| W5402 | Factor Funding/Drawdown, Advance Posting & Bank Reconciliation | Trade Receivables Factoring |
+| W5404 | Lockbox/Cash Receipt Processing, Customer Payment Matching & Clearing | Trade Receivables Factoring |
+| W5406 | Dilution Reconciliation, Reserve Release & Holdback Settlement | Trade Receivables Factoring |
+| W5409 | Factor/Funder Reconciliation, Fee/Interest Settlement & Monthly Account Statement | Trade Receivables Factoring |
+| W5415 | Internal Controls, Audit & Regulatory Examination Support | Trade Receivables Factoring |
 
 #### People
 
@@ -1056,6 +1122,39 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W973 | Employee Long Service Award & Milestone Recognition Management | Hire-to-Retire |
 | W977 | Employee Retirement Benefit Fund (RA 7641) Administration & Processing | Hire-to-Retire |
 | W994 | Employee Typhoon Disaster Relief Emergency Assistance & No-Interest Loan Program | Hire-to-Retire |
+| W5249 | TESDA DTS Dual Training Accreditation and Site Inspection | DTS & TESDA Partnership |
+| W5260 | Trainee Incident Management OHS Violations and Safety Escalation | DTS & TESDA Partnership |
+| W5265 | DTS Allowance Stipend Calculation Payroll Matching and Disbursement | DTS & TESDA Partnership |
+| W5266 | DTS Training Expense Accounting and BIR Deduction Ledgers Setup | DTS & TESDA Partnership |
+| W5267 | Monthly TESDA Compliance Report Compilation and Submission | DTS & TESDA Partnership |
+| W5268 | TVI Monthly Administrative Billing and Expense Sharing Reconciliation | DTS & TESDA Partnership |
+| W5269 | BIR Certificate of DTS Training Expense Audit | DTS & TESDA Partnership |
+| W5272 | Annual DTS Tax Savings Certificate Procurement | DTS & TESDA Partnership |
+
+#### Asset & Infrastructure
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5131 | Real Property Tax (RPT) Arrears Investigation & Settlement | Landbanking & Site Acquisition |
+| W5132 | Extrajudicial Settlement (EJS) of Estate Negotiation & Heir Consent | Landbanking & Site Acquisition |
+| W5136 | Land Title Consolidation & Subdivision (Subdivision of Lots) | Landbanking & Site Acquisition |
+| W5137 | Department of Agrarian Reform (DAR) Clearance & Exemption Application | Landbanking & Site Acquisition |
+| W5138 | National Commission on Indigenous Peoples (NCIP) Ancestral Domain Verification | Landbanking & Site Acquisition |
+| W5139 | Free, Prior, and Informed Consent (FPIC) Assessment & Tribal Council Negotiation | Landbanking & Site Acquisition |
+| W5140 | Certificate of Non-Overlap (CNO) Application & Boundary Survey | Landbanking & Site Acquisition |
+| W5142 | Land Use Conversion Order Application (DAR Central/Regional level) | Landbanking & Site Acquisition |
+| W5143 | Tenant Farmer Compensation, Settlement & Relocation Governance | Landbanking & Site Acquisition |
+| W5144 | DENR Environmental Compliance Certificate (ECC) / CNC Application for New Sites | Landbanking & Site Acquisition |
+| W5146 | BuildRight Property Management intercompany Lease Structuring & Transfer Pricing | Landbanking & Site Acquisition |
+| W5149 | LGU Locational Clearance & Zoning Permit Application | Landbanking & Site Acquisition |
+| W5278 | Insurance Settlement Negotiation and Recovery Accounting | Post-Disaster Store Reconstruction |
+| W5286 | LGU Building Official Inspections and Structural Safety Clearance | Post-Disaster Store Reconstruction |
+| W5287 | Bureau of Fire Protection BFP FSIC Re-Certification | Post-Disaster Store Reconstruction |
+| W5289 | Temporary Container Sales Office Site Selection and Setup | Post-Disaster Store Reconstruction |
+| W5290 | Mobile POS Terminal Routing and Network Activation | Post-Disaster Store Reconstruction |
+| W5291 | Temporary Utility Connection and Safety Accreditation | Post-Disaster Store Reconstruction |
+| W5292 | Emergency Vault and Cash Staging Security Setup | Post-Disaster Store Reconstruction |
+| W5293 | LGU Temporary Selling Permit Application and Zoning Variance | Post-Disaster Store Reconstruction |
 
 #### Governance & Assurance
 
@@ -1110,6 +1209,25 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W860 | Business Interruption Insurance Claim & Loss Documentation | Business Continuity & Insurance |
 | W861 | Employee Injury Insurance Claim Coordination & SSS/ECC Filing | Business Continuity & Insurance |
 | W864 | Insurance Claim Recovery, Settlement & Accounting Entry | Business Continuity & Insurance |
+| W5154 | ERP Item Master Plastic/Packaging Weight Fields Configuration | EPR Compliance & Plastic Recovery |
+| W5157 | Outbound Retail Plastic/Packaging Weight Calculation & Transaction Matching | EPR Compliance & Plastic Recovery |
+| W5158 | National Solid Waste Management Commission (NSWMC) EPR Program Registration | EPR Compliance & Plastic Recovery |
+| W5161 | Retail Store In-Store Plastic Waste Sorting, Collection & Storage | EPR Compliance & Plastic Recovery |
+| W5164 | Logistics Consolidation, Baling & Transport of Recovered Plastics to DCs | EPR Compliance & Plastic Recovery |
+| W5169 | EPR Plastic Waste Recovery Certificate (PRC) Verification & Matching | EPR Compliance & Plastic Recovery |
+| W5171 | Third-Party Independent Auditor Engagement & Scope Agreement | EPR Compliance & Plastic Recovery |
+| W5172 | EPR Annual Audit Documentation Preparation & Reconciliation | EPR Compliance & Plastic Recovery |
+| W5173 | National Solid Waste Management Commission (NSWMC) Annual Compliance Filing | EPR Compliance & Plastic Recovery |
+| W5346 | DENR-EMB Hazardous Waste Generator/Treater Registration & Permitting (RA 6969) | Household Hazardous Waste Take-Back |
+| W5347 | Take-Back Partner, Transporter & TSD (Treatment-Storage-Disposal) Facility Accreditation | Household Hazardous Waste Take-Back |
+| W5349 | In-Store Take-Back Collection Point Design, Containment & Safety Infrastructure | Household Hazardous Waste Take-Back |
+| W5351 | Hazardous Waste Manifest, Transporter Accreditation & Chain-of-Custody System Setup | Household Hazardous Waste Take-Back |
+| W5354 | Used Motor Oil, Lubricant & Filter Collection & Bulk Consolidation | Household Hazardous Waste Take-Back |
+| W5355 | Lead-Acid & Lithium Battery Collection, Safe Storage & Fire-Separation Compliance | Household Hazardous Waste Take-Back |
+| W5356 | Fluorescent, CFL & Mercury-Vapor Lamp Collection & Mercury Containment | Household Hazardous Waste Take-Back |
+| W5360 | Hazardous Waste Consolidation, Manifest Generation & Licensed Transporter Pickup | Household Hazardous Waste Take-Back |
+| W5364 | Take-Back Volume Tracking, DENR-EMB Annual Hazardous Waste Report & NSWMC Filing | Household Hazardous Waste Take-Back |
+| W5367 | Stewardship Program Cost Recovery, Co-Funding Reconciliation & Vendor Settlement | Household Hazardous Waste Take-Back |
 
 #### Technology & Data
 
@@ -1128,8 +1246,12 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W73 | System Upgrade & New Entity Integration Testing | IT Operations & Security |
 | W733 | Enterprise API Gateway Daily Monitoring & Health Dashboard | IT Operations & Security |
 | W831 | POS Terminal Emergency Swap & Rapid Replacement Protocol | IT Operations & Security |
+| W5430 | OT Cyber Incident Detection, Containment & Fail-Secure Response | OT/ICS Cybersecurity |
+| W5431 | OT Forensics, Root-Cause & Cross-Regulator (BSP/NPC/BFP) Notification | OT/ICS Cybersecurity |
+| W5435 | OT Cybersecurity Compliance (IEC 62443 / NIST SP 800-82) & Audit Evidence | OT/ICS Cybersecurity |
+| W5437 | OT-Aware Business Continuity, Recovery & Fail-Secure Operating Mode | OT/ICS Cybersecurity |
 
-### Tier 2 Additions (293 Workflows)
+### Tier 2 Additions (488 Workflows)
 
 #### Plan & Source
 
@@ -1178,6 +1300,20 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W901 | Vendor Seasonal Buy-Back & Stock Return Agreement Execution | Vendor Management & Procurement |
 | W932 | Vendor Catalog Price Change Intake, Assessment & ERP Synchronization | Vendor Management & Procurement |
 | W978 | Vendor Seasonal Product Post-Season Performance Review & Assortment Rationalization | Vendor Management & Procurement |
+| W5225 | B2B Project Custom Sourcing Intake and Specifications Scoping | B2B Bulk-Project Custom Import |
+| W5226 | Overseas Supplier RFQ Factory Vetting and Sample Approval | B2B Bulk-Project Custom Import |
+| W5227 | Project Landing Cost Calculation Pricing and Margin Matrix Modeling | B2B Bulk-Project Custom Import |
+| W5228 | Custom Indent Sourcing Contract Drafting and Legal Signing | B2B Bulk-Project Custom Import |
+| W5230 | Indent Order Technical Review and Production Quality Agreement Setup | B2B Bulk-Project Custom Import |
+| W5231 | Production Scheduling and Weekly Factory Progress Verification | B2B Bulk-Project Custom Import |
+| W5232 | Pre-Shipment Inspection Coordination and Quality Gate Sign-off | B2B Bulk-Project Custom Import |
+| W5233 | Letter of Credit Opening and Trade Finance Allocation for Indent Orders | B2B Bulk-Project Custom Import |
+| W5234 | Pro-Forma Invoice Verification and LC Amendment Processing | B2B Bulk-Project Custom Import |
+| W5237 | Marine Insurance Coverage Mobilization and Port Risk Underwriting | B2B Bulk-Project Custom Import |
+| W5241 | Direct Port-to-Jobsite Transit Logistics Planning and Route Survey | B2B Bulk-Project Custom Import |
+| W5242 | Jobsite Unloading Site Readiness and Heavy Equipment Coordination | B2B Bulk-Project Custom Import |
+| W5244 | Materials Discrepancy Damage Claims and Transit Insurance Execution | B2B Bulk-Project Custom Import |
+| W5247 | Project Sourcing Closeout Warranty Activation and Customer Handover | B2B Bulk-Project Custom Import |
 
 #### Make & Move
 
@@ -1191,6 +1327,29 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W797 | DC Security Operations, Perimeter Management & Access Control | DC & Warehouse Operations |
 | W836 | DC Outbound Load Verification & Pre-Dispatch Quality Check | DC & Warehouse Operations |
 | W588 | Seasonal Inventory Build-Down & Transition Execution | Inventory Lifecycle |
+| W5177 | Disaster Relief Supply Forecasting & Category Inventory Staging Plan | Disaster Relief Supply Chain Logistics |
+| W5178 | Emergency Building Materials (Galvanized Sheets, Nails, Lumber) Priority Allocation | Disaster Relief Supply Chain Logistics |
+| W5179 | Disaster Relief Home Rebuilding Kit Kitting & Staging | Disaster Relief Supply Chain Logistics |
+| W5180 | Emergency Power Generator & Solar Portable Kit Pre-Positioning | Disaster Relief Supply Chain Logistics |
+| W5182 | Emergency Vendor Direct-to-Store Delivery (DSD) Fast-Track PO Issuance | Disaster Relief Supply Chain Logistics |
+| W5183 | Inter-Island Relief Freight Capacity Reservation & Shipping Coordination | Disaster Relief Supply Chain Logistics |
+| W5185 | LGU State of Calamity Declaration Trigger & Pricing Monitoring | Disaster Relief Supply Chain Logistics |
+| W5193 | LGU Disaster Operations Center (DRRMC) Collaboration & Communication | Disaster Relief Supply Chain Logistics |
+| W5194 | DSWD (Social Welfare) & Red Cross Priority Relief Delivery Operations | Disaster Relief Supply Chain Logistics |
+| W5195 | NGO & Corporate Foundation Emergency Logistics Sponsorship Matching | Disaster Relief Supply Chain Logistics |
+| W5196 | Store-Level Disaster Relief Hub Setup & Community Distribution Point Operations | Disaster Relief Supply Chain Logistics |
+| W5198 | Emergency Fleet Fuel Allocation & Auxiliary Power Logistics | Disaster Relief Supply Chain Logistics |
+| W5441 | Site Cleanup Service Product Design, Pricing & Catalog | Construction Debris & Site Cleanup |
+| W5442 | Customer Debris Volume & Container Size Estimation | Construction Debris & Site Cleanup |
+| W5444 | Crew, Container & Truck Dispatch Scheduling | Construction Debris & Site Cleanup |
+| W5446 | B2B Project & Bulk Debris Engagement, SLA & Quotation | Construction Debris & Site Cleanup |
+| W5448 | Site Cleanup Service Work Order, Pricing & Booking Confirmation | Construction Debris & Site Cleanup |
+| W5449 | On-Site Debris Collection, Segregation & Load-Out Execution | Construction Debris & Site Cleanup |
+| W5451 | C&D Debris Weight/Volume Verification & Weighbridge Ticket Capture | Construction Debris & Site Cleanup |
+| W5453 | Multi-Stream Routing to Recycler / Reprocessor / MDRF / Landfill | Construction Debris & Site Cleanup |
+| W5455 | Site Final Cleanup, Handover & Customer Sign-Off | Construction Debris & Site Cleanup |
+| W5457 | Job Settlement, Container Demurrage & Scrap/Rebate Recovery Billing | Construction Debris & Site Cleanup |
+| W5458 | Customer Invoicing, Dispute Resolution & Collections | Construction Debris & Site Cleanup |
 
 #### Sell & Serve
 
@@ -1407,6 +1566,32 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W936 | Customer B2B Self-Service Portal Order Management & Account Access | Customer Experience & Loyalty |
 | W942 | Customer Loyalty Family/Household Account Linking & Shared Benefits Management | Customer Experience & Loyalty |
 | W969 | Customer Quick Reorder from Purchase History (Trade & Loyalty Members) | Customer Experience & Loyalty |
+| W5297 | Cooperative Partner Account Creation & Initial Contact | B2B Cooperative Credit & Procurement |
+| W5301 | Tripartite Credit Agreement Drafting & Legal Sign-off | B2B Cooperative Credit & Procurement |
+| W5303 | Cooperative Guarantor Setup and Surety Bond Validation | B2B Cooperative Credit & Procurement |
+| W5308 | Multi-Member Group Purchase Discount Routing | B2B Cooperative Credit & Procurement |
+| W5310 | Cooperative Account Payment Posting and Cash Application | B2B Cooperative Credit & Procurement |
+| W5311 | Cooperative Credit Hold Flagging and Delinquency Lockout | B2B Cooperative Credit & Procurement |
+| W5312 | Dispute Resolution for Member Unauthorized Purchases | B2B Cooperative Credit & Procurement |
+| W5313 | Quarterly Cooperative Purchase Volume Accumulation Audit | B2B Cooperative Credit & Procurement |
+| W5314 | Patronage Rebate Calculation & Tier Matching | B2B Cooperative Credit & Procurement |
+| W5316 | Rebate Credit Memo Issuance and Voucher Disbursement | B2B Cooperative Credit & Procurement |
+| W5317 | Joint Cooperative Community Build Project Procurement Scoping | B2B Cooperative Credit & Procurement |
+| W5318 | Cooperative Social Fund Contribution Routing & CSR Verification | B2B Cooperative Credit & Procurement |
+| W5319 | Annual Cooperative General Assembly Partnership Review | B2B Cooperative Credit & Procurement |
+| W5322 | Construction Equipment Vendor Selection, Procurement & Fleet Acquisition | Construction Equipment Rental Fleet |
+| W5323 | Rental Equipment Yard, Wash Bay & Heavy-Equipment Storage Infrastructure Setup | Construction Equipment Rental Fleet |
+| W5326 | Rental Operator Certification, Customer Pre-Qualification & Credit/License Vetting | Construction Equipment Rental Fleet |
+| W5327 | Heavy Equipment Insurance, Collision Damage Waiver (CDW) & Liability Program Setup | Construction Equipment Rental Fleet |
+| W5328 | Equipment Rental Catalog, Merchandising & Digital Booking Channel Integration | Construction Equipment Rental Fleet |
+| W5329 | Heavy Equipment Reservation, Quoting & Rental Agreement Generation | Construction Equipment Rental Fleet |
+| W5330 | Equipment Pre-Rental Inspection, Safety Briefing & Operator Handover | Construction Equipment Rental Fleet |
+| W5331 | Customer Equipment Transport, Delivery-to-Jobsite & Pickup Logistics | Construction Equipment Rental Fleet |
+| W5333 | Equipment Extension, Rollover, Early Return & Re-rental Processing | Construction Equipment Rental Fleet |
+| W5334 | Heavy Equipment Return Inspection, Damage Assessment & Repair Cost Recovery | Construction Equipment Rental Fleet |
+| W5336 | Lost, Stolen or Abandoned Equipment Recovery, Recovery Agent & Police Coordination | Construction Equipment Rental Fleet |
+| W5337 | Heavy Equipment Preventive Maintenance Schedule, Service Bay & Mechanic Operations | Construction Equipment Rental Fleet |
+| W5343 | Fleet Age, Lifecycle Replacement, Disposition & Trade-In Management | Construction Equipment Rental Fleet |
 
 #### Finance
 
@@ -1423,6 +1608,51 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W610 | Insurance Claims Processing & Recovery Management | Record-to-Report |
 | W639 | Rolling Forecast & Financial Scenario Planning | Record-to-Report |
 | W85 | Product Costing & Margin Analysis Review | Record-to-Report |
+| W5201 | Developer Bank-Escrow Agreement Review, Onboarding & Credit Setup | B2B Project Financing & Escrow |
+| W5203 | B2B Project Materials Requirements Forecasting & Staging Plan | B2B Project Financing & Escrow |
+| W5204 | Bank Escrow Financing Trust Account System Mapping | B2B Project Financing & Escrow |
+| W5206 | Developer Project Escrow Funding Verification & Collateral Assessment | B2B Project Financing & Escrow |
+| W5207 | Escrow Bank Agent Communication Protocols & Portal Integrations | B2B Project Financing & Escrow |
+| W5210 | Bank Inspector Joint Quantity Survey (JQS) Staging & Schedule Coordination | B2B Project Financing & Escrow |
+| W5211 | Escrow Draw Request Documentation Assembly & Submission | B2B Project Financing & Escrow |
+| W5212 | Bank Escrow Agent Inspector Audits & Deviation Clarification | B2B Project Financing & Escrow |
+| W5214 | Project Retainage (Milestone Retention Money) Accounting & Release Tracking | B2B Project Financing & Escrow |
+| W5215 | Project Escrow Payment Dispute, Resolution & Negotiation | B2B Project Financing & Escrow |
+| W5217 | Conditional Progress Waiver of Lien Issuance (upon Delivery) | B2B Project Financing & Escrow |
+| W5220 | Project Escrow Delay Credit-Hold Hold-and-Release Execution | B2B Project Financing & Escrow |
+| W5221 | Developer-Subcontractor Tripartite Payment Agreement Governance | B2B Project Financing & Escrow |
+| W5222 | Project-Restricted Inventory Allocation Hold & Release Control | B2B Project Financing & Escrow |
+| W5223 | Progressive Billing Audit, Revenue Leakage Prevention & Internal Control Review | B2B Project Financing & Escrow |
+| W5369 | Floor-Plan & Dealer Financing Program Strategy, Product Design & Risk Appetite | Trade Reseller Floor-Plan Financing |
+| W5370 | Dealer Eligibility, Credit Underwriting & Floor-Plan Limit Setting | Trade Reseller Floor-Plan Financing |
+| W5371 | Dealer Floor-Plan Agreement, Security Agreement & Collateral Perfection (Civil Code Pledge) | Trade Reseller Floor-Plan Financing |
+| W5373 | Floor-Plan Financing Funding Source, Bank Credit Line & Capital Allocation | Trade Reseller Floor-Plan Financing |
+| W5374 | Dealer Onboarding, System Integration & Inventory Reporting Feed Setup | Trade Reseller Floor-Plan Financing |
+| W5375 | Floor-Plan Pricing, Interest/Markup Rate Structure & Subvention/Manufacturer Support | Trade Reseller Floor-Plan Financing |
+| W5377 | Dealer Purchase/Floor-Plan Funding Request & Loan Origination | Trade Reseller Floor-Plan Financing |
+| W5379 | Unit-Level Collateral Registration, Serial/VIN Tracking & Floor-Plan Ledger Posting | Trade Reseller Floor-Plan Financing |
+| W5380 | Dealer Inventory Movement, Transfer & Subordinate-Lien Notification | Trade Reseller Floor-Plan Financing |
+| W5382 | Sold-Unit Reporting, Curtailment Schedule & Floor-Plan Paydown Processing | Trade Reseller Floor-Plan Financing |
+| W5383 | Floor-Plan Interest/Markup Accrual, Billing & Dealer Statement Generation | Trade Reseller Floor-Plan Financing |
+| W5385 | Dealer Aging, Curtailment Default & Out-of-Trust (OOT) Detection | Trade Reseller Floor-Plan Financing |
+| W5387 | Collateral Repossession, Redemption & Disposition of Defaulted Floor-Plan Units | Trade Reseller Floor-Plan Financing |
+| W5389 | Loss Provisioning, Charge-off & Recovery Accounting for Floor-Plan Losses | Trade Reseller Floor-Plan Financing |
+| W5393 | Receivables Financing Strategy, Instrument Selection & Working-Capital Plan | Trade Receivables Factoring |
+| W5394 | Factor/Funder Selection, Facility Negotiation & Master Factoring Agreement | Trade Receivables Factoring |
+| W5395 | Eligible-Receivable Criteria, Concentration Limits & Advance-Rate Framework | Trade Receivables Factoring |
+| W5396 | Customer Notification Strategy (Notification vs. Silent/Confidential Factoring) | Trade Receivables Factoring |
+| W5397 | Receivables Sale Accounting Design, True-Sale/Off-Balance-Sheet Opinion & Derecognition (PFRS 9) | Trade Receivables Factoring |
+| W5398 | Factoring/Securitization Platform, Lockbox & Remittance Infrastructure Setup | Trade Receivables Factoring |
+| W5399 | Dilution, Reserve & Holdback Modeling, and Credit-Protection/Insurance Sourcing | Trade Receivables Factoring |
+| W5401 | Eligible Invoice Batch Selection, Pooling & Submission to Factor | Trade Receivables Factoring |
+| W5403 | Customer Invoice Reissuance/Re-assignment & Remit-To Instruction Update | Trade Receivables Factoring |
+| W5405 | Non-Recourse Credit Risk Event, Customer Dispute & Short-Pay Handling | Trade Receivables Factoring |
+| W5407 | Recourse Period Expiry, Unpaid-Invoice Buyback & Repurchase Processing | Trade Receivables Factoring |
+| W5408 | Securitization Pool Reporting, Investor/Trustee Reporting & Servicing | Trade Receivables Factoring |
+| W5410 | Receivables Aging, Sub-Limits, Concentration & Pool Health Monitoring | Trade Receivables Factoring |
+| W5411 | Customer Notification Compliance, Audit-Trail & Dispute/Query Handling | Trade Receivables Factoring |
+| W5412 | Recourse Exposure, Bad-Debt Buyback Reserve & ECL Provisioning (PFRS 9) | Trade Receivables Factoring |
+| W5413 | Factor Performance, Dispute Rate & Service-Level Monitoring | Trade Receivables Factoring |
 
 #### People
 
@@ -1435,6 +1665,54 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W641 | Off-Cycle & Ad-Hoc Payment Processing | Hire-to-Retire |
 | W754 | Store-Level New Hire First-30-Day Performance Check-In & Early Intervention | Hire-to-Retire |
 | W779 | Store-Level Employee Injury Incident Reporting & Workers' Compensation Claim Processing | Hire-to-Retire |
+| W5250 | Technical-Vocational Institution TVI Partner Screening and SLA | DTS & TESDA Partnership |
+| W5251 | DTS Training Plan and Curriculum Design Collaboration | DTS & TESDA Partnership |
+| W5252 | Student Recruitment Interviewing and Intake Scheduling | DTS & TESDA Partnership |
+| W5253 | DTS Program Onboarding Safety Induction and Uniform Issuance | DTS & TESDA Partnership |
+| W5254 | Student-Trainee Profiling and Non-Employee Profile Provisioning | DTS & TESDA Partnership |
+| W5255 | TVI Coordinator Communication Portal and Escalation Matrix Setup | DTS & TESDA Partnership |
+| W5256 | Annual DTS Partnership Performance Audit and Contract Renewal | DTS & TESDA Partnership |
+| W5257 | Student Biometric Time and Attendance Monitoring | DTS & TESDA Partnership |
+| W5258 | In-Store Skills Mentoring Trainee Logbook and Output Verification | DTS & TESDA Partnership |
+| W5259 | Store Department Rotation and Skills Diversification Scheduling | DTS & TESDA Partnership |
+| W5261 | Mid-Term Practical Evaluation and Skills Competency Sign-off | DTS & TESDA Partnership |
+| W5262 | Trainee Grievance Handling Harassment Guard and Well-being Check | DTS & TESDA Partnership |
+| W5263 | DTS Trainee Graduation TESDA Assessment and Certification Support | DTS & TESDA Partnership |
+| W5264 | Permanent Employment Transition Interviewing and Store Placement | DTS & TESDA Partnership |
+| W5270 | Internal Audit of DTS Program Compliance and Policy Adherence | DTS & TESDA Partnership |
+
+#### Asset & Infrastructure
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5129 | Store Footprint Expansion Site Suitability & Strategic Assessment | Landbanking & Site Acquisition |
+| W5130 | Land Ownership Search, Title Verification & Due Diligence | Landbanking & Site Acquisition |
+| W5133 | Boundary Dispute, Land Survey & Technical Description Verification | Landbanking & Site Acquisition |
+| W5134 | Deed of Absolute Sale (DOAS) Negotiation, Drafting & Execution | Landbanking & Site Acquisition |
+| W5135 | Registry of Deeds (RD) Title Transfer & Registration | Landbanking & Site Acquisition |
+| W5141 | Agricultural-to-Commercial Land Reclassification Application (LGU level) | Landbanking & Site Acquisition |
+| W5145 | Joint-Venture (JV) Landowner Development Agreement Negotiation & Structuring | Landbanking & Site Acquisition |
+| W5147 | LGU Comprehensive Land Use Plan (CLUP) Conformity & Zoning Variance Application | Landbanking & Site Acquisition |
+| W5148 | Barangay Clearance, Road Right-of-Way (RROW) & Easement Agreement Negotiation | Landbanking & Site Acquisition |
+| W5150 | Groundbreaking Site Mobilization & Fencing Permit Management | Landbanking & Site Acquisition |
+| W5151 | Site Development Capex Budgeting & Milestone Release | Landbanking & Site Acquisition |
+| W5152 | Site Handover to Construction Project PMO | Landbanking & Site Acquisition |
+| W5273 | Disaster Incident Staging and Physical Site Access Control | Post-Disaster Store Reconstruction |
+| W5274 | Rapid Structural Integrity and Safety Assessment | Post-Disaster Store Reconstruction |
+| W5275 | Detailed Technical Damage Quantification and Geodetic Survey | Post-Disaster Store Reconstruction |
+| W5276 | Insurance Loss Adjuster Audit Coordination and Proof of Loss Submission | Post-Disaster Store Reconstruction |
+| W5277 | Emergency Scrap Defective Inventory and Asset Disposal Routing | Post-Disaster Store Reconstruction |
+| W5279 | LGU Civil Defense / Building Official Coordination | Post-Disaster Store Reconstruction |
+| W5280 | Post-Disaster Incident Review and Hazard Mapping Update | Post-Disaster Store Reconstruction |
+| W5281 | Post-Disaster Rebuilding CAPA Budget Approval and Financing Setup | Post-Disaster Store Reconstruction |
+| W5282 | Fast-Track Construction Contractor Vetting and Procurement SLA | Post-Disaster Store Reconstruction |
+| W5283 | Site Reconstruction PMO Activation and Schedule Coordination | Post-Disaster Store Reconstruction |
+| W5284 | Rebuilding Site Safety Fencing and Public Access Exclusion | Post-Disaster Store Reconstruction |
+| W5285 | Building Systems HVAC Electrical MEP Refurbishment | Post-Disaster Store Reconstruction |
+| W5288 | Reconstructed Store Facility Inspection and Commissioning Sign-off | Post-Disaster Store Reconstruction |
+| W5294 | High-Priority Safety and Reconstruction Material Stocking | Post-Disaster Store Reconstruction |
+| W5295 | Temporary Site Handover and Store Manager Operations Sign-off | Post-Disaster Store Reconstruction |
+| W5296 | Temporary Facility Decommissioning and Site Re-entry Checklist | Post-Disaster Store Reconstruction |
 
 #### Governance & Assurance
 
@@ -1449,6 +1727,33 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W805 | Workers' Compensation, SSS/ECC Claims & Return-to-Work Processing | Health, Safety & Environment |
 | W862 | Insurance Policy Annual Renewal & Coverage Review | Business Continuity & Insurance |
 | W863 | Third-Party Liability Claim & Customer Incident Insurance Response | Business Continuity & Insurance |
+| W5153 | Plastic Packaging Footprint Baseline Audit & Material Taxonomy Setup | EPR Compliance & Plastic Recovery |
+| W5155 | Inbound Supplier Plastic/Packaging Certification Audit | EPR Compliance & Plastic Recovery |
+| W5156 | Private Label Packaging Material Substitution & Eco-Design Review | EPR Compliance & Plastic Recovery |
+| W5159 | Producer Responsibility Organization (PRO) Enrollment & SLA Management | EPR Compliance & Plastic Recovery |
+| W5160 | EPR Budgeting, Cost Allocation & Plastic Fee Management | EPR Compliance & Plastic Recovery |
+| W5162 | LGU/MRF (Materials Recovery Facility) Plastic Waste Recovery Collaboration | EPR Compliance & Plastic Recovery |
+| W5163 | Junk Shop & Informal Waste Collector Network Registration & Incentivization | EPR Compliance & Plastic Recovery |
+| W5165 | Cement Kiln Co-Processing Partnership Agreement & Recovery Logistics | EPR Compliance & Plastic Recovery |
+| W5166 | Mechanical Recycling Partner Onboarding, Sourcing & Recovery Logistics | EPR Compliance & Plastic Recovery |
+| W5167 | Waste-to-Energy (WTE) Co-processing Certification & Recovery Audit Trails | EPR Compliance & Plastic Recovery |
+| W5168 | Multi-Region Recovery Operations Safety & OSH Compliance | EPR Compliance & Plastic Recovery |
+| W5170 | EPR Recovery Credit Purchase Agreement (RCPA) Negotiation & Trading | EPR Compliance & Plastic Recovery |
+| W5174 | EPR Program Variance Analysis, Penalty Provisioning & Remediation | EPR Compliance & Plastic Recovery |
+| W5175 | Plastic Reduction / Eco-Fulfillment Consumer Marketing Support | EPR Compliance & Plastic Recovery |
+| W5345 | Product Stewardship & Take-Back Program Strategy, Scope & Regulatory Mapping | Household Hazardous Waste Take-Back |
+| W5348 | Manufacturer/Brand Stewardship Partnership, Co-Funding & EPR Alignment | Household Hazardous Waste Take-Back |
+| W5350 | Take-Back Acceptance Policy, Eligibility, Quantity Limits & Customer Incentive Program | Household Hazardous Waste Take-Back |
+| W5352 | Take-Back Program Digital Platform, Customer Lookup & Awareness Campaign | Household Hazardous Waste Take-Back |
+| W5353 | Customer Paint Take-Back, Latex/Oil Sorting & Usable Paint Reblending (PaintCare) | Household Hazardous Waste Take-Back |
+| W5357 | Pesticide, Garden Chemical & Solvent Take-Back & Restricted-Substance Handling | Household Hazardous Waste Take-Back |
+| W5358 | Consumer E-Waste, Power Tool & Appliance Take-Back & Data-Bearing Device Sanitization | Household Hazardous Waste Take-Back |
+| W5359 | Propane/LPG Cylinder Take-Back, Condemned-Cylinder Handling & Cross-link to VS-175 | Household Hazardous Waste Take-Back |
+| W5361 | TSD Facility Processing, Recovery, Recycling & Energy-Recovery Verification | Household Hazardous Waste Take-Back |
+| W5362 | Latex Paint Reblending, Donation-to-Community & Reuse-Product Sales Channel | Household Hazardous Waste Take-Back |
+| W5363 | Hazardous Waste Disposal, Incineration/Cement-Kiln & Landfill Diversion Tracking | Household Hazardous Waste Take-Back |
+| W5365 | Product Stewardship Compliance Audit, TPRM of Transporters/TSD & Regulatory Inspection Response | Household Hazardous Waste Take-Back |
+| W5366 | Take-Back Program Incident, Spill/Leak & Exposure Response | Household Hazardous Waste Take-Back |
 
 #### Technology & Data
 
@@ -1458,8 +1763,25 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W709 | Enterprise Data Governance & Quality Management Operations | IT Operations & Security |
 | W734 | Data Quality Daily Triage & Remediation Operations | IT Operations & Security |
 | W787 | ERP System Monthly Performance Review & Capacity Planning Update | IT Operations & Security |
+| W5417 | OT/ICS Asset Discovery, Inventory & Cyber Risk Taxonomy | OT/ICS Cybersecurity |
+| W5418 | OT Security Architecture, Purdue-Model Zone Design & IT/OT Segmentation | OT/ICS Cybersecurity |
+| W5419 | OT Identity, Credential & Role-Based Access Control Governance | OT/ICS Cybersecurity |
+| W5420 | OT Device Hardening, Secure Configuration Baseline & Change Control | OT/ICS Cybersecurity |
+| W5421 | Connected-Retail-Device Onboarding Security Gate (POS, SCO, RF, Locker, EV, BMS) | OT/ICS Cybersecurity |
+| W5422 | OT Network Architecture Review, Firewall Rule & Zone-Boundary Lifecycle | OT/ICS Cybersecurity |
+| W5423 | OT Asset End-of-Life Security, Secure Decommissioning & Cryptographic Erase | OT/ICS Cybersecurity |
+| W5424 | OT Security Posture Dashboard, Criticality Tiering & Risk Acceptance Register | OT/ICS Cybersecurity |
+| W5425 | OT Monitoring, Detection (OT-IDS) & SIEM Correlation Operations | OT/ICS Cybersecurity |
+| W5426 | OT Threat Intelligence, ICS-CERT/Advisory Triage & Indicator Management | OT/ICS Cybersecurity |
+| W5427 | OT Vulnerability Management, CVE Triage & Risk-Based Patch/Compensating-Control | OT/ICS Cybersecurity |
+| W5428 | OT Patch, Firmware & PLC-Update Change-Window Management | OT/ICS Cybersecurity |
+| W5429 | OT Cyber Drill, Tabletop & Cross-Functional (IT/OT/HSE) Exercise Program | OT/ICS Cybersecurity |
+| W5433 | OT-Aware Third-Party / Vendor Remote-Access Governance & Session Recording | OT/ICS Cybersecurity |
+| W5434 | OT Cyber Supply-Chain & SBOM Risk Management | OT/ICS Cybersecurity |
+| W5438 | OT Cyber Awareness, Engineering-Workstation Hygiene & Insider-Threat Controls | OT/ICS Cybersecurity |
+| W5439 | Connected-Channel (POS/SCO/EV/Locker/BMS) Cyber Coordination & Incident Liaison | OT/ICS Cybersecurity |
 
-### Tier 3 Additions (104 Workflows)
+### Tier 3 Additions (128 Workflows)
 
 #### Plan & Source
 
@@ -1475,6 +1797,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W761 | Supplier Innovation & New Product Introduction Collaboration Processing | Vendor Management & Procurement |
 | W865 | Vendor Portal User Onboarding, Access Provisioning & Training | Vendor Management & Procurement |
 | W995 | Vendor Consignment Inventory Ageing Analysis & Automatic Markdown Trigger | Vendor Management & Procurement |
+| W5248 | Post-Project Margin Variance Analysis and Supplier Scorecard Review | B2B Bulk-Project Custom Import |
 
 #### Make & Move
 
@@ -1485,6 +1808,11 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W650 | Warehouse Equipment Preventive Maintenance | DC & Warehouse Operations |
 | W798 | DC Building Maintenance, Utility Operations & Facility Condition Monitoring | DC & Warehouse Operations |
 | W654 | Driver Onboarding, Training & Certification | Logistics & Fleet |
+| W5184 | DC-to-Store Emergency Transport Route Optimization | Disaster Relief Supply Chain Logistics |
+| W5459 | Diversion Rate, Stream Composition & Circular-Economy Analytics | Construction Debris & Site Cleanup |
+| W5461 | Service Performance, SLA & Customer Satisfaction Analytics | Construction Debris & Site Cleanup |
+| W5462 | Vendor Scorecard, Cost-to-Serve & Hauling Optimization | Construction Debris & Site Cleanup |
+| W5464 | Program Strategy, Pricing Health & Capacity Planning | Construction Debris & Site Cleanup |
 
 #### Sell & Serve
 
@@ -1545,6 +1873,23 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W909 | Customer Trade Account Co-Branded Credit Card Program Management | Marketing & Communications |
 | W912 | Store-Level Customer Loyalty Points Gifting & Transfer Between Members | Marketing & Communications |
 | W926 | Customer Loyalty Reward Physical Fulfillment & Partner Logistics Management | Marketing & Communications |
+| W5300 | Cooperative Financial Performance Review & Balance Sheet Analysis | B2B Cooperative Credit & Procurement |
+| W5320 | Cooperative Partnership Performance Analytics and Scorecard Reporting | B2B Cooperative Credit & Procurement |
+| W5321 | Compact & Heavy Equipment Rental Fleet Strategy, Category Mix & Business Case | Construction Equipment Rental Fleet |
+| W5324 | Heavy Equipment Rental Fleet Asset Registration, Tracking & Telematics Provisioning | Construction Equipment Rental Fleet |
+| W5325 | Equipment Rental Rate Card, Pricing Structure & Competitor Benchmarking | Construction Equipment Rental Fleet |
+| W5332 | In-Period Equipment Monitoring, Telematics Tracking & Misuse Detection | Construction Equipment Rental Fleet |
+| W5342 | Fleet Utilization, Idle-Time, Rate-Realization & Yield Analytics | Construction Equipment Rental Fleet |
+
+#### Finance
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5216 | Project Progress Billing Status Dashboard & Cashflow Forecast | B2B Project Financing & Escrow |
+| W5390 | Dealer Performance, Sales Velocity, Stocking Health & Relationship Analytics | Trade Reseller Floor-Plan Financing |
+| W5391 | Floor-Plan Portfolio Yield, Cost-of-Funds, NPL & Profitability Analytics | Trade Reseller Floor-Plan Financing |
+| W5414 | Receivables-Sale P&L, Cost-of-Funds vs. Discount Analytics & Funding-Mix Optimization | Trade Receivables Factoring |
+| W5416 | Portfolio Cash-Conversion-Cycle, DSO Impact & Treasury Integration Analytics | Trade Receivables Factoring |
 
 #### People
 
@@ -1554,6 +1899,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W1127 | Store-Level Employee Annual Competency Re-Certification & Skills Refresher | Hire-to-Retire |
 | W683 | Employee Competency Assessment & Certification Management | Hire-to-Retire |
 | W715 | Employee Referral Program Management & Reward Processing | Hire-to-Retire |
+| W5271 | DTS Program Learning and Development Impact Analytics and Cost-Benefit Review | DTS & TESDA Partnership |
 
 #### Asset & Infrastructure
 
@@ -1580,6 +1926,8 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W694 | ESG Data Collection, Validation & Annual Sustainability Report Preparation | ESG & Sustainability |
 | W800 | Green Building Certification (BERDE/LEED) & Sustainable Store Design Standards | ESG & Sustainability |
 | W801 | ESG Incident Response, Regulatory Citation Management & Stakeholder Communication | ESG & Sustainability |
+| W5176 | Board-Level Sustainability/EPR Dashboard & Program Performance Review | EPR Compliance & Plastic Recovery |
+| W5368 | Diversion Rate, Recycling Yield, Customer Participation & Program Impact Analytics | Household Hazardous Waste Take-Back |
 
 #### Technology & Data
 
@@ -1599,6 +1947,9 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W689 | AI/ML Model Governance, Bias Audit & Ethical Review | Innovation & Digital Transformation |
 | W690 | Digital Transformation Initiative Portfolio Management | Innovation & Digital Transformation |
 | W691 | Emerging Technology Scouting & Proof-of-Concept Evaluation | Innovation & Digital Transformation |
+| W5432 | OT Detection Engineering, Use-Case Tuning & False-Positive Reduction | OT/ICS Cybersecurity |
+| W5436 | OT Penetration Testing, Red-Team & Cyber-Physical Assessment | OT/ICS Cybersecurity |
+| W5440 | OT Cybersecurity Performance, Maturity & Investment Analytics | OT/ICS Cybersecurity |
 
 ### Statutory-Compliance Classification Pass (192 workflows; VS-79/85/89/91/114/117/118/125)
 
@@ -3468,6 +3819,10 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 - **People** (2): W4929, W4936
 - **Sell & Serve** (8): W5002, W5007, W5098, W5099, W5104, W5120, W5127, W5128
 
+### Pass 26–29 Confirmation Classification Pass (336 workflows; VS-178–VS-191)
+
+The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W5129–W5464) were promoted from the keyword proposal into the confirmed register after genuine tier review calibrated to the register's existing rules (statutory/regulatory execution → Tier 1; analytics/scorecard/optimization/strategy → Tier 3; standard operational support → Tier 2). Rows are tabulated by tier and family in the **Additions** family subsections above (this batch is the first to use the family-grouped Additions layout exclusively, so no per-batch row tables are duplicated here). **117 → Tier 1** (statutory/regulatory execution the keyword rules missed: DAR/NCIP/FPIC land clearances and DENR ECC in VS-178; NSWMC EPR registration/audit/filing under RA 11898 in VS-179; DTI price-compliance reporting and State-of-Calamity LGU permits in VS-180; TESDA monthly compliance report and BIR DTS tax-savings certificate in VS-183; BFP/LGU structural and temporary-selling-permit clearances in VS-184; CDA verification and patronage-dividend tax certification in VS-185; DOLE-OSH equipment certification in VS-186; DENR-EMB RA 6969 generator/TSD permitting and annual hazardous-waste report in VS-187; BSP/SEC/Truth-in-Lending RA 3765 disclosure and compliance-examination support in VS-188/189). **24 → Tier 3** (analytics/scorecard/dashboards the keyword default sent to Tier 2: program-impact/diversion-rate/yield/profitability analytics and board dashboards across VS-179/181/182/183/185/186/187/188/189/190/191). **195 confirmed Tier 2** (the operational-support majority). Confirmed 2,440→2,776 rows (2,417→2,753 unique; T1 684→801, T2 1,354→1,549, T3 402→426); unclassified 2,900→2,564 (51.8%); proposed 507/1,912/145. **All 103 gap-analysis value streams (VS-89–VS-191) now confirmed.** `validate-repo.sh`: 0 errors / 1 warning.
+
 ---
 
-*Date: 2026-06-20 | Workflow Criticality Classification v7.25 — seventh & final family-decisive batch: 5 VSs (VS-165/169/172/176/177, 120 workflows). **12 → T1** (PCAB license/registration/renewal/project-filing/audit-response/personnel, DOLE PPE, RA 10173 health-data, PCAB installer verification, copyright/IP, doc confidentiality, store override auth); **12 → T3**; **96 T2**. Confirmed 2,320→2,440 rows (2,297→2,417 unique; T1 672→684, T2 1,258→1,354, T3 390→402); unclassified 2,684→2,564 (48.5%); proposed 507/1,912/145. **All 53 family-decisive VSs confirmed.** `validate-repo.sh`: 0/2. Prior v7.24 — sixth batch. **10 → T1** (PCC merger notification, political-contribution/election-compliance/anti-graft, corporate-security K&R/active-assailant/investigations); **24 → T3**; **158 T2**. Confirmed 2,128→2,320 rows (2,105→2,297 unique; T1 662→672, T2 1,100→1,258, T3 366→390); unclassified 2,876→2,684 (46.1%); proposed 514/2,023/147 (zero drift). `validate-repo.sh`: 0/2. Prior v7.23 — fifth batch (Shared Services & Specialized Support): 8 VSs (VS-103/106/107/109/115/116/119/123, 192 workflows). **18 → Tier 1** (PFRS 9 hedge accounting, DTI Weights & Measures, bid/performance-bond statutory issuance/claim/dispute, whistleblower speak-up/investigation/anti-retaliation/external-reporting, TESDA apprenticeship compliance); **36 → Tier 3** (analytics); **138 T2**. Confirmed 1,936→2,128 rows (1,913→2,105 unique; T1 644→662, T2 962→1,100, T3 330→366); unclassified 3,068→2,876 (42.3%); proposed 518/2,209/149 (zero drift). `validate-repo.sh`: 0/2. Prior v7.22 — fourth hand-confirmation batch (Mixed Operations): 8 VSs (VS-57/58/66/69/70/71/74/101, 192 workflows). **15 → Tier 1** (typhoon-BCP emergency, anti-counterfeit enforcement, electrical-permit compliance, OTB financial gate); **36 → Tier 3** (analytics); **141 T2**. Confirmed 1,744→1,936 rows (1,721→1,913 unique; T1 629→644, T2 821→962, T3 294→330); unclassified 3,260→3,068 (38.4%); proposed 525/2,389/154 (zero drift). `validate-repo.sh`: 0/2. Prior v7.21 — third hand-confirmation batch (Operational Support): 8 VSs (VS-40/43/55/63/64/65/83/84, 192 workflows). **21 → Tier 1** (PFRS capex capitalization/interest/conversion, DOLE occupational-health reporting/exposure-monitoring/Mental-Health-Act, DOLE/NLRC labor-relations mandatory: union certification, CBA conciliation/ratification, 2-notice-rule/discipline/SENA, reinstatement, strike-lockout notice, emergency-comm-protocol); **30 → Tier 3** (space/productivity/clearance/channel analytics, churn prediction, planogram/seasonal analytics, engagement surveys, ROI analyses); **141 confirmed Tier 2**. Confirmed 1,552→1,744 rows (1,529→1,721 unique; T1 608→629, T2 680→821, T3 264→294); unclassified 3,452→3,260 (34.6%); proposed regenerated (535/2,566/159, no drift). `validate-repo.sh`: 0/2. Prior v7.20 — second hand-confirmation batch (Support & Governance): 8 family-decisive Tier-2 VSs (VS-100/104/112/113/126/129/133/139, 192 workflows) promoted from the keyword proposal after genuine review calibrated to the register's existing optimization/analytics=Tier 3 placement. **14 → Tier 1** (statutory execution the keyword rules missed: litigation hold/filing/enforcement & loss-contingency, corporate-secretarial/SEC, regulatory-investigation defense, merger-notification/PCC pre-filing, PCC investigation/dawn-raid/litigation/penalty, political-activity/lobbying disclosure, CDP DSAR/consumer-rights, event-permit/prize-withholding); **29 → Tier 3** (analytics/optimization defaulted to Tier 2: process/task mining, cost-out & productivity programs, OpEx maturity, CDP recommendation/CLV/attribution analytics, IP/legal/portfolio analytics); **149 confirmed Tier 2**. Confirmed 1,360→1,552 rows (1,337→1,529 unique; T1 594→608, T2 531→680, T3 235→264); unclassified 3,644→3,452 (30.7% classified); proposed regenerated (543/2,747/162). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.19 — first hand-confirmation batch: the 8 wholly-statutory value streams (VS-79/85/89/91/114/117/118/125, 192 workflows) promoted from the keyword proposal into the confirmed register after genuine tier review — 154 confirmed Tier 1 (statutory execution), 32 demoted to Tier 2 (program support: training / reporting / change-monitoring / cost-or-insurance recovery), 6 demoted to Tier 3 (analytics / continuous improvement); see the 'Statutory-Compliance Classification Pass' block above. Confirmed 1,168→1,360 rows (1,145→1,337 unique; Tier 1 440→594, Tier 2 499→531, Tier 3 229→235); unclassified 3,836→3,644; proposed register regenerated via `classify-workflows.py --write` (now 548 / 2,929 / 167 — which also dissolved one row of prior proposed-file drift). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.18 — grand total reconciled to 4,981 unique workflows (1,145 confirmed + 3,836 unclassified) after restoring the VS-12 PA-12.2 ghost workflow's missing `## W1318.` header (Tool Rental Reservation, Waitlist & Scheduling); the §Summary table and intro/banner above now read 4,981/3,836, the proposed register was regenerated via `classify-workflows.py --write`, and `validate-repo.sh` Check 17 (ghost detection) now reports 0. Prior v7.17 — §Summary *Proposed classification* subsection reconciled to the regenerated proposed register: unclassified **3,595 → 3,835** (per-tier **688 / 2,608 / 155 → 741 / 2,927 / 167**), now matching [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) exactly. The drift accumulated across Passes 19–25 (VS-162–VS-177, +240 workflows) because only the proposed file was being regenerated, not this mirror. The Confirmed Total (1,168 rows / 1,145 unique) and Grand Total (4,980) were already correct. v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
+*Date: 2026-06-20 | Workflow Criticality Classification v7.26 — Pass 26–29 confirmation batch: 14 value streams (VS-178–VS-191, 336 workflows). **117 → T1** (statutory/regulatory execution the keyword rules missed — DAR/NCIP/FPIC land clearances, NSWMC EPR filings, DTI price-freeze reporting, TESDA/BIR DTS reports, BFP/LGU structural clearances, CDA verification, DOLE-OSH equipment certification, DENR-EMB RA 6969 hazardous-waste permitting/reporting, BSP/SEC/Truth-in-Lending RA 3765 disclosure & examination support); **24 → T3** (analytics/scorecard/dashboards); **195 T2**. Confirmed 2,440→2,776 rows (2,417→2,753 unique; T1 684→801, T2 1,354→1,549, T3 402→426); unclassified 2,900→2,564 (51.8%); proposed 507/1,912/145. Rows placed in the family-grouped Additions subsections (Asset & Infrastructure and Finance family subsections created where absent). **All 103 gap-analysis VSs (VS-89–VS-191) now confirmed.** `validate-repo.sh`: 0/1. Prior v7.25 — seventh & final family-decisive batch: 5 VSs (VS-165/169/172/176/177, 120 workflows). **12 → T1** (PCAB license/registration/renewal/project-filing/audit-response/personnel, DOLE PPE, RA 10173 health-data, PCAB installer verification, copyright/IP, doc confidentiality, store override auth); **12 → T3**; **96 T2**. Confirmed 2,320→2,440 rows (2,297→2,417 unique; T1 672→684, T2 1,258→1,354, T3 390→402); unclassified 2,684→2,564 (48.5%); proposed 507/1,912/145. **All 53 family-decisive VSs confirmed.** `validate-repo.sh`: 0/2. Prior v7.24 — sixth batch. **10 → T1** (PCC merger notification, political-contribution/election-compliance/anti-graft, corporate-security K&R/active-assailant/investigations); **24 → T3**; **158 T2**. Confirmed 2,128→2,320 rows (2,105→2,297 unique; T1 662→672, T2 1,100→1,258, T3 366→390); unclassified 2,876→2,684 (46.1%); proposed 514/2,023/147 (zero drift). `validate-repo.sh`: 0/2. Prior v7.23 — fifth batch (Shared Services & Specialized Support): 8 VSs (VS-103/106/107/109/115/116/119/123, 192 workflows). **18 → Tier 1** (PFRS 9 hedge accounting, DTI Weights & Measures, bid/performance-bond statutory issuance/claim/dispute, whistleblower speak-up/investigation/anti-retaliation/external-reporting, TESDA apprenticeship compliance); **36 → Tier 3** (analytics); **138 T2**. Confirmed 1,936→2,128 rows (1,913→2,105 unique; T1 644→662, T2 962→1,100, T3 330→366); unclassified 3,068→2,876 (42.3%); proposed 518/2,209/149 (zero drift). `validate-repo.sh`: 0/2. Prior v7.22 — fourth hand-confirmation batch (Mixed Operations): 8 VSs (VS-57/58/66/69/70/71/74/101, 192 workflows). **15 → Tier 1** (typhoon-BCP emergency, anti-counterfeit enforcement, electrical-permit compliance, OTB financial gate); **36 → Tier 3** (analytics); **141 T2**. Confirmed 1,744→1,936 rows (1,721→1,913 unique; T1 629→644, T2 821→962, T3 294→330); unclassified 3,260→3,068 (38.4%); proposed 525/2,389/154 (zero drift). `validate-repo.sh`: 0/2. Prior v7.21 — third hand-confirmation batch (Operational Support): 8 VSs (VS-40/43/55/63/64/65/83/84, 192 workflows). **21 → Tier 1** (PFRS capex capitalization/interest/conversion, DOLE occupational-health reporting/exposure-monitoring/Mental-Health-Act, DOLE/NLRC labor-relations mandatory: union certification, CBA conciliation/ratification, 2-notice-rule/discipline/SENA, reinstatement, strike-lockout notice, emergency-comm-protocol); **30 → Tier 3** (space/productivity/clearance/channel analytics, churn prediction, planogram/seasonal analytics, engagement surveys, ROI analyses); **141 confirmed Tier 2**. Confirmed 1,552→1,744 rows (1,529→1,721 unique; T1 608→629, T2 680→821, T3 264→294); unclassified 3,452→3,260 (34.6%); proposed regenerated (535/2,566/159, no drift). `validate-repo.sh`: 0/2. Prior v7.20 — second hand-confirmation batch (Support & Governance): 8 family-decisive Tier-2 VSs (VS-100/104/112/113/126/129/133/139, 192 workflows) promoted from the keyword proposal after genuine review calibrated to the register's existing optimization/analytics=Tier 3 placement. **14 → Tier 1** (statutory execution the keyword rules missed: litigation hold/filing/enforcement & loss-contingency, corporate-secretarial/SEC, regulatory-investigation defense, merger-notification/PCC pre-filing, PCC investigation/dawn-raid/litigation/penalty, political-activity/lobbying disclosure, CDP DSAR/consumer-rights, event-permit/prize-withholding); **29 → Tier 3** (analytics/optimization defaulted to Tier 2: process/task mining, cost-out & productivity programs, OpEx maturity, CDP recommendation/CLV/attribution analytics, IP/legal/portfolio analytics); **149 confirmed Tier 2**. Confirmed 1,360→1,552 rows (1,337→1,529 unique; T1 594→608, T2 531→680, T3 235→264); unclassified 3,644→3,452 (30.7% classified); proposed regenerated (543/2,747/162). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.19 — first hand-confirmation batch: the 8 wholly-statutory value streams (VS-79/85/89/91/114/117/118/125, 192 workflows) promoted from the keyword proposal into the confirmed register after genuine tier review — 154 confirmed Tier 1 (statutory execution), 32 demoted to Tier 2 (program support: training / reporting / change-monitoring / cost-or-insurance recovery), 6 demoted to Tier 3 (analytics / continuous improvement); see the 'Statutory-Compliance Classification Pass' block above. Confirmed 1,168→1,360 rows (1,145→1,337 unique; Tier 1 440→594, Tier 2 499→531, Tier 3 229→235); unclassified 3,836→3,644; proposed register regenerated via `classify-workflows.py --write` (now 548 / 2,929 / 167 — which also dissolved one row of prior proposed-file drift). `validate-repo.sh`: 0 errors / 2 warnings. Prior v7.18 — grand total reconciled to 4,981 unique workflows (1,145 confirmed + 3,836 unclassified) after restoring the VS-12 PA-12.2 ghost workflow's missing `## W1318.` header (Tool Rental Reservation, Waitlist & Scheduling); the §Summary table and intro/banner above now read 4,981/3,836, the proposed register was regenerated via `classify-workflows.py --write`, and `validate-repo.sh` Check 17 (ghost detection) now reports 0. Prior v7.17 — §Summary *Proposed classification* subsection reconciled to the regenerated proposed register: unclassified **3,595 → 3,835** (per-tier **688 / 2,608 / 155 → 741 / 2,927 / 167**), now matching [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) exactly. The drift accumulated across Passes 19–25 (VS-162–VS-177, +240 workflows) because only the proposed file was being regenerated, not this mirror. The Confirmed Total (1,168 rows / 1,145 unique) and Grand Total (4,980) were already correct. v7.16 — Summary-table `% of Classified` percentages corrected (Phase 1 37.6%→37.7%, Phase 2 42.8%→42.7%) to match standard rounding of 440/1,168 and 499/1,168 (Phase 3 19.6% was already correct). v7.15 — W40 (Regular Price Change Execution) moved from Core Finance to Core Merchandising & Pricing (subsection move only; a pricing workflow refiled next to its sibling W13; tier-1 total unchanged). v7.14 — 1,145 unique `##` workflows are classified (Tier 1: 440 · Tier 2: 499 · Tier 3: 229 = 1,168 register rows, of which 23 are `###` parent/summary sub-workflows e.g. W2, W5B, W9A that are double-counted against a `##` parent, so unique classified = 1,145). 3,451 workflows remain unclassified (4,596 unique `##` workflows − 1,145 classified); all 3,451 carry a keyword-driven proposed tier in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) (688 Tier 1 / 2,608 Tier 2 / 155 Tier 3). The authoritative tier summary is the `## Summary` table above. VS-49–VS-52 were retired in the 2026-06-14 placeholder-content review (96 placeholder workflows removed; numbers unused); VS-89–VS-161 were added across eighteen gap-analysis passes (W2993–W4744). Full per-pass history — candidates considered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — is in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).*
