@@ -77,6 +77,20 @@ identify capability gaps not addressed by any existing value stream.
 > pass; that forward-looking language has since been acted on, and the authoritative current
 > tier assignment lives in the classification register (not by retrofitting each pass narrative).
 
+> **Post-Pass-30 extension (2026-06-25) — not a gap pass.** VS-127 (Sales & Operations Planning &
+> Integrated Business Planning) was extended with a fourth process area, **PA-127.4 — Calamity,
+> Seasonality & Philippine-Retail Demand–Supply Dynamics** (+8 workflows **W5489–W5496**). Unlike
+> the thirty gap-analysis passes above (which each filled a *genuinely-unowned capability*), this
+> extension specializes an already-owned value stream for BuildRight's Philippine operating
+> context (typhoon/calamity demand surge, ber-months & summer seasonality, inter-island
+> rebalancing, B2B/trade-project & new-store demand induction, VMI/consignment, DTI/Price-Act
+> mandated price events) and closes the VS-127 "unowned-as-a-program" finding by standing up a
+> dedicated S&OP/IBP sub-team in Supply Chain & Logistics (`model-company-profile.md` §3.3). It is
+> recorded here only because workflow-ID allocation is tracked in this document; it is **not**
+> appended to the Pass-1–30 progression tables in §4 (those are the historical, unadjusted
+> thirty-pass record). Canonical totals are now **188 value streams · 569 process areas · 5,349
+> workflows**.
+
 | # | Capability gap | Why it matters for BuildRight | Existing (partial) coverage | Decision |
 |---|---|---|---|---|
 | 1 | **Product Recall & Safety Corrective Action** | 35K SKUs incl. electrical, paint/chemical, power tools, appliances; Consumer Act (RA 7394) + DTI-BPS + FDA recall obligations; ~3–8 recalls/yr | Only the store-level *customer-notification execution* step exists (W776 in VS-09); no end-to-end recall program | **FILLED — VS-89** |

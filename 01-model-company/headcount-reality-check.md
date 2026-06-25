@@ -1,8 +1,8 @@
 # Headcount Reality Check — HQ vs. Workflow Coverage
 
-> **STATUS — ACTIONED 2026-06-20.** This analysis identified that HQ (315) was understaffed and omitted 6 functions. Per direction to apply the **minimum** increase that resolves the gaps, HQ was rebalanced **315 → 357** and total **6,715 → 6,757** (see `model-company-profile.md` §3.3/§4 and the CHANGELOG entry for 2026-06-20). The comfortable/fully-cushioned range estimated below (~440–470) was **not** adopted; the implemented 357 is the floor that (a) fixes the Executive inconsistency, (b) breaks out the 6 hidden departments explicitly, and (c) relieves only the contradictions the workflows themselves expose (e.g., AP "10 clerks", IT archipelago field support). The analysis below is retained as the gap record.
+> **STATUS — ACTIONED 2026-06-20.** This analysis identified that HQ (315) was understaffed and omitted 6 functions. Per direction to apply the **minimum** increase that resolves the gaps, HQ was rebalanced **315 → 357** and total **6,715 → 6,757** (see `model-company-profile.md` §3.3/§4 and the CHANGELOG entry for 2026-06-20). The comfortable/fully-cushioned range estimated below (~440–470) was **not** adopted; the implemented 357 is the floor that (a) fixes the Executive inconsistency, (b) breaks out the 6 hidden departments explicitly, and (c) relieves only the contradictions the workflows themselves expose (e.g., AP "10 clerks", IT archipelago field support). **2026-06-25 update:** Supply Chain & Logistics was subsequently rebalanced **35 → 40** to stand up a dedicated **S&OP/IBP sub-team** (5) — the single accountable owner of [VS-127](workflows/VS-127-sales-operations-planning-integrated-business-planning/README.md) — closing the §4 "S&OP Lead" missing-role gap and the VS-127 "unowned-as-a-program" finding; HQ is now **357 → 362** and total **6,757 → 6,762** (see `model-company-profile.md` §3.3 "Supply Chain & Logistics Team Structure" and the CHANGELOG entry for 2026-06-25). The analysis below is retained as the gap record.
 
-**Scope:** Cross-reference the stated HQ department headcounts (`model-company-profile.md` §3.3 / §4) against the actual job roles, volumes, and responsibilities referenced across all workflow markdown files (**568 process-area specs across 188 value streams**).
+**Scope:** Cross-reference the stated HQ department headcounts (`model-company-profile.md` §3.3 / §4) against the actual job roles, volumes, and responsibilities referenced across all workflow markdown files (**569 process-area specs across 188 value streams**).
 
 **Method:** Extracted every `Owner` / `Participants` role title from all workflow PA files (~16,400 internal role mentions after normalization), clustered into role families, mapped to departments, and sized against stated transaction volumes (AP/AR/PO volumes, user counts, store/DC counts, statutory filing frequency).
 
@@ -48,6 +48,8 @@ The 6,757 total company headcount is **plausible overall**, but the **HQ allocat
 | **TOTAL HQ** | **315** | **~440–470** | | +6 functions not enumerated |
 
 > The 6 "hidden" departments sum to ~40–53 people — which almost exactly explains the gap between the **enumerated departments (~275)** and the **stated HQ total (315)**. The profile clearly *included* these functions in the 315, but never broke them out. This is a **documentation defect**, not necessarily a planning omission.
+>
+> **2026-06-25 follow-up — Supply Chain & Logistics (the one 🔴 row without a dedicated §3 detail).** Profile §3.3 Supply Chain & Logistics rebalanced **35 → 40**, carving out a dedicated **S&OP/IBP sub-team** (5: S&OP/IBP Lead, Senior Demand Planner, 2 Demand Planners, Supply & Allocation Planner) that is the single accountable owner of [VS-127](workflows/VS-127-sales-operations-planning-integrated-business-planning/README.md). This closes the "S&OP Lead" missing-role gap (§4) and partially relieves the 31-vs-42–50 understaffing; HQ is now 357 → **362** and total 6,757 → **6,762**. The comfortable range (~42–50) remains only partially adopted, consistent with the minimum-resolves-the-gap principle.
 
 ---
 
@@ -116,7 +118,7 @@ These specialized roles appear repeatedly in workflows but have **no home in the
 | AML Officer / ABC Officer | 48 | Legal & Compliance | VS-86 — mandatory MLRO |
 | Fraud Management | 44 | Loss Prevention / Finance | VS-23.1, VS-80.3 |
 | Metrology / Weights & Measures | 28 | Quality | Catch-weight items (lumber, wire) |
-| S&OP Lead | 21 | Supply Chain | VS-136 multi-echelon |
+| S&OP Lead | 21 | Supply Chain | **✓ Resolved 2026-06-25** — now the S&OP/IBP sub-team in Supply Chain & Logistics (profile §3.3); owns [VS-127](workflows/VS-127-sales-operations-planning-integrated-business-planning/README.md) |
 | Third-Party Risk Mgmt (TPRM) | 19 | Risk/Audit | Vendor risk |
 | BCP Manager | 17 | Risk/Facilities | VS-26 |
 | ITAM (IT Asset Mgr) | 20 | IT | VS-99 |

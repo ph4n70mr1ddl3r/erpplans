@@ -109,16 +109,16 @@ The company operates through **5 legal entities** organized as follows:
 |---|---|
 | **Location** | Davao City, Philippines |
 | **Office Size** | ~3,000 sqm |
-| **HQ Headcount** | 357 |
+| **HQ Headcount** | 362 |
 
 #### HQ Departments
 
-> Rebalanced to the **minimum** staffing required to cover the roles and volumes referenced across the workflow catalog (see `headcount-reality-check.md`). Six functions previously rolled into an un-enumerated ~40-person bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and four transactional functions (Finance, IT, HR, Legal) were increased to resolve contradictions the workflows themselves exposed (e.g., AP "~10 clerks" cannot fit inside a 37-person Finance team; IT field support flagged inadequate for a 200-store archipelago footprint). Store (5,800) and DC (600) headcounts are unchanged.
+> Rebalanced to the **minimum** staffing required to cover the roles and volumes referenced across the workflow catalog (see `headcount-reality-check.md`). Six functions previously rolled into an un-enumerated ~40-person bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and four transactional functions (Finance, IT, HR, Legal) were increased to resolve contradictions the workflows themselves exposed (e.g., AP "~10 clerks" cannot fit inside a 37-person Finance team; IT field support flagged inadequate for a 200-store archipelago footprint). Store (5,800) and DC (600) headcounts are unchanged. **Supply Chain & Logistics** was subsequently rebalanced 35 → 40 (2026-06-25) to stand up a dedicated **S&OP/IBP sub-team** — the single accountable owner of the VS-127 monthly demand–supply consensus cycle that had previously been an unowned program (see the team breakdown below and `headcount-reality-check.md` §4, “S&OP Lead”).
 
 - **Executive Office**: CEO, CFO, COO, CIO, CMO, CHRO, VP Legal & Compliance (7)
 - **Merchandising & Buying**: Category managers, buyers, pricing analysts, planners (40)
 - **Finance & Accounting**: Controller, GL (per-entity), AP/AR, treasury, tax, FP&A, logistics finance (46)
-- **Supply Chain & Logistics**: Planning, DC ops, fleet, procurement, imports, S&OP (35)
+- **Supply Chain & Logistics**: S&OP/IBP & demand planning, supply & allocation planning, DC operations, fleet & logistics, procurement, imports & customs, vendor management (40)
 - **Information Technology**: Infrastructure, applications, data/BI, security, privacy, helpdesk (50)
 - **Human Resources**: Recruitment, compensation, training, payroll, benefits, labor relations (26)
 - **Marketing**: Brand, promotions, ecommerce, digital, content, loyalty, insights (25)
@@ -134,6 +134,33 @@ The company operates through **5 legal entities** organized as follows:
 - **Strategy / Corporate Planning**: Annual planning, CPM, competitive intelligence (3)
 - **Trade / Account Management**: Trade professional program, key accounts (5)
 
+#### Supply Chain & Logistics Team Structure (40 total)
+
+> Sized at 40 in §3.3; reports to the **COO** (§11.1). The breakdown below sums to exactly 40 and
+> carves out a dedicated **S&OP/IBP sub-team** — the single accountable owner for the monthly
+> demand–supply consensus cycle ([VS-127](workflows/VS-127-sales-operations-planning-integrated-business-planning/README.md))
+> that was previously an unowned program (see `headcount-reality-check.md` §4, “S&OP Lead”). The
+> 35 → 40 increase is the minimum that closes the S&OP/IBP ownership gap and relieves the Supply
+> Chain understaffing flagged in the gap record, without adopting the gap record’s comfortable
+> range (~42–50).
+
+| Sub-team / Role | Count | Responsibility |
+|---|---|---|
+| VP Supply Chain | 1 | Department P&L; reports to COO |
+| **S&OP/IBP sub-team (owns VS-127)** | | |
+| &nbsp;&nbsp;S&OP/IBP Lead | 1 | Chairs the monthly consensus cycle & exec S&OP; single owner of VS-127 |
+| &nbsp;&nbsp;Senior Demand Planner | 1 | Statistical baseline forecast, model ownership, accuracy/bias (PA-127.1) |
+| &nbsp;&nbsp;Demand Planners | 2 | Category-assigned forecasting, NPI/promo/event modeling, demand sensing |
+| &nbsp;&nbsp;Supply & Allocation Planner | 1 | Supply review, inventory reconciliation, multi-echelon allocation (PA-127.2 / VS-136) |
+| **Operational supply chain** | | |
+| &nbsp;&nbsp;DC Operations Managers/Coordinators | 8 | DC throughput across 4 DCs (VS-04) |
+| &nbsp;&nbsp;Fleet & Logistics | 6 | Outbound distribution, 3PL, inter-island freight (VS-06 / VS-66) |
+| &nbsp;&nbsp;Procurement / PO Execution | 8 | Vendor PO/release execution (VS-03) |
+| &nbsp;&nbsp;Imports & Customs | 5 | Import coordination, customs brokerage liaison (VS-122 / VS-87) |
+| &nbsp;&nbsp;Vendor Management / Sourcing Analysts | 4 | Vendor scorecard, sourcing support (VS-03 / VS-67) |
+| &nbsp;&nbsp;Inventory Planning Analysts | 3 | ROP/safety-stock policy, inventory health (VS-05 / VS-136) |
+| **Total** | **40** | |
+
 ---
 
 ## 4. Total Headcount
@@ -142,10 +169,10 @@ The company operates through **5 legal entities** organized as follows:
 |---|---|
 | Store Personnel | 5,800 (200 stores × 29) |
 | Distribution Center Personnel | 600 (4 DCs × 150) |
-| Corporate HQ Personnel | 357 (rebalanced to minimum workflow-coverage levels — see §3.3 and `headcount-reality-check.md`) |
-| **Total Company Headcount** | **6,757** |
+| Corporate HQ Personnel | 362 (rebalanced to minimum workflow-coverage levels — see §3.3 and `headcount-reality-check.md`) |
+| **Total Company Headcount** | **6,762** |
 
-> **Revenue per employee**: ~PHP 9.22M/year (~PHP 62.3B ÷ 6,757) — driven by BuildRight's optimized store staffing model (29 per store). The headcount per store was increased from 28 to 29 to implement the recommendation for an additional Stock Associate (4 total per store) to ensure adequate coverage for continuous replenishment, cycle counting, and omnichannel fulfillment. HQ headcount was rebalanced from 315 to 357: the six functions previously rolled into an un-enumerated bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and Finance, IT, HR, and Legal were increased to the minimum required to cover the roles and transaction volumes referenced across the workflow catalog (e.g., dedicated DPO W53, Regulatory Officer W54, Tax Accountant W90, Logistics Finance Analyst W277, IT Helpdesk W48, AML/MLRO, and Regional Loss Prevention's 20 Officers for variance investigation across the 200-store chain).
+> **Revenue per employee**: ~PHP 9.22M/year (~PHP 62.3B ÷ 6,762) — driven by BuildRight's optimized store staffing model (29 per store). The headcount per store was increased from 28 to 29 to implement the recommendation for an additional Stock Associate (4 total per store) to ensure adequate coverage for continuous replenishment, cycle counting, and omnichannel fulfillment. HQ headcount was rebalanced from 315 to 357 (2026-06-20), then to 362 (2026-06-25) to stand up a dedicated S&OP/IBP sub-team in Supply Chain & Logistics — closing the previously-unowned VS-127 consensus cycle and the “S&OP Lead” gap in `headcount-reality-check.md` §4: the six functions previously rolled into an un-enumerated bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and Finance, IT, HR, and Legal were increased to the minimum required to cover the roles and transaction volumes referenced across the workflow catalog (e.g., dedicated DPO W53, Regulatory Officer W54, Tax Accountant W90, Logistics Finance Analyst W277, IT Helpdesk W48, AML/MLRO, and Regional Loss Prevention's 20 Officers for variance investigation across the 200-store chain).
 
 ---
 
@@ -500,12 +527,12 @@ BuildRight Holdings, Inc.
 |---|---|---|
 | CEO / President | Merchandising & Buying; Strategy / Corporate Planning | 43 |
 | CFO | Finance & Accounting; Internal Audit & Risk ¹ | 53 |
-| COO | Store Operations; Supply Chain & Logistics; Facilities & Real Estate; Quality Management; Regional Loss Prevention; Customer Service / Call Center; Trade / Account Management | 126 |
+| COO | Store Operations; Supply Chain & Logistics; Facilities & Real Estate; Quality Management; Regional Loss Prevention; Customer Service / Call Center; Trade / Account Management | 131 |
 | CIO | Information Technology | 50 |
 | CMO | Marketing | 25 |
 | CHRO | Human Resources; Health, Safety & Environment | 36 |
 | VP Legal & Compliance | Legal & Compliance; Sustainability / ESG | 17 |
-| **Total** | **17 departments** here + Executive Office = **18 total HQ departments** (the 7 executives themselves are counted in Executive Office) | **350 + 7 = 357** |
+| **Total** | **17 departments** here + Executive Office = **18 total HQ departments** (the 7 executives themselves are counted in Executive Office) | **355 + 7 = 362** |
 
 > Department headcounts are taken from §3.3. **¹ Internal Audit independence:** the Head of
 > Internal Audit reports **functionally to the Board's Audit Committee** (dotted line) and
@@ -517,7 +544,7 @@ BuildRight Holdings, Inc.
 | Parameter | Value |
 |---|---|
 | **Payroll Frequency** | Semi-monthly (15th and 30th) |
-| **Total Employees** | 6,757 |
+| **Total Employees** | 6,762 |
 | **Payroll Entities** | 5 (one per legal entity) |
 | **Statutory Benefits** | SSS, PhilHealth, Pag-IBIG (HDMF) |
 | **13th Month Pay** | Mandatory (1/12 of annual basic salary, paid by Dec 24) |
@@ -733,7 +760,7 @@ The following external systems are actively integrated with the core ERP system.
 | Customers (B2B Corporate) | 200 |
 | Vendors / Suppliers | 1,000 |
 | Locations (Stores + DCs + HQ) | 205 |
-| Employees | 6,757 |
+| Employees | 6,762 |
 | Chart of Accounts | ~500–800 per entity |
 | GL Accounts (consolidated) | ~2,000–3,000 |
 
@@ -782,7 +809,7 @@ The following external systems are actively integrated with the core ERP system.
 7. **Offline POS resilience**: Stores must sell during outages
 8. **Intercompany automation**: 5-entity consolidation
 9. **Supply chain optimization**: Demand planning, auto-replenishment
-10. **User adoption**: ~6,757 users across varying tech literacy levels
+10. **User adoption**: ~6,762 users across varying tech literacy levels
 
 ---
 
@@ -824,4 +851,4 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.21 | Date: 2026-06-20 | §12.1 added a Regional/District Manager field-layer note cross-referencing VS-177 (resolving the “Regional Manager (~6)” vs “District Manager (~13)” tier ambiguity that recurred across requirements); §12.3 “Sales per Store per Month” clarified (≈ PHP 25.2M per §9.4); §11.1 table-total cell made the “17 departments here + Executive Office = 18 total” relationship explicit. Prior v2.20: §11.1 org chart now maps **all 18 HQ departments** to their C-suite owner (previously only 6 of 18 had a visible reporting line) with a 357-headcount reconciliation row and an Internal-Audit independence note; §13.1 Merchandising team breakdown expanded to sum explicitly to **40** (rebalanced toward planning/pricing/assortment per `headcount-reality-check.md` §7.4). Prior v2.19: §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.22 | Date: 2026-06-25 | §3.3 Supply Chain & Logistics rebalanced 35 → 40 to stand up a dedicated S&OP/IBP sub-team (S&OP/IBP Lead + Senior Demand Planner + 2 Demand Planners + Supply & Allocation Planner), closing the previously-unowned VS-127 consensus cycle and the “S&OP Lead” gap in `headcount-reality-check.md` §4; a new §3.3 “Supply Chain & Logistics Team Structure (40 total)” subsection documents the breakdown (mirrors §13.1). §4 HQ 357 → 362, total 6,757 → 6,762 (revenue/employee ~9.22M); §11.1 COO row 126 → 131 and total 350 + 7 = 357 → 355 + 7 = 362. Prior v2.21: §12.1 added a Regional/District Manager field-layer note cross-referencing VS-177 (resolving the “Regional Manager (~6)” vs “District Manager (~13)” tier ambiguity that recurred across requirements); §12.3 “Sales per Store per Month” clarified (≈ PHP 25.2M per §9.4); §11.1 table-total cell made the “17 departments here + Executive Office = 18 total” relationship explicit. Prior v2.20: §11.1 org chart now maps **all 18 HQ departments** to their C-suite owner (previously only 6 of 18 had a visible reporting line) with a 357-headcount reconciliation row and an Internal-Audit independence note; §13.1 Merchandising team breakdown expanded to sum explicitly to **40** (rebalanced toward planning/pricing/assortment per `headcount-reality-check.md` §7.4). Prior v2.19: §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*

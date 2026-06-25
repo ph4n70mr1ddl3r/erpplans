@@ -84,7 +84,7 @@ The following is the infrastructure topology that satisfies the NFRs in [erp-req
 | 200 store locations with POS | Requires reliable connectivity or robust offline mode |
 | 4 DCs with WMS/RF guns | Low-latency connection needed for real-time pick/ship |
 | 600 POS terminals | Centralized management is essential |
-| 6,757 employees | HR/payroll can be cloud-hosted |
+| 6,762 employees | HR/payroll can be cloud-hosted |
 | Philippine regulatory filing | BIR, SSS, PhilHealth, Pag-IBIG file generation |
 | Data residency | No strict PH data residency requirement, but Asia-Pacific hosting recommended for latency |
 

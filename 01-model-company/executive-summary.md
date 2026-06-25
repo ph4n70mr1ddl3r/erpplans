@@ -16,7 +16,7 @@
 | HQ | Davao City, Philippines |
 | Legal Entities | 5 (Holdings, Depot, Logistics, Digital Commerce, Property Mgmt) |
 | Annual Revenue | ~PHP 62.3 Billion |
-| Employees | 6,757 |
+| Employees | 6,762 |
 | Active SKUs | 35,000 |
 | POS Terminals | 600 (3 per store) |
 | Monthly Transactions | 2.8 million |
@@ -79,4 +79,4 @@ erpplans/
 
 ---
 
-*Date: 2026-06-21 (updated counts: 733 requirements, 5,341 workflows across 188 value streams; VS-49–VS-52 retired after placeholder-content review; VS-89–VS-192 added across thirty gap-analysis passes — see [CHANGELOG.md](../CHANGELOG.md) and [`workflow-gap-analysis.md`](workflows/workflow-gap-analysis.md) for per-pass detail).*
+*Date: 2026-06-25 (updated counts: 733 requirements, 5,349 workflows across 188 value streams; VS-127 PA-127.4 added — 8 workflows W5489–W5496 — specializing the S&OP/IBP consensus cycle for BuildRight's PH-retail context; total headcount 6,757 → 6,762 with the dedicated S&OP/IBP sub-team in Supply Chain & Logistics; VS-49–VS-52 retired after placeholder-content review; VS-89–VS-192 added across thirty gap-analysis passes — see [CHANGELOG.md](../CHANGELOG.md) and [`workflow-gap-analysis.md`](workflows/workflow-gap-analysis.md) for per-pass detail).*

@@ -42,7 +42,7 @@ following fields.
 
 ### Standard analysis fields (add to every fully-detailed workflow)
 
-These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 the field **headers** are present on all **5,341 workflows (100% presence)** across all blocks (Core, Expansion, Statutory, and Gap analysis).
+These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 the field **headers** are present on all **5,349 workflows (100% presence)** across all blocks (Core, Expansion, Statutory, and Gap analysis).
 
 > **Content-quality caveat (2026-06-21).** Presence ≠ quality. The repo-wide insertion was performed by a first-pass generator (`add-automation-controls.py`), and a 2026-06-21 review found the bulk of the generated content is **draft** quality: Automation bullets were emitted as mid-phrase fragments (e.g. `- auto-review (account manager reviews application: (a) verify)`) and most Controls sections cited no CTL-XX from the controls register. Two corrections shipped in that review: (1) `backfill-controls.py` retroactively injected real CTL-XX references wherever `internal-controls-matrix.md` provides a workflow→control mapping, and normalized the missing blank line before the next `###` header; (2) validator **Check 21** now reports the live quality metrics (fragment-bullet count, CTL-XX coverage %, pure-boilerplate count) so the backlog is tracked rather than silently claimed as complete. Because the 67-control register was authored against the Core workflows (W1–W942), only ~60 workflows currently have a CTL mapping; extending the register to the gap-analysis block (W2993+) is separate manual work. Treat any generated Automation/Controls bullet not matching the quality bar below as a draft pending per-workflow human refinement.
 
@@ -114,7 +114,7 @@ number never needs a VS prefix.
 ```
 workflows/
 ├── README.md                         Navigation hub & quick stats
-├── value-stream-index.md              Master index (8 families · 188 VS · 568 PAs)
+├── value-stream-index.md              Master index (8 families · 188 VS · 569 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
 ├── workflow-criticality-classification.md  Tier 1/2/3 priorities (2,776 confirmed rows; 2,564 proposed in workflow-criticality-proposed.md)
@@ -144,4 +144,4 @@ workflows/
 
 ---
 
-*Date: 2026-06-21 (Pass 30 added VS-192 Green Fleet Transition — 24 workflows — bringing totals to 5,341 workflows / 188 value streams / 568 process areas; the family-subtotal, grand-total, and criticality-proposed coverage line are reconciled. Prior 2026-06-20: adoption sentence in “Standard analysis fields” corrected to 100% of all 5,317 workflows after reformatting W641–W647. Repository Layout counts reconciled to 188 value streams / 568 process areas / 2,588 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
+*Date: 2026-06-21 (2026-06-25: VS-127 PA-127.4 added — 8 workflows, W5489–W5496 — specializing the S&OP/IBP consensus cycle for BuildRight's PH-retail context; totals now 5,349 workflows / 188 value streams / 569 process areas. Prior 2026-06-21: Pass 30 added VS-192 Green Fleet Transition — 24 workflows — bringing totals to 5,341 workflows / 188 value streams / 568 process areas; the family-subtotal, grand-total, and criticality-proposed coverage line are reconciled. Prior 2026-06-20: adoption sentence in “Standard analysis fields” corrected to 100% of all 5,317 workflows after reformatting W641–W647. Repository Layout counts reconciled to 188 value streams / 568 process areas / 2,588 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
