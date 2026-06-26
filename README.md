@@ -224,7 +224,8 @@ erpplans/
 │   │   ├── VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/ 24 workflows (3 process areas)
 │   │   ├── VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/ 24 workflows (3 process areas)
 │   │   ├── VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/ 24 workflows (3 process areas)
-│   │   └── VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/ 24 workflows (3 process areas)
+│   │   ├── VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/ 24 workflows (3 process areas)
+│   │   └── VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/ 24 workflows (3 process areas)
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis

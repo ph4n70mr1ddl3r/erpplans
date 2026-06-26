@@ -488,10 +488,11 @@ echo "--- Check 20: PA-file relative-link resolution ---"
 # Every PA file carries two navigation links (a 'Part of **[VS-NN: ...](./README.md)** ...'
 # header line and a '*... · [Value Stream Index](../value-stream-index.md)*' footer) plus
 # occasional in-body cross-reference links. A 2026-06-21 review found exactly one stale across
-# all 565 PA files: VS-56 PA-56.1's header linked to '../value-stream.md' instead of
+# all PA files (565 at the time of that review): VS-56 PA-56.1's header linked to '../value-stream.md' instead of
 # '../value-stream-index.md'. No other check sees this — Check 2 compares header COUNTS, Check 7
 # validates workflow-IDs, and Check 19 scopes only the index. This check resolves every
 # relative (./ or ../) intra-repo .md link inside every PA file so the drift cannot recur.
+PA_FILE_COUNT=$(find "$REPO_ROOT"/01-model-company/workflows -name 'PA-*.md' -type f | wc -l | tr -d ' ')
 BROKEN_PA_LINKS=$(python3 - "$REPO_ROOT" <<'PY'
 import os,re,sys,glob
 ROOT=sys.argv[1]
@@ -517,9 +518,9 @@ PA_LINK_TOTAL=$(echo "$BROKEN_PA_LINKS" | head -1)
 BROKEN_PA_BODY=$(echo "$BROKEN_PA_LINKS" | tail -n +2)
 BROKEN_PA_COUNT=$(echo -n "$BROKEN_PA_BODY" | grep -cP 'PA-' || true)
 if [ "$BROKEN_PA_COUNT" -eq 0 ]; then
-    ok "All $PA_LINK_TOTAL relative links across all 565 PA files resolve to a file"
+    ok "All $PA_LINK_TOTAL relative links across all $PA_FILE_COUNT PA files resolve to a file"
 else
-    error "$BROKEN_PA_COUNT PA-file relative link(s) do not resolve to a file:"
+    error "$BROKEN_PA_COUNT PA-file relative link(s) (of $PA_FILE_COUNT) do not resolve to a file:"
     echo "$BROKEN_PA_BODY" | sed 's/^/    /'
 fi
 
