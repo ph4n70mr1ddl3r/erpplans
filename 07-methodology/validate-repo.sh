@@ -666,6 +666,51 @@ else
     warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). These are generation artifacts concentrated in a few VS batches (VS-27/37/38/39/40/53/56/58/60/63) pending per-workflow filling — Time Estimate is mechanically derivable; Pain Points / System Touchpoints / Participants are content fields requiring human authoring."
 fi
 
+# --- Check 23: Intra-file TOC anchor resolution ---
+echo "--- Check 23: Intra-file TOC anchor resolution ---"
+# Every PA file opens with a '## Workflows in This Process Area' navigation list whose
+# entries link to the workflow headings below via GitHub heading anchors (#slug). A
+# gap-analysis generator bug left 1,926 such anchors malformed across 271 PA files —
+# the slugger dropped hyphens ('Floor-Plan' -> 'floorplan') and stale W-numbers survived
+# a renumber (display 'W4601' but anchor '#w4409-...') — so the TOC links resolved to
+# nothing on GitHub. No prior check saw this: Checks 19/20 verify linked FILES resolve;
+# none resolve anchors. This check computes each file's heading slugs (GitHub slugger)
+# and reports any '(#anchor)' link that matches no heading. Treated as an ERROR (a
+# broken navigational link), consistent with the file-resolution checks 19/20. Repaired
+# by `07-methodology/fix-toc-anchors.py`; this check guards against regression.
+ANCHORS=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+def gh_slug(s):
+    s = s.lower()
+    s = re.sub(r'[^\w\s-]', '', s, flags=re.UNICODE).strip()
+    s = re.sub(r'[\s_-]+', '-', s)
+    s = re.sub(r'^-+|-+$', '', s)
+    return s
+files_bad = {}
+for f in sorted(glob.glob(f"{ROOT}/01-model-company/workflows/VS-*/PA-*.md")):
+    txt = open(f, encoding='utf-8', errors='replace').read()
+    heads = {gh_slug(h) for h in re.findall(r'^#+\s+(.+?)\s*$', txt, re.M)}
+    bad = sorted({anchor for _disp, anchor in re.findall(r'\[([^\]]+)\]\(#([^)]+)\)', txt)
+                  if anchor not in heads})
+    if bad:
+        files_bad[f.replace(ROOT + '/', '')] = bad
+print(f"{len(files_bad)}|{sum(len(v) for v in files_bad.values())}")
+for f, bad in files_bad.items():
+    sample = bad[0] + (f" (+{len(bad)-1} more)" if len(bad) > 1 else "")
+    print(f"{f}: #{sample}")
+PY
+)
+BAD_ANCHOR_FILES=$(echo "$ANCHORS" | head -1 | cut -d'|' -f1)
+BAD_ANCHOR_TOTAL=$(echo "$ANCHORS" | head -1 | cut -d'|' -f2)
+BAD_ANCHOR_SAMPLES=$(echo "$ANCHORS" | tail -n +2)
+if [ "$BAD_ANCHOR_TOTAL" -eq 0 ]; then
+    ok "All intra-file TOC anchors resolve to a heading"
+else
+    error "$BAD_ANCHOR_TOTAL intra-file TOC anchor(s) across $BAD_ANCHOR_FILES PA file(s) do not resolve to any heading (run 07-methodology/fix-toc-anchors.py to repair):"
+    echo "$BAD_ANCHOR_SAMPLES" | sed 's/^/    /' | head -20
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

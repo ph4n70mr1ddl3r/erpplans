@@ -9,6 +9,17 @@
 
 ---
 
+## 2026-06-26 — Fix 1,926 broken intra-file TOC anchors; add validator Check 23
+
+Every PA file opens with a `## Workflows in This Process Area` navigation list whose entries link to the workflow headings below via GitHub heading anchors (`#slug`). A review using GitHub's exact slugger found **1,926 of these anchors malformed across 271 PA files** — every one in the gap-analysis block (VS-89+), zero in Core (VS-01–VS-31). Two malformation patterns from one generator bug: (a) the slugger dropped hyphens (`Floor-Plan` → `floorplan`; `stocking-list` → `stockinglist`); (b) a stale W-number survived a renumber (display text `W4601` but anchor `#w4409-…`). The TOC display text was always correct, so clicking the link did nothing on GitHub. No prior check saw this — Checks 19/20 verify linked *files* resolve; none resolved anchors.
+
+1. **`fix-toc-anchors.py` (new)** — regenerates each broken anchor from its (correct) display text using GitHub's slug rules. Safe rule: for every `(#anchor)` that doesn't resolve, use `gh_slug(display)` if it matches a heading (1,923 cases), else fall back to the unique heading sharing the display's W-number (3 truncated/typo'd display-text cases). Idempotent (a resolved anchor is never rewritten). The fix is a pure in-place anchor swap — **+1,926 / −1,926 diff lines, 0 non-anchor lines changed**, display text byte-identical.
+2. **Validator Check 23 (new)** — intra-file TOC anchor resolution. Computes each file's heading slugs and ERRORs on any `(#anchor)` matching no heading (an ERROR, consistent with the file-resolution checks 19/20, since a broken anchor is a broken navigational link). Verified to catch a deliberately-injected broken anchor.
+
+`validate-repo.sh`: **0 errors / 3 informational warnings** across all **23** checks. Canonical totals unchanged: 188 value streams · 569 process areas · 5,349 workflows · 733 requirements · 67 controls.
+
+---
+
 ## 2026-06-25 — Close the S&OP/IBP ownership gap; add VS-127 PA-127.4 (PH-retail demand–supply dynamics)
 
 Two related changes that together close the **S&OP/IBP "unowned-as-a-program"** finding the workflow catalog had been carrying (VS-127 README; `headcount-reality-check.md` §4 "S&OP Lead").
