@@ -711,6 +711,98 @@ else
     echo "$BAD_ANCHOR_SAMPLES" | sed 's/^/    /' | head -20
 fi
 
+# --- Check 24: workflows/README.md family reconciliation + stale canonical-figure guard ---
+echo "--- Check 24: workflows/README.md family reconciliation & stale-figure guard ---"
+# Two-part guard added 2026-06-26 after a review found (a) workflows/README.md family
+# headers/rows had drifted out of sync with value-stream-index.md (a VS-127 row stuck at
+# 24, a missing VS-192 row, and two stale family-header totals) and (b) a headcount
+# change (6,757 -> 6,762) had been applied to summary docs but not propagated to ~97
+# workflow files. No prior check saw either: Check 3 verifies the index GRAND total
+# only; Check 18 covers criticality-classification prose only. Part A is a structural
+# ERROR (count reconciliation, same class as Check 2/9); Part B is a WARN (editorial
+# figure consistency) scoped to skip the labelled historical-record docs and any
+# 'X -> Y' change-note. Repair scripts: fix-headcount-6757.py (Part B) + hand-edit (A).
+CHECK24=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+errors, stale = [], []
+
+# ---- Part A: workflows/README.md family sections reconcile with value-stream-index.md ----
+idx = open(f"{ROOT}/01-model-company/workflows/value-stream-index.md", encoding='utf-8').read().splitlines()
+readme = open(f"{ROOT}/01-model-company/workflows/README.md", encoding='utf-8').read().splitlines()
+
+idx_sub, cur = {}, None
+fam_row = re.compile(r'^\| ([A-Za-z][^|]*?) \| \[VS-')
+for line in idx:
+    m = fam_row.match(line)
+    if m:
+        cur = m.group(1).strip(); continue
+    if '**Subtotal**' in line and cur:
+        nums = re.findall(r'\*\*([\d,]+)\*\*', line)
+        if nums:
+            idx_sub[cur] = int(nums[-1].replace(',', ''))
+        cur = None
+
+hdr = re.compile(r'^### (.+?) \(([0-9,]+) workflows\)')
+vs_row = re.compile(r'^\| \[VS-\d+\]\([^)]*\) \| .* \| (\d+) \|$')
+readme_fam, cur = {}, None
+for line in readme:
+    m = hdr.match(line)
+    if m:
+        cur = m.group(1).strip(); readme_fam[cur] = {'header': int(m.group(2).replace(',', '')), 'sum': 0}; continue
+    m = vs_row.match(line)
+    if m and cur:
+        readme_fam[cur]['sum'] += int(m.group(1))
+
+idx_total = sum(idx_sub.values()); readme_total = sum(f['sum'] for f in readme_fam.values())
+for fam, idx_n in idx_sub.items():
+    if fam not in readme_fam:
+        errors.append(f"family '{fam}' in value-stream-index.md but has no section in workflows/README.md"); continue
+    h = readme_fam[fam]['header']; s = readme_fam[fam]['sum']
+    if not (idx_n == h == s):
+        errors.append(f"{fam}: index subtotal={idx_n}, README header={h}, README row-sum={s}")
+if idx_total != readme_total:
+    errors.append(f"grand total: index={idx_total}, README row-sum={readme_total}")
+
+# ---- Part B: stale canonical total-headcount figure '6,757' in current-state prose ----
+SKIP = {'CHANGELOG.md', 'workflow-gap-analysis.md', 'headcount-reality-check.md'}
+pat = re.compile(r'(?<!\d)6,757(?!\d)')
+for dirpath, _d, files in os.walk(ROOT):
+    if os.sep + '.git' in dirpath: continue
+    for fn in files:
+        if not fn.endswith('.md') or fn in SKIP: continue
+        path = os.path.join(dirpath, fn)
+        txt = open(path, encoding='utf-8', errors='replace').read()
+        for m in pat.finditer(txt):
+            lo = max(0, m.start()-25); hi = min(len(txt), m.end()+25)
+            if '->' in txt[lo:hi] or '\u2192' in txt[lo:hi]:
+                continue  # legitimate historical 'X -> Y' change-note
+            line_no = txt.count('\n', 0, m.start()) + 1
+            stale.append(f"{os.path.relpath(path, ROOT)}:{line_no}")
+
+print(f"A_ERRS={len(errors)}")
+for e in errors: print(f"A_ERR|{e}")
+print(f"B_STALE={len(stale)}")
+for s in stale[:12]: print(f"B_STALE|{s}")
+print(f"GRAND={readme_total}")
+PY
+)
+A_ERRS=$(echo "$CHECK24" | sed -n 's/^A_ERRS=//p')
+B_STALE=$(echo "$CHECK24" | sed -n 's/^B_STALE=//p')
+GRAND=$(echo "$CHECK24" | sed -n 's/^GRAND=//p')
+if [ "$A_ERRS" -eq 0 ]; then
+    ok "workflows/README.md family headers & per-VS row sums reconcile with value-stream-index.md subtotals (8 families, grand total $GRAND workflows)"
+else
+    error "workflows/README.md does not reconcile with value-stream-index.md ($A_ERRS family mismatch(es)) — family header / row-sum / index-subtotal must all agree:"
+    echo "$CHECK24" | grep '^A_ERR|' | sed 's/^A_ERR|/    /'
+fi
+if [ "$B_STALE" -eq 0 ]; then
+    ok "No stale total-headcount figure '6,757' in current-state prose (canonical figure is 6,762; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
+else
+    warn "Stale total-headcount figure '6,757' appears $B_STALE time(s) in current-state prose (canonical figure is now 6,762 — run 07-methodology/fix-headcount-6757.py to repair):"
+    echo "$CHECK24" | grep '^B_STALE|' | sed 's/^B_STALE|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

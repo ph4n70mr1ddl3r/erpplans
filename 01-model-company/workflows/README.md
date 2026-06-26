@@ -35,7 +35,7 @@
 
 ## Value Streams by Family
 
-### Plan & Source (452 workflows)
+### Plan & Source (460 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | 46 |
@@ -50,11 +50,11 @@
 | [VS-101](VS-101-merchandise-financial-planning-otb-margin-management/README.md) | Merchandise Financial Planning, OTB & Margin Management | 24 |
 | [VS-106](VS-106-commodity-input-cost-risk-management/README.md) | Commodity & Input-Cost Risk Management | 24 |
 | [VS-122](VS-122-global-sourcing-import-buying-sourcing-agent-management/README.md) | Global Sourcing, Import Buying & Sourcing Agent Management | 24 |
-| [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | 24 |
+| [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | 32 |
 | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | 24 |
 | [VS-182](VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md) | B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations) | 24 |
 
-### Make & Move (475 workflows)
+### Make & Move (499 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | 45 |
@@ -75,6 +75,7 @@
 | [VS-155](VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | 24 |
 | [VS-180](VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md) | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | 24 |
 | [VS-191](VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md) | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | 24 |
+| [VS-192](VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | 24 |
 
 ### Sell & Serve (1,531 workflows)
 | VS | Value Stream | Workflows |
