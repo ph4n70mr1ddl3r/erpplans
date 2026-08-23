@@ -803,6 +803,135 @@ else
     echo "$CHECK24" | grep '^B_STALE|' | sed 's/^B_STALE|/    /'
 fi
 
+# --- Check 25: criticality proposed-register mirror + touchpoint-map reconciliation claims ---
+echo "--- Check 25: proposed-register mirror & touchpoint-map reconciliation ---"
+# Added 2026-06-26 after an independent review found the 2026-06-25 VS-127 PA-127.4 regeneration
+# of workflow-criticality-proposed.md (unclassified 2,588 -> 2,596) had NOT been propagated into
+# (a) workflow-criticality-classification.md's §Summary 'Proposed classification' mirror (still
+#     2,564 / 507-1,912-145 — contradicting that same file's intro banner and Grand-Total row),
+# (b) three further current-state prose spots citing the stale figure 2,564 (format-guide layout
+#     line, touchpoint-map footer sentence), and
+# (c) workflow-system-touchpoint-map.md, last fully reconciled at Pass 29: its footer still
+#     declared 'Reconciled to 5,317 workflows across 187 value streams', its §summary section
+#     stopped at VS-191 with no VS-192 row, and the Pass 26–29 rows (VS-178–VS-191) sat
+#     header-less between the section heading and the intro note — a broken table invisible to
+#     Check 13, whose parser anchors on a header row.
+# No prior check saw any of these: Check 18 verifies tier-body counts only; Check 3 verifies the
+# index grand total only; Check 24 Part B guards one hard-coded headcount figure. Parts:
+#   A (ERROR): the classification doc's proposed-summary table (three tier rows, Proposed Total,
+#      coverage row) must equal workflow-criticality-proposed.md's register header (itself
+#      verified against PA headers by Check 1).
+#   B (WARN): stale canonical unclassified figure '2,564' in current-state prose — same
+#      SKIP-docs and 'X -> Y' exclusions as Check 24 Part B.
+#   C (ERROR): touchpoint-map self-declared reconciliation must match canonical reality —
+#      footer 'Reconciled to N workflows across M value streams' equals the index Grand Total
+#      and active-VS count; the §summary heading range ends at the index's max VS; every
+#      VS from 79 through max VS has a primary-module row.
+CHECK25=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+errors, stale = [], []
+WF = f"{ROOT}/01-model-company/workflows"
+
+# ---- Part A: proposed-register mirror in workflow-criticality-classification.md ----
+prop = open(f"{WF}/workflow-criticality-proposed.md", encoding='utf-8').read()
+m = re.search(r'\*\*Workflow coverage:\*\* ([\d,]+) unclassified workflows · Tier 1: ([\d,]+) · Tier 2: ([\d,]+) · Tier 3: ([\d,]+)', prop)
+if not m:
+    errors.append("cannot parse '**Workflow coverage:**' register header in workflow-criticality-proposed.md")
+else:
+    reg_total = int(m.group(1).replace(',', ''))
+    tiers = [int(m.group(i).replace(',', '')) for i in (2, 3, 4)]
+    if sum(tiers) != reg_total:
+        errors.append(f"register header inconsistent: T1+T2+T3={sum(tiers)} != total {reg_total}")
+    cls = open(f"{WF}/workflow-criticality-classification.md", encoding='utf-8').read()
+    def grab(pat, label):
+        mm = re.search(pat, cls, re.M)
+        if not mm:
+            errors.append(f"classification doc: cannot find {label}")
+            return None
+        return int(mm.group(1).replace(',', ''))
+    t1 = grab(r'^\| Phase 1 \| Go-Live Critical \(Tier 1\) \u2014 proposed \| ([\d,]+) \|$', 'proposed Tier-1 row')
+    t2 = grab(r'^\| Phase 2 \| Operational Excellence \(Tier 2\) \u2014 proposed \| ([\d,]+) \|$', 'proposed Tier-2 row')
+    t3 = grab(r'^\| Phase 3 \| Innovation & Optimization \(Tier 3\) \u2014 proposed \| ([\d,]+) \|$', 'proposed Tier-3 row')
+    tot = grab(r'^\| \*\*Proposed Total\*\* \| \| \*\*([\d,]+)\*\* \|$', 'Proposed Total row')
+    cov = grab(r'^\| Proposed \(keyword, pending review\) \| ([\d,]+) \|$', 'coverage-table Proposed row')
+    for got, want, label in ((t1, tiers[0], 'Tier 1'), (t2, tiers[1], 'Tier 2'), (t3, tiers[2], 'Tier 3'), (tot, reg_total, 'Proposed Total'), (cov, reg_total, 'Coverage Proposed')):
+        if got is not None and got != want:
+            errors.append(f"classification proposed-summary {label} = {got:,} but register = {want:,}")
+
+# ---- Part B: stale canonical unclassified figure '2,564' in current-state prose ----
+SKIP = {'CHANGELOG.md', 'workflow-gap-analysis.md', 'headcount-reality-check.md'}
+pat = re.compile(r'(?<!\d)2,564(?!\d)')
+for dirpath, _d, files in os.walk(ROOT):
+    if os.sep + '.git' in dirpath: continue
+    for fn in files:
+        if not fn.endswith('.md') or fn in SKIP: continue
+        path = os.path.join(dirpath, fn)
+        txt = open(path, encoding='utf-8', errors='replace').read()
+        for m in pat.finditer(txt):
+            lo = max(0, m.start()-25); hi = min(len(txt), m.end()+25)
+            if '->' in txt[lo:hi] or '\u2192' in txt[lo:hi]:
+                continue  # legitimate historical 'X -> Y' change-note
+            line_no = txt.count('\n', 0, m.start()) + 1
+            stale.append(f"{os.path.relpath(path, ROOT)}:{line_no}")
+
+# ---- Part C: touchpoint-map self-declared reconciliation vs canonical reality ----
+idx = open(f"{WF}/value-stream-index.md", encoding='utf-8').read()
+vs_nums = {int(n) for n in re.findall(r'\[VS-(\d+)\]\(', idx)}
+max_vs = max(vs_nums) if vs_nums else 0
+n_vs = len(vs_nums)
+gm = re.search(r'^\|[^\n]*\*\*Grand Total\*\*[^\n]*$', idx, re.M)
+if not gm:
+    errors.append("cannot parse Grand Total row in value-stream-index.md")
+else:
+    nums = re.findall(r'\*\*([\d,]+)\*\*', gm.group(0))
+    if len(nums) < 2:
+        errors.append("Grand Total row does not carry two bold figures (PAs, workflows)")
+    else:
+        idx_pas, idx_wfs = int(nums[-2].replace(',', '')), int(nums[-1].replace(',', ''))
+tmap_path = f"{WF}/workflow-system-touchpoint-map.md"
+tmap = open(tmap_path, encoding='utf-8').read()
+fm = re.search(r'Reconciled to ([\d,]+) workflows across (\d+) value streams', tmap)
+if not fm:
+    errors.append("touchpoint map: cannot find the self-declared 'Reconciled to N workflows across M value streams' footer claim")
+elif 'idx_wfs' in dir():
+    n_wfs, n_declared_vs = int(fm.group(1).replace(',', '')), int(fm.group(2))
+    if n_wfs != idx_wfs or n_declared_vs != n_vs:
+        errors.append(f"touchpoint map footer declares {n_wfs:,} workflows / {n_declared_vs} value streams but index says {idx_wfs:,} / {n_vs}")
+hm = re.search(r'^## Statutory & Gap-Analysis Value Streams \(VS-\d+\u2013VS-(\d+)\)', tmap, re.M)
+if not hm:
+    errors.append("touchpoint map: cannot find the '## Statutory & Gap-Analysis Value Streams (VS-a\u2013VS-b)' section heading")
+elif int(hm.group(1)) != max_vs:
+    errors.append(f"touchpoint map section heading ends at VS-{hm.group(1)} but the index max is VS-{max_vs}")
+rows = {int(n) for n in re.findall(r'^\| VS-(\d+) \| ', tmap, re.M)}
+missing = [v for v in range(79, max_vs + 1) if v not in rows]
+if missing:
+    errors.append(f"touchpoint map primary-module rows missing for: {', '.join('VS-' + str(v) for v in missing)}")
+
+print(f"A_ERRS={len(errors)}")
+for e in errors: print(f"A_ERR|{e}")
+print(f"B_STALE={len(stale)}")
+for s in stale[:12]: print(f"B_STALE|{s}")
+print(f"MAX_VS={max_vs}")
+PY
+)
+A_ERRS=$(echo "$CHECK25" | sed -n 's/^A_ERRS=//p')
+B_STALE=$(echo "$CHECK25" | sed -n 's/^B_STALE=//p')
+MAX_VS=$(echo "$CHECK25" | sed -n 's/^MAX_VS=//p')
+if [ "$A_ERRS" -eq 0 ]; then
+    ok "Proposed-register mirror & touchpoint-map reconciliation claims match canonical figures (register tiers/total; footer 'Reconciled to' == index grand totals; section range ends at VS-$MAX_VS with full VS-row coverage)"
+else
+    error "Criticality proposed-register mirror / touchpoint-map reconciliation mismatch ($A_ERRS):
+"
+    echo "$CHECK25" | grep '^A_ERR|' | sed 's/^A_ERR|/    /'
+fi
+if [ "$B_STALE" -eq 0 ]; then
+    ok "No stale unclassified-workflow figure '2,564' in current-state prose (canonical figure is 2,596; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
+else
+    warn "Stale unclassified-workflow figure '2,564' appears $B_STALE time(s) in current-state prose (canonical figure is now 2,596):"
+    echo "$CHECK25" | grep '^B_STALE|' | sed 's/^B_STALE|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

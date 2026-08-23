@@ -117,7 +117,7 @@ workflows/
 ├── value-stream-index.md              Master index (8 families · 188 VS · 569 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
-├── workflow-criticality-classification.md  Tier 1/2/3 priorities (2,776 confirmed rows; 2,564 proposed in workflow-criticality-proposed.md)
+├── workflow-criticality-classification.md  Tier 1/2/3 priorities (2,776 confirmed rows; 2,596 proposed in workflow-criticality-proposed.md)
 ├── workflow-criticality-proposed.md      Keyword-driven tier proposal (pending human review)
 ├── workflow-dependency-map.md         Prerequisite relationships, critical path
 ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
@@ -144,4 +144,4 @@ workflows/
 
 ---
 
-*Date: 2026-06-21 (2026-06-25: VS-127 PA-127.4 added — 8 workflows, W5489–W5496 — specializing the S&OP/IBP consensus cycle for BuildRight's PH-retail context; totals now 5,349 workflows / 188 value streams / 569 process areas. Prior 2026-06-21: Pass 30 added VS-192 Green Fleet Transition — 24 workflows — bringing totals to 5,341 workflows / 188 value streams / 568 process areas; the family-subtotal, grand-total, and criticality-proposed coverage line are reconciled. Prior 2026-06-20: adoption sentence in “Standard analysis fields” corrected to 100% of all 5,317 workflows after reformatting W641–W647. Repository Layout counts reconciled to 188 value streams / 568 process areas / 2,588 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
+*Date: 2026-06-26 (stale proposed-count figure `2,564` → `2,596` corrected in the Repository Layout diagram — drift from the 2026-06-25 PA-127.4 regeneration of `workflow-criticality-proposed.md`. 2026-06-25: VS-127 PA-127.4 added — 8 workflows, W5489–W5496 — specializing the S&OP/IBP consensus cycle for BuildRight's PH-retail context; totals now 5,349 workflows / 188 value streams / 569 process areas. Prior 2026-06-21: Pass 30 added VS-192 Green Fleet Transition — 24 workflows — bringing totals to 5,341 workflows / 188 value streams / 568 process areas; the family-subtotal, grand-total, and criticality-proposed coverage line are reconciled. Prior 2026-06-20: adoption sentence in “Standard analysis fields” corrected to 100% of all 5,317 workflows after reformatting W641–W647. Repository Layout counts reconciled to 188 value streams / 568 process areas / 2,588 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
