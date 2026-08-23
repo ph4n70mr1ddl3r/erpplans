@@ -241,6 +241,7 @@ erpplans/
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── add-automation-controls.py    Automation/Controls field adder
     ├── backfill-controls.py          CTL-XX backfiller for Controls sections
+    ├── backfill-participants.py      Participants derivation from Steps roles
     ├── backfill-time-estimate.py     Time Estimate derivation from step durations
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
     ├── fix-headcount-6757.py         Stale-headcount figure repairer (Check 24 companion)

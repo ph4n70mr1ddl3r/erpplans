@@ -593,11 +593,15 @@ fi
 # --- Check 22: Required-field completeness (WORKFLOW-FORMAT-GUIDE 9 fields) ---
 echo "--- Check 22: Required-field completeness ---"
 # WORKFLOW-FORMAT-GUIDE.md lists 9 required fields per workflow. No prior check enforces them
-# (Check 12 covers only Automation/Controls); a 2026-06-21 scan found ~1,067 missing-field
-# instances across ~1,000 workflows — a generation artifact where whole VS batches (VS-27/
-# 37/38/39/40/53/56/58/60/63) shipped missing analysis sections, undetected. This check
-# reports the gap as a WARN (same treatment as Check 21's draft-quality tracker) so the
-# backlog is measurable rather than invisible.
+# (Check 12 covers only Automation/Controls); a 2026-06-21 scan found ~1,105 missing-field
+# instances across ~480 workflows (the affected set spans 27 value streams — chiefly
+# VS-15..18/27/31..40/48 plus VS-53..63 and singletons — wider than first reported). The
+# backlog was fully closed by the 2026-06-27 completeness pass: Participants rows were
+# mechanically derived from each workflow's own Steps roles (backfill-participants.py),
+# and System Touchpoints / Pain Points were authored per-workflow from step content.
+# This check is retained as the regression guard so a future generation artifact that
+# ships workflows missing required fields is caught. Reports any gap as a WARN (same
+# treatment as Check 21's draft-quality tracker).
 #   Five fields are table-row form ('| **Field** |'): Trigger, Frequency, Volume, Owner, Participants.
 #   Three are ### sections: Steps, System Touchpoints, Pain Points / Risks.
 #   Time Estimate accepts either form (4924 use ###, 11 use the table row).
@@ -663,7 +667,7 @@ FIELD_DETAIL=$(echo "$FIELDS" | cut -d'|' -f3-)
 if [ "$FIELD_TOTAL_MISSING" -eq 0 ]; then
     ok "All $FIELD_TOTAL_WF workflows have all 9 required fields"
 else
-    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). These are generation artifacts concentrated in a few VS batches (VS-27/37/38/39/40/53/56/58/60/63) pending per-workflow filling — Time Estimate is mechanically derivable; Pain Points / System Touchpoints / Participants are content fields requiring human authoring."
+    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). All 5,349 workflows carried all 9 fields after the 2026-06-27 completeness pass (Participants derived from Steps; System Touchpoints / Pain Points authored) — any reading above zero is a regression from a new generation artifact."
 fi
 
 # --- Check 23: Intra-file TOC anchor resolution ---

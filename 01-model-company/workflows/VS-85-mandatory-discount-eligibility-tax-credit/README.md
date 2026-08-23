@@ -8,8 +8,8 @@
 
 Mandatory Discount, Eligibility & Tax Credit Recovery workflows for BuildRight Depot Corp. —
 covering the operational and fiscal program for Philippine statutory discounts: Senior Citizen
-(RA 9994/10645), Person with Disability (RA 10754/RA 11035), Solo Parent (RA 11861), and
-VAT-exempt purchases (RA 10361 Magna Carta of Women on specified goods, PEZA/BOI entities).
+(RA 9994/10645), Person with Disability (RA 7277/9442/10754), Solo Parent (RA 11861), and
+VAT-exempt purchases (RA 9710 Magna Carta of Women on specified goods, PEZA/BOI entities).
 
 These mandatory 5%–20% discounts touch ~5–8% of POS transactions and require coordinated
 in-store execution (ID validation, discount granting), registry bookkeeping (Book of
