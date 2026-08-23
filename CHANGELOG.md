@@ -9,6 +9,20 @@
 
 ---
 
+## 2026-06-26 — Consistency review #12: full independent re-audit; root-README methodology tree completed
+
+An independent whole-repo review (validator green at 0 errors / 3 informational warnings across all 25 checks; every headline figure and structure claim re-derived independently from file content) found the repository consistent throughout, with one completeness gap. Canonical totals unchanged: **188 value streams · 569 process areas · 5,349 workflows · 733 requirements · 67 controls**.
+
+Verified clean this pass (no action needed):
+1. **Counts**: 5,349 unique `## W` IDs (0 duplicates); 188 VS directories; 569 PA files; 733 unique requirement IDs (0 duplicates) with MoSCoW split 431/296/6 = 733; 67 controls (31 P / 36 D, CTL-01–CTL-67 with no gaps); headcount arithmetic 200×29 + 600 + 362 = 6,762 everywhere current-state.
+2. **Structure claims vs disk**: all 188 root-README folder-tree rows match both per-VS workflow counts AND process-area counts; value-stream-index.md's Detailed Value Stream Map reconciles row-by-row (all 188 VS header counts and every PA bullet count); workflows/README.md Quick Stats (801/1,549/426 = 2,776 rows = 2,753 unique + 23 sub-workflow rows) matches classification tier headings; requirement-workflow-matrix.md Coverage Validation figures reconcile.
+3. **Links & anchors**: all relative `.md` links repo-wide resolve (summary docs, workflow docs, PA files); all intra-file anchors resolve under GitHub's non-collapsing slugger (PA TOCs via Check 23, plus the non-PA docs independently); all cross-file fragment links resolve.
+4. **Registers**: proposed register holds exactly 2,596 rows matching its header (512/1,935/149); no stale canonical figures (5,317/5,341/187-VS/6,757/2,564 appear only inside labelled historical change-notes and the gap-analysis record doc).
+
+**One fix:** the root README's `07-methodology/` folder-tree listed only 5 of the folder's 11 files (the `workflows/` section was already complete). Added the five undocumented repair/backfill scripts (`backfill-controls.py`, `backfill-time-estimate.py`, `defragment-automation.py`, `fix-headcount-6757.py`, `fix-toc-anchors.py`) with one-line descriptions mirroring [`07-methodology/README.md`](07-methodology/README.md).
+
+---
+
 ## 2026-06-26 — Consistency review #11: 4,618 TOC anchors broken on GitHub (collapsing-slugger bug); fix-toc-anchors.py v2 + Check 23 slugger correction
 
 An independent whole-repo review (validator green at 0 errors / 3 informational warnings across all 25 checks; every headline figure re-derived independently — 188 VS directories / 569 PA files / 5,349 unique `## W` IDs with 0 duplicates / 733 unique requirement IDs with 0 true duplicates after letter-suffix disambiguation / 67 unique controls / root-README folder-tree counts vs disk / index per-VS rows vs disk / all 188 VS-README per-PA count tables & totals vs actual PA headers / all 3,434 relative .md links repo-wide resolving / all 26 non-PA intra-file anchors resolving / 733 matrix rows reconciling) found one systemic defect class invisible to every existing check: **PA TOC anchors that resolve under a collapsing slugger but not on GitHub.** Canonical totals unchanged: **188 value streams · 569 process areas · 5,349 workflows · 733 requirements · 67 controls**.
