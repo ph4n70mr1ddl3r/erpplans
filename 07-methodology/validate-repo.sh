@@ -682,15 +682,22 @@ ANCHORS=$(python3 - "$REPO_ROOT" <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 def gh_slug(s):
-    s = s.lower()
-    s = re.sub(r'[^\w\s-]', '', s, flags=re.UNICODE).strip()
-    s = re.sub(r'[\s_-]+', '-', s)
-    s = re.sub(r'^-+|-+$', '', s)
-    return s
+    # github-slugger semantics (consistency review #11 correction): lowercase, remove
+    # non-word/space/hyphen chars, then replace EACH space with '-' — do NOT collapse
+    # runs. GitHub turns the two adjacent spaces left by removed spaced punctuation
+    # (' & ', ' / ') into a DOUBLE hyphen; the previous collapsing rule wrongly accepted
+    # single-hyphen anchors that are broken on GitHub (4,618 repo-wide, repaired by
+    # fix-toc-anchors.py v2). Duplicates get '-1', '-2'… suffixes.
+    s = s.lower().strip()
+    s = re.sub(r'[^\w\s-]', '', s, flags=re.UNICODE)
+    return s.replace(' ', '-')
 files_bad = {}
 for f in sorted(glob.glob(f"{ROOT}/01-model-company/workflows/VS-*/PA-*.md")):
     txt = open(f, encoding='utf-8', errors='replace').read()
-    heads = {gh_slug(h) for h in re.findall(r'^#+\s+(.+?)\s*$', txt, re.M)}
+    heads = set(); _seen = {}
+    for h in re.findall(r'^#+\s+(.+?)\s*$', txt, re.M):
+        s = gh_slug(h); n = _seen.get(s, 0); _seen[s] = n + 1
+        heads.add(s if n == 0 else f"{s}-{n}")
     bad = sorted({anchor for _disp, anchor in re.findall(r'\[([^\]]+)\]\(#([^)]+)\)', txt)
                   if anchor not in heads})
     if bad:

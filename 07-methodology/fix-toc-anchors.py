@@ -39,15 +39,33 @@ import argparse, glob, os, re
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORKFLOWS = os.path.join(REPO, "01-model-company", "workflows")
 
-# GitHub heading slug: lowercase, strip everything not word/space/hyphen/underscore,
-# collapse runs of space/underscore/hyphen to a single '-', trim leading/trailing '-'.
+# GitHub heading slug (github-slugger semantics): lowercase; remove every character
+# that is not a unicode word char, space, hyphen or underscore; then replace EACH
+# remaining space with '-' — WITHOUT collapsing adjacent hyphens. The non-collapsing
+# step matters: spaced punctuation (' & ', ' / ') leaves TWO adjacent spaces after
+# removal, and GitHub renders those as a DOUBLE hyphen ('Merchandise Planning &
+# Assortment Review' -> '#w1-merchandise-planning--assortment-review'). The v1
+# implementation collapsed '[\s_-]+' runs to one '-', which silently reproduced the
+# generator's original bug for every heading containing spaced punctuation — 4,615
+# anchors repo-wide that resolved under the collapsing rule but NOT on GitHub (found
+# by consistency review #11; see CHANGELOG 2026-06-26). Duplicate slugs get GitHub's
+# '-1', '-2'… disambiguation suffixes.
 def gh_slug(s):
-    s = s.lower()
+    s = s.lower().strip()
     s = re.sub(r'[^\w\s-]', '', s, flags=re.UNICODE)
-    s = s.strip()
-    s = re.sub(r'[\s_-]+', '-', s)
-    s = re.sub(r'^-+|-+$', '', s)
-    return s
+    return s.replace(' ', '-')
+
+
+def heading_slug_set(headings):
+    """GitHub-accurate anchor set for a file: each slug, with '-N' suffix on duplicates."""
+    seen = {}
+    out = set()
+    for h in headings:
+        s = gh_slug(h)
+        n = seen.get(s, 0)
+        seen[s] = n + 1
+        out.add(s if n == 0 else f"{s}-{n}")
+    return out
 
 LINK_RE = re.compile(r'\[([^\]]+)\]\(#([^)]+)\)')
 HEADING_RE = re.compile(r'^#+\s+(.+?)\s*$', re.MULTILINE)
@@ -61,7 +79,7 @@ def analyze_file(path):
                   target was found (needs human)."""
     text = open(path, encoding='utf-8', errors='replace').read()
     headings = HEADING_RE.findall(text)
-    heading_slugs = {gh_slug(h) for h in headings}
+    heading_slugs = heading_slug_set(headings)
     # W-number -> unique heading slug, only when exactly one heading has that W-num.
     wmap = {}
     for h in headings:
