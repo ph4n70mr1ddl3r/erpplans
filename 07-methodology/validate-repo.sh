@@ -1537,6 +1537,60 @@ else
     echo "$CHECK34" | grep -E '^BAD-' | sed 's/^BAD-MATRIX|/    /; s/^BAD-BODY|/    /' | head -25
 fi
 
+# --- Check 35: VS-number citation resolution (catalog & summary docs) ---
+echo "--- Check 35: Value-stream-number citation resolution ---"
+# Checks 19/20 resolve link TARGETS and Checks 6/7/33 validate W… tokens, but nothing
+# validated the VS… namespace itself. Consistency review #21 found 87 citations across
+# 25 PA files of the form "(links to VS-469 DTI)" where 469 is not a value stream at
+# all — it is workflow W469's number (Customer Complaint DTI Escalation), i.e. a
+# workflow reference written in the VS namespace. Every phantom number matched an
+# existing workflow whose title matched the surrounding gloss (VS-228→W228 sales
+# commissions, VS-245→W245 vendor chargebacks, VS-289→W289 pricing master,
+# VS-399→W399 asset register, VS-4398→W4398 wayfinding, …); all repaired by the new
+# 07-methodology/fix-vs-wrefs.py. This check enforces the invariant that fixed:
+# every `VS-<n>` token in every current-state doc must denote an ACTIVE value stream
+# (or be a `VS-NN.M` process-area reference, or one of the two sanctioned retired-
+# number forms — the 'VS-49–VS-52' range phrase and the 'former VS-49/VS-52' gap
+# notes; CHANGELOG/workflow-gap-analysis are exempt as labelled historical records).
+CHECK35=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, glob, collections, sys
+ROOT = sys.argv[1]
+WF = os.path.join(ROOT, "01-model-company", "workflows")
+active = {int(re.match(r"VS-(\d+)-", d).group(1))
+          for d in os.listdir(WF) if re.match(r"VS-\d+-", d)
+          and os.path.isdir(os.path.join(WF, d))}
+SKIP = {"CHANGELOG.md", "workflow-gap-analysis.md"}
+bad = collections.Counter()
+where = collections.defaultdict(list)
+for dirpath, _d, files in os.walk(ROOT):
+    if os.sep + ".git" in dirpath or "__pycache__" in dirpath: continue
+    for fn in sorted(files):
+        if not fn.endswith(".md") or fn in SKIP: continue
+        path = os.path.join(dirpath, fn)
+        rel = os.path.relpath(path, ROOT)
+        txt = open(path, encoding="utf-8", errors="replace").read()
+        txt = re.sub(r"`[^`]*`", "", txt)  # inline-code spans are illustrative examples, not citations
+        for m in re.finditer(r"\bVS-(\d{1,4})\b(?!\.\d)", txt):
+            n = int(m.group(1))
+            if n in active: continue
+            ctx = txt[max(0, m.start() - 24):m.end() + 24]
+            if re.search(r"VS-49\s*[\u2013\u2014-]+\s*(VS-)?52", ctx): continue  # retirement range-note
+            if re.search(r"former\s+VS-(?:49|52)\b", ctx): continue             # 'filled the former VS-n gap' note
+            bad[f"VS-{n}"] += 1
+            where[f"VS-{n}"].append(f"{rel}:{txt.count(chr(10), 0, m.start()) + 1}")
+print(f"TOTALS ids={len(bad)} refs={sum(bad.values())}")
+for k in sorted(bad, key=lambda x: int(x[3:])):
+    print(f"BAD|{k} x{bad[k]} e.g. {sorted(where[k])[:3]}")
+PY
+)
+C35_IDS=$(echo "$CHECK35" | sed -n 's/^TOTALS ids=\([0-9]*\) refs=.*/\1/p')
+if [ "${C35_IDS:-1}" -eq 0 ]; then
+    ok "All VS-number citations across the model-company docs resolve to an active value stream (no workflow references written in the VS namespace)"
+else
+    error "Dangling/misnamespaced VS-number citations found ($C35_IDS distinct id(s)) — remap to the canonical workflow id (see fix-vs-wrefs.py for the review #21 precedent):"
+    echo "$CHECK35" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
