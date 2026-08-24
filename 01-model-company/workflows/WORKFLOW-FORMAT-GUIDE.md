@@ -51,7 +51,7 @@ These two fields were previously listed as "recommended"; a 2026-06-15 review fo
 | Field | Meaning |
 |---|---|
 | **Automation Opportunity** | Steps that are manual today but are candidates for system automation — directly informs ERP design (purpose 2) |
-| **Controls** | Internal-control IDs (from [`internal-controls-matrix.md`](../internal-controls-matrix.md)) exercised by this workflow — closes the loop with the 171-control register |
+| **Controls** | Internal-control IDs (from [`internal-controls-matrix.md`](../internal-controls-matrix.md)) exercised by this workflow — closes the loop with the 239-control register |
 
 ### Cross-reference field
 
@@ -141,7 +141,7 @@ workflows/
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap-analysis methodology and workflow-ID allocation log |
 | [../requirement-workflow-matrix.md](../requirement-workflow-matrix.md) | Requirement-to-workflow traceability |
-| [../internal-controls-matrix.md](../internal-controls-matrix.md) | 171 internal controls mapped to workflows and requirements |
+| [../internal-controls-matrix.md](../internal-controls-matrix.md) | 239 internal controls mapped to workflows and requirements |
 | [../../07-methodology/validate-repo.sh](../../07-methodology/validate-repo.sh) | Consistency & boilerplate validator |
 
 ---

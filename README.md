@@ -230,7 +230,7 @@ erpplans/
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
-│   ├── internal-controls-matrix.md     171 internal controls by objective
+│   ├── internal-controls-matrix.md     239 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
 │   └── data-migration-mapping.md       Data migration field mapping templates
 ├── CHANGELOG.md                 ← Revision history
@@ -241,6 +241,7 @@ erpplans/
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── add-automation-controls.py    Automation/Controls field adder
     ├── backfill-controls.py          CTL-XX backfiller for Controls sections
+    ├── add-expansion-anchors.py      One-time expansion/legacy-block anchor-control adder (CTL-172–239)
     ├── backfill-participants.py      Participants derivation from Steps roles
     ├── backfill-time-estimate.py     Time Estimate derivation from step durations
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
@@ -276,7 +277,7 @@ erpplans/
 |---|---|---|
 | Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
 | Workflows (total) | **5,349** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
-| Internal Controls | 171 (50 preventive, 121 detective) | `01-model-company/internal-controls-matrix.md` |
+| Internal Controls | 239 (57 preventive, 182 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
 | Nice to Have Requirements | 6 | `01-model-company/erp-requirements.md` |
@@ -288,7 +289,7 @@ erpplans/
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
 | Workflows | 5,349 fully specified across 188 value streams | `workflows/value-stream-index.md` |
 | Criticality classification | **2,753 of 5,349 workflows classified** (51%; the confirmed register holds 2,776 rows incl. 23 `###` parent/summary sub-workflows); 2,596 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
-| Internal controls | 171 controls mapped to workflows and requirements (67 core + 104 gap-analysis domain anchors, CTL-68–171) | `internal-controls-matrix.md` |
+| Internal controls | 239 controls mapped to workflows and requirements (67 core + 104 gap-analysis anchors CTL-68–171 + 68 expansion/legacy-block anchors CTL-172–239) | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 
 ## Document Relationships
@@ -312,7 +313,7 @@ erpplans/
    │  erp-requirements.md ←→ workflows/ (5,349 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
-   │  matrix.md (171 CTL)  classification.md          │
+   │  matrix.md (239 CTL)  classification.md          │
    │       ↕                    ↕                      │
    │  requirement-workflow- workflow-dependency-       │
    │  matrix.md              map.md                   │

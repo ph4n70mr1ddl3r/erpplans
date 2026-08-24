@@ -21,9 +21,12 @@ Both transforms are idempotent: re-running on an already-fixed file is a no-op.
 Scope note: the original 67-control register was authored against the Core workflows
 (W1-W942). The 2026-06-27 v8 register extension added 104 gap-analysis domain anchor
 controls (CTL-68-CTL-171, one per value stream VS-89-VS-192); running this tool after that
-extension backfilled 496 further Controls sections. The Expansion block (VS-32-VS-48 and
-VS-53-VS-88) remains outside the register — extending coverage there is further manual
-work tracked by validator Check 21. This tool picks up any new mappings automatically as
+extension backfilled 496 further Controls sections. The 2026-06-28 v9 extension
+(add-expansion-anchors.py) added the final 68 expansion/legacy-block anchors
+(CTL-172-CTL-239) covering every remaining value stream with no register row; the re-run
+backfilled a further 275 Controls sections. Register total is now 239 controls (57P/182D).
+Per-workflow Controls-section quality beyond the mapped anchors remains the live backlog
+tracked by validator Check 21. This tool picks up any new mappings automatically as
 the register grows.
 
 Usage:

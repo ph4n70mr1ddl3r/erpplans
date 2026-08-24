@@ -313,6 +313,153 @@ workflows listed and backfilled into those workflows' Controls sections by
 
 ---
 
+## C18. Expansion & Legacy-Block Domain Controls — Plan & Source
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-172 | Ensure demand-plan integrity & replenishment authorization | D | Monthly S&OP consensus sign-off with forecast-accuracy (MAPE/bias) tracking; store auto-replenishment overrides logged with reason codes and reviewed weekly; seasonal and disaster pre-positioning plans approved before stock commitment | VP Supply Chain | W133, W596, W835, W1533, W1355 | SCP-001, SCP-002 |
+| CTL-173 | Prevent non-compliant private-label products from reaching shelf | P | Factory qualification audit and first-article approval before first PO; product and packaging specification sign-off per SKU; regulatory testing/certification renewals tracked with listing blocked on lapse; packaging & labeling compliance audited per production batch | Quality Assurance Manager | W1831, W1832, W1840 | PUR-022, GOV-015 |
+| CTL-174 | Ensure consignment & VMI settlement integrity | D | Consignment stock physically counted and reconciled to vendor settlement monthly; non-valuated receipts proven-up at settlement; VMI auto-confirmations matched to agreed min/max parameters; multi-entity consignment settlements cross-checked between entities | Category Manager | W1926, W1930, W1937, W1948 | INV-009, FIN-018 |
+| CTL-175 | Ensure competitor-price data integrity & price-match governance | D | Scraped competitor prices validated for like-for-like SKU/UOM before any match decision; intelligence-driven price changes retain the standard approval workflow and audit trail; rapid-response repricing executed within DTI price-change tag rules | Pricing Analyst | W2214, W2215, W2219, W2222 | POS-006, MDM-005 |
+| CTL-176 | Ensure markdown & clearance pricing compliance | D | Markdown triggers execute from sell-through/aging rules with approval thresholds; clearance price overrides require delegated authority; clearance events reconciled financially post-event; vendor markdown allowances claimed against executed markdowns | Merchandising Planner | W2390, W2391, W2394, W2395, W2397 | GOV-029, POS-041 |
+| CTL-177 | Ensure vendor scorecard data quality & performance action | D | Scorecard KPIs computed from system data with a data-quality audit; strategic vendors reviewed quarterly with documented actions; performance improvement plans tracked to closure; vendor financial-health alerts tied to exposure review | Procurement Manager | W2454, W2459, W2462, W2463, W2465 | PUR-008, MDM-004 |
+
+## C19. Expansion & Legacy-Block Domain Controls — Make & Move
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-178 | Ensure fleet compliance & freight-cost integrity | D | Route/dispatch adheres to LGU truck-ban ordinances and LTFRB weight limits; fuel consumption reconciled per vehicle against route logs; carrier freight bills audited to contracted rates; 3PL SLA reviews documented with penalties applied | Logistics Manager | W196, W431, W1315, W198, W1166, W1207 | GOV-007, LOG-001 |
+| CTL-179 | Ensure returns integrity & refund-fraud prevention | D | Receipt-less returns bounded by policy limits with ID tracking; refunds/credits issued to original tender with exception approval; return disposition matched to vendor claim recovery; return-fraud patterns monitored and flagged | DC Returns Coordinator | W1622, W1625, W1627, W1628, W1630 | POS-007, POS-019 |
+| CTL-180 | Ensure 3PL delivery-partner compliance & performance | D | Partner screening with driver/vehicle compliance verification before engagement; delivery quality inspected at handover; real-time tracking with SLA compliance monitored on a scorecard and rate-card enforcement at billing | Logistics Manager | W2190, W2192, W2196, W2198, W2199 | ECOM-012, PUR-008 |
+| CTL-181 | Ensure fleet fuel-cost accuracy & fraud prevention | D | Fuel-card transactions matched per vehicle/driver with exception flags on off-pattern consumption; fuel-efficiency variances investigated; RFID toll accounts reconciled to statements | Fleet Supervisor | W2310, W2311, W2312, W2313, W2319 | FIN-064, GOV-007 |
+| CTL-182 | Ensure jobsite delivery accuracy & site reconciliation | D | Phased deliveries matched to the approved project schedule with on-site verification and receipt sign-off; damaged/refused material claims documented at placement; project close-out reconciles delivered vs. estimated materials with variance analysis | Logistics Coordinator | W2622, W2625, W2703, W2708, W2709 | ECOM-011, ECOM-004 |
+| CTL-183 | Ensure CIT custody-chain & cash-in-transit integrity | D | Dual-control skim and CIT handover with seal numbers recorded; GPS-tracked in-transit monitoring with route-adherence alerts; vault counts reconciled to store-declared deposits; counterfeit notes authenticated at deposit | CIT Operations Manager | W2801, W2802, W2810, W2811, W2812, W2806 | POS-009, IC-005 |
+
+## C20. Expansion & Legacy-Block Domain Controls — Sell & Serve
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-184 | Ensure POS settlement & tender reconciliation completeness | D | Daily multi-tender reconciliation of POS captures to acquirer/e-wallet settlements with variance triage; cashier over/short tracked with threshold escalation; near-real-time sync completeness reconciled nightly; catch-weight pricing verified against calibrated scales | Store Manager | W1425, W1301, W1354, W272, W525, W1305 | POS-009, FIN-009 |
+| CTL-185 | Ensure B2B billing & receivable milestone integrity | D | Project progress billing tied to verified milestones with retention release only on sign-off; contract price-book pricing enforced at order entry with deviation approval; statements auto-issued and disputes resolved within SLA | B2B Sales Manager | W163, W1426, W1134, W1117, W1022 | CRM-008, POS-010 |
+| CTL-186 | Ensure installation quality & warranty registration | D | Installer/service-partner quality audited with scorecards; punch-list closure and customer walk-through sign-off required before job close; completion certificates register warranty automatically; rework tracked to root cause | Store Manager | W213, W1171, W1254, W795 | SRV-001, POS-019 |
+| CTL-187 | Ensure marketing spend & loyalty-fraud control | D | Campaign spend tracked to budget with ROI attribution; co-op/vendor funds reconciled to agreements; loyalty-fraud patterns monitored with accounts flagged and points frozen on confirmation | Digital Marketing Manager | W83, W677, W104, W496, W565 | CRM-001, CRM-007 |
+| CTL-188 | Prevent premature store go-live | P | Go-live gated by systems-verification checklist, permit completeness, safety/compliance training validation and cash-float setup sign-off; handover from project to operations documented with an open-issues register | VP Store Operations | W1742, W1751, W1752, W1754, W1760 | SCP-012, POS-085 |
+| CTL-189 | Ensure trade-program benefit & master-data integrity | D | Tier benefits, early-payment discounts and referral incentives computed from system data with quarterly business reviews documented; account master data quality audited; annual recertification enforced with lapse handling | Account Manager | W1879, W1885, W1889, W1890, W1900 | CRM-001, CRM-008 |
+| CTL-190 | Protect research-participant data & insight validity | P | Panel/survey data collected under documented consent with RA 10173 safeguards; mystery-shop scoring calibrated and double-blind; competitive intelligence gathered ethically with no competitively-sensitive price coordination | Market Research Analyst | W1902, W1908, W1911, W1917 | NFR-010, MDM-032 |
+| CTL-191 | Ensure B2G procurement compliance & collection | D | PhilGEPS registration kept current; bids governed by procurement-law modes with documented quotations/awards; BIR-compliant billing issued and government collections followed up per aging schedule | Trade Account Manager | W1950, W1959, W1960, W1966, W1967 | CRM-009, PUR-031 |
+| CTL-192 | Ensure subscription billing & dunning integrity | D | Recurring billing reconciled to active entitlements; failed payments enter dunning with retry rules; cancellations pro-rated per policy; SKU/enrollment-flow changes gated by configuration sign-off | VP Store Operations | W1976, W1982, W1983, W1984, W1986 | CRM-024, SRV-001 |
+| CTL-193 | Ensure retail-media billing & placement delivery | D | Campaign placements audited against contracted inventory; vendor co-op funding reconciled to agreements; AR collections managed with campaign suspension on delinquency; sales-lift attribution methodology documented and consistent | Marketing Manager | W1998, W2000, W2010, W2015, W2017 | FIN-019, CRM-007 |
+| CTL-194 | Ensure warranty registration & claim integrity | D | Warranty capture validated at checkout against item/serial master; claims adjudicated against terms with vendor cost recovery where applicable; registration completeness audited for data quality | Customer Service Manager | W2118, W2119, W2120, W2123, W2126 | POS-019, MDM-015 |
+| CTL-195 | Ensure planogram & price-tag compliance | D | Planogram version control with store acknowledgement; compliance audited via on-site and photo-based remote checks; shelf-label price accuracy audited against the active price file | Merchandising Planner | W2170, W2174, W2175, W2176 | MDM-023, MDM-005 |
+| CTL-196 | Prevent coupon & promo-code abuse | P | Coupon configuration enforces stacking, limit and eligibility rules; redemption validated at tender; vendor-funded programs reconciled to funding agreements; fraud patterns monitored with deactivation controls | Marketing Analyst | W2238, W2241, W2244, W2246, W2247 | POS-014, ECOM-010 |
+| CTL-197 | Ensure omnichannel order-routing accuracy | D | Routing-engine decisions logged with ATP basis; split/mixed-basket fulfillment orders reconciled to a single financial order; routing exceptions worked to closure within SLA; drop-ship vendor confirmations matched to orders | Ecommerce Operations Manager | W2287, W2288, W2289, W2291, W2294 | ECOM-003, ECOM-005 |
+| CTL-198 | Ensure sample & display asset accountability | D | Sample inventory tracked with monthly condition inspection; damaged replacements charged or written off with approval; display assets reconciled at seasonal refresh; sample-to-order conversion measured | Merchandising Coordinator | W2337, W2341, W2342, W2343 | GOV-028, POS-081 |
+| CTL-199 | Ensure store-communication task closure | D | HQ directives acknowledged with compliance visible on a dashboard by store; task completion quality audited; emergency communication protocol tested on schedule | Store Operations Director | W2359, W2360, W2366, W2368, W2371 | POS-069, HR-041 |
+| CTL-200 | Ensure marketplace order & settlement reconciliation | D | Marketplace orders downloaded and processed with inventory allocation per channel strategy; settlements reconciled to platform statements with fee and chargeback validation; listing prices synchronized to the price file | Ecommerce Director | W2408, W2409, W2412, W2414 | ECOM-013, ECOM-026 |
+| CTL-201 | Ensure design-service quotation & change-order control | D | Quotations derived from the standard rate card with approval thresholds; customer approval captured before execution; change orders priced and signed before work proceeds; project status tracked through quality inspection | Project Consultant | W2432, W2434, W2435, W2442, W2448 | POS-054, SRV-001 |
+| CTL-202 | Ensure solar program compliance & delivery | D | Staff certification tracked before selling/consulting; installation materials staged and delivered with sign-off; net-metering activation documented per LGU/DOE rules; promotional ROI and savings claims validated | Solar Program Manager | W2528, W2530, W2539, W2540 | MDM-027, SRV-001 |
+| CTL-203 | Protect mobile-app customer data & release quality | P | App releases gated by security/privacy review (RA 10173) and performance SLOs; push-notification consent honored with preference management; catalog/price sync integrity monitored with reconciliation alerts | Digital Product Manager | W2647, W2650, W2651, W2652 | NFR-010, NFR-032 |
+| CTL-204 | Ensure project staging & price-lock integrity | D | Phased staging triggers only from approved project schedules; price-lock/escalation terms enforced at invoicing; on-site material receipt verified; consumption-vs-estimate variance analyzed at close-out | Trade Sales Manager | W2697, W2702, W2703, W2709, W2710 | ECOM-011, ECOM-004 |
+| CTL-205 | Ensure green-product claim substantiation | D | Green certifications verified before product listing and before any marketing claim; BERDE/LEED project documentation support accurate and retained; regulatory changes monitored for continuing claim validity | Sustainability Coordinator | W2718, W2724, W2736, W2738 | ESG-009, GOV-008 |
+| CTL-206 | Ensure MSME micro-wholesale credit & order integrity | D | KYC onboarding completed before first credit order; route-seller and app/WhatsApp orders validated with credit check at capture; cluster/group-buy orders reconciled to deliveries; micro-wholesale pricing governed per segment | MSME Sales Manager | W2825, W2829, W2830, W2833, W2834 | PUR-023, CRM-008 |
+
+## C21. Expansion & Legacy-Block Domain Controls — Finance
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-207 | Prevent unauthorized non-merchandise spend | P | Purchase requisitions follow the approval matrix with service contracts renegotiated before auto-renewal; expense cards reconciled monthly against policy limits; SLA performance documented as a condition of payment | Procurement Manager | W1675, W1676, W1678, W1685, W1686 | FIN-064, HR-016 |
+| CTL-208 | Ensure consumer-financing settlement & compliance | D | Financier settlements reconciled daily to POS originations with exception handling; MDR fees tracked and reported; BSP regulatory monitoring documented; installment VAT/WHT computed per rule | Treasury Manager | W1777, W1782, W1783, W1784, W1785 | FIN-045, CRM-008 |
+| CTL-209 | Ensure vendor rebate accuracy & recognition | D | Rebate accruals estimated per agreement terms and trued-up to vendor statements; volume thresholds tracked automatically; income recognized as earned per PFRS; markdown allowances and damage claims recovered | VP Merchandising | W1787, W1788, W1789, W1792, W1804 | FIN-019, PUR-020 |
+| CTL-210 | Ensure capex authorization & commitment control | P | Capex requests follow the tiered approval matrix with business-case evaluation; commitments tracked against budget with revisions re-approved; partial turnovers capitalized with supporting documentation | FP&A Manager | W1812, W1813, W1814, W1815, W1821, W2749 | FIN-016, FIN-055 |
+| CTL-211 | Ensure stored-value float & liability integrity | D | Gift-card issuance/redemption tracked to serial with daily float counts and variance escalation; breakage recognized per policy; compliance terms monitored; corporate bulk issuance documented against PO | Gift Card Program Manager | W2142, W2143, W2145, W2148, W2150 | POS-015, CRM-001 |
+| CTL-212 | Ensure trade-credit exposure control | D | New accounts scored and limits approved per the authority matrix; real-time limit monitoring blocks over-limit orders with override logging; periodic reviews with bureau-data refresh; insurance coverage assessed against exposure | Credit Manager | W2478, W2480, W2484, W2486, W2487 | CRM-003, CRM-008 |
+| CTL-213 | Ensure shared-services chargeback integrity | D | Cost pools identified and compiled monthly per documented allocation basis; chargebacks reconciled to cost pools with variance management; IC invoices generated and settled on schedule; pool audits documented | Financial Controller | W2574, W2575, W2576, W2579, W2580, W2583 | IC-001, IC-005 |
+| CTL-214 | Ensure BIR tax compliance & filing integrity | D | VAT ledgers reconciled to GL before 2550M/Q filings via eFPS with e-payment validation; EIS transmission completeness reconciled daily; EWT computations calendar-tracked through the 1601 series; VAT-exempt/zero-rated sales supported by certificates; POS/CAS accreditation current | Tax Manager | W2753, W2755, W2756, W2757, W2760, W2761 | FIN-006, FIN-007 |
+| CTL-215 | Ensure card/e-wallet settlement & chargeback control | D | Daily settlement files ingested and posted to GL with settlement-to-capture reconciliation and exception triage; terminal batch closes validated; chargeback evidence compiled within scheme windows; MID/MCC hierarchy mapped to entities | Payment Operations Manager | W2777, W2784, W2785, W2786, W2787, W2788 | POS-049, FIN-009 |
+
+## C22. Expansion & Legacy-Block Domain Controls — People
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-216 | Ensure occupational-health record & claim compliance | D | Work-relatedness determinations documented for EC claims with SSS/PhilHealth coordination; DOLE annual medical report and OHS statistics compiled; medical records kept confidential under consent per RA 10173; clinic pharmacy stock reconciled | Occupational Health Manager | W2850, W2852, W2853, W2855, W2856, W2863 | HSE-005, GOV-043 |
+| CTL-217 | Ensure labor-relations statutory compliance | D | CBA negotiation, drafting, ratification and DOLE registration followed with economic costing before sign-off; union dues check-off only on written authorization; grievances tracked through the steps with documentation; LMC governance recorded | Labor Relations Director | W2874, W2876, W2877, W2879, W2881 | HR-014, GOV-040 |
+
+## C23. Expansion & Legacy-Block Domain Controls — Asset & Infrastructure
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-218 | Ensure facility compliance & lease-cost integrity | D | LGU permit/RPT inspections current per site; CAM reconciliations reviewed and challenged with documentation; preventive maintenance executed with inspection records; construction turnover accepted against snag lists | Facilities Manager | W430, W1183, W240, W117, W1295 | GOV-006, GOV-003 |
+| CTL-219 | Ensure fixed-asset register accuracy | D | Asset tags applied at capitalization with annual wall-to-wall verification and rolling spot checks; transfers and disposals documented with approval; register reconciled to GL and the insurance schedule | Fixed Asset Accountant | W1690, W1692, W1697, W1703, W1706, W1707 | FIN-011, MDM-027 |
+| CTL-220 | Ensure lease-administration & PFRS 16 integrity | D | Key dates tracked with renewal/option notices served on time; rent, CAM and percentage-rent reconciled to lease terms; abatements enforced; PFRS 16 month-end processing and disclosures reviewed | VP Real Estate | W1855, W1862, W1864, W1865, W1872 | FIN-052, GOV-003 |
+| CTL-221 | Ensure controlled store-closure execution | D | Closure board-approved with regulatory/LGU deregistration completed; inventory liquidated with variance review; fixed assets recovered or disposed with approval; lease termination documented; employee separation executed per PH labor law | Store Closure Project Manager | W2264, W2269, W2270, W2271, W2272 | POS-086, PROP-001 |
+
+## C24. Expansion & Legacy-Block Domain Controls — Technology & Data
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-222 | Ensure BI data governance & reporting integrity | D | ETL jobs monitored with exception handling and data-quality gates before dashboard refresh; self-service access provisioned by role with training; executive reporting package reconciled to source systems before distribution | BI Analytics Manager | W879, W880, W881, W882, W885 | RPT-001, NFR-038 |
+| CTL-223 | Ensure responsible AI/ML & pilot governance | D | AI/ML models governed with bias audit and ethical review before deployment; demand-forecast model accuracy monitored with retraining triggers; innovation pilots stage-gated with KPI review before scale-up | IT Innovation Lead | W203, W689, W690, W1206 | INV-025, NFR-035 |
+
+## C25. Expansion & Legacy-Block Domain Controls — Governance & Assurance
+
+One anchor control per value stream whose workflows previously had no coverage in the
+register (Core VS-02–VS-31, Expansion VS-32–VS-48/VS-53–VS-78, Statutory VS-79–VS-88); each is
+exercised at the specific workflows listed and backfilled into those workflows' Controls
+sections by `07-methodology/backfill-controls.py`.
+
+| Control ID | Control Objective | Type | Control Activity | Owner | Workflows | Req Ref |
+|---|---|---|---|---|---|---|
+| CTL-224 | Ensure audit-plan execution & remediation | D | Risk-based audit plan executed with documented fieldwork; issues tracked to corrective-action closure with board reporting; specialized audits (ABC, capex, rebate, revenue assurance) performed per plan | Internal Audit Manager | W121, W159, W333, W344, W346, W348 | GOV-002, NFR-007 |
+| CTL-225 | Ensure shrinkage detection & case governance | D | Exception-based monitoring across cash handling, refunds, BOPIS staging and consignment stock; investigations documented in case management; organized-retail-crime coordination with law enforcement; recoveries accounted | Regional LP Manager | W837, W839, W841, W842, W1248, W1249 | POS-050, GOV-020 |
+| CTL-226 | Ensure OHS compliance & incident management | D | Safety certifications and training tracked with expiry alerts; workplace inspections scheduled and closed on time; incidents investigated with WAIR/AMR statutory reporting; hazmat spill response drilled | Safety Officer | W140, W141, W238, W436, W655, W758 | GOV-004, GOV-034 |
+| CTL-227 | Ensure ESG data integrity & disclosure | D | GHG, water and energy metrics collected with documented methodology and evidence retained; sustainable-sourcing claims verified including chain-of-custody; disclosures reviewed for accuracy before publication | Sustainability Lead | W192, W195, W693, W1262, W1529 | ESG-008, ESG-006 |
+| CTL-228 | Ensure BCP readiness & insurance recovery | D | BIA maintained with RTO/RPO targets; tabletop and DR-failover tests executed with results documented; damage and business-interruption claims documented, filed and recovered to GL | IT Director | W853, W858, W860, W864, W1204, W1322 | BCP-003, NFR-013 |
+| CTL-229 | Ensure supplier quality & product-safety verification | D | Vendor quality audits scheduled with VCAR closure tracked; first-article inspection before listing; electrical-safety and standards certification verified per SKU; import pre-shipment verification documented | Quality Manager | W1602, W1606, W1609, W1610, W1611, W1612 | PUR-017, PUR-024 |
+| CTL-230 | Ensure strategy-to-budget alignment | D | Annual targets cascade to store/department operating plans with board budget approval; mid-year recalibration documented; weekly KPI flash reconciled to financial systems | CFO | W1647, W1648, W1650, W1651, W1654 | FIN-015, RPT-001 |
+| CTL-231 | Ensure corporate-governance compliance | D | Board materials distributed with minutes approved and resolutions authenticated; SEC annual filings current; related-party transactions identified and disclosed; whistleblower channel operated with independence | Corporate Secretary | W1715, W1716, W1717, W1718, W1720, W1733 | GOV-001, GOV-038 |
+| CTL-232 | Ensure typhoon-response protocol execution | D | Pre-positioning and readiness checklists executed before landfall; emergency pricing freeze activated per RA 7581 with DTI compliance; post-event damage assessments documented for insurance claims; employee welfare and deployment tracked | Store Manager | W2502, W2503, W2507, W2508, W2515 | GOV-030, GOV-011 |
+| CTL-233 | Ensure anti-counterfeit program integrity | D | High-risk SKUs serialized with authentication verified at receiving and key control points; seizures documented with law-enforcement/regulatory reporting; marketplace takedowns tracked; customer restitution processed | Loss Prevention Manager | W2550, W2554, W2558, W2561, W2562, W2563 | INV-008, POS-050 |
+| CTL-234 | Ensure store-waste regulatory compliance | D | Waste segregated at store with hazardous streams (paint/chemical/e-waste) disposed only via DENR-accredited handlers with manifests; recycling revenue reconciled to the waste ledger; reduction targets tracked | Sustainability Coordinator | W2598, W2599, W2603, W2605, W2606 | ESG-008, GOV-008 |
+| CTL-235 | Ensure multi-LGU license compliance | D | Permit/license renewal calendar with expiry alerts escalating ahead of lapse; fire-safety, sanitary and signage permits current per site; regulatory changes impact-assessed; compliance dashboard maintained | Legal Compliance Officer | W2670, W2672, W2675, W2677, W2680 | NFR-017, REG-002 |
+| CTL-236 | Ensure mandatory-discount & VAT-exemption compliance | D | SC/PWD/solo-parent ID validation at POS with purchase-book recording; discount computation and stacking rules configured per RA 9994/10754/8972 and reviewed on change; abuse monitoring; zero-rated/exempt sales supported by certificates | Tax Accountant | W2897, W2898, W2899, W2900, W2905, W2906 | POS-014a, FIN-006 |
+| CTL-237 | Ensure AML/KYC & sanctions compliance | D | Customers risk-tiered with KYC due-diligence documentation and periodic refresh; sanctions/watchlist screening at onboarding and on list updates; covered transactions (≥PHP 500K single-day cash) detected with CTRs filed; STRs filed with AMLC within statutory windows | MLRO / Compliance Officer | W2921, W2924, W2926, W2929, W2931, W2932 | COM-009, NFR-010 |
+| CTL-238 | Ensure customs classification & valuation compliance | D | HS/AHTN classifications assigned per SKU with advance rulings sought where material; customs value captures assists and royalties; rules-of-origin documented for FTA preference claims; classification discrepancies reconciled | Trade Compliance Specialist | W2945, W2946, W2947, W2948, W2949, W2952 | SCP-015, FIN-013 |
+| CTL-239 | Ensure records-retention & legal-hold compliance | D | Retention schedule by record class (BIR/SEC/DOLE/NPC) enforced with event-driven clock management; legal holds issued and released with defined scope; disposition only after review and approval with certificates of destruction; e-invoice/receipt archives BIR-compliant | Records Manager | W2975, W2977, W2978, W2979, W2980 | DOC-005, POS-037 |
 ## Controls Summary by Category
 
 | Category | Preventive Controls | Detective Controls | Total |
@@ -334,8 +481,16 @@ workflows listed and backfilled into those workflows' Controls sections by
 | Gap-Analysis — Asset & Infrastructure | 0 | 9 | 9 |
 | Gap-Analysis — Technology & Data | 1 | 8 | 9 |
 | Gap-Analysis — Governance & Assurance | 9 | 11 | 20 |
-| **Total** | **50** | **121** | **171** |
+| Expansion & Legacy — Plan & Source | 1 | 5 | 6 |
+| Expansion & Legacy — Make & Move | 0 | 6 | 6 |
+| Expansion & Legacy — Sell & Serve | 4 | 19 | 23 |
+| Expansion & Legacy — Finance | 2 | 7 | 9 |
+| Expansion & Legacy — People | 0 | 2 | 2 |
+| Expansion & Legacy — Asset & Infrastructure | 0 | 4 | 4 |
+| Expansion & Legacy — Technology & Data | 0 | 2 | 2 |
+| Expansion & Legacy — Governance & Assurance | 0 | 16 | 16 |
+| **Total** | **57** | **182** | **239** |
 
 ---
 
-*Date: 2026-06-27 (v8 — added C10–C17 Gap-Analysis Domain Controls (CTL-68 to CTL-171, 104 controls): one anchor control per gap-analysis value stream VS-89–VS-192, extending the register beyond the Core workflows. Total controls: 171 (50P/121D). Prior: 2026-06-09 v7 — C8 Master Data Governance (CTL-50–58) and C9 Treasury & Corporate Finance (CTL-59–67).)*
+*Date: 2026-06-28 (v9 — added C18–C25 Expansion & Legacy-Block Domain Controls (CTL-172 to CTL-239, 68 controls): one anchor control per value stream whose workflows previously had no register coverage — Core VS-02–VS-31 stragglers, Expansion VS-32–48/53–78, Statutory VS-79–88 — closing the "Expansion block outside the register" backlog tracked by validator Check 21. Total controls: 239 (57P/182D); `07-methodology/backfill-controls.py` re-run lifted CTL-XX citation coverage 1,135 → 1,410. Prior v8 — added C10–C17 Gap-Analysis Domain Controls (CTL-68 to CTL-171, 104 controls): one anchor control per gap-analysis value stream VS-89–VS-192, extending the register beyond the Core workflows. Total controls: 171 (50P/121D). Prior: 2026-06-09 v7 — C8 Master Data Governance (CTL-50–58) and C9 Treasury & Corporate Finance (CTL-59–67).)*
