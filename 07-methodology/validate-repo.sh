@@ -1839,6 +1839,112 @@ else
     echo "$CHECK39" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 40: Validator self-description agreement (quoted check counts vs implemented checks) ---
+echo "--- Check 40: Validator self-description agreement ---"
+# Reviews #22–#24 grew the validator from 35 to 39 checks, but both canonical
+# self-descriptions (the root-README folder-tree line and the 07-methodology
+# README contents-table row) still said "35 checks". No prior check compared
+# quoted check counts against the implemented checks, so every future check
+# addition would silently strand the same two surfaces (exactly what happened
+# between reviews #21 and #24). This check counts the '--- Check N:' markers
+# in validate-repo.sh and validates every quoted check-count figure against it.
+# Per-version history notes (footer '*Date: ...' lines carrying frozen
+# 'across N checks' status records) and CHANGELOG/gap-analysis are exempt.
+IMPLEMENTED_CHECKS=$(grep -c '^# --- Check ' "$REPO_ROOT/07-methodology/validate-repo.sh")
+CHECK40=$(python3 - "$REPO_ROOT" "$IMPLEMENTED_CHECKS" <<'PY'
+import re, os, glob, sys
+ROOT, IMPL = sys.argv[1], int(sys.argv[2])
+bad = []
+forms = [re.compile(r"\((\d+) checks\)"),
+         re.compile(r"\u2014 (\d+) checks covering"),
+         re.compile(r"across (\d+) checks")]
+for f in glob.glob(ROOT + "/**/*.md", recursive=True):
+    rel = os.path.relpath(f, ROOT)
+    if rel.startswith("CHANGELOG") or "workflow-gap-analysis" in rel:
+        continue
+    for i, line in enumerate(open(f, encoding="utf-8"), 1):
+        if line.lstrip().startswith("*Date:") or "Prior v" in line or "\u2192" in line:
+            continue  # frozen per-version history notes and 'X -> Y' transitions
+        for pat in forms:
+            for m in pat.finditer(line):
+                if int(m.group(1)) != IMPL:
+                    bad.append(f"{rel}:{i}: '{m.group(0)}' != {IMPL} implemented checks")
+print(f"TOTALS implemented={IMPL} mismatches={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C40_BAD=$(echo "$CHECK40" | sed -n 's/^TOTALS .* mismatches=\([0-9]*\)/\1/p')
+if [ "${C40_BAD:-1}" -eq 0 ]; then
+    ok "All quoted validator check counts equal the ${IMPLEMENTED_CHECKS} checks implemented in validate-repo.sh"
+else
+    error "Quoted validator check counts disagree with the ${IMPLEMENTED_CHECKS} checks implemented in validate-repo.sh:"
+    echo "$CHECK40" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 41: Quoted requirement-total & category-count figures vs the register ---
+echo "--- Check 41: Requirement-total figure agreement ---"
+# Review #22 shrank the register 733 -> 728, but the executive-summary footer's
+# 'updated counts: 733 requirements' headline (written 2026-06-25, before the
+# removal) kept quoting the pre-removal total. Check 37 guards only the
+# priority split and Check 38 only the erp-requirements.md TOC; neither
+# compares quoted *totals* (or 'across N categories' claims) against the
+# register. This check derives both figures from the register rows and
+# validates the total-claim surfaces: 'N requirements across', 'N unique
+# requirements', 'Total requirements: N', 'updated counts: N requirements',
+# the root-README Key Metrics '| Requirements | N |' row, and the anchored
+# 'requirements across N categor…' category-count claims (anchored to the
+# word 'requirements' so workflow-body phrases like 'across 13 categories'
+# for product/vendor categories are not flagged). Historical records
+# (CHANGELOG, gap-analysis, 'Prior v' notes, 'X → Y' transitions) are exempt.
+CHECK41=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, sys
+ROOT = sys.argv[1]
+req = {}
+for line in open(os.path.join(ROOT, "01-model-company", "erp-requirements.md"), encoding="utf-8"):
+    m = re.match(r"^\| ([A-Z]{2,5}-\d+[a-z]?) \|", line)
+    if m:
+        pre = m.group(1).split("-")[0]
+        req[pre] = req.get(pre, 0) + 1
+TOTAL, CATS = sum(req.values()), len(req)
+bad = []
+total_forms = [re.compile(r"\b([\d,]+)\s+requirements\s+across"),
+               re.compile(r"\b([\d,]+)\s+unique\s+requirements"),
+               re.compile(r"Total requirements\*?\*?:?\s*\**([\d,]+)"),
+               re.compile(r"updated counts:\s*([\d,]+)\s+requirements"),
+               re.compile(r"\| Requirements \| \**([\d,]+)\** \|")]
+cat_forms = [re.compile(r"requirements\s+across\s+(\d+)\s+(?:distinct requirement-ID prefixes|prefix categor|categor)"),
+             re.compile(r"\| Requirements \| \**[\d,]+\**\s+across\s+(\d+)\s+categor")]
+for f in glob.glob(ROOT + "/**/*.md", recursive=True):
+    rel = os.path.relpath(f, ROOT)
+    if rel.startswith("CHANGELOG") or "workflow-gap-analysis" in rel:
+        continue
+    for i, line in enumerate(open(f, encoding="utf-8"), 1):
+        if "Prior v" in line or "\u2192" in line:
+            continue  # frozen version-history notes and 'X -> Y' transitions
+        for pat in total_forms:
+            for m in pat.finditer(line):
+                if int(m.group(1).replace(",", "")) != TOTAL:
+                    bad.append(f"{rel}:{i}: total-claim '{m.group(0)}' != register {TOTAL}")
+        for pat in cat_forms:
+            for m in pat.finditer(line):
+                if int(m.group(1)) != CATS:
+                    bad.append(f"{rel}:{i}: category-claim '{m.group(0)}' != register {CATS} prefixes")
+print(f"TOTALS register={TOTAL} prefixes={CATS} mismatches={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C41_BAD=$(echo "$CHECK41" | sed -n 's/^TOTALS .* mismatches=\([0-9]*\)/\1/p')
+if [ "${C41_BAD:-1}" -eq 0 ]; then
+    C41_T=$(echo "$CHECK41" | sed -n 's/^TOTALS register=\([0-9]*\) .*/\1/p')
+    C41_C=$(echo "$CHECK41" | sed -n 's/^TOTALS .* prefixes=\([0-9]*\) .*/\1/p')
+    ok "All quoted requirement-total and category-count figures match the erp-requirements.md register (${C41_T} requirements across ${C41_C} prefixes)"
+else
+    error "Quoted requirement-total/category-count figures disagree with the erp-requirements.md register:"
+    echo "$CHECK41" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
