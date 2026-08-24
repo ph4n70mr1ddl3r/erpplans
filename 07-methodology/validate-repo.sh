@@ -1432,6 +1432,111 @@ else
     echo "$CHECK32" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
 fi
 
+# --- Check 33: Workflow-reference resolution inside PA bodies & VS READMEs ---
+echo "--- Check 33: Workflow-reference resolution (PA bodies & VS READMEs) ---"
+# Checks 6/7 validate W-references in the four cross-reference docs only; nothing
+# previously verified the citations inside the 569 PA files themselves or the 188
+# VS READMEs (review #20 found 19 dangling tokens there: zero-padded W01/W03/W05,
+# a PA reference written in the W namespace (W03.4), phantom W413/W1593/W6796 and
+# PA-file-slug citations W05.2). Every \bW\d{1,4}[A-Z]?\b token outside workflow
+# headings must resolve to a '##'/'###' workflow header ID defined anywhere in the
+# catalog (sub-step refs like W14.8 and sub-workflow refs like W13.9a reduce to their
+# base id W14/W13 by the \b boundary).
+CHECK33=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, collections, sys
+ROOT = os.path.join(sys.argv[1], "01-model-company")
+defined = set()
+pa_files = []
+for f in glob.glob(os.path.join(ROOT, "workflows", "VS-*", "PA-*.md")):
+    pa_files.append(f)
+    for line in open(f, encoding="utf-8"):
+        m = re.match(r"^#{2,3} (W\d+[A-Z]?)\.", line)
+        if m:
+            defined.add(m.group(1))
+bad = collections.Counter()
+where = collections.defaultdict(set)
+scan = set(glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True))
+for f in sorted(scan):
+    for i, line in enumerate(open(f, encoding="utf-8"), 1):
+        if re.match(r"^#{2,3} W\d", line):
+            continue
+        for m in re.finditer(r"\b(W\d{1,4}[A-Z]?)\b", line):
+            w = m.group(1)
+            if w not in defined:
+                bad[w] += 1
+                where[w].add(os.path.relpath(f, ROOT) + f":{i}")
+for w in sorted(bad):
+    print(f"BAD|{w} x{bad[w]} e.g. {sorted(where[w])[:3]}")
+print(f"TOTALS ids={len(bad)} refs={sum(bad.values())} defined={len(defined)}")
+PY
+)
+C33_IDS=$(echo "$CHECK33" | sed -n 's/^TOTALS ids=\([0-9]*\) refs=.*/\1/p')
+if [ "${C33_IDS:-1}" -eq 0 ]; then
+    ok "All workflow-ID citations across the model-company docs (PA bodies, VS READMEs, summary docs) resolve to a defined workflow header"
+else
+    error "Dangling workflow-ID citations found ($C33_IDS distinct ID(s)) — remap to the canonical workflow/VS id (see fix-pa-wrefs.py for the review #20 precedent):"
+    echo "$CHECK33" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
+fi
+
+# --- Check 34: CTL-240–808 PA-control objective names match canonical PA names ---
+echo "--- Check 34: PA-control objective canonical-name agreement ---"
+# add-pa-controls.py derived objective names from PA file slugs (mangling proper nouns:
+# S&OP->Sandop, DENR->Denr, ERP->Erp, DC->Dc, B2B->B2b) and backfill-controls.py
+# truncated them to 90 chars mid-word; fix-ctl-pa-names.py (review #20) canonicalized
+# both surfaces to the value-stream-index bullet names. This guard verifies:
+#   (a) every matrix row 'Ensure controlled execution — <name> (PA-XX.Y)' carries the
+#       canonical index name of its PA;
+#   (b) every PA-body 'CTL-NNN (ensure controlled execution — ...)' parenthetical is
+#       the exact canonical rendering of its register row.
+CHECK34=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, collections, sys
+ROOT = os.path.join(sys.argv[1], "01-model-company")
+canon = {}
+for m in re.finditer(r"- \*\*(PA-\d{2,3}\.\d)\*\* \[([^\]]+)\]\(",
+                     open(os.path.join(ROOT, "workflows", "value-stream-index.md"), encoding="utf-8").read()):
+    canon[m.group(1)] = m.group(2)
+row = re.compile(r"^\| (CTL-\d{3}) \| Ensure controlled execution — (.+?) \((PA-\d{2,3}\.\d)\) \|")
+ctl2pa = {}
+rows = 0
+bad_matrix = []
+for line in open(os.path.join(ROOT, "internal-controls-matrix.md"), encoding="utf-8"):
+    m = row.match(line.rstrip("\n"))
+    if not m:
+        continue
+    rows += 1
+    ctl2pa[m.group(1)] = m.group(3)
+    if m.group(2) != canon.get(m.group(3)):
+        bad_matrix.append(f"{m.group(1)}: '{m.group(2)}' != canonical '{canon.get(m.group(3))}' (PA {m.group(3)})")
+bad_body = collections.Counter()
+where = collections.defaultdict(list)
+bpat = re.compile(r"(CTL-\d{3}) \(ensure controlled execution — .*?\.\)")
+for f in glob.glob(os.path.join(ROOT, "workflows", "VS-*", "PA-*.md")):
+    text = open(f, encoding="utf-8").read()
+    for m in bpat.finditer(text):
+        ctl = m.group(1)
+        pa = ctl2pa.get(ctl)
+        want = f"{ctl} (ensure controlled execution — {canon[pa]} ({pa}).)" if pa else None
+        if m.group(0) != want:
+            key = f"{ctl}: '{m.group(0)[:70]}...' != canonical" if pa else f"{ctl}: not a register PA-control row"
+            bad_body[key] += 1
+            where[key].append(os.path.relpath(f, ROOT))
+for k in sorted(bad_matrix):
+    print(f"BAD-MATRIX|{k}")
+for k in sorted(bad_body):
+    print(f"BAD-BODY|{k} x{bad_body[k]} e.g. {where[k][0]}")
+print(f"TOTALS matrix_rows={rows} matrix_bad={len(bad_matrix)} body_bad={sum(bad_body.values())} pa_controls={len(ctl2pa)}")
+PY
+)
+C34_BAD=$(echo "$CHECK34" | sed -n 's/^TOTALS matrix_rows=[0-9]* matrix_bad=\([0-9]*\) body_bad=\([0-9]*\).*/\1 \2/p')
+C34_MBAD=$(echo "$C34_BAD" | cut -d' ' -f1)
+C34_BBAD=$(echo "$C34_BAD" | cut -d' ' -f2)
+if [ "${C34_MBAD:-1}" -eq 0 ] && [ "${C34_BBAD:-1}" -eq 0 ]; then
+    ok "All 569 PA-control objectives (matrix + PA-body parentheticals) carry their canonical process-area name from value-stream-index.md"
+else
+    error "PA-control objective-name drift (matrix: $C34_MBAD, PA bodies: $C34_BBAD) — re-run 07-methodology/fix-ctl-pa-names.py:"
+    echo "$CHECK34" | grep -E '^BAD-' | sed 's/^BAD-MATRIX|/    /; s/^BAD-BODY|/    /' | head -25
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

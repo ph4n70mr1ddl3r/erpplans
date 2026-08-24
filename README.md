@@ -237,7 +237,7 @@ erpplans/
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── validate-repo.sh              Cross-reference validation (32 checks)
+    ├── validate-repo.sh              Cross-reference validation (34 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── add-automation-controls.py    Automation/Controls field adder
@@ -251,7 +251,9 @@ erpplans/
     ├── fix-toc-anchors.py            Intra-file TOC anchor repairer (Check 23 companion)
     ├── fix-table-structure.py        One-time table delimiter/structure repairer (Check 29 companion)
     ├── fix-toc-completeness.py       PA TOC completeness/stray-fragment repairer (Check 30 companion)
-    └── fix-pa-names.py               PA-name 3-way aligner: H1 ↔ VS README ↔ index (Check 31 companion)
+    ├── fix-pa-names.py               PA-name 3-way aligner: H1 ↔ VS README ↔ index (Check 31 companion)
+    ├── fix-pa-wrefs.py               Dangling/misdirected W- & CTL-reference repairer inside PA bodies (Check 33 companion)
+    └── fix-ctl-pa-names.py           PA-control objective canonicalizer: matrix ↔ index ↔ PA bodies (Check 34 companion)
 ```
 
 ## The Model Company at a Glance
