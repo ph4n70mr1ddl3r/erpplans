@@ -1285,6 +1285,109 @@ else
     echo "$CHECK29" | grep -E '^(SEP\||ROW\|)' | sed 's/^SEP|/    /; s/^ROW|/    /' | head -25
 fi
 
+# --- Check 30: PA TOC hygiene (completeness, duplicates, stray fragments) ---
+echo "--- Check 30: PA-file TOC completeness & stray-fragment guard ---"
+# Consistency review #18 (2026-06-28) found a defect class Check 23 cannot see: Check 23
+# verifies every TOC ANCHOR resolves to a heading, but never asks whether the TOC is
+# complete, de-duplicated, or free of debris. Found & repaired by
+# 07-methodology/fix-toc-completeness.py (companion script):
+#   (a) stray mid-file TOC fragments — nav lists left inside the workflow body when
+#       appended workflows were merged (VS-04 PA-04.2: 6 lines; VS-06 PA-06.2: 2 lines);
+#   (b) duplicate TOC entries (the ID-level symptom of (a));
+#   (c) a shipped workflow heading with NO TOC entry (VS-12 PA-12.2: W1318 — invisible
+#       in the file's navigation).
+# Convention (WORKFLOW-FORMAT-GUIDE.md): the TOC indexes '## W…' (h2) workflows only —
+# '### W…' parent/summary sub-workflows are deliberately not TOC-indexed.
+CHECK30=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+WF = os.path.join(ROOT, "01-model-company", "workflows")
+TOC_LINE = re.compile(r"^- \[(W[^\]]+)\]\(#([^)]+)\)")
+H2 = re.compile(r"^## (W\d+[A-Z]?(?:\.\d+[a-z]?)?)\. ")
+stray = dup = missing = 0
+for path in sorted(glob.glob(os.path.join(WF, "VS-*", "PA-*.md"))):
+    rel = os.path.relpath(path, ROOT)
+    lines = open(path, encoding="utf-8").read().split("\n")
+    seen_first_wf = False
+    toc, heads = [], []
+    for i, ln in enumerate(lines, 1):
+        if H2.match(ln):
+            seen_first_wf = True
+            heads.append(H2.match(ln).group(1))
+        m = TOC_LINE.match(ln)
+        if m:
+            toc.append(re.match(r"(W\d+[A-Z]?(?:\.\d+[a-z]?)?)", m.group(1)).group(1))
+            if seen_first_wf:
+                stray += 1
+                print(f"STRAY|{rel}:{i}: TOC line after first workflow heading")
+    for w, c in __import__("collections").Counter(toc).items():
+        if c > 1:
+            dup += 1
+            print(f"DUP|{rel}: TOC entry {w} listed {c}x")
+    for w in heads:
+        if w not in toc:
+            missing += 1
+            print(f"MISS|{rel}: workflow {w} has no TOC entry")
+print(f"TOTALS stray={stray} dup={dup} missing={missing}")
+PY
+)
+C30_TOTALS=$(echo "$CHECK30" | sed -n 's/^TOTALS stray=\([0-9]*\) dup=\([0-9]*\) missing=\([0-9]*\)$/\1 \2 \3/p')
+C30_STRAY=$(echo "$C30_TOTALS" | cut -d' ' -f1); C30_DUP=$(echo "$C30_TOTALS" | cut -d' ' -f2); C30_MISS=$(echo "$C30_TOTALS" | cut -d' ' -f3)
+if [ "${C30_STRAY:-1}" -eq 0 ] && [ "${C30_DUP:-1}" -eq 0 ] && [ "${C30_MISS:-1}" -eq 0 ]; then
+    ok "All 569 PA-file TOCs are complete (every ## workflow indexed), duplicate-free, and free of stray mid-file fragments"
+else
+    error "PA TOC hygiene defects found (stray: $C30_STRAY, duplicate: $C30_DUP, missing: $C30_MISS) — run 07-methodology/fix-toc-completeness.py:"
+    echo "$CHECK30" | grep -E '^(STRAY\||DUP\||MISS\|)' | sed 's/^[A-Z]*|/    /' | head -25
+fi
+
+# --- Check 31: PA-name 3-way consistency (H1 vs VS-README row vs index bullet) ---
+echo "--- Check 31: PA-name 3-way consistency ---"
+# Consistency review #18 (2026-06-28) found 38 name drifts across the three places a
+# process-area name is stated (PA file H1, VS README 'Process Areas' row, value-stream-index
+# bullet) — 37 H1s that had drifted from the canonical index/README name (mostly
+# Expansion-block shortenings like 'Coupon & Voucher Creation' vs 'Coupon & Voucher
+# Creation & Distribution', 'and'/'&' and ':'/'—' variants) plus one VS README outlier
+# (PA-69.1). Repaired by 07-methodology/fix-pa-names.py; canonical source = index bullet.
+CHECK31=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+WF = os.path.join(ROOT, "01-model-company", "workflows")
+idx = open(os.path.join(WF, "value-stream-index.md"), encoding="utf-8").read()
+idx_pa = {m.group(1): (m.group(2), m.group(3)) for m in re.finditer(
+    r"^- \*\*(PA-\d+\.\d+)\*\* \[([^\]]+)\]\(([^)]+)\) — (\d+) workflows", idx, re.M)}
+bad = 0
+for vsdir in sorted(glob.glob(os.path.join(WF, "VS-*"))):
+    vrd = open(os.path.join(vsdir, "README.md"), encoding="utf-8").read()
+    vr = {m.group(1): (m.group(3).strip(), m.group(2)) for m in re.finditer(
+        r"^\| \[(PA-\d+\.\d+)\]\(([^)]+)\) \| ([^|]+) \| \d+ \|", vrd, re.M)}
+    for p in sorted(glob.glob(os.path.join(vsdir, "PA-*.md"))):
+        pid = re.match(r"(PA-\d+\.\d+)-", os.path.basename(p)).group(1)
+        rel = os.path.relpath(p, ROOT)
+        h1 = open(p, encoding="utf-8").read().split("\n", 1)[0]
+        if pid not in idx_pa:
+            bad += 1; print(f"BAD|{rel}: PA absent from value-stream-index bullets"); continue
+        cname, clink = idx_pa[pid]
+        if h1 != f"# {pid} — {cname}":
+            bad += 1; print(f"BAD|{rel}: H1 {h1!r} != canonical '# {pid} — {cname}'")
+        if pid in vr:
+            rname, rlink = vr[pid]
+            if rname != cname:
+                bad += 1; print(f"BAD|{os.path.relpath(vsdir, ROOT)}/README.md: {pid} row name {rname!r} != canonical {cname!r}")
+            if os.path.basename(p) != rlink:
+                bad += 1; print(f"BAD|{os.path.relpath(vsdir, ROOT)}/README.md: {pid} links {rlink!r} != file {os.path.basename(p)!r}")
+        else:
+            bad += 1; print(f"BAD|{os.path.relpath(vsdir, ROOT)}/README.md: {pid} has no Process Areas row")
+print(f"TOTALS bad={bad}")
+PY
+)
+C31_BAD=$(echo "$CHECK31" | sed -n 's/^TOTALS bad=\([0-9]*\)$/\1/p')
+if [ "${C31_BAD:-1}" -eq 0 ]; then
+    ok "All 569 process-area names agree 3-way (PA-file H1 == VS-README row == value-stream-index bullet, canonical = index)"
+else
+    error "PA-name drift found ($C31_BAD location(s)) — run 07-methodology/fix-pa-names.py (canonical source: value-stream-index.md):"
+    echo "$CHECK31" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
