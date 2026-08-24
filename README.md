@@ -239,6 +239,7 @@ erpplans/
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
     ├── validate-repo.sh              Cross-reference validation (26 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
+    ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── add-automation-controls.py    Automation/Controls field adder
     ├── backfill-controls.py          CTL-XX backfiller for Controls sections
     ├── add-expansion-anchors.py      One-time expansion/legacy-block anchor-control adder (CTL-172–239)
@@ -288,7 +289,7 @@ erpplans/
 |---|---|---|
 | Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
 | Workflows | 5,349 fully specified across 188 value streams | `workflows/value-stream-index.md` |
-| Criticality classification | **2,753 of 5,349 workflows classified** (51%; the confirmed register holds 2,776 rows incl. 23 `###` parent/summary sub-workflows); 2,596 remain unclassified, all carrying a keyword-driven proposed tier in `workflow-criticality-proposed.md` pending review | `workflows/workflow-criticality-classification.md` |
+| Criticality classification | **All 5,349 workflows classified (100%)** — the confirmed register holds 5,372 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted), leaving `workflow-criticality-proposed.md` empty | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 239 controls mapped to workflows and requirements (67 core + 104 gap-analysis anchors CTL-68–171 + 68 expansion/legacy-block anchors CTL-172–239) | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 

@@ -436,7 +436,19 @@ for i,ln in enumerate(lines):
 # (2,440) row, which counts register rows incl. 23 parent/summary sub-workflows.
 intro_m=re.search(r'An additional ([0-9,]+) workflows \(([0-9,]+) total . ([0-9,]+) classified\)', f)
 gt_m=re.search(r'\| \*\*Grand Total\*\* \| \*\*([0-9,]+)\*\* unique .##. workflows \(([0-9,]+) confirmed \+ ([0-9,]+) unclassified', f)
-if intro_m:
+# Since the 2026-06-28 Full-Coverage Confirmation Pass the intro banner declares full
+# coverage ('Classifies all 5,349 unique ... Zero workflows remain unclassified'). That
+# form is accepted and cross-checked against the Grand Total row instead (confirmed ==
+# unique, unclassified == 0).
+full_m=re.search(r'^> Classifies all ([0-9,]+) unique operational workflows', f, re.M) and re.search(r'^> .*Zero workflows remain unclassified', f, re.M)
+if full_m and not intro_m:
+    if gt_m:
+        g=int(gt_m.group(1).replace(",","")); c=int(gt_m.group(2).replace(",","")); u=int(gt_m.group(3).replace(",",""))
+        if c!=g: errs.append(f"Grand Total confirmed-unique ({c:,}) != unique total ({g:,}) under full coverage")
+        if u!=0: errs.append(f"Grand Total unclassified ({u:,}) must be 0 under the full-coverage banner")
+    else:
+        errs.append("cannot find Grand Total row to cross-check the full-coverage intro banner")
+elif intro_m:
     unc=int(intro_m.group(1).replace(",","")); tot=int(intro_m.group(2).replace(",","")); cls=int(intro_m.group(3).replace(",",""))
     if tot-cls!=unc:
         errs.append(f"Intro banner arithmetic wrong: {tot:,} total − {cls:,} classified = {tot-cls:,}, but states {unc:,} unclassified")
@@ -446,7 +458,7 @@ if intro_m:
         if cls!=c: errs.append(f"Intro banner classified ({cls:,}) != Summary Grand Total confirmed-unique ({c:,})")
         if unc!=u: errs.append(f"Intro banner unclassified ({unc:,}) != Summary Grand Total unclassified ({u:,})")
 else:
-    errs.append("Could not locate intro-banner 'An additional N workflows (M total − K classified)' sentence")
+    errs.append("Could not locate intro-banner (either the pre-2026-06-28 'An additional N workflows (M total − K classified)' form or the full-coverage 'Zero workflows remain unclassified' form)")
 print("\n".join(errs))
 PY
 )
@@ -870,21 +882,25 @@ else:
         if got is not None and got != want:
             errors.append(f"classification proposed-summary {label} = {got:,} but register = {want:,}")
 
-# ---- Part B: stale canonical unclassified figure '2,564' in current-state prose ----
+# ---- Part B: stale canonical unclassified figure in current-state prose ----
+# '2,564' was the pre-Pass-26–29 figure; '2,596' became stale itself when the 2026-06-28
+# Full-Coverage Confirmation Pass closed the backlog to zero. Both are guarded with the
+# same SKIP-docs / 'X -> Y' change-note exclusions.
 SKIP = {'CHANGELOG.md', 'workflow-gap-analysis.md', 'headcount-reality-check.md'}
-pat = re.compile(r'(?<!\d)2,564(?!\d)')
-for dirpath, _d, files in os.walk(ROOT):
-    if os.sep + '.git' in dirpath: continue
-    for fn in files:
-        if not fn.endswith('.md') or fn in SKIP: continue
-        path = os.path.join(dirpath, fn)
-        txt = open(path, encoding='utf-8', errors='replace').read()
-        for m in pat.finditer(txt):
-            lo = max(0, m.start()-25); hi = min(len(txt), m.end()+25)
-            if '->' in txt[lo:hi] or '\u2192' in txt[lo:hi]:
-                continue  # legitimate historical 'X -> Y' change-note
-            line_no = txt.count('\n', 0, m.start()) + 1
-            stale.append(f"{os.path.relpath(path, ROOT)}:{line_no}")
+for pat_src in (r'(?<!\d)2,564(?!\d)', r'(?<!\d)2,596(?!\d)'):
+    pat = re.compile(pat_src)
+    for dirpath, _d, files in os.walk(ROOT):
+        if os.sep + '.git' in dirpath: continue
+        for fn in files:
+            if not fn.endswith('.md') or fn in SKIP: continue
+            path = os.path.join(dirpath, fn)
+            txt = open(path, encoding='utf-8', errors='replace').read()
+            for m in pat.finditer(txt):
+                lo = max(0, m.start()-25); hi = min(len(txt), m.end()+25)
+                if '->' in txt[lo:hi] or '\u2192' in txt[lo:hi]:
+                    continue  # legitimate historical 'X -> Y' change-note
+                line_no = txt.count('\n', 0, m.start()) + 1
+                stale.append(f"{os.path.relpath(path, ROOT)}:{line_no}")
 
 # ---- Part C: touchpoint-map self-declared reconciliation vs canonical reality ----
 idx = open(f"{WF}/value-stream-index.md", encoding='utf-8').read()
@@ -937,9 +953,9 @@ else
     echo "$CHECK25" | grep '^A_ERR|' | sed 's/^A_ERR|/    /'
 fi
 if [ "$B_STALE" -eq 0 ]; then
-    ok "No stale unclassified-workflow figure '2,564' in current-state prose (canonical figure is 2,596; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
+    ok "No stale unclassified-workflow figure '2,564'/'2,596' in current-state prose (register at full coverage — 0 unclassified — since 2026-06-28; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
 else
-    warn "Stale unclassified-workflow figure '2,564' appears $B_STALE time(s) in current-state prose (canonical figure is now 2,596):"
+    warn "Stale unclassified-workflow figure '2,564'/'2,596' appears $B_STALE time(s) in current-state prose (register at full coverage since 2026-06-28 — use an 'X -> Y' change-note or drop the figure):"
     echo "$CHECK25" | grep '^B_STALE|' | sed 's/^B_STALE|/    /'
 fi
 

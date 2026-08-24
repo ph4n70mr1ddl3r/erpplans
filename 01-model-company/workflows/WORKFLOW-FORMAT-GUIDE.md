@@ -119,7 +119,7 @@ workflows/
 ├── value-stream-index.md              Master index (8 families · 188 VS · 569 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
-├── workflow-criticality-classification.md  Tier 1/2/3 priorities (2,776 confirmed rows; 2,596 proposed in workflow-criticality-proposed.md)
+├── workflow-criticality-classification.md  Tier 1/2/3 priorities (5,372 confirmed rows = full coverage; workflow-criticality-proposed.md now empty)
 ├── workflow-criticality-proposed.md      Keyword-driven tier proposal (pending human review)
 ├── workflow-dependency-map.md         Prerequisite relationships, critical path
 ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
