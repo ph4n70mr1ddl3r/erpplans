@@ -24,7 +24,7 @@ controls (CTL-68-CTL-171, one per value stream VS-89-VS-192); running this tool 
 extension backfilled 496 further Controls sections. The 2026-06-28 v9 extension
 (add-expansion-anchors.py) added the final 68 expansion/legacy-block anchors
 (CTL-172-CTL-239) covering every remaining value stream with no register row; the re-run
-backfilled a further 275 Controls sections. Register total is now 239 controls (57P/182D).
+backfilled a further 275 Controls sections. The 2026-06-28 v10 extension (add-pa-controls.py) added 569 process-area operating controls (CTL-240-CTL-808, one per PA mapped to every workflow of that PA); the re-run closed CTL-XX citation coverage to 100% (+3,939 sections; 0 pure-boilerplate remaining). Register total is now 808 controls (88P/720D).
 Per-workflow Controls-section quality beyond the mapped anchors remains the live backlog
 tracked by validator Check 21. This tool picks up any new mappings automatically as
 the register grows.
