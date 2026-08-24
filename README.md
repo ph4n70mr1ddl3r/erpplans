@@ -27,7 +27,7 @@ erpplans/
 ├── README.md                    ← You are here
 ├── 01-model-company/            ← Complete model company profile, requirements & workflows
 │   ├── model-company-profile.md       Company profile, operations, financials
-│   ├── erp-requirements.md            733 requirements across 38 categories
+│   ├── erp-requirements.md            728 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
 │   ├── workflows/                      5,349 workflows organized by value stream
 │   │   ├── README.md                           Navigation hub & quick stats
@@ -283,7 +283,7 @@ erpplans/
 
 | Metric | Value | Source |
 |---|---|---|
-| Requirements | **733** across 38 categories | `01-model-company/erp-requirements.md` |
+| Requirements | **728** across 38 categories | `01-model-company/erp-requirements.md` |
 | Workflows (total) | **5,349** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 808 (88 preventive, 720 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
@@ -294,7 +294,7 @@ erpplans/
 
 | Coverage Area | Status | Source |
 |---|---|---|
-| Requirements | 733 fully specified (431 Must / 296 Should / 6 Nice) | `erp-requirements.md` |
+| Requirements | 728 fully specified (429 Must / 293 Should / 6 Nice) | `erp-requirements.md` |
 | Workflows | 5,349 fully specified across 188 value streams | `workflows/value-stream-index.md` |
 | Criticality classification | **All 5,349 workflows classified (100%)** — the confirmed register holds 5,372 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted), leaving `workflow-criticality-proposed.md` empty | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 808 controls mapped to workflows and requirements (67 core + 172 domain anchors CTL-68–239 + 569 process-area operating controls CTL-240–808) — CTL-XX citation coverage is 100% of workflows | `internal-controls-matrix.md` |

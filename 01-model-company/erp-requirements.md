@@ -12,7 +12,7 @@
 |---|---|---|---|
 | [R1](#r1-financial-management) | Financial Management | FIN-001 – FIN-079 | 79 |
 | [R2](#r2-inventory-management) | Inventory Management | INV-001 – INV-027 | 27 |
-| [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-043 (incl. PUR-025a/b) | 45 |
+| [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-043 (incl. PUR-025a/b) | 44 |
 | [R4](#r4-warehouse-management) | Warehouse Management | WMS-001 – WMS-023, WHL-001 – WHL-003 | 26 |
 | [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-121 (incl. POS-014a) | 118 |
 | [R6](#r6-ecommerce-integration) | Ecommerce Integration | ECOM-001 – ECOM-033 | 33 |
@@ -25,7 +25,7 @@
 | [R13](#r13-master-data-management) | Master Data Management | MDM-001 – MDM-033 | 33 |
 | [R14](#r14-non-functional-requirements) | Non-Functional Requirements | NFR-001 – NFR-041 (incl. NFR-022a) | 42 |
 | [R15](#r15-installation--value-added-services) | Installation & Services | SRV-001 – SRV-005 | 5 |
-| [R16](#r16-wholesale--reseller-operations) | Wholesale & Reseller | WSL-001 – WSL-008 | 8 |
+| [R16](#r16-wholesale--reseller-operations) | Wholesale & Reseller | WSL-001 – WSL-008 | 7 |
 | [R17](#r17-corporate-governance-legal--strategy) | Governance, Legal & Strategy | GOV-001 – GOV-056 | 55 |
 | [R18](#r18-additional-cross-functional-requirements) | Cross-Functional Additions | FIN-048+, HR-028+, etc. | — |
 | R19–R24 | Operational Gap Closure (Rounds 11–19) | Mixed | — |
@@ -39,17 +39,21 @@
 | R32 | Operational Gap Closure (Round 21) | Mixed | — |
 | — | Additional (COM, ENG, ESG, HAZ, HSE, LOG, MER, MKT, MNT, PRJ, PROP, REG, AUD) | Various | 59 |
 
-> **Total: 733 unique requirements** across 38 prefix categories. Requirements marked with
-> priority: **Must Have** (431), **Should Have** (296), **Nice to Have** (6).
+> **Total: 728 unique requirements** across 38 prefix categories. Requirements marked with
+> priority: **Must Have** (429), **Should Have** (293), **Nice to Have** (6).
 
 > **Numbering note (2026-06-28):** eight requirement numbers were never allocated during
 > authoring and remain intentionally unused — **POS-087–POS-090**, **GOV-049**, and
 > **HAZ-002–HAZ-004** — so the ID ranges above are inclusive bounds, not contiguous
 > allocations (e.g. R5 defines 118 requirements inside POS-001–POS-121, and R17 defines 55
-> inside GOV-001–GOV-056). The 733 total counts defined rows only. The unused numbers are
-> left in place (not renumbered) because requirement IDs are referenced across the
-> requirement-workflow matrix, the controls register, and the workflow catalog — the same
-> treatment as the retired VS-49–VS-52 value-stream numbers.
+> inside GOV-001–GOV-056). Five further numbers were retired on 2026-08-24 (consistency
+> review #22) as exact duplicates of surviving rows — **PUR-015** (= FIN-019),
+> **WSL-002** (= CRM-012 + CRM-013), and **WMS-009–WMS-011** (= WHL-001–WHL-003) — so the
+> R3/R16 ranges above are inclusive bounds with gaps. The 728 total counts defined rows
+> only. The unused and retired numbers are left in place (not renumbered, not reused)
+> because requirement IDs are referenced across the requirement-workflow matrix, the
+> controls register, and the workflow catalog — the same treatment as the retired
+> VS-49–VS-52 value-stream numbers.
 
 ---
 
@@ -125,7 +129,6 @@
 | PUR-012 | Return to Vendor (RTV) | Must Have | Defective, overage, wrong items |
 | PUR-013 | Direct Store Delivery (DSD) | Must Have | Store-level GR against PO; 3-way AP matching for DSD goods (~30% of inbound) |
 | PUR-014 | Vendor Managed Inventory | Should Have | Sell-through data sharing, ASN receipt, auto-confirmation, and settlement |
-| PUR-015 | Vendor Rebate Management | Should Have | Rebate accrual, tracking, and settlement per agreement |
 
 ## R4. Warehouse Management
 
@@ -474,7 +477,6 @@
 | Req ID | Requirement | Priority | Notes |
 |---|---|---|---|
 | WSL-001 | Wholesale & Reseller Operations | Should Have | Wholesale customer onboarding with credit check, bulk order fulfillment with cross-dock option, wholesale-specific pricing tiers, pallet-level picking & shipping, wholesale invoice & settlement |
-| WSL-002 | Trade Sales Pipeline & Territory Management | Should Have | Trade sales pipeline stages (lead → qualify → quote → negotiate → close), territory assignment, pipeline forecasting, sales rep performance tracking, trade counter / pro desk operations |
 
 ---
 
@@ -586,9 +588,6 @@
 | POS-113 | Store-Level Vendor Representative Access & Activity Management | Should Have | Daily management of in-store vendor representatives (promodizers, merchandisers, product trainers, brand ambassadors): visitor registration with government-issued ID, temporary badge issuance with time-limited access, activity assignment by Department Supervisor (shelf stocking, product demonstration, customer assistance, inventory audit), time tracking (check-in/check-out), activity output verification and documentation, incident reporting protocol, vendor rep performance feedback to vendor per W269; compliance with store access control per W71; integration with vendor promodizer labor compliance per W449 per W581 |
 | POS-114 | Store-Level Fire Drill Execution & Documentation | Should Have | Semi-annual fire drill execution per BFP Fire Code (RA 9514) and FSIC compliance (W476): drill scheduling (off-peak hours, alternating morning/afternoon), staff briefing on evacuation routes and assembly points, fire alarm activation and timed evacuation, assembly point accountability (biometric/roll call verification), simulated customer evacuation, all-clear signal and building re-entry, post-drill debrief with evacuation time and issues, BFP-compliant documentation (attendance, evacuation time, issues, corrective actions), corrective action tracking; integration with W476 (BFP fire safety certificate), W141 (workplace safety inspection), W330 (in-store emergency response) per W582 |
 | POS-115 | Store-Level Seasonal Promotional Transition & Display Reset | Should Have | Systematic transition between promotional periods: old promotional teardown (signage removal, display dismantle, shelf tag removal per W63), new promotional setup (planogram execution per W86, signage installation, shelf tag printing per W181, POS configuration verification per W523), endcap and feature display build, promotional stock placement and fronting, pre-opening walk-through verification, photographic documentation for HQ compliance audit, promotional effectiveness baseline capture; integration with W13 (promotions), W262 (store promotional setup), W523 (promotional terminal setup), W554 (shelf replenishment) per W583 |
-| WMS-009 | DC Daily Operations & Shift Management | Must Have | Holistic daily DC operations management: shift start-up briefing (daily volume forecast, priority orders, labor allocation), shift handover log (open issues, pending receipts, outbound priorities, equipment status), labor utilization monitoring (planned vs. actual productivity by zone), operational pace tracking (receiving throughput, picking rate, shipping on-time %), exception handling and escalation, end-of-day KPI snapshot; 2-shift operation (06:00–14:00, 14:00–22:00) for each of 4 DCs; integration with W3 (receiving), W106 (dispatch), W585 (dock scheduling), W586 (KPI dashboard) per W584 |
-| WMS-010 | DC Dock Scheduling & Appointment Management | Must Have | Systematic scheduling of inbound and outbound dock appointments: appointment request intake (vendor, carrier, 3PL), dock door assignment based on load type (container, truck, van), time slot allocation (30-min windows, max 2 concurrent inbound per DC), carrier confirmation and notification, day-of check-in with gate guard, dock utilization tracking and bottleneck alerting, no-show management (auto-release slot after 30 min grace), daily dock schedule publication; 8–12 dock doors per DC, ~70 total truck movements per DC per day; integration with W3 (receiving), W106 (dispatch), W242 (3PL review) per W585 |
-| WMS-011 | DC Daily KPI Dashboard & Performance Tracking | Should Have | Automated daily DC performance monitoring: receiving throughput (lines/hour, receipts completed), putaway productivity (units/hour, location accuracy), picking productivity (lines/hour, pick accuracy), shipping on-time % (loads dispatched by scheduled time), labor utilization (productive hours vs. scheduled hours), inventory accuracy (adjustments posted), safety incidents; overnight KPI calculation, morning dashboard publication, exception flagging with color-coded status, corrective action assignment, weekly trend feed to DC Manager and VP Supply Chain; integration with W584 (daily operations), W44 (vendor scorecard), W242 (3PL review) per W586 |
 | INV-023 | Inventory Obsolescence Identification & Write-Off Management | Must Have | Formal process for inventory that has exhausted all disposition channels (markdown, clearance, RTV, liquidation per W220): obsolescence candidate identification (items with zero sales > 180 days and failed disposition), write-off request with detailed justification and total financial impact, approval matrix (Store Manager < PHP 50K, Regional Manager < PHP 200K, VP Merchandising < PHP 1M, CFO/Board > PHP 1M), BIR-compliant documentation (affidavit of loss/destruction, board resolution for material amounts > PHP 500K), system write-off execution (inventory removal, GL posting to loss account), post-write-off physical disposal with witness documentation; quarterly write-off batch to minimize GL noise; integration with W220 (SLOB), W93 (markdown), W88 (RTV), W92 (adjustments) per W587 |
 | INV-024 | Seasonal Inventory Build-Down & Transition Execution | Should Have | End-of-season inventory reduction and transition: pre-season-end review at T-8 weeks (current sell-through vs. plan, remaining stock value), markdown escalation schedule (T-8: 20%, T-4: 40%, T-2: 60%, T-1: 75%), weekly sell-through tracking during build-down, final disposition decision tree at T-0 (continue selling at clearance, RTV, donate, write-off per W587), seasonal display teardown, new season inventory receipt and staging, new season planogram execution per W86, transition period dual-display management; covers 4 major Philippine seasons (Christmas, Summer, Back-to-School, Rainy Season) with 3,000–5,000 seasonal SKUs per event; integration with W32 (seasonal buying), W93 (markdown), W220 (SLOB), W262 (promo setup), W583 (promo transition) per W588 |
 | FIN-076 | Weekly Cash Flow Forecast & Treasury Planning | Should Have | Rolling 4-week forward cash flow forecast: prior week actual cash position reconciliation, store cash collection aggregation by channel (cash, card, e-wallet, trade AR), AP payment forecast (vendor payment run schedule per W556), payroll forecast (semi-monthly 15th and 30th for 5 entities per W10), intercompany settlement forecast (monthly 5th per W14), LC/import payment calendar (per W232/W144), FX exposure review (per W80), 4-week rolling forecast update, cash surplus/deficit action plan (short-term investment per W318 or draw from debt facility per W319); updated every Monday; integration with W30 (daily treasury), W89 (bank reconciliation), W99 (payment settlement) per W589 |
@@ -851,7 +850,7 @@
 
 ---
 
-*Document Version: 23.0 | 2026-08-24 — consistency review #19: B2B account-count canonicalization in six requirement descriptions (FIN-044, FIN-060, CRM-023, CRM-025, CRM-029, CCR-004/007) to the catalog-majority scheme — trade ~5,200, corporate ~200, total/AR ~5,400 — matching `model-company-profile.md` §9.2 as re-canonicalized in the same pass; no requirement IDs added/removed, total stays 733. Prior 22.0: numbering note added to the TOC documenting the eight never-allocated requirement numbers (POS-087–090, GOV-049, HAZ-002–004 — leftovers of the R19–R32 renumbering and round-15 HAZ authoring jump); no requirement rows changed, total stays 733. Prior 21.0: Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 733 (a later 2026-06-09 review added WHL-001–003 DC operations to R4, bringing the total from 730 to 733; reconciled with requirement-workflow-matrix.md and the validator, both of which count 733).*
+*Document Version: 24.0 | 2026-08-24 — consistency review #22: removed five exact-duplicate requirement rows whose titles AND primary-workflow mappings duplicated a surviving row — PUR-015 (= FIN-019, both W27 vendor rebate accrual & settlement), WSL-002 (= CRM-012 + CRM-013, both W103 trade sales pipeline; the extra 'trade counter / pro desk' scope is CRM-013), and WMS-009/010/011 (= WHL-001/002/003, all mapping W584/W585/W586 DC operations/dock scheduling/KPI dashboard); total **733 → 728** (429 Must / 293 Should / 6 Nice); re-pointed the one live citation of a removed ID (PA-03.4 System Touchpoints '(PUR-015)' → '(PUR-037)', which was itself a mis-citation — PUR-015 was rebate management, not the self-service portal) and trimmed CTL-39's Req Ref 'FIN-019, PUR-015' → 'FIN-019'; numbering note extended with the retired numbers; validator Check 36 added (duplicate-requirement-title guard). Prior 23.0: B2B account-count canonicalization in six requirement descriptions (FIN-044, FIN-060, CRM-023, CRM-025, CRM-029, CCR-004/007) to the catalog-majority scheme — trade ~5,200, corporate ~200, total/AR ~5,400 — matching `model-company-profile.md` §9.2 as re-canonicalized in the same pass; no requirement IDs added/removed, total stays 733. Prior 22.0: numbering note added to the TOC documenting the eight never-allocated requirement numbers (POS-087–090, GOV-049, HAZ-002–004 — leftovers of the R19–R32 renumbering and round-15 HAZ authoring jump); no requirement rows changed, total stays 733. Prior 21.0: Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 733 (a later 2026-06-09 review added WHL-001–003 DC operations to R4, bringing the total from 730 to 733; reconciled with requirement-workflow-matrix.md and the validator, both of which count 733).*
 
 ---
 

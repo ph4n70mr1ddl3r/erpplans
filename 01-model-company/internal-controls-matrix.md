@@ -88,7 +88,7 @@
 | CTL-36 | Ensure recall execution | P | System blocks recalled items at POS; ecommerce auto-removes; store quarantine tracked; recall coverage measured | VP Merchandising | W29.5–7 | INV-016 |
 | CTL-37 | Ensure warranty claim validity | D | System verifies warranty period from original transaction; defect documented with photos; SLA tracking on vendor response | CSR / Buyer | W33 | POS-019 |
 | CTL-38 | Ensure consignment settlement accuracy | D | System auto-records sell-through at POS; monthly settlement report confirmed by Buyer before payment; period-end accrual for sold-but-unsettled | Buyer / Cost Accountant | W23.6–9, W23.6a | FIN-018, INV-017 |
-| CTL-39 | Ensure vendor rebate accuracy | D | System auto-accrues rebates at purchase/sale; monthly Cost Accountant validates against agreement; Buyer confirms settlement before payment | Cost Accountant / Buyer | W27.3–9 | FIN-019, PUR-015 |
+| CTL-39 | Ensure vendor rebate accuracy | D | System auto-accrues rebates at purchase/sale; monthly Cost Accountant validates against agreement; Buyer confirms settlement before payment | Cost Accountant / Buyer | W27.3–9 | FIN-019 |
 | CTL-40 | Ensure emergency procurement regularization | D | Emergency procurements must be formalized within 5 business days; system auto-escalates if not; monthly Controller review of emergency procurement frequency | Controller | W60.6–7 | PUR-001 |
 | CTL-41 | Ensure LGU permit compliance | D | System alerts 60 days before permit expiry; expired permits escalated; locations blocked if permits lapse (operational risk) | Regulatory Officer | W54.2, W54.10 | NFR-017 |
 

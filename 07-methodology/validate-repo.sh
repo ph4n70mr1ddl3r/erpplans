@@ -1591,6 +1591,41 @@ else
     echo "$CHECK35" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
 fi
 
+# --- Check 36: duplicate requirement titles in erp-requirements.md ---
+echo "--- Check 36: Duplicate requirement titles (erp-requirements.md register) ---"
+# Consistency review #22 (2026-08-24) found five exact-duplicate requirement rows no prior
+# check saw: Checks 4/28/32 validate requirement ID *tokens* and TOC claims, but never the
+# titles. PUR-015 duplicated FIN-019 (same title, same primary workflow W27), WSL-002
+# duplicated CRM-012 + CRM-013 (W103; its extra scope is CRM-013), and WMS-009–011
+# duplicated WHL-001–003 (same titles, same primary workflows W584/W585/W586). Two IDs for
+# one capability is an ambiguity defect: any consumer citing the capability cannot tell
+# which ID is canonical, and the duplicate rows drifted independently (priorities differed:
+# WHL-001 S vs WMS-009 M, WMS-011 S vs WHL-003 M). All five rows were removed (total
+# 733 -> 728; see erp-requirements.md v24.0 note); this check enforces title uniqueness so
+# a future authoring round cannot re-register an existing capability under a new prefix.
+CHECK36=$(python3 - "$REPO_ROOT" <<'PY'
+import collections, re, sys
+path = sys.argv[1] + "/01-model-company/erp-requirements.md"
+titles = collections.defaultdict(list)
+for line in open(path, encoding="utf-8"):
+    m = re.match(r"^\| ([A-Z]{2,5}-\d+[ab]?) \| (.+?) \|", line)
+    if m:
+        titles[m.group(2).strip().lower()].append(m.group(1))
+dups = {t: ids for t, ids in titles.items() if len(ids) > 1}
+n = sum(len(v) for v in dups.values())
+for t, ids in sorted(dups.items()):
+    print(f"DUP|{' / '.join(sorted(ids))}: {t}")
+print(f"TOTALS dup_titles={len(dups)} dup_rows={n}")
+PY
+)
+C36_DUPS=$(echo "$CHECK36" | sed -n 's/^TOTALS dup_titles=\([0-9]*\) dup_rows=[0-9]*/\1/p')
+if [ "${C36_DUPS:-1}" -eq 0 ]; then
+    ok "All 728 erp-requirements.md requirement titles are unique across all 38 prefix categories (no capability registered twice under different IDs)"
+else
+    error "Duplicate requirement titles found ($C36_DUPS distinct title(s)) — merge into one canonical row and remap citations (see erp-requirements.md v24.0 note for the review #22 precedent):"
+    echo "$CHECK36" | grep -E '^DUP\|' | sed 's/^DUP|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
