@@ -14,7 +14,7 @@
 | [R2](#r2-inventory-management) | Inventory Management | INV-001 – INV-027 | 27 |
 | [R3](#r3-procurement--purchasing) | Procurement & Purchasing | PUR-001 – PUR-043 (incl. PUR-025a/b) | 45 |
 | [R4](#r4-warehouse-management) | Warehouse Management | WMS-001 – WMS-023, WHL-001 – WHL-003 | 26 |
-| [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-121 (incl. POS-014a, POS-022a) | 118 |
+| [R5](#r5-point-of-sale-pos--retail) | POS & Retail | POS-001 – POS-121 (incl. POS-014a) | 118 |
 | [R6](#r6-ecommerce-integration) | Ecommerce Integration | ECOM-001 – ECOM-033 | 33 |
 | [R7](#r7-supply-chain-planning) | Supply Chain Planning | SCP-001 – SCP-020 | 20 |
 | [R8](#r8-hr--payroll) | HR & Payroll | HR-001 – HR-054 | 54 |

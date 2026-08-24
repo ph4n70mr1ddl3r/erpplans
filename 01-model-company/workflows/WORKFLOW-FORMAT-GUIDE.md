@@ -120,7 +120,7 @@ workflows/
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
 ├── workflow-criticality-classification.md  Tier 1/2/3 priorities (5,372 confirmed rows = full coverage; workflow-criticality-proposed.md now empty)
-├── workflow-criticality-proposed.md      Keyword-driven tier proposal (pending human review)
+├── workflow-criticality-proposed.md      Keyword-driven tier proposal register (currently empty — 0 rows; repopulates if new workflows ship unclassified)
 ├── workflow-dependency-map.md         Prerequisite relationships, critical path
 ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
 └── VS-<NN>-<slug>/
@@ -136,7 +136,7 @@ workflows/
 |---|---|
 | [value-stream-index.md](value-stream-index.md) | Master index of all value streams and process areas |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 priority classification (confirmed) |
-| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal for unclassified workflows (companion) |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for unclassified workflows (companion; currently empty — 0 rows — since full coverage on 2026-06-28) |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships and critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap-analysis methodology and workflow-ID allocation log |
@@ -146,4 +146,4 @@ workflows/
 
 ---
 
-*Date: 2026-06-27 (required-field completeness achieved — Participants backfilled from Steps roles via `backfill-participants.py`; System Touchpoints + Pain Points authored for VS-15–18/27/31–40/48; Check 22 green across all 5,349 workflows. Prior 2026-06-26: stale proposed-count figure `2,564` → `2,596` corrected in the Repository Layout diagram — drift from the 2026-06-25 PA-127.4 regeneration of `workflow-criticality-proposed.md`. 2026-06-25: VS-127 PA-127.4 added — 8 workflows, W5489–W5496 — specializing the S&OP/IBP consensus cycle for BuildRight's PH-retail context; totals now 5,349 workflows / 188 value streams / 569 process areas. Prior 2026-06-21: Pass 30 added VS-192 Green Fleet Transition — 24 workflows — bringing totals to 5,341 workflows / 188 value streams / 568 process areas; the family-subtotal, grand-total, and criticality-proposed coverage line are reconciled. Prior 2026-06-20: adoption sentence in “Standard analysis fields” corrected to 100% of all 5,317 workflows after reformatting W641–W647. Repository Layout counts reconciled to 188 value streams / 568 process areas / 2,588 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*
+*Date: 2026-06-28 (workflow-criticality-proposed.md descriptions aligned to the register's current state — the Repository Layout diagram row and the Related Documents row now carry the 'currently empty (0 rows)' marker with the repopulation note; same repair in workflows/README.md and the root README tree; validator Check 28 Part B now guards the descriptions. Prior 2026-06-27: required-field completeness achieved — Participants backfilled from Steps roles via `backfill-participants.py`; System Touchpoints + Pain Points authored for VS-15–18/27/31–40/48; Check 22 green across all 5,349 workflows. Prior 2026-06-26: stale proposed-count figure `2,564` → `2,596` corrected in the Repository Layout diagram — drift from the 2026-06-25 PA-127.4 regeneration of `workflow-criticality-proposed.md`. 2026-06-25: VS-127 PA-127.4 added — 8 workflows, W5489–W5496 — specializing the S&OP/IBP consensus cycle for BuildRight's PH-retail context; totals now 5,349 workflows / 188 value streams / 569 process areas. Prior 2026-06-21: Pass 30 added VS-192 Green Fleet Transition — 24 workflows — bringing totals to 5,341 workflows / 188 value streams / 568 process areas; the family-subtotal, grand-total, and criticality-proposed coverage line are reconciled. Prior 2026-06-20: adoption sentence in “Standard analysis fields” corrected to 100% of all 5,317 workflows after reformatting W641–W647. Repository Layout counts reconciled to 188 value streams / 568 process areas / 2,588 proposed; `README.md` (navigation hub) added to the layout diagram so it lists all 8 support files; classified-register reconciliation note aligned with workflow-criticality-classification.md)*

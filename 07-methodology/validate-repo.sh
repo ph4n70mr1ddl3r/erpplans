@@ -1136,6 +1136,89 @@ else
     echo "$CHECK27" | grep '^B_ERR|' | sed 's/^B_ERR|/    /'
 fi
 
+# --- Check 28: requirements-TOC letter-suffixed-ID claims + proposed-register description staleness ---
+echo "--- Check 28: requirements-TOC letter-suffixed IDs & proposed-register descriptions ---"
+# Two guards closed by consistency review #16 (2026-06-28):
+#   (A) the erp-requirements.md TOC's R5 row claimed '(incl. POS-014a, POS-022a)' but no
+#       POS-022a exists anywhere — the four letter-suffixed IDs are NFR-022a, POS-014a,
+#       PUR-025a/b. The TOC's 'incl.' claims must all exist as defined rows AND must cover
+#       every letter-suffixed ID defined in the doc (phantom claims and omissions both fail).
+#   (B) with the proposed register at 0 rows since the 2026-06-28 Full-Coverage Confirmation
+#       Pass, navigation descriptions of workflow-criticality-proposed.md must not assert a
+#       'remaining unclassified' population (stale current-state prose) and must carry the
+#       'currently empty' marker; if the register ever repopulates (new workflows shipping
+#       unclassified), the guard flips and demands the descriptions stop claiming emptiness.
+CHECK28=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+errs = []
+warns = []
+# ---- Part A: TOC letter-suffixed-ID claims vs defined letter-suffixed IDs ----
+REQ = os.path.join(ROOT, '01-model-company', 'erp-requirements.md')
+txt = open(REQ, encoding='utf-8', errors='replace').read()
+toc_end = txt.find('\n## R1.')
+toc = txt[:toc_end] if toc_end != -1 else txt
+claimed = set()
+for m in re.finditer(r'\(incl\.\s+([^)]*)\)', toc):
+    for tok in re.finditer(r'([A-Z]{2,4}-\d+)((?:[a-z])(?:/[a-z])*)', m.group(1)):
+        base, suffixes = tok.group(1), tok.group(2)
+        for suf in [s for s in suffixes.split('/') if s]:
+            claimed.add(base + suf)
+defined = set(m.group(1) for m in re.finditer(r'^\|\s*([A-Z]{2,4}-\d+[a-z])\s*\|', txt, re.M))
+for phantom in sorted(claimed - defined):
+    errs.append(f"erp-requirements.md TOC claims letter-suffixed ID {phantom}, but no such requirement row exists")
+for missing in sorted(defined - claimed):
+    errs.append(f"erp-requirements.md defines letter-suffixed ID {missing}, but the TOC's '(incl. ...)' claims omit it")
+# ---- Part B: proposed-register description staleness in navigation docs ----
+PROP = os.path.join(ROOT, '01-model-company', 'workflows', 'workflow-criticality-proposed.md')
+prop = open(PROP, encoding='utf-8', errors='replace').read()
+m = re.search(r'\*\*Workflow coverage:\*\*\s*(\d+) unclassified workflows', prop)
+coverage = int(m.group(1)) if m else -1
+if coverage == -1:
+    warns.append("workflow-criticality-proposed.md: cannot parse the '**Workflow coverage:** N unclassified workflows' banner line")
+else:
+    spots = [
+        ('README.md', 'tree'),
+        (os.path.join('01-model-company', 'workflows', 'README.md'), 'nav table'),
+        (os.path.join('01-model-company', 'workflows', 'WORKFLOW-FORMAT-GUIDE.md'), 'Related Documents table'),
+    ]
+    for rel, kind in spots:
+        path = os.path.join(ROOT, rel)
+        lines = open(path, encoding='utf-8', errors='replace').read().split('\n')
+        for i, ln in enumerate(lines, 1):
+            if 'workflow-criticality-proposed.md' not in ln:
+                continue
+            if 'validate-repo' in ln or ln.lstrip().startswith('#') or ln.lstrip().startswith('*'):
+                continue  # tool rows, headings, and dated version-note footers are not current-state descriptions
+            if coverage == 0:
+                if re.search(r'remaining unclassified', ln, re.I):
+                    warns.append(f"{rel}:{i} still describes workflow-criticality-proposed.md as holding 'the remaining unclassified workflows', but the register has stood at 0 rows since the 2026-06-28 Full-Coverage Confirmation Pass")
+                elif 'empty' not in ln.lower():
+                    warns.append(f"{rel}:{i} describes workflow-criticality-proposed.md without any emptiness marker while the register stands at 0 rows")
+            else:
+                if 'currently empty' in ln:
+                    warns.append(f"{rel}:{i} claims workflow-criticality-proposed.md is 'currently empty', but the register holds {coverage} unclassified workflows")
+print(f"A_ERRS={len(errs)}")
+for e in errs: print(f"A_ERR|{e}")
+print(f"B_WARNS={len(warns)}")
+for w in warns: print(f"B_WARN|{w}")
+PY
+)
+C28_ERRS=$(echo "$CHECK28" | sed -n 's/^A_ERRS=//p')
+C28_WARNS=$(echo "$CHECK28" | sed -n 's/^B_WARNS=//p')
+if [ "$C28_ERRS" -eq 0 ]; then
+    ok "erp-requirements.md TOC '(incl. ...)' letter-suffixed-ID claims match the defined letter-suffixed requirement rows exactly (no phantom IDs, no omissions)"
+else
+    error "erp-requirements.md TOC letter-suffixed-ID claims do not match the defined letter-suffixed requirement rows ($C28_ERRS):"
+    echo "$CHECK28" | grep '^A_ERR|' | sed 's/^A_ERR|/    /'
+fi
+if [ "$C28_WARNS" -eq 0 ]; then
+    ok "Navigation descriptions of workflow-criticality-proposed.md (root README tree, workflows/README.md, WORKFLOW-FORMAT-GUIDE.md) match the register's current state (0 unclassified rows — descriptions carry the 'currently empty' marker)"
+else
+    warn "Navigation descriptions of workflow-criticality-proposed.md drifted from the register's current state ($C28_WARNS):"
+    echo "$CHECK28" | grep '^B_WARN|' | sed 's/^B_WARN|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
