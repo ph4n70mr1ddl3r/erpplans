@@ -621,7 +621,8 @@ echo "--- Check 22: Required-field completeness ---"
 # treatment as Check 21's draft-quality tracker).
 #   Five fields are table-row form ('| **Field** |'): Trigger, Frequency, Volume, Owner, Participants.
 #   Three are ### sections: Steps, System Touchpoints, Pain Points / Risks.
-#   Time Estimate accepts either form (4924 use ###, 11 use the table row).
+#   Time Estimate accepts either form (all 5,349 workflows now use the ### form; 11 of
+#   them also retain a legacy table row — the dual form is harmless and accepted).
 # Each field is counted present if it appears in EITHER form within its workflow block.
 FIELDS=$(python3 - "$REPO_ROOT" <<'PY'
 import glob, os, re, sys
@@ -1217,6 +1218,71 @@ if [ "$C28_WARNS" -eq 0 ]; then
 else
     warn "Navigation descriptions of workflow-criticality-proposed.md drifted from the register's current state ($C28_WARNS):"
     echo "$CHECK28" | grep '^B_WARN|' | sed 's/^B_WARN|/    /'
+fi
+
+# --- Check 29: repo-wide markdown table structural integrity (delimiter + data rows) ---
+echo "--- Check 29: repo-wide table delimiter/data-row column integrity ---"
+# Consistency review #17 (2026-06-28) found 18 table defects no prior check saw:
+# Check 13 scans only the summary docs and only compares DATA rows to the header — the
+# delimiter (separator) row was never validated, and the 569 PA files were never scanned
+# for either. GFM requires the delimiter row to match the header cell count or the table
+# is NOT RECOGNIZED AT ALL (the block renders as plain text on GitHub). Defect classes
+# found & repaired by 07-methodology/fix-table-structure.py (companion script):
+#   (a) 9 delimiter rows missing columns (5-col Steps tables with 4-cell delimiters;
+#       a 2-col Field/Detail table with a 1-cell delimiter) — VS-09 x3, VS-11, VS-13,
+#       VS-20, VS-28, VS-29 x2;
+#   (b) 7 delimiter rows with excess columns (2-col Field/Detail tables carrying a
+#       4/5-cell steps-delimiter) — VS-105 x5, VS-133, VS-170;
+#   (c) a doubled delimiter line under one header — VS-29 PA-29.2;
+#   (d) a stray 1-cell '| **Steps** |' data row inside a 2-col Field/Detail table —
+#       VS-162 PA-162.3.
+# This check re-scans ALL .md files (code-fence aware, escaped-pipe aware — '\|' is a
+# literal, not a cell separator, per CommonMark) for delimiter-vs-header mismatches and
+# data-row-vs-header mismatches, so neither class can ship silently again. It subsumes
+# Check 13's second half over a wider scope (13 is retained for its leading-whitespace
+# guard and its focused summary-doc reporting).
+CHECK29=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+SEP = re.compile(r'^\|[\s:|-]+\|\s*$')
+def ncells(s):
+    return re.sub(r'\\\|', '', s).count('|') - 1
+sep_bad, row_bad = [], []
+for dirpath, _d, files in os.walk(ROOT):
+    if os.sep + '.git' in dirpath or '__pycache__' in dirpath: continue
+    for fn in sorted(files):
+        if not fn.endswith('.md'): continue
+        path = os.path.join(dirpath, fn)
+        rel = os.path.relpath(path, ROOT)
+        lines = open(path, encoding='utf-8', errors='replace').read().split('\n')
+        fence = False; hdr = None
+        for i, ln in enumerate(lines):
+            if ln.startswith('```'): fence = not fence; hdr = None; continue
+            if fence: continue
+            if ln.startswith('|'):
+                if SEP.match(ln):
+                    if hdr is not None and ncells(ln) != hdr:
+                        sep_bad.append(f"{rel}:{i+1} delimiter {ncells(ln)} cells vs header {hdr}: {ln[:50]}")
+                    continue
+                nxt = lines[i+1] if i+1 < len(lines) else ''
+                if SEP.match(nxt):
+                    hdr = ncells(ln); continue
+                if hdr is not None and ncells(ln) != hdr:
+                    row_bad.append(f"{rel}:{i+1} data row {ncells(ln)} cells vs header {hdr}: {ln[:50]}")
+            else:
+                hdr = None
+print(f"SEP={len(sep_bad)} ROW={len(row_bad)}")
+for x in sep_bad: print(f"SEP|{x}")
+for x in row_bad: print(f"ROW|{x}")
+PY
+)
+C29_SEP=$(echo "$CHECK29" | sed -n 's/^SEP=\([0-9]*\).*/\1/p')
+C29_ROW=$(echo "$CHECK29" | sed -n 's/.*ROW=\([0-9]*\)$/\1/p')
+if [ "${C29_SEP:-1}" -eq 0 ] && [ "${C29_ROW:-1}" -eq 0 ]; then
+    ok "All markdown tables repo-wide (779 .md files incl. 569 PA files) have delimiter and data rows matching their header column count (code-fence & escaped-pipe aware)"
+else
+    error "Markdown table structural defects found (delimiter: $C29_SEP, data-row: $C29_ROW) — GFM will not recognize tables whose delimiter row mismatches the header; run 07-methodology/fix-table-structure.py:"
+    echo "$CHECK29" | grep -E '^(SEP\||ROW\|)' | sed 's/^SEP|/    /; s/^ROW|/    /' | head -25
 fi
 
 echo ""

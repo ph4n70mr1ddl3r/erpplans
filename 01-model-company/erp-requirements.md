@@ -42,6 +42,15 @@
 > **Total: 733 unique requirements** across 38 prefix categories. Requirements marked with
 > priority: **Must Have** (431), **Should Have** (296), **Nice to Have** (6).
 
+> **Numbering note (2026-06-28):** eight requirement numbers were never allocated during
+> authoring and remain intentionally unused — **POS-087–POS-090**, **GOV-049**, and
+> **HAZ-002–HAZ-004** — so the ID ranges above are inclusive bounds, not contiguous
+> allocations (e.g. R5 defines 118 requirements inside POS-001–POS-121, and R17 defines 55
+> inside GOV-001–GOV-056). The 733 total counts defined rows only. The unused numbers are
+> left in place (not renumbered) because requirement IDs are referenced across the
+> requirement-workflow matrix, the controls register, and the workflow catalog — the same
+> treatment as the retired VS-49–VS-52 value-stream numbers.
+
 ---
 
 ## R1. Financial Management
@@ -842,7 +851,7 @@
 
 ---
 
-*Document Version: 21.0 | Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 733 (a later 2026-06-09 review added WHL-001–003 DC operations to R4, bringing the total from 730 to 733; reconciled with requirement-workflow-matrix.md and the validator, both of which count 733).*
+*Document Version: 22.0 | 2026-06-28 — consistency review #17: numbering note added to the TOC documenting the eight never-allocated requirement numbers (POS-087–090, GOV-049, HAZ-002–004 — leftovers of the R19–R32 renumbering and round-15 HAZ authoring jump); no requirement rows changed, total stays 733. Prior 21.0: Resolved 41 duplicate requirement IDs across R19–R32 (renumbered to POS-106–121, CRM-039–044, ECOM-031–033, FIN-076–079, GOV-055–056, HR-052–054, INV-025–027, MER-011, PUR-042–043, SCP-019–020); fixed R32 section header from Round 14 to Round 21; total unique requirements: 733 (a later 2026-06-09 review added WHL-001–003 DC operations to R4, bringing the total from 730 to 733; reconciled with requirement-workflow-matrix.md and the validator, both of which count 733).*
 
 ---
 
