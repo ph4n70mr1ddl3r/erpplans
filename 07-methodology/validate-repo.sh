@@ -1410,6 +1410,18 @@ where = collections.defaultdict(set)
 files = [os.path.join(ROOT, "erp-requirements.md"), os.path.join(ROOT, "requirement-workflow-matrix.md")]
 files = [f for f in files if os.path.exists(f)]
 scan = set(glob.glob(os.path.join(ROOT, "workflows", "**", "*.md"), recursive=True)) - set(files)
+# Review #23: also scan the surfaces outside the workflow catalog — the controls
+# matrix (five shipped dangling citations of review #22-removed IDs lived in its
+# Req Ref column) plus the summary/methodology docs and the root README.
+scan |= {os.path.join(ROOT, f) for f in (
+    "internal-controls-matrix.md", "model-company-profile.md", "executive-summary.md",
+    "assumptions-and-design-decisions.md", "data-migration-mapping.md",
+    "data-volumes-and-integrations.md", "mobile-app-strategy.md",
+    "headcount-reality-check.md") if os.path.exists(os.path.join(ROOT, f))}
+for extra in (os.path.join(sys.argv[1], "README.md"),
+              os.path.join(sys.argv[1], "07-methodology", "technical-guidelines.md")):
+    if os.path.exists(extra):
+        scan.add(extra)
 for f in sorted(scan):
     for m in pat.finditer(open(f, encoding="utf-8").read()):
         rid = m.group(1)
@@ -1624,6 +1636,65 @@ if [ "${C36_DUPS:-1}" -eq 0 ]; then
 else
     error "Duplicate requirement titles found ($C36_DUPS distinct title(s)) — merge into one canonical row and remap citations (see erp-requirements.md v24.0 note for the review #22 precedent):"
     echo "$CHECK36" | grep -E '^DUP\|' | sed 's/^DUP|/    /'
+fi
+
+# --- Check 37: Requirement priority-split figures vs the erp-requirements.md register ---
+echo "--- Check 37: Priority-split figure agreement ---"
+# Review #22 removed five requirement rows (733 -> 728; 429 Must / 293 Should / 6 Nice)
+# but two prose surfaces kept quoting the pre-removal split (431/296): the classification
+# doc's Classification Rules intro and the root-README Key Metrics table. No prior check
+# compared quoted priority counts against the register itself, so this check derives the
+# canonical split from the register rows and validates every quoted figure against it.
+CHECK37=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, sys
+ROOT = sys.argv[1]
+counts = {"Must Have": 0, "Should Have": 0, "Nice to Have": 0}
+for line in open(os.path.join(ROOT, "01-model-company", "erp-requirements.md"), encoding="utf-8"):
+    m = re.match(r"^\| [A-Z]{2,5}-\d+[ab]? \| .+? \| (Must Have|Should Have|Nice to Have) \|", line)
+    if m:
+        counts[m.group(1)] += 1
+derived = (counts["Must Have"], counts["Should Have"], counts["Nice to Have"])
+bad = []
+def note(where, label, got):
+    if tuple(got) != derived:
+        bad.append(f"{where}: {label} figures {tuple(got)} != register {derived}")
+def ints(m):
+    return tuple(int(x.replace(",", "")) for x in m.groups())
+tiers = ("Must Have", "Should Have", "Nice to Have")
+# Surface 1: classification doc 'Classification Rules' '**X requirements** (N)' claims
+text = open(os.path.join(ROOT, "01-model-company/workflows/workflow-criticality-classification.md"), encoding="utf-8").read()
+got = []
+for tier in tiers:
+    m = re.search(r"\*\*" + tier + r" requirements\*\* \(([\d,]+)\)", text)
+    got.append(int(m.group(1).replace(",", "")) if m else -1)
+note("workflow-criticality-classification.md Classification Rules", "priority-split", got)
+# Surface 2: root-README Key Metrics '| X Requirements | N |' rows
+text = open(os.path.join(ROOT, "README.md"), encoding="utf-8").read()
+got = []
+for tier in tiers:
+    m = re.search(r"\| " + tier + r" Requirements \| ([\d,]+) \|", text)
+    got.append(int(m.group(1).replace(",", "")) if m else -1)
+note("root README Key Metrics", "priority-split", got)
+# Surface 3: repo-wide 'A Must / B Should / C Nice' numeric triples (historical records excluded)
+for f in glob.glob(ROOT + "/**/*.md", recursive=True):
+    rel = os.path.relpath(f, ROOT)
+    if rel.startswith("CHANGELOG") or "workflow-gap-analysis" in rel:
+        continue
+    for m in re.finditer(r"\b(\d[\d,]*) Must[^.\n]*?\b(\d[\d,]*) Should[^.\n]*?\b(\d[\d,]*) Nice\b", open(f, encoding="utf-8").read()):
+        trip = ints(m)
+        if trip != derived:
+            note(rel, "'N Must / M Should / K Nice'", trip)
+print(f"TOTALS derived={derived} mismatches={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C37_BAD=$(echo "$CHECK37" | sed -n 's/^TOTALS derived=.* mismatches=\([0-9]*\)/\1/p')
+if [ "${C37_BAD:-1}" -eq 0 ]; then
+    ok "All quoted requirement priority-split figures match the erp-requirements.md register (429 Must / 293 Should / 6 Nice)"
+else
+    error "Quoted priority-split figures disagree with the erp-requirements.md register (see BAD lines for derived counts):"
+    echo "$CHECK37" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
 echo ""

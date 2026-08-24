@@ -286,8 +286,8 @@ erpplans/
 | Requirements | **728** across 38 categories | `01-model-company/erp-requirements.md` |
 | Workflows (total) | **5,349** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 808 (88 preventive, 720 detective) | `01-model-company/internal-controls-matrix.md` |
-| Must Have Requirements | 431 | `01-model-company/erp-requirements.md` |
-| Should Have Requirements | 296 | `01-model-company/erp-requirements.md` |
+| Must Have Requirements | 429 | `01-model-company/erp-requirements.md` |
+| Should Have Requirements | 293 | `01-model-company/erp-requirements.md` |
 | Nice to Have Requirements | 6 | `01-model-company/erp-requirements.md` |
 
 ## Coverage & Known Gaps
