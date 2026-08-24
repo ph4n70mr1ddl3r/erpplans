@@ -41,7 +41,7 @@ distinct from foundational MDM, loyalty ops, privacy, key-account, and enterpris
 
 BuildRight's exposure is structural: a multi-channel retailer with ~600K loyalty members, growing
 ecommerce, clienteling ambition (links to VS-124), a trade-pro program (links to VS-43), and
-~5,200 B2B accounts, where the inability to resolve a single customer across cash/loyalty/ecommerce/
+~5,400 B2B accounts, where the inability to resolve a single customer across cash/loyalty/ecommerce/
 trade/app touchpoints directly blocks personalization, loyalty earn accuracy, retention, CLV-
 based decisions, and consent-compliant marketing under RA 10173. Without a dedicated owner,
 BuildRight risks duplicate/unresolved customer records, inconsistent personalization, consent

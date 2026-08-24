@@ -4,7 +4,7 @@
 
 ## Overview
 
-Manages BuildRight's trade credit risk for ~5,200 trade and corporate accounts representing ~30% of revenue (PHP 18.7B/year). Covers credit risk assessment and scoring, credit limit management and monitoring, bad debt recovery and write-off management, and credit insurance program administration. Integrates with order-to-cash (VS-16), customer experience (VS-13), and finance (VS-17).
+Manages BuildRight's trade credit risk for ~5,400 trade and corporate accounts representing ~30% of revenue (PHP 18.7B/year). Covers credit risk assessment and scoring, credit limit management and monitoring, bad debt recovery and write-off management, and credit insurance program administration. Integrates with order-to-cash (VS-16), customer experience (VS-13), and finance (VS-17).
 
 ## Process Areas
 

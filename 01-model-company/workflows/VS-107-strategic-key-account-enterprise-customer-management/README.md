@@ -17,7 +17,7 @@ planning and joint business planning (JBP), dedicated account teams and executiv
 enterprise contract and pricing governance, account-level profitability and mix management,
 customer success and adoption, strategic growth and share-of-wallet, retention and at-risk
 management, and key-account analytics. It addresses the reality that ~40% of revenue is
-concentrated in ~5,200 B2B accounts (per profile §9.2), where a handful of strategic accounts
+concentrated in ~5,400 B2B accounts (per profile §9.2), where a handful of strategic accounts
 materially move the P&L and where disciplined relationship management is the primary lever for
 growth, retention, and margin.
 

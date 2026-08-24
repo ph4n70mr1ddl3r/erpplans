@@ -10,7 +10,7 @@ Customer Mystery Shopping & Service Quality Assurance workflows for BuildRight D
 owning the **independent service-quality assurance discipline** that measures, verifies, and
 improves the service delivered across BuildRight's customer touchpoints: 200 stores running 2.8M
 monthly POS transactions, ecommerce/app/digital channels (~42,900 orders/month), B2B/trade/field-
-sales (~5,000 trade + 200 corporate accounts), and the contact center. Service quality (greeting,
+sales (~5,200 trade + 200 corporate accounts), and the contact center. Service quality (greeting,
 product knowledge, consultative selling, queue/wait, cleanliness, recovery, omnichannel
 consistency) is a primary controllable lever on conversion, basket, loyalty, repeat-purchase, and
 the "Your Home Building Partner" positioning — yet it is only credible as an **independent,

@@ -11,7 +11,7 @@ Field Sales, Outside Sales & Route-to-Market Force Management workflows for Buil
 (30% professional/trade + 10% corporate/institutional) through a dedicated field sales force:
 outside sales representatives and trade-account executives who travel to contractors, builders,
 developers, architects, interior designers, and government/institutional project buyers across
-~5,000 trade accounts and ~200 corporate accounts. For a hardware/home-improvement retailer
+~5,200 trade accounts and ~200 corporate accounts. For a hardware/home-improvement retailer
 whose B2B revenue is project-driven, relationship-driven, and specification-driven (winning the
 rebar/cement/tile package for a development, the paint package for a contractor's portfolio), the
 field sales force is the primary revenue engine for the B2B segment — yet today it operates
@@ -28,7 +28,7 @@ management in the field, and field-sales performance analytics.
 
 This is distinct from **VS-107 (Strategic Key Account)** which manages a small set of *named
 enterprise accounts* strategically — this value stream owns the *broader field force* that covers
-the ~5,000 trade accounts and the many project/contractor accounts at territory scale. It is
+the ~5,200 trade accounts and the many project/contractor accounts at territory scale. It is
 distinct from **VS-43 (Trade-Professional Program)** which manages the trade-pro *membership/
 benefits* — this value stream owns the *field-selling activity* to that base. It is distinct from
 **VS-11 (Trade/Project Wholesale)** which executes the B2B/project *transaction* (quote→order→

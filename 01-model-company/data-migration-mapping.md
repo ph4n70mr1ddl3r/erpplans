@@ -120,7 +120,7 @@
 | Promotional Pricing | Spreadsheets / calendars | Migrate active promotions with start/end dates, applicable SKUs, and discount amounts | Valid date range; linked to valid items |
 | Clearance / Markdown Pricing | Spreadsheets | Migrate current markdown prices; flag items with margin < 0% for review | Positive; linked to valid items |
 
-**Target record count**: 35,000 SRP records + ~5,000 trade price records + ~200 corporate price records + ~500 quantity break rules + ~50 active promotions
+**Target record count**: 35,000 SRP records + ~5,200 trade price records + ~200 corporate price records + ~500 quantity break rules + ~50 active promotions
 
 ### 2.7 Inventory Opening Balances (from physical counts)
 
@@ -171,4 +171,4 @@
 
 ---
 
-*Date: 2026-06-28 (v2.4 — consistency review #15: the §2.1 employee-master TIN rule aligned to the both-formats standard the rest of the file already carries (COM-011 / §TIN Validation): `Validate format (XXX-XXX-XXX)` → `(XXX-XXX-XXX or XXX-XXX-XXX-XXX)`; the same repair was applied to the single-format TIN checks in PA-17.3, PA-22.2, and PA-29.1. Prior v2.3 — §2.2 vendor-master target count reconciled to `model-company-profile.md` §6.5 range `~800–1,000 active vendors` (was `~1,000`); vendor TIN cleansing rule updated to accept both Philippine TIN formats (`XXX-XXX-XXX or XXX-XXX-XXX-XXX`) per COM-011 / §3, was 12-digit only. Prior v2.2: counts reconciled with README.md; canonical glossary reference added)*
+*Date: 2026-08-24 (v2.5 — consistency review #19: §2 trade price-record count aligned to the canonical B2B scheme (~5,000 → ~5,200 trade price records, matching §9.2 of the profile). Prior v2.4 — consistency review #15: the §2.1 employee-master TIN rule aligned to the both-formats standard the rest of the file already carries (COM-011 / §TIN Validation): `Validate format (XXX-XXX-XXX)` → `(XXX-XXX-XXX or XXX-XXX-XXX-XXX)`; the same repair was applied to the single-format TIN checks in PA-17.3, PA-22.2, and PA-29.1. Prior v2.3 — §2.2 vendor-master target count reconciled to `model-company-profile.md` §6.5 range `~800–1,000 active vendors` (was `~1,000`); vendor TIN cleansing rule updated to accept both Philippine TIN formats (`XXX-XXX-XXX or XXX-XXX-XXX-XXX`) per COM-011 / §3, was 12-digit only. Prior v2.2: counts reconciled with README.md; canonical glossary reference added)*

@@ -7,7 +7,7 @@
 ## Overview
 
 Consumer Data Privacy & Data Protection Program workflows for BuildRight Depot Corp. — governing
-the privacy of personal data collected from ~600,000 loyalty members, ~5,200 B2B contacts,
+the privacy of personal data collected from ~600,000 loyalty members, ~5,400 B2B contacts,
 ~42,900 monthly ecommerce buyers, ~515,000 annual ecommerce orders, marketplace-channel buyers,
 app users, and CCTV-captured visitors — across 200 stores, 4 DCs, the web/app, marketplaces, and
 third-party processors — in compliance with the Philippine **Data Privacy Act (RA 10173)**, NPC

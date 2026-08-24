@@ -4,7 +4,7 @@
 
 ## Overview
 
-Manages BuildRight's dedicated program for trade professionals (contractors, builders, electricians, plumbers, interior designers, architects) — who represent 30% of revenue (~PHP 18.7B/year) through ~5,000 trade accounts and ~200 corporate accounts. Covers trade account lifecycle, contractor loyalty program (separate from consumer loyalty), trade pricing and volume incentives, project pipeline management, job-site delivery coordination, contractor credit facilities, trade training and certification programs, and trade community engagement. Differentiated from VS-13 (Customer Experience & Loyalty) which focuses on consumer loyalty, and VS-11 (Trade, Project & Wholesale) which handles transaction-level sales processing. This value stream manages the strategic relationship and program infrastructure that enables the 30% B2B revenue stream.
+Manages BuildRight's dedicated program for trade professionals (contractors, builders, electricians, plumbers, interior designers, architects) — who represent 30% of revenue (~PHP 18.7B/year) through ~5,200 trade accounts and ~200 corporate accounts. Covers trade account lifecycle, contractor loyalty program (separate from consumer loyalty), trade pricing and volume incentives, project pipeline management, job-site delivery coordination, contractor credit facilities, trade training and certification programs, and trade community engagement. Differentiated from VS-13 (Customer Experience & Loyalty) which focuses on consumer loyalty, and VS-11 (Trade, Project & Wholesale) which handles transaction-level sales processing. This value stream manages the strategic relationship and program infrastructure that enables the 30% B2B revenue stream.
 
 ## Process Areas
 

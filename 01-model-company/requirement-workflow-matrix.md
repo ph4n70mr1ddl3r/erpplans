@@ -79,7 +79,7 @@
 | INV-004 | ABC Classification | M | W31.8 (classification review), W42 (tiered count strategy) | W1 (assortment review) |
 | INV-005 | Multi-Location Stock Transfer | M | W4 (DC→Store), W22 (store-to-store, inter-DC), W204 (regional expedited transfer), W214 (store-to-store expedited), W218 (inter-DC push), W22A (store-level outbound transfer fulfillment), W22B (store-to-DC return — excess/damaged) | W45 (closure redistribution), W4B (store-initiated replenishment request) |
 | INV-006 | Cycle Counting | M | W6 (cycle counting), W248 (store variance LP investigation), W301 (reason code & disposition master — adjustment reason code governance) | W42 (annual physical inventory) |
-| INV-007 | Physical Inventory (Wall-to-Wall) | M | W42 (annual physical inventory), W248 (store variance LP investigation) | W6 (cycle counts feed C-item validation) |
+| INV-007 | Physical Inventory (Wall-to-Wall) | M | W42 (annual physical inventory), W248 (store variance LP investigation) | W6 (cycle counts feed C-tier validation) |
 | INV-008 | Lot & Serial Tracking | S | W5B.4b (POS batch capture), W29 (recall tracing), W421 (shade reconciliation) | W33 (warranty serial lookup) |
 | INV-009 | Consignment Inventory | S | W23 (consignment operations) | — |
 | INV-010 | Catch-Weight / Variable Measure | M | W5B.2 (POS catch-weight), W3B.3 (yard catch-weight), W22 (transfer catch-weight), W463 (catch-weight & cut-to-length processing) | W18 (DSD catch-weight) |
@@ -715,7 +715,7 @@
 | CRM-040 | Customer B2B Self-Service Portal Order Management & Account Access | S | W936 | — |
 | CRM-041 | Customer Loyalty Family/Household Account Linking & Shared Benefits Management | S | W942 | W515 |
 | CRM-042 | Customer Complaint Root Cause Analysis & Systemic Improvement | S | W507 (Complaint root cause analysis — monthly pattern detection, systemic issue threshold alerting, cross-departmental corrective action assignment, 60-day effectiveness monitoring, quarterly complaint-to-improvement reporting) | W41, W87, W110, W67, W40, W4 |
-| CRM-043 | Customer Account Maintenance & B2B Information Update | S | W508 (Customer account maintenance — update request intake, document verification, change type classification, customer master update with audit trail, downstream propagation, annual re-verification of 5,200 B2B accounts) | W24, W460, W253, W328, W293, W112 |
+| CRM-043 | Customer Account Maintenance & B2B Information Update | S | W508 (Customer account maintenance — update request intake, document verification, change type classification, customer master update with audit trail, downstream propagation, annual re-verification of 5,400 B2B accounts) | W24, W460, W253, W328, W293, W112 |
 | CRM-044 | Customer Price Protection & Price Adjustment Policy Processing | M | W928 | — |
 
 ## Additional Ecommerce Requirements (ECOM)

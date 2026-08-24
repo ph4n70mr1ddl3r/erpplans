@@ -10,7 +10,7 @@ Trade, project & wholesale: trade account management, project sales & B2B, and w
 
 ## Why it matters
 
-~40% of revenue concentrated in ~5,200 B2B accounts; project/contractor/wholesale and government bidding drive large-ticket, lower-frequency, higher-margin business with credit and bond requirements.
+~40% of revenue concentrated in ~5,400 B2B accounts; project/contractor/wholesale and government bidding drive large-ticket, lower-frequency, higher-margin business with credit and bond requirements.
 
 ## Owner & participants
 

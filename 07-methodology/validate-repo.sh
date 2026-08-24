@@ -1388,6 +1388,50 @@ else
     echo "$CHECK31" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
 fi
 
+# --- Check 32: Dangling requirement-ID citations in workflow/PA and summary docs ---
+echo "--- Check 32: Requirement-ID citation resolution (workflow catalog) ---"
+CHECK32=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, collections, sys
+ROOT = os.path.join(sys.argv[1], "01-model-company")
+# Canonical requirement IDs from erp-requirements.md table rows
+defined = set()
+for line in open(os.path.join(ROOT, "erp-requirements.md"), encoding="utf-8"):
+    m = re.match(r"^\| ([A-Z]{2,5}-\d+[a-z]?) \|", line)
+    if m:
+        defined.add(m.group(1))
+# Non-requirement tokens that match the ID shape: standards, laws, shift times,
+# project codes, intra-file sub-step labels (NR-10/11), dependency-map row IDs (CIRC-xxx)
+EXEMPT = {"ISPM-15", "EAN-13", "COVID-19", "DOLE-174", "ITF-14", "GTIN-13", "GTIN-14",
+          "NR-10", "NR-11", "PM-10", "RG-59", "BRD-001", "PFRS-15"}
+prefixes = ("VS-", "PA-", "CTL-", "CIRC-")
+pat = re.compile(r"\b([A-Z]{2,5}-\d{2,3}[a-z]?)\b")
+bad = collections.Counter()
+where = collections.defaultdict(set)
+files = [os.path.join(ROOT, "erp-requirements.md"), os.path.join(ROOT, "requirement-workflow-matrix.md")]
+files = [f for f in files if os.path.exists(f)]
+scan = set(glob.glob(os.path.join(ROOT, "workflows", "**", "*.md"), recursive=True)) - set(files)
+for f in sorted(scan):
+    for m in pat.finditer(open(f, encoding="utf-8").read()):
+        rid = m.group(1)
+        if rid in defined or rid in EXEMPT or rid.startswith(prefixes):
+            continue
+        if re.fullmatch(r"W\d+[a-z]?", rid):
+            continue
+        bad[rid] += 1
+        where[rid].add(os.path.relpath(f, ROOT))
+for rid in sorted(bad):
+    print(f"BAD|{rid} x{bad[rid]} in {sorted(where[rid])[:4]}")
+print(f"TOTALS ids={len(bad)} refs={sum(bad.values())} defined={len(defined)}")
+PY
+)
+C32_IDS=$(echo "$CHECK32" | sed -n 's/^TOTALS ids=\([0-9]*\) refs=.*/\1/p')
+if [ "${C32_IDS:-1}" -eq 0 ]; then
+    ok "All requirement-ID citations across the workflow catalog resolve to a defined erp-requirements.md row"
+else
+    error "Dangling requirement-ID citations found ($C32_IDS distinct ID(s)) — remap to the canonical requirement ID (see Check 4 for the matrix equivalent):"
+    echo "$CHECK32" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

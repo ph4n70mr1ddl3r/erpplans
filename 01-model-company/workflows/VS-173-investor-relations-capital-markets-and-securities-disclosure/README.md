@@ -19,7 +19,7 @@ register, stock ledger and cap-table/ownership administration**; the **dividend 
 (declaration-to-payment, DRIP/election, unclaimed property)**; shareholder services; and IR
 perception/analytics.
 
-This matters at BuildRight's structure, scale and ownership. The group is a ~PHP 60B-revenue
+This matters at BuildRight's structure, scale and ownership. The group is a ~PHP 62.3B-revenue
 holding company operating across **5 legal entities** (Holdings, Depot, Logistics, Digital
 Commerce, Property Mgmt) with material institutional ownership, bank/debt and capital-markets
 counterparties (links VS-170 ABL / VS-18 treasury), a credit-rating posture that sets borrowing

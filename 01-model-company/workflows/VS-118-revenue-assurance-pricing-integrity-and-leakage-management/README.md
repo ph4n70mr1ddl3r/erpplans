@@ -10,7 +10,7 @@ Revenue Assurance, Pricing Integrity & Leakage Management workflows for BuildRig
 governing the **revenue-assurance program** that detects, quantifies, prevents, and recovers
 revenue **leakage** across every monetization channel. At ~PHP 62.3B annual revenue, the company
 processes ~2.8M POS transactions/month across 600 terminals (profile §5), ~42,900 ecommerce
-orders/month (profile §8.5), ~3,500 AR invoices/month across ~5,200 trade/corporate accounts
+orders/month (profile §8.5), ~3,500 AR invoices/month across ~5,400 trade/corporate accounts
 (profile §10.3), ~515K ecommerce orders/year, a ~600K-member loyalty program, gift-card and
 stored-value programs, marketplace (3P seller) and retail-media revenue, catch-weight and
 cut-length selling (lumber/board-foot, wire/meter, nails bulk), and a complex promotional /
