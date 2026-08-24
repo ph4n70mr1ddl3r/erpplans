@@ -1697,6 +1697,148 @@ else
     echo "$CHECK37" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 38: Requirements-TOC count-column agreement vs the register rows ---
+echo "--- Check 38: Requirements-TOC count-column agreement ---"
+# Review #22 updated R3 (45 -> 44) and R16 (8 -> 7) in the erp-requirements.md TOC
+# when it removed five duplicate rows, but missed R4: retiring WMS-009–011 shrank
+# R4's defined complement 26 -> 23 while its Count cell stayed at 26, so the Count
+# column summed to 731 against the doc's own 'Total: 728' line. No prior check
+# compared the TOC's per-section Counts against the register rows themselves.
+CHECK38=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, sys
+ROOT = sys.argv[1]
+path = os.path.join(ROOT, "01-model-company", "erp-requirements.md")
+lines = open(path, encoding="utf-8").read().splitlines()
+# actual defined rows per prefix
+cnt = {}
+for line in lines:
+    m = re.match(r"^\| ([A-Z]{2,5}-\d+[a-z]?) \|", line)
+    if m:
+        pre = m.group(1).split("-")[0]
+        cnt[pre] = cnt.get(pre, 0) + 1
+bad = []
+sum_counts = 0
+for line in lines:
+    if not line.startswith("| [R") and not line.startswith("| — | Additional"):
+        continue
+    cells = [c.strip() for c in line.strip().strip("|").split("|")]
+    if len(cells) < 4 or not cells[3].isdigit():
+        continue
+    claimed = int(cells[3])
+    sum_counts += claimed
+    # prefixes from the Req IDs cell (skip cells without ID tokens, e.g. 'Various')
+    prefixes = sorted({t.split("-")[0] for t in re.findall(r"\b[A-Z]{2,5}-\d+", cells[2])})
+    if not prefixes:
+        continue
+    actual = sum(cnt.get(p, 0) for p in prefixes)
+    if actual != claimed:
+        bad.append(f"{cells[1]} ({', '.join(prefixes)}): Count {claimed} != {actual} defined rows")
+# Total line vs actual register size vs Count-column sum
+mtot = re.search(r"\*\*Total: ([\d,]+) unique requirements\*\*", "\n".join(lines))
+total_line = int(mtot.group(1).replace(",", "")) if mtot else -1
+if total_line != len([k for k in cnt for _ in range(cnt[k])]):
+    bad.append(f"Total line {total_line} != {sum(cnt.values())} defined register rows")
+if sum_counts != total_line:
+    bad.append(f"Count column sums to {sum_counts} != Total-line figure {total_line}")
+print(f"TOTALS total_line={total_line} defined={sum(cnt.values())} count_col_sum={sum_counts} mismatches={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C38_BAD=$(echo "$CHECK38" | sed -n 's/^TOTALS .* mismatches=\([0-9]*\)/\1/p')
+if [ "${C38_BAD:-1}" -eq 0 ]; then
+    ok "erp-requirements.md TOC Count column agrees with the register (per-row and 728-total)"
+else
+    error "Requirements-TOC Count column disagrees with the erp-requirements.md register:"
+    echo "$CHECK38" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 39: Namespace & listing integrity (dup W headers, VS listings, CTL/PA citations, cross-file anchors) ---
+echo "--- Check 39: Namespace & listing integrity ---"
+# Regression guards for invariants verified manually in reviews #22/#23 but never
+# codified: unique workflow headers across PA files (the 5,372-header / 5,349-unique
+# register complement); repo-wide CTL-ID and PA-N.N citation resolution; cross-file
+# markdown anchor links resolving to a heading. (VS READMEs aggregate workflows by
+# process-area count rather than enumerating W-numbers — that count agreement is
+# already guarded by Checks 2, 24 and 31.)
+CHECK39=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, collections, sys
+ROOT = os.path.join(sys.argv[1], "01-model-company")
+bad = []
+# A. duplicate W headers across PA files
+wdef = collections.Counter(); where = {}
+hdr = re.compile(r"^#{2,4} (W\d+[A-Za-z]?)[\.\s]")
+for f in glob.glob(os.path.join(ROOT, "workflows", "**", "PA-*.md"), recursive=True):
+    for line in open(f, encoding="utf-8"):
+        m = hdr.match(line)
+        if m:
+            wdef[m.group(1)] += 1; where.setdefault(m.group(1), f)
+dups = {k: v for k, v in wdef.items() if v > 1}
+if dups:
+    bad.append(f"duplicate workflow headers: {dict(list(dups.items())[:5])}")
+# B. CTL-ID citation resolution repo-wide
+ctl = set()
+for line in open(os.path.join(ROOT, "internal-controls-matrix.md"), encoding="utf-8"):
+    m = re.match(r"^\| (CTL-\d+) \|", line)
+    if m: ctl.add(m.group(1))
+scan = glob.glob(ROOT + "/**/*.md", recursive=True) + [
+    os.path.join(sys.argv[1], "README.md"),
+    os.path.join(sys.argv[1], "07-methodology", "technical-guidelines.md")]
+dang_ctl, dang_pa = [], []
+padef = {re.match(r"(PA-\d+\.\d+)-", os.path.basename(f)).group(1)
+         for f in glob.glob(os.path.join(ROOT, "workflows", "**", "*.md"), recursive=True)
+         if re.match(r"(PA-\d+\.\d+)-", os.path.basename(f))}
+for f in scan:
+    txt = re.sub(r"```.*?```", "", open(f, encoding="utf-8").read(), flags=re.S)
+    rel = os.path.relpath(f, ROOT)
+    for m in re.finditer(r"\b(CTL-\d+)\b", txt):
+        if m.group(1) not in ctl: dang_ctl.append(f"{rel}:{m.group(1)}")
+    for m in re.finditer(r"\b(PA-\d+\.\d+)\b", txt):
+        if m.group(1) not in padef: dang_pa.append(f"{rel}:{m.group(1)}")
+if dang_ctl:
+    bad.append(f"dangling CTL citations: {sorted(set(dang_ctl))[:5]} ({len(dang_ctl)} refs)")
+if dang_pa:
+    bad.append(f"dangling PA-number citations: {sorted(set(dang_pa))[:5]} ({len(dang_pa)} refs)")
+# D. cross-file markdown anchor resolution
+def slug(h):
+    s = h.lower().strip()
+    s = re.sub(r"[^\w\s-]", "", s)
+    return re.sub(r"\s+", "-", s)
+broke = 0; broke_ex = []
+for f in glob.glob(sys.argv[1] + "/**/*.md", recursive=True):
+    if os.sep + ".git" + os.sep in f: continue
+    base = os.path.dirname(f)
+    txt = re.sub(r"```.*?```", "", open(f, encoding="utf-8").read(), flags=re.S)
+    for m in re.finditer(r"\]\(([^)#\s]+\.md)(#[^)\s]+)?\)", txt):
+        tp = os.path.normpath(os.path.join(base, m.group(1)))
+        if not os.path.exists(tp) or not m.group(2):
+            continue
+        heads = set()
+        for line in open(tp, encoding="utf-8"):
+            hm = re.match(r"^#+\s+(.*)", line)
+            if hm: heads.add(slug(hm.group(1)))
+            em = re.search(r'<a name="([^"]+)"', line)
+            if em: heads.add(em.group(1).lower())
+        if m.group(2)[1:].lower() not in heads:
+            broke += 1
+            if len(broke_ex) < 5:
+                broke_ex.append(f"{os.path.relpath(f, ROOT)} -> {m.group(1)}{m.group(2)}")
+if broke:
+    bad.append(f"broken cross-file anchors: {broke} (e.g. {'; '.join(broke_ex)})")
+print(f"TOTALS headers={len(wdef)} problems={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C39_BAD=$(echo "$CHECK39" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
+if [ "${C39_BAD:-1}" -eq 0 ]; then
+    C39_HDRS=$(echo "$CHECK39" | sed -n 's/^TOTALS headers=\([0-9]*\) .*/\1/p')
+    ok "Namespace integrity: ${C39_HDRS} workflow headers unique; all CTL & PA-N.N citations resolve; all cross-file anchors resolve"
+else
+    error "Namespace/listing integrity violations found:"
+    echo "$CHECK39" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
