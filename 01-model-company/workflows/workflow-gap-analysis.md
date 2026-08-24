@@ -91,6 +91,31 @@ identify capability gaps not addressed by any existing value stream.
 > thirty-pass record). Canonical totals are now **188 value streams · 569 process areas · 5,349
 > workflows**.
 
+> **Post-Pass-30 workflow-level additions (2026-08-24) — not a gap pass.** A fresh review re-ran
+> the §2 gap methodology at *workflow* granularity (defining-term keyword search across all PA
+> files for dedicated `## W` headers) and filled six single-workflow gaps inside existing value
+> streams: **W5497** POSH / Safe Spaces compliance (RA 7877 / RA 11313 CODI committee,
+> statutory investigation & reporting — VS-84.2; 'Safe Spaces'/'RA 11313'/'CODI' appeared in zero
+> PA files, with only the W719 training step and W2881 generic grievance adjacent), **W5498**
+> Telecommuting & flexible/hybrid work program (RA 11165 — VS-19.3; 'telecommuting'/'RA 11165' in
+> zero PA files, only temporary pandemic BCP references adjacent), **W5499** Director induction &
+> continuing board education (VS-36.1; 'director induction'/'board education' in zero PA files
+> while W1727/W1730 bookend appointments and self-assessment), **W5500** Customer digital
+> accessibility / WCAG 2.1 AA (VS-10.1; 'digital accessibility' in zero PA files and 'WCAG' only
+> for the career site in VS-121.1), **W5501** Climate physical & transition risk assessment &
+> scenario analysis (VS-21.2; TCFD existed only as a reporting framework, and W1330 is a generic
+> single-event exercise), and **W5502** Employee financial wellness program (VS-83.3; W76 owns the
+> payroll-loan mechanic and W2865 the counseling channel, but nobody owned literacy education,
+> salary-linked lender governance, or the debt-stress pathway). Three candidates examined in the
+> same review were confirmed already covered and deliberately not duplicated: lost & found
+> (**W929**, VS-09.3 — surfaced by searching 'lost and found' but present as 'Lost & Found'),
+> permit-to-work (**W3219**, VS-98.2), and counterfeit-currency handling (step-level coverage in
+> W37/W185 and VS-81.2 vault counting). Like the PA-127.4 extension, these additions are recorded
+> here because workflow-ID allocation is tracked in this document and are not appended to the
+> §4 pass tables. Canonical totals are now **188 value streams · 569 process areas · 5,355
+> workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
+> confirmation pass).
+
 | # | Capability gap | Why it matters for BuildRight | Existing (partial) coverage | Decision |
 |---|---|---|---|---|
 | 1 | **Product Recall & Safety Corrective Action** | 35K SKUs incl. electrical, paint/chemical, power tools, appliances; Consumer Act (RA 7394) + DTI-BPS + FDA recall obligations; ~3–8 recalls/yr | Only the store-level *customer-notification execution* step exists (W776 in VS-09); no end-to-end recall program | **FILLED — VS-89** |

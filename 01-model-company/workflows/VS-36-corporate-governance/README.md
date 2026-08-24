@@ -10,10 +10,10 @@ Manages corporate governance activities for BuildRight Depot's 5-entity holding 
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-36.1](PA-36.1-board-meeting-corporate-records.md) | Board Meeting Management & Corporate Records | 8 |
+| [PA-36.1](PA-36.1-board-meeting-corporate-records.md) | Board Meeting Management & Corporate Records | 9 |
 | [PA-36.2](PA-36.2-shareholder-equity-management.md) | Shareholder & Equity Management | 7 |
 | [PA-36.3](PA-36.3-corporate-policy-entity-governance.md) | Corporate Policy & Entity Governance | 8 |
-| | **Total** | **23** |
+| | **Total** | **24** |
 
 ---
 

@@ -24,9 +24,9 @@ partnership governance with recognized labor organizations.
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-84.1](PA-84.1-union-recognition-cba-negotiation-administration.md) | Union Recognition, CBA Negotiation & Administration | 8 |
-| [PA-84.2](PA-84.2-grievance-labor-dispute-dole-conciliation.md) | Grievance Handling, Labor Dispute & DOLE Conciliation | 8 |
+| [PA-84.2](PA-84.2-grievance-labor-dispute-dole-conciliation.md) | Grievance Handling, Labor Dispute & DOLE Conciliation | 9 |
 | [PA-84.3](PA-84.3-employee-voice-engagement-partnership.md) | Employee Voice, Engagement & Partnership Management | 8 |
-| | **Total** | **24** |
+| | **Total** | **25** |
 
 ---
 

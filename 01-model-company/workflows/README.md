@@ -11,11 +11,11 @@
 |---|---|
 | Value Streams | 188 |
 | Process Areas | 569 |
-| Workflows | 5,349 |
+| Workflows | 5,355 |
 | Classified (Tier 1) | 1,375 |
 | Classified (Tier 2) | 3,243 |
 | Classified (Tier 3) | 754 |
-| Classified total | 5,372 rows = all 5,349 unique workflows + 23 parent/summary sub-workflow rows (100% — full coverage confirmed 2026-06-28) |
+| Classified total | 5,372 rows = 5,349 unique workflows + 23 parent/summary sub-workflow rows (full coverage confirmed 2026-06-28; the 6 post-catalog workflows W5497–W5502 added 2026-08-24 ship unclassified with keyword-driven proposed tiers) |
 
 ---
 
@@ -26,7 +26,7 @@
 | [value-stream-index.md](value-stream-index.md) | **Master index** — all 188 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
-| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — currently empty (0 rows) since the 2026-06-28 Full-Coverage Confirmation Pass; repopulates automatically if new workflows ship unclassified |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — holds the 6 unclassified post-catalog workflows (W5497–W5502, added 2026-08-24) pending confirmation; regenerates automatically whenever new workflows ship unclassified |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap analysis methodology & results |
@@ -77,13 +77,13 @@
 | [VS-191](VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md) | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | 24 |
 | [VS-192](VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | 24 |
 
-### Sell & Serve (1,531 workflows)
+### Sell & Serve (1,532 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-07](VS-07-store-operations/README.md) | Store Operations | 144 |
 | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 58 |
 | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 158 |
-| [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 61 |
+| [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 62 |
 | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 52 |
 | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 40 |
 | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 64 |
@@ -160,12 +160,12 @@
 | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | 24 |
 | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | 24 |
 
-### People (434 workflows)
+### People (437 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
-| [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 74 |
-| [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 24 |
-| [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 24 |
+| [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 75 |
+| [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 25 |
+| [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 25 |
 | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | 24 |
 | [VS-102](VS-102-compensation-benefits-total-rewards/README.md) | Compensation, Benefits & Total Rewards Strategy | 24 |
 | [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | 24 |
@@ -197,10 +197,10 @@
 | [VS-178](VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md) | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | 24 |
 | [VS-184](VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md) | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | 24 |
 
-### Governance & Assurance (960 workflows)
+### Governance & Assurance (962 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
-| [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 48 |
+| [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 49 |
 | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 57 |
 | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 28 |
 | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 26 |
@@ -208,7 +208,7 @@
 | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 30 |
 | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | 22 |
 | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | 23 |
-| [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | 23 |
+| [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | 24 |
 | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | 24 |
 | [VS-71](VS-71-anti-counterfeit-authentication/README.md) | Anti-Counterfeit & Product Authentication | 24 |
 | [VS-73](VS-73-store-waste-circular-economy/README.md) | Store-Level Waste Management & Circular Economy | 24 |
@@ -255,7 +255,7 @@
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 460 + 499 + 1,531 + 771 + 434 + 320 + 960 + 374 = 5,349
+Family subtotal reconciliation: 460 + 499 + 1,532 + 771 + 437 + 320 + 962 + 374 = 5,355
 
 > **Note (2026-06-21):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 through 2026-06-21, VS-89–VS-192; W2993–W5488). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

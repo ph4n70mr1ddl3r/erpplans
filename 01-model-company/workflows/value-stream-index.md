@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,349 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,355 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -71,7 +71,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 144 |
 |  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
-|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | Core | 3 | 61 |
+|  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | Core | 3 | 62 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | Core | 3 | 52 |
 |  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | Core | 3 | 40 |
 |  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | Core | 3 | 64 |
@@ -114,7 +114,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
 |  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
 |  | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **139** | **1531** |
+| | | | **Subtotal** | **139** | **1532** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
@@ -145,9 +145,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | Gap analysis | 3 | 24 |
 |  | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **87** | **771** |
-| People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 74 |
-|  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 24 |
-|  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 24 |
+| People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 75 |
+|  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 25 |
+|  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 25 |
 |  | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | Gap analysis | 3 | 24 |
 |  | [VS-102](VS-102-compensation-benefits-total-rewards/README.md) | Compensation, Benefits & Total Rewards Strategy | Gap analysis | 3 | 24 |
 |  | [VS-103](VS-103-hr-shared-services-employee-experience-people-analytics/README.md) | HR Shared Services, Employee Experience & People Analytics | Gap analysis | 3 | 24 |
@@ -161,7 +161,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | Gap analysis | 3 | 24 |
 |  | [VS-169](VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md) | Employee Uniform, Workwear & PPE-Issuance Program | Gap analysis | 3 | 24 |
 |  | [VS-183](VS-183-dual-training-system-dts-and-tesda-partnership-program/README.md) | Dual Training System (DTS) & TESDA Partnership Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **50** | **434** |
+| | | | **Subtotal** | **50** | **437** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -176,7 +176,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-178](VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md) | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | Gap analysis | 3 | 24 |
 |  | [VS-184](VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md) | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **320** |
-| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 48 |
+| Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 49 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 28 |
 |  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 26 |
@@ -184,7 +184,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | Core | 3 | 30 |
 |  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | Core | 3 | 22 |
 |  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | Core | 3 | 23 |
-|  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | Core | 3 | 23 |
+|  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | Core | 3 | 24 |
 |  | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | Expansion | 3 | 24 |
 |  | [VS-71](VS-71-anti-counterfeit-authentication/README.md) | Anti-Counterfeit & Product Authentication | Expansion | 3 | 24 |
 |  | [VS-73](VS-73-store-waste-circular-economy/README.md) | Store-Level Waste Management & Circular Economy | Expansion | 3 | 24 |
@@ -213,7 +213,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | Gap analysis | 3 | 24 |
 |  | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | Gap analysis | 3 | 24 |
 |  | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **111** | **960** |
+| | | | **Subtotal** | **111** | **962** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **374** |
-| | | | **Grand Total** | **569** | **5,349** |
+| | | | **Grand Total** | **569** | **5,355** |
 
 ---
 
@@ -466,9 +466,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-09.2** [Project Estimation & Advisory](./VS-09-in-store-services/PA-09.2-project-estimation-and-advisory.md) — 75 workflows
 - **PA-09.3** [Customer Amenities & Assistance](./VS-09-in-store-services/PA-09.3-customer-amenities-and-assistance.md) — 18 workflows
 
-**[VS-10: Ecommerce & Digital Channels](./VS-10-ecommerce-digital/README.md)** (61 workflows)
+**[VS-10: Ecommerce & Digital Channels](./VS-10-ecommerce-digital/README.md)** (62 workflows)
 
-- **PA-10.1** [Ecommerce Platform Operations](./VS-10-ecommerce-digital/PA-10.1-ecommerce-platform-operations.md) — 31 workflows
+- **PA-10.1** [Ecommerce Platform Operations](./VS-10-ecommerce-digital/PA-10.1-ecommerce-platform-operations.md) — 32 workflows
 - **PA-10.2** [Order Fulfillment & Delivery](./VS-10-ecommerce-digital/PA-10.2-order-fulfillment-and-delivery.md) — 20 workflows
 - **PA-10.3** [Marketplace & Social Commerce](./VS-10-ecommerce-digital/PA-10.3-marketplace-and-social-commerce.md) — 10 workflows
 
@@ -903,24 +903,24 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 ### People
 
-**[VS-19: Hire-to-Retire](./VS-19-hire-to-retire/README.md)** (74 workflows)
+**[VS-19: Hire-to-Retire](./VS-19-hire-to-retire/README.md)** (75 workflows)
 
 - **PA-19.1** [Recruitment & Onboarding](./VS-19-hire-to-retire/PA-19.1-recruitment-and-onboarding.md) — 35 workflows
 - **PA-19.2** [Payroll & Compensation](./VS-19-hire-to-retire/PA-19.2-payroll-and-compensation.md) — 10 workflows
-- **PA-19.3** [Workforce Management](./VS-19-hire-to-retire/PA-19.3-workforce-management.md) — 10 workflows
+- **PA-19.3** [Workforce Management](./VS-19-hire-to-retire/PA-19.3-workforce-management.md) — 11 workflows
 - **PA-19.4** [Learning & Development](./VS-19-hire-to-retire/PA-19.4-learning-and-development.md) — 11 workflows
 - **PA-19.5** [Separation & Benefits](./VS-19-hire-to-retire/PA-19.5-separation-and-benefits.md) — 8 workflows
 
-**[VS-83: Occupational Health, Safety Clinic & Employee Wellness](./VS-83-occupational-health-clinic-wellness/README.md)** (24 workflows)
+**[VS-83: Occupational Health, Safety Clinic & Employee Wellness](./VS-83-occupational-health-clinic-wellness/README.md)** (25 workflows)
 
 - **PA-83.1** [Occupational Health Clinic & Medical Case Management](./VS-83-occupational-health-clinic-wellness/PA-83.1-occupational-health-clinic-and-medical-case.md) — 8 workflows
 - **PA-83.2** [Periodic Examination, DOLE Compliance & Disease Surveillance](./VS-83-occupational-health-clinic-wellness/PA-83.2-periodic-exam-dole-compliance-surveillance.md) — 8 workflows
-- **PA-83.3** [Mental Health, Wellness & Employee Assistance Program](./VS-83-occupational-health-clinic-wellness/PA-83.3-mental-health-wellness-eap.md) — 8 workflows
+- **PA-83.3** [Mental Health, Wellness & Employee Assistance Program](./VS-83-occupational-health-clinic-wellness/PA-83.3-mental-health-wellness-eap.md) — 9 workflows
 
-**[VS-84: Labor Relations & Collective Bargaining Management](./VS-84-labor-relations-collective-bargaining/README.md)** (24 workflows)
+**[VS-84: Labor Relations & Collective Bargaining Management](./VS-84-labor-relations-collective-bargaining/README.md)** (25 workflows)
 
 - **PA-84.1** [Union Recognition, CBA Negotiation & Administration](./VS-84-labor-relations-collective-bargaining/PA-84.1-union-recognition-cba-negotiation-administration.md) — 8 workflows
-- **PA-84.2** [Grievance Handling, Labor Dispute & DOLE Conciliation](./VS-84-labor-relations-collective-bargaining/PA-84.2-grievance-labor-dispute-dole-conciliation.md) — 8 workflows
+- **PA-84.2** [Grievance Handling, Labor Dispute & DOLE Conciliation](./VS-84-labor-relations-collective-bargaining/PA-84.2-grievance-labor-dispute-dole-conciliation.md) — 9 workflows
 - **PA-84.3** [Employee Voice, Engagement & Partnership Management](./VS-84-labor-relations-collective-bargaining/PA-84.3-employee-voice-engagement-partnership.md) — 8 workflows
 
 **[VS-98: Contingent, Contract & Outsourced Workforce Management](./VS-98-contingent-contract-outsourced-workforce/README.md)** (24 workflows)
@@ -1084,10 +1084,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 ### Governance & Assurance
 
-**[VS-21: Internal Audit & Risk](./VS-21-internal-audit-risk/README.md)** (48 workflows)
+**[VS-21: Internal Audit & Risk](./VS-21-internal-audit-risk/README.md)** (49 workflows)
 
 - **PA-21.1** [Audit Planning & Execution](./VS-21-internal-audit-risk/PA-21.1-audit-planning-and-execution.md) — 26 workflows
-- **PA-21.2** [Enterprise Risk Management](./VS-21-internal-audit-risk/PA-21.2-enterprise-risk-management.md) — 9 workflows
+- **PA-21.2** [Enterprise Risk Management](./VS-21-internal-audit-risk/PA-21.2-enterprise-risk-management.md) — 10 workflows
 - **PA-21.3** [Specialized Audit Domains](./VS-21-internal-audit-risk/PA-21.3-specialized-audit-domains.md) — 13 workflows
 
 **[VS-22: Compliance & Regulatory](./VS-22-compliance-regulatory/README.md)** (57 workflows)
@@ -1132,9 +1132,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-33.2** [Corporate Performance Management](./VS-33-strategic-planning/PA-33.2-corporate-performance-management.md) — 8 workflows
 - **PA-33.3** [Competitive Intelligence & Market Analysis](./VS-33-strategic-planning/PA-33.3-competitive-intelligence.md) — 7 workflows
 
-**[VS-36: Corporate Governance & Board Management](./VS-36-corporate-governance/README.md)** (23 workflows)
+**[VS-36: Corporate Governance & Board Management](./VS-36-corporate-governance/README.md)** (24 workflows)
 
-- **PA-36.1** [Board Meeting Management & Corporate Records](./VS-36-corporate-governance/PA-36.1-board-meeting-corporate-records.md) — 8 workflows
+- **PA-36.1** [Board Meeting Management & Corporate Records](./VS-36-corporate-governance/PA-36.1-board-meeting-corporate-records.md) — 9 workflows
 - **PA-36.2** [Shareholder & Equity Management](./VS-36-corporate-governance/PA-36.2-shareholder-equity-management.md) — 7 workflows
 - **PA-36.3** [Corporate Policy & Entity Governance](./VS-36-corporate-governance/PA-36.3-corporate-policy-entity-governance.md) — 8 workflows
 
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,349 workflows across 188 value streams · Date: 2026-06-25*
+*Total: 5,355 workflows across 188 value streams · Date: 2026-08-24*

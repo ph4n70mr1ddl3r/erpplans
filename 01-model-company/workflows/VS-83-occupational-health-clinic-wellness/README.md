@@ -25,8 +25,8 @@ regulatory occupational health reporting, mental health services, and population
 |---|---|---|
 | [PA-83.1](PA-83.1-occupational-health-clinic-and-medical-case.md) | Occupational Health Clinic & Medical Case Management | 8 |
 | [PA-83.2](PA-83.2-periodic-exam-dole-compliance-surveillance.md) | Periodic Examination, DOLE Compliance & Disease Surveillance | 8 |
-| [PA-83.3](PA-83.3-mental-health-wellness-eap.md) | Mental Health, Wellness & Employee Assistance Program | 8 |
-| | **Total** | **24** |
+| [PA-83.3](PA-83.3-mental-health-wellness-eap.md) | Mental Health, Wellness & Employee Assistance Program | 9 |
+| | **Total** | **25** |
 
 ---
 
