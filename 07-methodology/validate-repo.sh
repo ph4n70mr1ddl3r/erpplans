@@ -1071,6 +1071,71 @@ else
     echo "$CHECK26" | grep '^A_ERR|' | sed 's/^A_ERR|/    /'
 fi
 
+# --- Check 27: stale register-row figures + unclassified-workflow claims ---
+echo "--- Check 27: stale register-row figures & unclassified-workflow claims ---"
+# Two guards closed by consistency review #15 (2026-06-28):
+#   (A) the Full-Coverage Confirmation Pass updated the register's Summary table to 5,372 rows
+#       (5,349 unique) but left three current-state prose figures frozen at the pre-pass state:
+#       the root README's folder-tree '(2,776 rows)', the register's own Summary note 'the
+#       remaining 2,753 are canonical ## workflows', and the §Domain Breakdown 'breakdown of
+#       the 2,776 classified workflows'. '2,776' was the v7.26 register-row total; '2,753' its
+#       unique-workflow complement (2,776 - 23 parents). Both are guarded with the same
+#       SKIP-docs / 'X -> Y' change-note exclusions as Checks 24B and 25B (canonical: 5,372
+#       rows / 5,349 unique).
+#   (B) the dependency map's §8 coverage note still claimed 'VS-192 remains unclassified
+#       pending criticality review' — true when v4.5 shipped, superseded the same day by the
+#       Full-Coverage Confirmation Pass. With all 5,349 workflows classified, any
+#       unclassified-workflow claim in workflow-dependency-map.md is stale by definition (the
+#       register's own dated 2026-06-14 addition notes are the historical record and stay
+#       exempt — this map carries no such dated-note convention).
+CHECK27=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+stale = []
+errs = []
+# ---- Part A: stale register-row figures '2,776' / '2,753' in current-state prose ----
+SKIP = {'CHANGELOG.md', 'workflow-gap-analysis.md', 'headcount-reality-check.md'}
+for fig in ('2,776', '2,753'):
+    pat = re.compile(r'(?<!\d)' + fig + r'(?!\d)')
+    for dirpath, _d, files in os.walk(ROOT):
+        if os.sep + '.git' in dirpath: continue
+        for fn in files:
+            if not fn.endswith('.md') or fn in SKIP: continue
+            path = os.path.join(dirpath, fn)
+            txt = open(path, encoding='utf-8', errors='replace').read()
+            for m in pat.finditer(txt):
+                lo = max(0, m.start()-25); hi = min(len(txt), m.end()+25)
+                if '->' in txt[lo:hi] or '\u2192' in txt[lo:hi]:
+                    continue  # legitimate historical 'X -> Y' change-note
+                line_no = txt.count('\n', 0, m.start()) + 1
+                stale.append(f"{os.path.relpath(path, ROOT)}:{line_no} ({fig})")
+# ---- Part B: unclassified-workflow claims in workflow-dependency-map.md ----
+DEP = os.path.join(ROOT, '01-model-company', 'workflows', 'workflow-dependency-map.md')
+dep = open(DEP, encoding='utf-8', errors='replace').read()
+for i, ln in enumerate(dep.split('\n'), 1):
+    if 'remains unclassified' in ln or 'pending criticality review' in ln:
+        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,349 workflows have been classified since the 2026-06-28 Full-Coverage Confirmation Pass")
+print(f"A_STALE={len(stale)}")
+for s in stale[:12]: print(f"A_STALE|{s}")
+print(f"B_ERRS={len(errs)}")
+for e in errs: print(f"B_ERR|{e}")
+PY
+)
+C27_STALE=$(echo "$CHECK27" | sed -n 's/^A_STALE=//p')
+C27_ERRS=$(echo "$CHECK27" | sed -n 's/^B_ERRS=//p')
+if [ "$C27_STALE" -eq 0 ]; then
+    ok "No stale register-row figure '2,776'/'2,753' in current-state prose (canonical figures are 5,372 rows / 5,349 unique since the 2026-06-28 Full-Coverage Confirmation Pass; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
+else
+    warn "Stale register-row figure '2,776'/'2,753' appears $C27_STALE time(s) in current-state prose (canonical figures are 5,372 rows / 5,349 unique — use an 'X -> Y' change-note or update the figure):"
+    echo "$CHECK27" | grep '^A_STALE|' | sed 's/^A_STALE|/    /'
+fi
+if [ "$C27_ERRS" -eq 0 ]; then
+    ok "No unclassified-workflow claims in workflow-dependency-map.md (all 5,349 workflows classified since 2026-06-28)"
+else
+    error "workflow-dependency-map.md carries unclassified-workflow claims that the 2026-06-28 Full-Coverage Confirmation Pass superseded ($C27_ERRS):"
+    echo "$CHECK27" | grep '^B_ERR|' | sed 's/^B_ERR|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

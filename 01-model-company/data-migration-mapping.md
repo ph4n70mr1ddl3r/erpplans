@@ -84,7 +84,7 @@
 | Salary / Rate | Payroll system | Migrate current basic salary; validate range | Positive; reasonable range |
 | Tax Status (BIR) | Payroll system | Map to BIR tax status codes (ME, S, HF, etc.) | Valid tax status |
 | SSS / PhilHealth / Pag-IBIG numbers | Payroll system | Validate format; flag missing | Valid format per agency |
-| TIN | Payroll system | Validate format (XXX-XXX-XXX) | Valid TIN format |
+| TIN | Payroll system | Validate format (XXX-XXX-XXX or XXX-XXX-XXX-XXX) | Valid TIN format |
 | Bank Account | Payroll system | Validate bank name + account number | Format validation |
 | Employee Type | Payroll system | Regular, Probationary, Fixed-term, Project-based | Valid type |
 | YTD Earnings & Deductions | Payroll system | Migrate year-to-date for BIR annual reconciliation (1702/1604) | Sum validates to payroll register |
@@ -171,4 +171,4 @@
 
 ---
 
-*Date: 2026-06-19 (v2.3 — §2.2 vendor-master target count reconciled to `model-company-profile.md` §6.5 range `~800–1,000 active vendors` (was `~1,000`); vendor TIN cleansing rule updated to accept both Philippine TIN formats (`XXX-XXX-XXX or XXX-XXX-XXX-XXX`) per COM-011 / §3, was 12-digit only. Prior v2.2: counts reconciled with README.md; canonical glossary reference added)*
+*Date: 2026-06-28 (v2.4 — consistency review #15: the §2.1 employee-master TIN rule aligned to the both-formats standard the rest of the file already carries (COM-011 / §TIN Validation): `Validate format (XXX-XXX-XXX)` → `(XXX-XXX-XXX or XXX-XXX-XXX-XXX)`; the same repair was applied to the single-format TIN checks in PA-17.3, PA-22.2, and PA-29.1. Prior v2.3 — §2.2 vendor-master target count reconciled to `model-company-profile.md` §6.5 range `~800–1,000 active vendors` (was `~1,000`); vendor TIN cleansing rule updated to accept both Philippine TIN formats (`XXX-XXX-XXX or XXX-XXX-XXX-XXX`) per COM-011 / §3, was 12-digit only. Prior v2.2: counts reconciled with README.md; canonical glossary reference added)*
