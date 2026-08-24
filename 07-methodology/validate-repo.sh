@@ -943,6 +943,113 @@ else
     echo "$CHECK25" | grep '^B_STALE|' | sed 's/^B_STALE|/    /'
 fi
 
+# --- Check 26: dependency-map §8 cross-cutting-block reconciliation ---
+echo "--- Check 26: dependency-map §8 block reconciliation ---"
+# The dependency map's §8 mines inline 'VS-NN' references across the Statutory + gap-analysis
+# block's PA and README files and self-declares its coverage: the section heading range
+# (VS-79–VS-NN), the intro's block size (N value streams / M workflows), the §8.1 anchor
+# top-10 table, and §8.4's per-program anchor-edge rows. Consistency review #14 (2026-06-28)
+# found this block frozen at the v4.4 snapshot — heading/§8.1/§8.4 all ended at VS-191, the
+# intro still said 113 value streams / 2,712 workflows (excluding both VS-192's +24 and the
+# PA-127.4 extension's +8), and the v4.4 footer itself flagged 'VS-192 incorporation pending
+# the next consistency review' — a pending item three reviews (#10–#13) shipped without
+# action because no check guarded §8; the §8.1 table had also drifted (v4.3 counts, and a
+# top-10 that omitted VS-91 while listing VS-100). All parts ERROR (the doc's claims are
+# machine-verifiable):
+#   A: §8 heading range end == index max active VS.
+#   B: §8.4's last '| VS-NN |' program row == max VS (full block coverage).
+#   C: §8 intro's declared 'N value streams / M workflows' == actual block content on disk
+#      (VS-79..max directories; ## W headers in their PA files).
+#   D: §8.1's anchor table == the live top-10 recomputed from PA+README reference mining
+#      (membership AND counts) — enforcing the table's own 'freshly recomputed' claim, so
+#      any content change that shifts reference counts must refresh the table.
+CHECK26=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+WF = f"{ROOT}/01-model-company/workflows"
+errors = []
+idx = open(f"{WF}/value-stream-index.md", encoding='utf-8').read()
+vs_nums = {int(n) for n in re.findall(r'\[VS-(\d+)\]\(', idx)}
+max_vs = max(vs_nums) if vs_nums else 0
+dep = open(f"{WF}/workflow-dependency-map.md", encoding='utf-8').read()
+
+# ---- A: §8 heading range end == index max active VS ----
+hm = re.search(r'^## 8\. Cross-Cutting Program Dependencies \(VS-79\u2013VS-(\d+)\)', dep, re.M)
+if not hm:
+    errors.append("cannot find the '## 8. Cross-Cutting Program Dependencies (VS-79\u2013VS-N)' heading")
+elif int(hm.group(1)) != max_vs:
+    errors.append(f"\u00a78 heading range ends at VS-{hm.group(1)} but the index max active VS is VS-{max_vs}")
+
+# ---- B: §8.4's last program row == max VS ----
+m84 = re.search(r'^### 8\.4 .*?\n(.*?)(?=^>|\Z)', dep, re.M | re.S)
+if not m84:
+    errors.append("cannot find the '### 8.4' program-anchor table section")
+else:
+    rows = [int(n) for n in re.findall(r'^\| VS-(\d+) \| ', m84.group(1), re.M)]
+    if not rows:
+        errors.append("\u00a78.4 has no '| VS-NN |' program rows")
+    elif rows[-1] != max_vs:
+        errors.append(f"\u00a78.4's last program row is VS-{rows[-1]} but the index max active VS is VS-{max_vs} (block coverage incomplete)")
+
+# ---- C: §8 intro's declared block size == disk ----
+# The intro is a wrapped markdown blockquote ('> ... \n> ...'), so normalize newlines and
+# quote markers to single spaces before parsing the 'added N value streams / M workflows' claim.
+intro_flat = re.sub(r'\s+', ' ', re.sub(r'[\n>]+', ' ', dep[hm.start():dep.find('### 8.1')] if hm else dep))
+block_dirs = []
+for d in sorted(os.listdir(WF)):
+    m = re.match(r'VS-(\d+)-', d)
+    if m and 79 <= int(m.group(1)) <= max_vs and os.path.isdir(os.path.join(WF, d)):
+        block_dirs.append(d)
+wf_disk = 0
+for d in block_dirs:
+    for fn in sorted(os.listdir(os.path.join(WF, d))):
+        if fn.startswith("PA-") and fn.endswith(".md"):
+            txt = open(os.path.join(WF, d, fn), encoding='utf-8', errors='replace').read()
+            wf_disk += len(re.findall(r'^## W\d+[A-Z]?\.', txt, re.M))
+im = re.search(r'added (\d+) value streams / ([\d,]+) workflows', intro_flat)
+if not im:
+    errors.append("cannot parse the §8 intro's 'added N value streams / M workflows' claim")
+else:
+    decl_vs, decl_wf = int(im.group(1)), int(im.group(2).replace(',', ''))
+    if (decl_vs, decl_wf) != (len(block_dirs), wf_disk):
+        errors.append(f"§8 intro declares {decl_vs} value streams / {decl_wf:,} workflows but the block on disk holds {len(block_dirs)} / {wf_disk:,}")
+
+# ---- D: §8.1 anchor table == live top-10 recomputed from PA+README mining ----
+counts = {}
+for d in block_dirs:
+    files = [os.path.join(WF, d, "README.md")] + [os.path.join(WF, d, fn) for fn in sorted(os.listdir(os.path.join(WF, d))) if fn.startswith("PA-") and fn.endswith(".md")]
+    for fp in files:
+        if not os.path.exists(fp):
+            continue
+        for mm in re.finditer(r'VS-(\d{1,3})(?![0-9])', open(fp, encoding='utf-8', errors='replace').read()):
+            counts[mm.group(1)] = counts.get(mm.group(1), 0) + 1
+want = sorted(counts.items(), key=lambda kv: (-kv[1], int(kv[0])))[:10]
+m81 = re.search(r'^### 8\.1 .*?\n(.*?)(?=^### )', dep, re.M | re.S)
+if not m81:
+    errors.append("cannot find the '### 8.1' anchor table section")
+else:
+    got = [(k, int(v.replace(',', ''))) for k, v in re.findall(r'^\| VS-(\d+) \| [^|]+ \| ([\d,]+) \|$', m81.group(1), re.M)]
+    if got != want:
+        errors.append(f"§8.1 anchor table is not the live top-10 (freshly recomputed from VS-79\u2013VS-{max_vs} PA+README mining): table={[(('VS-'+k), v) for k, v in got]} live={[(('VS-'+k), v) for k, v in want]}")
+
+print(f"A_ERRS={len(errors)}")
+for e in errors: print(f"A_ERR|{e}")
+print(f"MAX_VS={max_vs}")
+print(f"BLOCK_VS={len(block_dirs)}")
+print(f"BLOCK_WF={wf_disk}")
+PY
+)
+C26_ERRS=$(echo "$CHECK26" | sed -n 's/^A_ERRS=//p')
+C26_MAXVS=$(echo "$CHECK26" | sed -n 's/^MAX_VS=//p')
+C26_VS=$(echo "$CHECK26" | sed -n 's/^BLOCK_VS=//p')
+C26_WF=$(echo "$CHECK26" | sed -n 's/^BLOCK_WF=//p')
+if [ "$C26_ERRS" -eq 0 ]; then
+    ok "Dependency-map §8 block reconciliation: heading/§8.4 end at VS-$C26_MAXVS, intro block size ($C26_VS value streams / $C26_WF workflows) matches disk, and the §8.1 anchor table equals the live top-10 (freshly recomputed from PA+README reference mining)"
+else
+    error "Dependency-map §8 self-declared coverage does not reconcile ($C26_ERRS mismatch(es)) — the block tables must be re-mined/recomputed:"
+    echo "$CHECK26" | grep '^A_ERR|' | sed 's/^A_ERR|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
