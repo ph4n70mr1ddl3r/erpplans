@@ -237,7 +237,7 @@ erpplans/
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── validate-repo.sh              Cross-reference validation (41 checks)
+    ├── validate-repo.sh              Cross-reference validation (42 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── add-automation-controls.py    Automation/Controls field adder
@@ -318,7 +318,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (5,349 WF)    │
+   │  erp-requirements.md ←→ workflows/ (5,355 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (808 CTL)  classification.md          │

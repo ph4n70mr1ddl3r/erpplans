@@ -1945,6 +1945,55 @@ else
     echo "$CHECK41" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 42: Duplicate workflow titles (normalized) across the workflow catalog ---
+echo "--- Check 42: Duplicate workflow-title guard ---"
+# Consistency review #26 found same-title duplicate clusters no ID-based check could
+# see: W1396/W1543 (identical titles, both VS-25 — a true duplicate authored in
+# different passes), W1185/W1286/W1311 alongside canonical W510 (four same-scope
+# review workflows in one PA with conflicting review volumes), and the cross-VS
+# twins W1638/W176 and W1731/W2582 (conflicting cadence/agreement counts). Check 36
+# guards requirement titles; nothing guarded workflow titles. Titles are normalized
+# (case/punctuation-insensitive, so 'Store-to-DC Reverse Logistics (Consolidation)'
+# equals 'Store-to-DC Reverse Logistics Consolidation') and grouped by normalized
+# text; three ID groups are adjudicated intentional parallel program templates
+# (same function, different asset domain) and sit on the allowlist below.
+CHECK42=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, collections, sys
+ROOT = os.path.join(sys.argv[1], "01-model-company", "workflows")
+# Adjudicated intentional parallel program templates (see check header):
+ALLOWED = [frozenset(x) for x in (("W4776", "W4800"), ("W4786", "W4810"),
+                                   ("W4888", "W4912", "W4936"))]
+def norm(t):
+    return " ".join(re.sub(r"[^a-z0-9]+", " ", t.lower()).split())
+titles = collections.defaultdict(list)
+for f in glob.glob(os.path.join(ROOT, "VS-*", "PA-*.md")):
+    for line in open(f, encoding="utf-8"):
+        m = re.match(r"^## (W\d+[A-Z]?)\. (.+)$", line.strip())
+        if m:
+            titles[norm(m.group(2))].append(m.group(1))
+bad = 0
+total = 0
+for t, ids in sorted(titles.items()):
+    total += len(ids)
+    if len(ids) < 2:
+        continue
+    s = frozenset(ids)
+    if any(a == s for a in ALLOWED):
+        continue
+    bad += 1
+    print(f"BAD|{', '.join(sorted(ids))}: '{t[:80]}'")
+print(f"TOTALS workflows={total} dup_groups={bad}")
+PY
+)
+C42_BAD=$(echo "$CHECK42" | sed -n 's/^TOTALS workflows=[0-9]* dup_groups=\([0-9]*\)/\1/p')
+C42_TOTAL=$(echo "$CHECK42" | sed -n 's/^TOTALS workflows=\([0-9]*\) dup_groups=[0-9]*/\1/p')
+if [ "${C42_BAD:-1}" -eq 0 ]; then
+    ok "All ${C42_TOTAL} workflow titles are unique after normalization (3 adjudicated parallel program-template groups allowlisted)"
+else
+    error "Duplicate workflow titles found (same normalized title on 2+ IDs) — designate a canonical workflow, retitle companions to their genuine slice, or add an adjudicated allowlist entry:"
+    echo "$CHECK42" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

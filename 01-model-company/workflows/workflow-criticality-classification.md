@@ -3938,7 +3938,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W1632 | Vendor RTV Credit Recovery & Reconciliation | VS-32 |
 | W1634 | Vendor Product Recall Return & Recovery Processing | VS-32 |
 | W1636 | Vendor Consignment Unsold Inventory Return & Settlement | VS-32 |
-| W1638 | Store-to-DC Reverse Logistics Consolidation | VS-32 |
+| W1638 | Store-to-DC Reverse Logistics Consolidation Program, In-Transit Tracking & DC Hand-Off | VS-32 |
 | W2200 | Customer Home Delivery SLA Management | VS-56 |
 | W2201 | Delivery Quality Inspection | VS-56 |
 | W2206 | Monthly 3PL Invoice Processing | VS-56 |
@@ -4339,7 +4339,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W1661 | Competitor Store Visit Program & Systematic Data Collection | VS-33 |
 | W1718 | SEC Annual Filing & Corporate Information Update | VS-36 |
 | W1724 | Stock Transfer & Ownership Change Processing | VS-36 |
-| W1731 | Intercompany Service Agreement Management | VS-36 |
+| W1731 | Intercompany Service Agreement Governance, Transfer Pricing & Board Authorization | VS-36 |
 | W1735 | Data Privacy Governance & NPC Compliance | VS-36 |
 | W2598 | Store-Level Waste Segregation & Daily Collection | VS-73 |
 | W2603 | E-Waste & Battery Collection & Disposal | VS-73 |
@@ -4802,7 +4802,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W1171 | Installation Defect Punch List, Customer Walk-Through & Quality Sign-Off | VS-12 |
 | W1172 | Tool Rental Fleet Procurement, Lifecycle Planning & Retirement Management | VS-12 |
 | W1179 | Store-Level Gift Card Sales, Redemption & Balance Management | VS-9 |
-| W1185 | Ecommerce Product Review, Rating & User-Generated Content Moderation | VS-10 |
+| W1185 | Post-Purchase Review Solicitation, Loyalty Review Incentives & Fake-Review Detection | VS-10 |
 | W1186 | Loyalty Program Partner Cross-Promotion & Third-Party Reward Integration | VS-13 |
 | W1192 | Post-Typhoon Store Damage Assessment, Insurance Claim & Rapid Reopening Protocol | VS-7 |
 | W1193 | Heavy & Bulky Material Customer Pickup Scheduling & Loading Bay Priority Management | VS-7 |
@@ -4836,7 +4836,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W1283 | Cement & Building Material Vendor Direct Store Delivery (DSD) Coordination | VS-7 |
 | W1284 | Customer Bulk Material Quantity Takeoff & Quotation Service | VS-9 |
 | W1285 | Customer Tile & Flooring Sample Loan Program | VS-9 |
-| W1286 | Ecommerce Product Review & User-Generated Content Moderation | VS-10 |
+| W1286 | Ecommerce UGC Moderation Playbook, Content Seeding & Product Q&A Management | VS-10 |
 | W1287 | Customer Ecommerce Product Availability Notification & Back-in-Stock Alert | VS-10 |
 | W1289 | Store-Level Tool Demonstration & Product Launch Event Coordination | VS-12 |
 | W1290 | Store-Level Appliance Warranty Registration & After-Sales Service Coordination | VS-13 |
@@ -4845,7 +4845,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W1297 | Store-Level Perimeter Security & Parking Lot Safety Management | VS-7 |
 | W1302 | Typhoon Season Store Protection, Rapid Reopening & Post-Disaster Assessment Protocol | VS-7 |
 | W1308 | B2B Project Bid, Tender Response & Government Procurement Compliance Management | VS-11 |
-| W1311 | E-Commerce Product Review & Rating Management, Seller Response & Negative Review Escalation | VS-10 |
+| W1311 | Negative-Review Quality-Pattern Escalation, Seller Response Governance & Positive-Review Amplification | VS-10 |
 | W1314 | Customer Project Material List (Bill of Materials) Creation, Management & Reorder Tracking | VS-9 |
 | W1316 | Loyalty Points Liability Accounting, Redemption Forecasting & Program Financial Management | VS-13 |
 | W1317 | Store-Level Generator Backup Power Operations, Fuel Management & Load Shedding Protocol | VS-7 |
@@ -6503,7 +6503,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W1396 | Store-Level Energy Consumption Benchmarking, Carbon Footprint Estimation & Reduction Target Tracking | VS-25 |
 | W1448 | Store-Level Solar Panel Performance Monitoring, Energy Savings Tracking & ROI Reporting | VS-25 |
 | W1541 | Key Risk Indicator (KRI) Monthly Monitoring, Threshold Alert & Risk Appetite Dashboard Operations | VS-21 |
-| W1543 | Store-Level Energy Consumption Benchmarking, Carbon Footprint Estimation & Reduction Target Tracking | VS-25 |
+| W1543 | Utility Data Collection & Store-Level Energy Consumption Monitoring | VS-25 |
 | W1565 | Annual Insurance Portfolio Review, Coverage Gap Analysis & Market Benchmarking for Policy Renewal | VS-26 |
 | W1608 | Vendor Quality Scorecard & Performance Review | VS-31 |
 | W1645 | Annual Strategic Planning Workshop & Strategy Refresh | VS-33 |
@@ -6562,6 +6562,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 ---
 
+*Date: 2026-08-24 | Workflow Criticality Classification v7.34 — consistency review #26 (title-only register change, PDC-repair precedent): four duplicate-title repairs — W1185 retitled to its solicitation/incentives/fake-review slice, W1286 to its moderation-playbook/seeding/Q&A slice and W1311 to its escalation/amplification slice (W510 declared the canonical own-platform review workflow in PA-10.1, resolving the four-way same-scope cluster with conflicting review volumes), and W1543 retitled to its data-collection/monitoring layer (W1396 remains the benchmarking/carbon analytics layer; same-title pair in VS-25 resolved); W1638 retitled to the reverse-logistics program view (store-side execution stays canonical in W176, whose cadence/volume W1638 now follows) and W1731 retitled to the governance/TP layer (operational registry stays in W2582, agreement counts harmonized at ~20 across 5 entities). No tier assignments, register-row counts, or totals changed. `validate-repo.sh`: 0 errors / 0 warnings across 42 checks.*
 *Date: 2026-08-24 | Workflow Criticality Classification v7.33 — six post-catalog workflow-level gap fills added to the catalog (W5497–W5502; totals 5,349 → 5,355 workflows). No confirmed register rows changed (5,372 rows / 5,349 unique stand); the six ship **unclassified** with keyword-driven proposed tiers (1 Tier 1 / 5 Tier 2) in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md), mirroring the pre-2026-06-28 convention until the next confirmation pass. Intro banner, §Summary proposed/coverage rows, and Domain-Breakdown prose re-pointed to 5,355 / 6-unclassified. `validate-repo.sh`: 0 errors / 0 warnings across 41 checks.*
 *Date: 2026-08-24 | Workflow Criticality Classification v7.32 — consistency review #25 (repo hygiene, no register change): validator Checks 40 (validator self-description agreement) and 41 (quoted requirement-total/category-count agreement) added; no tier assignments, register rows, headings, or totals altered in this document. `validate-repo.sh`: 0 errors / 0 warnings across 41 checks.*
 *Date: 2026-08-24 | Workflow Criticality Classification v7.31 — PDC consistency repair: the Core Financial rows W423 and W425 are retitled to their treasury-companion scope (W423 — treasury execution companion of the canonical customer-PDC lifecycle W1380; W425 — treasury financial-reversal companion of the canonical bounced-check resolution W1381; both canonical workflows are defined in VS-16 and carry their own register rows). No tier assignments, register-row counts, or totals changed. `validate-repo.sh`: 0 errors / 0 warnings across 39 checks.*
