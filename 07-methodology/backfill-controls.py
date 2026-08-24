@@ -9,7 +9,7 @@ Two related fixes applied in one pass over every PA file:
      so the two sections render glued together. This ensures exactly one blank line between
      a Controls body and the next `###` / `##` / `---` / EOF. (3,235 sections were affected.)
 
-  2. CTL-XX backfill. `internal-controls-matrix.md` maps each of the 67 controls to the
+  2. CTL-XX backfill. `internal-controls-matrix.md` maps each control to the
      workflows that exercise it (its `Workflows` column). This script reverses that into a
      workflow -> controls index and, for any workflow whose `### Controls` body cites NO
      CTL-XX today but IS mapped in the matrix, prepends the mapped control(s) as a properly
@@ -18,10 +18,13 @@ Two related fixes applied in one pass over every PA file:
 
 Both transforms are idempotent: re-running on an already-fixed file is a no-op.
 
-Scope note: the 67-control register was authored against the Core workflows (W1-W942), so
-only ~60 workflows currently have a matrix mapping. The gap-analysis block (W2993+) is not
-yet covered by the register; extending the register is a separate, manual effort tracked by
-validator Check 21. This tool will pick up any new mappings automatically as the register grows.
+Scope note: the original 67-control register was authored against the Core workflows
+(W1-W942). The 2026-06-27 v8 register extension added 104 gap-analysis domain anchor
+controls (CTL-68-CTL-171, one per value stream VS-89-VS-192); running this tool after that
+extension backfilled 496 further Controls sections. The Expansion block (VS-32-VS-48 and
+VS-53-VS-88) remains outside the register — extending coverage there is further manual
+work tracked by validator Check 21. This tool picks up any new mappings automatically as
+the register grows.
 
 Usage:
     python3 07-methodology/backfill-controls.py           # write changes

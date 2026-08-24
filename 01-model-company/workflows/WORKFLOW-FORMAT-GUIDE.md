@@ -46,12 +46,12 @@ following fields.
 
 These two fields were previously listed as "recommended"; a 2026-06-15 review found **Automation Opportunity absent from all 376 PA files** and **Controls present in only 5**. They are now standard for any fully-detailed workflow (see VS-73 for the reference implementation). As of 2026-06-20 the field **headers** are present on all **5,349 workflows (100% presence)** across all blocks (Core, Expansion, Statutory, and Gap analysis).
 
-> **Content-quality caveat (2026-06-21).** Presence ≠ quality. The repo-wide insertion was performed by a first-pass generator (`add-automation-controls.py`), and a 2026-06-21 review found the bulk of the generated content is **draft** quality: Automation bullets were emitted as mid-phrase fragments (e.g. `- auto-review (account manager reviews application: (a) verify)`) and most Controls sections cited no CTL-XX from the controls register. Two corrections shipped in that review: (1) `backfill-controls.py` retroactively injected real CTL-XX references wherever `internal-controls-matrix.md` provides a workflow→control mapping, and normalized the missing blank line before the next `###` header; (2) validator **Check 21** now reports the live quality metrics (fragment-bullet count, CTL-XX coverage %, pure-boilerplate count) so the backlog is tracked rather than silently claimed as complete. Because the 67-control register was authored against the Core workflows (W1–W942), only ~60 workflows currently have a CTL mapping; extending the register to the gap-analysis block (W2993+) is separate manual work. Treat any generated Automation/Controls bullet not matching the quality bar below as a draft pending per-workflow human refinement.
+> **Content-quality caveat (2026-06-21).** Presence ≠ quality. The repo-wide insertion was performed by a first-pass generator (`add-automation-controls.py`), and a 2026-06-21 review found the bulk of the generated content is **draft** quality: Automation bullets were emitted as mid-phrase fragments (e.g. `- auto-review (account manager reviews application: (a) verify)`) and most Controls sections cited no CTL-XX from the controls register. Two corrections shipped in that review: (1) `backfill-controls.py` retroactively injected real CTL-XX references wherever `internal-controls-matrix.md` provides a workflow→control mapping, and normalized the missing blank line before the next `###` header; (2) validator **Check 21** now reports the live quality metrics (fragment-bullet count, CTL-XX coverage %, pure-boilerplate count) so the backlog is tracked rather than silently claimed as complete. Because the 67-control register was originally authored against the Core workflows (W1–W942), only ~60 workflows had a CTL mapping; the 2026-06-27 register extension (CTL-68–CTL-171, one anchor control per gap-analysis value stream VS-89–VS-192) raised mapped coverage via `backfill-controls.py` — see Check 21's live metrics for the current CTL-citation rate. Treat any generated Automation/Controls bullet not matching the quality bar below as a draft pending per-workflow human refinement.
 
 | Field | Meaning |
 |---|---|
 | **Automation Opportunity** | Steps that are manual today but are candidates for system automation — directly informs ERP design (purpose 2) |
-| **Controls** | Internal-control IDs (from [`internal-controls-matrix.md`](../internal-controls-matrix.md)) exercised by this workflow — closes the loop with the 67-control register |
+| **Controls** | Internal-control IDs (from [`internal-controls-matrix.md`](../internal-controls-matrix.md)) exercised by this workflow — closes the loop with the 171-control register |
 
 ### Cross-reference field
 
@@ -141,7 +141,7 @@ workflows/
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap-analysis methodology and workflow-ID allocation log |
 | [../requirement-workflow-matrix.md](../requirement-workflow-matrix.md) | Requirement-to-workflow traceability |
-| [../internal-controls-matrix.md](../internal-controls-matrix.md) | 67 internal controls mapped to workflows |
+| [../internal-controls-matrix.md](../internal-controls-matrix.md) | 171 internal controls mapped to workflows and requirements |
 | [../../07-methodology/validate-repo.sh](../../07-methodology/validate-repo.sh) | Consistency & boilerplate validator |
 
 ---

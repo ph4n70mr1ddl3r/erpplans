@@ -537,7 +537,7 @@ echo "--- Check 21: Automation/Controls content quality ---"
 # is still 100%, and these are draft placeholders pending per-workflow human review — the
 # same treatment Check 1 gives unclassified workflows. Metrics:
 #   (a) Automation bullets that are broken fragments (auto-X (lowercase fragment, no period)
-#   (b) Controls sections citing >=1 real CTL-XX  (coverage of the 67-control register)
+#   (b) Controls sections citing >=1 real CTL-XX  (coverage of the controls register)
 #   (c) Controls sections that are pure boilerplate (no CTL-XX AND one of two known strings)
 QUALITY=$(python3 - "$REPO_ROOT" <<'PY'
 import glob, os, re, sys

@@ -217,7 +217,7 @@ def generate_controls(pain_points, wf_name, steps, owner, wf_id=None):
     Preference order: (1) explicit CTL-XX references from the internal-controls matrix
     for this workflow id (the auditable, traceable source); (2) mitigating controls named
     in the pain points ('mitigated by …'); (3) a step-pattern-derived operational control.
-    The CTL-XX branch is what closes the loop with the 67-control register; without a
+    The CTL-XX branch is what closes the loop with the controls register; without a
     mapping the output is a clearly-labelled draft.
     """
     controls = []
