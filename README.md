@@ -34,7 +34,7 @@ erpplans/
 │   │   ├── value-stream-index.md              Master index (8 families · 188 value streams · 569 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (5,372 rows)
-│   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal register for unclassified workflows (8 post-catalog workflows W5497–W5504 added 2026-08-24/25)
+│   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal register for unclassified workflows (11 post-catalog workflows W5497–W5507 added 2026-08-24/25)
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
 │   │   ├── workflow-system-touchpoint-map.md    ERP module-to-workflow cross-reference
 │   │   ├── workflow-gap-analysis.md            Gap-analysis methodology & 30-pass history
@@ -47,7 +47,7 @@ erpplans/
 │   │   ├── VS-07-store-operations/              147 workflows (4 process areas)
 │   │   ├── VS-08-pos-checkout/                  58 workflows (3 process areas)
 │   │   ├── VS-09-in-store-services/             158 workflows (3 process areas)
-│   │   ├── VS-10-ecommerce-digital/             61 workflows (3 process areas)
+│   │   ├── VS-10-ecommerce-digital/             62 workflows (3 process areas)
 │   │   ├── VS-11-trade-project-wholesale/       52 workflows (3 process areas)
 │   │   ├── VS-12-installation-services/         40 workflows (3 process areas)
 │   │   ├── VS-13-customer-experience/           64 workflows (3 process areas)
@@ -56,24 +56,24 @@ erpplans/
 │   │   ├── VS-16-order-to-cash/                 31 workflows (3 process areas)
 │   │   ├── VS-17-record-to-report/              67 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 33 workflows (3 process areas)
-│   │   ├── VS-19-hire-to-retire/                74 workflows (5 process areas)
+│   │   ├── VS-19-hire-to-retire/                75 workflows (5 process areas)
 │   │   ├── VS-20-real-estate-construction/      32 workflows (3 process areas)
-│   │   ├── VS-21-internal-audit-risk/           48 workflows (3 process areas)
+│   │   ├── VS-21-internal-audit-risk/           49 workflows (3 process areas)
 │   │   ├── VS-22-compliance-regulatory/         57 workflows (3 process areas)
 │   │   ├── VS-23-loss-prevention/               28 workflows (3 process areas)
-│   │   ├── VS-24-health-safety-environment/     26 workflows (3 process areas)
+│   │   ├── VS-24-health-safety-environment/     27 workflows (3 process areas)
 │   │   ├── VS-25-esg-sustainability/            31 workflows (3 process areas)
 │   │   ├── VS-26-business-continuity-insurance/ 30 workflows (3 process areas)
 │   │   ├── VS-27-it-operations-security/        62 workflows (3 process areas)
 │   │   ├── VS-28-data-analytics-bi/             24 workflows (3 process areas)
 │   │   ├── VS-29-master-data/                   43 workflows (3 process areas)
 │   │   ├── VS-30-innovation-digital/            29 workflows (3 process areas)
-│   │   ├── VS-31-quality-management/            22 workflows (3 process areas)
+│   │   ├── VS-31-quality-management/            23 workflows (3 process areas)
 │   │   ├── VS-32-returns-reverse-logistics/     23 workflows (3 process areas)
 │   │   ├── VS-33-strategic-planning/            23 workflows (3 process areas)
 │   │   ├── VS-34-expense-procurement/           22 workflows (3 process areas)
 │   │   ├── VS-35-fixed-asset-management/        24 workflows (3 process areas)
-│   │   ├── VS-36-corporate-governance/          23 workflows (3 process areas)
+│   │   ├── VS-36-corporate-governance/          24 workflows (3 process areas)
 │   │   ├── VS-37-store-opening-commissioning/   26 workflows (3 process areas)
 │   │   ├── VS-38-consumer-credit-financing/     24 workflows (3 process areas)
 │   │   ├── VS-39-vendor-rebate-incentive/       24 workflows (3 process areas)
@@ -116,8 +116,8 @@ erpplans/
 │   │   ├── VS-80-payment-operations-acquirer-settlement/ 24 workflows (3 process areas)
 │   │   ├── VS-81-cash-in-transit-vault-armored/    24 workflows (3 process areas)
 │   │   ├── VS-82-sari-sari-msme-micro-wholesale/   24 workflows (3 process areas)
-│   │   ├── VS-83-occupational-health-clinic-wellness/ 24 workflows (3 process areas)
-│   │   ├── VS-84-labor-relations-collective-bargaining/ 24 workflows (3 process areas)
+│   │   ├── VS-83-occupational-health-clinic-wellness/ 25 workflows (3 process areas)
+│   │   ├── VS-84-labor-relations-collective-bargaining/ 25 workflows (3 process areas)
 │   │   ├── VS-85-mandatory-discount-eligibility-tax-credit/ 24 workflows (3 process areas)
 │   │   ├── VS-86-anti-financial-crime-aml-abc/     24 workflows (3 process areas)
 │   │   ├── VS-87-customs-trade-compliance-tariff/  24 workflows (3 process areas)
@@ -237,7 +237,7 @@ erpplans/
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── validate-repo.sh              Cross-reference validation (43 checks)
+    ├── validate-repo.sh              Cross-reference validation (45 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── add-automation-controls.py    Automation/Controls field adder

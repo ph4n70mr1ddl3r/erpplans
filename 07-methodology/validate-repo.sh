@@ -2071,6 +2071,198 @@ else
     echo "$CHECK43" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 44: Root-README folder-tree agreement with value-stream-index.md ---
+echo "--- Check 44: Root-README folder-tree agreement ---"
+# Consistency review #28 found the root-README folder tree had drifted from the index
+# after the post-catalog gap-fill batches: batch 1 (W5497–W5502) updated the tree's
+# workflows/ total line but not the per-VS directory rows, so 6 rows sat at pre-batch
+# counts (VS-10/19/21/36/83/84) and batch 2 (W5503/W5504) repeated the miss (VS-24/31)
+# — batch 3 (W5505–W5507, VS-07) was reconciled only because it also touched the
+# total line. The tree's proposed-register description row had drifted identically
+# (8/W5497–W5504 vs 11/W5497–W5507). Checks 2/24 guard the index and workflows/README
+# against the same drift but never scan the root README tree. This check derives the
+# canonical per-VS PA/workflow counts and grand total from value-stream-index.md, the
+# unclassified complement and ID range from workflow-criticality-proposed.md, and
+# validates every tree row against them.
+CHECK44=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, sys
+ROOT = sys.argv[1]
+bad = []
+# canonical: index per-VS (PAs, workflows) + grand total
+idx = {}
+total = None
+for line in open(os.path.join(ROOT, "01-model-company/workflows/value-stream-index.md"), encoding="utf-8"):
+    m = re.match(r"^\|.*?\[VS-(\d+)\]\([^)]+\)\s*\|[^|]+\|[^|]+\|\s*(\d+)\s*\|\s*([\d,]+)\s*\|\s*$", line)
+    if m:
+        idx[int(m.group(1))] = (int(m.group(3).replace(",", "")), int(m.group(2)))  # (workflows, PAs)
+    m = re.match(r"^\|\s*\|\s*\|\s*\|\s*\*\*Grand Total\*\*\s*\|\s*\*\*(\d+)\*\*\s*\|\s*\*\*([\d,]+)\*\*\s*\|\s*$", line)
+    if m:
+        total = int(m.group(2).replace(",", ""))
+if total is None or sum(v[0] for v in idx.values()) != total:
+    bad.append(f"index parse failed: grand_total={total} vs per-VS sum={sum(v[1] for v in idx.values())}")
+# canonical: unclassified complement + ID range from the proposal register
+prop = open(os.path.join(ROOT, "01-model-company/workflows/workflow-criticality-proposed.md"), encoding="utf-8").read()
+m = re.search(r"\*\*Workflow coverage:\*\* (\d+) unclassified workflows", prop)
+unclassified = int(m.group(1)) if m else -1
+ids = [int(w[1:]) for w in re.findall(r"^\| (W\d+) \|", prop, re.M)]
+lo, hi = (min(ids), max(ids)) if ids else (None, None)
+if unclassified >= 0 and len(ids) != unclassified:
+    bad.append(f"proposal register: coverage line says {unclassified}, table holds {len(ids)} rows")
+# root README tree rows
+tree = {}
+tree_total = None
+prop_rows = []
+for i, line in enumerate(open(os.path.join(ROOT, "README.md"), encoding="utf-8"), 1):
+    m = re.search(r"VS-(\d+)-[a-z0-9-]+/\s+([\d,]+) workflows \((\d+) process areas\)", line)
+    if m:
+        tree[int(m.group(1))] = (int(m.group(2).replace(",", "")), int(m.group(3)))
+        continue
+    m = re.search(r"workflows/\s+([\d,]+) workflows organized by value stream", line)
+    if m:
+        tree_total = int(m.group(1).replace(",", ""))
+    if "├── workflow-criticality-proposed.md" in line and "post-catalog" in line:
+        cm = re.search(r"\((\d+) post-catalog workflows (W\d+)–(W\d+) added", line)
+        prop_rows.append((i, cm))
+missing = sorted(set(idx) - set(tree))
+extra = sorted(set(tree) - set(idx))
+if missing:
+    bad.append(f"tree omits index VS rows: {missing[:8]}")
+if extra:
+    bad.append(f"tree lists non-index VS rows: {extra[:8]}")
+for v in sorted(set(idx) & set(tree)):
+    if tree[v] != idx[v]:
+        bad.append(f"VS-{v}: tree says {tree[v][0]} workflows / {tree[v][1]} PAs, index says {idx[v][0]} / {idx[v][1]}")
+if tree_total != total:
+    bad.append(f"tree 'workflows/ N workflows organized' line says {tree_total}, index grand total is {total}")
+for i, cm in prop_rows:
+    if unclassified > 0:
+        if not cm:
+            bad.append(f"README.md:{i}: proposed-register row lacks '(N post-catalog workflows Wxxx–Wyyy added…)' while {unclassified} are unclassified")
+        else:
+            cnt, a, b = int(cm.group(1)), int(cm.group(2)[1:]), int(cm.group(3)[1:])
+            if cnt != unclassified:
+                bad.append(f"README.md:{i}: proposed-register row says {cnt} post-catalog workflows, register holds {unclassified}")
+            if lo is not None and (a, b) != (lo, hi):
+                bad.append(f"README.md:{i}: proposed-register range W{a}–W{b} != register W{lo}–W{hi}")
+    elif cm and int(cm.group(1)) != 0:
+        bad.append(f"README.md:{i}: proposed-register row still quotes {cm.group(1)} post-catalog workflows while register is empty")
+print(f"TOTALS vs={len(set(idx) & set(tree))} total={total} unclassified={unclassified} problems={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C44_BAD=$(echo "$CHECK44" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
+if [ "${C44_BAD:-1}" -eq 0 ]; then
+    C44_VS=$(echo "$CHECK44" | sed -n 's/^TOTALS vs=\([0-9]*\) .*/\1/p')
+    C44_U=$(echo "$CHECK44" | sed -n 's/^TOTALS .* unclassified=\([0-9]*\) .*/\1/p')
+    ok "Root-README folder tree agrees with value-stream-index.md (${C44_VS} VS rows, workflow/PA counts, total line) and workflow-criticality-proposed.md (${C44_U} unclassified)"
+else
+    error "Root-README folder-tree rows disagree with the canonical registers:"
+    echo "$CHECK44" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 45: Current-state workflow-total figures on anchored self-description surfaces ---
+echo "--- Check 45: Anchored current-state total-figure agreement ---"
+# Consistency review #28 repaired 9 further current-state surfaces quoting the
+# pre-batch-3 canonical total (5,357) or the pre-batch-3 unclassified complement
+# (8 / W5497–W5504) that no prior check scanned: the format-guide required-fields
+# completeness claim, its 100%-field-header-presence claim, and its Repository
+# Layout / Related Documents proposed-register rows; the requirement-matrix closing
+# 'The full N-workflow inventory' line; the VS-133 self-descriptions (README 'runs
+# ~N documented workflows' + the PA-133.1/133.3 Volume rows); and the dependency-map
+# VS-133 row. Blanket total-figure scans false-positive on frozen history
+# (*Date: footers, 'Prior v' notes, gap-analysis pass tables), so this check
+# instead validates the anchored claim forms on those exact surfaces against the
+# index grand total, the classification confirmed-row count, and the proposal
+# register's unclassified complement and ID range.
+CHECK45=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, glob, sys
+ROOT = sys.argv[1]
+W = os.path.join(ROOT, "01-model-company", "workflows")
+bad = []
+# canonical figures
+total = None
+for line in open(os.path.join(W, "value-stream-index.md"), encoding="utf-8"):
+    m = re.match(r"^\|\s*\|\s*\|\s*\|\s*\*\*Grand Total\*\*\s*\|\s*\*\*(\d+)\*\*\s*\|\s*\*\*([\d,]+)\*\*\s*\|\s*$", line)
+    if m:
+        total = int(m.group(2).replace(",", ""))
+rows = None
+for line in open(os.path.join(W, "workflow-criticality-classification.md"), encoding="utf-8"):
+    m = re.match(r"^\| \*\*Confirmed Total\*\* \| \| \*\*([\d,]+)\*\* \|", line)
+    if m:
+        rows = int(m.group(1).replace(",", ""))
+prop = open(os.path.join(W, "workflow-criticality-proposed.md"), encoding="utf-8").read()
+m = re.search(r"\*\*Workflow coverage:\*\* (\d+) unclassified workflows", prop)
+unclassified = int(m.group(1)) if m else -1
+ids = [int(w[1:]) for w in re.findall(r"^\| (W\d+) \|", prop, re.M)]
+lo, hi = (min(ids), max(ids)) if ids else (None, None)
+def n(s):
+    return int(s.replace(",", ""))
+def want_total(label, got):
+    if got != total:
+        bad.append(f"{label}: total figure {got} != index grand total {total}")
+# anchored surfaces (file glob, regex, validator fn); each regex must match exactly once
+surfaces = [
+    ("WORKFLOW-FORMAT-GUIDE.md", r"All ([\d,]+) workflows now carry all 9 required fields",
+     lambda m: want_total("format-guide required-fields completeness claim", n(m.group(1))), 1),
+    ("WORKFLOW-FORMAT-GUIDE.md", r"present on all \*\*([\d,]+) workflows \(100% presence\)\*\*",
+     lambda m: want_total("format-guide 100%-presence claim", n(m.group(1))), 1),
+    ("WORKFLOW-FORMAT-GUIDE.md", r"\(([\d,]+) confirmed rows; (\d+) post-catalog workflows keyword-proposed\)",
+     lambda m: (n(m.group(1)) != rows and bad.append(f"format-guide layout row: confirmed-rows figure {n(m.group(1))} != classification {rows}"),
+                int(m.group(2)) != unclassified and bad.append(f"format-guide layout row: post-catalog figure {m.group(2)} != register {unclassified}")), 1),
+    ("WORKFLOW-FORMAT-GUIDE.md", r"holds the (\d+) unclassified post-catalog workflows (W\d+)–(W\d+)",
+     lambda m: (int(m.group(1)) != unclassified and bad.append(f"format-guide proposed-register row: count {m.group(1)} != register {unclassified}"),
+                lo is not None and (int(m.group(2)[1:]), int(m.group(3)[1:])) != (lo, hi) and bad.append(f"format-guide proposed-register row: range {m.group(2)}–{m.group(3)} != register W{lo}–W{hi}")), 2),
+    (os.path.join("..", "requirement-workflow-matrix.md"), r"The full ([\d,]+)-workflow / 188-value-stream inventory",
+     lambda m: want_total("requirement-matrix inventory line", n(m.group(1))), 1),
+]
+counts = {}
+for fname, pat, fn, expect in surfaces:
+    path = os.path.join(W, fname)
+    txt = open(path, encoding="utf-8").read()
+    ms = list(re.finditer(pat, txt))
+    counts[fname + "|" + pat[:30]] = len(ms)
+    if len(ms) != expect:
+        bad.append(f"{fname}: anchored pattern '{pat[:40]}…' matched {len(ms)} times (expected exactly {expect}) — surface may have been rewritten; update Check 45's anchor")
+        continue
+    for m in ms:
+        fn(m)
+# VS-133 self-description sentences (README + both PA Volume rows)
+p = os.path.join(W, "VS-133-operational-excellence-process-mining-continuous-improvement", "README.md")
+ms = list(re.finditer(r"runs ~([\d,]+) documented workflows", open(p, encoding="utf-8").read()))
+if len(ms) != 1:
+    bad.append("VS-133 README: 'runs ~N documented workflows' anchor missing/duplicated")
+else:
+    want_total("VS-133 README self-description", n(ms[0].group(1)))
+for pa in ("PA-133.1-opex-strategy-governance-and-improvement-methodology.md",
+           "PA-133.3-productivity-benefit-realization-and-opex-analytics.md"):
+    p = os.path.join(W, "VS-133-operational-excellence-process-mining-continuous-improvement", pa)
+    ms = list(re.finditer(r"~([\d,]+) workflows across 188 value streams", open(p, encoding="utf-8").read()))
+    if len(ms) != 1:
+        bad.append(f"VS-133 {pa}: Volume-row anchor missing/duplicated")
+    else:
+        want_total(f"VS-133 {pa} Volume row", n(ms[0].group(1)))
+# dependency-map VS-133 row
+p = os.path.join(W, "workflow-dependency-map.md")
+ms = [m for m in re.finditer(r"^\| VS-133 .*?over the ~([\d,]+) workflows", open(p, encoding="utf-8").read(), re.M)]
+if len(ms) != 1:
+    bad.append("workflow-dependency-map.md: VS-133 row 'over the ~N workflows' anchor missing/duplicated")
+else:
+    want_total("dependency-map VS-133 row", n(ms[0].group(1)))
+print(f"TOTALS total={total} confirmed_rows={rows} unclassified={unclassified} problems={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C45_BAD=$(echo "$CHECK45" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
+if [ "${C45_BAD:-1}" -eq 0 ]; then
+    C45_T=$(echo "$CHECK45" | sed -n 's/^TOTALS total=\([0-9]*\) .*/\1/p')
+    ok "Anchored current-state total figures agree with the canonical registers (grand total ${C45_T}; format-guide, requirement-matrix, VS-133 and dependency-map surfaces)"
+else
+    error "Anchored current-state total figures disagree with the canonical registers:"
+    echo "$CHECK45" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
