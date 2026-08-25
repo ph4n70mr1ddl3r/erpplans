@@ -1994,6 +1994,83 @@ else
     echo "$CHECK42" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 43: Analysis-section list hygiene, paren balance & bold balance ---
+echo "--- Check 43: Controls-section list hygiene + bold/paren balance ---"
+# Consistency review #27 found a rendering-defect cluster every prior check was blind to
+# (they validate counts/IDs/anchors/tables — not list hygiene inside analysis sections):
+# 3,349 Controls sections carried a dangling non-bulleted 'operational:' line (the
+# add-automation-controls.py generator emitted CTL items bulleted but operational items
+# bare, so markdown rendered the operational controls outside the list), 78 Controls
+# lines had unbalanced parentheses (the generator's pain-point regex truncated captures
+# at 'e.g.'/'vs.'/'No.' periods and swallowed ')' at '; operational:' joins), and 25
+# paragraph blocks carried broken '**' bold markers (labels closed with a stray '"' or
+# stray '**' leaked from Pain Points into Controls). This check guards all three:
+#   A. every content line in a '### Controls' section is a bullet or indented continuation
+#   B. Controls bullets have balanced parens and no '**' artifacts
+#   C. every paragraph block in the model-company docs has an even '**' count
+#      (code spans stripped first, so glob patterns like `workflows/**/*.md` are exempt)
+# Companion repairer: 07-methodology/fix-controls-bullets.py
+CHECK43=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+bad = 0
+# A + B: Controls-section hygiene across PA files
+for f in glob.glob(os.path.join(ROOT, "01-model-company", "workflows", "VS-*", "PA-*.md")):
+    rel = os.path.relpath(f, ROOT)
+    in_c = False
+    for i, line in enumerate(open(f, encoding="utf-8"), 1):
+        s = line.rstrip("\n")
+        if s == "### Controls":
+            in_c = True
+            continue
+        if in_c and (s.startswith("#") or s.startswith("---") or s.strip() == ""):
+            in_c = False
+            continue
+        if not in_c:
+            continue
+        if not s.startswith("- ") and not re.match(r"^  \S", s):
+            bad += 1
+            print(f"BAD|{rel}:{i}: non-bulleted Controls line: '{s[:80]}'")
+        elif s.count("(") != s.count(")"):
+            bad += 1
+            print(f"BAD|{rel}:{i}: unbalanced parens: '{s[:80]}'")
+        elif "**" in s:
+            bad += 1
+            print(f"BAD|{rel}:{i}: stray '**' in Controls bullet: '{s[:80]}'")
+# C: bold balance per paragraph block, model-company docs + root README
+files = glob.glob(os.path.join(ROOT, "01-model-company", "**", "*.md"), recursive=True)
+files.append(os.path.join(ROOT, "README.md"))
+for f in files:
+    rel = os.path.relpath(f, ROOT)
+    lines = open(f, encoding="utf-8").readlines()
+    i = 0
+    while i < len(lines):
+        if "**" not in lines[i]:
+            i += 1
+            continue
+        start = i
+        while start > 0 and lines[start - 1].strip() and not lines[start - 1].lstrip().startswith(("#", "|", "---")):
+            start -= 1
+        end = i
+        while end + 1 < len(lines) and lines[end + 1].strip() and not lines[end + 1].lstrip().startswith(("#", "|", "---")):
+            end += 1
+        block = "".join(lines[start:end + 1])
+        block = re.sub(r"`[^`]*`", "", block)  # code spans may hold glob '**'
+        if block.count("**") % 2 == 1:
+            bad += 1
+            print(f"BAD|{rel}:{i + 1}: odd '**' count in paragraph block: '{lines[i].strip()[:80]}'")
+        i = end + 1
+print(f"TOTALS bad={bad}")
+PY
+)
+C43_BAD=$(echo "$CHECK43" | sed -n 's/^TOTALS bad=\([0-9]*\)/\1/p')
+if [ "${C43_BAD:-1}" -eq 0 ]; then
+    ok "Controls sections bullet-hygenic; all paragraph blocks bold-balanced and Controls parens balanced"
+else
+    error "Analysis-section hygiene violations (dangling Controls lines, unbalanced parens, broken '**' bold) — repair via 07-methodology/fix-controls-bullets.py + per-case review:"
+    echo "$CHECK43" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
