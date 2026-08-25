@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,355 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,357 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -179,10 +179,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 49 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 28 |
-|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 26 |
+|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 27 |
 |  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | Core | 3 | 31 |
 |  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | Core | 3 | 30 |
-|  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | Core | 3 | 22 |
+|  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | Core | 3 | 23 |
 |  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | Core | 3 | 23 |
 |  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | Core | 3 | 24 |
 |  | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | Expansion | 3 | 24 |
@@ -213,7 +213,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | Gap analysis | 3 | 24 |
 |  | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | Gap analysis | 3 | 24 |
 |  | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **111** | **962** |
+| | | | **Subtotal** | **111** | **964** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 62 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **374** |
-| | | | **Grand Total** | **569** | **5,355** |
+| | | | **Grand Total** | **569** | **5,357** |
 
 ---
 
@@ -1102,9 +1102,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-23.2** [Physical Security & Surveillance](./VS-23-loss-prevention/PA-23.2-physical-security-and-surveillance.md) — 9 workflows
 - **PA-23.3** [Shrinkage Reduction](./VS-23-loss-prevention/PA-23.3-shrinkage-reduction.md) — 9 workflows
 
-**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (26 workflows)
+**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (27 workflows)
 
-- **PA-24.1** [Occupational Health & Safety](./VS-24-health-safety-environment/PA-24.1-occupational-health-and-safety.md) — 10 workflows
+- **PA-24.1** [Occupational Health & Safety](./VS-24-health-safety-environment/PA-24.1-occupational-health-and-safety.md) — 11 workflows
 - **PA-24.2** [Emergency Preparedness](./VS-24-health-safety-environment/PA-24.2-emergency-preparedness.md) — 8 workflows
 - **PA-24.3** [Hazmat Management](./VS-24-health-safety-environment/PA-24.3-hazmat-management.md) — 8 workflows
 
@@ -1120,11 +1120,11 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-26.2** [Crisis Response & Recovery](./VS-26-business-continuity-insurance/PA-26.2-crisis-response-and-recovery.md) — 11 workflows
 - **PA-26.3** [Insurance Claims & Policy Management](./VS-26-business-continuity-insurance/PA-26.3-insurance-claims-and-policy-management.md) — 10 workflows
 
-**[VS-31: Quality Management & Product Compliance](./VS-31-quality-management/README.md)** (22 workflows)
+**[VS-31: Quality Management & Product Compliance](./VS-31-quality-management/README.md)** (23 workflows)
 
 - **PA-31.1** [Incoming Quality Inspection & Control](./VS-31-quality-management/PA-31.1-incoming-quality-inspection.md) — 8 workflows
 - **PA-31.2** [Vendor Quality Management & Audit](./VS-31-quality-management/PA-31.2-vendor-quality-audit.md) — 7 workflows
-- **PA-31.3** [Product Recall & Safety Compliance](./VS-31-quality-management/PA-31.3-product-recall-safety-compliance.md) — 7 workflows
+- **PA-31.3** [Product Recall & Safety Compliance](./VS-31-quality-management/PA-31.3-product-recall-safety-compliance.md) — 8 workflows
 
 **[VS-33: Strategic Planning & Corporate Performance Management](./VS-33-strategic-planning/README.md)** (23 workflows)
 
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,355 workflows across 188 value streams · Date: 2026-08-24*
+*Total: 5,357 workflows across 188 value streams · Date: 2026-08-25*

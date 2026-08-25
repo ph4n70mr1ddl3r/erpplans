@@ -116,6 +116,24 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 2 (2026-08-25) — not a gap pass.** A follow-up
+> review re-ran the same workflow-granularity methodology and filled two further single-workflow
+> gaps inside existing core value streams: **W5503** Restricted-Substance & Chemical-Content
+> Product Compliance — lead-in-paint (DENR CCO 2013-24 under RA 6969), formaldehyde-emission
+> classes and VOC limits (VS-31.3; 'restricted substance', 'lead in paint' and 'formaldehyde'
+> appeared in zero PA files as dedicated headers — the content-compliance layer between SDS hazard
+> communication (W698/W1465) and certification renewals (W1620/VS-117) was unowned, with only
+> incidental paint-standard mentions and the W1605 goods-receipt shelf-life check adjacent), and
+> **W5504** Extreme-Heat Work Interruption & Occupational Heat-Stress Management (VS-24.1; 'heat
+> stress'/'heat index' appeared in zero PA files as dedicated headers while every other recurring
+> PH hazard has an owned protocol — typhoon VS-69/W576, earthquake W1450, ashfall W1449, brownout
+> W470, pandemic W484/W854 — leaving only a toolbox-talk topic in VS-07.2 and a hydration bullet
+> in VS-19.1). One candidate examined in the same review was confirmed already covered and
+> deliberately not duplicated: in-store PWD accessibility (**W497**, VS-07.2 — surfaced only after
+> correcting an ampersand-blind search that had missed its title). Canonical totals are now **188
+> value streams · 569 process areas · 5,357 workflows** (the eight post-catalog workflows ship
+> unclassified with keyword-driven proposed tiers pending a confirmation pass).
+
 | # | Capability gap | Why it matters for BuildRight | Existing (partial) coverage | Decision |
 |---|---|---|---|---|
 | 1 | **Product Recall & Safety Corrective Action** | 35K SKUs incl. electrical, paint/chemical, power tools, appliances; Consumer Act (RA 7394) + DTI-BPS + FDA recall obligations; ~3–8 recalls/yr | Only the store-level *customer-notification execution* step exists (W776 in VS-09); no end-to-end recall program | **FILLED — VS-89** |

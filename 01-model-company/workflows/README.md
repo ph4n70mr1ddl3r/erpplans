@@ -11,11 +11,11 @@
 |---|---|
 | Value Streams | 188 |
 | Process Areas | 569 |
-| Workflows | 5,355 |
+| Workflows | 5,357 |
 | Classified (Tier 1) | 1,375 |
 | Classified (Tier 2) | 3,243 |
 | Classified (Tier 3) | 754 |
-| Classified total | 5,372 rows = 5,349 unique workflows + 23 parent/summary sub-workflow rows (full coverage confirmed 2026-06-28; the 6 post-catalog workflows W5497–W5502 added 2026-08-24 ship unclassified with keyword-driven proposed tiers) |
+| Classified total | 5,372 rows = 5,349 unique workflows + 23 parent/summary sub-workflow rows (full coverage confirmed 2026-06-28; the 8 post-catalog workflows W5497–W5504, added 2026-08-24/25, ship unclassified with keyword-driven proposed tiers) |
 
 ---
 
@@ -26,7 +26,7 @@
 | [value-stream-index.md](value-stream-index.md) | **Master index** — all 188 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
-| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — holds the 6 unclassified post-catalog workflows (W5497–W5502, added 2026-08-24) pending confirmation; regenerates automatically whenever new workflows ship unclassified |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — holds the 8 unclassified post-catalog workflows (W5497–W5504, added 2026-08-24/25) pending confirmation; regenerates automatically whenever new workflows ship unclassified |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap analysis methodology & results |
@@ -197,16 +197,16 @@
 | [VS-178](VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md) | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | 24 |
 | [VS-184](VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md) | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | 24 |
 
-### Governance & Assurance (962 workflows)
+### Governance & Assurance (964 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 49 |
 | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 57 |
 | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 28 |
-| [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 26 |
+| [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 27 |
 | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 31 |
 | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 30 |
-| [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | 22 |
+| [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | 23 |
 | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | 23 |
 | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | 24 |
 | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | 24 |
@@ -255,7 +255,7 @@
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 460 + 499 + 1,532 + 771 + 437 + 320 + 962 + 374 = 5,355
+Family subtotal reconciliation: 460 + 499 + 1,532 + 771 + 437 + 320 + 964 + 374 = 5,357
 
 > **Note (2026-06-21):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 through 2026-06-21, VS-89–VS-192; W2993–W5488). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 
