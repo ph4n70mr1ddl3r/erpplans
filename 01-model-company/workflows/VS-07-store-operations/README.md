@@ -10,7 +10,7 @@ Store operations: daily management, facility & safety, receiving & replenishment
 
 ## Why it matters
 
-200 stores × ~29 staff × 2–3 shifts; 2.8M monthly POS transactions originate here. The largest value stream (144 workflows); daily execution governs revenue, safety, and customer experience.
+200 stores × ~29 staff × 2–3 shifts; 2.8M monthly POS transactions originate here. The largest value stream (147 workflows); daily execution governs revenue, safety, and customer experience.
 
 ## Owner & participants
 
@@ -20,11 +20,11 @@ Store operations: daily management, facility & safety, receiving & replenishment
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-07.1](PA-07.1-store-daily-management.md) | Store Daily Management | 60 |
+| [PA-07.1](PA-07.1-store-daily-management.md) | Store Daily Management | 63 |
 | [PA-07.2](PA-07.2-store-facility-and-safety.md) | Store Facility & Safety | 46 |
 | [PA-07.3](PA-07.3-store-receiving-and-replenishment.md) | Store Receiving & Replenishment | 28 |
 | [PA-07.4](PA-07.4-store-staffing-and-people.md) | Store Staffing & People | 10 |
-| | **Total** | **144** |
+| | **Total** | **147** |
 
 ## Key dependencies
 

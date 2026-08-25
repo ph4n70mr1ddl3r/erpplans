@@ -116,6 +116,34 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 3 (2026-08-25) — not a gap pass.** A follow-up
+> review re-ran the same workflow-granularity methodology against the concessionaire operating
+> model and found that W177 (Vending & Concessionaire Management) — the single workflow the gap
+> analysis had relied on to close the in-store concessionaire/kiosk/vending candidate ("covered by
+> VS-07.1 (W177)") — modeled only agreement admin and a single throughput SKU: item-level
+> concession pricing, barcodes, labels, and any concessionaire self-service had no owner
+> ('concession item', 'concessionaire price' and 'concessionaire portal' appeared in zero PA files
+> as dedicated headers). Three workflows fill the gap inside PA-07.1, following the VS-95
+> marketplace seller-portal pattern (W3140/W3141/W3142/W3152) transposed in-store: **W5505**
+> Concession Item Catalog, Barcode & Price-Label Onboarding & Governance (item-level concession
+> SKUs with concessionaire-owner flags distinct from W252 merchandise and W23 consignment; GS1 or
+> internal-barcode governance per W311 with collision blocking; BuildRight-printed vs
+> concessionaire-printed label ownership; RA 7394 tag compliance; annual catalog reconciliation
+> and exit purge), **W5506** Concessionaire Self-Service Price Change Request, Approval &
+> Store-Level Propagation (portal request → automated guardrails incl. W468 price-freeze and
+> undercut checks → Store Manager / Category Manager approve-reject with SLA and guardrail
+> auto-approval → an unambiguous label-first cutover: label batch T-1 16:00, scan/photo-confirmed
+> swap, 06:00 POS activation within 60 s, 05:30 auto-hold when the swap is unconfirmed — POS
+> price can never lead the shelf tag per RA 7394; barcode-change cutover with 7-day alias ring;
+> emergency rollback; 10-year audit trail feeding W177 commission settlement), and **W5507**
+> Concession Service-Fee Billing & Cost Recovery (contracted per-event fee schedule — label
+> printing, barcode changes, expedited/excess price changes — auto-logged as evidence-linked
+> events, aggregated into the monthly W177 invoice as a Service Fees section with a 5-day portal
+> dispute window, separate service-revenue/VAT treatment per W473, and quarterly recovery
+> review). Canonical totals are now **188 value streams · 569 process areas · 5,360 workflows**
+> (the eleven post-catalog workflows ship unclassified with keyword-driven proposed tiers pending
+> a confirmation pass).
+
 > **Post-Pass-30 workflow-level additions, batch 2 (2026-08-25) — not a gap pass.** A follow-up
 > review re-ran the same workflow-granularity methodology and filled two further single-workflow
 > gaps inside existing core value streams: **W5503** Restricted-Substance & Chemical-Content
@@ -303,7 +331,7 @@ The pass strengthens two families (Technology & Data +24 via VS-190; Make & Move
 - **B2B self-service portal** — covered (W936 portal referenced throughout VS-11/VS-16).
 - **NPI / range / product lifecycle** — covered by VS-01.1 (assortment planning & product lifecycle).
 - **Affiliate / influencer / referral marketing** — covered by VS-14.2 (W1351/W142/W1184/W1558).
-- **In-store concessionaire / kiosk / vending** — covered by VS-07.1 (W177).
+- **In-store concessionaire / kiosk / vending** — covered by VS-07.1 (W177), extended 2026-08-25 by W5505–W5507 (batch 3: concession item catalog/barcode/label governance, concessionaire self-service price change with label-first propagation, concession service-fee billing).
 - **Performance management / succession** — covered by VS-19.1 (W72/W178).
 - **Software development lifecycle (SDLC)** — covered by VS-27.1 (W132).
 - **Data governance / stewardship** — covered by VS-28.2 (W1177).
