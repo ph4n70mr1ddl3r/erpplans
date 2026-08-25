@@ -2263,6 +2263,65 @@ else
     echo "$CHECK45" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 46: Stale tender-mix / fleet / SKU figures & superseded statutory citations ---
+echo "--- Check 46: stale-figure & superseded-citation literal guard ---"
+# Consistency review #29 repaired the semantic figure/statute drift no structural check
+# could see: (1) W261's e-wallet Volume band quoted a 560,000-POS-transaction base × 30%
+# share (canonical: 2.8M × ~15% = ~420,000/month per W1268) and a ~45,000 ecommerce
+# order base (canonical ~42,900), leaving ~186,000/month totals in three spots; (2)
+# W1268's background converted 420,000/month to '42,000 per day' (correct: ~14,000);
+# (3) W265's maintenance fleet quoted '~1,000 terminals'/'4,000 PM events/quarter'/
+# '~500 hours/quarter' against the canonical 3-per-store = 600-terminal fleet the
+# same workflow's own Time Estimate derives (~300 hours/quarter); (4) W478's Volume
+# quoted '~80,000 active SKUs' (canonical 35,000 active / ~55,000 incl. master);
+# (5) statutory citations: 'RA 10862' for the LPG Industry Regulation Act (correct:
+# RA 10617), 'RA 10691' for 13th-month pay (correct: PD 851), phantom BIR ATC codes
+# WI 028/WI 160/WI 011 (correct: WC 010 professional services, WI 010 rent,
+# WP 010 purchases of goods), and the DO 13-98 construction-OSH citation for store
+# forklifts (correct: OSH Standards Rule 1160 series per D.O. 198-18). This check
+# guards the retired literals repo-wide so no surface regresses to them. CHANGELOG.md
+# (frozen history + this repair's own description) and 'X -> Y' change-note contexts
+# (e.g. the classification register's dated version footers) are exempt.
+CHECK46=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+SKIP = {'CHANGELOG.md'}
+bad_literals = [
+    (r'RA\s?10862', 'LPG act citation (correct: RA 10617 — LPG Industry Regulation Act)'),
+    (r'RA\s?10691', '13th-month-pay citation (correct: PD 851)'),
+    (r'\bWI 028\b|\bWI 160\b|\bWI 011\b', 'phantom BIR ATC code (correct: WC 010 services / WI 010 rent / WP 010 goods)'),
+    (r'560,000 POS transactions', 'stale e-wallet base (canonical: ~2.8M POS transactions × ~15% = ~420,000/month)'),
+    (r'42,000 transactions per day', 'stale per-day conversion (canonical: ~14,000/day = 420,000/month ÷ 30)'),
+    (r'~186,000 e-wallet', 'stale e-wallet total (canonical: ~437,000/month incl. ~17,000 ecommerce)'),
+    (r'~?1,000 terminals', 'stale terminal-fleet figure (canonical: 600 POS terminals = 3/store × 200)'),
+    (r'80,000 active SKUs', 'stale SKU figure (canonical: 35,000 active / ~55,000 item-master records)'),
+]
+stale = []
+for dirpath, _d, files in os.walk(ROOT):
+    if os.sep + '.git' in dirpath or os.sep + '__pycache__' in dirpath: continue
+    for fn in files:
+        if not fn.endswith('.md') or fn in SKIP: continue
+        path = os.path.join(dirpath, fn)
+        txt = open(path, encoding='utf-8', errors='replace').read()
+        for pat, why in bad_literals:
+            for m in re.finditer(pat, txt):
+                lo = max(0, m.start()-40); hi = min(len(txt), m.end()+40)
+                if '->' in txt[lo:hi] or '\u2192' in txt[lo:hi]:
+                    continue  # legitimate historical 'X -> Y' change-note
+                line_no = txt.count('\n', 0, m.start()) + 1
+                stale.append(f"{os.path.relpath(path, ROOT)}:{line_no}: '{m.group(0)}' — {why}")
+print(f"STALE={len(stale)}")
+for s in stale: print(f"STALE|{s}")
+PY
+)
+C46_BAD=$(echo "$CHECK46" | sed -n 's/^STALE=\([0-9]*\)$/\1/p')
+if [ "${C46_BAD:-1}" -eq 0 ]; then
+    ok "No stale tender-mix/fleet/SKU figures or superseded statutory citations (RA/ATC/DO literals) in current-state prose"
+else
+    error "Stale figures / superseded statutory citations found in current-state prose:"
+    echo "$CHECK46" | grep -E '^STALE\|' | sed 's/^STALE|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

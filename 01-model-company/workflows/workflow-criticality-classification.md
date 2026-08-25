@@ -5252,7 +5252,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W5051 | Stored-Goods Restrictions, Hazardous/Prohibited-Items Inspection & Enforcement | VS-174 |
 | W5057 | Propane/LPG Cylinder Exchange & Refill Program Strategy & Business-Model Design | VS-175 |
 | W5058 | LPG Bulk Supply, Vendor Selection, Pricing & Procurement Management | VS-175 |
-| W5059 | LPG Cylinder-Fleet Strategy, Standardization, Branding & RA 10862 Compliance | VS-175 |
+| W5059 | LPG Cylinder-Fleet Strategy, Standardization, Branding & RA 10617 Compliance | VS-175 |
 | W5060 | Cylinder Procurement, Ownership/Pool Model, Asset Tracking & Lifecycle Management | VS-175 |
 | W5062 | LPG Retail Pricing, Exchange Fee, Refill Tariff & Margin Strategy | VS-175 |
 | W5064 | LPG HAZMAT Handling, PPE & Emergency-Response Program Design | VS-175 |
@@ -6565,6 +6565,9 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4503 | EAS/RFID Performance, Tag-ROI & Shrink Analytics | VS-151 |
 
 ---
+
+
+*Date: 2026-08-26 | Workflow Criticality Classification v7.37 — consistency review #29 statutory-citation repair: the W5059 register-row title carries the correct LPG Industry Regulation Act number (RA 10862 → RA 10617; 1 spot — the superseded number had propagated from the PA-175.1 workflow title at Pass-24 authoring, and consistency review #13's statutory audit had adjudicated the wrong number correct). No tier assignment, row count, or canonical total changed (5,372 rows / 5,349 unique; 5,360 workflows). `validate-repo.sh`: 0 errors / 0 warnings across 46 checks.*
 
 *Date: 2026-08-25 | Workflow Criticality Classification v7.36 — three further post-catalog workflow-level gap fills added to the catalog (W5505 concession item catalog/barcode/price-label onboarding & governance, W5506 concessionaire self-service price change request/approval & store-level propagation, W5507 concession service-fee billing & cost recovery — all in VS-07.1, extending W177; totals 5,357 → 5,360 workflows; Sell & Serve family 1,532 → 1,535). No confirmed register rows changed (5,372 rows / 5,349 unique stand); the three ship **unclassified** with keyword-driven proposed tiers (W5505/W5507 Tier 1 `barcode`, W5506 Tier 2; with W5497 the proposal register now holds 3 Tier 1 / 8 Tier 2 across the 11) in [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) pending the next confirmation pass. Intro banner, §Summary proposed/coverage rows, Domain-Breakdown prose, and a dated 2026-08-25 batch-3 addition note re-pointed to 5,360 / 11-unclassified. `validate-repo.sh`: 0 errors / 0 warnings across 43 checks.*
 
