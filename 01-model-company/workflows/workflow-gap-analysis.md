@@ -116,6 +116,47 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 4 (2026-08-26) — not a gap pass.** A fresh
+> review re-ran the §2 gap methodology at *workflow* granularity (defining-term keyword search
+> across all PA files for dedicated `## W` headers, candidate-by-candidate confirmation against
+> adjacent owners) and filled two single-workflow gaps inside existing value streams: **W5508**
+> Fringe Benefits Tax (FBT) Determination, Valuation & Quarterly BIR Form 1605 Filing (VS-79.2;
+> 'fringe benefit'/'FBT'/'1605' appeared in zero PA files as dedicated headers — PA-144.1 flags
+> 'BIR (fringe benefit)' as a dormitory-housing compliance obligation with no downstream owner —
+> while the adjacent workflows each own a different tax species: W2764 cash-compensation
+> withholding, W2766 final withholding on passive income, W3314 statutory contributions, W3316
+> allowance administration, and VS-144 dormitory housing is the largest recurring benefit
+> *source*; the workflow owns the NIRC §33 rank test, de-minimis and employer-convenience
+> exclusions (RR 3-98 as updated by RR 5-2018), valuation rules for housing/vehicle/loan
+> benefits, the 35% gross-up computation under RA 10963, monthly accrual via W9A, and the
+> quarterly 1605 filing per entity via eFPS with 10-year evidence retention feeding W2773), and
+> **W5509** Unfulfilled-Demand & Lost-Sales Capture, Substitution Analytics & Replenishment
+> Feedback (VS-02.1; 'lost sales' appears across 37 PA files but only ever as a consequence or
+> estimate — forecast pain points, vendor lead-time stockout cost math, recall shelf-gap
+> costing, disruption estimation per W852/BCP-006 — and 'unfulfilled demand' in zero, while the
+> adjacent slices are each transactional: W772 rain checks only advertised promos, W56/W38
+> capture committed orders, W1252/W1356 sense leading indicators; the workflow owns the POS
+> no-sale/floor-inquiry/quote-decline capture instrumentation, the deduplicated demand-event
+> fact table, gross-vs-net quantification with substitution recovery, and the feedback loop into
+> W31/W2A forecasting, W1451 assortment, W44 vendor attribution and the W1533 S&OP review).
+> Ten candidates examined in the same review were confirmed already covered and deliberately
+> not duplicated: annual stockholders' meeting (**W482**, VS-17.1 — missed by the initial
+> keyword search because its title carries the apostrophe form 'Stockholders' Meeting', the
+> same failure mode as batch 2's ampersand-blind miss), vendor drop-ship / direct-to-customer
+> (**W273** endless aisle, **W1283** cement DSD, **W5182** emergency vendor-direct), store
+> footfall analytics (**W1250**, VS-28.1), employee purchase discount (**W5B.12** with W93
+> pricing-conflict rules and W205.2 category rules), BIR Authority-to-Print invoice/OR
+> accreditation (**W485** branch registration & RDO transfer in PA-22.1, incl. ATP 5-year expiry
+> tracking),
+> LGU plastic-bag fees and bans (**W531** bagging & bag-fee compliance in PA-08.3 with the
+> W193 reusable-bag program and VS-111.3 ordinance mapping), social live-selling (**W917**, VS-10.3), retirement pay (**W3315** program
+> + **W643** final pay), and elevator/escalator maintenance (**W47** external-contractor work
+> order class in PA-07.2). Like the earlier batches, these additions are recorded here because
+> workflow-ID allocation is tracked in this document and are not appended to the §4 pass tables.
+> Canonical totals are now **188 value streams · 569 process areas · 5,362 workflows** (the
+> thirteen post-catalog workflows ship unclassified with keyword-driven proposed tiers pending
+> a confirmation pass).
+
 > **Post-Pass-30 workflow-level additions, batch 3 (2026-08-25) — not a gap pass.** A follow-up
 > review re-ran the same workflow-granularity methodology against the concessionaire operating
 > model and found that W177 (Vending & Concessionaire Management) — the single workflow the gap

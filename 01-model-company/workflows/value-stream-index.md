@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,360 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,362 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -33,7 +33,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Family | VS | Value Stream | Block | Process Areas | Workflows |
 |---|---|---|---|---|---|
 | Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | Core | 3 | 46 |
-|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | Core | 3 | 37 |
+|  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | Core | 3 | 38 |
 |  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | Core | 4 | 81 |
 |  | [VS-41](VS-41-private-label-brand/README.md) | Private Label & Exclusive Brand Management | Core | 3 | 24 |
 |  | [VS-45](VS-45-consignment-vmi-operations/README.md) | Consignment & Vendor-Managed Inventory Operations | Core | 3 | 24 |
@@ -47,7 +47,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | Gap analysis | 4 | 32 |
 |  | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Gap analysis | 3 | 24 |
 |  | [VS-182](VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md) | B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations) | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **47** | **460** |
+| | | | **Subtotal** | **47** | **461** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | Core | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | Core | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | Core | 3 | 36 |
@@ -126,7 +126,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | Expansion | 3 | 24 |
 |  | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | Expansion | 3 | 24 |
 |  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | Expansion | 3 | 24 |
-|  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | Statutory | 3 | 24 |
+|  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | Statutory | 3 | 25 |
 |  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | Statutory | 3 | 24 |
 |  | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | Gap analysis | 3 | 24 |
 |  | [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | Gap analysis | 3 | 24 |
@@ -144,7 +144,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-181](VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/README.md) | B2B Project Financing, Escrow Account Orchestration & Lien Release | Gap analysis | 3 | 24 |
 |  | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | Gap analysis | 3 | 24 |
 |  | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **87** | **771** |
+| | | | **Subtotal** | **87** | **772** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 75 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 25 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 25 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **374** |
-| | | | **Grand Total** | **569** | **5,360** |
+| | | | **Grand Total** | **569** | **5,362** |
 
 ---
 
@@ -244,7 +244,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 **[VS-02: Supply Planning](./VS-02-supply-planning/README.md)** (37 workflows)
 
-- **PA-02.1** [Demand Forecasting & S&OP](./VS-02-supply-planning/PA-02.1-demand-forecasting-and-sandop.md) — 13 workflows
+- **PA-02.1** [Demand Forecasting & S&OP](./VS-02-supply-planning/PA-02.1-demand-forecasting-and-sandop.md) — 14 workflows
 - **PA-02.2** [Import & Customs Operations](./VS-02-supply-planning/PA-02.2-import-and-customs-operations.md) — 8 workflows
 - **PA-02.3** [Supply Chain Orchestration & Risk](./VS-02-supply-planning/PA-02.3-supply-chain-orchestration-and-risk.md) — 16 workflows
 
@@ -795,7 +795,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 **[VS-79: Tax Management & BIR Statutory Reporting](./VS-79-tax-management-bir-reporting/README.md)** (24 workflows)
 
 - **PA-79.1** [Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing](./VS-79-tax-management-bir-reporting/PA-79.1-indirect-tax-vat-and-einvoicing.md) — 8 workflows
-- **PA-79.2** [Withholding Tax (EWT/CWT) & Form 2307 Management](./VS-79-tax-management-bir-reporting/PA-79.2-withholding-tax-and-2307-management.md) — 8 workflows
+- **PA-79.2** [Withholding Tax (EWT/CWT) & Form 2307 Management](./VS-79-tax-management-bir-reporting/PA-79.2-withholding-tax-and-2307-management.md) — 9 workflows
 - **PA-79.3** [Corporate Income Tax, Local Tax, DST & BIR Audit Defense](./VS-79-tax-management-bir-reporting/PA-79.3-income-tax-local-tax-and-audit-defense.md) — 8 workflows
 
 **[VS-80: Payment Operations, Acquirer & Settlement Management](./VS-80-payment-operations-acquirer-settlement/README.md)** (24 workflows)
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,360 workflows across 188 value streams · Date: 2026-08-25*
+*Total: 5,362 workflows across 188 value streams · Date: 2026-08-26*
