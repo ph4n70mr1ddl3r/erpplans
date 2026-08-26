@@ -11,11 +11,11 @@
 |---|---|
 | Value Streams | 188 |
 | Process Areas | 569 |
-| Workflows | 5,362 |
+| Workflows | 5,363 |
 | Classified (Tier 1) | 1,375 |
 | Classified (Tier 2) | 3,243 |
 | Classified (Tier 3) | 754 |
-| Classified total | 5,372 rows = 5,349 unique workflows + 23 parent/summary sub-workflow rows (full coverage confirmed 2026-06-28; the 13 post-catalog workflows W5497–W5509, added 2026-08-24/26, ship unclassified with keyword-driven proposed tiers) |
+| Classified total | 5,372 rows = 5,349 unique workflows + 23 parent/summary sub-workflow rows (full coverage confirmed 2026-06-28; the 14 post-catalog workflows W5497–W5510, added 2026-08-24/26, ship unclassified with keyword-driven proposed tiers) |
 
 ---
 
@@ -26,7 +26,7 @@
 | [value-stream-index.md](value-stream-index.md) | **Master index** — all 188 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
-| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — holds the 13 unclassified post-catalog workflows (W5497–W5509, added 2026-08-24/26) pending confirmation; regenerates automatically whenever new workflows ship unclassified |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — holds the 14 unclassified post-catalog workflows (W5497–W5510, added 2026-08-24/26) pending confirmation; regenerates automatically whenever new workflows ship unclassified |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap analysis methodology & results |
@@ -127,10 +127,10 @@
 | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | 24 |
 | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | 24 |
 
-### Finance (772 workflows)
+### Finance (773 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
-| [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 42 |
+| [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 43 |
 | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 31 |
 | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 67 |
 | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 33 |
@@ -255,7 +255,7 @@
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 461 + 499 + 1,535 + 772 + 437 + 320 + 964 + 374 = 5,362
+Family subtotal reconciliation: 461 + 499 + 1,535 + 773 + 437 + 320 + 964 + 374 = 5,363
 
 > **Note (2026-06-21):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 through 2026-06-21, VS-89–VS-192; W2993–W5488). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

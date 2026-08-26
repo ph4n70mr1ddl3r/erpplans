@@ -20,9 +20,9 @@ Procure-to-pay: invoice processing & matching, and vendor payment & reconciliati
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-15.1](PA-15.1-invoice-processing-and-matching.md) | Invoice Processing & Matching | 18 |
+| [PA-15.1](PA-15.1-invoice-processing-and-matching.md) | Invoice Processing & Matching | 19 |
 | [PA-15.2](PA-15.2-vendor-payment-and-reconciliation.md) | Vendor Payment & Reconciliation | 24 |
-| | **Total** | **42** |
+| | **Total** | **43** |
 
 ## Key dependencies
 

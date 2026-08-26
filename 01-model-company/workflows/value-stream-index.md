@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,362 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,363 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -115,7 +115,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
 |  | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **139** | **1535** |
-| Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 42 |
+| Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 43 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
 |  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | Core | 3 | 33 |
@@ -144,7 +144,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-181](VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/README.md) | B2B Project Financing, Escrow Account Orchestration & Lien Release | Gap analysis | 3 | 24 |
 |  | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | Gap analysis | 3 | 24 |
 |  | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **87** | **772** |
+| | | | **Subtotal** | **87** | **773** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 75 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 25 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 25 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **374** |
-| | | | **Grand Total** | **569** | **5,362** |
+| | | | **Grand Total** | **569** | **5,363** |
 
 ---
 
@@ -726,9 +726,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 ### Finance
 
-**[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (42 workflows)
+**[VS-15: Procure-to-Pay](./VS-15-procure-to-pay/README.md)** (43 workflows)
 
-- **PA-15.1** [Invoice Processing & Matching](./VS-15-procure-to-pay/PA-15.1-invoice-processing-and-matching.md) — 18 workflows
+- **PA-15.1** [Invoice Processing & Matching](./VS-15-procure-to-pay/PA-15.1-invoice-processing-and-matching.md) — 19 workflows
 - **PA-15.2** [Vendor Payment & Reconciliation](./VS-15-procure-to-pay/PA-15.2-vendor-payment-and-reconciliation.md) — 24 workflows
 
 **[VS-16: Order-to-Cash](./VS-16-order-to-cash/README.md)** (31 workflows)
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,362 workflows across 188 value streams · Date: 2026-08-26*
+*Total: 5,363 workflows across 188 value streams · Date: 2026-08-26*

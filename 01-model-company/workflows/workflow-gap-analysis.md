@@ -116,6 +116,29 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 5 (2026-08-26) — not a gap pass.** A
+> supplier-expense-model review found the two existing supplier-recovery paths each own a
+> different money flow — co-op marketing funds (W513/W1799 in VS-03/VS-39) settle *pre-agreed
+> campaign reimbursement*, and compliance chargebacks (W245) settle *penalties for
+> non-performance* — while per-event, store-rendered services billed to the supplier's account
+> (barcode/price-label printing for supplier items, promotional-collateral production, source-tag
+> re-application) had no owner: 'service fee' and 'supplier billing' appeared in zero
+> merchandise-supplier PA files as dedicated headers, with only the concessionaire analog W5507
+> (VS-07.1) modeling the pattern. **W5510** fills the gap inside PA-15.1, transposing the W5507
+> concessionaire service-fee pattern onto merchandise suppliers and settling through the W770 AP
+> debit-memo mechanism: contracted per-event fee schedule with free allowances versioned on the
+> trade agreement (W688) behind a vendor opt-in flag; chargeable events auto-logged at source
+> (W4490/W181 print runs, W4488 barcode changes, W1796/W1798 campaign collateral, W4498
+> source-tag re-application) as evidence-linked records provisional until service completion,
+> with a co-op coverage flag preventing double-billing against W1799 settlement; monthly
+> itemized statement in the vendor portal (W705) with a 5-business-day dispute window before
+> posting; settlement as W770 debit memos (deduction type "service fee") netted at the next
+> W556 payment run, with an AR invoice fallback (W8/W108) for un-nettable vendors and a
+> cash-settlement route where a BIR 2307 is required; separate service-revenue/VAT treatment per
+> W473; and a quarterly fee-income-vs-service-cost recovery review. Canonical totals are now
+> **188 value streams · 569 process areas · 5,363 workflows** (the fourteen post-catalog workflows
+> ship unclassified with keyword-driven proposed tiers pending a confirmation pass).
+
 > **Post-Pass-30 workflow-level additions, batch 4 (2026-08-26) — not a gap pass.** A fresh
 > review re-ran the §2 gap methodology at *workflow* granularity (defining-term keyword search
 > across all PA files for dedicated `## W` headers, candidate-by-candidate confirmation against

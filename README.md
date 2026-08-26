@@ -29,12 +29,12 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            728 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      5,362 workflows organized by value stream
+│   ├── workflows/                      5,363 workflows organized by value stream
 │   │   ├── README.md                           Navigation hub & quick stats
 │   │   ├── value-stream-index.md              Master index (8 families · 188 value streams · 569 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
 │   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (5,372 rows)
-│   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal register for unclassified workflows (13 post-catalog workflows W5497–W5509 added 2026-08-24/26)
+│   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal register for unclassified workflows (14 post-catalog workflows W5497–W5510 added 2026-08-24/26)
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
 │   │   ├── workflow-system-touchpoint-map.md    ERP module-to-workflow cross-reference
 │   │   ├── workflow-gap-analysis.md            Gap-analysis methodology & 30-pass history
@@ -52,7 +52,7 @@ erpplans/
 │   │   ├── VS-12-installation-services/         40 workflows (3 process areas)
 │   │   ├── VS-13-customer-experience/           64 workflows (3 process areas)
 │   │   ├── VS-14-marketing/                     40 workflows (3 process areas)
-│   │   ├── VS-15-procure-to-pay/                42 workflows (2 process areas)
+│   │   ├── VS-15-procure-to-pay/                43 workflows (2 process areas)
 │   │   ├── VS-16-order-to-cash/                 31 workflows (3 process areas)
 │   │   ├── VS-17-record-to-report/              67 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 33 workflows (3 process areas)
@@ -285,7 +285,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **728** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **5,362** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **5,363** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 808 (88 preventive, 720 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 429 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 293 | `01-model-company/erp-requirements.md` |
@@ -296,8 +296,8 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 728 fully specified (429 Must / 293 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 5,362 fully specified across 188 value streams (5,349 confirmed-classified + 13 post-catalog additions W5497–W5509 with keyword-proposed tiers) | `workflows/value-stream-index.md` |
-| Criticality classification | **5,349 of 5,362 workflows classified** — the confirmed register holds 5,372 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted); the thirteen post-catalog workflows W5497–W5509 (added 2026-08-24/26: POSH/Safe Spaces CODI, RA 11165 telecommuting, director education, customer digital accessibility/WCAG, climate risk assessment, employee financial wellness, restricted-substance & chemical-content product compliance, extreme-heat work interruption & occupational heat-stress management, concession item catalog/barcode/price-label governance, concessionaire self-service price change & propagation, concession service-fee billing & cost recovery, fringe benefits tax determination & quarterly BIR 1605 filing, unfulfilled-demand & lost-sales capture) carry keyword-driven proposed tiers in `workflow-criticality-proposed.md` pending a confirmation pass | `workflows/workflow-criticality-classification.md` |
+| Workflows | 5,363 fully specified across 188 value streams (5,349 confirmed-classified + 14 post-catalog additions W5497–W5510 with keyword-proposed tiers) | `workflows/value-stream-index.md` |
+| Criticality classification | **5,349 of 5,363 workflows classified** — the confirmed register holds 5,372 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted); the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26: POSH/Safe Spaces CODI, RA 11165 telecommuting, director education, customer digital accessibility/WCAG, climate risk assessment, employee financial wellness, restricted-substance & chemical-content product compliance, extreme-heat work interruption & occupational heat-stress management, concession item catalog/barcode/price-label governance, concessionaire self-service price change & propagation, concession service-fee billing & cost recovery, fringe benefits tax determination & quarterly BIR 1605 filing, unfulfilled-demand & lost-sales capture, supplier service-fee billing & account deduction for store-rendered services) carry keyword-driven proposed tiers in `workflow-criticality-proposed.md` pending a confirmation pass | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 808 controls mapped to workflows and requirements (67 core + 172 domain anchors CTL-68–239 + 569 process-area operating controls CTL-240–808) — CTL-XX citation coverage is 100% of workflows | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 
@@ -319,7 +319,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (5,362 WF)    │
+   │  erp-requirements.md ←→ workflows/ (5,363 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (808 CTL)  classification.md          │
