@@ -7,14 +7,14 @@
 ## Overview
 
 End-to-end program governing the ~200-store + 4-DC waste stream at BuildRight Depot Corp. —
-segregation, recycling revenue, **hazardous-waste DENR compliance (DAO 2013-22, RA 6969)**,
+segregation, recycling revenue, **hazardous-waste DENR compliance (DAO 2004-36, RA 6969)**,
 spill response, the circular-economy product program, and the corporate ESG/GRI 306 waste
 disclosure. Distinct from VS-24 (fixed-site HSE), VS-25 (group ESG reporting), VS-111
 (packaging/pallet RTI pool), and VS-114 (dangerous-goods *transport*).
 
 ## Why it matters
 
-- **Regulatory exposure**: DENR hazardous-waste generator registration + 90-day accumulation
+- **Regulatory exposure**: DENR hazardous-waste generator registration + 180-day (6-month) accumulation
   limit + 5-year manifest archive across 205 locations; RA 6969 cradle-to-grave liability;
   BFP Fire Code for flammable storage; LGU single-use-plastic ordinances.
 - **Material cost/revenue line**: ~PHP 24–40M/yr hazardous-waste disposal cost offset by
@@ -49,7 +49,7 @@ quality for waste-grade root-cause).
 
 CTL-06 (certified-vendor onboarding), CTL-26 (fixed-asset/IT disposal + data wipe per RA
 10173), CTL-41 (permit-expiry alerting), CTL-44 (duplicate-invoice guard on disposal
-invoices); plus operational controls (90-day accumulation countdown, manifest-vs-invoice
+invoices); plus operational controls (180-day accumulation countdown, manifest-vs-invoice
 match, spill severity-decision tree, monthly Safety inspection).
 
 ---

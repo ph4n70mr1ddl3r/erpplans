@@ -11,7 +11,7 @@ Depot Corp. — owning the **customer-facing flammable-gas cylinder program** th
 merchandise BuildRight sells (BBQ/patio grills, patio heaters, camping stoves, plumbing torches,
 soldering/brazing, forklifts) and one of the Philippines' largest consumer-fuel markets: LPG
 program & business-model strategy; bulk LPG supply, vendor and pricing; the **returnable cylinder
-fleet, standardization and RA 10617 (LPG Industry Regulation Act) compliance**; cylinder cage/yard
+fleet, standardization and RA 11592 (LPG Industry Regulation Act) compliance**; cylinder cage/yard
 design and BFP Fire Code storage infrastructure; LPG retail pricing, exchange fee and refill
 tariff; **DOE retailer accreditation, DTI-BPS cylinder product standards and metrology
 compliance**; the HAZMAT/safety program; the **customer cylinder-exchange (full-for-empty)
@@ -50,14 +50,14 @@ program* sold to consumers and trade. It is **not** covered by **VS-114 (DG/Hazm
 *transport/regulatory compliance* for dangerous goods — this *operates the in-store cylinder
 exchange/refill service* (and links to VS-114 for the DG dimension). It is **not** covered by
 **VS-111 (Packaging/Pallet/RTI)**, which tracks *pallets* — this tracks the *returnable LPG
-cylinder pool* (a deposit-bearing, safety-regulated, RA 10617-standardized asset). It is **not**
+cylinder pool* (a deposit-bearing, safety-regulated, RA 11592-standardized asset). It is **not**
 covered by **VS-24 (HSE)** or **VS-147 (Customer Safety)**, which own *safety policy/premises
 liability* — this operates the *gas service* that must comply with them. And it is **not** covered
 by **VS-12 (Installation)** or **VS-38 (Consumer Credit)** — this is a *physical-goods exchange
 service with a deposit float*, not an installation or a financing product.
 
 This value stream owns the end-to-end program: LPG strategy & business model; bulk supply, vendor
-and pricing; cylinder fleet strategy, standardization, branding and **RA 10617 compliance**;
+and pricing; cylinder fleet strategy, standardization, branding and **RA 11592 compliance**;
 cylinder procurement, ownership/pool, asset tracking and lifecycle; cage/yard design and **BFP
 Fire Code / safety infrastructure**; retail pricing, exchange fee and refill tariff; **DOE retailer
 accreditation, DTI-BPS product standards and metrology (weights & measures) compliance**; HAZMAT

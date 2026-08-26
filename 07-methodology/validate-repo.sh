@@ -2282,16 +2282,30 @@ echo "--- Check 46: stale-figure & superseded-citation literal guard ---"
 # RA 10617), 'RA 10691' for 13th-month pay (correct: PD 851), phantom BIR ATC codes
 # WI 028/WI 160/WI 011 (correct: WC 010 professional services, WI 010 rent,
 # WP 010 purchases of goods), and the DO 13-98 construction-OSH citation for store
-# forklifts (correct: OSH Standards Rule 1160 series per D.O. 198-18). This check
-# guards the retired literals repo-wide so no surface regresses to them. CHANGELOG.md
-# (frozen history + this repair's own description) and 'X -> Y' change-note contexts
-# (e.g. the classification register's dated version footers) are exempt.
+# forklifts (correct: OSH Standards Rule 1160 series per D.O. 198-18). Consistency
+# review #31 extended this guard with five more retired literals: 'RA 11592' is the
+# actual LPG Industry Regulation Act (2020) so review #29's 'RA 10617' adjudication is
+# itself retired (RA 10617 sits in the late-2013 numbering, predating the 17th/18th-
+# Congress LPG bills); the Philippine Competition Act is RA 10677, not RA 10667;
+# hazardous-waste management under RA 6969 runs on DAO 2004-36 (Procedural Manual,
+# 6-month storage limit) — DAO 2013-22 (mercury CCO) was mis-cited and a US-style
+# 90-day accumulation limit had drifted into the DENR storage-limit machinery; RR
+# 34-2022 does not exist as a BIR transfer-pricing regulation (correct: RR 02-2013);
+# RA 9266 is the Architecture Act and cannot perfect collateral (correct: Act No.
+# 1508 chattel mortgage / RA 11057 PPSA). This check guards the retired literals
+# repo-wide so no surface regresses to them. CHANGELOG.md (frozen history + this
+# repair's own description) and 'X -> Y' change-note contexts (e.g. the
+# classification register's dated version footers) are exempt.
 CHECK46=$(python3 - "$REPO_ROOT" <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 SKIP = {'CHANGELOG.md'}
 bad_literals = [
-    (r'RA\s?10862', 'LPG act citation (correct: RA 10617 — LPG Industry Regulation Act)'),
+    (r'RA\s?10862', 'LPG act citation (correct: RA 11592 — LPG Industry Regulation Act, 2020)'),
+    (r'RA\s?10617', 'superseded LPG act citation from review #29 (correct: RA 11592)'),
+    (r'RA\s?10667', 'Philippine Competition Act citation (correct: RA 10677)'),
+    (r'DAO\s?2013-22', 'hazardous-waste-management citation (that order is the mercury CCO; correct: DAO 2004-36 Procedural Manual under RA 6969)'),
+    (r'RR\s?34-2022', 'phantom BIR transfer-pricing regulation (correct: RR 02-2013)'),
     (r'RA\s?10691', '13th-month-pay citation (correct: PD 851)'),
     (r'\bWI 028\b|\bWI 160\b|\bWI 011\b', 'phantom BIR ATC code (correct: WC 010 services / WI 010 rent / WP 010 goods)'),
     (r'560,000 POS transactions', 'stale e-wallet base (canonical: ~2.8M POS transactions × ~15% = ~420,000/month)'),
@@ -2322,7 +2336,7 @@ C46_BAD=$(echo "$CHECK46" | sed -n 's/^STALE=\([0-9]*\)$/\1/p')
 if [ "${C46_BAD:-1}" -eq 0 ]; then
     ok "No stale tender-mix/fleet/SKU figures or superseded statutory citations (RA/ATC/DO literals) in current-state prose"
 else
-    error "Stale figures / superseded statutory citations found in current-state prose:"
+    error "Stale figures / superseded statutory citations found in current-state prose: (incl. RA 10617/RA 10667/DAO 2013-22/RR 34-2022)"
     echo "$CHECK46" | grep -E '^STALE\|' | sed 's/^STALE|/    /'
 fi
 

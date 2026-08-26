@@ -106,7 +106,7 @@
 | VS-126 | Customer Data Platform & Single Customer View | CRM / Loyalty; Data Privacy & Compliance; Reporting / Analytics; Innovation |
 | VS-127 | Sales & Operations Planning & Integrated Business Planning | Supply Chain Planning; Reporting / Analytics; Pricing / Merchandising |
 | VS-128 | AI/ML Governance & Responsible AI | IT Operations; Data Privacy & Compliance; Internal Audit; Innovation |
-| VS-129 | Competition & Antitrust Compliance (RA 10667 / PCC) | Governance / Strategy; Pricing / Merchandising; Internal Audit; Vendor Contract Management |
+| VS-129 | Competition & Antitrust Compliance (RA 10677 / PCC) | Governance / Strategy; Pricing / Merchandising; Internal Audit; Vendor Contract Management |
 | VS-130 | Corporate Development, M&A & Divestiture | Governance / Strategy; Financials; Internal Audit; Vendor Contract Management |
 | VS-131 | Human Rights & Responsible Supply Chain Due Diligence | Procurement; Data Privacy & Compliance; Internal Audit; Vendor Contract Management |
 | VS-132 | Corporate Political Engagement & Election Compliance | Governance / Strategy; Regulatory Operations; Internal Audit; Financials |
