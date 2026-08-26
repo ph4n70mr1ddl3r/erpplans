@@ -1863,8 +1863,12 @@ for f in glob.glob(ROOT + "/**/*.md", recursive=True):
     if rel.startswith("CHANGELOG") or "workflow-gap-analysis" in rel:
         continue
     for i, line in enumerate(open(f, encoding="utf-8"), 1):
-        if line.lstrip().startswith("*Date:") or "Prior v" in line or "\u2192" in line:
-            continue  # frozen per-version history notes and 'X -> Y' transitions
+        if line.lstrip().startswith("*Date:") or "Prior v" in line:
+            continue  # frozen per-version history notes
+        # (a former '\u2192' line exemption was removed in review #30: it silently
+        # exempted the 07-methodology README's own contents-table row — which quotes
+        # an arrow inside its Check-46 description — letting that row drift to a
+        # stale count; dated footers above are the only legitimate arrow carriers)
         for pat in forms:
             for m in pat.finditer(line):
                 if int(m.group(1)) != IMPL:
@@ -2320,6 +2324,165 @@ if [ "${C46_BAD:-1}" -eq 0 ]; then
 else
     error "Stale figures / superseded statutory citations found in current-state prose:"
     echo "$CHECK46" | grep -E '^STALE\|' | sed 's/^STALE|/    /'
+fi
+
+# --- Check 47: per-store rate ↔ chain-wide total unit coherence + explicit ×-math ---
+echo "--- Check 47: per-store-rate/chain-total unit coherence & store-multiplication math ---"
+# Consistency review #30 found a figure-drift family no structural check could see:
+# Frequency/Volume fields pairing a per-store cadence with a chain-wide total whose
+# unit does not cohere with the rate (e.g. '~600-800 bulk negotiation transactions/
+# month across 200 stores (~3-4 per store per WEEK)' — 3-4/store/week is ~2,600-3,500/
+# month, while the canonical total and Volume anchor ~700/month imply a per-MONTH
+# rate; and '~4,000-8,000/year chain-wide' beside '~5-10 per store per week' where the
+# Time Estimate's own chain-wide arithmetic was monthly). The same review repaired
+# the store receiving-cadence cluster (W723/W745 quoted 600-1,000/2,000 truck &
+# receiving events per DAY chain-wide vs the canonical 2-3 DC deliveries/store/WEEK
+# + ~500-600 DSD receipts/month chain-wide per profile §7.1). Two guarded forms:
+#   (a) same-line per-store rate ('N-M ... per store per week|month|day|year') vs
+#       same-line chain total ('~A-B .../month|week|day|year chain-wide|across 200
+#       stores'), normalized to events per month per 200-store chain (week=4.33,
+#       day=30, year=1/12) with a 25% disjointness margin; multiple rates on one
+#       line are summed before comparison; effort-denominated totals (hours/min/
+#       staff-hours) are skipped — different dimension;
+#   (b) explicit single-multiplier store math ('200 stores × ~N ... = ~M') verified
+#       within 35% (multi-factor chains like '× ~7 ... × 6 promos' are skipped).
+CHECK47=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = os.path.join(sys.argv[1], "01-model-company")
+MONTHLY = {"week": 4.33, "month": 1.0, "day": 30.0, "year": 1/12}
+SUFFIX = {"k": 1e3, "m": 1e6}
+def nums(a, b=None):
+    def val(s):
+        s = s.strip().replace(",", "").replace("~", "")
+        mult = 1.0
+        if s and s[-1].lower() in SUFFIX:
+            mult = SUFFIX[s[-1].lower()]; s = s[:-1]
+        return float(s) * mult
+    return val(a), val(b or a)
+rate_re = re.compile(r"~?([\d,.]+[KkMm]?)\s*[\u2013-]\s*([\d,.]+[KkMm]?)?[^|;()]{0,60}?per store per (week|month|day|year)", re.I)
+total_re = re.compile(r"~([\d,.]+[KkMm]?)\s*[\u2013-]\s*([\d,.]+[KkMm]?)?[^|;()]{0,60}?/(month|week|day|year)\s*(?:chain-?wide|across (?:the |all )?200\+? locations|across (?:the |all )?200 stores)", re.I)
+effort_re = re.compile(r"(?:staff-)?(?:hours?|hrs?|min(?:ute)?s?|person-hours?|tons?|tonnes?)\s*/(?:month|week|day|year)", re.I)
+prod_re = re.compile(r"200 stores?\s*[\u00d7x]\s*~?([\d,.]+)(\s*[\u2013-]\s*~?[\d,.]+)?([^=\n]{0,90})?=\s*~?([\d,.]+[KkMm]?)(\s*[\u2013-]\s*~?[\d,.]+[KkMm]?)?")
+cad_re = re.compile(r"/(week|month|day|year)\b|per (week|month|day|year)\b", re.I)
+bad = []
+for dirpath, _d, files in os.walk(ROOT):
+    if os.sep + ".git" in dirpath or os.sep + "__pycache__" in dirpath: continue
+    for fn in sorted(files):
+        if not fn.endswith(".md") or fn == "CHANGELOG.md": continue
+        path = os.path.join(dirpath, fn)
+        rel = os.path.relpath(path, ROOT)
+        for i, line in enumerate(open(path, encoding="utf-8"), 1):
+            rates = []
+            for m in rate_re.finditer(line):
+                lo, hi = nums(m.group(1), m.group(2))
+                mult = MONTHLY[m.group(3).lower()]
+                rates.append((lo * 200 * mult, hi * 200 * mult))
+            if rates and not effort_re.search(line):
+                rlo = sum(r[0] for r in rates); rhi = sum(r[1] for r in rates)
+                tm = total_re.search(line)
+                if tm:
+                    tlo, thi = nums(tm.group(1), tm.group(2))
+                    tmult = MONTHLY[tm.group(3).lower()]
+                    tlo, thi = tlo * tmult, thi * tmult
+                    if thi < rlo * 0.75 or tlo > rhi * 1.33:
+                        bad.append(f"{rel}:{i}: per-store rate -> {rlo:,.0f}-{rhi:,.0f}/month/chain vs total {tlo:,.0f}-{thi:,.0f}: {line.strip()[:110]}")
+            pm = prod_re.search(line)
+            if pm:
+                seg = pm.group(3) or ""
+                if re.search(r"\b(?:min|minute|hour|hr)\b", seg, re.I) or " + " in seg or (line.count("\u00d7") + line.count(" x ")) > 1:
+                    continue  # effort dimension, additive expression, or multi-factor chain
+                cm = cad_re.search(seg)
+                cad = MONTHLY[(cm.group(1) or cm.group(2)).lower()] if cm else 1.0
+                plo, phi = nums(pm.group(1), (pm.group(2) or pm.group(1)).lstrip(" \u2013-").replace("~", ""))
+                stated_unit_line = line[pm.end():pm.end() + 60]
+                sm2 = cad_re.search(stated_unit_line)
+                sunit = MONTHLY[(sm2.group(1) or sm2.group(2)).lower()] if sm2 else cad
+                mlo, mhi = nums(pm.group(4), (pm.group(5) or pm.group(4)).lstrip(" \u2013-").replace("~", ""))
+                # raw comparison first (handles period-count factors like '× 365 days = 73,000/year');
+                # fall back to cadence-normalized comparison ('× 1 audit/week = ~800/month')
+                raw_ok = not (mhi < plo * 200 * 0.65 or mlo > phi * 200 * 1.35)
+                if not raw_ok:
+                    plo_m, phi_m = plo * 200 * cad, phi * 200 * cad
+                    mlo_m, mhi_m = mlo * sunit, mhi * sunit
+                    if mhi_m < plo_m * 0.65 or mlo_m > phi_m * 1.35:
+                        bad.append(f"{rel}:{i}: store math {plo:,.0f}-{phi:,.0f} x200 = {plo*200:,.0f}-{phi*200:,.0f} (cadence-normalized {plo_m:,.0f}-{phi_m:,.0f}/month) != stated {mlo:,.0f}-{mhi:,.0f}: {line.strip()[:110]}")
+print(f"TOTALS bad={len(bad)}")
+for b in bad: print(f"BAD|{b}")
+PY
+)
+C47_BAD=$(echo "$CHECK47" | sed -n 's/^TOTALS bad=\([0-9]*\)$/\1/p')
+if [ "${C47_BAD:-1}" -eq 0 ]; then
+    ok "All per-store rates cohere with their same-line chain-wide totals (unit-normalized) and all explicit 200-store multiplications check out"
+else
+    error "Per-store-rate/chain-total unit mismatches or store-math errors found ($C47_BAD):"
+    echo "$CHECK47" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -20
+fi
+
+# --- Check 48: steps-table row integrity (leading pipe, canonical header, ID ordering) ---
+echo "--- Check 48: steps-table row integrity & step-ID ordering ---"
+# Consistency review #30 found three step-table defects invisible to Check 29
+# (which only validates rows that already start with '|') and to every ordering-
+# blind structural check: (1) five rows missing their leading table pipe
+# ('6a |', '16c |', '11 |', '12 |', '9a |' in PA-17.4/PA-17.1/PA-05.2 — the last
+# also missing its trailing pipe), which rendered outside their tables; (2) two
+# steps-table headers with typos ('Role (R))' in PA-57.2, 'Role(A)' in PA-170.3);
+# (3) three mis-ordered step rows (W922's row 2 above row 1; W35's 14a above 14;
+# W9's 16c above 16a/16b). House convention: step IDs ascend (num, letter) with
+# letter variants AFTER their base row (4a/4b/4c per W47, 16a-16e per W9), and
+# each ### section or sub-workflow may restart at 1. This check enforces all three.
+CHECK48=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, glob, sys
+ROOT = os.path.join(sys.argv[1], "01-model-company")
+bad = []
+CANON = re.compile(r"^\| # \| Activity \| Role \(R\) \| Role \(A\) \| (Duration|Frequency|Latency) \|$")
+ROWID = re.compile(r"^(\d+)([a-z]?)\s*\|")
+for f in sorted(glob.glob(os.path.join(ROOT, "workflows", "VS-*", "PA-*.md"))):
+    rel = os.path.relpath(f, ROOT)
+    lines = open(f, encoding="utf-8").readlines()
+    wid = None
+    seq = []
+    def flush(seq, wid, lineno):
+        prev = None
+        for tok, ln in seq:
+            n, letter = int(tok[:-1]) if tok[-1].isalpha() else int(tok), (tok[-1] if tok[-1].isalpha() else "")
+            if prev is not None:
+                pn, pl = prev
+                if not ((n == pn and letter > pl) or n == pn + 1):
+                    bad.append(f"{rel}:{ln}: step row {tok} out of order after {pn}{pl} (workflow {wid})")
+            prev = (n, letter)
+    in_steps = False
+    for i, l in enumerate(lines, 1):
+        m = re.match(r"## (W\d+[A-Z]?)\.", l)
+        if m:
+            flush(seq, wid, i); seq = []; wid = m.group(1); in_steps = False; continue
+        if l.startswith("### "):
+            flush(seq, wid, i); seq = []; in_steps = False; continue
+        if l.startswith("| # | Activity |"):
+            if not CANON.match(l.rstrip("\n")):
+                bad.append(f"{rel}:{i}: non-canonical steps-table header: {l.strip()[:60]}")
+            in_steps = True; continue
+        bare = ROWID.match(l)
+        if bare:
+            ctx = next((lines[j] for j in range(i - 2, min(i + 1, len(lines))) if lines[j].strip()), "")
+            if ctx.startswith("|"):
+                bad.append(f"{rel}:{i}: step row missing leading table pipe: {l.strip()[:60]}")
+        if in_steps:
+            sm = re.match(r"^\| (\d+)([a-z]?) \|", l)
+            if sm:
+                seq.append((sm.group(1) + sm.group(2), i))
+            elif l.strip() and not l.startswith("|"):
+                flush(seq, wid, i); seq = []; in_steps = False
+    flush(seq, wid, len(lines))
+print(f"TOTALS bad={len(bad)}")
+for b in bad: print(f"BAD|{b}")
+PY
+)
+C48_BAD=$(echo "$CHECK48" | sed -n 's/^TOTALS bad=\([0-9]*\)$/\1/p')
+if [ "${C48_BAD:-1}" -eq 0 ]; then
+    ok "All 5,425 steps tables carry canonical headers, well-formed rows, and (num, letter)-ascending step IDs"
+else
+    error "Steps-table integrity violations found ($C48_BAD):"
+    echo "$CHECK48" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
 fi
 
 echo ""
