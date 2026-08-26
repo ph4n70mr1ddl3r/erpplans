@@ -2292,8 +2292,18 @@ echo "--- Check 46: stale-figure & superseded-citation literal guard ---"
 # 90-day accumulation limit had drifted into the DENR storage-limit machinery; RR
 # 34-2022 does not exist as a BIR transfer-pricing regulation (correct: RR 02-2013);
 # RA 9266 is the Architecture Act and cannot perfect collateral (correct: Act No.
-# 1508 chattel mortgage / RA 11057 PPSA). This check guards the retired literals
-# repo-wide so no surface regresses to them. CHANGELOG.md (frozen history + this
+# 1508 chattel mortgage / RA 11057 PPSA). Consistency review #32 found the sweep
+# had missed sibling surfaces in the same hazardous-waste/chemical-safety family:
+# one spelled-out 'DENR Administrative Order No. 2013-22' spot (PA-07.2) whose form
+# dodged the literal guard plus a residual 90-day limit contradicting PA-22.1's own
+# post-#31 180-day line; seven 'DAO 2015-09' spots doing the Procedural Manual's job
+# or mandating SDS (PA-24.3 x6, PA-25.1); a phantom toxic-substances SDS order
+# ('DENR Administrative Order 2015-08') paired with a dubious 'DOLE Department Order
+# 1989-114' OSHS promulgation (PA-01.3); penalty attribution to 'DAO 2021-19'
+# (PA-07.2); and septic-tank standards attributed to 'DAO 2005-10' instead of the
+# Sanitation Code PD 856 Ch. XVII / National Plumbing Code (PA-09.2). All repaired;
+# the guard below now covers every retired form. This check guards the retired
+# literals repo-wide so no surface regresses to them. CHANGELOG.md (frozen history + this
 # repair's own description) and 'X -> Y' change-note contexts (e.g. the
 # classification register's dated version footers) are exempt.
 CHECK46=$(python3 - "$REPO_ROOT" <<'PY'
@@ -2304,7 +2314,14 @@ bad_literals = [
     (r'RA\s?10862', 'LPG act citation (correct: RA 11592 — LPG Industry Regulation Act, 2020)'),
     (r'RA\s?10617', 'superseded LPG act citation from review #29 (correct: RA 11592)'),
     (r'RA\s?10667', 'Philippine Competition Act citation (correct: RA 10677)'),
-    (r'DAO\s?2013-22', 'hazardous-waste-management citation (that order is the mercury CCO; correct: DAO 2004-36 Procedural Manual under RA 6969)'),
+    (r'(?:DENR )?(?:DAO|AO)\s?2013-22', 'hazardous-waste-management citation incl. the short AO form (that order is the mercury CCO; correct: DENR DAO 2004-36 Procedural Manual under RA 6969)'),
+    (r'(?:DENR )?Administrative Order\s?(?:No\.?\s?)?2013-22', 'spelled-out form of the retired hazardous-waste-management citation (correct: DENR DAO 2004-36 Procedural Manual under RA 6969) — caught the one surviving spelled-out spot review #31 left behind'),
+    (r'DAO\s?2015-09', 'phantom/misapplied hazardous-waste order (correct: DENR DAO 2004-36 Procedural Manual under RA 6969)'),
+    (r'(?:DAO\s?|DENR Administrative Order\s?)2015-08', 'mis-cited toxic-substances/SDS order (correct: RA 6969 and its implementing rules; workplace SDS also per OSH Standards / D.O. 198-18)'),
+    (r'DAO\s?2021-19', 'mis-attributed hazardous-waste penalty citation (fines run under RA 6969 / DAO 2004-36)'),
+    (r'DAO\s?2005-10', 'mis-cited septic-tank standards order (correct: Sanitation Code PD 856 Ch. XVII + National Plumbing Code)'),
+    (r'DOLE Department Order\s?1989-114', 'dubious OSHS promulgation citation (correct: OSH Standards as amended, per DOLE D.O. 198-18)'),
+    (r'DOLE Department Order\s?136-14', 'DO 136-14 governs construction-site OSH, not chemical/SDS duties (correct here: RA 6969 + implementing rules / OSH Standards per D.O. 198-18)'),
     (r'RR\s?34-2022', 'phantom BIR transfer-pricing regulation (correct: RR 02-2013)'),
     (r'RA\s?10691', '13th-month-pay citation (correct: PD 851)'),
     (r'\bWI 028\b|\bWI 160\b|\bWI 011\b', 'phantom BIR ATC code (correct: WC 010 services / WI 010 rent / WP 010 goods)'),
@@ -2336,7 +2353,7 @@ C46_BAD=$(echo "$CHECK46" | sed -n 's/^STALE=\([0-9]*\)$/\1/p')
 if [ "${C46_BAD:-1}" -eq 0 ]; then
     ok "No stale tender-mix/fleet/SKU figures or superseded statutory citations (RA/ATC/DO literals) in current-state prose"
 else
-    error "Stale figures / superseded statutory citations found in current-state prose: (incl. RA 10617/RA 10667/DAO 2013-22/RR 34-2022)"
+    error "Stale figures / superseded statutory citations found in current-state prose: (incl. RA 10617/RA 10667/DAO 2013-22/DAO 2015-09/RR 34-2022)"
     echo "$CHECK46" | grep -E '^STALE\|' | sed 's/^STALE|/    /'
 fi
 
