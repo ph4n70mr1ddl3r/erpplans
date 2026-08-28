@@ -2615,6 +2615,33 @@ else
     echo "$C50_OUT" | grep -A1 "^GUARD VIOLATION" | sed 's/^/    /' | head -40
 fi
 
+# --- Check 51: headcount-anchor & Volume-product reconciliation ---
+echo "--- Check 51: Staffing-claim & Volume-product reconciliation ---"
+# reconcile-staffing-claims.py (2026-08-29, consistency review #34) reconciles the
+# staffing-team / role-count claims in PA prose against the canonical registers
+# (model-company-profile.md §3.3 eighteen-department 362-HQ table, §4 store/DC/
+# total figures, §13.1 Merchandising 40 breakdown) and verifies every explicit
+# A × B = C product in Volume/Frequency field rows (elementwise, K/M endpoints,
+# week→month cadence allowance). Guards: (a) the retired literals from the
+# review's repaired spots (pre-rebalance dept totals IT 28→50, Finance 37→46,
+# Legal 9→14, Store Ops 23→24; stale role counts 3→4 Pricing Analysts, 10–12→10
+# Buyers, 6→5 Category Managers; the per-shift DC worker phrasing vs the
+# canonical 4 × 150 = 600; the DSD per-store week→month cadence) must not
+# reappear; (b) any '<Department> … team of N' claim must equal the §3.3 total
+# (engagement crews 'team of 2–3'/'deploys a team of 2' exempt); (c) Volume-row
+# products must compute ('+'-sum rows and cadence conversions out of scope).
+C51_OUT=$(python3 "$REPO_ROOT/07-methodology/reconcile-staffing-claims.py" 2>&1)
+C51_RC=$?
+C51_N=$(echo -n "$C51_OUT" | tail -1)
+echo "    $C51_N"
+if [ $C51_RC -eq 0 ]; then
+    ok "No stale headcount literals, dept-team mismatches, or Volume-product defects (guard mode of reconcile-staffing-claims.py; 21 claim spots + 3 Volume rows repaired 2026-08-29)"
+else
+    C51_HITS=$(echo "$C51_OUT" | grep -cE "^(retired-literal|dept-team|volume-product):" || true)
+    error "$C51_HITS staffing-claim/Volume-product violation(s) (run 07-methodology/reconcile-staffing-claims.py for detail):"
+    echo "$C51_OUT" | grep -E "^(retired-literal|dept-team|volume-product):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
