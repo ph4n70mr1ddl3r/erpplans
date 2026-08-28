@@ -2670,6 +2670,33 @@ else
     echo "$C52_OUT" | grep -E "^(retired-literal|duplicate-trigger):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 53: Automation-keyword & RACI role-title guard ---
+echo "--- Check 53: Automation-keyword & RACI role-title guard ---"
+# fix-auto-keywords.py --check (2026-08-29, consistency review #36) guards the two
+# surfaces beyond Check 21's draft-marker scope: (a) the defragmented Automation
+# Opportunity bullets' quoted keywords — the review repaired the extractor's glitch
+# classes (mid-word clips like 'logy' re-quoted from their own step's full word,
+# legal-entity captures like "Logistics Inc." re-quoted with the step's true object,
+# trailing-space/punctuation fragments trimmed or extracted from nested quotes, and
+# case-variant keywords lowercased) across ~250 bullets in 183 PA files; (b) the RACI
+# role-title vocabulary in Steps tables — 124 cell-bounded normalizations to the
+# dominant forms (plurals, abbreviation variants like Gov Affairs → Govt Affairs,
+# OHS Officer → HSE Officer, External Adviser → External Advisor, and the org-chart
+# ghost 'VP Communications' → Marketing Comms Manager, which §11.1 does not list);
+# legitimately distinct look-alikes (Site Manager in VS-141, Property AR Manager in
+# VS-97, Sourcing Manager, customer's site representative) were adjudicated and kept.
+C53_OUT=$(python3 "$REPO_ROOT/07-methodology/fix-auto-keywords.py" --check 2>&1)
+C53_RC=$?
+C53_N=$(echo -n "$C53_OUT" | tail -1)
+echo "    $C53_N"
+if [ $C53_RC -eq 0 ]; then
+    ok "No glitched Automation keywords and no cell-bounded RACI role-title variants (guard mode of fix-auto-keywords.py; ~250 keyword repairs + 124 role normalizations on 2026-08-29)"
+else
+    C53_HITS=$(echo "$C53_OUT" | grep -cE "^(retired-keyword|glitched-keyword|role-variant):" || true)
+    error "$C53_HITS Automation-keyword/RACI-role violation(s) (run 07-methodology/fix-auto-keywords.py for detail):"
+    echo "$C53_OUT" | grep -E "^(retired-keyword|glitched-keyword|role-variant):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

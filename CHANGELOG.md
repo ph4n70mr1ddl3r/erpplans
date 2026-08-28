@@ -9,6 +9,19 @@
 
 ---
 
+## 2026-08-29 — Consistency review #36: Automation-keyword & RACI role-title audit — ~250 glitched Automation-bullet keywords repaired against their own steps and 124 cell-bounded role-title normalizations (incl. the org-chart ghost "VP Communications"); new tool `fix-auto-keywords.py`; validator Check 53 added (53 checks)
+
+The two surfaces named in the review #35 close-out, beyond Check 21's draft-marker scope:
+
+- **Automation Opportunity keyword quality.** The defragment-automation.py extractor left four glitch classes inside the honest `- System auto-<verb> of "<keyword>" (replaces manual Step N).` form, all repaired against each bullet's own referenced step: **mid-word clips** — `auto-log of "logy"` ×45, where the step says "technology"/"methodology"/"Logistics" (each re-quoted with the full in-step word); **legal-entity captures** — `auto-log of "Logistics Inc."`/`"Logistics, Inc."` ×16, where the step names a BuildRight entity (each re-quoted with the step's true object: bonding-entity determination, IC netting matrix, PHILGEPS registrations per entity, entity assignment at hire, …); **trailing fragments** — keywords clipped mid-sentence ("creates Transfer Order per W22 with ", "Verify that the ") trimmed at dangling prepositions; **nested quotes** — `of "generates "Installation Kit Pull List" from…"` re-quoted with the inner phrase (~130 bullets gained specific step-derived keywords). Case-variant keywords were lowercased to the dominant form. A mid-run regex defect that briefly doubled the verb phrase (`auto-report of report of`) across 319 files was caught and reverted in place before commit, preserving the legitimate extractions.
+- **RACI role-title vocabulary vs the org chart.** All 3,152 distinct Role (R)/(A) strings across the 5,425 steps tables were clustered and adjudicated: **124 cell-bounded normalizations** to dominant forms — plurals used as roles (Drivers, Cashiers, DC Managers…), abbreviation variants (Gov Affairs → Govt Affairs, BCM Manager → BC Manager, Service Center Mgr → Service Center Manager, External Adviser → External Advisor…), OHS Officer → HSE Officer, and the **org-chart ghost "VP Communications"** (×2, PA-20.1/PA-25.3) which §11.1 does not list among the seven executives — the communications function sits under the CMO as the Marketing Comms Manager. Legitimately distinct look-alikes were adjudicated and kept (Site Manager in VS-141 shuttle operations, Property AR Manager in VS-97, plain Sourcing Manager, the customer's own site representative, accredited transporter).
+- **New tool [`07-methodology/fix-auto-keywords.py`](07-methodology/fix-auto-keywords.py)** — default mode performs the repairs (idempotent, reports every edit); `--check` is the zero-false-positive guard: retired keyword literals ('logy', the Logistics-Inc. captures), glitched-keyword shape (trailing space/punctuation, nested quotes), and cell-bounded role-title variants are errors. Teeth verified by re-feeding synthetic defects (5/5 classes caught); zero false positives repo-wide.
+- **Validator Check 53 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 53 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **53 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #35: System-Touchpoints vocabulary & Trigger-duplication audit — ~35 rogue spelling/hyphenation spots normalized (incl. the W995 ageing→aging title/TOC/register cascade and the W5045 Pick-Up→Pickup title cascade), 20 same-PA duplicate-Trigger clusters adjudicated legitimate; new tool `audit-st-touchpoints.py`; validator Check 52 added (52 checks)
 
 The two surfaces named in the review #34 close-out:
