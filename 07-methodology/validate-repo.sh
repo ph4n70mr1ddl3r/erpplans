@@ -2726,6 +2726,32 @@ else
     echo "$C54_OUT" | grep -E "^(retired-literal|cadence-variant):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 55: Participants hygiene & per-unit volume coherence ---
+echo "--- Check 55: Participants hygiene & per-unit volume coherence ---"
+# audit-participants-units.py (2026-08-29, consistency review #38) guards the three
+# surfaces of that review: (a) the data-volumes §1.1 anchors vs PA Volume/Frequency
+# at scale — agreement verified clean (subset/per-store figures and the W867 portal
+# share of W7's merchandise invoices all cohere); the single defect repaired was
+# W3's per-DC arithmetic (6,000 ÷ 4 = 1,500/DC, not ~1,200); the same-row per-unit
+# coherence guard below is its generalization (units × per-unit within ±30% of the
+# stated chain-wide total); (b) Participants hygiene — 35 rows carried stray RACI
+# markers duplicating the Steps tables (stripped to the plain-name convention of the
+# other 5,350 rows) and the 'Analytics Mgr' abbreviation was unified to 'Analytics
+# Manager' (68 spots incl. VS READMEs); (c) steps-table Duration unit vocabulary —
+# spell-clean (min/hours/days/weeks dominant; hrs/minutes/sec established variety;
+# apparent 'hors'/'das' hits were substrings of Authors/horsepower/anchors).
+C55_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-participants-units.py" --guard 2>&1)
+C55_RC=$?
+C55_N=$(echo -n "$C55_OUT" | tail -1)
+echo "    $C55_N"
+if [ $C55_RC -eq 0 ]; then
+    ok "No RACI-marked Participants rows, no 'Analytics Mgr' abbreviation, and per-unit volume rows cohere with their chain-wide totals (guard mode of audit-participants-units.py; W3 per-DC arithmetic + 35 marker rows + 68 Mgr spots repaired 2026-08-29)"
+else
+    C55_HITS=$(echo "$C55_OUT" | grep -cE "^(raci-marker|retired-literal|per-unit-coherence):" || true)
+    error "$C55_HITS Participants/per-unit violation(s) (run 07-methodology/audit-participants-units.py for detail):"
+    echo "$C55_OUT" | grep -E "^(raci-marker|retired-literal|per-unit-coherence):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

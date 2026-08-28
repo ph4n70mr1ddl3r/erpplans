@@ -237,7 +237,7 @@ erpplans/
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── validate-repo.sh              Cross-reference validation (54 checks)
+    ├── validate-repo.sh              Cross-reference validation (55 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── add-automation-controls.py    Automation/Controls field adder
@@ -252,6 +252,7 @@ erpplans/
     ├── audit-st-touchpoints.py       ST-vocabulary & duplicate-Trigger guard (Check 52)
     ├── fix-auto-keywords.py          Automation-keyword & RACI role-title repair/guard (Check 53)
     ├── audit-field-vocabulary.py    Risk-label / cadence / owner vocabulary guard (Check 54)
+    ├── audit-participants-units.py  Participants hygiene & per-unit volume coherence guard (Check 55)
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
     ├── fix-headcount-6757.py         Stale-headcount figure repairer (Check 24 companion)
     ├── fix-toc-anchors.py            Intra-file TOC anchor repairer (Check 23 companion)

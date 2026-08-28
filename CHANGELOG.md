@@ -9,6 +9,20 @@
 
 ---
 
+## 2026-08-29 — Consistency review #38: data-volumes-at-scale, Participants & Duration-unit audit — W3 per-DC arithmetic repaired, the at-scale volume agreement verified clean; 35 RACI-marked Participants rows stripped and 68 'Analytics Mgr' spots unified; new tool `audit-participants-units.py`; validator Check 55 added (55 checks)
+
+The three surfaces named in the review #37 close-out:
+
+- **data-volumes-and-integrations.md vs PA Volume/Frequency at scale** (the repeatedly-named unswept surface). The nine canonical §1.1 anchors (POS transactions 93,333/day, POS lines 373,333/day, DC goods receipts 200/day = 6,000/month, DSD ~20/day ≈ 600/month, POs 40–50/day = 1,200–1,500/month, AP ~300/day = 8,500–9,500/month, ecommerce ~1,430/day ≈ 43,000/month, replenishment orders 167/day ≈ 5,000/month, customer registrations ~150/day) were normalized to monthly bands and checked against every PA Volume/Frequency figure naming those quantities. **Agreement is remarkably clean**: subset and per-store figures (5% of ecommerce returns, 36% card share of 2.8M POS, BOPIS/home-delivery mix) verify internally; W867's portal-invoice volume (~3,000–4,000/month) coheres with the ~800–1,000 vendor base at 4–5 invoices/vendor as a portal share of W7's 6,715 merchandise invoices; W7's 217/day matches 6,715/month. The single defect repaired: **W3's per-DC arithmetic** ("~6,000/month across all DCs; ~1,200/DC/month; ~40/day per DC" → 1,500/DC and ~50/day).
+- **Participants-field role vocabulary.** 35 rows carried stray RACI markers `(R)`/`(A)`/`(R/A)` duplicating the Steps tables — stripped to the plain-name convention of the other 5,350 rows; the **'Analytics Mgr' abbreviation unified to 'Analytics Manager'** (68 spots incl. VS READMEs, where the full form dominates 161:69); plural/case variants normalized (AP Clerks, AR Clerks/Managers, 3PL carrier). The near-miss tail is otherwise splitter noise (parenthetical reference truncations) and legitimately distinct roles.
+- **steps-table Duration unit vocabulary.** Spell-clean: min (5,144)/hours (3,621)/days/weeks dominate; the hrs/minutes/sec abbreviation variety is established house usage; the apparent 'hors'/'das' hits were substrings of Authors/horsepower/anchors. Nothing repaired, nothing retired.
+- **New tool [`07-methodology/audit-participants-units.py`](07-methodology/audit-participants-units.py)** — guard mode errors on RACI markers inside Participants rows, the 'Analytics Mgr' abbreviation, and any Volume/Frequency row whose per-DC/per-store figure contradicts its stated chain-wide total beyond ±30% (the W3 class generalized). Teeth verified (3/3 synthetic classes caught, correct ±30% acceptance proven on the repaired values); zero false positives across the 757 PA+README files.
+- **Validator Check 55 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 55 checks (Check 40 verifies); methodology README gains the tool row. A would-be repeat of the #35 `\&` escape artifact in the new tree line was caught and fixed before commit this time.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **55 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #37: Pain-Points risk-label, Frequency-cadence & Owner-role vocabulary audit — 13 variant risk labels, 18 cadence spots and 3 owner spots normalized; two latent README defects repaired; new tool `audit-field-vocabulary.py`; validator Check 54 added (54 checks)
 
 The three surfaces named in the review #36 close-out:
