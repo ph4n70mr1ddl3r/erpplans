@@ -9,6 +9,20 @@
 
 ---
 
+## 2026-08-29 — Consistency review #40: Trigger richness, mitigation-clause structure & format-guide example inventory — 50 em-dash risk labels converted to the colon form; enrichment backlogs quantified (265 mitigation-less bullets, 85 thin Triggers); example anchors verified; new tool `audit-risk-labels.py`; validator Check 57 added (57 checks)
+
+The three surfaces named in the review #39 close-out:
+
+- **Pain Points mitigation-clause structure.** Of the 7,066 risk bullets, 95.8% carry the canonical `mitigated by …` clause and 31 more carry explicit alternative mitigation phrasings; **265 (3.7%) state the risk without a mitigation clause** (their mitigations live in the workflow's Controls sections). That residue is an authored-content enrichment backlog per the format guide's "refine freely during per-workflow review" note — documented here rather than fabricated. The structural defect repaired: **50 risk labels used the em-dash form `**X risk** — description`** instead of the colon form used by the 6,800+ majority and the guide's own example — all converted.
+- **Trigger-field prose richness.** 85 Trigger values outside the Check-52 allowlisted files are ultra-short cadence phrases ("Monthly reporting", "Quarterly analysis", "Monthly close") — thin but honest, single-workflow (no duplication), and likewise an enrichment backlog rather than a defect. The 20 shared-event clusters remain allowlisted and guarded.
+- **WORKFLOW-FORMAT-GUIDE example inventory.** All ✅/❌ example anchors resolve against current state: W2599 exists (VS-73.1), VS-88 is an active value stream, and the `~72,000 receipts/yr → ~6,000 discrepancies/yr` example matches the canonical DC-only goods-receipt volume (6,000/month per §1.1). Clean.
+- **New tool [`07-methodology/audit-risk-labels.py`](07-methodology/audit-risk-labels.py)** — guard mode retires the em-dash risk-label form across PA files. Teeth verified; zero false positives repo-wide.
+- **Validator Check 57 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 57 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **57 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #39: operational-control prose, ST module-family naming & VS-citation density — ~20 gate-sentence variants normalized; the ST-family and citation-density surfaces verified clean; new tool `audit-operational-controls.py`; validator Check 56 added (56 checks)
 
 The three surfaces named in the review #38 close-out:

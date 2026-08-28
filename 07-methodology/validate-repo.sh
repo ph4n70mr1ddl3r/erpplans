@@ -2778,6 +2778,30 @@ else
     echo "$C56_OUT" | grep "^retired-literal:" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 57: risk-label punctuation guard ---
+echo "--- Check 57: Risk-label punctuation ---"
+# audit-risk-labels.py (2026-08-29, consistency review #40) guards the Pain-Points
+# risk-label structure: 50 labels used the em-dash form '**X risk** — description'
+# instead of the colon form used by the 6,800+ majority and the format guide's
+# example; normalized. The same review quantified the enrichment backlogs it did
+# NOT fabricate content for: 265 of 7,066 risk bullets (3.7%) state the risk
+# without a mitigation clause (their mitigations live in the workflow's Controls
+# sections), and 85 Trigger values outside the Check-52 allowlist are ultra-short
+# cadence phrases — both documented for per-workflow review. The format guide's
+# example anchors were verified against current state (W2599, VS-88, and the
+# ~72,000 receipts/yr figure matching the canonical DC-only volume).
+C57_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-risk-labels.py" --guard 2>&1)
+C57_RC=$?
+C57_N=$(echo -n "$C57_OUT" | tail -1)
+echo "    $C57_N"
+if [ $C57_RC -eq 0 ]; then
+    ok "No em-dash risk labels (guard mode of audit-risk-labels.py; 50 labels converted to the colon form 2026-08-29)"
+else
+    C57_HITS=$(echo "$C57_OUT" | grep -c "^em-dash-risk-label:" || true)
+    error "$C57_HITS em-dash risk label(s) (run 07-methodology/audit-risk-labels.py for detail):"
+    echo "$C57_OUT" | grep "^em-dash-risk-label:" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
