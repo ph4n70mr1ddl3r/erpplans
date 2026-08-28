@@ -2589,6 +2589,32 @@ else
     fi
 fi
 
+# --- Check 50: Time-Estimate / Staffing inline arithmetic guard ---
+echo "--- Check 50: Time-Estimate & Staffing inline arithmetic ---"
+# audit-time-estimate-math.py (2026-08-29) re-derives every explicit
+# "<A> × <B> (=|≈) <result>" chain written into the finalized Time Estimate and
+# Staffing Implication paragraphs (5,382 sections), applying the unit
+# conventions the house style licenses (min↔hours ÷/×60, sec→hours, workday/
+# workweek/month-length alternates, per-cadence annualization ×12/×4/×52/×365/×6,
+# noun/suffix cancellation, the canonical 200-store and 4-DC chain scalings,
+# shared-factor inheritance, K/M endpoints, %-as-decimal). The full audit reports
+# candidates for human adjudication (house-style range padding, elapsed-window
+# weeks, hidden context factors are accepted classes); --guard is the strict
+# zero-false-positive subset this check enforces: single-run effort-time product
+# chains whose midpoint is off ≥1.6× under NO licensed convention, plus reversed
+# numeric ranges. The 2026-08-29 pass adjudicated the complete hit list and
+# repaired 25 workflows' arithmetic against their own steps/Frequency/Volume.
+C50_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-time-estimate-math.py" --guard 2>&1)
+C50_RC=$?
+echo "$C50_OUT" | grep -E "^Guard:" | sed 's/^/    /'
+if [ $C50_RC -eq 0 ]; then
+    ok "No inline-arithmetic guard violations in Time Estimate / Staffing Implication sections (guard mode of audit-time-estimate-math.py; 25 defective chains repaired 2026-08-29)"
+else
+    C50_N=$(echo "$C50_OUT" | grep -c "^GUARD VIOLATION" || true)
+    error "$C50_N inline-arithmetic guard violation(s) in Time Estimate / Staffing Implication sections (run 07-methodology/audit-time-estimate-math.py for the full audit trail):"
+    echo "$C50_OUT" | grep -A1 "^GUARD VIOLATION" | sed 's/^/    /' | head -40
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

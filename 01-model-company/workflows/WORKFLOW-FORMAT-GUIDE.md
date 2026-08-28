@@ -52,6 +52,20 @@ following fields.
 > annual figure). The retired draft literal and full section coverage are guarded by
 > validator Check 49.
 
+> **Inline-arithmetic audit note (2026-08-29).** Every explicit scaling chain written into the finalized
+> Time Estimate and Staffing Implication paragraphs (`<per-occurrence> × <count> (=|≈) <result>`) was
+> re-derived by [`07-methodology/audit-time-estimate-math.py`](../../07-methodology/audit-time-estimate-math.py)
+> under the unit conventions this guide licenses — min↔hours (÷/× 60), sec→hours, workday (×8) and
+> workweek (×5/×7) alternates, month-length alternates, per-cadence annualization (×12 / ×4 / ×52 /
+> ×365 / ×6), noun/suffix cancellation (`2 hours/visit × 20–30 visits/month`), the canonical 200-store
+> and 4-DC chain scalings, shared-factor inheritance (`× 200 stores … + 3 hours per store`), and K/M
+> endpoints. Twenty-five workflows carried defective chains (minutes labelled hours, counts
+> double-multiplied, over- and understated products) and were repaired against their own step
+> Durations, Frequency, and Volume; the strict `--guard` subset of the tool is enforced by validator
+> Check 50. Accepted prose classes the tool reports but does not flag: house-style range padding
+> (±35%), elapsed-window days/weeks reported verbatim, and hidden context factors stated elsewhere
+> in the workflow.
+
 > **Completeness note (2026-06-27; figure updated 2026-08-26).** All 5,363 workflows now carry all 9 required fields (validator Check 22 green). The last 645 missing instances were closed as follows: the 224 missing **Participants** rows (VS-53–VS-63 plus VS-86/87/99/189) were mechanically derived from each workflow's own Steps-table roles via [`07-methodology/backfill-participants.py`](../../07-methodology/backfill-participants.py) (honest-draft: values come from authored steps; no invented roles); the 175 missing **System Touchpoints** and 246 missing **Pain Points / Risks** sections (VS-15–18, VS-27, VS-31–40, VS-48) were authored per-workflow, grounded in each workflow's own steps and cross-references. Treat these like any authored field: refine freely during per-workflow review.
 
 ### Standard analysis fields (add to every fully-detailed workflow)
