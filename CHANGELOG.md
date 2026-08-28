@@ -9,6 +9,19 @@
 
 ---
 
+## 2026-08-29 — Consistency review #41: root-level model-company documents audited — mobile-app-strategy.md, data-migration-mapping.md, assumptions-and-design-decisions.md verified fully clean against the canonical registers; new tool `audit-model-docs.py`; validator Check 59 added (59 checks)
+
+The three root-level model-company documents never before swept:
+
+- **Figure agreement — clean.** All canonical-anchored figures match the registers: 6,762 employees (migration employee-master target), ~800–1,000 active vendors (profile §6.5), 55,000 item-master records (35,000 active + 20,000 inactive/seasonal), ~600,000 loyalty members (matching the W1217 evaluation base), 29 per store, 200 stores + 4 DCs, 14,000 POS transactions/store/month (2.8M ÷ 200), ~PHP 9.22M revenue/employee, and the 5,200 trade + 200 corporate price records per the §9.2 canonicalization. No retired totals (6,757/6,715/5,3xx), no 80,000-SKU or 1,000-terminal ghosts.
+- **Cross-reference integrity — clean.** Every W/VS-/CTL-/PA-/requirement-ID token resolves against the live registers (5,363 W / 190 VS / 569 PA / 808 CTL / 728 requirements); the §-refs resolve doc-scoped (unqualified to the profile's 61 sections, 'Technical Guidelines §2.1/§2.3' to 07-methodology/technical-guidelines.md, bare §N.N inside data-migration-mapping.md to its own headers, 'data-volumes §1.2' to that doc); change-note footers exempt per house convention.
+- **New tool [`07-methodology/audit-model-docs.py`](07-methodology/audit-model-docs.py)** — guard mode re-runs the full audit on every invocation (live-register token resolution, doc-scoped §-ref resolution, retired-figure literals). Teeth verified by synthetic injection (dangling W/VS/§ refs and a retired figure all caught; a W-prefix collision between WMS-nnn requirement IDs and W-token routing was caught and fixed during bring-up).
+- **Validator Check 59 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 59 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **59 checks**.
+
+---
+
 ## 2026-08-29 — Enrichment pass: the review #40 backlogs closed — 231 risk bullets enriched with mitigation clauses grounded in their own workflows' Controls sections; 38 cadence-only Triggers enriched with their workflows' title subjects; new tool `audit-enrichment-completeness.py`; validator Check 58 added (58 checks)
 
 Closing the two enrichment backlogs quantified by consistency review #40:

@@ -2826,6 +2826,32 @@ else
     echo "$C58_OUT" | grep -E "^(bare-mitigation|cadence-only-trigger):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 59: root-level model-company document integrity ---
+echo "--- Check 59: Model-doc figures & cross-references ---"
+# audit-model-docs.py (2026-08-29, consistency review #41) audits the three
+# root-level model-company documents never before swept (mobile-app-strategy.md,
+# data-migration-mapping.md, assumptions-and-design-decisions.md) against the
+# canonical registers: every W/VS-/CTL-/PA-/requirement-ID token must resolve
+# against the live registers (5,363 W / 190 VS / 569 PA / 808 CTL / 728 req),
+# §-refs must resolve doc-scoped (profile / named target doc / the document's
+# own sections; change-note footers exempt), and the retired stale totals
+# (6,757 / 6,715 / 5,3xx / 80,000-SKU / 1,000-terminal) must not appear. The
+# review found the documents fully clean — all figures (6,762 HC, ~800–1,000
+# vendors, 35,000+20,000 items, ~600,000 loyalty members, 29/store, 14,000
+# POS/store/month, PHP 9.22M/employee, 5,200+200 price records) agree with
+# the registers — so this check is the permanent regression guard.
+C59_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-model-docs.py" --guard 2>&1)
+C59_RC=$?
+C59_N=$(echo -n "$C59_OUT" | tail -1)
+echo "    $C59_N"
+if [ $C59_RC -eq 0 ]; then
+    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py; documents verified clean 2026-08-29)"
+else
+    C59_HITS=$(echo "$C59_OUT" | grep -c "^model-doc:" || true)
+    error "$C59_HITS model-doc violation(s) (run 07-methodology/audit-model-docs.py for detail):"
+    echo "$C59_OUT" | grep "^model-doc:" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
