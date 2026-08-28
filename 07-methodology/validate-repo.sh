@@ -2697,6 +2697,35 @@ else
     echo "$C53_OUT" | grep -E "^(retired-keyword|glitched-keyword|role-variant):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 54: risk-label / cadence / owner vocabulary guard ---
+echo "--- Check 54: Pain-Points, Frequency & Owner vocabulary ---"
+# audit-field-vocabulary.py (2026-08-29, consistency review #37) guards the three
+# field vocabularies beyond Checks 14/15: (a) the Pain Points risk taxonomy — the
+# 4,836-label vocabulary is domain-specific and clean; thirteen variant labels
+# normalized (Blindspot → Blind-spot, Cannibalisation → Cannibalization, the
+# hybrid Cannibalization-miss → Missed-cannibalization, Cost-leak → Cost-leakage,
+# Metrics-gaming → Metric-gaming, Operations → Operational, Re-occurrence →
+# Recurrence, Record-gap → Records-gap, Reputation → Reputational, unhyphenated
+# "Scope creep risk", and three capitalized Risk tails → lowercase), with genuinely
+# distinct concepts kept (Capability- vs Capacity-shortfall, Hidden-PL-cost,
+# Reputational/ESG, Tax-mis-classification); (b) the Frequency cadence vocabulary —
+# spell-clean, 17 unhyphenated 'ad hoc' → 'ad-hoc' (dominant 320x); (c) the Owner
+# vocabulary vs the profile — HSE spelling enforced (EHS Manager → HSE Manager),
+# PA-07.1 store-opening rows aligned to Compliance Officer in cell and prose; the
+# bare 'Compliance Manager' adjudicated a plausible Legal & Compliance title and
+# kept, as are the qualified Product/EPR/Trade/Tax/HR Compliance Manager roles.
+C54_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-field-vocabulary.py" --guard 2>&1)
+C54_RC=$?
+C54_N=$(echo -n "$C54_OUT" | tail -1)
+echo "    $C54_N"
+if [ $C54_RC -eq 0 ]; then
+    ok "No retired risk-label/cadence/owner vocabulary literals (guard mode of audit-field-vocabulary.py; 13 risk labels + 18 cadence spots + 3 owner spots normalized 2026-08-29)"
+else
+    C54_HITS=$(echo "$C54_OUT" | grep -cE "^(retired-literal|cadence-variant):" || true)
+    error "$C54_HITS vocabulary violation(s) (run 07-methodology/audit-field-vocabulary.py for detail):"
+    echo "$C54_OUT" | grep -E "^(retired-literal|cadence-variant):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

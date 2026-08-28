@@ -9,6 +9,21 @@
 
 ---
 
+## 2026-08-29 — Consistency review #37: Pain-Points risk-label, Frequency-cadence & Owner-role vocabulary audit — 13 variant risk labels, 18 cadence spots and 3 owner spots normalized; two latent README defects repaired; new tool `audit-field-vocabulary.py`; validator Check 54 added (54 checks)
+
+The three surfaces named in the review #36 close-out:
+
+- **Pain Points risk taxonomy.** All 4,836 distinct bolded `**X risk**:` labels (6,959 bullets) were clustered and near-miss-scanned: the vocabulary is domain-specific and healthy; sixteen variant pairs were adjudicated and **thirteen normalized** — Blindspot → Blind-spot, Cannibalisation → Cannibalization (US house spelling), the hybrid Cannibalization-miss → Missed-cannibalization, Cost-leak → Cost-leakage, Metrics-gaming → Metric-gaming, Operations → Operational, Re-occurrence → Recurrence, Record-gap → Records-gap, Reputation → Reputational, the unhyphenated "Scope creep risk" → "Scope-creep risk", and three capitalized `Risk` tails → lowercase (Audit/Closure/Regularization). Genuinely distinct concepts kept: Capability-shortfall ≠ Capacity-shortfall, CDR-reconciliation, Hidden-PL-cost, Reputational/ESG, Tax-mis-classification.
+- **Frequency cadence vocabulary.** 3,117 distinct leading cadence terms spell-check clean (zero continous/quaterly/montly-class misspellings — 85 apparent hits were substrings of "manually"); the only variant was **17 unhyphenated "ad hoc" → "ad-hoc"** (dominant 320×, incl. one in `workflow-gap-analysis.md`).
+- **Owner-field role vocabulary vs the profile.** Top roles cohere with §13.1/§3.3 (Category Manager 72, Pricing Analyst 32, Merchandise Planner 28…); the org-chart spelling **HSE** enforced (EHS Manager → HSE Manager); the two PA-07.1 store-opening rows aligned to Compliance Officer in both role cell and prose. Adjudicated and kept: the bare "Compliance Manager" title (a plausible Legal & Compliance team title; the qualified Product/EPR/Trade/Tax/HR Compliance Manager forms are distinct roles) and PA-14.3's "CSR Manager" (Corporate Social Responsibility, not customer service).
+- **Latent cross-doc defects found while wiring the guard:** the review #36 README tree-line edit had silently never landed (its edit script died on a syntax error before writing — the tool row is restored), and the review #35 sed had written a literal `\&` into the root-README tree line (restored to `&`). Neither was caught by the validator's tree checks, which verify counts and VS rows, not tool rows.
+- **New tool [`07-methodology/audit-field-vocabulary.py`](07-methodology/audit-field-vocabulary.py)** — guard mode retires the thirteen risk-label variants, the unhyphenated `ad hoc`, and the EHS-Manager spelling across PA files and the workflow summary docs. Teeth verified (4/4 synthetic classes caught); zero false positives repo-wide.
+- **Validator Check 54 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 54 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **54 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #36: Automation-keyword & RACI role-title audit — ~250 glitched Automation-bullet keywords repaired against their own steps and 124 cell-bounded role-title normalizations (incl. the org-chart ghost "VP Communications"); new tool `fix-auto-keywords.py`; validator Check 53 added (53 checks)
 
 The two surfaces named in the review #35 close-out, beyond Check 21's draft-marker scope:
