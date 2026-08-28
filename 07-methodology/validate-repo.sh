@@ -2752,6 +2752,32 @@ else
     echo "$C55_OUT" | grep -E "^(raci-marker|retired-literal|per-unit-coherence):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 56: operational-control prose variant guard ---
+echo "--- Check 56: Operational-control prose variants ---"
+# audit-operational-controls.py (2026-08-29, consistency review #39) guards the
+# Controls-section 'operational:' prose vocabulary beyond Check 21's boilerplate
+# strings: the review normalized ~20 variant spots (hyphenated
+# 'review-and-approval gate', 'review & approval', 'review and approvals',
+# 'VP for Merchandising/Store Operations', the '(CSR)' gloss and '(HQ)'
+# qualifiers inside gate sentences) to the dominant '<Role> review and approval
+# gate' template; role look-alikes in the near-miss tail are distinct roles and
+# the 'Marketing — <role>' department-scoped composites are kept. The same
+# review verified the ST module-family naming against the 36-module register
+# (clean — the hyphenated hits are correct compound modifiers) and the VS-x
+# citation density (44,041 citations across all 569 PAs, median 57, none
+# isolated).
+C56_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-operational-controls.py" --guard 2>&1)
+C56_RC=$?
+C56_N=$(echo -n "$C56_OUT" | tail -1)
+echo "    $C56_N"
+if [ $C56_RC -eq 0 ]; then
+    ok "No retired operational-prose variant literals (guard mode of audit-operational-controls.py; ~20 gate-sentence variants normalized 2026-08-29)"
+else
+    C56_HITS=$(echo "$C56_OUT" | grep -c "^retired-literal:" || true)
+    error "$C56_HITS operational-prose violation(s) (run 07-methodology/audit-operational-controls.py for detail):"
+    echo "$C56_OUT" | grep "^retired-literal:" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

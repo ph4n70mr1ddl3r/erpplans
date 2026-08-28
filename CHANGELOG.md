@@ -9,6 +9,20 @@
 
 ---
 
+## 2026-08-29 — Consistency review #39: operational-control prose, ST module-family naming & VS-citation density — ~20 gate-sentence variants normalized; the ST-family and citation-density surfaces verified clean; new tool `audit-operational-controls.py`; validator Check 56 added (56 checks)
+
+The three surfaces named in the review #38 close-out:
+
+- **Controls-section operational-control prose.** The 5,153 `operational:` sentences cluster into the intentional add-pa-controls.py templates (`<Role> review and approval gate` ×~1,100 across 300+ roles, plus the two Check-21-known boilerplate strings). The near-miss tail's 72 role look-alikes (CEO vs CMO, AP vs AR Supervisor…) are genuinely distinct roles, and the three `Marketing — <role>` department-scoped composites are informative and kept. **~20 variant spots normalized:** hyphenated `review-and-approval gate` → `review and approval gate`; `review & approval`; `review and approvals`; `VP for Merchandising`/`VP for Store Operations` → the house `VP Merchandising`/`VP Store Operations`; the redundant `(CSR)` gloss and `(HQ)` qualifiers inside gate sentences.
+- **System Touchpoints module-family naming vs the 36-module register.** The semantic mapping coheres (subsystem names by design, per the review #35 adjudication); the only hyphenated family-name hits inside ST sections — `master-data-quality monitoring`, `loss-prevention CCTV` — are grammatically correct compound modifiers, not inconsistencies. **Clean; nothing repaired.**
+- **cross-PA VS-x citation density.** 44,041 `VS-x` citations across all 569 PAs — median 57 per PA, minimum 2, maximum 259, and **zero PAs without cross-VS citations**. Healthy; nothing repaired.
+- **New tool [`07-methodology/audit-operational-controls.py`](07-methodology/audit-operational-controls.py)** — guard mode retires the six gate-sentence variant literals across PA files. Teeth verified (synthetic defects caught); zero false positives repo-wide.
+- **Validator Check 56 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 56 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **56 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #38: data-volumes-at-scale, Participants & Duration-unit audit — W3 per-DC arithmetic repaired, the at-scale volume agreement verified clean; 35 RACI-marked Participants rows stripped and 68 'Analytics Mgr' spots unified; new tool `audit-participants-units.py`; validator Check 55 added (55 checks)
 
 The three surfaces named in the review #37 close-out:
