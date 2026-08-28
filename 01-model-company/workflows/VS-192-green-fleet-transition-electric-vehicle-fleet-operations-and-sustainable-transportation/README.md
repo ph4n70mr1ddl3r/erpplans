@@ -29,7 +29,7 @@ battery second-life and end-of-life recycling (RA 11898 EPR linkage); and green-
 and decarbonization analytics.
 
 This matters at BuildRight's scale. The Philippines' **Electric Vehicle Industry Development Act
-(RA 11697 / EVIDA, 2022)** and its IRR (DAO 2023-05) establish a national EV roadmap that
+(RA 11697 / EVIDA, 2022)** and its DOE IRR establish a national EV roadmap that
 explicitly includes **commercial and fleet adoption**, corporate fleet EV-share expectations, and
 building/Parking-Space EV-readiness provisions that interact directly with BuildRight's existing
 EV-charging host network (VS-163) and rooftop-solar prosumer program (VS-108). At ~5,000 monthly

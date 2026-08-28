@@ -9,6 +9,24 @@
 
 ---
 
+## 2026-08-28 — Consistency review #33: statutory-citation correctness sweep #4 — Competition Act number restored (RA 10677 → RA 10667), six further mis-citations repaired, house-spelling normalized; validator Check 46 guard extended (48 checks)
+
+A whole-repo review for consistency, correctness and completeness — running with the validator fully green at 48 checks — re-audited the repo's ~100 distinct Republic Act / PD / DO / DAO / RR citations, the summary-doc figures and footer-history integrity, and the spelling house-style. Findings and repairs:
+
+- **Philippine Competition Act number restored — RA 10677 → RA 10667 (25 spots).** Review #31's sweep flipped the act number repo-wide on the claim that "the Philippine Competition Act is RA 10677, not RA 10667" — backwards: **RA 10667** (signed 21 July 2015) is the Philippine Competition Act that creates the PCC (RA 10668 is the Right-of-Way Act; RA 10677 is not the Competition Act). Corrected across VS-129 (README + three PA files incl. the PA header quotes), PA-57.1 (×2, incl. the 2026-06-20 rework note), PA-76.2 (×3, incl. the hyphenated `RA-10677-flavored` form), PA-172.1, `workflows/README.md`, `value-stream-index.md`, `workflow-dependency-map.md`, `workflow-gap-analysis.md` (×3), and `workflow-system-touchpoint-map.md`. Validator Check 46's retired-literal guard — which reviews #31/#32 had taught the wrong number — now retires the `RA 10677` form instead; the methodology README's guard description re-pointed; dependency map **v4.15**, touchpoint map **v82.0**, and the index footer dated accordingly.
+- **PA-100.1**: `commercial arbitration per ADR Act RA 876` — RA 876 (1953) is the Arbitration Law, not the ADR Act (RA 9285, 2004); now cites both correctly.
+- **PA-08.1 (×3, automation fragment kept verbatim with the step)**: age-restricted ID checks cited RA 7610 (the child-protection act) — age-restricted sale bans run per **RA 9211 §9** (tobacco) / **PD 1619** (volatile solvents).
+- **`erp-requirements.md` COM-001**: `DOLE DO 53-03` → the drug-free-workplace guidelines are DOLE **D.O. 53-04** (the catalog's own W4458 title).
+- **PA-17.3**: the e-invoicing example cited `RR 13-2018 (SAF-T)` — SAF-T is an OECD format, not a BIR standard; e-receipts/e-invoicing run per **RR 8-2020** (NIRC §237 as amended by TRAIN).
+- **PA-31.3**: hazardous-release notification paired `PD 1586, RA 6969` — PD 1586 is the EIS/ECC system; releases run under RA 6969 + its IRR alone.
+- **VS-192 README + PA-192.1**: EVIDA's IRR cited as `DAO 2023-05` — EVIDA (RA 11697) is DOE-administered and its IRR is a DOE department circular, while DENR DAO 2023-05 is the EPR Act (RA 11898) IRR; re-pointed to "its DOE IRR".
+- **Dating + footer-history repairs**: review #31's "(2020)" dating of the LPG Industry Regulation Act corrected to **2021** (Check 46 comment + classification v7.40 footer); the v7.39 register-footer paragraph that review #31's v7.40 edit absorbed inline restored as its own standalone note; classification register bumped **v7.41** for the W4710 title normalization.
+- **House-spelling normalization** to the dominant US spellings: dependant → dependent (23 spots, incl. the W4710 title / TOC-anchor / register-row cascade in VS-160), judgement → judgment (9, PA-157.3), fulfilment → fulfillment (1, VS-140 README), labelling → labeling (3, PA-115.1/.2).
+
+**Validator Check 46 extended** with the seven newly retired literals (`RA 10677`, `ADR Act RA 876`, `age-restricted items per RA 7610`, `DO 53-03`, `RR 13-2018 (SAF-T)`, `PD 1586, RA 6969`, `IRR (DAO 2023-05)`); 48 checks unchanged. Totals unchanged 188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC; validator green 0 errors / 0 warnings.
+
+---
+
 ## 2026-08-26 — Consistency review #32: hazardous-waste/chemical-safety citation sweep completion (21 spots across 7 PA files); validator Check 46 guard extended again (48 checks)
 
 A whole-repo review for consistency, correctness and completeness — running with the validator fully green at 48 checks — re-audited every remaining DENR/DOLE chemical-safety citation against the statute each is invoked for, and found that consistency review #31's hazardous-waste adjudication (DAO 2013-22 is the mercury CCO; hazardous-waste management under RA 6969 runs on **DAO 2004-36**, Procedural Manual, 6-month storage limit) had missed the sibling surfaces outside VS-73. Fifteen live spots across six PA files:

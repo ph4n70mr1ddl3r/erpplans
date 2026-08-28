@@ -200,7 +200,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-114](VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md) | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | Gap analysis | 3 | 24 |
 |  | [VS-117](VS-117-dti-bps-product-standards-certification-ps-mark-icc-compliance/README.md) | DTI-BPS Product Standards Certification & PS Mark/ICC Compliance | Gap analysis | 3 | 24 |
 |  | [VS-119](VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/README.md) | Whistleblower, Ethics & Corporate Integrity (Speak-Up) Program | Gap analysis | 3 | 24 |
-|  | [VS-129](VS-129-competition-and-antitrust-compliance/README.md) | Competition & Antitrust Compliance (RA 10677 / PCC) | Gap analysis | 3 | 24 |
+|  | [VS-129](VS-129-competition-and-antitrust-compliance/README.md) | Competition & Antitrust Compliance (RA 10667 / PCC) | Gap analysis | 3 | 24 |
 |  | [VS-130](VS-130-corporate-development-ma-divestiture/README.md) | Corporate Development, Mergers, Acquisitions, Divestiture & Strategic Transactions | Gap analysis | 3 | 24 |
 |  | [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Gap analysis | 3 | 24 |
 |  | [VS-133](VS-133-operational-excellence-process-mining-continuous-improvement/README.md) | Operational Excellence, Process Mining & Continuous Improvement Program | Gap analysis | 3 | 24 |
@@ -1228,7 +1228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-119.2** [Investigation, Case Management & Retaliation Protection](./VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/PA-119.2-investigation-case-management-and-retaliation-protection.md) — 8 workflows
 - **PA-119.3** [Ethics Analytics, Culture & Program Assurance](./VS-119-whistleblower-ethics-and-corporate-integrity-speak-up-program/PA-119.3-ethics-analytics-culture-and-program-assurance.md) — 8 workflows
 
-**[VS-129: Competition & Antitrust Compliance (RA 10677 / PCC)](./VS-129-competition-and-antitrust-compliance/README.md)** (24 workflows)
+**[VS-129: Competition & Antitrust Compliance (RA 10667 / PCC)](./VS-129-competition-and-antitrust-compliance/README.md)** (24 workflows)
 
 - **PA-129.1** [Competition Risk Assessment, Market Power & Exposure Analysis](./VS-129-competition-and-antitrust-compliance/PA-129.1-competition-risk-assessment-market-power-and-exposure-analysis.md) — 8 workflows
 - **PA-129.2** [Anti-Competitive Conduct Prevention & Compliance Controls](./VS-129-competition-and-antitrust-compliance/PA-129.2-anticompetitive-conduct-prevention-and-compliance-controls.md) — 8 workflows
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,363 workflows across 188 value streams · Date: 2026-08-26*
+*Total: 5,363 workflows across 188 value streams · Date: 2026-08-28*

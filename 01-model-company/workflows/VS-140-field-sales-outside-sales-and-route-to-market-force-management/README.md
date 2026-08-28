@@ -32,7 +32,7 @@ the ~5,200 trade accounts and the many project/contractor accounts at territory 
 distinct from **VS-43 (Trade-Professional Program)** which manages the trade-pro *membership/
 benefits* — this value stream owns the *field-selling activity* to that base. It is distinct from
 **VS-11 (Trade/Project Wholesale)** which executes the B2B/project *transaction* (quote→order→
-fulfilment) — this value stream owns the *field-force coverage* that generates those opportunities.
+fulfillment) — this value stream owns the *field-force coverage* that generates those opportunities.
 It is distinct from **VS-124 (Sales Enablement)** which equips *all* associates — this value
 stream owns the *outside-sales operating model* and the route-to-market. Field sales/RTM is the
 *outside-sales-force* discipline — distinct from key-account management, trade-pro membership,

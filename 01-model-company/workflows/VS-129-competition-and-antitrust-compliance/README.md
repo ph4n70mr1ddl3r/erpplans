@@ -1,4 +1,4 @@
-# VS-129: Competition & Antitrust Compliance (RA 10677 / PCC)
+# VS-129: Competition & Antitrust Compliance (RA 10667 / PCC)
 
 > **Governance & Assurance** · [Value Stream Index](../value-stream-index.md)
 
@@ -7,7 +7,7 @@
 ## Overview
 
 Competition & Antitrust Compliance workflows for BuildRight Depot Corp. — owning the enterprise
-discipline of competing lawfully under the **Philippine Competition Act (RA 10677)** and the
+discipline of competing lawfully under the **Philippine Competition Act (RA 10667)** and the
 **Philippine Competition Commission (PCC)**. As the largest hardware/DIY/home-improvement
 big-box retailer in its market (200 stores, ~PHP 62.3B annual revenue, ~35,000 active SKUs,
 ~800–1,000 vendors, ~40% B2B revenue, 5 legal entities), BuildRight has structural exposure to
@@ -17,7 +17,7 @@ intelligence (VS-57), it negotiates trade/resale pricing and terms with vendors 
 associations (VS-104.2), it buys from ~1,000 suppliers with potential buyer-power exposure
 (VS-03), it operates a 3P marketplace and retail-media network (VS-95, VS-48), and it pursues
 growth that may include acquisitions, JVs, and store/market consolidation (VS-130). Each is a
-distinct antitrust vector under RA 10677, its Implementing Rules and Regulations, and PCC
+distinct antitrust vector under RA 10667, its Implementing Rules and Regulations, and PCC
 guidelines (agreements restricting competition, abuse of dominant position, and mergers and
 acquisitions that substantially lessen competition).
 
@@ -49,7 +49,7 @@ financial crime, and corporate development.
 BuildRight's exposure is structural: a dominant-share retailer with pervasive pricing, vendor,
 channel, association, and M&A activity faces real PCC enforcement exposure (fines up to PHP 250M
 for first-time corporate offenders and a full year of preceding-year revenues for repeat/large
-offenders under RA 10677), private damages actions, reputational harm, and contract
+offenders under RA 10667), private damages actions, reputational harm, and contract
 unenforceability — risks that no existing value stream owns end-to-end and that today rest on a
 single workflow.
 

@@ -2284,9 +2284,15 @@ echo "--- Check 46: stale-figure & superseded-citation literal guard ---"
 # WP 010 purchases of goods), and the DO 13-98 construction-OSH citation for store
 # forklifts (correct: OSH Standards Rule 1160 series per D.O. 198-18). Consistency
 # review #31 extended this guard with five more retired literals: 'RA 11592' is the
-# actual LPG Industry Regulation Act (2020) so review #29's 'RA 10617' adjudication is
+# actual LPG Industry Regulation Act (2021) so review #29's 'RA 10617' adjudication is
 # itself retired (RA 10617 sits in the late-2013 numbering, predating the 17th/18th-
-# Congress LPG bills); the Philippine Competition Act is RA 10677, not RA 10667;
+# Congress LPG bills; review #31 also mis-dated the act '(2020)' — corrected to 2021
+# by review #33); review #31 also flipped the Philippine Competition Act number to
+# RA 10677, which review #33 REVERSED: the Philippine Competition Act is RA 10667
+# (signed 21 July 2015 — the act that creates the PCC; RA 10668 is the Right-of-Way
+# Act and RA 10677 is not the Competition Act), so every RA 10677 spot (25 incl.
+# VS-129 headings, index/dependency/touchpoint-map rows) went RA 10677 -> RA 10667 and
+# the guard now retires the RA 10677 form instead of the correct number;
 # hazardous-waste management under RA 6969 runs on DAO 2004-36 (Procedural Manual,
 # 6-month storage limit) — DAO 2013-22 (mercury CCO) was mis-cited and a US-style
 # 90-day accumulation limit had drifted into the DENR storage-limit machinery; RR
@@ -2301,8 +2307,21 @@ echo "--- Check 46: stale-figure & superseded-citation literal guard ---"
 # ('DENR Administrative Order 2015-08') paired with a dubious 'DOLE Department Order
 # 1989-114' OSHS promulgation (PA-01.3); penalty attribution to 'DAO 2021-19'
 # (PA-07.2); and septic-tank standards attributed to 'DAO 2005-10' instead of the
-# Sanitation Code PD 856 Ch. XVII / National Plumbing Code (PA-09.2). All repaired;
-# the guard below now covers every retired form. This check guards the retired
+# Sanitation Code PD 856 Ch. XVII / National Plumbing Code (PA-09.2). Consistency
+# review #33 (statutory-citation correctness sweep #4 + house-spelling normalization)
+# found six more mis-citations: 'ADR Act RA 876' (PA-100.1) conflates the 1953
+# Arbitration Law with the 2004 ADR Act (RA 9285); 'age-restricted items per RA 7610'
+# (PA-08.1 x3, incl. the automation fragment) cites the child-protection act where the
+# age-verification mandates run per RA 9211 Sec. 9 (tobacco) / PD 1619 (volatile
+# solvents); 'DOLE DO 53-03' (erp-requirements.md) mistypes the drug-free-workplace
+# guidelines, which are D.O. 53-04 (the catalog's own W4458); 'RR 13-2018 (SAF-T)'
+# (PA-17.3) is neither the e-invoicing regulation (RR 8-2020 under NIRC Sec. 237 as
+# amended by TRAIN) nor a Philippine standard (SAF-T is an OECD format, not BIR);
+# 'PD 1586, RA 6969' (PA-31.3) pairs the EIS/ECC law with hazardous-release
+# notification, which runs under RA 6969 + its IRR alone; and the EVIDA IRR is cited
+# as 'DAO 2023-05' (VS-192 README + PA-192.1) although EVIDA is DOE-administered — its
+# IRR is a DOE department circular, while DENR DAO 2023-05 is the EPR Act (RA 11898)
+# IRR. All repaired; the guard below now covers every retired form. This check guards the retired
 # literals repo-wide so no surface regresses to them. CHANGELOG.md (frozen history + this
 # repair's own description) and 'X -> Y' change-note contexts (e.g. the
 # classification register's dated version footers) are exempt.
@@ -2313,7 +2332,7 @@ SKIP = {'CHANGELOG.md'}
 bad_literals = [
     (r'RA\s?10862', 'LPG act citation (correct: RA 11592 — LPG Industry Regulation Act, 2020)'),
     (r'RA\s?10617', 'superseded LPG act citation from review #29 (correct: RA 11592)'),
-    (r'RA\s?10667', 'Philippine Competition Act citation (correct: RA 10677)'),
+    (r'RA\s?10677', 'superseded Philippine Competition Act citation from review #31 (correct: RA 10667 — the Philippine Competition Act of 21 July 2015 that creates the PCC)'),
     (r'(?:DENR )?(?:DAO|AO)\s?2013-22', 'hazardous-waste-management citation incl. the short AO form (that order is the mercury CCO; correct: DENR DAO 2004-36 Procedural Manual under RA 6969)'),
     (r'(?:DENR )?Administrative Order\s?(?:No\.?\s?)?2013-22', 'spelled-out form of the retired hazardous-waste-management citation (correct: DENR DAO 2004-36 Procedural Manual under RA 6969) — caught the one surviving spelled-out spot review #31 left behind'),
     (r'DAO\s?2015-09', 'phantom/misapplied hazardous-waste order (correct: DENR DAO 2004-36 Procedural Manual under RA 6969)'),
@@ -2323,6 +2342,12 @@ bad_literals = [
     (r'DOLE Department Order\s?1989-114', 'dubious OSHS promulgation citation (correct: OSH Standards as amended, per DOLE D.O. 198-18)'),
     (r'DOLE Department Order\s?136-14', 'DO 136-14 governs construction-site OSH, not chemical/SDS duties (correct here: RA 6969 + implementing rules / OSH Standards per D.O. 198-18)'),
     (r'RR\s?34-2022', 'phantom BIR transfer-pricing regulation (correct: RR 02-2013)'),
+    (r'ADR Act RA 876', 'mis-labeled arbitration citation (RA 876 is the 1953 Arbitration Law; the ADR Act is RA 9285)'),
+    (r'age-restricted items per RA 7610', 'age-verification mis-citation (RA 7610 is child protection; age-restricted sale bans run per RA 9211 Sec. 9 tobacco / PD 1619 volatile solvents)'),
+    (r'DO\s?53-03', 'drug-free-workplace guidelines are DOLE D.O. 53-04, not 53-03'),
+    (r'RR\s?13-2018 \(SAF-T\)', 'SAF-T is not a Philippine BIR standard; e-invoicing/e-receipts run per RR 8-2020 under NIRC Sec. 237 as amended by TRAIN'),
+    (r'PD 1586, RA 6969', 'hazardous-release notification runs under RA 6969 + its IRR alone (PD 1586 is the EIS/ECC system)'),
+    (r'IRR \(DAO 2023-05\)', 'the EVIDA (RA 11697) IRR is a DOE department circular (DENR DAO 2023-05 is the EPR Act RA 11898 IRR)'),
     (r'RA\s?10691', '13th-month-pay citation (correct: PD 851)'),
     (r'\bWI 028\b|\bWI 160\b|\bWI 011\b', 'phantom BIR ATC code (correct: WC 010 services / WI 010 rent / WP 010 goods)'),
     (r'560,000 POS transactions', 'stale e-wallet base (canonical: ~2.8M POS transactions × ~15% = ~420,000/month)'),
@@ -2353,7 +2378,7 @@ C46_BAD=$(echo "$CHECK46" | sed -n 's/^STALE=\([0-9]*\)$/\1/p')
 if [ "${C46_BAD:-1}" -eq 0 ]; then
     ok "No stale tender-mix/fleet/SKU figures or superseded statutory citations (RA/ATC/DO literals) in current-state prose"
 else
-    error "Stale figures / superseded statutory citations found in current-state prose: (incl. RA 10617/RA 10667/DAO 2013-22/DAO 2015-09/RR 34-2022)"
+    error "Stale figures / superseded statutory citations found in current-state prose: (incl. RA 10617/RA 10677/DAO 2013-22/DAO 2015-09/RR 34-2022)"
     echo "$CHECK46" | grep -E '^STALE\|' | sed 's/^STALE|/    /'
 fi
 
