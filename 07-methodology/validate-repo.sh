@@ -2541,6 +2541,54 @@ else
     echo "$CHECK48" | grep -E '^BAD\|' | sed 's/^BAD|/    /' | head -25
 fi
 
+# --- Check 49: Time Estimate finalization state (no mechanical drafts; full coverage) ---
+echo "--- Check 49: Time Estimate finalization state ---"
+# backfill-time-estimate.py (2026-06-21) shipped 410 honest-draft roll-ups labelled
+# "Draft roll-up from per-step Durations"; finalize-time-estimates.py (2026-08-28)
+# completed all 407 then remaining into the per-occurrence + annualization house style
+# (W424's hand-authored finalization was the exemplar). Guards: (a) the retired draft
+# literal must not reappear in any PA file; (b) every workflow block must carry at
+# least one '### Time Estimate' header — stronger than Check 22's either-form presence
+# test. Section COUNT may legitimately exceed the workflow count (variant-grouped
+# workflows carry one Time Estimate per variant, like the 5,425 steps tables), so
+# presence is asserted per workflow, not by aggregate equality.
+C49_DRAFTS=$(grep -rlF "Draft roll-up from per-step Durations" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
+C49_DRAFT_N=$(echo -n "$C49_DRAFTS" | grep -cP 'PA-' || true)
+C49_MISSING=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+missing = []
+total_wf = total_te = 0
+for f in glob.glob(f"{ROOT}/01-model-company/workflows/VS-*/PA-*.md"):
+    txt = open(f, encoding="utf-8", errors="replace").read()
+    for m in re.finditer(r"^## (W\d+[A-Z]?)\..*?(?=^## W|\Z)", txt, re.M | re.S):
+        block = m.group(0)
+        total_wf += 1
+        n = len(re.findall(r"^### Time Estimate\s*$", block, re.M))
+        total_te += n
+        if n == 0:
+            missing.append(f"{os.path.relpath(f, ROOT)}: {m.group(1)}")
+print(f"{total_wf}|{total_te}|{len(missing)}")
+for x in missing:
+    print("MISSING|" + x)
+PY
+)
+C49_WF=$(echo "$C49_MISSING" | head -1 | cut -d'|' -f1)
+C49_TE=$(echo "$C49_MISSING" | head -1 | cut -d'|' -f2)
+C49_MN=$(echo "$C49_MISSING" | head -1 | cut -d'|' -f3)
+if [ "$C49_DRAFT_N" -eq 0 ] && [ "$C49_MN" -eq 0 ]; then
+    ok "No mechanical draft Time Estimates remain; all $C49_WF workflows carry a '### Time Estimate' section ($C49_TE sections incl. variant sub-sections; finalized 2026-08-28 per finalize-time-estimates.py)"
+else
+    if [ "$C49_DRAFT_N" -ne 0 ]; then
+        error "$C49_DRAFT_N PA file(s) still carry the mechanical draft roll-up marker (run 07-methodology/finalize-time-estimates.py):"
+        echo "$C49_DRAFTS" | sed 's/^/    /'
+    fi
+    if [ "$C49_MN" -ne 0 ]; then
+        error "$C49_MN workflow(s) lack a '### Time Estimate' header:"
+        echo "$C49_MISSING" | grep -E '^MISSING\|' | sed 's/^MISSING|/    /' | head -20
+    fi
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

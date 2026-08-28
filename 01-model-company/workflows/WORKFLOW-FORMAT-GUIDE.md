@@ -40,6 +40,18 @@ following fields.
 | **Time Estimate** | Estimated effort per occurrence, rolled up to an annual or per-store figure where it drives headcount |
 | **Pain Points / Risks** | What can go wrong, named specifically (e.g. "**Evidence risk**: damage not documented at receipt forfeits claim rights"), with the mitigating control |
 
+> **Time-Estimate finalization note (2026-08-28).** The 407 `### Time Estimate` sections still carrying
+> `backfill-time-estimate.py`'s honest-draft roll-up were finalized via
+> [`07-methodology/finalize-time-estimates.py`](../../07-methodology/finalize-time-estimates.py):
+> 118 mechanically unambiguous drafts (uniform per-occurrence step Durations × an explicit
+> Frequency occurrence count) were auto-decided, and the 289 mixed-cadence / per-unit /
+> event-driven cases were adjudicated one by one — every paragraph derives its figures from
+> the workflow's own step Durations, Frequency, and Volume (per-unit steps scaled by Volume
+> counts shown explicitly; own-cadence steps annualized at their own cadence; elapsed
+> timelines reported, never summed into effort; event-driven frequencies honestly carry no
+> annual figure). The retired draft literal and full section coverage are guarded by
+> validator Check 49.
+
 > **Completeness note (2026-06-27; figure updated 2026-08-26).** All 5,363 workflows now carry all 9 required fields (validator Check 22 green). The last 645 missing instances were closed as follows: the 224 missing **Participants** rows (VS-53–VS-63 plus VS-86/87/99/189) were mechanically derived from each workflow's own Steps-table roles via [`07-methodology/backfill-participants.py`](../../07-methodology/backfill-participants.py) (honest-draft: values come from authored steps; no invented roles); the 175 missing **System Touchpoints** and 246 missing **Pain Points / Risks** sections (VS-15–18, VS-27, VS-31–40, VS-48) were authored per-workflow, grounded in each workflow's own steps and cross-references. Treat these like any authored field: refine freely during per-workflow review.
 
 ### Standard analysis fields (add to every fully-detailed workflow)
