@@ -1810,7 +1810,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W1157 | Vendor Sustainable Packaging Assessment & Plastic Reduction Collaboration | Vendor Management & Procurement |
 | W761 | Supplier Innovation & New Product Introduction Collaboration Processing | Vendor Management & Procurement |
 | W865 | Vendor Portal User Onboarding, Access Provisioning & Training | Vendor Management & Procurement |
-| W995 | Vendor Consignment Inventory Ageing Analysis & Automatic Markdown Trigger | Vendor Management & Procurement |
+| W995 | Vendor Consignment Inventory Aging Analysis & Automatic Markdown Trigger | Vendor Management & Procurement |
 | W5248 | Post-Project Margin Variance Analysis and Supplier Scorecard Review | B2B Bulk-Project Custom Import |
 
 #### Make & Move
@@ -4103,7 +4103,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4973 | Forklift Operator Qualification, Equipment Inspection & DOLE OSH Compliance | VS-171 |
 | W4982 | Loading-Zone Safety Incident, CAPA & Customer-Injury Response | VS-171 |
 | W5036 | Portable & Mobile Storage Container-Fleet Strategy, Sizing & Procurement | VS-174 |
-| W5045 | Portable/Mobile Container Delivery, Placement, Relocation & Pick-Up Operations | VS-174 |
+| W5045 | Portable/Mobile Container Delivery, Placement, Relocation & Pickup Operations | VS-174 |
 | W5046 | Customer Move-Out, Unit Inspection, Damage Assessment & Final Settlement | VS-174 |
 | W5052 | Storage Fire/Life-Safety, BFP Compliance & Emergency Preparedness | VS-174 |
 | W5053 | Portable Container Fleet Maintenance, Cleaning, Sanitization & Lifecycle | VS-174 |

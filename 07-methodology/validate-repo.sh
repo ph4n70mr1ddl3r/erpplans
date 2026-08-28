@@ -2642,6 +2642,34 @@ else
     echo "$C51_OUT" | grep -E "^(retired-literal|dept-team|volume-product):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 52: System-Touchpoints vocabulary & Trigger-duplication guard ---
+echo "--- Check 52: ST vocabulary & duplicate-Trigger guard ---"
+# audit-st-touchpoints.py (2026-08-29, consistency review #35) audited the
+# System Touchpoints module-name vocabulary (15,988 bullets spell-clean; the 36
+# canonical touchpoint-map modules are families whose PA subsystem names
+# cohere) and every same-PA byte-identical Trigger pair (20 clusters, all
+# adjudicated legitimate shared-event/shared-cadence program triggers —
+# parallel M&A diligence streams, annual-audit-plan children, month-close
+# siblings, typhoon-signal preparedness streams — allowlisted). The review
+# normalized eight rogue spelling/hyphenation variants to the dominant house
+# forms (ageing→aging incl. the W995 title/TOC/register cascade; drilldown→
+# drill-down; pick-up→pickup; put-away→putaway; time-stamp(ed)→timestamp(ed);
+# charge-back(s)→chargeback(s); anti-counterfeiting→anti-counterfeit;
+# self-serve→self-service) while deliberately preserving title-canonical forms
+# (W258 Omni-channel, W1238/W1491 Material Take-Off, W3657 Closeout, the
+# paired check-in/check-out noun).
+C52_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-st-touchpoints.py" --guard 2>&1)
+C52_RC=$?
+C52_N=$(echo -n "$C52_OUT" | tail -1)
+echo "    $C52_N"
+if [ $C52_RC -eq 0 ]; then
+    ok "No retired ST-vocabulary literals and no unallowlisted same-PA duplicate Triggers (guard mode of audit-st-touchpoints.py; ~35 variant spots normalized and 20 trigger clusters adjudicated 2026-08-29)"
+else
+    C52_HITS=$(echo "$C52_OUT" | grep -cE "^(retired-literal|duplicate-trigger):" || true)
+    error "$C52_HITS ST-vocabulary/duplicate-Trigger violation(s) (run 07-methodology/audit-st-touchpoints.py for detail):"
+    echo "$C52_OUT" | grep -E "^(retired-literal|duplicate-trigger):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
