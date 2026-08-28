@@ -2802,6 +2802,30 @@ else
     echo "$C57_OUT" | grep "^em-dash-risk-label:" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 58: mitigation-clause & Trigger-richness completeness ---
+echo "--- Check 58: Mitigation-clause & Trigger-richness completeness ---"
+# audit-enrichment-completeness.py (2026-08-29 enrichment pass) closes the two
+# backlogs quantified by consistency review #40: (a) the 231 risk bullets that
+# stated a risk without mitigation semantics now carry 'mitigated by …' clauses
+# affinity-matched from their OWN workflow's Controls section (operational gates
+# where they fit, else the PA-level CTL-XXX execution control — nothing cited
+# that is not in that workflow's Controls); (b) the 38 cadence-only Trigger
+# values outside the Check-52 allowlist are enriched with their workflow's own
+# title subject ('Monthly analytics cycle — Sales Per Square Meter'). The
+# remaining short triggers ('Breach confirmed', 'Retention expiry'…) were
+# adjudicated already-specific event names.
+C58_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-enrichment-completeness.py" --guard 2>&1)
+C58_RC=$?
+C58_N=$(echo -n "$C58_OUT" | tail -1)
+echo "    $C58_N"
+if [ $C58_RC -eq 0 ]; then
+    ok "Every risk bullet carries mitigation content and no cadence-only Triggers remain outside the shared-event allowlist (231 mitigation clauses + 38 Trigger subjects enriched 2026-08-29)"
+else
+    C58_HITS=$(echo "$C58_OUT" | grep -cE "^(bare-mitigation|cadence-only-trigger):" || true)
+    error "$C58_HITS enrichment-completeness violation(s) (run 07-methodology/audit-enrichment-completeness.py for detail):"
+    echo "$C58_OUT" | grep -E "^(bare-mitigation|cadence-only-trigger):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

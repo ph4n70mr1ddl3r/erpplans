@@ -9,6 +9,19 @@
 
 ---
 
+## 2026-08-29 — Enrichment pass: the review #40 backlogs closed — 231 risk bullets enriched with mitigation clauses grounded in their own workflows' Controls sections; 38 cadence-only Triggers enriched with their workflows' title subjects; new tool `audit-enrichment-completeness.py`; validator Check 58 added (58 checks)
+
+Closing the two enrichment backlogs quantified by consistency review #40:
+
+- **Mitigation clauses (231 bullets, 92 files).** Every risk bullet that stated a risk without mitigation semantics (per the review's refined net — which also counts validated-by / reviewed-by / requires-approval / system-blocks / per-W phrasings, reducing the true count from the initially-reported 265 to 231) now carries a `mitigated by …` clause derived by **affinity-matching the bullet against its OWN workflow's Controls section**: the operational `<Role> review and approval gate` where it fits, else the PA-level CTL-XXX execution control — nothing is cited that is not in that workflow's Controls section (batch 1 on VS-01/02/03 hand-reviewed first; the generator was hardened twice on that review — non-control prose matches now fall back to the CTL, and multi-role gates joined with "and" instead of truncated at the semicolon). Spot-checks across the heaviest families (VS-18/19/09/21/22) read naturally. The repo-wide census is now **7,066/7,066 bullets with mitigation content**.
+- **Trigger richness (38 values).** The cadence-only Trigger values outside the Check-52 shared-event allowlist ("Monthly", "Quarterly analysis", "Monthly reporting"…) are enriched with their workflow's own title subject — "Monthly analytics cycle — Sales Per Square Meter" (W2182), "Quarterly review cycle — Category Adjacency Planning" (W2172), "Semi-annual cycle — Price Elasticity" (W2220) — cadence and event noun intact, no invented events. The remaining short triggers ("Breach confirmed", "Retention expiry", "Order split", "Pattern-based alert"…) were adjudicated already-specific event names and left alone.
+- **New tool [`07-methodology/audit-enrichment-completeness.py`](07-methodology/audit-enrichment-completeness.py)** — guard mode errors on any risk bullet without mitigation semantics under the refined net, and on any cadence-only Trigger outside the allowlist. Teeth verified (2/2 synthetic classes caught); zero false positives repo-wide.
+- **Validator Check 58 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 58 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **58 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #40: Trigger richness, mitigation-clause structure & format-guide example inventory — 50 em-dash risk labels converted to the colon form; enrichment backlogs quantified (265 mitigation-less bullets, 85 thin Triggers); example anchors verified; new tool `audit-risk-labels.py`; validator Check 57 added (57 checks)
 
 The three surfaces named in the review #39 close-out:
