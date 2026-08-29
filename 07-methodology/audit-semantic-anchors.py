@@ -302,6 +302,31 @@ RETIRED_LITERALS = [
     "Bureau of Weights and Measures",
     "fleet of ~20 trucks",
     "5,200 trade accounts per store",
+    # review #63 batch-18 repairs
+    "NPCA",
+    "(NPCA) & Data Sharing",
+    "\"Red\" or \"Gold\" membership",
+    "I-SEAL",
+    "RR No. 10-2021 and related CAS",
+    "No. 11-2018 and Revenue Memorandum Order (RMO) No. 29-2002",
+    "1601E (monthly)",
+    "1601F/1601FF monthly",
+    "dividends 10/20%",
+    "fines up to PHP 200,000 per day",
+    "DAO 2015-09",
+    "SOGO",
+    "PFRS 136",
+    "PAS 39 / Contingent-Liability",
+    "DTO consumer protection",
+    "per BIR and SEC guidelines",
+    "1.4 in-store returns",
+    "across all 50 assigned stores",
+    "with 50 stores",
+    "10–15 store completions/year + ~10–15 other project completions ≈ 10–15",
+    "600–800 inbound deliveries/month",
+    "~130,000 daily",
+    "5,000–6,000 refund/credit",
+    # "1601E" withdrawn — substring of the legitimate 1601EQ; hyphenated forms covered structurally
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
@@ -418,7 +443,7 @@ PLACEHOLDER_CELL = re.compile(r'^\| \*\*(Volume|Frequency)\*\* \| ~\s?([^|]*)\|'
 # Legacy BIR withholding forms discontinued by RR 11-2018 (filed their last
 # returns in 2018): 1601-E -> 1601-EQ (quarterly, creditable/EWT) and
 # 1601-F -> 1601-FQ (quarterly, final). Any non-Q sighting is a defect.
-LEGACY_FORM = re.compile(r"1601-[EF](?!Q)")
+LEGACY_FORM = re.compile(r"1601-E(?!Q)|1601-F(?!F|Q)")
 
 # Review #61: a Time Estimate line `~N(-N)? per occurrence` with no time unit is a
 # defect (131 spots censused and repaired across 20 files; units restored from each

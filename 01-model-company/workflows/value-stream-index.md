@@ -1178,7 +1178,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 - **PA-87.1** [Tariff Classification, Origin & Valuation](./VS-87-customs-trade-compliance-tariff/PA-87.1-tariff-classification-origin-valuation.md) — 8 workflows
 - **PA-87.2** [FTA Preference, Duty Drawback & Bonded Operations](./VS-87-customs-trade-compliance-tariff/PA-87.2-fta-preference-duty-drawback-bonded.md) — 8 workflows
-- **PA-87.3** [Trade Compliance Audit, Broker Governance & ADC/NPCA](./VS-87-customs-trade-compliance-tariff/PA-87.3-trade-compliance-audit-broker-governance.md) — 8 workflows
+- **PA-87.3** [Trade Compliance Audit, Broker Governance & ADC](./VS-87-customs-trade-compliance-tariff/PA-87.3-trade-compliance-audit-broker-governance.md) — 8 workflows
 
 **[VS-88: Document Control, Records Management & Retention](./VS-88-document-control-records-retention/README.md)** (24 workflows)
 

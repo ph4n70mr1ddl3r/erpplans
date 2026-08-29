@@ -1989,7 +1989,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W2758 | Capital Goods Input VAT — Full-Credit Regime & Grandfathered 60-Month Amortization Tracking | VS-79 |
 | W2759 | Percentage Tax (2551Q) & Entities Below VAT Threshold Management | VS-79 |
 | W2760 | POS BIR-Registered Accreditation, CAS Registration & Compliance Audit | VS-79 |
-| W2761 | Expanded Withholding Tax (EWT) Determination & Monthly Form 1601E/1601EQ | VS-79 |
+| W2761 | Expanded Withholding Tax (EWT) Determination & Quarterly Form 1601EQ | VS-79 |
 | W2762 | Creditable Withholding Tax (CWT) at Source & Vendor 2307 Issuance | VS-79 |
 | W2763 | Customer CWT Collection (2307) & AR Application | VS-79 |
 | W2764 | Compensation Withholding Tax (1601C) & TRAIN Tax Table Maintenance | VS-79 |
@@ -4367,7 +4367,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W2921 | Customer KYC Tiering, Risk Scoring & Due Diligence Level Determination | VS-86 |
 | W2922 | Vendor/Supplier Due Diligence, UBO Identification & Beneficial Ownership | VS-86 |
 | W2923 | PEP (Politically Exposed Person) Screening & Enhanced Due Diligence | VS-86 |
-| W2924 | Sanctions & Watchlist Screening (UN/OFAC/EU/AMLC/NPCA) | VS-86 |
+| W2924 | Sanctions & Watchlist Screening (UN/OFAC/EU/AMLC/INTERPOL) | VS-86 |
 | W2926 | KYC Document Verification, TIN/BIR & SEC Registry Validation | VS-86 |
 | W2927 | Periodic KYC Refresh, Trigger Event Re-Review & Offboarding | VS-86 |
 | W2928 | KYC Data Quality, Consent & Data Privacy Compliance | VS-86 |
@@ -4388,7 +4388,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W2961 | Customs Broker Selection, Accreditation & Performance Management | VS-87 |
 | W2962 | BOC Post-Entry Audit (PEA) Readiness & Response | VS-87 |
 | W2963 | BOC Alert Order, Hold & Detention Resolution | VS-87 |
-| W2965 | National Privacy & Customs Act (NPCA) & Data Sharing Compliance | VS-87 |
+| W2965 | Data Privacy Act (RA 10173) Compliance for Customs Data Sharing | VS-87 |
 | W2967 | BIR-to-BOC Reconciliation (Import VAT, Duties, 2306 on Imports) | VS-87 |
 | W2973 | Physical Records Storage, Barcode & Retrieval Management | VS-88 |
 | W2975 | BIR-Compliant E-Invoice, E-Receipt & E-Book Archiving | VS-88 |
