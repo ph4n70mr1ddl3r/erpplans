@@ -2919,16 +2919,24 @@ echo "--- Check 62: Semantic-sample anchors ---"
 # mis-pasted operational-control line. The guard retires those literals and
 # enforces register-equal Participants counts for the section 13.1 merchandising
 # roles (CM 5, Buyers 10, Planners 5, Pricing Analysts 4) repo-wide.
+# Review #50 (2026-08-29) extended it with the general keyword-quote integrity
+# rules: every 'System ... of "QUOTE" (replaces manual Step N)' bullet must
+# quote text that appears in the referenced step (containment) and at a word
+# boundary (no mid-word clips) — repairing 884 clips (account/discount->count,
+# profile->file, catalog->log, center->enter, analogous->logous, ...) and the
+# 50 review #45/#47 '-logy' mis-repairs ('technology' where the step word was
+# Metrology/methodology/typology/toxicology/genealogy/apology); 12 adjudicated
+# noun-phrase summary bullets are allowlisted.
 C62_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-semantic-anchors.py" --guard 2>&1)
 C62_RC=$?
 C62_N=$(echo -n "$C62_OUT" | tail -1)
 echo "    $C62_N"
 if [ $C62_RC -eq 0 ]; then
-    ok "No retired semantic literals and all Participants role-counts match the section 13.1 register (guard mode of audit-semantic-anchors.py; 4 defects from the 64-workflow semantic sample repaired 2026-08-29)"
+    ok "No retired semantic literals, register-equal Participants counts, and every step-quoting automation bullet passes containment + word-boundary (guard mode of audit-semantic-anchors.py; 64-workflow sample + review #50 quote-integrity sweep repaired 2026-08-29)"
 else
-    C62_HITS=$(echo "$C62_OUT" | grep -cE "^(retired-literal|participant-count):" || true)
+    C62_HITS=$(echo "$C62_OUT" | grep -cE "^(retired-literal|participant-count|quote-integrity):" || true)
     error "$C62_HITS semantic-anchor violation(s) (run 07-methodology/audit-semantic-anchors.py for detail):"
-    echo "$C62_OUT" | grep -E "^(retired-literal|participant-count):" | sed 's/^/    /' | head -30
+    echo "$C62_OUT" | grep -E "^(retired-literal|participant-count|quote-integrity):" | sed 's/^/    /' | head -30
 fi
 
 echo ""

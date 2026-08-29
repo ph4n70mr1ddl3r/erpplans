@@ -48,6 +48,19 @@ Bureau of Philippine Standards' acronym is and was BPS — including the
 inverted "(BFS, formerly BPS)" note — and "DOE Bureau of Fire Standards
 and Regulations" does not exist; VS-175 anchors cylinder re-qualification
 to DTI-BPS per RA 11592). Each retired literal above is teeth-verified.
+
+Consistency review #50 (2026-08-29) added the general keyword-quote integrity
+rules after the 104-workflow batch-7 read exposed the clip family at its true
+extent: every `System … of "QUOTE" (replaces manual Step N)` bullet must quote
+text that (a) actually appears in the referenced step's Activity cell
+(containment — catches the 50 review #45/#47 '-logy' mis-repairs that wrote
+"technology" where the step word was Metrology/methodology/typology/toxicology/
+genealogy/apology) and (b) appears at a word boundary in at least one
+occurrence (catches the 884 mid-word clips: account(s)/discount(s)→count(s),
+profile→file, catalog→log, center→enter, analogous→logous, … — the class the
+exact-literal clip regexes had only piecemeal covered). Hand-authored
+noun-phrase summary bullets (adjudicated, semantically sound vintage style)
+are allowlisted per (file, workflow).
 """
 import argparse, glob, os, re, sys
 
@@ -83,11 +96,94 @@ RETIRED_LITERALS = [
     "their payroll. | Store Manager | HR Admin |",
     "upon offboarding. | HR Admin | HR Director |",
     "| VP Merchandising | Insurance Partner |",
+    # review #50 batch-7 repairs
+    "1 LP analyst per region (~10–12 LP analysts chain-wide)",
+    "Supply Chain team (31 at HQ)",
+    "(personnel safety logs)",
+    "~20–30 RFQs per month",
+    "× 10 groups = 5 hours/day",
+    "~5–10 tonnes of recyclable material per store/month",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
 ROLE_COUNTS = [("Category Manager", 5), ("Buyers", 10), ("Buyer", 10),
                ("Merchandise Planners", 5), ("Pricing Analysts", 4)]
+
+BULLET_RE = re.compile(r'- System [^"]*?of "([^"]+)" \(replaces manual Step (\d+)([a-z]?)\)\.')
+STEP_RE = re.compile(r"^\|\s*(\d+)([a-z]?)\s*\|")
+
+# Hand-authored noun-phrase summary bullets (vintage generator style): the quote
+# is a descriptive noun phrase, not a verbatim step span — adjudicated sound.
+QUOTE_STYLE_ALLOWLIST = {
+    ("PA-116.2-bond-application-issuance-tracking-and-encumbrance-management.md", "W3655"),
+    ("PA-117.3-market-surveillance-compliance-monitoring-and-certification-analytics.md", "W3687"),
+    ("PA-17.3-tax-and-statutory.md", "W590"),
+    ("PA-17.3-tax-and-statutory.md", "W1503"),
+    ("PA-18.1-cash-positioning-and-forecasting.md", "W234"),
+    ("PA-18.1-cash-positioning-and-forecasting.md", "W323"),
+    ("PA-15.1-invoice-processing-and-matching.md", "W461"),
+    ("PA-38.3-financing-reconciliation-settlement.md", "W1785"),
+    ("PA-40.2-project-cost-tracking.md", "W1826"),
+    ("PA-46.1-government-registration-qualification.md", "W1950"),
+    ("PA-26.3-insurance-claims-and-policy-management.md", "W860"),
+    ("PA-10.1-ecommerce-platform-operations.md", "W1185"),
+}
+
+
+def quote_integrity_hits(fname, lines):
+    """Containment + word-boundary check for step-quoting automation bullets."""
+    out = []
+    cur = None
+    steps = {}
+    in_steps = False
+    for i, l in enumerate(lines, 1):
+        m = re.match(r"^#{2,3} (W\d+[A-Z]?)[. ]", l)
+        if m:
+            cur = m.group(1)
+            in_steps = False
+            continue
+        if re.match(r"^### Steps\b", l):
+            in_steps = True
+            continue
+        if l.startswith("#"):
+            in_steps = False
+            continue
+        if in_steps:
+            sm = STEP_RE.match(l)
+            if sm and cur:
+                steps[(cur, sm.group(1), sm.group(2))] = l
+        bm = BULLET_RE.search(l)
+        if bm and cur:
+            if (fname, cur) in QUOTE_STYLE_ALLOWLIST:
+                continue
+            quote, snum, sltr = bm.group(1), bm.group(2), bm.group(3)
+            st = steps.get((cur, snum, sltr), "")
+            if not st:
+                continue
+            stn = re.sub(r"\*\*", "", st)
+            stw = re.sub(r"\s+", " ", stn)
+            q = quote.rstrip("…").rstrip()
+
+            def contained(s):
+                s2 = re.sub(r"\s+", " ", s)
+                return bool(s) and (s in stn or s.lower() in stn.lower()
+                                    or s2 in stw or s2.lower() in stw.lower())
+
+            if not contained(q):
+                if not ("…" in quote and contained(quote.split("…")[0].rstrip())):
+                    out.append((i, f'quote not in Step {snum}{sltr}: "{q[:60]}"'))
+                    continue
+            # word-boundary: at least one occurrence must not sit inside a word
+            hay, needle = (stn, q) if q in stn else (stn.lower(), q.lower())
+            ok = False
+            for mm in re.finditer(re.escape(needle), hay):
+                s, e = mm.start(), mm.end()
+                if (s == 0 or not hay[s - 1].isalnum()) and (e >= len(hay) or not hay[e].isalnum()):
+                    ok = True
+                    break
+            if not ok:
+                out.append((i, f'mid-word clip in Step {snum}{sltr}: "{q[:60]}"'))
+    return out
 
 
 def main():
@@ -99,6 +195,7 @@ def main():
     for f in files:
         text = open(f, encoding="utf-8").read()
         rel = os.path.relpath(f, REPO)
+        fname = os.path.basename(f)
         for lit in RETIRED_LITERALS:
             if lit in text:
                 hits.append(("retired-literal", rel,
@@ -123,6 +220,8 @@ def main():
                     hits.append(("participant-count", rel,
                                  text[:m.start()].count("\n") + 1,
                                  f"{role} count {pm.group(1)} != register {n}"))
+        for line, detail in quote_integrity_hits(fname, text.splitlines()):
+            hits.append(("quote-integrity", rel, line, detail))
     for kind, rel, line, detail in hits:
         print(f"{kind}: {rel}:{line}: {detail}")
     print(f"audit-semantic-anchors: {len(hits)} hit(s) across {len(files)} PA files")
