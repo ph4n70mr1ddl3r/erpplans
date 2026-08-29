@@ -198,6 +198,18 @@ RETIRED_LITERALS = [
     "**~360 hours/year**",
     "revertion",
     "ERB",
+    # review #58 batch-14 repairs
+    "~90–110 hours/week",
+    "3–4 orders/store/day",
+    "~115 home deliveries/DC/day",
+    "~500–800 new barcodes/month",
+    "~230 person-hours/month",
+    "~15–20 per store per day",
+    "~40–50 rent escalations/year",
+    "~1,500–2,500 hours/month",
+    "~400–500 empty return trips",
+    "Monthly; ~20 vehicles",
+    "~1,000 dealer grades",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
