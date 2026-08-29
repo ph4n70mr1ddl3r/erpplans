@@ -9,6 +9,20 @@
 
 ---
 
+## 2026-08-29 — Consistency review #43: requirement-matrix cells, gap-analysis figures & technical-guidelines claims — 8 ghost-only matrix rows re-pointed to the real workflows; the alias convention documented and guarded; new tool `audit-matrix-refs.py`; validator Check 61 added (61 checks)
+
+The three surfaces:
+
+- **requirement-workflow-matrix.md cell-by-cell.** All 724 rows' W tokens resolve (Checks 4/6); the ~1,400 prose mentions of letter-suffixed IDs (W5B, W9A, W2A, W12A–C…) are the sanctioned POS-family sub-workflow shorthand resolved via prose — only W19B and W2C exist as headers. The defect class repaired: **8 rows mapped ONLY to ghost aliases**, leaving the requirement untraceable to any real workflow header — POS-004 (multi-tender), POS-011 (customer display), POS-012 (receipt printing), POS-017 (paint mixing at POS), POS-018 (age-restricted prompts), RPT-007 (consolidated statements), NFR-003 (POS speed), NFR-015 (batch windows). Each re-pointed to the real workflows that exercise it: W5 (in-store selling steps), W463 (catch-weight transactions), W520 (age-restricted verification), W528 (e-receipt delivery), W1282/W1485 (paint-mixing stations), W1425 (multi-tender reconciliation), W9 (financial close) and W14 (IC elimination input).
+- **workflow-gap-analysis.md summary figures.** The current-state declaration quotes the canonical 188 VS / 569 PA / 5,363 workflows and the fourteen post-catalog workflows; the smaller totals (5,349…5,362) and the 6,757 headcount sit inside per-pass historical evidence notes, exempt per the change-note convention. Clean.
+- **technical-guidelines.md quantitative claims.** Verified against current state: offline capacity 933 peak-day transactions/store (= 467 avg × 2.0 peak factor, buffered to ~1,500), event streaming < 30 sec, price push ≤ 60 sec, offline endurance ≥ 8 hours, the bandwidth table (200 stores × 2 Mbps + 4 DCs × 10 + HQ 100 = ~540 Mbps aggregate; ~362 HQ staff ≈ 325 concurrent; ~80 RF guns/DC; 205 sites), RTO ≤ 4 hours, and the 10-year retention per TRAIN/NIRC. Clean.
+- **New tool [`07-methodology/audit-matrix-refs.py`](07-methodology/audit-matrix-refs.py)** — guard mode errors on ghost-only matrix rows, a missing canonical-totals line in the gap analysis, or missing verified anchors in technical-guidelines. Teeth verified (synthetic ghost-only row caught; restored clean).
+- **Validator Check 61 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 61 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **61 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #42: executive-summary narrative & CTL-register citation scope — every narrative claim verified against the registers; 33 stretched spend-control citations re-pointed to their own PA-level CTLs; new tool `audit-exec-ctl.py`; validator Check 60 added (60 checks)
 
 The two never-swept surfaces:

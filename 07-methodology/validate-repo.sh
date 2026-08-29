@@ -2878,6 +2878,31 @@ else
     echo "$C60_OUT" | grep -E "^(exec-anchor|spend-ctl-scope):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 61: matrix ghost-only rows, gap-analysis & tech-guidelines anchors ---
+echo "--- Check 61: Matrix rows, gap-analysis & tech-guidelines anchors ---"
+# audit-matrix-refs.py (2026-08-29, consistency review #43) guards the three
+# surfaces of that review: (a) requirement-workflow-matrix.md — the letter-
+# suffixed aliases (W5B, W9A, W2A… ~1,400 prose mentions) are the sanctioned
+# POS-family shorthand, but no requirement row may map ONLY to ghost aliases;
+# the 8 such rows found (POS-004/011/012/017/018, RPT-007, NFR-003, NFR-015)
+# were re-pointed to the real workflows that exercise each requirement (W5,
+# W463, W520, W528, W1282/W1485, W1425, W9, W14); (b) workflow-gap-analysis.md
+# current-state line must quote the canonical 188/569/5,363 totals (per-pass
+# historical totals exempt); (c) technical-guidelines.md must carry its verified
+# anchor figures (~362 HQ staff, ~540 Mbps aggregate, >= 8h offline, 933
+# peak-day/store, 10-year retention).
+C61_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-matrix-refs.py" --guard 2>&1)
+C61_RC=$?
+C61_N=$(echo -n "$C61_OUT" | tail -1)
+echo "    $C61_N"
+if [ $C61_RC -eq 0 ]; then
+    ok "No ghost-only matrix rows; gap-analysis and technical-guidelines carry their canonical anchor figures (8 rows re-pointed 2026-08-29)"
+else
+    C61_HITS=$(echo "$C61_OUT" | grep -cE "^(ghost-only-row|gap-analysis-current-state|tg-anchor):" || true)
+    error "$C61_HITS matrix/gap-analysis/tech-guidelines violation(s) (run 07-methodology/audit-matrix-refs.py for detail):"
+    echo "$C61_OUT" | grep -E "^(ghost-only-row|gap-analysis-current-state|tg-anchor):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

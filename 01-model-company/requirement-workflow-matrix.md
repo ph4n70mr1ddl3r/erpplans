@@ -144,22 +144,22 @@
 | POS-001 | 600 POS Terminals | M | W5B (in-store selling), W5 (daily store operations — parent workflow), W16 (new store POS setup) | W45 (store closure decommission) |
 | POS-002 | Offline Mode | M | W5G (offline POS recovery & reconciliation), W535 (offline capability scope — local operations, capability matrix, offline-to-online recovery, local data store, LAN sync) | W49 (typhoon — degraded mode), W533 (event streaming — offline event replay) |
 | POS-003 | Barcode Scanning | M | W5B.4 (barcode scanning at checkout), W311 (barcode, GTIN & item identification master — barcode assignment, multi-level config, custom barcode ranges) | W3.4 (receiving scan), W6.3 (cycle count scan) |
-| POS-004 | Multi-Tender | M | W5B.7 (multi-tender payment), W12A.6 (split-tender refund) | — |
+| POS-004 | Multi-Tender | M | W5 (in-store selling — multi-tender payment), W1425 (multi-tender POS daily reconciliation), W12 (split-tender refund) | — |
 | POS-005 | Loyalty Integration | M | W5B.5 (loyalty scan), W17 (loyalty program operations) | — |
 | POS-006 | Price Override (w/ Auth) | M | W5B.4a (price override with manager authorization) | W61 (competitor price match), W281 (self-checkout exception & intervention — SCO override authorization) |
 | POS-007 | Returns & Exchanges | M | W12A (in-store returns), W12B (online returns), W12C (cross-store returns), W215 (home delivery returns) | W301 (reason code & disposition master) |
 | POS-008 | Cash Drawer Management | M | W5A.4 (cash float), W5F.2–5 (Z-report & cash count), W212 (Smart Safe deposit) | W89 (bank reconciliation), W99 (payment settlement reconciliation), W278 (mid-day cash skimming / till sweeps — mid-day drawer management) |
 | POS-009 | End-of-Day Reconciliation | M | W5F (store closing & EOD), W212.5 (Smart Safe reconciliation) | W30.4 (deposit auto-matching), W89 (bank reconciliation), W99 (payment settlement reconciliation), W5D (in-store customer delivery scheduling — delivery EOD reconciliation), W5E (store opening delay procedure — delayed start EOD impact), W272 (cashier over/short dispute & deduction resolution), W278 (mid-day cash skimming / till sweeps) |
 | POS-010 | Quantity Break Pricing | M | W5B.6 (auto quantity breaks), W40.15–19 (quantity break setup) | — |
-| POS-011 | Customer Display | S | W5B.4–7 (customer-facing display during checkout) | — |
-| POS-012 | Receipt Printing | M | W5B.8 (BIR-registered receipt) | — |
+| POS-011 | Customer Display | S | W5 (customer-facing display during checkout steps) | — |
+| POS-012 | Receipt Printing | M | W5 (BIR-registered receipt at sale), W528 (POS digital receipt / e-receipt delivery) | — |
 | POS-013 | Real-Time Inventory Deduction | M | W5B.8 (near-real-time inventory deduction via event streaming), W533 (real-time event streaming — continuous event bus, inventory consumer), W5G.5 (offline event replay reconciliation) | W11 (BOPIS — ATP consumer), W19 (home delivery — ATP consumer) |
 | POS-014 | Promotional Pricing Auto-Apply | M | W13.7 (auto-apply at POS), W5B.6 (system calculates promos) | W279 (product substitution rules & governance — substitution-based pricing logic) |
 | POS-014a | Senior Citizen & PWD Discount Compliance | M | W170 (senior citizen & PWD discount compliance — PH legal, auto-detect and apply 20% discount, VAT-exemption for SC), W432 (Solo Parent discount compliance) | W217 (SC/PWD VAT-exemption reporting), W5B (POS — discount application) |
 | POS-015 | Gift Card / Store Credit | S | W28 (gift card & store credit lifecycle) | W12A.6 (store credit from returns) |
 | POS-016 | Catch-Weight / Variable Measure at POS | M | W5B.2 (catch-weight selling) | W3B.3 (catch-weight receiving), W22 (catch-weight transfer) |
-| POS-017 | Paint Mixing / Custom SKU at POS | M | W5B.3 (paint mixing) | — |
-| POS-018 | Age-Restricted Product Prompts | S | W5B.9 (age-restricted prompts) | — |
+| POS-017 | Paint Mixing / Custom SKU at POS | M | W1282 (paint mixing station setup & color formula management), W1485 (station calibration & tint replenishment) | — |
+| POS-018 | Age-Restricted Product Prompts | S | W520 (age-restricted product verification & compliance at POS) | — |
 | POS-019 | Warranty Claim Registration | S | W33 (warranty claim processing) | — |
 | POS-020 | Layaway / Installment Sales | S | W75 (layaway agreement lifecycle — exercises POS-004, POS-015, FIN-005) | W273 (in-store endless aisle & vendor direct-to-customer delivery — special order flow), W274 (third-party customer financing / equipment leasing — installment integration) |
 | POS-021 | Multi-DC Order Splitting | S | W19 (multi-DC order splitting logic) | — |
@@ -285,7 +285,7 @@
 | RPT-004 | Inventory Reports | M | W6 (cycle count variance), W9A.6 (inventory valuation), W102 (category performance review & P&L ownership) | W42.17 (physical inventory summary), W97 (sample & demo inventory reporting) |
 | RPT-005 | Purchase Analysis | S | W44 (vendor scorecard), W27 (rebate analytics), W130 (competitor price intelligence gathering) | — |
 | RPT-006 | BIR-Compliant Tax Reports | M | W9A.16 (VAT returns), W9A.16a (EWT remittance), W216 (BIR CAS audit), W235 (transfer pricing compliance) | — |
-| RPT-007 | Consolidated Financial Statements | M | W9A.14 (consolidated statements) | — |
+| RPT-007 | Consolidated Financial Statements | M | W9 (financial close & reporting — consolidated statements), W14 (intercompany elimination input) | — |
 | RPT-008 | Ad-Hoc Reporting | S | W35.18–19 (ad-hoc reports & BI analyses), W113 (business intelligence & data governance — self-service analytics) | — |
 | RPT-009 | Mobile Dashboard | N | W35.2 (CFO mobile dashboard) | — |
 | RPT-010 | Scheduled Report Distribution | S | W35 (full reporting rhythm — daily/weekly/monthly), W231 (QBR reporting), W67 (monthly store performance review) | — |
@@ -359,7 +359,7 @@
 |---|---|---|---|---|
 | NFR-001 | POS Uptime | 99.9% | W5G (offline recovery), W55 (DR failover), W5E (store opening delay procedure — system-down protocol) | W48 (helpdesk P1 SLA) |
 | NFR-002 | Back-Office Uptime | 99.5% | W55 (IT disaster recovery), W366 (network infrastructure), W368 (database & cloud infrastructure), W376 (IT capacity planning) | W48 (incident management), W380 (IT alert & event management) |
-| NFR-003 | POS Transaction Speed | < 3 sec | W5B (POS selling) | — |
+| NFR-003 | POS Transaction Speed | < 3 sec | W5 (POS selling transaction flow), W463 (catch-weight transaction processing) | — |
 | NFR-004 | Report Generation | < 30 sec | W35 (management reporting), W113 (BI & data governance — query performance) | — |
 | NFR-005 | Concurrent Users | 1,000–1,500 | W5B (600 POS terminals), W35 (HQ reporting) | — |
 | NFR-006 | Data Retention | 10 years | W42 (physical inventory archive), W35 quarterly retention review | Data Volumes §1.2 |
@@ -371,7 +371,7 @@
 | NFR-012 | Integration Capability | All touchpoints | W3–W7 (core integrations), W19 (3PL), W30 (banking), W257 (enterprise API & systems integration lifecycle management) | Data Volumes §3 |
 | NFR-013 | Disaster Recovery | RPO ≤ 1h, RTO ≤ 4h | W55 (IT DR & failover), W382 (IT backup & recovery), W390 (IT service continuity), W465 (network-wide disaster recovery & BCP) | W49 (physical disaster BC) |
 | NFR-014 | Data Migration | Legacy → ERP | Data Migration Mapping (data migration standards), W73 (data migration validation & parallel-run testing), W385 (data cleansing & migration operational lifecycle) | — |
-| NFR-015 | Batch Processing Windows | Off-peak | Data Volumes §5 (batch windows), W9A (month-end) | — |
+| NFR-015 | Batch Processing Windows | Off-peak | Data Volumes §5 (batch windows), W9 (month-end close batch) | — |
 | NFR-016 | Data Privacy Breach Response | RA 10173 | W53 (full breach response lifecycle) | W41 (DSAR), W271 (data subject access & deletion — breach-related access requests) |
 | NFR-017 | LGU Business Permit Tracking | Per location | W54 (LGU permit renewal per location), W310 (address & geographic hierarchy master — LGU jurisdiction mapping per municipality/city), W430 (LGU business permit inspection), W437 (branch de-registration & permit cancellation), W446 (temporary permits for outdoor sales), W448 (LGU sanitary & health permit), W467 (specialized hardware permits) | W16 (new store initial permit) |
 | NFR-018 | ESG & Sustainability Reporting | S | W192 (GHG tracking), W193 (Waste diversion) | W194 (CSR), W195 (Ethical audit) |

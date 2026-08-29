@@ -237,7 +237,7 @@ erpplans/
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── validate-repo.sh              Cross-reference validation (60 checks)
+    ├── validate-repo.sh              Cross-reference validation (61 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── add-automation-controls.py    Automation/Controls field adder
@@ -258,6 +258,7 @@ erpplans/
     ├── audit-enrichment-completeness.py  Mitigation-clause & Trigger-richness guard (Check 58)
     ├── audit-model-docs.py           Root model-doc figure & cross-reference guard (Check 59)
     ├── audit-exec-ctl.py             Exec-summary anchors & CTL citation-scope guard (Check 60)
+    ├── audit-matrix-refs.py          Matrix ghost-row & summary-doc anchor guard (Check 61)
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
     ├── fix-headcount-6757.py         Stale-headcount figure repairer (Check 24 companion)
     ├── fix-toc-anchors.py            Intra-file TOC anchor repairer (Check 23 companion)
