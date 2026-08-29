@@ -7,7 +7,7 @@
 ## Overview
 
 End-to-end program governing the ~200-store + 4-DC waste stream at BuildRight Depot Corp. —
-segregation, recycling revenue, **hazardous-waste DENR compliance (DAO 2004-36, RA 6969)**,
+segregation, recycling revenue, **hazardous-waste DENR compliance (DAO 2013-22, RA 6969)**,
 spill response, the circular-economy product program, and the corporate ESG/GRI 306 waste
 disclosure. Distinct from VS-24 (fixed-site HSE), VS-25 (group ESG reporting), VS-111
 (packaging/pallet RTI pool), and VS-114 (dangerous-goods *transport*).

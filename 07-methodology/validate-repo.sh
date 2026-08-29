@@ -2333,8 +2333,14 @@ bad_literals = [
     (r'RA\s?10862', 'LPG act citation (correct: RA 11592 — LPG Industry Regulation Act, 2020)'),
     (r'RA\s?10617', 'superseded LPG act citation from review #29 (correct: RA 11592)'),
     (r'RA\s?10677', 'superseded Philippine Competition Act citation from review #31 (correct: RA 10667 — the Philippine Competition Act of 21 July 2015 that creates the PCC)'),
-    (r'(?:DENR )?(?:DAO|AO)\s?2013-22', 'hazardous-waste-management citation incl. the short AO form (that order is the mercury CCO; correct: DENR DAO 2004-36 Procedural Manual under RA 6969)'),
-    (r'(?:DENR )?Administrative Order\s?(?:No\.?\s?)?2013-22', 'spelled-out form of the retired hazardous-waste-management citation (correct: DENR DAO 2004-36 Procedural Manual under RA 6969) — caught the one surviving spelled-out spot review #31 left behind'),
+    # review #64 REVERSAL of the #31 retirement: web-verified vs WTO notification/EMB's own
+    # PDF/Japan-MOE — DAO 2013-22 IS the Revised Procedures and Standards for the
+    # Management of Hazardous Wastes (RA 6969), revising DAO 2004-36; generators keep
+    # on-site accumulation to 90 days. The old 'mercury CCO' claim was a mis-verification.
+    (r'(?:DENR )?(?:DAO|AO)\s?2004-36(?! manual)', 'stale hazardous-waste-manual citation (correct: DAO 2013-22, which revised DAO 2004-36; 90-day on-site accumulation)'),
+    (r'(?:180-day|6-month[/ ]180-day|180 day) (?:storage|accumulation) limit', 'stale 180-day storage limit (correct: 90-day on-site accumulation per DAO 2013-22)'),
+    (r'storage to 6 months', 'stale 6-month storage limit (correct: 90-day per DAO 2013-22)'),
+    # (the spelled-out 2013-22 retirement was removed in review #64 — see the DAO-2004-36 reversal note above)
     (r'DAO\s?2015-09', 'phantom/misapplied hazardous-waste order (correct: DENR DAO 2004-36 Procedural Manual under RA 6969)'),
     (r'(?:DAO\s?|DENR Administrative Order\s?)2015-08', 'mis-cited toxic-substances/SDS order (correct: RA 6969 and its implementing rules; workplace SDS also per OSH Standards / D.O. 198-18)'),
     (r'DAO\s?2021-19', 'mis-attributed hazardous-waste penalty citation (fines run under RA 6969 / DAO 2004-36)'),
