@@ -297,6 +297,37 @@ def quote_integrity_hits(fname, lines):
     return out
 
 
+# review #56/#57 missing-quantifier Volume/Frequency rule: a register cell that
+# starts "~ <noun>" (no count word) and carries no digit/% of its own — ignoring
+# digits that are part of codes (VS-122, 3PL, 9G, B2B) — is a placeholder.
+QUANT_WORDS = {"all", "most", "every", "each", "tens", "hundreds", "thousands",
+               "dozens", "majority", "half", "one", "two", "three", "few",
+               "several", "annual", "continuous", "rare", "event-driven",
+               "event", "daily", "weekly", "monthly", "quarterly", "per",
+               "hopefully", "variable", "negligible", "minimal", "low", "high",
+               "medium", "top"}
+CODE_TOKENS = re.compile(r'(?:VS|PA|W|CTL|RA|DO|DAO|RR|SEC|MC|GIS|D\.O\.|DTS)'
+                         r'-?\d+(?:\.\d+)*|\dPL|9[GD]|B2B|B2C|C2C'
+                         r'|10-wheeler|6-wheel')
+PLACEHOLDER_CELL = re.compile(r'^\| \*\*(Volume|Frequency)\*\* \| ~\s?([^|]*)\|')
+
+
+def placeholder_cell_hits(lines):
+    out = []
+    for i, l in enumerate(lines, 1):
+        m = PLACEHOLDER_CELL.match(l)
+        if not m:
+            continue
+        txt = m.group(2)
+        first = re.split(r'[\s/–-]', txt.strip())[0].lower()
+        if first in QUANT_WORDS:
+            continue
+        if re.search(r'[\d%]', CODE_TOKENS.sub('', txt)):
+            continue
+        out.append((i, f'missing-quantifier {m.group(1)} cell: "{txt.strip()[:60]}"'))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true")
@@ -335,6 +366,8 @@ def main():
             hits.append(("quote-integrity", rel, line, detail))
         for line, detail in steps_header_hits(text.splitlines()):
             hits.append(("steps-header", rel, line, detail))
+        for line, detail in placeholder_cell_hits(text.splitlines()):
+            hits.append(("placeholder-cell", rel, line, detail))
     for kind, rel, line, detail in hits:
         print(f"{kind}: {rel}:{line}: {detail}")
     print(f"audit-semantic-anchors: {len(hits)} hit(s) across {len(files)} PA files")
