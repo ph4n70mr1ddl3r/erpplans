@@ -16,6 +16,9 @@ Coverage registry grown to **1,825 W-ids (34.0%)**; the batch was not zero-findi
 
 Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC**. `validate-repo.sh` green **0 errors / 0 warnings** across all **62 checks**.
 
+
+**Post-commit addendum — group-2 report arrived and was folded in:** its top web-verified statutory items repaired immediately (CMTA Sec. 2102 surcharge tiers 250%/500% replacing "40–100% of duties" in W1233; CREATE 20%-rate thresholds corrected from "≤PHP 5B total assets" to ≤PHP 5M net taxable income + ≤PHP 100M assets in W472; phantom FTA "IPAPTA" → PH–EFTA FTA in W2953; phantom regulator "Bureau of Weights and Measures" → DTI/RA 7394 + NML/DOST-ITDI/RA 9236 ×2 spots; "~20 trucks" → 40 owned; "5,200 trade accounts per store" → the per-store share), the remaining ~40 g2 candidates appended to the worklist (incl. the W90/W260 12%-vs-20% deficiency-interest conflict, the expired TRAIN 70% input-VAT cap, W174's duplicated title, and the PA-13.2 loyalty-points earnings-base conflict), and 6 new guard literals added (1 straggler caught and repaired; sweep 0 hits). g2's DO 252-25 self-supersession flag dismissed (pre-fix read state). Validator re-run green 0/0.
+
 ---
 
 ## 2026-08-29 — Consistency review #60: semantic batch 16 (104 workflows, 1,617 → 1,721 of 5,363 read; 32.1% coverage) — the highest-yield batch yet: ~340 defect spots repaired across 40+ files, headlined by the legacy 1601-E straggler class (26 spots, 8 files incl. the profile and erp-requirements), a systematic staffing-cadence family in PA-09.1 (~30 workflows), and 20 web-verified statutory corrections

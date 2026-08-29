@@ -294,6 +294,13 @@ RETIRED_LITERALS = [
     "80% by Year 5 per RA 11898",
     "from 120+ delivery vehicles",
     "<72 hr for mandatory",
+    # review #61 g2-attribution repairs
+    "penalties (40–100% of duties)",
+    "≤ PHP 5B total assets",
+    "IPAPTA",
+    "Bureau of Weights and Measures",
+    "fleet of ~20 trucks",
+    "5,200 trade accounts per store",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
