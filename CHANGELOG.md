@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-08-29 — Consistency review #54: semantic batch 11 (104 workflows, 1,097 → 1,201 of 5,363 read; 22.4% coverage) — 9 defect spots repaired across 5 classes, all guarded; the lightest-yet batch
+
+**Batch 11** (104 workflows, seed 5555, 13-per-family expansion-weighted, excluding all 1,097 prior W-ids; 82 distinct VS, 60 VS-53+; 98 PA files), pre-screened (zero flags) then read in full.
+
+- **Register/canon alignments (5 spots):**
+  - **W628 exit interviews understated separations 2×** — "~600–800 separations/year / ~50–70 per month" against the W43/§11.4 churn canon (~100–130/month, 1,200–1,600/year at 15–20% turnover); the Time Estimate chain re-derived (1,100–1,470 hours/year). The new literal swept a live straggler: the PA-27.1 license-allocation chain (itself a batch-9 repair) still carried "~50–70 separations/month" — re-repaired with its full arithmetic re-derived (33–43 h/month, 400–520 h/year, total ≈ 450–580).
+  - **W34 store shift scheduling**: "30 staff × 200 stores = 6,000" against the profile §4 register's 29/store (5,800) → repaired with register citation.
+  - **W1176 green procurement**: "~200–300 new vendor assessments/year" against the onboarding canon (~50–80 new vendors/year per W1611/W732/W1546) → folded to the canon.
+  - **W1460 DIY-content workflow**: "DIY segment (55% of revenue)" — the exact B2C-share figure repaired corpus-wide in batch 10 (W1452, 55% → ~60%); the literal sweep then caught a second live instance in PA-09.1's video-library workflow → both repaired.
+  - **W1432 typhoon pre-positioning**: Volume claimed "~60 stores in typhoon-prone Visayas = ~110 at risk" against its own Background ("Visayas (40 stores)") and the profile §2 regional split (Visayas 40) → 40 + 50 Luzon = ~90.
+- **Verified sound in the batch** (no action): the VMI settlement chain incl. month-end liability accrual (W20); RA 11210 105-day maternity with SSS reimbursement mechanics (W1306); PhilHealth 5%/2.5–2.5 split capped at PHP 80,000 and Pag-IBIG 2–2% capped at PHP 5,000 (W1306, consistent with W816); the BIR ~12% IC-loan minimum-rate convention (W137); RA 9184 bid-protest windows before the BAC (W1964); 2/3 stockholder vote for capital increase (W1726); LTO RC-2/RC-3 restriction-code gloss (W1373, consistent with W1400); DOLE 30-day retrenchment notice and 1/2-month-per-year separation (W807); RA 3844 tenant disturbance compensation with MARO validation (W5143); 2-notice rule and SENA 30-day conciliation (W2883/W2885); RA 8293 trademark 10th-year renewal + DAU (W3267); SEC MC 4 sustainability reporting (W1176); RA 11285 M&V/IPMVP (W3747); OT fail-secure incident response co-signed by HSE (W5430) and cryptographic-erase decommissioning (W5423); PFRS 136 impairment (W1700), PFRS 15 point-of-sale installment recognition with MDR-as-expense (W1771), loyalty-points fair-value/breakage (W4636); volume chains (2.8M POS/month quoted 3×; 400–600 TEU/month; 105 ✓; 48 inspections/year ✓; 8 promotions × 2 weeks = 16 weeks ✓; W815's 50–80/month = 600–960/year ✓; W2118's 420K = 15% of 2.8M with only ~15-sec incremental checkout time).
+- **Guard (Check 62):** 7 new retired literals; the first run caught 2 live corpus instances (both repaired — the sweep now routinely pays for itself). Teeth verified by synthetic injection (caught, restored clean) — **0 hits across all 569 PA files**.
+
+Coverage registry grown to **1,201 W-ids (22.4%)**; the batch was not zero-findings (9 spots), so **the sampling loop continues per its directive** — though the per-batch yield is now single-digit register-alignment spots, a monotone decline from the clip families of batches 7–10.
+
+Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC**. `validate-repo.sh` green **0 errors / 0 warnings** across all **62 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #53: semantic batch 10 (104 workflows, 993 → 1,097 of 5,363 read; 20.4% coverage) — 30 defect spots repaired across 13 classes (fabricated SEC "GAN" filing removed with title cascade, RA 9275→RA 8749 refrigerant mis-attribution ×8 with W4306 title cascade, W273 endless-aisle volume re-anchored to the W545 special-orders canon), all guarded
 
 **Batch 10** (104 workflows, seed 5454, 13-per-family expansion-weighted, excluding all 993 prior W-ids; 76 distinct VS, 54 VS-53+; 93 PA files), pre-screened (zero flags) then read in full.

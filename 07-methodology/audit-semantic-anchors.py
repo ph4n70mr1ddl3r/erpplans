@@ -151,6 +151,14 @@ RETIRED_LITERALS = [
     "RA 9275 refrigerant",
     "ODS/RA 9275",
     "transfer-prricing",
+    # review #54 batch-11 repairs
+    "30 staff × 200 stores",
+    "~600–800 separations/year",
+    "~50–70 separations/month",
+    "≈ 550–730 hours/year",
+    "~200–300 new vendor assessments/year",
+    "DIY segment (55% of revenue)",
+    "~60 stores in typhoon-prone Visayas",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')

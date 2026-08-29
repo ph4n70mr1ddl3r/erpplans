@@ -260,7 +260,7 @@ erpplans/
     ├── audit-exec-ctl.py             Exec-summary anchors & CTL citation-scope guard (Check 60)
     ├── audit-matrix-refs.py          Matrix ghost-row & summary-doc anchor guard (Check 61)
     ├── audit-semantic-anchors.py    Semantic-sample anchor guard (Check 62)
-    ├── semantic-audit-coverage.txt  Audited-W-id registry for the Check 62 sampling loop (1,097 of 5,363)
+    ├── semantic-audit-coverage.txt  Audited-W-id registry for the Check 62 sampling loop (1,201 of 5,363)
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
     ├── fix-headcount-6757.py         Stale-headcount figure repairer (Check 24 companion)
     ├── fix-toc-anchors.py            Intra-file TOC anchor repairer (Check 23 companion)
