@@ -45,8 +45,9 @@ RETIRED_LITERALS = [
     "| Participants (field) |",
     "200 stores × ~5,000 replenishment orders/month",
     "**Absb-erosion risk**",
+    "(DOLE DO 174 Compliance)",
 ]
-CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/])')
+CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
 ROLE_COUNTS = [("Category Manager", 5), ("Buyers", 10), ("Buyer", 10),
                ("Merchandise Planners", 5), ("Pricing Analysts", 4)]

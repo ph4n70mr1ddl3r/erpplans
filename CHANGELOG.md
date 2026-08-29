@@ -9,6 +9,18 @@
 
 ---
 
+## 2026-08-29 — Consistency review #47: semantic batches 4–5 — 104 + 96 confirmation workflows (200 total, 152 distinct VS, 108 of them VS-53+); 46 "countant" clips and one statutory title mis-citation (W1324 DO 174 → Labor Code Art. 298–299) repaired; guard extended (Check 62); sampling-loop status honest: not yet a literal zero-findings batch
+
+Two batches under the extended Check 62 guard, per the termination directive:
+
+- **Batch 4 (104 workflows, seed 4646-follow-on 4747, 77 distinct VS, 55 VS-53+, excluding all 264 previously sampled).** Semantic prose: zero defects — statutory chains verified sound throughout (RA 11285 energy-audit cycles, ERC/DU net-metering rules, PCC merger notification and gun-jumping, RA 8435 agri/fisherfolk VAT exemption, RA 7641 retirement 22.5-day formula, PAG-IBIG/DHSUD ≤PHP 3.2M housing threshold, BIR casualty-loss 45-day filing, DAR land-use-conversion machinery, EJS publication requirements, RA 3765 Truth-in-Lending, RA 8556 lending-company registration, IPRA). One new mechanical clip subclass found and repaired: **46 "countant" clips across 22 files** — the keyword generator had also quoted the tail of "Accountant" (`of "countant reviews"`, `of "countant ensures total transaction amount…"`); every one re-quoted to the full word, each spot-verified against its own referenced step (one forensic-accountant case hand-corrected where the step's phrasing differs). Guard extended: the clip rule now covers `countant` (teeth re-verified; zero false positives across all 569 PAs).
+- **Batch 5 — confirmation batch (96 workflows, seed 4848, 75 distinct VS, 53 VS-53+).** Mechanical pre-screen and guard: zero flags. Full audit found **one genuine semantic defect**: **W1324's title cited "DOLE DO 174 Compliance" for retrenchment & redundancy processing** — DO 174 regulates contracting/contractualization, while retrenchment and redundancy run under **Labor Code Articles 298–299** (which the workflow body itself correctly cites; only the title bracket was wrong). Repaired with the full title cascade (header, TOC anchor, criticality-register row; anchor fixer rerun). Everything else in the batch verified sound.
+- **Honest termination status:** the sampling loop's own criterion — a literally zero-findings batch — is **not yet met**: batch 4 returned the countant class (mechanical, now guarded) and batch 5 returned one statutory title mis-citation (now repaired and covered by the repaired-literal guard). Cumulative semantic coverage stands at **464 workflows (~8.6% of the catalog, expansion-weighted)** with per-batch defect yield now at one-digit counts confined to already-guarded mechanical families plus this last single semantic spot.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **62 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #46: semantic batch 3 — 104 expansion-weighted workflows (83 distinct VS, 62 of them VS-53+); semantic prose zero-defect; one new mechanical clip subclass found and repaired (19 footprint→"print" keyword clips); guard extended (Check 62)
 
 The third stratified semantic batch, per the continue-until-zero directive:

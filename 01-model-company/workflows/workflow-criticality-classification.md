@@ -4246,7 +4246,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | ID | Workflow | Value Stream |
 |---|---|---|
 | W1306 | Multi-Entity Statutory Benefits Consolidation, Remittance Reconciliation & Government Portal Compliance | VS-19 |
-| W1324 | Employee Retrenchment & Redundancy Processing (DOLE DO 174 Compliance) | VS-19 |
+| W1324 | Employee Retrenchment & Redundancy Processing (Labor Code Art. 298–299 Compliance) | VS-19 |
 | W1383 | Employee Resignation Processing, Clearance & Final Pay Computation (Philippine Labor Code) | VS-19 |
 | W1384 | Employee 13th Month Pay Computation, Proration & BIR Taxable Benefit Reporting | VS-19 |
 | W1385 | Employee Separation Pay Computation, DOLE Clearance & Retirement Benefit Settlement | VS-19 |
