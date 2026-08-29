@@ -134,6 +134,23 @@ RETIRED_LITERALS = [
     "~1M loyalty members",
     "~1–2 per store/month",
     "D.O. 53-04",
+    # review #53 batch-10 repairs
+    "General Affiliate Notice",
+    "(GIS, AFS, GAN",
+    "10-20 per store per day",
+    "2,000-4,000 orders/day",
+    "- operational: to file public financial statements",
+    "~150–250 exceptions/week",
+    "30-person Supply Chain team",
+    "~84,000 returns/month",
+    "~84,000 product returns per month",
+    "(double the chain average)",
+    "~55 license expirations/year",
+    "55% of revenue from ~600,000 loyalty members",
+    "per RA 9275",
+    "RA 9275 refrigerant",
+    "ODS/RA 9275",
+    "transfer-prricing",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')

@@ -1058,7 +1058,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W14 | Intercompany Transactions & Settlement | Record-to-Report |
 | W39 | Fixed Asset Disposal & Retirement | Record-to-Report |
 | W407 | Corporate Income Tax — Computation & Deferred Tax (PAS 12) | Record-to-Report |
-| W481 | SEC Reportorial Requirements Compliance (GIS, AFS, GAN, MC 28) | Record-to-Report |
+| W481 | SEC Reportorial Requirements Compliance (GIS, AFS, MC 28) | Record-to-Report |
 | W590 | Monthly Tax Provision & Compliance Review | Record-to-Report |
 | W612 | Intercompany Rate Setting & Quarterly Transfer Pricing Review | Record-to-Report |
 | W636 | Standardized Balance Sheet Account Reconciliation | Record-to-Report |
@@ -3984,7 +3984,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4297 | Daily Delivery Manifest, Load Planning & Dispatch | VS-143 |
 | W4298 | In-Home Delivery Execution, Site Protection & Handoff | VS-143 |
 | W4304 | Field Service Safety, DOLE OSH, Heavy-Lifting & Customer-Premises Liability | VS-143 |
-| W4306 | Refrigerant Recovery, ODS/RA 9275 & DENR-Compliant Appliance Handling | VS-143 |
+| W4306 | Refrigerant Recovery, ODS/RA 8749 & DENR-Compliant Appliance Handling | VS-143 |
 | W4308 | Haul-Away Reverse Logistics, Consolidation & Vendor Scrap Partner | VS-143 |
 | W5477 | Range-Aware Route Dispatch, Payload Optimization & Charging-Stop Planning | VS-192 |
 | W5482 | DOE / LTO / LTFRB Green-Fleet Compliance, EV Inspection & Franchise Reporting | VS-192 |
