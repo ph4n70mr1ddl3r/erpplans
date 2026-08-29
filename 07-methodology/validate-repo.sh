@@ -2852,6 +2852,32 @@ else
     echo "$C59_OUT" | grep "^model-doc:" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 60: executive-summary anchors & CTL citation scope ---
+echo "--- Check 60: Exec-summary anchors & CTL citation scope ---"
+# audit-exec-ctl.py (2026-08-29, consistency review #42) guards the two surfaces
+# of that review: (a) executive-summary.md's narrative claims — every anchor
+# verified against the registers (6,762 employees, 35,000 SKUs, 200 stores, 4 DCs
+# at Davao/Cebu/Laguna/Clark, 600 terminals, 2.8M transactions/month, PHP 62.3B,
+# ~600,000 loyalty members, offline >= 8h, 300+ store scalability, 99.9% POS
+# uptime, <= 5-working-day close, 728/5,363/188/6,762 footer counts) and retired
+# totals must not appear outside change-notes; (b) the CTL register's citation
+# scope — the 33 stretched spend-control citations (CTL-01 'Prevent unauthorized
+# purchases' / CTL-02 '...capital expenditure' cited for non-spend governance
+# notes like 'IR governance'/'exercise governance' in VS-184–191) were re-pointed
+# to each workflow's own PA-level execution control in the Check-34 canonical
+# form with the note preserved; spend-related notes remain on the spend controls.
+C60_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-exec-ctl.py" --guard 2>&1)
+C60_RC=$?
+C60_N=$(echo -n "$C60_OUT" | tail -1)
+echo "    $C60_N"
+if [ $C60_RC -eq 0 ]; then
+    ok "Executive-summary anchors agree with the registers and CTL-01/02 citations carry spend-scoped notes (33 stretched citations re-pointed 2026-08-29)"
+else
+    C60_HITS=$(echo "$C60_OUT" | grep -cE "^(exec-anchor|spend-ctl-scope):" || true)
+    error "$C60_HITS exec-summary/CTL-scope violation(s) (run 07-methodology/audit-exec-ctl.py for detail):"
+    echo "$C60_OUT" | grep -E "^(exec-anchor|spend-ctl-scope):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

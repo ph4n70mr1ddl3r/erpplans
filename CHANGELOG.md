@@ -9,6 +9,19 @@
 
 ---
 
+## 2026-08-29 — Consistency review #42: executive-summary narrative & CTL-register citation scope — every narrative claim verified against the registers; 33 stretched spend-control citations re-pointed to their own PA-level CTLs; new tool `audit-exec-ctl.py`; validator Check 60 added (60 checks)
+
+The two never-swept surfaces:
+
+- **executive-summary.md beyond its guarded figure anchors — clean.** Every quantitative and descriptive claim verified: the company table (200 stores; 4 DCs at Davao/Cebu/Laguna/Clark per profile §3.2; 5 legal entities per §2; PHP 62.3B; 6,762 employees; 35,000 SKUs; 600 terminals = 3/store; 2.8M monthly transactions; ~600,000 loyalty members matching the W1217 base), the critical requirements (offline ≥ 8 hours, 300+ store scalability per profile §10, BIR/SSS/PhilHealth/Pag-IBIG scope), the operational metrics (POS uptime 99.9% = NFR-001, month-end ≤ 5 working days = FIN-015, inventory accuracy ≥ 97%), the repository-structure note, and the footer history (728/5,363/188/6,762 counts, the 14-workflow post-catalog set, the 733 → 728 dedup note).
+- **internal-controls-matrix CTL register vs PA citations.** CTL-240–808 citations already carry canonical PA names (Check 34); CTL-001–239 citations carry free-form application notes by convention. Cross-referencing all 752 cited CTLs' notes against register objectives surfaced one real defect class: **33 citations of the spend controls** (CTL-01 "Prevent unauthorized purchases", CTL-02 "Prevent unauthorized capital expenditure") in VS-184–191 carried non-spend notes ("IR governance", "exercise governance", "test governance/safety sign-off", "subordination approval", "coordination governance"…) — stretched semantic reuse of spend-authorization controls as generic approval governance. Each was **re-pointed to the workflow's OWN PA-level execution control** in the Check-34 canonical form with the application note preserved as an em-dash suffix; the one genuinely spend-scoped note ("capital/program approval") was kept on CTL-02.
+- **New tool [`07-methodology/audit-exec-ctl.py`](07-methodology/audit-exec-ctl.py)** — guard mode: executive-summary.md must carry the canonical anchor figures with retired totals absent outside change-notes (footers and "X → Y" notes exempt per Check-46 convention), and CTL-01/CTL-02 citations repo-wide must carry spend-scoped notes. Teeth verified by synthetic injection (a flipped employee figure, a missing anchor, and a stretched citation all caught; arrow-notes confirmed exempt).
+- **Validator Check 60 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 60 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **60 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #41: root-level model-company documents audited — mobile-app-strategy.md, data-migration-mapping.md, assumptions-and-design-decisions.md verified fully clean against the canonical registers; new tool `audit-model-docs.py`; validator Check 59 added (59 checks)
 
 The three root-level model-company documents never before swept:
