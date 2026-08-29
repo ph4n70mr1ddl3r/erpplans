@@ -9,6 +9,25 @@
 
 ---
 
+## 2026-08-29 — Consistency review #49: semantic-coverage lift — corpus-wide citation census + 200-workflow batch (481 → 681 of 5,363 read); 43 defect spots repaired across 8 classes, all guarded
+
+**Census (machine, full corpus):** 110 distinct statutory-citation forms swept; ~100 adjudicated correct (DO 183-18, DAO 29-1992, D.O. 13, RA 10607/9006/10863/11210/10951, RR 2-98/3-98, SEC MC 28, RA 9501/5487/10623/10644/11232/11521/8371, …). Four live mis-citation classes (20 spots) repaired pre-batch: "DTI DAO 2" ×2 → Consumer Act RA 7394 basis (PA-13.1); "RR 19-2020" ×17 → RR 02-2013 house TP canon (PA-17.2, PA-18.1, PA-18.3, PA-72.1, PA-72.3, PA-97.2, PA-97.3); "RA 11199" → RA 11111 SSS (PA-19.2); "per DAO 198" → DOLE OSH Standards as amended by D.O. 198-18 (PA-07.3).
+
+**Machine-sweep remainder of the guarded class:** four "No. 19-2020" spelling variants the bare-literal pass missed (PA-17.2 ×2, PA-18.3, PA-18.1 — incl. the W235 "BIR RR No. 19-2020" spotted mid-batch-read) → RR 02-2013; "RA 9160 as amended by RA 10121" (PA-22.1, W730) → RA 10365 and RA 11521 — RA 10121 is the DRRM Act, and its two remaining usages (PA-76.2 disaster-preparedness) are correct.
+
+**200-workflow stratified batch (seed 5050, excluding all 481 prior W-ids; 121 distinct VS, 94 VS-53+):** read in full — 196 of 200 sound; 4 defect workflows repaired:
+- **W269 promodizer management (PA-19.1): RACI R-column scrambled** — all five steps' Responsible contradicted the prose actor ("Vendor submits…" R=Store Manager; "Store Admin creates…" R=Security Guard; "System provisions…" R=Vendor Account Mgr; "Promodizer logs…" R=Store Manager; "Store Manager reviews…" R=HR Admin) → R realigned to the prose actor per row.
+- **W2141 warranty partner review (PA-53.3): external Accountable** — "VP Merchandising conducts quarterly performance review with partner" carried A=Insurance Partner while sibling steps use internal A → A=CFO.
+- **"BFS" ×11 → BPS / DTI-BPS** — PA-01.3 used "DTI/BFS", "BFS/DTI", "DENR/BFS" and the inverted "(BFS, formerly BPS)" gloss (the Bureau of Philippine Standards' acronym is and was BPS; corpus canon "DTI-BPS" ×208); PA-30.3 "PS Mark from BFS"; PA-09.1 fabricated "DOE Bureau of Fire Standards and Regulations (BFSR)" for cylinder hydrostatic re-testing → "Philippine standards (DTI-BPS)" (VS-175 anchors cylinder re-qualification to DTI-BPS per RA 11592).
+
+**Guard (Check 62) extended:** RETIRED_LITERALS grown by 21 entries (the four census classes + "No. 19-2020" + "amended by RA 10121" + six BFS-family forms + five W269 row-fragments + the W2141 external-A fragment); every literal teeth-verified via synthetic injection (caught, then restored clean; 0 hits across 569 PA files).
+
+**Coverage durability:** new `07-methodology/semantic-audit-coverage.txt` registry (root-README tree row added) pins the 681 audited W-ids so future batches' exclusion sets survive /tmp loss; the sampling loop continues (this batch was not zero-findings) toward exhaustive-or-statistically-defensible coverage of 5,363.
+
+Totals unchanged: 188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC. Validator green 0 errors / 0 warnings across all 62 checks.
+
+---
+
 ## 2026-08-29 — Consistency review #48: semantic batch 6 — ZERO FINDINGS; the review #45–#48 sampling loop terminates on its own criterion
 
 **Batch 6** (104 workflows, seed 4949, 13-per-family, expansion-weighted; 68 distinct VS touched, 48 of them VS-53+), audited under the extended Check 62 guard (logy/logies, footprint, and countant clip rules plus the retired literals), with a mechanical pre-screen over the whole batch before the deep read:

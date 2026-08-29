@@ -31,6 +31,23 @@ Guard mode (--guard): the four repaired literals must not reappear, and any
 Participants-field parenthetical count for a §13.1-anchored merchandising
 role must equal the register (Category Managers 5, Buyers 10, Merchandise
 Planners 5, Pricing Analysts 4).
+
+Consistency review #49 (2026-08-29) lifted coverage toward the corpus-wide
+bar: a corpus-wide statutory-citation census (110 distinct forms) plus a
+200-workflow stratified batch (seed 5050, excluding the 481 already
+audited; see semantic-audit-coverage.txt) brought full-read coverage to
+681 of 5,363 workflows. Repairs: 4 "RR No./Revenue Regulation(s) No.
+19-2020" spelling variants and 17 bare "RR 19-2020" transfer-pricing
+mis-citations → RR 02-2013 (house TP canon); "RA 9160 as amended by
+RA 10121" → RA 10365 and RA 11521 (AMLA amendments; RA 10121 is the
+DRRM Act, whose two live DRRM usages are correct); W269's RACI R-column
+realigned to the prose actors (five steps); W2141's quarterly
+warranty-partner review given an internal Accountable (CFO, not the
+external Insurance Partner); 11 "BFS"/"BFSR" spots → BPS / DTI-BPS (the
+Bureau of Philippine Standards' acronym is and was BPS — including the
+inverted "(BFS, formerly BPS)" note — and "DOE Bureau of Fire Standards
+and Regulations" does not exist; VS-175 anchors cylinder re-qualification
+to DTI-BPS per RA 11592). Each retired literal above is teeth-verified.
 """
 import argparse, glob, os, re, sys
 
@@ -46,6 +63,26 @@ RETIRED_LITERALS = [
     "200 stores × ~5,000 replenishment orders/month",
     "**Absb-erosion risk**",
     "(DOLE DO 174 Compliance)",
+    "DTI DAO 2",
+    "RR 19-2020",
+    "No. 19-2020",
+    "RA 11199",
+    "per DAO 198",
+    "amended by RA 10121",
+    "DTI/BFS",
+    "BFS/DTI",
+    "DENR/BFS",
+    "(BFS, formerly BPS)",
+    "PS Mark from BFS",
+    "BFS may cite",
+    "/BFSR",
+    "Bureau of Fire Standards",
+    "to HR. | Store Manager | HR Admin |",
+    "in the system. | Security Guard |",
+    "attendance profile. | Vendor Account Mgr |",
+    "their payroll. | Store Manager | HR Admin |",
+    "upon offboarding. | HR Admin | HR Director |",
+    "| VP Merchandising | Insurance Partner |",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
