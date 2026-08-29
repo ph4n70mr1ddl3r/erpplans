@@ -32,6 +32,27 @@ DOCS = ["mobile-app-strategy.md", "data-migration-mapping.md",
 RETIRED_FIGURES = ["6,757", "6,715", "5,357", "5,362", "5,349", "5,341",
                    "80,000 SKU", "1,000 POS terminal"]
 
+# Consistency review #60: BIR Forms 1601-E/1601-F were discontinued by RR 11-2018
+# (replaced by the quarterly 1601-EQ creditable / 1601-FQ final remittance
+# returns). Guarded here in the two statutory-citation model docs (profile
+# §10.5/§16 and erp-requirements FIN rows); the PA files are guarded by Check 62's
+# legacy_form rule. Version-history footers are exempt — they legitimately name
+# the retired form when describing the change.
+LEGACY_FORM = re.compile(r"1601-[EF](?!Q)")
+LEGACY_FORM_DOCS = ["model-company-profile.md", "erp-requirements.md"]
+
+
+def legacy_form_hits(path):
+    hits = []
+    for i, line in enumerate(open(path, encoding="utf-8").read().splitlines(), 1):
+        if line.startswith("*Document Version:"):
+            continue
+        for m in LEGACY_FORM.finditer(line):
+            hits.append((os.path.basename(path), i,
+                         f'retired BIR form "{m.group(0)}" '
+                         f'(use 1601-EQ/1601-FQ per RR 11-2018)'))
+    return hits
+
 
 def load_registers():
     wids, vsids, paids, ctlids, reqids = set(), set(), set(), set(), set()
@@ -101,6 +122,9 @@ def main():
             for m in re.finditer(re.escape(lit), body):
                 hits.append((doc, body[:m.start()].count("\n") + 1,
                              f"retired figure {lit}"))
+    for doc in LEGACY_FORM_DOCS:
+        for d, line, detail in legacy_form_hits(os.path.join(MC, doc)):
+            hits.append((d, line, detail))
     for doc, line, detail in hits:
         print(f"model-doc: {doc}:{line}: {detail}")
     print(f"audit-model-docs: {len(hits)} hit(s) across {len(DOCS)} documents")

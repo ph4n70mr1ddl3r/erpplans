@@ -1986,7 +1986,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W2755 | BIR eFPS Filing, e-Payment (PESONet/InstaPay) & Validation | VS-79 |
 | W2756 | BIR EIS E-Invoicing Transmission & Daily Sales Report Sync | VS-79 |
 | W2757 | VAT-Exempt & Zero-Rated Sale Documentation (PEZA/BOI/Education/Housing) | VS-79 |
-| W2758 | Capital Goods Input VAT Spread (120-Month Amortization) Tracking | VS-79 |
+| W2758 | Capital Goods Input VAT — Full-Credit Regime & Grandfathered 60-Month Amortization Tracking | VS-79 |
 | W2759 | Percentage Tax (2551Q) & Entities Below VAT Threshold Management | VS-79 |
 | W2760 | POS BIR-Registered Accreditation, CAS Registration & Compliance Audit | VS-79 |
 | W2761 | Expanded Withholding Tax (EWT) Determination & Monthly Form 1601E/1601EQ | VS-79 |

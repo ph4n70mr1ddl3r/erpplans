@@ -178,7 +178,7 @@ RETIRED_LITERALS = [
     "~1,825 hazmat receiving events",
     "= ~304 hours/year",
     "= ~520 hours/year",
-    "1601-E,",
+    # "1601-E," retired in #56, superseded by the structural LEGACY_FORM rule (#60)
     "(~25,000–50,000 total)",
     "per DOLE 174",
     "(DOLE Department Order 174) distinguishes",
@@ -229,6 +229,45 @@ RETIRED_LITERALS = [
     "PMBTI",
     "NMIC)",
     "Amillaramento",
+    # review #60 batch-15-successor repairs (RR 11-2018 EWT regime straggler sweep:
+    # the #56 batch-13 repair retired only the comma-form "1601-E,", leaving ~24
+    # non-comma citations live; superseded here by the structural LEGACY_FORM rule)
+    "Monthly EWT Remittance",
+    "Monthly EWT payment run",
+    "~800–1,000 vendor EWT certificates per month",
+    "monthly batch issuance is essential",
+    "within 20 days of month-end",
+    "subject to 15–20% withholding tax",
+    # review #60 batch-16 repairs (statutory + canon stragglers; the 1601-E/F
+    # class is additionally guarded structurally by LEGACY_FORM)
+    "Input VAT Spread (120-Month Amortization)",
+    "DOLE Department Order No. 197-18",
+    "48 hours for serious injuries",
+    "PHP 10K-500K",
+    "Fair Lending Act",
+    "mandatory per RA 7641",
+    "Calampa",
+    "top 50 = 45% of COGS",
+    "DUERC",
+    "PASER",
+    "NCSD",
+    "PFRS 37",
+    "~2,800 active vendors",
+    "16 Sales Associates",
+    "Revenue Regulation No. 11-2024",
+    "Regulations No. 5-2022",
+    "8%/12% VAT-on-imports",
+    "(23 FTE)",
+    "37 Finance & Accounting",
+    "3 Stock Associates per store",
+    "209 locations",
+    "PHP 2–4B in forward-buy",
+    "8,000–12,000 ship-from-store",
+    "~115 orders/DC/day",
+    "Foriklift",
+    "50kg cement",
+    "(BIR Form 1601-F)",
+    "hundreds of inquiries/day group-wide",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
@@ -342,6 +381,11 @@ CODE_TOKENS = re.compile(r'(?:VS|PA|W|CTL|RA|DO|DAO|RR|SEC|MC|GIS|D\.O\.|DTS)'
                          r'|10-wheeler|6-wheel')
 PLACEHOLDER_CELL = re.compile(r'^\| \*\*(Volume|Frequency)\*\* \| ~\s?([^|]*)\|')
 
+# Legacy BIR withholding forms discontinued by RR 11-2018 (filed their last
+# returns in 2018): 1601-E -> 1601-EQ (quarterly, creditable/EWT) and
+# 1601-F -> 1601-FQ (quarterly, final). Any non-Q sighting is a defect.
+LEGACY_FORM = re.compile(r"1601-[EF](?!Q)")
+
 
 def placeholder_cell_hits(lines):
     out = []
@@ -399,6 +443,10 @@ def main():
             hits.append(("steps-header", rel, line, detail))
         for line, detail in placeholder_cell_hits(text.splitlines()):
             hits.append(("placeholder-cell", rel, line, detail))
+        for m in LEGACY_FORM.finditer(text):
+            hits.append(("legacy-bir-form", rel,
+                         text[:m.start()].count("\n") + 1,
+                         f'retired BIR form "{m.group(0)}" (use 1601-EQ / 1601-FQ per RR 11-2018)'))
     for kind, rel, line, detail in hits:
         print(f"{kind}: {rel}:{line}: {detail}")
     print(f"audit-semantic-anchors: {len(hits)} hit(s) across {len(files)} PA files")
