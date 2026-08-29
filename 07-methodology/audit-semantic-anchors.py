@@ -209,7 +209,8 @@ RETIRED_LITERALS = [
     "~1,500–2,500 hours/month",
     "~400–500 empty return trips",
     "Monthly; ~20 vehicles",
-    "~1,000 dealer grades",
+    # "~1,000 dealer grades" withdrawn in review #62 — W5385's ~1,000-active-dealer anchor
+    # supports one-grade-per-dealer; the #58 300–800 basis is superseded
     # review #59 batch-15 repairs
     "All store staff (30/store)",
     "PHP 150,000–300,000/month in penalties",
@@ -419,6 +420,11 @@ PLACEHOLDER_CELL = re.compile(r'^\| \*\*(Volume|Frequency)\*\* \| ~\s?([^|]*)\|'
 # 1601-F -> 1601-FQ (quarterly, final). Any non-Q sighting is a defect.
 LEGACY_FORM = re.compile(r"1601-[EF](?!Q)")
 
+# Review #61: a Time Estimate line `~N(-N)? per occurrence` with no time unit is a
+# defect (131 spots censused and repaired across 20 files; units restored from each
+# workflow's own step durations).
+UNITLESS_OCCURRENCE = re.compile(r"^- ~\d+(?:–\d+)? per occurrence", re.M)
+
 
 def placeholder_cell_hits(lines):
     out = []
@@ -480,6 +486,10 @@ def main():
             hits.append(("legacy-bir-form", rel,
                          text[:m.start()].count("\n") + 1,
                          f'retired BIR form "{m.group(0)}" (use 1601-EQ / 1601-FQ per RR 11-2018)'))
+        for m in UNITLESS_OCCURRENCE.finditer(text):
+            hits.append(("unitless-occurrence", rel,
+                         text[:m.start()].count("\n") + 1,
+                         'unit-less "per occurrence" Time Estimate line (restore the unit from the workflow step durations)'))
     for kind, rel, line, detail in hits:
         print(f"{kind}: {rel}:{line}: {detail}")
     print(f"audit-semantic-anchors: {len(hits)} hit(s) across {len(files)} PA files")
