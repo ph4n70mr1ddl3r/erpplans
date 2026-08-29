@@ -2903,6 +2903,34 @@ else
     echo "$C61_OUT" | grep -E "^(ghost-only-row|gap-analysis-current-state|tg-anchor):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 62: semantic-sample anchor guard ---
+echo "--- Check 62: Semantic-sample anchors ---"
+# audit-semantic-anchors.py (2026-08-29, consistency review #44) guards the defects
+# found by the bounded semantic-correctness sample: 40 workflows stratified 5-per-
+# family across the 8 VS families (seed 44) audited in full — step logic, Duration
+# plausibility, RACI feasibility, statutory statements — plus a 24-workflow
+# statutory-heavy second batch (0 defects). 36+24 of 64 verified sound including
+# every statutory base (DOLE 174, RA 4136, DENR CCO 2013-24, TRAIN, PFRS 15,
+# BIR 2307 netting, RA 10173) and the volume chains. Four defects repaired:
+# W264's stale Participants counts (6/8 -> 5/10 per section 13.1), W1777's
+# in-house-interest VAT basis ('as a financial service' -> part of gross selling
+# price; financial-service interest is NIRC-exempt), W253's impossible ~10,000
+# loyalty enrollments/month vs the section 1.1 ~4,500/month anchor, and W449's
+# mis-pasted operational-control line. The guard retires those literals and
+# enforces register-equal Participants counts for the section 13.1 merchandising
+# roles (CM 5, Buyers 10, Planners 5, Pricing Analysts 4) repo-wide.
+C62_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-semantic-anchors.py" --guard 2>&1)
+C62_RC=$?
+C62_N=$(echo -n "$C62_OUT" | tail -1)
+echo "    $C62_N"
+if [ $C62_RC -eq 0 ]; then
+    ok "No retired semantic literals and all Participants role-counts match the section 13.1 register (guard mode of audit-semantic-anchors.py; 4 defects from the 64-workflow semantic sample repaired 2026-08-29)"
+else
+    C62_HITS=$(echo "$C62_OUT" | grep -cE "^(retired-literal|participant-count):" || true)
+    error "$C62_HITS semantic-anchor violation(s) (run 07-methodology/audit-semantic-anchors.py for detail):"
+    echo "$C62_OUT" | grep -E "^(retired-literal|participant-count):" | sed 's/^/    /' | head -30
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

@@ -9,6 +9,20 @@
 
 ---
 
+## 2026-08-29 — Consistency review #44: bounded semantic-correctness sample audit — 64 stratified workflows audited in full (40 family-stratified + 24 statutory-heavy); 4 defects repaired (stale role counts, wrong VAT basis, impossible enrollment volume, mis-pasted control); new tool `audit-semantic-anchors.py`; validator Check 62 added (62 checks)
+
+The bounded semantic audit directed by the close-out:
+
+- **Sample.** 40 workflows randomly drawn (seed 44), stratified 5-per-family across the 8 value-stream families, audited in full — step-sequence logic, per-step Duration plausibility vs the described activity, RACI role feasibility vs the org chart, and statutory statements inside step prose — plus a scaled second batch of 24 statutory-heavy workflows (3-per-family, preferentially drawn where the prose carries RA/PD/DO/BIR/DOLE/DTI/DENR/LTO tokens).
+- **Findings — 60 of 64 semantically sound**, including every statutory base checked: DOLE 174 labor-only-contracting (W449), RA 4136 PDL restriction codes and 5-year validity (W1400), DENR CCO 2013-24 lead-in-paint at 90 ppm (W5503), TRAIN-law payroll tables and SSS PRN machinery (W10), point-of-sale VAT recognition on installment sales (W1777's step 1), BIR 2307-on-netted-deduction evidence risk (W5510), RA 10173 consent for auto-charging, PFRS 15 breakage estimation, and 10-year BIR retention. Volume chains verified: W1627 (280/store × 200 = 56,000 refunds/month; 2 min × 56,000 ≈ 22,400 h/yr), W31 (35,000 × 204 = 7.2M SKU-locations; 140,000 SKU-DC), W614 (§1.1-anchored feed volumes), W747 (200 × 20 = 4,000/day).
+- **Four defects repaired:** W264's Participants counts (Category Manager (6), Buyer (8) → 5 and 10 per §13.1 — the same stale-count class as review #34, now mechanically guarded repo-wide); W1777's in-house-installment interest VAT basis ("subject to VAT (12%) as a financial service" → "forms part of the gross selling price and is subject to VAT (12%)" — financial-service interest is NIRC-exempt, so the old basis contradicted its own conclusion); W253's "~10,000 new loyalty enrollments/month" (impossible vs the data-volumes §1.1 customer-registration anchor of ~150/day ≈ 4,500/month, of which loyalty sign-ups are the bulk); W449's Controls-section operational line (a mis-paste of the regularization-risk prose → replaced with the actual DOLE-174 audit control).
+- **New tool [`07-methodology/audit-semantic-anchors.py`](07-methodology/audit-semantic-anchors.py)** — guard mode retires the four repaired literals and enforces register-equal Participants-field counts for the §13.1 merchandising roles (Category Managers 5, Buyers 10, Merchandise Planners 5, Pricing Analysts 4) across all 569 PA files. Teeth verified (retired literal + wrong counts caught; restored clean); the corpus-wide count sweep found no further instances beyond the repaired W264.
+- **Validator Check 62 (new):** runs the guard repo-wide; root-README tree line and methodology README bumped to 62 checks (Check 40 verifies); methodology README gains the tool row.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **62 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #43: requirement-matrix cells, gap-analysis figures & technical-guidelines claims — 8 ghost-only matrix rows re-pointed to the real workflows; the alias convention documented and guarded; new tool `audit-matrix-refs.py`; validator Check 61 added (61 checks)
 
 The three surfaces:
