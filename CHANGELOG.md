@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-08-29 — Consistency review #52: semantic batch 9 (104 workflows, 889 → 993 of 5,363 read) — 34 defect spots repaired across 13 classes (statutory D.O. 53-04→53-03 ×12 with title cascade, DO-174 mis-association ×2, NOLCO-adjacent deadline fix, W1396 energy-magnitude cluster re-anchored to the W1501 store-cost canon), all guarded
+
+**Batch 9** (104 workflows, seed 5353, 13-per-family expansion-weighted, excluding all 889 prior W-ids; 77 distinct VS, 54 VS-53+; 95 PA files), pre-screened (zero flags) then read in full.
+
+- **Statutory repairs:**
+  - **"DOLE D.O. 53-04" → D.O. 53-03 ×12 spots** — the drug-free-workplace order was mis-numbered throughout VS-150 (W4458 title + TOC anchor + body, W4466 ×3, PA-150.3 ×4) and VS-167 (W?×2), plus its citations in internal-controls-matrix CTL-129, workflow-gap-analysis (×2), and the criticality register's W4458 title row — full title-cascade repair (anchor fixer rerun; 53-03 is the canon review #33's sweep established).
+  - **W1385 associated retrenchment with "DOLE DO 174 compliance" ×2** — the same mis-association review #47 repaired in W1324's title (DO 174 regulates contracting, not retrenchment) → Labor Code Art. 298–299 / Art. 298 notice; a lowercase variant the #47 guard literal had missed.
+  - **W816 withholding-deposit deadlines** "(10th and 25th of following month)" mixed the VAT eFPS date into withholding → 10th, per the W90 house canon.
+- **W1396 energy-magnitude cluster (5 spots)** — its ~1.2–1.5 GWh/store and 15–20 GWh/DC figures implied PHP 3.0–4.6B/year at its own PHP 10–12/kWh (stated: 1.8–2.4B) and were ~5× the W1501/W3742 store-cost canon (PHP 150,000–300,000/month per store); re-anchored coherently: ~0.2–0.35 GWh/store (40–70 GWh chain) + ~1.5–2.5 GWh/DC (6–10 GWh), cost PHP 0.5–1.0B/year, Scope 2 at 0.58 kg/kWh → ~27,000–46,000 tonnes CO2e (was 175,000–220,000), total Scope 1+2 ~32,000–54,000 (was 180,000–228,000; no other corpus citation of the old figures).
+- **Register/canon alignments:** W51's training audiences "Store staff (6,000)/HQ (~300)" → 5,800/~360 (sums to the 6,762 canon); W108's "~35-person Finance team" → ~46 (§3.3) — the literal then swept a second instance in PA-17.2; W1398's and PA-28.2's "~1M loyalty members" → ~600K (the W926/W1443 canon).
+- **Internal-coherence:** W756's Volume "~500–800 qualifying transactions/day" contradicted its own "~5% of daily transactions" claim (93K/day canon → ~4,500–5,000/day); W1674's Volume "~1–2 per store/month" contradicted its 50–100/month Frequency → ~0.25–0.5/store.
+- **Broken/fragment artifacts:** W294's board-foot example compared identical numbers ("0.00236 … instead of 0.00236") → 0.0236-vs-0.00236 order-of-magnitude illustration; W294's control line "operational: and physical reality" (pain-point fragment) → quarterly conversion-audit control; W359's step-5 Accountable "BPO" → "DPO".
+- **The marketplace-settlement pain-point paste ×5** — an ecommerce boilerplate risk ("marketplace settlement doesn't match BuildRight's order records…") pasted into five unrelated workflows (W2491 credit scoring, W66.2 project quotation, W77.1/W77.2 material staging, and one more found by the sweep): four repaired with context-appropriate risks; PA-65.3 (marketplace settlement — the legitimate original) left intact, so this class is documented rather than literal-guarded (a byte-identical innocent original cannot be distinguished by literal). The sweep of the other new literals caught 9 additional corpus-wide instances (53-04 ×3, 35-person ×1, BPO ×1 — adjudicated a legitimate Business Process Owner abbreviation in PA-21.1 and the literal narrowed accordingly, 1M-loyalty ×1, pain-paste ×3).
+- **Verified sound in the batch** (no action): RA 7877/RA 11313 POSH CODI machinery incl. Safe Spaces 10+-employee threshold, 2-notice rule, SENA (W5497 — exemplary); separation-pay 18.75-day DOLE formula and NIRC §32(B)(6) exemptions (W1385); Art. 83–85 meal/rest breaks with 200 × 29 × 3 = 17,400 events/day; RA 9275 interceptors, BFP FSIC; PhilHealth 5% (2.5/2.5) and Pag-IBIG PHP 100+100; DOLE-accredited SENA/NLRC arbitration ladder; GHS 16-section SDS and DENR-EMB CIR under RA 6969; PCI-PFI/BSP/NPC breach; AQL sampling; EDI 850/856/810; punchout cXML/OCI; DC1–DC4 locations vs profile; lumber species/2×4-dimension practice; W5509's lost-sales math (15–35K events = 2–6/store/day; 0.4–1% × 5.19B = 20–50M/month).
+- **Guard (Check 62):** 15 new retired literals (one narrowed to W359's exact row after PA-21.1's BPO was adjudicated legitimate; the pain-paste literal withdrawn per above). Teeth proven live — the first run caught 9 real corpus instances — plus a synthetic injection test (caught, restored clean): **0 hits across all 569 PA files**.
+
+Coverage registry grown to **993 W-ids (18.5%)**; the batch was not zero-findings, so **the sampling loop continues per its directive**.
+
+Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC**. `validate-repo.sh` green **0 errors / 0 warnings** across all **62 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #51: semantic batch 8 (104 workflows, 785 → 889 of 5,363 read) — 24 defect spots repaired across 8 classes (3 pain-point-fragments-as-controls, 3 statutory fixes incl. NOLCO and OT rates, 7 missing `### Steps` headers, garbled "SALSBAC", register-stale hire rates), all guarded
 
 **Batch 8** (104 workflows, seed 5252, 13-per-family expansion-weighted, excluding all 785 prior W-ids; 75 distinct VS touched, 56 of them VS-53+; 93 PA files), pre-screened (zero flags) then read in full.

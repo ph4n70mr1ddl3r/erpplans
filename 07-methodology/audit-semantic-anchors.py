@@ -119,6 +119,21 @@ RETIRED_LITERALS = [
     "1.5 hours × 4,500 employees",
     "- **Total: ~140–160 hours/year**",
     "(18 regular holidays",
+    # review #52 batch-9 repairs
+    "Store staff (6,000)",
+    "~35-person Finance team",
+    "instead of 0.00236, a small rounding error",
+    "- operational: and physical reality",
+    "| IT Auditor | BPO | 2 days |",
+    "~500–800 qualifying transactions/day",
+    "(10th and 25th of following month)",
+    "per W1324 (DOLE DO 174 compliance)",
+    "notice per DO 174 requirements",
+    "~1.2–1.5 GWh/store",
+    "175,000–220,000 tonnes",
+    "~1M loyalty members",
+    "~1–2 per store/month",
+    "D.O. 53-04",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
