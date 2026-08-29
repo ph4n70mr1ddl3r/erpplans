@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-08-29 — Consistency review #55: semantic batch 12 (104 workflows, 1,201 → 1,305 of 5,363 read; 24.3% coverage) — 10 defect spots repaired across 10 classes (returns-canon undercount ×4 in the W101 refund chain, W2271 closure fixtures vs W807, W817 sabbatical Little's-law check), all guarded
+
+**Batch 12** (104 workflows, seed 5656, 13-per-family expansion-weighted, excluding all 1,201 prior W-ids; 75 distinct VS, 55 VS-53+; 95 PA files), pre-screened (zero flags) then read in full.
+
+- **Register/canon alignments and arithmetic (10 spots, 10 classes):**
+  - **W101 refund/credit volume understated the returns canon ~20×** — PA-15.2's Volume line counted "~2,800 in-store return refunds/month" against the W12/W1627 returns canon of ~56,000/month (mostly settled at POS by refund or store credit); the whole chain re-derived (~48,000–56,000 refunds → ~1,600–1,900 store-labor hours/month → ~2,000–2,300 total → the ~50,000–58,000 transactions/month pain point).
+  - **W1116 store-complaints volume** — "~200–400 customer complaints per store per month" against the W41 canon (~10–15/store/month, ~2,000–3,000/month chain-wide) → repaired with W41 cross-citation and a per-1,000-transactions benchmark.
+  - **W630 spot-award budget period** — "PHP 10,000/month" per store × 200 stores = PHP 24M/year for spot awards alone; the program's own mechanics (nomination → quarterly review → payout) make it PHP 10,000/**quarter** (×2 spots).
+  - **W641 off-cycle payment frequency** — "~50–80/month" against its own driver list (final pays ~100–130/month per the separations canon, plus bereavement/backpay/bonus adjustments) → ~75–100/month.
+  - **W688 contract-repository volume** — "~800–1,000 active contracts" left no room for the ~205 active store leases plus customer/partnership/government agreements; re-derived bottom-up to ~1,100–1,400 (~800 vendor + ~205 leases + the rest).
+  - **W817 sabbatical steady-state (Little's-law check)** — "~5–10 active at any time" is inconsistent with its own "60–120 per year" inflow at 3–12-month durations (steady state = inflow × duration = 15–120, realistically ~15–40 active); Volume and HR-BP staffing line aligned, "~5–10 new **requests** per month" kept.
+  - **W1207 3PL contract count ×3 spots** — "~15–20 active 3PL contracts" against the corpus canon of ~10–15 3PL partners (W1207's own counterpart, PA-06.2 quarterly reviews); Volume, Staffing, and Time-Estimate arithmetic all re-derived (30–45 h/quarter; 10–15 × 3–5 h = 30–75 h).
+  - **W1402 pre-staging volume arithmetic** — "~3,000–4,400 SKU-location pre-staging events/year" under-counted its own inputs (6 major × 500–800 + 4 seasonal × 200–300 = 3,800–6,000 **per DC**); repaired to ~15,000–24,000 SKU-location set-ups/year across 4 DCs × ~10 events.
+  - **W2271 closure fixtures value** — "~PHP 3–5M in fixtures/equipment" against W807's closure-canonical PHP 5–10M per store closure → aligned with W807 cross-citation.
+  - **W4146 PIM taxonomy breadth** — "~12 categories" against the profile §2 register's 13 departments (~40 categories) → repaired with register citation.
+- **Verified sound in the batch** (no action): BP 22 / DAIF 5-banking-days / >PHP 50K threshold mechanics (W1620); RA 9501 Magna Carta MSME credit + RA 10644 Go Negosyo Act lending-band obligations (W115); EPIRA contestable-market retail-supply contracting (W1467); RA 7277/BP 344 accessibility retrofit scope in store improvements (W2552); 3DS2 ECI/CAVV authorization-flow artifacts (W307); SBOM provenance and GPL copyleft obligations in vendor software due diligence (W4616); D.O. 53-03 random drug-testing 50% sampling (W1351); the Vendor-TBD-PO emergency-procurement mode (W60, consistent with W5); the RA 9275 Clean-Water usages in the batch (wastewater contexts, correctly attributed); volume chains (2.8M POS/month; 42,900 ecommerce orders/month; Supply Chain team 40; 20 Regional LP Officers; 40 owned trucks = 20% of fleet ✓).
+- **Guard (Check 62):** 13 new retired literals; sweep found no live stragglers (first batch with a clean first sweep since #52). Teeth verified by synthetic injection (caught, restored clean) — **0 hits across all 569 PA files**.
+
+Coverage registry grown to **1,305 W-ids (24.3%)**; the batch was not zero-findings (10 spots), so **the sampling loop continues per its directive** — the yield remains single-digit-to-low-teens register-alignment spots, continuing the monotone decline from batches 7–10.
+
+Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC**. `validate-repo.sh` green **0 errors / 0 warnings** across all **62 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #54: semantic batch 11 (104 workflows, 1,097 → 1,201 of 5,363 read; 22.4% coverage) — 9 defect spots repaired across 5 classes, all guarded; the lightest-yet batch
 
 **Batch 11** (104 workflows, seed 5555, 13-per-family expansion-weighted, excluding all 1,097 prior W-ids; 82 distinct VS, 60 VS-53+; 98 PA files), pre-screened (zero flags) then read in full.

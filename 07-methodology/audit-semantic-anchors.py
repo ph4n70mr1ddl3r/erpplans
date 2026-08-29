@@ -159,6 +159,20 @@ RETIRED_LITERALS = [
     "~200–300 new vendor assessments/year",
     "DIY segment (55% of revenue)",
     "~60 stores in typhoon-prone Visayas",
+    # review #55 batch-12 repairs
+    "~200–400 customer complaints per store per month",
+    "~2,800 in-store return refunds",
+    "~5,000–6,000 refund transactions/month",
+    "~50–80 off-cycle payments/month",
+    "~800–1,000 active contracts",
+    "~5–10 active sabbaticals",
+    "assuming 5-10 active programs",
+    "~15–20 active 3PL contracts",
+    "(15–20 providers × 2–3 hours",
+    "15–20 × 3–5 hours = 45–100 hours",
+    "~3,000–4,400 SKU-location",
+    "~PHP 3–5M in fixtures/equipment",
+    "~12 categories × tens of attributes",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
