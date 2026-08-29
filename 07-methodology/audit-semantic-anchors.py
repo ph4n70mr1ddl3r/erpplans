@@ -42,7 +42,11 @@ RETIRED_LITERALS = [
     "subject to VAT (12%) as a financial service",
     "~10,000 new loyalty enrollments/month",
     "operational: regularization of thousands of workers",
+    "| Participants (field) |",
+    "200 stores × ~5,000 replenishment orders/month",
+    "**Absb-erosion risk**",
 ]
+CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/])')
 ROLE_COUNTS = [("Category Manager", 5), ("Buyers", 10), ("Buyer", 10),
                ("Merchandise Planners", 5), ("Pricing Analysts", 4)]
 
@@ -60,6 +64,10 @@ def main():
             if lit in text:
                 hits.append(("retired-literal", rel,
                              text[:text.find(lit)].count("\n") + 1, lit))
+        for m in CLIP_RE.finditer(text):
+            hits.append(("clipped-keyword", rel,
+                         text[:m.start()].count("\n") + 1,
+                         f'automation keyword clip "{m.group(1)}"'))
         for m in re.finditer(r"^\| \*\*Participants\*\* \| (.+?) \|$", text, re.M):
             row = m.group(1)
             for role, n in ROLE_COUNTS:

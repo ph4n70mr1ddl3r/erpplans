@@ -9,6 +9,19 @@
 
 ---
 
+## 2026-08-29 — Consistency review #45: semantic sample scaled to 96 expansion-weighted workflows — 4 new defect classes found and repaired (malformed field row, chain-total volume misread, risk-label typo, and the full ~88-spot automation-keyword clip family the exact-match grep had under-counted); guard extended in place (Check 62)
+
+The directed scale-up of the semantic-correctness sample:
+
+- **Sample.** 96 workflows (seed 4545), stratified 12-per-family and weighted toward the underrepresented expansion value streams — 78 distinct VS touched, 55 of them VS-53+ — excluding all 64 previously sampled workflows; audited in full (step logic, Duration plausibility, RACI feasibility, statutory prose) across the four field dimensions plus a typo/malformed-row tail scan.
+- **Findings — 92 of 96 sound**, including exemplary statutory chains: W643's final-pay computation (PD 851 13th-month, Labor Code Art. 298–299 separation pay, RA 7641 retirement, TRAIN §32(B)(6)(b) separation-pay exemption), W4945's PD 115 Trust Receipts Law with §13–14 criminal liability, W3665's RA 4109/PS/ICC instrument map, W2684's RA 10121 DRRM, W4037's RA 3019/RA 6713 anti-graft, W2863's DOLE AMR, and volume chains consistent with the §1.1 anchors throughout (W594's 5,800 × 12–18% ≈ 700–1,100 daily exceptions; W956's ~560 APE/month; W3908's 5–8% × 35,000 = 1,750–2,800 NPI SKUs; W4126's 5,000/42,900 orders).
+- **Four defect classes repaired:** W5411's malformed `| Participants (field) |` table rows (two — merged into the canonical Participants rows); W3019's "200 stores × ~5,000 replenishment orders/month" which misread the chain-wide §1.1 total as per-store (reworded); W2232's "**Absb-erosion risk**" label typo; and — the largest — the **automation-keyword clip family at its true size**: the review #36 exact-match grep had counted only `of "logy"` forms, but the clip generator also produced `of "logies …"`, `of "logy …"`, and `of "logy-…"` variants — **~88 additional clipped keywords across 57 files**, every one repaired to the full in-step word (technology/technologies) with the guard's clip regex now catching the whole family (and finding them: the first extended-guard run surfaced all 80+ for repair before the clean pass).
+- **Guard extended in place** (`audit-semantic-anchors.py`, Check 62): three new retired literals (the malformed-row form, the chain-total misread, the Absb typo) plus the clip-pattern rule `auto-… of "logy/logies…"`. Teeth re-verified (synthetic clip caught; restored clean); zero false positives across all 569 PA files.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **62 checks**. Cumulative semantic-sample coverage now stands at 160 workflows (~3% of the catalog, expansion-weighted) with a monotone-decreasing per-batch defect yield (4 → 4, the second batch's findings dominated by one under-counted mechanical family rather than semantic errors).
+
+---
+
 ## 2026-08-29 — Consistency review #44: bounded semantic-correctness sample audit — 64 stratified workflows audited in full (40 family-stratified + 24 statutory-heavy); 4 defects repaired (stale role counts, wrong VAT basis, impossible enrollment volume, mis-pasted control); new tool `audit-semantic-anchors.py`; validator Check 62 added (62 checks)
 
 The bounded semantic audit directed by the close-out:
