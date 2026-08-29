@@ -9,6 +9,19 @@
 
 ---
 
+## 2026-08-29 — Consistency review #46: semantic batch 3 — 104 expansion-weighted workflows (83 distinct VS, 62 of them VS-53+); semantic prose zero-defect; one new mechanical clip subclass found and repaired (19 footprint→"print" keyword clips); guard extended (Check 62)
+
+The third stratified semantic batch, per the continue-until-zero directive:
+
+- **Sample.** 104 workflows (seed 4646), 13-per-family, expansion-weighted, excluding all 160 previously sampled workflows — 83 distinct VS touched, 62 of them VS-53+; audited across step logic, Duration plausibility, RACI feasibility, and statutory prose, plus a mechanical pre-screen (typo tokens, malformed field rows, clip patterns) over the whole batch before the deep read.
+- **Semantic prose: zero defects.** Every statutory and arithmetic chain verified sound — W643-class final-pay machinery elsewhere confirmed; W2774's CREATE reduced-rate rule (20% for ≤ PHP 5M taxable income and ≤ 100 employees) and TIMTA reporting; W3992's PCC merger notification and gun-jumping discipline; W697's DOLE D.O. 197-18 ergonomics basis; W3215's four-fold worker-classification test with NLRC exposure; W2808's BSP clean-note policy; W2937's ISO 37001 alignment; W1414's Coface/Euler Hermes credit-insurance terms with 75–90% coverage; volume chains consistent throughout (W1652's ramp curves, W1415's 35,000-line initial stock build, W594-class attendance math, W714's PHP 5.04B monthly in-store revenue consistent with 62.3B annual).
+- **One new mechanical clip subclass, found and repaired: 19 "footprint" clips.** The #36/#45 clip generator also produced keywords quoting the tail of "footprint" — `auto-generate of "print/customers trigger review"`, `of "print and capacity, supply chain and vendor base…"`, `of "print disclosure, energy efficiency…"` — across PA-09.2/PA-104.2/.3/PA-22.3/PA-25.1/.2/.3/PA-29.1/PA-13.2/PA-93.3/PA-111.3/PA-130.2. Each was adjudicated against its own referenced step (only keywords whose step contains "footprint" were re-quoted; the many legitimate print/printed/printing receipt keywords were left untouched) and repaired to the full word.
+- **Guard extended** (`audit-semantic-anchors.py`, Check 62): a step-verified footprint-clip rule — `of "print…"` is an error only when the referenced step's text contains "footprint" — keeping the legitimate receipt-printing keywords untouched. Teeth verified (synthetic re-clip caught; restored clean); zero false positives across all 569 PA files.
+
+Canonical totals unchanged: **188 value streams · 569 process areas · 5,363 workflows · 728 requirements · 808 controls · 6,762 headcount**. After this pass `validate-repo.sh` reports **0 errors / 0 warnings** across all **62 checks**. Cumulative semantic coverage: 264 workflows (~4.9% of the catalog, expansion-weighted); the semantic-prose defect count in this batch was **zero** — the sole finding class was the tail of the mechanical keyword-clip family already guarded, now closed at its true extent.
+
+---
+
 ## 2026-08-29 — Consistency review #45: semantic sample scaled to 96 expansion-weighted workflows — 4 new defect classes found and repaired (malformed field row, chain-total volume misread, risk-label typo, and the full ~88-spot automation-keyword clip family the exact-match grep had under-counted); guard extended in place (Check 62)
 
 The directed scale-up of the semantic-correctness sample:

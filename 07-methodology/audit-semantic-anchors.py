@@ -47,6 +47,7 @@ RETIRED_LITERALS = [
     "**Absb-erosion risk**",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/])')
+FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
 ROLE_COUNTS = [("Category Manager", 5), ("Buyers", 10), ("Buyer", 10),
                ("Merchandise Planners", 5), ("Pricing Analysts", 4)]
 
@@ -68,6 +69,14 @@ def main():
             hits.append(("clipped-keyword", rel,
                          text[:m.start()].count("\n") + 1,
                          f'automation keyword clip "{m.group(1)}"'))
+        for m in FOOTPRINT_CLIP_RE.finditer(text):
+            stepn = m.group(2)
+            blk = text[text.rfind("## W", 0, m.start()):]
+            sm = re.search(r"^\| " + stepn + r" \| (.+?) \|", blk, re.M)
+            if sm and "footprint" in sm.group(1).lower():
+                hits.append(("clipped-keyword", rel,
+                             text[:m.start()].count("\n") + 1,
+                             f'footprint clip "print{m.group(1)[:30]}"'))
         for m in re.finditer(r"^\| \*\*Participants\*\* \| (.+?) \|$", text, re.M):
             row = m.group(1)
             for role, n in ROLE_COUNTS:
