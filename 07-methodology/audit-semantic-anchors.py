@@ -327,6 +327,23 @@ RETIRED_LITERALS = [
     "~130,000 daily",
     "5,000–6,000 refund/credit",
     # "1601E" withdrawn — substring of the legitimate 1601EQ; hyphenated forms covered structurally
+    # review #65 batch-19 repairs
+    "PNS 48",
+    "(top 4 with",
+    "COBAC",
+    # "opose" withdrawn — substring of propose/proposed; the W3355 spot is repaired
+    "stakeaker",
+    "PSA/Nikcert",
+    "SSS Form B-302",
+    "ECC-1.1",
+    "controlled/nserialized",
+    "RCOR",
+    "30% corporate tax rate",
+    "34(D)(2)",
+    "≤ 100 employees",
+    # "Permit to Operate (PTO) for standby generators" withdrawn — the DOE attribution is repaired;
+    # the remaining literal matches the correct DENR-EMB text
+    "within 5 days of document execution",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
