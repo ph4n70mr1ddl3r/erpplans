@@ -2061,7 +2061,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W2911 | Mixed Basket (Taxable + Exempt) Allocation & Apportionment | VS-85 |
 | W2912 | VAT-Exempt Sale Invoice, ATC & Disclosure Compliance | VS-85 |
 | W2913 | SC/PWD/Solo Parent Tax Credit Computation & Monthly Claim Buildup | VS-85 |
-| W2914 | BIR Form 2552 (SC/PWD Book) Quarterly Compilation & Submission | VS-85 |
+| W2914 | SC/PWD Book-of-Sales Quarterly Compilation & Submission (RR 7-2010) | VS-85 |
 | W2915 | Tax Credit Certificate (TCC) Application & Tracking | VS-85 |
 | W2916 | LGU Local Tax Credit & Real Property Tax Exemption Coordination | VS-85 |
 | W2918 | BIR Audit of Statutory Discount Books & Tax Credit Defense | VS-85 |

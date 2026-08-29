@@ -260,7 +260,7 @@ erpplans/
     ├── audit-exec-ctl.py             Exec-summary anchors & CTL citation-scope guard (Check 60)
     ├── audit-matrix-refs.py          Matrix ghost-row & summary-doc anchor guard (Check 61)
     ├── audit-semantic-anchors.py    Semantic-sample anchor guard (Check 62)
-    ├── semantic-audit-coverage.txt  Audited-W-id registry for the Check 62 sampling loop (2,137 of 5,363)
+    ├── semantic-audit-coverage.txt  Audited-W-id registry for the Check 62 sampling loop (2,241 of 5,363)
     ├── placeholder-field-census.txt Completed missing-quantifier field census (173 spots repaired in review #57; now guarded structurally in Check 62)
     ├── unit-less-time-estimate-census.txt  Completed unit-less `per occurrence` Time Estimate census (131 spots repaired in review #62; now guarded structurally in Check 62)
     ├── batch18-deferred-candidates.txt  Worklist: residual batch-18 verified candidates (~64 spots; two-sided/design items)

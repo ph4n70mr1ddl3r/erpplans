@@ -221,7 +221,8 @@ RETIRED_LITERALS = [
     "~5,000–10,000 catalog updates per year",
     "= 6,000 person-hours/year",
     "catalog review is 30% of role",
-    "~8,500–9,500 invoices",
+    # "~8,500–9,500 invoices" withdrawn in review #67 — superseded by the corpus-wide total-AP canon
+    # (profile §10.2; W556 payments aligned to the 8,500–9,500/month inflow in #66; W1362 2 runs/week)
     "(PHP 5,800 employees",
     "~5,800 employees with average basic salary",
     "200 stores × 35 departments",
@@ -372,6 +373,27 @@ RETIRED_LITERALS = [
     "~28,000 monthly special-order",
     "~600–960 new listings",
     "~15,000–20,000 partner reward redemptions",
+    # review #67 batch-21 repairs
+    "CAO 4-2016 (Customs Modernization and Tariff Act)",
+    "RR 19-2017",
+    "USD 50,000 require BSP reporting",
+    "Intercharge",
+    "引入",
+    "mimifies",
+    "ERC-licensed electrician",
+    "RA 7160 §199",
+    "theARTA",
+    "Staffing Impiction",
+    "BIR Form 2552",
+    "DOLE Department Order No. 16",
+    "CAO 4-2016",
+    "DOTC road hazmat",
+    "BuildRight Retail",
+    "PGBI",
+    "RMC 044-2022",
+    "loan PHP 2 per PHP 200",
+    "~1 days per occurrence",
+    "~1 weeks per occurrence",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
