@@ -2,6 +2,27 @@
 
 ---
 
+## 2026-08-29 — Consistency review #51: semantic batch 8 (104 workflows, 785 → 889 of 5,363 read) — 24 defect spots repaired across 8 classes (3 pain-point-fragments-as-controls, 3 statutory fixes incl. NOLCO and OT rates, 7 missing `### Steps` headers, garbled "SALSBAC", register-stale hire rates), all guarded
+
+**Batch 8** (104 workflows, seed 5252, 13-per-family expansion-weighted, excluding all 785 prior W-ids; 75 distinct VS touched, 56 of them VS-53+; 93 PA files), pre-screened (zero flags) then read in full.
+
+- **Statutory fixes:**
+  - **W590 NOLCO mis-stated in both halves** — "3 years for small taxpayers, unlimited for large taxpayers" → the rule is **3 consecutive years, extended to 5 years for FY2020–2021 losses of non-large taxpayers per CREATE (RR 25-2020)**; there is no unlimited carryforward (verified against Grant Thornton/PwC/SGV).
+  - **W1428 project employment cited Labor Code Article 294** (regular/casual employment) → **Article 297**.
+  - **W1032 overtime rates quoted day-work rates as OT premiums** — "130% for rest days … 200% for regular holiday overtime" → **169% rest-day OT (130% day rate + 30% OT premium) and 260% regular-holiday OT (200% + 30%)**, in both the background and the payroll-calculation step; plus "18 regular holidays" → "~18 holidays (regular and special)".
+- **Pain-point fragments pasted as operational controls** (the review #44 W449 class, 3 more instances): W199's "operational: as evidence", W590's "operational: (eFPS) experiences frequent downtime…", W732's "operational: is not always accessible or up-to-date…" → each replaced with the workflow's real control (DC Dispatch monitoring gate; Chief Accountant provision-journal approval; TIN-validation gate with AP hold).
+- **Seven missing `### Steps` headers** — W4762's steps table followed its field table with no header, and a new structural rule found six more hidden in h3 sub-sections (PA-03.2 ×2, PA-04.1 ×2, PA-17.2 ×2); all given the header (11 descriptive-phase-header variants adjudicated as legitimate house style).
+- **Register-stale hire rates** (§11.4 canon: ~1,200–1,600 hires/year = 100–133/month): W372's "~100–150 new hires/month" (×2 + its derived 1,500–2,250 h/year), W846's "~200/month given ~30% turnover" (with its 2,400-completions and 4,500-employee refresher base — the latter also stale vs the 5,800 store headcount, incl. the 1.5 × 4,500 = 6,750 h chain), W1500's "~15–25/month" (contradicting its own ~200–300-in-program Volume), and PA-27.1's license-allocation chain (10 min × 100–150 + 50–70 ≈ 25–37 h/month → 100–130 basis ≈ 25–33 h/month; totals 360–460 h/year).
+- **Internal-coherence repairs:** W78's "~5–8% of total revenue" was impossible against its own contract math (20–40 bids × PHP 0.5–20M ≈ <1.3%) and the VS-46 canon (~3–5% government + institutional) → "a subset of the ~3–5% (VS-46)"; **W1547's Time-Estimate total** (~140–160 h/year) contradicted its own line items (100 h/quarter × 4 + 25 + 16 ≈ 440) → ~440 hours/year with staffing share 40% → 20–25%; **W3190/W3186's garbled "SALSBAC"** (×3 spots) → "sale-and-leaseback" (the VS-97 canon, incl. W3187's own title); **W216's "(W15.3)"** → "(profile §15.3)" (the retention section, not workflow W15).
+- **Verified sound in the batch** (no action): RA 9184/PHILGEPS/ABC bidding mechanics; RA 9994/RA 10754 SC-PWD 20%+VAT-exemption with the 56,000–140,000/month volume consistent with W1627's 56,000-returns anchor; BIR CAS PTU/audit-trail immutability; CREATE RCIT 25%/FCIT 20%; RR 02-2013 TP benchmarking; PFRS 16/23; RA 9275 Clean Water Act interceptor; BFP FSIC; SWP/9D/9G/SVEG visa categories; CBA 5-year term with 60-day pre-expiry notice; RA 10364; DOLE OSH; Volume chains cross-verified (5.19B monthly revenue = 62.3B/12, 2.8M POS txn, ~205 leases/deposits/accounts, 600 DC staff, 29/store, ~150–230 new SKUs/month matching the 1,750–2,800/year canon, 400–600 TEU/month).
+- **Guard (Check 62) extended:** 14 new retired literals (the mis-pasted controls, statutory forms, stale hire rates, SALSBAC, etc.) and the **steps-header structural rule** (a steps table must not directly follow a field-table row) — which surfaced the six additional hidden instances on its first run; workflow-attribution in the quote-integrity rules now resets at named h3 sub-sections so nested steps tables can't shadow the parent workflow's step map. Teeth verified: a synthetic SALSBAC literal and a synthetic header-less steps table were both caught, then restored clean — **0 hits across all 569 PA files**.
+
+Coverage registry grown to **889 W-ids (16.6%)**; the batch was not zero-findings, so **the sampling loop continues per its directive**.
+
+Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC**. `validate-repo.sh` green **0 errors / 0 warnings** across all **62 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #50: semantic batch 7 (104 workflows, 681 → 785 of 5,363 read) — the automation-keyword clip family closed at its true extent by a new general quote-integrity guard (884 mid-word clips + 50 '-logy' mis-repairs repaired); 16 batch-defect spots repaired across 9 classes, all guarded
 
 **Batch 7** (104 workflows, seed 5151, 13-per-family expansion-weighted, excluding all 681 prior W-ids; 74 distinct VS touched, 55 of them VS-53+; 90 PA files), audited under the extended Check 62 guard with a mechanical pre-screen (typo tokens, doubled words, malformed rows — zero flags) before the full read.

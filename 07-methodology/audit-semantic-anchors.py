@@ -103,6 +103,22 @@ RETIRED_LITERALS = [
     "~20–30 RFQs per month",
     "× 10 groups = 5 hours/day",
     "~5–10 tonnes of recyclable material per store/month",
+    # review #51 batch-8 repairs
+    "- operational: as evidence",
+    "- operational: (eFPS) experiences frequent downtime",
+    "- operational: is not always accessible or up-to-date",
+    "NOLCO carryforward period is 3 years for small taxpayers",
+    "Labor Code Article 294",
+    "130% for rest days and holidays",
+    "PHP 500K–20M; represents ~5–8% of total revenue",
+    "SALSBAC",
+    "archived accounting data (W15.3)",
+    "~100–150 new hires",
+    "~200 new hires/month",
+    "~15–25 new hires/month",
+    "1.5 hours × 4,500 employees",
+    "- **Total: ~140–160 hours/year**",
+    "(18 regular holidays",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
@@ -130,6 +146,19 @@ QUOTE_STYLE_ALLOWLIST = {
 }
 
 
+def steps_header_hits(lines):
+    """Structural rule (review #51): a steps table header row must not directly
+    follow a field-table row — the W4762 signature (missing '### Steps' or any
+    phase header between the field table and the steps table)."""
+    out = []
+    for i, l in enumerate(lines):
+        if re.match(r"^\| # \| Activity \|", l):
+            prev = next((x for x in lines[:i][::-1] if x.strip()), "")
+            if prev.startswith("| **") and "**" in prev:
+                out.append((i + 1, "steps table follows field row with no section header"))
+    return out
+
+
 def quote_integrity_hits(fname, lines):
     """Containment + word-boundary check for step-quoting automation bullets."""
     out = []
@@ -137,15 +166,18 @@ def quote_integrity_hits(fname, lines):
     steps = {}
     in_steps = False
     for i, l in enumerate(lines, 1):
+        if re.match(r"^### Steps\b", l):
+            in_steps = True
+            continue
         m = re.match(r"^#{2,3} (W\d+[A-Z]?)[. ]", l)
         if m:
             cur = m.group(1)
             in_steps = False
             continue
-        if re.match(r"^### Steps\b", l):
-            in_steps = True
-            continue
         if l.startswith("#"):
+            # named h3 sub-sections (e.g. '### Vendor Rebate Dispute Resolution')
+            # end the current workflow's step scope
+            cur = None
             in_steps = False
             continue
         if in_steps:
@@ -222,6 +254,8 @@ def main():
                                  f"{role} count {pm.group(1)} != register {n}"))
         for line, detail in quote_integrity_hits(fname, text.splitlines()):
             hits.append(("quote-integrity", rel, line, detail))
+        for line, detail in steps_header_hits(text.splitlines()):
+            hits.append(("steps-header", rel, line, detail))
     for kind, rel, line, detail in hits:
         print(f"{kind}: {rel}:{line}: {detail}")
     print(f"audit-semantic-anchors: {len(hits)} hit(s) across {len(files)} PA files")
