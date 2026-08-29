@@ -54,7 +54,7 @@ demand-charge management, integration with BuildRight's own solar/storage VS-108
 billing/payment/roaming (OCPI/OCPP, RFID/app/QR access, acquirer settlement VS-80); and operations,
 preventive/reactive EVSE maintenance (specialized high-voltage), accessibility (PWD-accessible
 charge bays, RA 7277), safety/incident (PERA/DOLE/Energy Regulatory Board), regulatory compliance
-(ERB, LGU, EMB), host-revenue settlement, and network uptime/analytics. It integrates tightly with
+(DOE, LGU, EMB), host-revenue settlement, and network uptime/analytics. It integrates tightly with
 VS-108 (own generation/storage), VS-120 (energy), VS-138 (facility power infrastructure), VS-80
 (payment/settlement), VS-13/VS-75 (loyalty/app), and VS-25 (decarbonization reporting).
 

@@ -4312,7 +4312,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4786 | Reactive Fault Triage, Field Repair & Vendor Dispatch | VS-163 |
 | W4787 | Charging-Site Safety, Emergency Response & Incident Management | VS-163 |
 | W4790 | Host-Revenue Settlement, CPO Recon & Financial Close | VS-163 |
-| W4791 | Charging Compliance Audit — ERB/LGU/RA 11697/RA 7394 & Cyber/Privacy | VS-163 |
+| W4791 | Charging Compliance Audit — DOE/LGU/RA 11697/RA 7394 & Cyber/Privacy | VS-163 |
 
 **Governance & Assurance** (99)
 
@@ -5855,7 +5855,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4770 | Charge-Point-Operator (CPO) & e-Mobility-Service-Partner Selection & Contracting | VS-163 |
 | W4772 | Host-Revenue, Lease & Cost-Sharing Commercial Structure | VS-163 |
 | W4773 | EV Customer Experience, Loyalty Integration & Drive-to-Store Basket Design | VS-163 |
-| W4774 | Regulatory & Utility Engagement — ERB, RA 11697, Meralco/Cooperative, LGU | VS-163 |
+| W4774 | Regulatory & Utility Engagement — ERC, RA 11697, Meralco/Cooperative, LGU | VS-163 |
 | W4775 | Charging Tariff Design, Energy Pricing & Demand-Charge Management Strategy | VS-163 |
 | W4776 | Network Expansion Governance, Capex Approval & Portfolio Prioritization | VS-163 |
 | W4777 | EVSE Hardware Specification, Standards & Procurement | VS-163 |
