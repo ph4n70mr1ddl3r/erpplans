@@ -531,7 +531,7 @@ These 3,243 workflows are needed for standard operational support, cost controls
 | W116 | Site Selection & Feasibility Analysis | Real estate expansion |
 | W117 | Lease Administration & Renewal | Lease management |
 | W118 | Rent & CAM Payment Processing | Rent payments |
-| W119 | Real Property Tax (Amillaramento) Management | Property tax |
+| W119 | Real Property Tax (Amillaramiento) Management | Property tax |
 | W162 | Project Quotation & Bid Management | Trade/project sales |
 | W163 | Contract Pricing & Project Price Books | Project pricing |
 | W164 | Staged Project Delivery & Call-Off Orders | Staged deliveries |
@@ -548,7 +548,7 @@ These 3,243 workflows are needed for standard operational support, cost controls
 | W279 | Product Substitution Rules & Governance | Substitution rules |
 | W441 | Corporate Staff Housing & Billeting Management | Staff housing management |
 | W238 | Hazmat Spill Response & Incident Management | Hazmat spill response |
-| W430 | LGU Business Permit & "Amillaramento" (RPT) On-Site Inspection | Regulatory compliance for 200 sites |
+| W430 | LGU Business Permit & "Amillaramiento" (RPT) On-Site Inspection | Regulatory compliance for 200 sites |
 | W431 | LGU-Specific "Truck Ban" & Route Governance | Delivery window & fine management |
 
 ---

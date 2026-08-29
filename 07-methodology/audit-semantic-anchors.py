@@ -210,6 +210,25 @@ RETIRED_LITERALS = [
     "~400–500 empty return trips",
     "Monthly; ~20 vehicles",
     "~1,000 dealer grades",
+    # review #59 batch-15 repairs
+    "All store staff (30/store)",
+    "PHP 150,000–300,000/month in penalties",
+    "~5,000–10,000 catalog updates per year",
+    "= 6,000 person-hours/year",
+    "catalog review is 30% of role",
+    "~8,500–9,500 invoices",
+    "(PHP 5,800 employees",
+    "~5,800 employees with average basic salary",
+    "200 stores × 35 departments",
+    "~50–80 active VMI vendor partners",
+    "~6,000 employees across 5 legal entities",
+    "contributions reach PHP 8–12M",
+    "**~1,400 hours/month**",
+    "DTI: within 24 hours of recall decision",
+    "DTI 24-hour reporting deadline",
+    "PMBTI",
+    "NMIC)",
+    "Amillaramento",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
