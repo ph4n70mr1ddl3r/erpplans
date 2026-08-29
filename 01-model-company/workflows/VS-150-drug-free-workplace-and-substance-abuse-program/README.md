@@ -8,11 +8,11 @@
 
 Drug-Free Workplace & Substance Abuse Program workflows for BuildRight Depot Corp. — owning the
 **drug-free workplace discipline** mandated for Philippine employers by DOLE Department Order No.
-53-04 (series of 2003) and Article V of RA 9165 (Comprehensive Dangerous Drugs Act), which require
+53-03 (series of 2003) and Article V of RA 9165 (Comprehensive Dangerous Drugs Act), which require
 covered employers to formulate and implement a drug-free workplace policy and program. At ~6,762
 employees across 5 entities and ~205 sites (200 stores + 4 DCs + HQ), plus ~10–20% contingent
 labor (VS-98) and a large **safety-sensitive** population (forklift/reach-truck operators,
-delivery drivers under LTFRB/DOTC rules, paint/chemical handlers, equipment operators) inside a
+delivery drivers under LTFRB/DOTr rules, paint/chemical handlers, equipment operators) inside a
 **premises-liability-exposed** customer environment (VS-147), an impaired employee is a direct
 safety, legal, and reputational risk — a drug-impaired forklift operator in a customer-occupied
 aisle, or an impaired delivery driver, can cause catastrophic harm.
@@ -24,7 +24,7 @@ workflow headers (only scattered single-step mentions). The capability is sprink
 *pre-employment* testing as one onboarding step), VS-24 (HSE — touches *post-incident* testing as
 one safety step), VS-06.2 (Fleet & Driver — touches *driver* testing), VS-22 (Compliance — touches
 *DOLE documentation*), and VS-56 (3PL — touches *partner-driver* testing). No value stream owns the
-end-to-end drug-free workplace program: the DOLE D.O. 53-04 policy & framework, safety-sensitive
+end-to-end drug-free workplace program: the DOLE D.O. 53-03 policy & framework, safety-sensitive
 role identification, drug-testing vendor (collection/lab/MRO) management, the full testing matrix
 (pre-employment, random, reasonable-suspicion, post-incident, return-to-duty, follow-up),
 specimen chain-of-custody, MRO/results management, positive/refusal case management & due process,
@@ -37,12 +37,12 @@ value stream owns the *drug-free program* that uses the clinic/lab as a vendor. 
 *pre-employment drug testing as one element of a broader program*. It is distinct from **VS-24
 (HSE)** which owns *employee safety broadly* — this value stream owns the *drug-impairment*
 dimension that drives post-incident and reasonable-suspicion testing. It is distinct from **VS-06
-(Fleet)** which owns *drivers* — this value stream owns the *LTFRB/DOTC driver drug-testing
+(Fleet)** which owns *drivers* — this value stream owns the *LTFRB/DOTr driver drug-testing
 requirement* as part of the broader program. It is distinct from **VS-98 (Contingent Workforce)**
 which owns *non-employee labor* — this value stream owns the *contractor/agency drug-testing
 coverage requirement* that VS-98 enforces contractually.
 
-BuildRight's exposure is structural: DOLE D.O. 53-04 makes the drug-free program a legal obligation
+BuildRight's exposure is structural: DOLE D.O. 53-03 makes the drug-free program a legal obligation
 (non-compliance → DOLE finding/penalty and officers' personal liability under RA 9165); a
 drug-impaired operator/driver is a catastrophic safety risk (VS-24/VS-147); and mishandled testing
 (privacy breach RA 10173, wrongful discipline, NLRC case) creates labor/legal exposure. A

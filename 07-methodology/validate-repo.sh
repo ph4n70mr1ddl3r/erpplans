@@ -2314,7 +2314,12 @@ echo "--- Check 46: stale-figure & superseded-citation literal guard ---"
 # (PA-08.1 x3, incl. the automation fragment) cites the child-protection act where the
 # age-verification mandates run per RA 9211 Sec. 9 (tobacco) / PD 1619 (volatile
 # solvents); 'DOLE DO 53-03' (erp-requirements.md) mistypes the drug-free-workplace
-# guidelines, which are D.O. 53-04 (the catalog's own W4458); 'RR 13-2018 (SAF-T)'
+# guidelines, which are D.O. 53-04 (the catalog's own W4458) — [review #68 REVERSED:
+# web-verified vs DOLE's own download page and the SC E-Library, the private-sector
+# drug-free-workplace guidelines are D.O. 53-03, s. 2003; #33's '53-04' was a
+# mis-verification that flipped only COM-001 + the VS-150 README against the corpus
+# majority (53-03 in CTL-129, W4458, PA-150.1/2/3, PA-22.2, PA-167.2, gap-analysis)];
+# 'RR 13-2018 (SAF-T)'
 # (PA-17.3) is neither the e-invoicing regulation (RR 8-2020 under NIRC Sec. 237 as
 # amended by TRAIN) nor a Philippine standard (SAF-T is an OECD format, not BIR);
 # 'PD 1586, RA 6969' (PA-31.3) pairs the EIS/ECC law with hazardous-release
@@ -2350,7 +2355,10 @@ bad_literals = [
     (r'RR\s?34-2022', 'phantom BIR transfer-pricing regulation (correct: RR 02-2013)'),
     (r'ADR Act RA 876', 'mis-labeled arbitration citation (RA 876 is the 1953 Arbitration Law; the ADR Act is RA 9285)'),
     (r'age-restricted items per RA 7610', 'age-verification mis-citation (RA 7610 is child protection; age-restricted sale bans run per RA 9211 Sec. 9 tobacco / PD 1619 volatile solvents)'),
-    (r'DO\s?53-03', 'drug-free-workplace guidelines are DOLE D.O. 53-04, not 53-03'),
+    # review #68 REVERSAL of the #33 adjudication: web-verified vs DOLE's own page and
+    # the SC E-Library — the drug-free-workplace private-sector guidelines are
+    # D.O. 53-03, s. 2003; '53-04' was the mis-verification.
+    (r'D\.?\s?O\.?\s?53-04', 'the drug-free-workplace guidelines are DOLE D.O. 53-03, s. 2003, not 53-04'),
     (r'RR\s?13-2018 \(SAF-T\)', 'SAF-T is not a Philippine BIR standard; e-invoicing/e-receipts run per RR 8-2020 under NIRC Sec. 237 as amended by TRAIN'),
     (r'PD 1586, RA 6969', 'hazardous-release notification runs under RA 6969 + its IRR alone (PD 1586 is the EIS/ECC system)'),
     (r'IRR \(DAO 2023-05\)', 'the EVIDA (RA 11697) IRR is a DOE department circular (DENR DAO 2023-05 is the EPR Act RA 11898 IRR)'),

@@ -1143,7 +1143,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 | W5267 | Monthly TESDA Compliance Report Compilation and Submission | DTS & TESDA Partnership |
 | W5268 | TVI Monthly Administrative Billing and Expense Sharing Reconciliation | DTS & TESDA Partnership |
 | W5269 | BIR Certificate of DTS Training Expense Audit | DTS & TESDA Partnership |
-| W5272 | Annual DTS Tax Savings Certificate Procurement | DTS & TESDA Partnership |
+| W5272 | Annual DTS Tax Savings Computation and Assessment Records | DTS & TESDA Partnership |
 
 #### Asset & Infrastructure
 
@@ -4267,7 +4267,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4331 | Housing Cost Recovery, Rent/Utility Recharge & Reconciliation | VS-144 |
 | W4333 | Dormitory Fire/Life-Safety, BFP & Inspections | VS-144 |
 | W4458 | DOLE D.O. 53-03 & PH Regulatory Framework Alignment | VS-150 |
-| W4459 | Safety-Sensitive & Driver (LTFRB/DOTC) Role Identification | VS-150 |
+| W4459 | Safety-Sensitive & Driver (LTFRB/DOTr) Role Identification | VS-150 |
 | W4460 | Drug Testing Vendor (Collection/Lab/MRO) Selection & Contract | VS-150 |
 | W4469 | Specimen Collection, Chain-of-Custody & Laboratory Testing | VS-150 |
 | W4477 | Drug-Free Workplace Audit, Inspection & DOLE Documentation | VS-150 |
@@ -4281,7 +4281,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4867 | Screening-Vendor Selection, PSIAB Accreditation & Contracting | VS-167 |
 | W4872 | Screening Data Governance, Retention, DSAR & Records Management | VS-167 |
 | W4885 | Screening Cost & ROI Analytics — Spend, Loss-Avoided, Vendor Consolidation | VS-167 |
-| W4886 | Regulatory Change Monitoring (DOLE/NPC/NBI/PBI) & Policy Update | VS-167 |
+| W4886 | Regulatory Change Monitoring (DOLE/NPC/NBI/PNP) & Policy Update | VS-167 |
 
 **Asset & Infrastructure** (26)
 

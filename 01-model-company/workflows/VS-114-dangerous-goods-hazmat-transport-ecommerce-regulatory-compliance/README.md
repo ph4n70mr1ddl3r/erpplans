@@ -53,7 +53,7 @@ fixed-site HSE, customs, recall, packaging, logistics execution, and waste manag
 
 BuildRight's exposure is structural: an 8–10%+ DG-intensive assortment moving by ocean, inter-island,
 road, and ecommerce last-mile across 200 stores and 4 DCs, under multiple Philippine regulators
-(DENR-EMB RA 6969, BFP Fire Code, DOLE OSH, MARINA/Coast Guard for sea, CAB for air, LTFRB/DOTC for
+(DENR-EMB RA 6969, BFP Fire Code, DOLE OSH, MARINA/Coast Guard for sea, CAB for air, LTFRB/DOTr for
 road) and international modal rules (IMDG/IATA/ADR). Non-compliance causes carrier refusal and
 shipment detention, ecommerce channel blocking, port/airport seizure, fines/penalties, license/
 permit loss, and — in the worst case — fire, spill, injury, and environmental damage. No existing
