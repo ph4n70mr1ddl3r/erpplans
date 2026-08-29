@@ -77,7 +77,11 @@ RETIRED_LITERALS = [
     "**Absb-erosion risk**",
     "(DOLE DO 174 Compliance)",
     "DTI DAO 2",
-    "RR 19-2020",
+    # "RR 19-2020" re-scoped in #66 — it is a real TP-documentation issuance legitimately
+    # supplementing RR 02-2013; only the bare "per RR 19-2020" mis-citation (without the
+    # RR 02-2013 anchor) is retired
+    "per RR 19-2020)",
+    "per RR 19-2020.",
     "No. 19-2020",
     "RA 11199",
     "per DAO 198",
@@ -344,6 +348,30 @@ RETIRED_LITERALS = [
     # "Permit to Operate (PTO) for standby generators" withdrawn — the DOE attribution is repaired;
     # the remaining literal matches the correct DENR-EMB text
     "within 5 days of document execution",
+    # review #66 batch-20 repairs
+    "MARPA",
+    "AO 2016-0015",
+    "1604E/1604C with Alpha List attachments via eFPS BIR system before January 31",
+    "coorporate",
+    "deliquent",
+    "DTI/NMIS",
+    "PSA certification for aircon technicians",
+    "RR 19-2017",
+    "USD 50,000 require BSP reporting",
+    # "(3 per store)" withdrawn — matches the correct 3-POS-terminals-per-store canon;
+    # the Stock-Associate mis-count is repaired
+    "23-person Marketing team",
+    "10–12 Sales Reps",
+    "~5,000 active vendors",
+    # "100 points = PHP 10" re-scoped — substring of the correct "PHP 100" form;
+    # only bounded mis-citation variants are retired
+    "100 points = PHP 10 for",
+    "100 points = PHP 10)",
+    "PHP 5,000 per terminal",
+    "2–10% of contract value",
+    "~28,000 monthly special-order",
+    "~600–960 new listings",
+    "~15,000–20,000 partner reward redemptions",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')
