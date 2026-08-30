@@ -643,7 +643,7 @@ The following circular data flows must be managed during steady-state operations
 > The Statutory deepening (VS-79–VS-88) and thirty gap-analysis passes (2026-06-14 through 2026-06-21)
 > — with the post-Pass-30 PA-127.4 extension (W5489–W5496) and the post-catalog workflow-level
 > additions (W5497 in VS-84.2, W5502 in VS-83.3, and W5508 in VS-79.2) — together added 114 value streams /
-> 2,747 workflows that are predominantly
+> 2,748 workflows that are predominantly
 > **cross-cutting overlays** on the Tier-1 core: governance,
 > assurance, finance-deepening, and technology-platform programs that consume master
 > data and transactions from the foundational value streams. This section captures the

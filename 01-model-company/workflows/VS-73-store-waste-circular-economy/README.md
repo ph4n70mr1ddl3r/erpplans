@@ -24,7 +24,7 @@ disclosure. Distinct from VS-24 (fixed-site HSE), VS-25 (group ESG reporting), V
 
 ## Owner & participants
 
-- **Owner**: Sustainability Coordinator (reports to VP Operations)
+- **Owner**: Sustainability Coordinator (reports to COO)
 - **Key participants**: Store Managers, Maintenance Staff, Paint Section Leads, Safety
   Officers, Facilities Manager, DENR-certified waste/recycling vendors, Finance, Legal, IT
   (e-waste), Marketing (circular-economy + community programs).

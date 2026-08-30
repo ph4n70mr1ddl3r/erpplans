@@ -531,6 +531,11 @@ RETIRED_LITERALS = [
     "~20 vehicles/month",
     "Annual; ~20 vehicles",
     "BDO, BPI, Citibank, Metrobank, HSBC",
+    # review #69 successor — the VP-Operations ghost-role adjudication (2026-08-30):
+    # web/corpus-verified decision — the corpus's own PA-69.2 gloss "VP Operations (COO
+    # designate)" and profile §11.1's closed 7-exec C-suite (ops under the COO) settle
+    # the 519 bare-title spots as the COO; "VP Store Operations" (canonical) untouched.
+    "| VP Operations |",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')

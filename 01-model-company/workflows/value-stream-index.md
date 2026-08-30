@@ -179,7 +179,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 49 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 28 |
-|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 27 |
+|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 26 |
 |  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | Core | 3 | 31 |
 |  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | Core | 3 | 30 |
 |  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | Core | 3 | 23 |
@@ -191,7 +191,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-76](VS-76-multi-region-lgu-compliance/README.md) | Philippine Multi-Region LGU & Local Regulatory Compliance | Expansion | 3 | 24 |
 |  | [VS-85](VS-85-mandatory-discount-eligibility-tax-credit/README.md) | Mandatory Discount, Eligibility & Tax Credit Recovery | Statutory | 3 | 24 |
 |  | [VS-86](VS-86-anti-financial-crime-aml-abc/README.md) | Anti-Financial Crime, AML/KYC & Anti-Corruption | Statutory | 3 | 24 |
-|  | [VS-87](VS-87-customs-trade-compliance-tariff/README.md) | Customs Trade Compliance & Tariff Optimization | Statutory | 3 | 24 |
+|  | [VS-87](VS-87-customs-trade-compliance-tariff/README.md) | Customs Trade Compliance & Tariff Optimization | Statutory | 3 | 25 |
 |  | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control, Records Management & Retention | Statutory | 3 | 24 |
 |  | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action Management | Gap analysis | 3 | 24 |
 |  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | Gap analysis | 3 | 24 |
@@ -1102,11 +1102,11 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-23.2** [Physical Security & Surveillance](./VS-23-loss-prevention/PA-23.2-physical-security-and-surveillance.md) — 9 workflows
 - **PA-23.3** [Shrinkage Reduction](./VS-23-loss-prevention/PA-23.3-shrinkage-reduction.md) — 9 workflows
 
-**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (27 workflows)
+**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (26 workflows)
 
 - **PA-24.1** [Occupational Health & Safety](./VS-24-health-safety-environment/PA-24.1-occupational-health-and-safety.md) — 11 workflows
 - **PA-24.2** [Emergency Preparedness](./VS-24-health-safety-environment/PA-24.2-emergency-preparedness.md) — 8 workflows
-- **PA-24.3** [Hazmat Management](./VS-24-health-safety-environment/PA-24.3-hazmat-management.md) — 8 workflows
+- **PA-24.3** [Hazmat Management](./VS-24-health-safety-environment/PA-24.3-hazmat-management.md) — 7 workflows
 
 **[VS-25: ESG & Sustainability](./VS-25-esg-sustainability/README.md)** (31 workflows)
 
@@ -1174,11 +1174,11 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-86.2** [AML Transaction Monitoring & STR/CTR Reporting (AMLC)](./VS-86-anti-financial-crime-aml-abc/PA-86.2-aml-transaction-monitoring-strctr.md) — 8 workflows
 - **PA-86.3** [Anti-Bribery, Gifts & Conflict of Interest Management](./VS-86-anti-financial-crime-aml-abc/PA-86.3-antibribery-gifts-conflict-of-interest.md) — 8 workflows
 
-**[VS-87: Customs Trade Compliance & Tariff Optimization](./VS-87-customs-trade-compliance-tariff/README.md)** (24 workflows)
+**[VS-87: Customs Trade Compliance & Tariff Optimization](./VS-87-customs-trade-compliance-tariff/README.md)** (25 workflows)
 
 - **PA-87.1** [Tariff Classification, Origin & Valuation](./VS-87-customs-trade-compliance-tariff/PA-87.1-tariff-classification-origin-valuation.md) — 8 workflows
 - **PA-87.2** [FTA Preference, Duty Drawback & Bonded Operations](./VS-87-customs-trade-compliance-tariff/PA-87.2-fta-preference-duty-drawback-bonded.md) — 8 workflows
-- **PA-87.3** [Trade Compliance Audit, Broker Governance & ADC](./VS-87-customs-trade-compliance-tariff/PA-87.3-trade-compliance-audit-broker-governance.md) — 8 workflows
+- **PA-87.3** [Trade Compliance Audit, Broker Governance & ADC](./VS-87-customs-trade-compliance-tariff/PA-87.3-trade-compliance-audit-broker-governance.md) — 9 workflows
 
 **[VS-88: Document Control, Records Management & Retention](./VS-88-document-control-records-retention/README.md)** (24 workflows)
 
