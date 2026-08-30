@@ -121,7 +121,7 @@ The company operates through **5 legal entities** organized as follows:
 - **Supply Chain & Logistics**: S&OP/IBP & demand planning, supply & allocation planning, DC operations, fleet & logistics, procurement, imports & customs, vendor management (40)
 - **Information Technology**: Infrastructure, applications, data/BI, security, privacy, helpdesk (50)
 - **Human Resources**: Recruitment, compensation, training, payroll, benefits, labor relations (26)
-- **Marketing**: Brand, promotions, ecommerce, digital, content, loyalty, insights (25)
+- **Marketing**: Brand, promotions, ecommerce, digital, content, loyalty, insights (25; led by a **VP Marketing** under the CMO, mirroring the VP-for-Merchandising convention at §13.1 — the department-head tier the workflow catalog's escalation seats refer to)
 - **Store Operations**: Regional managers, operations standards, facilities coordination (24)
 - **Legal & Compliance**: Corporate secretary, regulatory, DPO, AML/MLRO, contracts, government affairs (14)
 - **Internal Audit & Risk**: (7)

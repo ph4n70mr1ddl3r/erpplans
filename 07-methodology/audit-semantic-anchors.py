@@ -83,7 +83,12 @@ RETIRED_LITERALS = [
     "per RR 19-2020)",
     "per RR 19-2020.",
     "No. 19-2020",
-    "RA 11199",
+    # review #74 (batch 28) REVERSED review #49's own adjudication per the #22/#68
+    # precedent: #49 retired "RA 11199" and swept SSS cites to "RA 11111" — backwards.
+    # RA 11199 IS the Social Security Act of 2018 (signed 2019-02-07; LawPhil + SSS
+    # official site, web-verified 2026-08-30); RA 11111 is the Farm Tourism Development
+    # Act. The two #49-era spots were re-trued to RA 11199 and the literal flipped.
+    "RA 11111",
     "per DAO 198",
     "amended by RA 10121",
     "DTI/BFS",
@@ -637,6 +642,17 @@ RETIRED_LITERALS = [
     "PSIAB",
     "which includes businesses accepting cash payments",
     "under RA 8556 / SEC oversight",
+    # review #74 batch-28 repairs: the Pag-IBIG remittance deadline trued to the 10th
+    # of the following month (three spots incl. the W1306 trigger and PA-17.3), the
+    # stale "~16-person HR team" figure (26 per §3.3), the 12-24x data-warehouse
+    # growth claim trued to the §1.2 canon, the "standard 15%" receiving-sampling
+    # figure trued to the corpus 10% canon (W1600), and the deprecated W5c sub-step
+    # ids renumbered to W5F.
+    "Pag-IBIG: every 14th",
+    "Pag-IBIG by every 14th",
+    "~16-person HR team",
+    "100\u2013200 GB/month",
+    "(vs. standard 15%)",
     # review #71 batch-25 repairs (withdrawn after collision testing: bare "~8K–12K/month"
     # — legitimate coupon/gift-card volumes share the form; "CSO /" and "| CDO |" match
     # un-swept non-sustainability contexts — the CSO/CDO flips were scoped to the

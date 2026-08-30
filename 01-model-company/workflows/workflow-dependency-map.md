@@ -670,7 +670,7 @@ counts themselves superseded the v3.7 snapshot mined over a narrower range.
 | VS-28 | Data, Analytics & BI | 1,117 |
 | VS-19 | Hire-to-Retire | 996 |
 | VS-91 | Consumer Data Privacy & Data Protection Program | 977 |
-| VS-13 | Customer Experience & Loyalty | 884 |
+| VS-13 | Customer Experience & Loyalty | 882 |
 | VS-24 | Health, Safety & Environment | 867 |
 | VS-22 | Compliance & Regulatory | 842 |
 
