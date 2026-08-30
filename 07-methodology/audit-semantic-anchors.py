@@ -536,6 +536,29 @@ RETIRED_LITERALS = [
     # designate)" and profile §11.1's closed 7-exec C-suite (ops under the COO) settle
     # the 519 bare-title spots as the COO; "VP Store Operations" (canonical) untouched.
     "| VP Operations |",
+    # review #70 batch-24 repairs ("13 departments [,/]-~40 categories" literals WITHDRAWN after
+    # the repair — #66 had canonicalized that very form as the per-department planning convention;
+    # the batch-24 flag was the over-correction, caught by the guard's own first run)
+    "~320–600 hours across 4 DCs",
+    "4 DCs × ~15–20 loads/day",
+    "Primarily with top 50 vendors (by spend)",
+    "(PHP 50–200 value)",
+    "store/DC staff (98%+ of headcount)",
+    "management resolutions: ~10–20/year",
+    "funded projects ~120–200/month",
+    "~1,750–2,800/yr",
+    "~50 critical categories requiring diversification",
+    "typically 5–30% per RA 9184",
+    "~60–90 min per wholesale return",
+    "adds ~4–6 hours/month centralized",
+    "fabrication activity consumes ~20–40 min/day",
+    "~1–2 days/month on vehicle registration compliance",
+    "200 stores × ~20 extinguishers per store",
+    "regional operations directors",
+    "VP Store Ops",
+    "Chief Audit Executive",
+    "the restocking fee (5–10%)",
+    "Pay the registration fees; download and archive the NPC",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')

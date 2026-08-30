@@ -4377,7 +4377,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W2935 | AML Case Management, Investigation & Law Enforcement Cooperation | VS-86 |
 | W2936 | AML Rule Tuning, Threshold Governance & False-Positive Reduction | VS-86 |
 | W2945 | HS Tariff Classification & AHTN Code Assignment per Imported SKU | VS-87 |
-| W2946 | BOC Advance Ruling on Tariff Classification (CRA) Application | VS-87 |
+| W2946 | Tariff Commission Advance Ruling on Tariff Classification Application | VS-87 |
 | W2947 | Customs Valuation (Transaction Value) & Adjustments Management | VS-87 |
 | W2948 | Assists, Royalties & Additions to Customs Value Capture | VS-87 |
 | W2951 | Tariff Classification Master Maintenance & Item Master Integration | VS-87 |
