@@ -653,6 +653,23 @@ RETIRED_LITERALS = [
     "~16-person HR team",
     "100\u2013200 GB/month",
     "(vs. standard 15%)",
+    # review #75 batch-29 sweeps: two systemic wrong-VS pointer boilerplates
+    # (W113 "Business Intelligence & Data Governance" lives in VS-27, not VS-28;
+    # W52 "Fleet Management" lives in VS-04, not VS-06; 60 files / ~258 spots
+    # swept, plus 40 "VS-63 / W571" -> VS-07 spots), role families completed
+    # (Store Operations Director -> VP Store Operations incl. 5 ICM owner rows;
+    # Land Liaison Specialist -> Officer; ITAM Manager -> IT Asset Manager;
+    # Safety & PPE Department Supervisor -> Department Supervisor (Tools/Hardware)
+    # per §12.1's closed 4-supervisor set; Lease Accounting Controller -> Finance
+    # Controller (Lease Accounting); CHRO/CHRO doubled cells), and the W1278
+    # price-approval threshold (PHP 50 -> PHP 50,000 per the PA's own tiers).
+    "VS-28 / W113",
+    "VS-06 / W52",
+    "VS-63 / W571",
+    "51 daily workflows",
+    "above PHP 50 impact",
+    "CHRO / CHRO",
+    "downtime exceeds 99.9%",
     # review #71 batch-25 repairs (withdrawn after collision testing: bare "~8K–12K/month"
     # — legitimate coupon/gift-card volumes share the form; "CSO /" and "| CDO |" match
     # un-swept non-sustainability contexts — the CSO/CDO flips were scoped to the
