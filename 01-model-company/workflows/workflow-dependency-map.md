@@ -666,13 +666,13 @@ counts themselves superseded the v3.7 snapshot mined over a narrower range.
 | VS-17 | Record-to-Report | 1,984 |
 | VS-100 | Legal Operations, Litigation & IP | 1,607 |
 | VS-21 | Internal Audit & Risk | 1,544 |
-| VS-27 | IT Operations & Security | 1,231 |
+| VS-27 | IT Operations & Security | 1,229 |
 | VS-28 | Data, Analytics & BI | 1,117 |
-| VS-19 | Hire-to-Retire | 998 |
+| VS-19 | Hire-to-Retire | 996 |
 | VS-91 | Consumer Data Privacy & Data Protection Program | 977 |
-| VS-13 | Customer Experience & Loyalty | 889 |
-| VS-24 | Health, Safety & Environment | 868 |
-| VS-22 | Compliance & Regulatory | 843 |
+| VS-13 | Customer Experience & Loyalty | 884 |
+| VS-24 | Health, Safety & Environment | 867 |
+| VS-22 | Compliance & Regulatory | 842 |
 
 ### 8.2 Cross-cutting Tier-1 statutory / revenue-critical programs
 
