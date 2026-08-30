@@ -51,7 +51,7 @@ this owns the broader background/credential screening (with drug-test integratio
 consent and data-minimization *within the screening context*.
 
 This value stream owns the end-to-end screening discipline: program strategy & operating model;
-screening policy & role-based matrix; screening-vendor selection & governance (PSIAB-accredited
+screening policy & role-based matrix; screening-vendor selection & governance (PNP-SOSIA-licensed
 providers, TPRM VS-161); consent/RA 10173 privacy governance; screening-package design (NBI/
 police/court, prior-employment, education, credit-for-finance-roles, sanctions/PEP); quality/
 SLA/evidence chain-of-custody; governance/adverse-action review board; screening data

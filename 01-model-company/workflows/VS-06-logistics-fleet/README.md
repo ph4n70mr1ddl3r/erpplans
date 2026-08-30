@@ -14,7 +14,7 @@ Logistics & fleet: outbound distribution, fleet & driver management, and last-mi
 
 ## Owner & participants
 
-- **Owner**: VP Logistics / Fleet Manager
+- **Owner**: VP Supply Chain / Fleet Manager
 
 ## Process Areas
 

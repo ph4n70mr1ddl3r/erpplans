@@ -4278,7 +4278,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W4713 | Assignment Payroll, Multi-Currency & Home/Host Split-Pay Operations | VS-160 |
 | W4715 | Assignment Statutory Benefits, SSS/PhilHealth/Pag-IBIG & Home-Country Continuity | VS-160 |
 | W4719 | Immigration/DOLE Inspection, Audit Defense & Penalty Management | VS-160 |
-| W4867 | Screening-Vendor Selection, PSIAB Accreditation & Contracting | VS-167 |
+| W4867 | Screening-Vendor Selection, PNP-SOSIA Licensing & Contracting | VS-167 |
 | W4872 | Screening Data Governance, Retention, DSAR & Records Management | VS-167 |
 | W4885 | Screening Cost & ROI Analytics — Spend, Loss-Avoided, Vendor Consolidation | VS-167 |
 | W4886 | Regulatory Change Monitoring (DOLE/NPC/NBI/PNP) & Policy Update | VS-167 |

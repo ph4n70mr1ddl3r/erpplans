@@ -615,6 +615,28 @@ RETIRED_LITERALS = [
     "DOLE-BLRF",
     "8 pilot stores installed",
     "- CTL-51: master-data quality \u2014 links to VS-29 / W291",
+    # review #73 batch-27 repairs: role variants swept on canon targets (Merchandising
+    # Director -> VP Merchandising per §13.1; Financial Controller -> Finance Controller;
+    # Logistics Director/VP Logistics -> VP Supply Chain; VS-183's HR L&D Director /
+    # L&D VP -> the PA's charted HR-L&D Manager; executive-seat CCO forms -> VP Legal &
+    # Compliance — the DENR "CCO 2013-24" Chemical Control Order references are
+    # legitimately live and NOT retired), statutory forms (the phantom BOC "CAB-CBP"
+    # accreditation -> AMO per CMO 04-2014 + RA 9280; the last PSIAB remnant -> PNP-SOSIA
+    # per RA 5487; the AMLA covered-person mis-claim — general retail is not an RA 9160
+    # covered person, the group's financing subsidiaries are; RA 8556-only lending-company
+    # framing -> RA 9474 alongside RA 8556), and the CSO disambiguation literal form.
+    "Merchandising Director",
+    "Financial Controller",
+    "Logistics Director",
+    "VP Logistics",
+    "HR L&D Director",
+    "L&D VP",
+    "VP Legal/CCO",
+    "VP Legal / CCO",
+    "CAB-CBP",
+    "PSIAB",
+    "which includes businesses accepting cash payments",
+    "under RA 8556 / SEC oversight",
     # review #71 batch-25 repairs (withdrawn after collision testing: bare "~8K–12K/month"
     # — legitimate coupon/gift-card volumes share the form; "CSO /" and "| CDO |" match
     # un-swept non-sustainability contexts — the CSO/CDO flips were scoped to the
