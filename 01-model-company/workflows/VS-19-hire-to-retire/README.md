@@ -14,7 +14,7 @@ Hire-to-retire: recruitment, payroll & compensation, workforce management, learn
 
 ## Owner & participants
 
-- **Owner**: VP HR / HR Directors
+- **Owner**: CHRO / HR Directors
 
 ## Process Areas
 

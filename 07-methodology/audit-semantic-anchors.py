@@ -576,6 +576,45 @@ RETIRED_LITERALS = [
     "VP Services",
     "VP Real Estate",
     "VP Asset & Infra",
+    # review #72 batch-26 ghost-role adjudication: the finance-exec seat family
+    # ("VP Finance" ~148 + "Finance VP" ~71) unified on CFO per the corpus's own
+    # approval ladders (INS-008/CCR-001 "≤PHP 500K Finance Controller, ≤PHP 5M
+    # Finance VP, >PHP 5M CEO" — the seat between Controller and CEO is the CFO's
+    # in §11.1's closed 7-exec chart); "Finance Director" (~100) -> Finance
+    # Controller (the §3.3 department head; 478-use majority form; the external
+    # "Developer Finance Director" is legitimately live and NOT retired);
+    # "VP HR" (~42) -> CHRO; "VP Internal Audit" (~31) -> Head of Internal Audit
+    # (batch-24 target); "Merchandising VP"/"Marketing VP"/"Supply Chain VP" ->
+    # the charted VP-majority forms; "Regional Ops Director" (9) -> Regional
+    # Manager (PA-26.2's own step text already names Regional Manager);
+    # "Store Ops Dir" (16) -> VP Store Operations (batch-24 decision's abbreviation
+    # form); "Supply Chain Mgr" (8) -> VP Supply Chain (approval/escalation
+    # A-columns = the department-head seat charted at profile §3.3).
+    "VP Finance",
+    "Finance VP",
+    "| Finance Director |",
+    "the Finance Director",
+    "| VP HR |",
+    "| VP Internal Audit |",
+    "Merchandising VP",
+    "Regional Ops Director",
+    "Store Ops Dir",
+    "Supply Chain Mgr",
+    # review #72 batch-26 second wave: role families swept after the five audit passes
+    # (VP Customer Service 11 spots -> COO per §11.1's CS-under-COO row, VP-Services
+    # precedent; Head of Sustainability 33 -> Sustainability/ESG Manager, the CSO/
+    # VP-Sustainability adjudicated owner; Chief Risk Officer remnant -> Head of
+    # Internal Audit & Risk), statutory forms from the web-verified RA 9481/D.O. 40-03
+    # and BIR-2306 repairs, the solar-fleet stale figure, and the CTL-51 paste-template
+    # leading form (PA-67.2's deliberate topical cross-reference is a different string).
+    "VP Customer Service",
+    "Head of Sustainability",
+    "Chief Risk Officer",
+    "2306 on Imports",
+    "20% representation support",
+    "DOLE-BLRF",
+    "8 pilot stores installed",
+    "- CTL-51: master-data quality \u2014 links to VS-29 / W291",
     # review #71 batch-25 repairs (withdrawn after collision testing: bare "~8K–12K/month"
     # — legitimate coupon/gift-card volumes share the form; "CSO /" and "| CDO |" match
     # un-swept non-sustainability contexts — the CSO/CDO flips were scoped to the

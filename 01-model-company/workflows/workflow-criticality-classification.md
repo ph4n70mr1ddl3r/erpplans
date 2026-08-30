@@ -4389,7 +4389,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 | W2962 | BOC Post-Entry Audit (PEA) Readiness & Response | VS-87 |
 | W2963 | BOC Alert Order, Hold & Detention Resolution | VS-87 |
 | W2965 | Data Privacy Act (RA 10173) Compliance for Customs Data Sharing | VS-87 |
-| W2967 | BIR-to-BOC Reconciliation (Import VAT, Duties, 2306 on Imports) | VS-87 |
+| W2967 | BIR-to-BOC Reconciliation (Import VAT, Duties, BCOR/SSDT on Imports) | VS-87 |
 | W2973 | Physical Records Storage, Barcode & Retrieval Management | VS-88 |
 | W2975 | BIR-Compliant E-Invoice, E-Receipt & E-Book Archiving | VS-88 |
 | W2977 | Retention Schedule Maintenance by Record Class (BIR/SEC/DOLE/NPC) | VS-88 |
