@@ -14,7 +14,7 @@ Real estate & construction: site selection & lease management, engineering & con
 
 ## Owner & participants
 
-- **Owner**: VP Real Estate / Facilities
+- **Owner**: COO / Facilities
 
 ## Process Areas
 

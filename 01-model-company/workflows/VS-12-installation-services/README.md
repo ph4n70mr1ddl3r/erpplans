@@ -14,7 +14,7 @@ Installation, tool rental, and DIY workshops extend the customer relationship be
 
 ## Owner & participants
 
-- **Owner**: VP Services / Service Operations Managers
+- **Owner**: COO / Service Operations Managers
 
 ## Process Areas
 

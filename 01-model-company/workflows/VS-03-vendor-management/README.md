@@ -14,7 +14,7 @@ Vendor management & procurement: sourcing/onboarding, the purchase-order cycle, 
 
 ## Owner & participants
 
-- **Owner**: VP Procurement / Category Managers
+- **Owner**: VP Supply Chain / Category Managers
 
 ## Process Areas
 

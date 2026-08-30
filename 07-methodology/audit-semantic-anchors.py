@@ -559,6 +559,23 @@ RETIRED_LITERALS = [
     "Chief Audit Executive",
     "the restocking fee (5–10%)",
     "Pay the registration fees; download and archive the NPC",
+    # review #70 successor — the ghost-role adjudication sweep (2026-08-30): ten families
+    # (1,108 spots) unified on charted/majority owners per profile §11.1 — CRO -> Head of
+    # Internal Audit & Risk (the W122 "acting as Risk Officer" gloss), General Counsel -> VP
+    # Legal & Compliance, Store Ops Director -> VP Store Operations (715-use majority), VP
+    # Procurement -> VP Supply Chain (charted), VP Quality -> Quality Manager, VP Sustainability
+    # -> Sustainability/ESG Manager, CDAIO -> CIO, VP Services/VP Real Estate/VP Asset & Infra -> COO
+    # (the §11.1 COO row owns Store Ops, Supply Chain, Facilities & Real Estate, Quality, Trade).
+    "| CRO |",
+    "General Counsel",
+    "Store Ops Director",
+    "VP Procurement",
+    "VP Quality",
+    "VP Sustainability",
+    "CDAIO",
+    "VP Services",
+    "VP Real Estate",
+    "VP Asset & Infra",
 ]
 CLIP_RE = re.compile(r'auto-\w+ of "(logies|logy[^"s/]|countant)')
 FOOTPRINT_CLIP_RE = re.compile(r'auto-\w+ of "print([^"]*)" \(replaces manual Step (\d+)\)')

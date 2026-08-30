@@ -7,7 +7,7 @@
 ## Overview
 
 Legal Operations, Litigation & Intellectual Property Management workflows for BuildRight Depot
-Corp. — governing the **General Counsel's office operating model** for active legal work across the
+Corp. — governing the **VP Legal & Compliance's office operating model** for active legal work across the
 5-entity group: matter/case and outside-counsel management, the litigation lifecycle (pre-trial,
 trial, judgment, appeal, enforcement), alternative dispute resolution, settlement/judgment
 accounting, intellectual-property portfolio (trademarks, copyrights, industrial designs, trade
