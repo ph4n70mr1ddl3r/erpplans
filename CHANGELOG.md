@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-09-01 — IT Product Operating Model issued (`07-methodology/it-product-operating-model.md`) — 12 product teams covering all 188 value streams; membership, roles, RACI, governance, sizing 50 → 80 FTE
+
+First organizational artifact of the `07-methodology` folder: the target IT operating model for the post-go-live unified-ERP steady state.
+
+- **Product taxonomy**: 7 stream-aligned domain teams (MSC Merchandising & Supply Chain Systems; WLI Warehouse, Logistics & Inventory Systems; SSP Store Systems & POS; CCP Commerce & Customer Platforms; FIN Finance & Treasury Systems; CORP Corporate, Governance & Asset Systems; PEO People Systems) + 5 platform teams (IAP Integration & API Platform; INFRA Cloud Infrastructure & SRE; SEC Cybersecurity, Privacy & OT Security; DP Data Platform & MDM; FS Field & End-User Services) + CIO Office (EA, portfolio governance, FinOps).
+- **Full 188-VS assignment**: §4 maps every value stream to exactly one primary product team with its business process owner — the Governance & Assurance family (37 VS) gets no dedicated team (controls embedded in the owning products, coordinated by the SEC GRC cell with Internal Audit/Legal & Compliance as demand-side owners); the Technology & Data family (13 VS) is owned directly by the platform teams/CIO Office. §4.9 reconciliation sums exactly: 171 domain + 17 platform = 188 VS; 4,864 + 499 = 5,363 workflows (matches the value-stream-index grand totals).
+- **Team membership & roles** (§5): standard 6-role domain-team core (IT Product Owner; Product/Process Architect; ERP Functional Analysts; CCP-only Commerce/App Engineer; Data & Reporting Analyst; QA & Release Analyst) with business-side membership (Business Product Owner + SMEs + shared Change & Training pool) explicitly excluded from IT headcount; platform-team rosters defined.
+- **RACI** (§6): delivery, run-and-operate, and shared-object/control change matrices; single-A discipline throughout (house RACI key). **Governance** (§7): Product Council (monthly, CIO), Architecture Review Board (bi-weekly, Head of EA — custodian of the VS-113 unified-ERP principle), weekly Product Sync, monthly Tier & Control Board (808-control register, Internal Audit independence preserved per §11.1 note 1), quarterly QBR.
+- **Sizing** (§9): steady state **80 FTE** (47 domain + 33 platform/CIO) vs the §3.3 current 50, the `headcount-reality-check.md` §3.2 need band 65–80, and the 100–168 industry benchmark — phase plan 50 → ~53 → ~70 → 80 prioritizing the gap-record's flagged archipelago field-support and integration-backbone shortfalls first.
+- Root README tree + `07-methodology/README.md` contents updated. Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC**. `validate-repo.sh` green **0 errors / 0 warnings** across all **62 checks**.
+
+---
+
 ## 2026-08-29 — Consistency review #67: semantic batch 21 (104 workflows, 2,137 → 2,241 of 5,363 read; 41.8% coverage) — ~165 spots repaired across 35 files; 7 web-verified statutory classes; the #59 W1105 subset-literal formally superseded
 
 **Batch 21** (104 workflows, seed 6565, 13-per-family expansion-weighted, excluding all 2,137 prior W-ids; 94 families, 62 VS-53+, 100 PA files), pre-screened clean then read in full via five parallel passes with the #66 conventions briefing.
