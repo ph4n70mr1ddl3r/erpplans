@@ -137,7 +137,7 @@ identify capability gaps not addressed by any existing value stream.
 > cash-settlement route where a BIR 2307 is required; separate service-revenue/VAT treatment per
 > W473; and a quarterly fee-income-vs-service-cost recovery review. Canonical totals are now
 > **188 value streams · 569 process areas · 5,363 workflows** (the fourteen post-catalog workflows
-> ship unclassified with keyword-driven proposed tiers pending a confirmation pass).
+> were confirmed 2026-09-02 by the post-catalog confirmation pass — full classification coverage).
 
 > **Post-Pass-30 workflow-level additions, batch 4 (2026-08-26) — not a gap pass.** A fresh
 > review re-ran the §2 gap methodology at *workflow* granularity (defining-term keyword search
@@ -523,7 +523,7 @@ Pass 5 specifically targeted capabilities that existed only as a single workflow
 - **Insurance program / risk financing / total cost of risk** — covered by PA-26.3 (Insurance
   Claims & Policy Management, incl. W862 annual renewal and W1565 annual portfolio review/coverage-
   gap analysis/market benchmarking) in VS-26.
-- **Construction-site / jobsite HSE (DOLE D.O. 13)** — covered by W789 (Construction Safety
+- **Construction-site / jobsite HSE (DOLE D.O. 13-98)** — covered by W789 (Construction Safety
   Management & DOLE DO 13 Compliance) in VS-20.2 for BuildRight construction projects, with field
   safety for dispatched crews in VS-12.1/VS-24.
 - **Open innovation / R&D / corporate venture / pilot-to-scale** — covered by VS-30.1 (Emerging

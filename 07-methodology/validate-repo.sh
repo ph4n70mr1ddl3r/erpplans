@@ -685,7 +685,7 @@ FIELD_DETAIL=$(echo "$FIELDS" | cut -d'|' -f3-)
 if [ "$FIELD_TOTAL_MISSING" -eq 0 ]; then
     ok "All $FIELD_TOTAL_WF workflows have all 9 required fields"
 else
-    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). All 5,349 workflows carried all 9 fields after the 2026-06-27 completeness pass (Participants derived from Steps; System Touchpoints / Pain Points authored) — any reading above zero is a regression from a new generation artifact."
+    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). All 5,363 workflows carried all 9 fields after the 2026-06-27 completeness pass (Participants derived from Steps; System Touchpoints / Pain Points authored) — any reading above zero is a regression from a new generation artifact."
 fi
 
 # --- Check 23: Intra-file TOC anchor resolution ---
@@ -1115,7 +1115,7 @@ DEP = os.path.join(ROOT, '01-model-company', 'workflows', 'workflow-dependency-m
 dep = open(DEP, encoding='utf-8', errors='replace').read()
 for i, ln in enumerate(dep.split('\n'), 1):
     if 'remains unclassified' in ln or 'pending criticality review' in ln:
-        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,349 workflows have been classified since the 2026-06-28 Full-Coverage Confirmation Pass")
+        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,363 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510)")
 print(f"A_STALE={len(stale)}")
 for s in stale[:12]: print(f"A_STALE|{s}")
 print(f"B_ERRS={len(errs)}")
@@ -1125,9 +1125,9 @@ PY
 C27_STALE=$(echo "$CHECK27" | sed -n 's/^A_STALE=//p')
 C27_ERRS=$(echo "$CHECK27" | sed -n 's/^B_ERRS=//p')
 if [ "$C27_STALE" -eq 0 ]; then
-    ok "No stale register-row figure '2,776'/'2,753' in current-state prose (canonical figures are 5,372 rows / 5,349 unique since the 2026-06-28 Full-Coverage Confirmation Pass; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
+    ok "No stale register-row figure '2,776'/'2,753' in current-state prose (canonical figures are 5,386 rows / 5,363 unique since the 2026-09-02 post-catalog confirmation; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
 else
-    warn "Stale register-row figure '2,776'/'2,753' appears $C27_STALE time(s) in current-state prose (canonical figures are 5,372 rows / 5,349 unique — use an 'X -> Y' change-note or update the figure):"
+    warn "Stale register-row figure '2,776'/'2,753' appears $C27_STALE time(s) in current-state prose (canonical figures are 5,386 rows / 5,363 unique — use an 'X -> Y' change-note or update the figure):"
     echo "$CHECK27" | grep '^A_STALE|' | sed 's/^A_STALE|/    /'
 fi
 if [ "$C27_ERRS" -eq 0 ]; then
@@ -2214,9 +2214,8 @@ surfaces = [
     ("WORKFLOW-FORMAT-GUIDE.md", r"\(([\d,]+) confirmed rows; (\d+) post-catalog workflows keyword-proposed\)",
      lambda m: (n(m.group(1)) != rows and bad.append(f"format-guide layout row: confirmed-rows figure {n(m.group(1))} != classification {rows}"),
                 int(m.group(2)) != unclassified and bad.append(f"format-guide layout row: post-catalog figure {m.group(2)} != register {unclassified}")), 1),
-    ("WORKFLOW-FORMAT-GUIDE.md", r"holds the (\d+) unclassified post-catalog workflows (W\d+)–(W\d+)",
-     lambda m: (int(m.group(1)) != unclassified and bad.append(f"format-guide proposed-register row: count {m.group(1)} != register {unclassified}"),
-                lo is not None and (int(m.group(2)[1:]), int(m.group(3)[1:])) != (lo, hi) and bad.append(f"format-guide proposed-register row: range {m.group(2)}–{m.group(3)} != register W{lo}–W{hi}")), 2),
+    ("WORKFLOW-FORMAT-GUIDE.md", r"currently empty — 0 unclassified",
+     lambda m: (unclassified != 0 and bad.append(f"format-guide proposed-register rows claim 'currently empty — 0 unclassified' but the register holds {unclassified} unclassified workflows")), 2),
     (os.path.join("..", "requirement-workflow-matrix.md"), r"The full ([\d,]+)-workflow / 188-value-stream inventory",
      lambda m: want_total("requirement-matrix inventory line", n(m.group(1))), 1),
 ]
@@ -2842,24 +2841,32 @@ fi
 
 # --- Check 59: root-level model-company document integrity ---
 echo "--- Check 59: Model-doc figures & cross-references ---"
-# audit-model-docs.py (2026-08-29, consistency review #41) audits the three
-# root-level model-company documents never before swept (mobile-app-strategy.md,
-# data-migration-mapping.md, assumptions-and-design-decisions.md) against the
-# canonical registers: every W/VS-/CTL-/PA-/requirement-ID token must resolve
+# audit-model-docs.py (2026-08-29, consistency review #41) audits the root-level
+# model-company documents against the canonical registers: every W/VS-/CTL-/PA-/
+# requirement-ID token must resolve
 # against the live registers (5,363 W / 190 VS / 569 PA / 808 CTL / 728 req),
 # §-refs must resolve doc-scoped (profile / named target doc / the document's
 # own sections; change-note footers exempt), and the retired stale totals
-# (6,757 / 6,715 / 5,3xx / 80,000-SKU / 1,000-terminal) must not appear. The
-# review found the documents fully clean — all figures (6,762 HC, ~800–1,000
-# vendors, 35,000+20,000 items, ~600,000 loyalty members, 29/store, 14,000
-# POS/store/month, PHP 9.22M/employee, 5,200+200 price records) agree with
-# the registers — so this check is the permanent regression guard.
+# (6,757 / 6,715 / 5,3xx / 80,000-SKU / 1,000-terminal) must not appear.
+# Consistency review #68 (2026-09-02) extended the doc set from the three
+# secondary root docs (mobile-app-strategy.md, data-migration-mapping.md,
+# assumptions-and-design-decisions.md) to also cover the two organizational
+# documents issued 2026-09-01/02 — optimal-table-of-organization.md and
+# 07-methodology/it-product-operating-model.md — which had shipped with zero
+# validator coverage; the review found and repaired three figure/citation
+# defects between them (TO §7.3 'Outbound (51)' vs role-sum 50; IT-model
+# '~11 external integration clusters' vs the canonical ten; a §13.3-for-§13.2
+# seasonal-calendar §-ref) plus an unresolvable §2.4 self-reference, and added
+# doc-scoped retired literals, required corrected anchors (the 171+17=188 /
+# 4,864+499=5,363 reconciliation sums, the two-state 469/6,869 totals), and a
+# structural rule re-deriving every §7.3 DC-roster group total from its own HC
+# cells — so this check is the permanent regression guard.
 C59_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-model-docs.py" --guard 2>&1)
 C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
-    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py; documents verified clean 2026-08-29)"
+    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68)"
 else
     C59_HITS=$(echo "$C59_OUT" | grep -c "^model-doc:" || true)
     error "$C59_HITS model-doc violation(s) (run 07-methodology/audit-model-docs.py for detail):"
@@ -2951,6 +2958,77 @@ else
     C62_HITS=$(echo "$C62_OUT" | grep -cE "^(retired-literal|participant-count|quote-integrity):" || true)
     error "$C62_HITS semantic-anchor violation(s) (run 07-methodology/audit-semantic-anchors.py for detail):"
     echo "$C62_OUT" | grep -E "^(retired-literal|participant-count|quote-integrity):" | sed 's/^/    /' | head -30
+fi
+
+# --- Check 63: Root-README worklist-row & methodology-tree guard ---
+echo "--- Check 63: Root-README worklist rows & methodology-tree completeness ---"
+# Consistency review #69 (2026-09-02) found a defect class no prior check could
+# see: the root-README folder tree's PROSE rows for the 07-methodology worklists
+# had drifted — the batch17 row still advertised 'residual: W712 phrasing,
+# W16.1 approval-matrix design' although review #64 had already consolidated the
+# W16.1 four-matrix conflict on W24's canonical ladder (W886/W1245 re-pointed)
+# and the W712 quote was never locatable (current PA-17.3 text verified correct:
+# 25% attaches to the surcharge per NIRC 248, compromise penalty listed
+# separately). Check 44 guards the tree's per-VS counts/figures and the
+# proposed-register description row, but no check guarded worklist prose or
+# methodology-tree completeness. This check (a) retires the stale batch17-
+# residual literal, (b) requires the batch17 row to carry the review-#64 closure
+# anchor and to quote the worklist file's own '~N of ~M repaired' figures,
+# (c) requires the batch18 row's '(~N spots' residual count to equal the
+# 'residual ~N' figure in batch18-deferred-candidates.txt's header, and
+# (d) requires every file in 07-methodology/ (pycache excluded) to appear in
+# the root-README folder tree, so future worklists/scripts cannot ship
+# unlisted.
+C63_OUT=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+bad = []
+readme = open(os.path.join(ROOT, "README.md"), encoding="utf-8").read()
+meth = os.path.join(ROOT, "07-methodology")
+b17 = open(os.path.join(meth, "batch17-deferred-candidates.txt"), encoding="utf-8").read()
+b18 = open(os.path.join(meth, "batch18-deferred-candidates.txt"), encoding="utf-8").read()
+
+# (a) retired stale literal (repaired by review #69)
+if "residual: W712 phrasing, W16.1 approval-matrix design" in readme:
+    bad.append("retired-literal: stale batch17 residual form 'residual: W712 phrasing, W16.1 approval-matrix design' in README.md (both residuals closed by/until review #64)")
+
+# (b) batch17 closure anchor + repaired-figures agreement with the worklist file
+if "W24's canonical ladder in review #64" not in readme:
+    bad.append("batch17-anchor: README tree must carry the review-#64 closure marker \"W24's canonical ladder in review #64\"")
+m17 = re.search(r"~(\d+) of (?:the )?~(\d+) listed spots repaired", b17)
+r17 = re.search(r"batch17-deferred-candidates\.txt.*?~(\d+) of ~(\d+) spots", readme, re.S)
+if m17 and r17:
+    if (r17.group(1), r17.group(2)) != (m17.group(1), m17.group(2)):
+        bad.append("batch17-figures: README tree quotes ~%s of ~%s spots but the worklist says ~%s of ~%s" % (r17.group(1), r17.group(2), m17.group(1), m17.group(2)))
+else:
+    bad.append("batch17-figures: README tree batch17 row missing '~N of ~M spots repaired' agreement with the worklist file")
+
+# (c) batch18 residual-count agreement with the worklist header
+m18 = re.search(r"residual ~(\d+)", b18)
+r18 = re.search(r"batch18-deferred-candidates\.txt.*?\(~(\d+) spots", readme, re.S)
+if m18 and r18:
+    if r18.group(1) != m18.group(1):
+        bad.append("batch18-figures: README tree quotes ~%s spots but the worklist header says residual ~%s" % (r18.group(1), m18.group(1)))
+else:
+    bad.append("batch18-figures: README tree batch18 row missing '(~N spots' residual count")
+
+# (d) methodology-tree completeness: every 07-methodology file listed in the root README
+for name in sorted(os.listdir(meth)):
+    if name == "__pycache__" or not os.path.isfile(os.path.join(meth, name)):
+        continue
+    if name not in readme:
+        bad.append("tree-completeness: 07-methodology/%s not listed in the root-README folder tree" % name)
+print("HITS %d" % len(bad))
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C63_BAD=$(echo "$C63_OUT" | sed -n 's/^HITS \([0-9]*\)/\1/p')
+if [ "${C63_BAD:-1}" -eq 0 ]; then
+    ok "Root-README worklist rows agree with the worklist files and the methodology tree lists every 07-methodology file (stale batch17 residual repaired by review #69)"
+else
+    error "$C63_BAD root-README worklist/tree violation(s):"
+    echo "$C63_OUT" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
 echo ""

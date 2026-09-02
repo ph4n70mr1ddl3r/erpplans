@@ -33,8 +33,8 @@ erpplans/
 │   │   ├── README.md                           Navigation hub & quick stats
 │   │   ├── value-stream-index.md              Master index (8 families · 188 value streams · 569 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
-│   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (5,372 rows)
-│   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal register for unclassified workflows (14 post-catalog workflows W5497–W5510 added 2026-08-24/26)
+│   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (5,386 rows)
+│   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal register for unclassified workflows (currently empty — 0 unclassified; regenerates via classify-workflows.py)
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
 │   │   ├── workflow-system-touchpoint-map.md    ERP module-to-workflow cross-reference
 │   │   ├── workflow-gap-analysis.md            Gap-analysis methodology & 30-pass history
@@ -229,6 +229,7 @@ erpplans/
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
+│   ├── optimal-table-of-organization.md  Adopted TARGET-STATE TO: HQ 469 / total 6,869 (phased from current 362 / 6,762)
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
 │   ├── internal-controls-matrix.md     808 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
@@ -237,9 +238,11 @@ erpplans/
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── validate-repo.sh              Cross-reference validation (62 checks)
+    ├── it-product-operating-model.md IT product teams, roles, RACI, governance, sizing
+    ├── validate-repo.sh              Cross-reference validation (63 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
+    ├── confirm-postcatalog-14.py     One-time post-catalog confirmation pass (W5497–W5510: 14 → 0 unclassified, 2026-09-02)
     ├── add-automation-controls.py    Automation/Controls field adder
     ├── backfill-controls.py          CTL-XX backfiller for Controls sections
     ├── add-expansion-anchors.py      One-time expansion/legacy-block anchor-control adder (CTL-172–239)
@@ -260,11 +263,19 @@ erpplans/
     ├── audit-exec-ctl.py             Exec-summary anchors & CTL citation-scope guard (Check 60)
     ├── audit-matrix-refs.py          Matrix ghost-row & summary-doc anchor guard (Check 61)
     ├── audit-semantic-anchors.py    Semantic-sample anchor guard (Check 62)
-    ├── semantic-audit-coverage.txt  Audited-W-id registry for the Check 62 sampling loop (2,241 of 5,363)
+    ├── audit-misdirected-ctl.py     Misdirected-CTL-citation family measurer (the batch-26/27 paste-family audits)
+    ├── classify-isolated-ctl.py     Isolated colon-form CTL-citation classifier (gloss-vs-control overlap scoring, batch-27)
+    ├── final-semantic-coverage.py    Final full-coverage semantic pass (review #71 — detector suite over the 3,122 unaudited workflows; closed the sampling loop to 5,363/5,363)
+    ├── semantic-audit-coverage.txt  Audited-W-id registry — LOOP CLOSED 2026-09-02 at 5,363 of 5,363 (2,241 stratified full-reads reviews #44–#67 + the review-#71 final-coverage detector pass; the fork-local batches 22–29 read their 832 post-fork W-ids in full — see the merge note atop CHANGELOG)
+    ├── draw-batch26.py             Batch-26 semantic-audit sample drawer (seed 7070, 104 workflows, expansion-weighted)
+    ├── draw-batch27.py             Batch-27 semantic-audit sample drawer (seed 7171)
+    ├── draw-batch28.py             Batch-28 semantic-audit sample drawer (seed 7272)
+    ├── draw-batch29.py             Batch-29 semantic-audit sample drawer (seed 7373)
     ├── placeholder-field-census.txt Completed missing-quantifier field census (173 spots repaired in review #57; now guarded structurally in Check 62)
     ├── unit-less-time-estimate-census.txt  Completed unit-less `per occurrence` Time Estimate census (131 spots repaired in review #62; now guarded structurally in Check 62)
-    ├── batch18-deferred-candidates.txt  Worklist: residual batch-18 verified candidates (~64 spots; two-sided/design items)
-    ├── batch17-deferred-candidates.txt  Batch-17 deferred candidates (~185 of ~190 spots repaired in review #62; residual: W712 phrasing, W16.1 approval-matrix design)
+    ├── batch18-deferred-candidates.txt  Batch-18 verified-but-deferred candidates — COMPLETED 2026-09-02 by review #70's re-audit + repair pass (~0 spots remain; all candidates repaired, closed with pointers, or dismissed)
+    ├── batch17-deferred-candidates.txt  Batch-17 deferred candidates (~185 of ~190 spots repaired in review #62; both named residuals since closed — the W16.1 four-matrix conflict consolidated on W24's canonical ladder in review #64, and the W712 quote was not locatable with current text verified correct)
+    ├── batch23-deferred-candidates.txt  Batch-23 deferred candidates — items 1–4 (VP Operations ghost family, W126 scope, the W239 move, the 204-vs-205 family) RESOLVED in the #69 successor adjudication pass; the VP Digital / role-charter residuals tracked in the CHANGELOG batch entries
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
     ├── fix-headcount-6757.py         Stale-headcount figure repairer (Check 24 companion)
     ├── fix-toc-anchors.py            Intra-file TOC anchor repairer (Check 23 companion)
@@ -274,6 +285,9 @@ erpplans/
     ├── fix-pa-wrefs.py               Dangling/misdirected W- & CTL-reference repairer inside PA bodies (Check 33 companion)
     ├── fix-ctl-pa-names.py           PA-control objective canonicalizer: matrix ↔ index ↔ PA bodies (Check 34 companion)
     ├── fix-vs-wrefs.py               Workflow-reference-in-VS-namespace repairer inside the catalog (Check 35 companion)
+    ├── fix-ctl-paste-families.py     One-time re-mapper of the 36 paste-family misdirected CTL citations (batch-26, review #72)
+    ├── fix-ghost-roles-batch26.py    Ghost-role adjudication sweep for the batch-26 families (review #72; batch-24 precedent)
+    ├── fix-pa211-order.py            One-time PA-21.1 scrambled-section-order canonicalizer (batch-27, review #73)
     └── fix-controls-bullets.py       Controls-section list-hygiene/paren/bold repairer (Check 43 companion)
 ```
 
@@ -315,8 +329,8 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 728 fully specified (429 Must / 293 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 5,363 fully specified across 188 value streams (5,349 confirmed-classified + 14 post-catalog additions W5497–W5510 with keyword-proposed tiers) | `workflows/value-stream-index.md` |
-| Criticality classification | **5,349 of 5,363 workflows classified** — the confirmed register holds 5,372 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted); the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26: POSH/Safe Spaces CODI, RA 11165 telecommuting, director education, customer digital accessibility/WCAG, climate risk assessment, employee financial wellness, restricted-substance & chemical-content product compliance, extreme-heat work interruption & occupational heat-stress management, concession item catalog/barcode/price-label governance, concessionaire self-service price change & propagation, concession service-fee billing & cost recovery, fringe benefits tax determination & quarterly BIR 1605 filing, unfulfilled-demand & lost-sales capture, supplier service-fee billing & account deduction for store-rendered services) carry keyword-driven proposed tiers in `workflow-criticality-proposed.md` pending a confirmation pass | `workflows/workflow-criticality-classification.md` |
+| Workflows | 5,363 fully specified across 188 value streams (all 5,363 confirmed-classified — the 14 post-catalog additions W5497–W5510 were confirmed 2026-09-02) | `workflows/value-stream-index.md` |
+| Criticality classification | **5,363 of 5,363 workflows classified (full coverage)** — the confirmed register holds 5,386 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted), and the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26: POSH/Safe Spaces CODI, RA 11165 telecommuting, director education, customer digital accessibility/WCAG, climate risk assessment, employee financial wellness, restricted-substance & chemical-content product compliance, extreme-heat work interruption & occupational heat-stress management, concession item catalog/barcode/price-label governance, concessionaire self-service price change & propagation, concession service-fee billing & cost recovery, fringe benefits tax determination & quarterly BIR 1605 filing, unfulfilled-demand & lost-sales capture, supplier service-fee billing & account deduction for store-rendered services) were confirmed 2026-09-02 by the post-catalog confirmation pass — 6 → Tier 1, 6 → Tier 2, 2 → Tier 3; `workflow-criticality-proposed.md` is empty | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 808 controls mapped to workflows and requirements (67 core + 172 domain anchors CTL-68–239 + 569 process-area operating controls CTL-240–808) — CTL-XX citation coverage is 100% of workflows | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 

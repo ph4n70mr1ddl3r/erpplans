@@ -153,8 +153,8 @@ workflows/
 ├── value-stream-index.md              Master index (8 families · 188 VS · 569 PAs)
 ├── WORKFLOW-FORMAT-GUIDE.md           This file
 ├── workflow-gap-analysis.md           Gap-analysis methodology & workflow-ID allocation log
-├── workflow-criticality-classification.md  Tier 1/2/3 priorities (5,372 confirmed rows; 14 post-catalog workflows keyword-proposed)
-├── workflow-criticality-proposed.md      Keyword-driven tier proposal register (holds the 14 unclassified post-catalog workflows W5497–W5510; regenerates via classify-workflows.py)
+├── workflow-criticality-classification.md  Tier 1/2/3 priorities (5,386 confirmed rows; 0 post-catalog workflows keyword-proposed)
+├── workflow-criticality-proposed.md      Keyword-driven tier proposal register (currently empty — 0 unclassified; regenerates via classify-workflows.py)
 ├── workflow-dependency-map.md         Prerequisite relationships, critical path
 ├── workflow-system-touchpoint-map.md  ERP module-to-workflow cross-reference
 └── VS-<NN>-<slug>/
@@ -170,7 +170,7 @@ workflows/
 |---|---|
 | [value-stream-index.md](value-stream-index.md) | Master index of all value streams and process areas |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 priority classification (confirmed) |
-| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for unclassified workflows (companion; holds the 14 unclassified post-catalog workflows W5497–W5510 added 2026-08-24/26, pending confirmation) |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for unclassified workflows (companion; currently empty — 0 unclassified since the 2026-09-02 post-catalog confirmation) |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships and critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap-analysis methodology and workflow-ID allocation log |
