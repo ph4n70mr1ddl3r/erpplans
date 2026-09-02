@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-02 — Consistency review #70: batch-18 worklist closed — re-audit pass + 16 residual-spot repair wave across 10 files; `batch18-deferred-candidates.txt` marked COMPLETED (~194/~194 candidates resolved)
+
+The last open defect worklist is closed. Every line of `07-methodology/batch18-deferred-candidates.txt` was re-verified against current file state (several had already been closed by reviews #62–#65 after the #63 worklist was written) and dispositioned as REPAIRED / CLOSED (with pointer) / DISMISSED; the file now carries per-line resolutions and the header trues the stale "residual ~64" count to ~0 (Check 63's README↔worklist agreement re-verified).
+
+**Repaired this pass (16 spots, 10 files):**
+- **PA-22.1**: W54 Q1 peak re-derived (~12–15 renewals/week ≈ ~35–45 h/week Q1 / ~3–5 h/week off-peak, coherent with 205 × ~3 h ≈ 620 h/yr — was 15–20 renewals vs 20–25 h/week self-contradiction); W433 headline trued to ~8.5 days (its own itemization 1 wk + 2 d + 1 d + 4 h); W626 staffing chain trued to ~5 h/week (was "= ~12 hours/week" off a 4 + 0.6 + 0.3 chain); four "100+ LGUs" stragglers trued to the ~150 canon (W802 background + pain, W1244 background + pain; W802's Volume row, PA-76.1 and W1421 already carried ~150).
+- **PA-27.1 + PA-99.1 (W265)**: field-support count harmonized to the IT operating model's Field & End-User Services team of **5 regional field technicians** — W48's pain point ("1–2"), two staffing lines ("1–2"/"2"), W265's Participants row ("4 field"), and the PM bullet ("4 field specialists ~75 h each/quarter" → 5 × ~60 h, preserving the 300 h/quarter total).
+- **PA-15.2**: W488 chargeback total trued to the derivable ~150–375 h/month (60–90 min × 150–250; was 250–375); W1199 LC Frequency trued to ~50–80/month per the W1310 PA-15.2 LC register (review #60/#61 canon; was 40–60).
+- **PA-05.1**: W514 staffing aligned to the §3.3 register ("the 3 Inventory Planning Analysts (profile §3.3)"; was "2–3 Inventory Analysts").
+- **PA-09.1**: W1088's Pag-IBIG band trued to 3–6.5% — the HDMF housing-loan band W966 itself carries and that W1088 cites ("per W966") — closing the 6–10.5% → 3–7% → 3–6.5% drift chain.
+- **PA-02.2**: W1233 Volume trued to ~1,800–3,600 import entries/year (multiple TEUs per entry per W464; coherent with 400–600 TEUs/month and the feasible 600–1,200 h/month TE basis) — was ~5,000–7,000/year, which contradicted its own Time Estimate's ~150–300 entries/month.
+- **PA-07.1**: W5F closing re-framed elapsed-vs-staff (~75 min elapsed with two cashiers in parallel = ~105–125 staff-minutes itemized; the old TE compressed the 3-terminal Z-report/cash count 45 → 15 min) with the annual chain figure recomputed to ~130,000–153,000 staff-hours (was ~91,000 on the elapsed basis); W1407 trued to its own per-store basis (chain-wide ~5,600–9,600 h/reset = 200 × 28–48 h, and ~67,000–115,000 h/yr across 12 resets — was the non-derivable "~2,000 h (200 × 10)" / "~24,000 h/yr") and supervisor load to ~8–13 h/reset ≈ ~100–155 h/yr.
+- **PA-10.1**: W905 gallery TE total trued to ~15–30 h/week (tagging effort applies to the manually curated subset; bulk tagging automated) — now coheres with the staffing rows instead of contradicting them at ~60–120 h/week.
+- **PA-02.1**: W31 step 7 trued to 1 hour per Category Manager/month (~5 CMs per §13.1) — the per-category reading (~40 categories ≈ 9–10 h/week) exhausted the workflow's own ~8–12 h/week role total.
+- **PA-07.2**: typhoon-count spread harmonized to the W1023/W5501 canon (~20 enter the PAR, ~8–9 make landfall): W576 Frequency/TE (20–25 → ~20; 180–375 → 180–300 h/yr), W1302 background (15–20/5–8 → ~20/~8–9), W1505 background (8–10 → ~8–9).
+- **PA-66.1**: W2432 design volume re-based on a funnel adjudication — ~150–300 design proposals/month (~25–35% of W2431's ~600–900 measured projects; the rest take standard material estimates per W2433) — resolving the infeasibility of ~600–900 designs × 4–8 h against the 10–15 Design Consultants; Frequency/Volume/TE rows all re-pointed.
+
+**Closed with pointers (verified already resolved):** W265 peak-vs-average (annotated in-place), W476, W930/W1287 (90-day expiry aligned), W963 NSCP (no citation remains), W991/W992/W984/W998/W997/W1000 (#65 family), W557 (155–160 derives), W236 (derives per W699), W3860 (endpoint-product annotation, guard-licensed), W1990 (not locatable), W1421 (~150 already), W165/W792 (#62 retention canon), W793 + W16.1 + W2606 + W115 (#64), W2962/W2965 (#63 waves). **Dismissed:** W1105 (protected subset canon), W31 7.2M rounding.
+
+Root-README tree row for the worklist updated to the completed state (Check 63 agreement). Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC (current) · 469 / 6,869 (target)**. `validate-repo.sh` green **0 errors / 0 warnings** across all **63 checks**.
+
+---
+
 ## 2026-09-02 — Post-catalog criticality confirmation pass (W5497–W5510): the fourteen post-catalog workflows confirmed 6 T1 / 6 T2 / 2 T3 — classification coverage back to 100%, proposal register empty
 
 All fourteen post-catalog workflow-level gap fills (added 2026-08-24/26) were read in full and confirmed into the criticality register by the new one-time [`07-methodology/confirm-postcatalog-14.py`](07-methodology/confirm-postcatalog-14.py), applying the calibrated confirmation rules workflow-by-workflow with recorded adjudications:
