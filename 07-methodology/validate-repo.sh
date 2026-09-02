@@ -3183,6 +3183,53 @@ else
     echo "$CHECK65" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 66: Repo-wide file-level relative-link resolution (non-PA files) ---
+echo "--- Check 66: Relative-link target resolution outside PA files ---"
+# Check 20 resolves every relative .md link inside PA files; Check 39(d) resolves the
+# *anchor* half of cross-file links. Neither guards the file-level half in the other
+# ~213 .md files (VS READMEs, workflows/ support docs, root docs, methodology docs) —
+# a 2026-09-03 residual sweep found exactly this class: the VS-08 and VS-32 READMEs
+# linked 'event-custody-and-precedence-register.md' without the '../' prefix (the
+# register lives one directory up), invisible to both guards. This check resolves
+# every relative markdown link target (file part; fragments and externals ignored)
+# in every non-PA .md file so the drift cannot recur. Literal prose examples inside
+# CHANGELOG change-notes ('file.md#anchor') are exempt.
+CHECK66=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys, glob
+ROOT = sys.argv[1]
+bad = []
+total = 0
+files = [f for f in glob.glob(os.path.join(ROOT, "**", "*.md"), recursive=True)
+         if ".git" not in f and not re.search(r"PA-\d+\.\d+-", os.path.basename(f))]
+link = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+for f in files:
+    txt = re.sub(r"```.*?```", "", open(f, encoding="utf-8", errors="replace").read(), flags=re.S)
+    for m in link.finditer(txt):
+        t = m.group(1).strip()
+        if t.startswith(("http://", "https://", "mailto:")) or t.startswith("#"):
+            continue
+        path_part = t.split("#")[0].split()[0]
+        if not path_part:
+            continue
+        if "CHANGELOG.md" in f and path_part == "file.md":  # literal prose example
+            continue
+        total += 1
+        resolved = os.path.normpath(os.path.join(os.path.dirname(f), path_part))
+        if not os.path.exists(resolved):
+            bad.append(f"{os.path.relpath(f, ROOT)}: [{t}] -> missing target")
+print(f"TOTALS links={total} problems={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C66_BAD=$(echo "$CHECK66" | sed -n 's/^TOTALS links=[0-9]* problems=\([0-9]*\)/\1/p')
+if [ "${C66_BAD:-1}" -eq 0 ]; then
+    ok "All non-PA relative markdown links resolve to existing files (guard added by the 2026-09-03 residual sweep; PA files remain Check 20's surface)"
+else
+    error "$C66_BAD broken relative link(s) outside PA files:"
+    echo "$CHECK66" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

@@ -8,7 +8,7 @@
 
 POS & checkout: transaction processing, payment & cash management, and POS compliance & controls across 600 terminals.
 
-**Returns routing:** in-store return *decisions* (eligibility, approval tiers, disposition) live in VS-32 (W1622–W1630); this value stream executes the POS refund mechanics (W1538) and fraud screening (W605) — see the [Event Custody & Precedence Register](event-custody-and-precedence-register.md) (E-09).
+**Returns routing:** in-store return *decisions* (eligibility, approval tiers, disposition) live in VS-32 (W1622–W1630); this value stream executes the POS refund mechanics (W1538) and fraud screening (W605) — see the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md) (E-09).
 
 ## Why it matters
 
