@@ -239,7 +239,7 @@ erpplans/
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
     ├── it-product-operating-model.md IT product teams, roles, RACI, governance, sizing
-    ├── validate-repo.sh              Cross-reference validation (62 checks)
+    ├── validate-repo.sh              Cross-reference validation (63 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── add-automation-controls.py    Automation/Controls field adder
@@ -266,7 +266,7 @@ erpplans/
     ├── placeholder-field-census.txt Completed missing-quantifier field census (173 spots repaired in review #57; now guarded structurally in Check 62)
     ├── unit-less-time-estimate-census.txt  Completed unit-less `per occurrence` Time Estimate census (131 spots repaired in review #62; now guarded structurally in Check 62)
     ├── batch18-deferred-candidates.txt  Worklist: residual batch-18 verified candidates (~64 spots; two-sided/design items)
-    ├── batch17-deferred-candidates.txt  Batch-17 deferred candidates (~185 of ~190 spots repaired in review #62; residual: W712 phrasing, W16.1 approval-matrix design)
+    ├── batch17-deferred-candidates.txt  Batch-17 deferred candidates (~185 of ~190 spots repaired in review #62; both named residuals since closed — the W16.1 four-matrix conflict consolidated on W24's canonical ladder in review #64, and the W712 quote was not locatable with current text verified correct)
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
     ├── fix-headcount-6757.py         Stale-headcount figure repairer (Check 24 companion)
     ├── fix-toc-anchors.py            Intra-file TOC anchor repairer (Check 23 companion)

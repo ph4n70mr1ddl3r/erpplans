@@ -2953,6 +2953,77 @@ else
     echo "$C62_OUT" | grep -E "^(retired-literal|participant-count|quote-integrity):" | sed 's/^/    /' | head -30
 fi
 
+# --- Check 63: Root-README worklist-row & methodology-tree guard ---
+echo "--- Check 63: Root-README worklist rows & methodology-tree completeness ---"
+# Consistency review #69 (2026-09-02) found a defect class no prior check could
+# see: the root-README folder tree's PROSE rows for the 07-methodology worklists
+# had drifted — the batch17 row still advertised 'residual: W712 phrasing,
+# W16.1 approval-matrix design' although review #64 had already consolidated the
+# W16.1 four-matrix conflict on W24's canonical ladder (W886/W1245 re-pointed)
+# and the W712 quote was never locatable (current PA-17.3 text verified correct:
+# 25% attaches to the surcharge per NIRC 248, compromise penalty listed
+# separately). Check 44 guards the tree's per-VS counts/figures and the
+# proposed-register description row, but no check guarded worklist prose or
+# methodology-tree completeness. This check (a) retires the stale batch17-
+# residual literal, (b) requires the batch17 row to carry the review-#64 closure
+# anchor and to quote the worklist file's own '~N of ~M repaired' figures,
+# (c) requires the batch18 row's '(~N spots' residual count to equal the
+# 'residual ~N' figure in batch18-deferred-candidates.txt's header, and
+# (d) requires every file in 07-methodology/ (pycache excluded) to appear in
+# the root-README folder tree, so future worklists/scripts cannot ship
+# unlisted.
+C63_OUT=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+bad = []
+readme = open(os.path.join(ROOT, "README.md"), encoding="utf-8").read()
+meth = os.path.join(ROOT, "07-methodology")
+b17 = open(os.path.join(meth, "batch17-deferred-candidates.txt"), encoding="utf-8").read()
+b18 = open(os.path.join(meth, "batch18-deferred-candidates.txt"), encoding="utf-8").read()
+
+# (a) retired stale literal (repaired by review #69)
+if "residual: W712 phrasing, W16.1 approval-matrix design" in readme:
+    bad.append("retired-literal: stale batch17 residual form 'residual: W712 phrasing, W16.1 approval-matrix design' in README.md (both residuals closed by/until review #64)")
+
+# (b) batch17 closure anchor + repaired-figures agreement with the worklist file
+if "W24's canonical ladder in review #64" not in readme:
+    bad.append("batch17-anchor: README tree must carry the review-#64 closure marker \"W24's canonical ladder in review #64\"")
+m17 = re.search(r"~(\d+) of (?:the )?~(\d+) listed spots repaired", b17)
+r17 = re.search(r"batch17-deferred-candidates\.txt.*?~(\d+) of ~(\d+) spots", readme, re.S)
+if m17 and r17:
+    if (r17.group(1), r17.group(2)) != (m17.group(1), m17.group(2)):
+        bad.append("batch17-figures: README tree quotes ~%s of ~%s spots but the worklist says ~%s of ~%s" % (r17.group(1), r17.group(2), m17.group(1), m17.group(2)))
+else:
+    bad.append("batch17-figures: README tree batch17 row missing '~N of ~M spots repaired' agreement with the worklist file")
+
+# (c) batch18 residual-count agreement with the worklist header
+m18 = re.search(r"residual ~(\d+)", b18)
+r18 = re.search(r"batch18-deferred-candidates\.txt.*?\(~(\d+) spots", readme, re.S)
+if m18 and r18:
+    if r18.group(1) != m18.group(1):
+        bad.append("batch18-figures: README tree quotes ~%s spots but the worklist header says residual ~%s" % (r18.group(1), m18.group(1)))
+else:
+    bad.append("batch18-figures: README tree batch18 row missing '(~N spots' residual count")
+
+# (d) methodology-tree completeness: every 07-methodology file listed in the root README
+for name in sorted(os.listdir(meth)):
+    if name == "__pycache__" or not os.path.isfile(os.path.join(meth, name)):
+        continue
+    if name not in readme:
+        bad.append("tree-completeness: 07-methodology/%s not listed in the root-README folder tree" % name)
+print("HITS %d" % len(bad))
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C63_BAD=$(echo "$C63_OUT" | sed -n 's/^HITS \([0-9]*\)/\1/p')
+if [ "${C63_BAD:-1}" -eq 0 ]; then
+    ok "Root-README worklist rows agree with the worklist files and the methodology tree lists every 07-methodology file (stale batch17 residual repaired by review #69)"
+else
+    error "$C63_BAD root-README worklist/tree violation(s):"
+    echo "$C63_OUT" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
