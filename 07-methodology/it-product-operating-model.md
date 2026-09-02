@@ -387,7 +387,7 @@ headcount figures below are FTE; §9 sizes each team.
 
 | Platform Team | Members (§9) | Role & Responsibilities |
 |---|---|---|
-| **Integration & API Platform (IAP)** | Platform lead; 3 integration engineers; 1 events/monitoring engineer | Owns the integration backbone all domain teams consume: middleware/iPaaS, event streaming (near-real-time POS-to-ERP inventory sync), API standards and contracts, error handling and replay, integration monitoring dashboards. Owns the ~11 external integration clusters of `data-volumes-and-integrations.md` (payment gateways, banks, BIR eFPS, SSS/PhilHealth/Pag-IBIG, delivery partners, loyalty engine, WMS RF, supplier portal). Most engineering-heavy team. |
+| **Integration & API Platform (IAP)** | Platform lead; 3 integration engineers; 1 events/monitoring engineer | Owns the integration backbone all domain teams consume: middleware/iPaaS, event streaming (near-real-time POS-to-ERP inventory sync), API standards and contracts, error handling and replay, integration monitoring dashboards. Owns the ~10 external integration clusters of `data-volumes-and-integrations.md` (payment gateways, banks, BIR eFPS, SSS/PhilHealth/Pag-IBIG, delivery partners, loyalty engine, WMS RF, supplier portal). Most engineering-heavy team. |
 | **Cloud Infrastructure & SRE (INFRA)** | Lead; 2 cloud engineers; 1 network engineer; 1 SRE; 1 DBA/SaaS administrator | Uptime (POS 99.9%, back-office 99.5%), performance (POS transaction < 3s; standard reports < 30s), environment management, patch intake, DR/BCP execution (typhoon resilience, VS-26/VS-69), capacity planning for the 1,000–1,500 peak concurrent users (§15.3). |
 | **Cybersecurity, Privacy & OT Security (SEC)** | Lead; 1 security engineer; 1 security analyst; 2 GRC/controls analysts | SOC liaison and monitoring (with managed-SOC partner), vulnerability management, penetration-test remediation, access reviews and SOD enforcement, RA 10173 privacy program support with the DPO (VS-91), OT/retail-tech security for POS terminals, RF guns, CCTV (VS-190), third-party risk assessments (VS-161). The GRC/controls analysts form the **enabling cell** that coordinates control design, test evidence, and audit responses across all product teams against the 808-control register. |
 | **Data Platform & MDM (DP)** | Lead; 2 data engineers; 1 MDM stewardship lead; 1 BI platform administrator | Data warehouse and semantic layer; the item/customer/vendor/employee master-data platforms (55,000-SKU item master; ~600,000 loyalty members); CDP/identity resolution (VS-126); PIM/DAM (VS-137); AI/ML governance tooling (VS-128); process-mining platform (VS-133). Domain data analysts build on DP's certified layer; DP enforces the shared-object change process (§6.3). |
@@ -483,7 +483,7 @@ Risk, which retains its Board Audit Committee reporting line per `model-company-
 
 A single monthly cross-product release window, sequenced by Product Sync and executed by the
 QA/release analysts, **avoiding the bi-monthly sale-event windows and the December peak**
-(§13.3 seasonal calendar). Vendor ERP releases are intake-tested by INFRA and domain teams in a
+(§13.2 seasonal calendar). Vendor ERP releases are intake-tested by INFRA and domain teams in a
 staging ring before the train. Each release carries: regression evidence (Tier-1 coverage
 mandatory), release notes for BPOs, updated training content, and a rollback plan.
 
@@ -599,7 +599,13 @@ to the ERP provider, and L1 support plus the 24/7 SOC are partner-operated.
 
 ---
 
-*Document Version: 1.0 | Date: 2026-09-01 | Initial issue. Defines the 12-product IT operating
+*Document Version: 1.1 | Date: 2026-09-02 | Consistency review #68: §5.3 IAP integration-cluster
+count trued to the canonical integration architecture (the `data-volumes-and-integrations.md`
+§2 diagram and §3 detail matrix carry **ten** external clusters; was stated one high), and the
+§8.2 release-train profile cross-reference re-pointed to **§13.2**, the Seasonal Calendar
+section (was §13.3, Promotional Strategy). This document is now under the permanent regression
+guard of `audit-model-docs.py` (validator Check 59). Prior v1.0 (2026-09-01): initial issue.
+Defines the 12-product IT operating
 model (7 stream-aligned domain teams + IAP/INFRA/SEC/DP/FS platform teams + CIO Office) with
 full 188-VS assignment (§4.9 reconciliation: 171 domain + 17 platform = 188 VS; 4,864 + 499 =
 5,363 workflows, matching the value-stream index grand totals), standard team membership and

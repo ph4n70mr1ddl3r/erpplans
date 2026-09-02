@@ -389,7 +389,7 @@ afternoon); DC3 (40,000 sqm) may split the AM roles into two each during peak.
 | | Putaway Staff | 10 | RF-directed |
 | | Forklift Operators (inbound) | 15 | Reach/counterbalance |
 | | Cross-Dock Team | 6 | Fast-mover sort & stage |
-| **Outbound (51)** | Outbound/Shipping Supervisor | 2 | VS-04 PA-04.2 |
+| **Outbound (50)** | Outbound/Shipping Supervisor | 2 | VS-04 PA-04.2 |
 | | Order Pickers | 24 | RF-directed, full-case + each |
 | | Packers / Load Builders | 14 | Multi-drop load consolidation (2–3 ROs/truck) |
 | | Loaders / Staging | 8 | ~25 outbound trucks/day/DC |
@@ -542,13 +542,20 @@ Each phase promotion is recorded in [CHANGELOG.md](../CHANGELOG.md) and flips th
 | [`it-product-operating-model.md`](../07-methodology/it-product-operating-model.md) | Authoritative IT structure & sizing (80 FTE, 12 product teams) |
 | `workflows/VS-177-…` | Field retail operating model (RM/DM cadence) this TO instantiates |
 | `workflows/VS-127-…` | S&OP/IBP cycle owned by the Supply Chain sub-team |
-| [`internal-controls-matrix.md`](internal-controls-matrix.md) | 808 controls embedded in 1st-line departments (three-lines model, §2.4) |
+| [`internal-controls-matrix.md`](internal-controls-matrix.md) | 808 controls embedded in 1st-line departments (three-lines model, §2 principle 4) |
 
 ---
 
-*Document Version: 1.1 | Date: 2026-09-02 | **Adopted as the BuildRight target-state table
+*Document Version: 1.2 | Date: 2026-09-02 | **Adopted as the BuildRight target-state table
 of organization.** Retitled from “Optimal Table of Organization (Target Org Design)”;
 two-state framing declared (§1); guardrails extended with CHANGELOG-recorded phase promotion
-(§11). v1.0 (same date): initial optimal TO design issued as a proposal. Current-state canon
-(model-company-profile.md v2.25 §3.3/§4/§11.1 — HQ 362 / total 6,762) is unchanged; the
-deltas in §5.1/§11 define the target until each phase trigger fires.*
+(§11). v1.1 (same date, consistency review #68): §7.3 DC-roster Outbound group-total label
+trued to its own role sum (was stated one high; the section's grand total of 150 and the
+company total of 6,869 are unchanged), and the §15 internal-controls cross-reference made
+mechanically resolvable (“§2 principle 4”, was an unresolvable subsection-style §-ref).
+This document is now under the permanent regression guard of `07-methodology/audit-model-docs.py`
+(validator Check 59), including a structural rule that re-derives every §7.3 roster
+group total from its own HC cells. v1.0 (same date): initial optimal TO design issued as a
+proposal. Current-state canon (model-company-profile.md v2.25 §3.3/§4/§11.1 — HQ 362 /
+total 6,762) is unchanged; the deltas in §5.1/§11 define the target until each phase
+trigger fires.*

@@ -2834,24 +2834,32 @@ fi
 
 # --- Check 59: root-level model-company document integrity ---
 echo "--- Check 59: Model-doc figures & cross-references ---"
-# audit-model-docs.py (2026-08-29, consistency review #41) audits the three
-# root-level model-company documents never before swept (mobile-app-strategy.md,
-# data-migration-mapping.md, assumptions-and-design-decisions.md) against the
-# canonical registers: every W/VS-/CTL-/PA-/requirement-ID token must resolve
+# audit-model-docs.py (2026-08-29, consistency review #41) audits the root-level
+# model-company documents against the canonical registers: every W/VS-/CTL-/PA-/
+# requirement-ID token must resolve
 # against the live registers (5,363 W / 190 VS / 569 PA / 808 CTL / 728 req),
 # §-refs must resolve doc-scoped (profile / named target doc / the document's
 # own sections; change-note footers exempt), and the retired stale totals
-# (6,757 / 6,715 / 5,3xx / 80,000-SKU / 1,000-terminal) must not appear. The
-# review found the documents fully clean — all figures (6,762 HC, ~800–1,000
-# vendors, 35,000+20,000 items, ~600,000 loyalty members, 29/store, 14,000
-# POS/store/month, PHP 9.22M/employee, 5,200+200 price records) agree with
-# the registers — so this check is the permanent regression guard.
+# (6,757 / 6,715 / 5,3xx / 80,000-SKU / 1,000-terminal) must not appear.
+# Consistency review #68 (2026-09-02) extended the doc set from the three
+# secondary root docs (mobile-app-strategy.md, data-migration-mapping.md,
+# assumptions-and-design-decisions.md) to also cover the two organizational
+# documents issued 2026-09-01/02 — optimal-table-of-organization.md and
+# 07-methodology/it-product-operating-model.md — which had shipped with zero
+# validator coverage; the review found and repaired three figure/citation
+# defects between them (TO §7.3 'Outbound (51)' vs role-sum 50; IT-model
+# '~11 external integration clusters' vs the canonical ten; a §13.3-for-§13.2
+# seasonal-calendar §-ref) plus an unresolvable §2.4 self-reference, and added
+# doc-scoped retired literals, required corrected anchors (the 171+17=188 /
+# 4,864+499=5,363 reconciliation sums, the two-state 469/6,869 totals), and a
+# structural rule re-deriving every §7.3 DC-roster group total from its own HC
+# cells — so this check is the permanent regression guard.
 C59_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-model-docs.py" --guard 2>&1)
 C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
-    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py; documents verified clean 2026-08-29)"
+    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68)"
 else
     C59_HITS=$(echo "$C59_OUT" | grep -c "^model-doc:" || true)
     error "$C59_HITS model-doc violation(s) (run 07-methodology/audit-model-docs.py for detail):"
