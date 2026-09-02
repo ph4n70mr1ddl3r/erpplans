@@ -59,7 +59,7 @@ BIR tax clearance, mayor's permit, audited FS, technical personnel, equipment, c
 category/classification & upgrade; annual renewal & registration-compliance calendar; CIAP/PCAB
 board engagement & multi-entity coverage; **project registration (PCAB-required project
 registration per contract/notice of award)**; performance/surety bonding linkage (VS-116);
-construction safety & health program (COSP) / DOLE D.O. 13 compliance for licensed work; bidding
+construction safety & health program (COSP) / DOLE D.O. 13-98 compliance for licensed work; bidding
 license proof & PhilGEPS sync; subcontractor license cascading; warranty/acceptance/retention;
 **construction payment security (mechanic's-lien rights, lien waivers, payment-bond claims)**;
 CIAP/LGU inspection response; license-condition monitoring (insurance, technical capacity, CPD);

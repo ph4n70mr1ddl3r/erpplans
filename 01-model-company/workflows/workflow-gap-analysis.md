@@ -523,7 +523,7 @@ Pass 5 specifically targeted capabilities that existed only as a single workflow
 - **Insurance program / risk financing / total cost of risk** — covered by PA-26.3 (Insurance
   Claims & Policy Management, incl. W862 annual renewal and W1565 annual portfolio review/coverage-
   gap analysis/market benchmarking) in VS-26.
-- **Construction-site / jobsite HSE (DOLE D.O. 13)** — covered by W789 (Construction Safety
+- **Construction-site / jobsite HSE (DOLE D.O. 13-98)** — covered by W789 (Construction Safety
   Management & DOLE DO 13 Compliance) in VS-20.2 for BuildRight construction projects, with field
   safety for dispatched crews in VS-12.1/VS-24.
 - **Open innovation / R&D / corporate venture / pilot-to-scale** — covered by VS-30.1 (Emerging

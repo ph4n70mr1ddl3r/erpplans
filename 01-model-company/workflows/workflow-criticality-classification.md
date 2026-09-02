@@ -3733,7 +3733,7 @@ Two post-catalog workflows confirmed **Tier 3** — analytics/optimization class
 | W4822 | Multi-Entity License Coverage, Affiliate & Entity-Level Licensing Decisions | VS-165 |
 | W4823 | PCAB License Compliance Recordkeeping, Evidence Repository & Audit Trail | VS-165 |
 | W4826 | Performance & Surety Bonding for PCAB-Licensed Project Work | VS-165 |
-| W4827 | Construction Safety & Health Program (COSP) & DOLE D.O. 13 Compliance for Licensed Work | VS-165 |
+| W4827 | Construction Safety & Health Program (COSP) & DOLE D.O. 13-98 Compliance for Licensed Work | VS-165 |
 | W4828 | Bidding/Bid-Support License Proof, Capacity Pre-Check & PhilGEPS Eligibility Sync | VS-165 |
 | W4829 | Subcontractor License Verification, Approved-Subcontractor List & Cascading Compliance | VS-165 |
 | W4830 | Project Warranty Period, Acceptance Certificate & Retention/Maintenance Obligations | VS-165 |

@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-09-02 — Consistency review #71: semantic sampling loop CLOSED at 5,363/5,363 — final full-coverage pass over the 3,122 remaining workflows; three citation defects repaired; registry completed
+
+The Check 62 sampling loop (reviews #44–#67: 104-workflow stratified full-read batches, 2,241 of 5,363 audited) is closed by a final full-coverage pass over the remaining **3,122 workflows** via the new [`07-methodology/final-semantic-coverage.py`](07-methodology/final-semantic-coverage.py) — honestly labelled **detector coverage + targeted reads, not 30×104 full reads**: a detector suite implementing the highest-yield defect classes of the prior batches (D1 same-row per-store-rate vs chain-total coherence with kg/ton unit awareness; D2 statutory-citation adjudication against the audited-corpus baseline plus the web-verified canon list; D3 same-line hours/week vs hours/month contradiction; D4 chain-/day cadence suspicion), with **every flagged spot read and adjudicated by hand**.
+
+**Triage yield:** the detectors surfaced 49 live flags after two rounds of detector refinement (the first cut's 1,281 flags were dominated by two greedy-match constructions — per-store figures restated with chain-scope markers, and '~5 min × 1 min' time gaps — plus a `\d{1,4}` boundary bug that truncated 5-digit act numbers, e.g. 'RA 11165' → 'RA 1116'). Adjudication found **3 real defects, 16 newly-verified canon citations, and 30 false-positive constructions** (11 allowlisted in-script with documented reasons after per-spot verification; the rest eliminated by detector refinement):
+
+- **W998 (PA-09.2)** — septic-tank sizing still attributed to **'DENR AO 2005-10'** (×3 spots incl. the auto-quote bullet): the retired form from review #32's sweep, dodging the Check 46 literal via the 'DENR AO' spelling (the same dodge class as the spelled-out DAO 2013-22 that #32 caught). Repaired to the **Sanitation Code (PD 856, Ch. XVII) / National Plumbing Code of the Philippines (NPCP)**, matching the #32 canon.
+- **W4827 (VS-165)** — the construction-safety workflow title and body cited **'DOLE D.O. 13'** (×4 + README + register row): the construction-OSH order is **D.O. 13-98** (already corpus canon per review #29). Full cascade repaired: H2 title, TOC display text, anchor (regenerated via `fix-toc-anchors.py`, 1 fix), step 1, risk bullet, VS-165 README row, criticality-register row, and the gap-analysis W789 cross-reference line.
+- **W2148 (PA-54.1)** — gift-card KYC cited **'RA 9194 AMLA'** (×2 incl. the grounding note): RA 9194 is the 2003 *amendment*; the principal act is **RA 9160**, the form the VS-86 anti-financial-crime canon carries ('AMLA (RA 9160/RA 10365)'). Repaired.
+
+**Canon additions** (each verified in context before listing): RR 1-2023 (solo-parent child-care IRR — the #65 web-verification), RR 8-2022/9-2022 (the #60-verified set), RR 3-98 + RR 5-2018 (de-minimis schedule, W5508), RA 8792 (E-Commerce Act, W686), RA 9710 (Magna Carta of Women, W719), RA 6727 (Wage Rationalization, W589), RA 10951 (RPC penalties amendment, W4763), RA 10623 (Price Act amendment, W468), RA 9006 (election-practice rules, VS-132), PNS 63/67/35/90 (product standards, W1082), DAO 29 (RA 6969's original IRR, W82).
+
+**Allowlisted false positives** (documented in-script): time-denominated per-store rates multiplied as events (W205/W897/W1375/W1555); 'across 200 stores (~N per store…)' grabbing the 200 (W922/W1039/W1516 — all verified exactly coherent); kg-per-store vs tons-chain-wide (W1212); same-line component lists with different cadences (W107/W7/W70/W614).
+
+**Registry closed:** `semantic-audit-coverage.txt` extended to **5,363 of 5,363** (the 3,122 appended with the completion note; the registry's two letter-suffixed ids W2C/W19B re-normalized after the append logic's `^W\d+$` pattern was found to skip them). Root-README tree rows added/updated for the new script and the completed registry (Check 63 completeness); methodology README gained the tool row. Detector exit code 0 = closed; re-runnable as a regression net.
+
+Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC (current) · 469 / 6,869 (target)**. `validate-repo.sh` green **0 errors / 0 warnings** across all **63 checks**.
+
+---
+
 ## 2026-09-02 — Consistency review #70: batch-18 worklist closed — re-audit pass + 16 residual-spot repair wave across 10 files; `batch18-deferred-candidates.txt` marked COMPLETED (~194/~194 candidates resolved)
 
 The last open defect worklist is closed. Every line of `07-methodology/batch18-deferred-candidates.txt` was re-verified against current file state (several had already been closed by reviews #62–#65 after the #63 worklist was written) and dispositioned as REPAIRED / CLOSED (with pointer) / DISMISSED; the file now carries per-line resolutions and the header trues the stale "residual ~64" count to ~0 (Check 63's README↔worklist agreement re-verified).
