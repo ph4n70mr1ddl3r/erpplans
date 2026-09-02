@@ -15,8 +15,9 @@ Consistency review #43 (2026-08-29) audited the three surfaces:
     workflows that exercise it (W5, W463, W520, W528, W1282/W1485, W1425,
     W9, W14).
   * workflow-gap-analysis.md summary figures — the current-state declaration
-    quotes 188 VS / 569 PA / 5,363 workflows and the fourteen post-catalog
-    workflows; the smaller totals (5,349…5,362) and the 6,757 headcount live
+    quotes 188 VS / 569 PA / 5,364 workflows and the fourteen post-catalog
+    workflows plus the W5511 event-custody addition; the smaller totals (5,349…5,363)
+    and the 6,757 headcount live
     inside per-pass historical notes, exempt per the change-note convention.
   * technical-guidelines.md quantitative claims — verified against current
     state: offline capacity 933 peak-day (= 467 avg × 2.0), event latency
@@ -37,7 +38,7 @@ MC = os.path.join(REPO, "01-model-company")
 TG_ANCHORS = ["~362 HQ staff (≈325 concurrent users)", "~540 Mbps aggregate",
               "≥ 8 hours", "933 peak-day transactions per store",
               "10 years"]
-GA_ANCHOR = "**188 value streams · 569 process areas · 5,363 workflows**"
+GA_ANCHOR = "**188 value streams · 569 process areas · 5,364 workflows**"
 
 
 def main():

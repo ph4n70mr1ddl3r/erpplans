@@ -2,6 +2,8 @@
 
 > **Governance & Assurance** · [Value Stream Index](../value-stream-index.md)
 
+**Event custody:** owns the store-level flood-response canon (W1387), the store-level generator/power canon (W1223), and HSE emergency-preparedness activation (W1386) — boundaries vs VS-26/VS-69 per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md).
+
 ## Process Areas
 
 | PA | Name | Workflows |

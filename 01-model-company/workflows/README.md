@@ -11,11 +11,11 @@
 |---|---|
 | Value Streams | 188 |
 | Process Areas | 569 |
-| Workflows | 5,363 |
+| Workflows | 5,364 |
 | Classified (Tier 1) | 1,381 |
-| Classified (Tier 2) | 3,249 |
+| Classified (Tier 2) | 3,250 |
 | Classified (Tier 3) | 756 |
-| Classified total | 5,386 rows = 5,363 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass and re-achieved 2026-09-02 when the 14 post-catalog workflows W5497–W5510 were confirmed 6 T1 / 6 T2 / 2 T3) |
+| Classified total | 5,387 rows = 5,364 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass, re-achieved 2026-09-02 on the 14 post-catalog workflows W5497–W5510, and maintained 2026-09-03 when W5511 shipped confirmed Tier 2 in the event-custody pass) |
 
 ---
 
@@ -30,6 +30,7 @@
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap analysis methodology & results |
+| [event-custody-and-precedence-register.md](event-custody-and-precedence-register.md) | Cross-cutting event routing — accountable value stream, PAGASA signal ladder, incident-command ladder, enforced overlap pairs |
 
 ---
 
@@ -127,7 +128,7 @@
 | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | 24 |
 | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | 24 |
 
-### Finance (773 workflows)
+### Finance (774 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 43 |
@@ -138,7 +139,7 @@
 | [VS-38](VS-38-consumer-credit-financing/README.md) | Consumer Credit & Financing | 24 |
 | [VS-39](VS-39-vendor-rebate-incentive/README.md) | Vendor Rebate & Incentive Management | 24 |
 | [VS-40](VS-40-capex-project-accounting/README.md) | Capex & Project Accounting | 24 |
-| [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | 24 |
+| [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | 25 |
 | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | 24 |
 | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | 24 |
 | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | 25 |
@@ -255,7 +256,7 @@
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 461 + 499 + 1,535 + 773 + 437 + 320 + 964 + 374 = 5,363
+Family subtotal reconciliation: 461 + 499 + 1,535 + 774 + 437 + 320 + 964 + 374 = 5,364
 
 > **Note (2026-06-21):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 through 2026-06-21, VS-89–VS-192; W2993–W5488). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

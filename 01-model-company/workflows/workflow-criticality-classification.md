@@ -1,12 +1,14 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,363 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,386 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,364 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,387 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
-> 2,596 → 0), and the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
+> 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
 > confirmed on 2026-09-02 by the post-catalog confirmation pass
-> (`07-methodology/confirm-postcatalog-14.py`; 6 → Tier 1, 6 → Tier 2, 2 → Tier 3).
+> (`07-methodology/confirm-postcatalog-14.py`; 6 → Tier 1, 6 → Tier 2, 2 → Tier 3), and
+> W5511 (VS-54.3 gift-card dormancy/escheat) shipped directly confirmed Tier 2 in the
+> 2026-09-03 event-custody pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -262,9 +264,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (3,249 Workflows)
+## Tier 2: Standard Support (3,250 Workflows)
 
-These 3,249 workflows are needed for standard operational support, cost controls, and category management.
+These 3,250 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -761,12 +763,12 @@ These 756 workflows deliver advanced capabilities for competitive differentiatio
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
 | Phase 1 | Go-Live Critical (Tier 1) | 1,381 | 25.6% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,249 | 60.3% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,250 | 60.3% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 756 | 14.0% |
-| **Confirmed Total** | | **5,386** | 100% |
+| **Confirmed Total** | | **5,387** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,363 are canonical `##` workflows.
+> own classification row; the remaining 5,364 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -790,14 +792,14 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,386 rows (5,363 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,387 rows (5,364 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,363** unique `##` workflows (5,363 confirmed + 0 unclassified) |
+| **Grand Total** | **5,364** unique `##` workflows (5,364 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,386 classified register rows (5,363 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,363 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,387 classified register rows (5,364 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,364 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-08-26 addition (batch 5):** One further post-catalog workflow-level gap fill — W5510 (Supplier Service-Fee Billing & Account Deduction for Store-Rendered Services (Barcode Labels & Promotional Collaterals); VS-15.1) — was added after a supplier-expense-model review found the two existing recovery paths each own a different money flow (co-op funds W513/W1799 = pre-agreed campaign reimbursement; compliance chargebacks W245 = penalties for non-performance) while per-event, store-rendered services billed to the supplier's account — barcode/price-label printing, promotional-collateral production, source-tag re-application — had no owner ('service fee'/'supplier billing' appeared in zero merchandise-supplier PA files as dedicated headers; only the concessionaire analog W5507 existed, in VS-07.1); it ships **unclassified** with a keyword-driven proposed Tier 1 tier (the `barcode` core-transactional keyword, same precedent as W5507), joining W5497–W5509 in the pending-confirmation register (its settlement rides W770/W556, which are already Tier 1, so the Tier 1 proposal is recovery-integrity driven rather than go-live blocking — warrants explicit confirmation review).
 
@@ -1285,7 +1287,7 @@ Six post-catalog workflows confirmed **Tier 1** — statutory / regulatory execu
 | W5505 | Concession Item Catalog, Barcode & Price-Label Onboarding & Governance | Store Operations |
 | W5508 | Fringe Benefits Tax (FBT) Determination, Valuation & Quarterly BIR Form 1605 Filing | Tax Management & BIR Reporting |
 
-### Tier 2 Additions (494 Workflows)
+### Tier 2 Additions (495 Workflows)
 
 #### Plan & Source
 
@@ -1827,6 +1829,14 @@ Six post-catalog workflows confirmed **Tier 2** — standard operational support
 | W5506 | Concessionaire Self-Service Price Change Request, Approval & Store-Level Propagation | Store Operations |
 | W5507 | Concession Service-Fee Billing & Cost Recovery for Labels, Barcode Changes & Admin Services | Store Operations |
 | W5510 | Supplier Service-Fee Billing & Account Deduction for Store-Rendered Services (Barcode Labels & Promotional Collaterals) | Procure-to-Pay |
+
+#### Event-Custody Pass (2026-09-03)
+
+The event-custody pass added one workflow-level gap fill and confirmed it directly **Tier 2** — the finance-operations class of its W2158–W2165 VS-54.3 siblings (the statutory escheat filing rides the Legal Counsel gate inside the workflow rather than a standalone statutory register, matching the sibling pattern where statutory execution lives in VS-79/VS-118 registers):
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5511 | Gift Card Dormancy Monitoring, Escheat Evaluation & Expired-Liability Derecognition | Gift Card & Stored Value Management |
 
 ### Tier 3 Additions (130 Workflows)
 
@@ -6612,6 +6622,8 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 ---
 
+
+*Date: 2026-09-03 | Workflow Criticality Classification v7.43 — event-custody pass: W5511 (gift-card dormancy monitoring, escheat evaluation & expired-liability derecognition; VS-54.3) added to the catalog and confirmed directly Tier 2 (the finance-operations class of its W2158–W2165 siblings; the statutory escheat filing rides the Legal Counsel gate inside the workflow). Register 5,386 → 5,387 rows (5,363 → 5,364 unique; T2 3,249 → 3,250); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Finance family + reconciliation line, root-README coverage rows + tree rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows, dependency-map intro + VS-133 row, gap-analysis current-state clause, IT-model §4.9 reconciliation 4,864+499 → 4,865+499). `validate-repo.sh`: 0 errors / 0 warnings across 64 checks.*
 
 *Date: 2026-09-02 | Workflow Criticality Classification v7.42 — post-catalog confirmation pass: the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) confirmed 6 → Tier 1 / 6 → Tier 2 / 2 → Tier 3 by `07-methodology/confirm-postcatalog-14.py` (adjudications in the dated confirmation note above; three statutory-execution promotions W5498/W5503/W5504, one analytics promotion W5501, demotions W5509 → T3 and W5507/W5510 → T2, eight adoptions). Register 5,372 → 5,386 rows (5,349 → 5,363 unique; T1 1,375 → 1,381, T2 3,243 → 3,249, T3 754 → 756); proposed register regenerated empty (0 unclassified); downstream figures re-pointed (workflows/README Quick Stats + nav row, root-README coverage rows + tree rows, WORKFLOW-FORMAT-GUIDE anchors, dependency-map intro + v4.16 footer, gap-analysis current-state clause). `validate-repo.sh`: 0 errors / 0 warnings across 63 checks.*
 *Date: 2026-08-28 | Workflow Criticality Classification v7.41 — consistency review #33 house-spelling normalization: the W4710 register-row title corrected **Dependant** → **Dependent** & Family Visa, Schooling & Relocation Support (VS-160), re-joining the register to the dominant repo spelling (dependent 118 vs dependant 23 occurrences before the sweep; the PA-160.2 H2 and its TOC anchor were normalized in the same pass, and the v7.39 footer paragraph was un-merged from inside v7.40's note where review #31 had absorbed it). No tier assignment, row count, or canonical total changed (5,372 rows / 5,349 unique; 5,363 workflows). `validate-repo.sh`: 0 errors / 0 warnings across 48 checks.*

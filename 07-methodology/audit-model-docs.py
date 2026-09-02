@@ -72,7 +72,7 @@ ANCHORS = {
         "10 external integration clusters",
         "§13.2 seasonal calendar",
         "**171 + 17 = 188**",
-        "**4,864 + 499 = 5,363**",
+        "**4,865 + 499 = 5,364**",
     ],
     "optimal-table-of-organization.md": [
         "Outbound (50)",

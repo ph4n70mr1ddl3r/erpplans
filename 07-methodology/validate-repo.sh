@@ -3031,6 +3031,77 @@ else
     echo "$C63_OUT" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 64: event-custody register guards (dependency-map self-loops + overlap-pair bidirectional links) ---
+echo "--- Check 64: Event-custody register guards ---"
+# The 2026-09-03 event-custody pass closed the semantic-overlap blind spot: the gap
+# methodology hunts capabilities appearing in ZERO PA files, and Check 35 verifies cited
+# VS-numbers resolve — but nothing detected the same capability governed by MULTIPLE value
+# streams with conflicting authority (the typhoon triple-collision VS-24/VS-26/VS-69: four
+# workflows, four different closure triggers and commanders, zero cross-references between
+# VS-26 and VS-69) or degenerate dependency-map self-loops (W54→W54, W288→W288 — 'W54 cannot
+# function until W54 is operational'). Two guards:
+#   Part A — the dependency map may carry no parent→itself edge (any `→|⇢|↔ Wxx` line whose
+#            first target equals the enclosing parent block's W-id);
+#   Part B — every overlap pair declared in event-custody-and-precedence-register.md §4
+#            (`VS-A ↔ VS-B` rows) must cross-reference bidirectionally: at least one file of
+#            VS-A's folder cites `\bVS-B\b` and vice versa, so a declared split can never ship
+#            one-sided again.
+CHECK64=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, glob, sys
+ROOT = sys.argv[1]
+errs = []
+
+# ---- Part A: dependency-map self-loop edges ----
+dep = os.path.join(ROOT, "01-model-company", "workflows", "workflow-dependency-map.md")
+parent = None
+for i, line in enumerate(open(dep, encoding="utf-8"), 1):
+    pm = re.match(r"^\s*(W\d+[A-Z]?)\s*\(", line)
+    if pm and not re.match(r"^\s*(\u2192|\u21e2|\u2194)", line):
+        parent = pm.group(1)
+        continue
+    em = re.match(r"^\s*(\u2192|\u21e2|\u2194)\s*(W\d+[A-Z]?)", line)
+    if em and parent and em.group(2) == parent:
+        errs.append(f"workflow-dependency-map.md:{i}: self-loop edge {parent} {em.group(1)} {em.group(2)} (a block may not depend on itself; re-home the back-edge in \u00a76 CIRC like CIRC-005 or drop it)")
+
+# ---- Part B: declared overlap pairs must cross-reference bidirectionally ----
+reg = os.path.join(ROOT, "01-model-company", "workflows", "event-custody-and-precedence-register.md")
+if not os.path.isfile(reg):
+    errs.append("event-custody-and-precedence-register.md not found (workflows/ support file required since the 2026-09-03 event-custody pass)")
+    pairs = []
+else:
+    pairs = sorted(set((int(a), int(b)) for a, b in
+                       re.findall(r"\bVS-(\d+) \u2194 VS-(\d+)\b", open(reg, encoding="utf-8").read())))
+folders = {}
+for d in glob.glob(os.path.join(ROOT, "01-model-company", "workflows", "VS-*")):
+    m = re.match(r"VS-(\d+)-", os.path.basename(d))
+    if m:
+        folders[int(m.group(1))] = d
+for a, b in pairs:
+    for x, y in ((a, b), (b, a)):
+        if x not in folders:
+            errs.append(f"OP pair VS-{a} \u2194 VS-{b}: VS-{x} has no workflow folder")
+            continue
+        hits = 0
+        pat = re.compile(r"\bVS-0*%d\b" % y)  # citations may zero-pad (VS-07 for VS-7)
+        for f in glob.glob(os.path.join(folders[x], "*.md")):
+            if pat.search(open(f, encoding="utf-8").read()):
+                hits += 1
+        if hits == 0:
+            errs.append(f"OP pair VS-{a} \u2194 VS-{b}: no file in VS-{x}/ cites VS-{y} (declared overlap pairs must cross-reference bidirectionally per the register \u00a74)")
+print(f"TOTALS pairs={len(pairs)} problems={len(errs)}")
+for e in errs:
+    print("BAD|" + e)
+PY
+)
+C64_BAD=$(echo "$CHECK64" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
+C64_PAIRS=$(echo "$CHECK64" | sed -n 's/^TOTALS pairs=\([0-9]*\) .*/\1/p')
+if [ "${C64_BAD:-1}" -eq 0 ]; then
+    ok "No dependency-map self-loop edges and all ${C64_PAIRS} declared event-custody overlap pairs cross-reference bidirectionally (guard added by the 2026-09-03 event-custody pass)"
+else
+    error "$C64_BAD event-custody violation(s) (dependency-map self-loop / one-sided overlap pair):"
+    echo "$CHECK64" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

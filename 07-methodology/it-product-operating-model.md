@@ -13,7 +13,7 @@ taxonomy, product-team membership, role definitions, RACI, governance bodies, ca
 headcount. It is the organizational counterpart to the system landscape defined in
 [`technical-guidelines.md`](technical-guidelines.md) and the business process catalog in
 [`workflows/value-stream-index.md`](../01-model-company/workflows/value-stream-index.md)
-(188 value streams, 569 process areas, 5,363 workflows).
+(188 value streams, 569 process areas, 5,364 workflows).
 
 Scope covers the steady state **after** the unified cloud ERP go-live (the "Live & Unified"
 landscape of `model-company-profile.md` §14.1). Implementation-phase structures (SI governance,
@@ -75,10 +75,10 @@ consequences worth stating explicitly:
 | 2 | Warehouse, Logistics & Inventory Systems | WLI | Stream-aligned | VP Supply Chain (DC Ops, Fleet & Logistics) | 22 | 571 |
 | 3 | Store Systems & POS | SSP | Stream-aligned | Store Operations Director | 25 | 873 |
 | 4 | Commerce & Customer Platforms | CCP | Stream-aligned | CMO; Digital Commerce Inc. GM; Trade/Account Mgmt | 27 | 786 |
-| 5 | Finance & Treasury Systems | FIN | Stream-aligned | CFO (Controller, Treasurer, Tax) | 30 | 797 |
+| 5 | Finance & Treasury Systems | FIN | Stream-aligned | CFO (Controller, Treasurer, Tax) | 30 | 798 |
 | 6 | Corporate, Governance & Asset Systems | CORP | Stream-aligned | VP Legal & Compliance; Facilities & Real Estate; Quality; Internal Audit & Risk | 35 | 915 |
 | 7 | People Systems | PEO | Stream-aligned | CHRO | 16 | 437 |
-| | **Domain subtotal** | | | | **171** | **4,864** |
+| | **Domain subtotal** | | | | **171** | **4,865** |
 | 8 | Integration & API Platform | IAP | Platform | All product teams | 0 | 0 |
 | 9 | Cloud Infrastructure & SRE | INFRA | Platform | All product teams | 3 | 116 |
 | 10 | Cybersecurity, Privacy & OT Security | SEC | Platform + enabling | All product teams; DPO; Internal Audit | 3 | 72 |
@@ -86,7 +86,7 @@ consequences worth stating explicitly:
 | 12 | Field & End-User Services | FS | Platform | All 205 locations; 6,762 users | 1 | 24 |
 | | CIO Office (EA, Portfolio Governance, FinOps) | CIO | Enabling | CIO; CEO; Finance | 3 | 77 |
 | | **Platform + CIO subtotal** | | | | **17** | **499** |
-| | **Total** | | | | **188** | **5,363** |
+| | **Total** | | | | **188** | **5,364** |
 
 > Team **workload is weighted by Tier-1 density and transaction volume, not raw VS count** —
 > CORP's 35 VS are mostly registers and GRC tooling with modest system complexity, while SSP's
@@ -343,7 +343,7 @@ consequences worth stating explicitly:
 | WLI | 19 (§4.2) + 3 (VS-87, VS-89, VS-114) | 571 |
 | SSP | 20 (§4.3) + 1 (VS-59) + 3 (VS-23, VS-85, VS-147) + 1 (VS-151) | 873 |
 | CCP | 26 (§4.3) + 1 (VS-146) | 786 |
-| FIN | 29 (§4.4) + 1 (VS-86) | 797 |
+| FIN | 29 (§4.4) + 1 (VS-86) | 798 |
 | CORP | 12 (§4.6) + 22 (§4.7) + 1 (VS-115) | 915 |
 | PEO | 16 (§4.5) | 437 |
 | INFRA | 2 (VS-26, VS-69) + 1 (VS-27) | 116 |
@@ -351,7 +351,7 @@ consequences worth stating explicitly:
 | DP | 2 (VS-33, VS-133) + 5 (VS-28, VS-29, VS-126, VS-128, VS-137) | 210 |
 | FS | 1 (VS-99) | 24 |
 | CIO Office | 3 (VS-30, VS-113, VS-135) | 77 |
-| **Total** | **171 + 17 = 188** | **4,864 + 499 = 5,363** |
+| **Total** | **171 + 17 = 188** | **4,865 + 499 = 5,364** |
 
 ---
 
@@ -589,7 +589,7 @@ to the ERP provider, and L1 support plus the 24/7 SOC are partner-operated.
 | Document | Relationship |
 |---|---|
 | [`model-company-profile.md`](../01-model-company/model-company-profile.md) | Departments (§3.3), org chart (§11.1), performance targets (§12.3/§15.3), ERP landscape (§14) |
-| [`workflows/value-stream-index.md`](../01-model-company/workflows/value-stream-index.md) | The 188-VS / 569-PA / 5,363-WF catalog this model assigns to products |
+| [`workflows/value-stream-index.md`](../01-model-company/workflows/value-stream-index.md) | The 188-VS / 569-PA / 5,364-WF catalog this model assigns to products |
 | [`workflows/workflow-criticality-classification.md`](../01-model-company/workflows/workflow-criticality-classification.md) | Tier 1/2/3 register driving regression coverage and SLAs |
 | [`internal-controls-matrix.md`](../01-model-company/internal-controls-matrix.md) | 808-control register governed via the Tier & Control Board |
 | [`headcount-reality-check.md`](../01-model-company/headcount-reality-check.md) | §3.2 IT staffing gap record this sizing resolves |

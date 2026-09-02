@@ -136,8 +136,9 @@ identify capability gaps not addressed by any existing value stream.
 > W556 payment run, with an AR invoice fallback (W8/W108) for un-nettable vendors and a
 > cash-settlement route where a BIR 2307 is required; separate service-revenue/VAT treatment per
 > W473; and a quarterly fee-income-vs-service-cost recovery review. Canonical totals are now
-> **188 value streams · 569 process areas · 5,363 workflows** (the fourteen post-catalog workflows
-> were confirmed 2026-09-02 by the post-catalog confirmation pass — full classification coverage).
+> **188 value streams · 569 process areas · 5,364 workflows** (the fourteen post-catalog workflows
+> were confirmed 2026-09-02 by the post-catalog confirmation pass — full classification coverage;
+> W5511 gift-card dormancy/escheat shipped confirmed 2026-09-03 in the event-custody pass).
 
 > **Post-Pass-30 workflow-level additions, batch 4 (2026-08-26) — not a gap pass.** A fresh
 > review re-ran the §2 gap methodology at *workflow* granularity (defining-term keyword search

@@ -2,6 +2,8 @@
 
 > **Governance & Assurance** · [Value Stream Index](../value-stream-index.md)
 
+**Event custody:** owns the BCP/crisis framework (W848 CMT, W855 communications, W856 reviews), closure/reopening mechanics (W850), phased reopening governance (W1552), flood BCP/insurance linkage (W1213), and all disaster insurance-claim processing (PA-26.3) — operational typhoon response runs VS-69; boundaries per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md).
+
 ## Process Areas
 
 | PA | Name | Workflows |
