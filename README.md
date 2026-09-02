@@ -229,6 +229,7 @@ erpplans/
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
+│   ├── optimal-table-of-organization.md  Adopted TARGET-STATE TO: HQ 469 / total 6,869 (phased from current 362 / 6,762)
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
 │   ├── internal-controls-matrix.md     808 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy

@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-09-02 — Target-state table of organization adopted (`01-model-company/optimal-table-of-organization.md`) — target HQ 362 → 469 / total 6,762 → 6,869 declared; current-state canon unchanged
+
+The repository now recognizes exactly two org states: the **current baseline** (profile §3.3/§11.1 — HQ 362, total 6,762, the minimum-coverage structure implemented 2026-06-20/25) and the **adopted target state** (the new document — HQ 469, total 6,869 at 200 stores).
+
+- **What the target TO defines**: board & committee architecture (Audit, Related-Party Transactions, Nomination & Compensation, Risk — RPT matters with 5 interlocking family entities); the 7-executive / 18-department structure affirmed unchanged (spans at ceiling by design); the 8 value-stream families mapped gap-free to executive owners; department sub-team architecture (Finance 62 across 11 sub-teams sized to ≤800 AP invoices/clerk/mo; Supply Chain 46 with the S&OP/IBP sub-team preserved exactly; HR 42 field-partnered with 6 regional HRBPs; Legal 20 across 8 sub-disciplines; CS 34 resolving the hybrid-model decision; LP 27; HSE 13; Facilities 12 incl. the Energy Manager; Marketing 30 incl. retail media/marketplace); legal-entity overlay with dual-hat GMs (Logistics = VP Supply Chain; Property = Director Facilities & RE; Digital Commerce under CMO) and statutory officers; field layer per VS-177 (6 RM → 13 DM → 200 stores; 20 LP Officers + 6 HRBPs field-dotted to HQ functions); governance-body cadence (11 bodies incl. monthly Exec S&OP, ARB, RPT Committee); span/layer discipline (≤ 8 layers CEO → floor; spans banded 5–8 with exception process; HQ:field 7.3%); mandated-role register (DPO per RA 10173, MLRO, CorpSec, IA independence via Audit Committee, Safety Officers per RA 11058/DO 198-18, Company Nurse, energy/environmental focal); org-health metrics; and the 200 → 300 store scaling path (regions 6→8, districts 13→20, HQ ≤ ~530 at ≤ half the store-growth rate).
+- **Sizing authority**: every target figure traces to `headcount-reality-check.md` need bands (~440–470 comfortable HQ; 469 lands at its upper edge), `it-product-operating-model.md` §9 (IT = 80, already the authoritative steady-state sizing), and VS-177 (field model). Store 29/store and DC 150/DC affirmed unchanged.
+- **Phasing**: three demand-triggered phases — regulatory floor (+18), transaction scale (+26, incl. the AP-automation threshold), capability scale (+63) — guarded by: HQ never exceeds the 440–470 band at 200 stores; each phase promotion is CHANGELOG-recorded and flips the affected sizing row from target to current.
+- **Canon updates**: `model-company-profile.md` v2.25 — §3.3/§4/§11.1 cross-reference the target state (all current-state figures unchanged); `headcount-reality-check.md` STATUS banner records the comfortable band's adoption as target; root README tree updated. Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC (current state)**.
+
+---
+
 ## 2026-09-01 — IT Product Operating Model issued (`07-methodology/it-product-operating-model.md`) — 12 product teams covering all 188 value streams; membership, roles, RACI, governance, sizing 50 → 80 FTE
 
 First organizational artifact of the `07-methodology` folder: the target IT operating model for the post-go-live unified-ERP steady state.
