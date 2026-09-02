@@ -2,6 +2,8 @@
 
 > **Plan & Source** · [Value Stream Index](../value-stream-index.md)
 
+**Event custody:** owns merchandise-vendor onboarding (W36 — risk-gated by VS-161 TPRM tiering/DD; installer/contractor-class third parties onboard via VS-172) and the indirect-procurement *engine* W136 that all non-merch spend requisitions through (VS-34's category programs own the category policy) — boundaries per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md) (E-13/E-16).
+
 ---
 
 ## Overview

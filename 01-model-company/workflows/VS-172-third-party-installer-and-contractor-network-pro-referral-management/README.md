@@ -2,6 +2,8 @@
 
 > **Sell & Serve** · [Value Stream Index](../value-stream-index.md)
 
+**Event custody:** owns installer/contractor-class third-party onboarding & network management (risk DD per VS-161); merchandise vendors onboard via VS-03 instead — boundary per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md) (E-16).
+
 ---
 
 ## Overview

@@ -29,7 +29,7 @@ POS & checkout: transaction processing, payment & cash management, and POS compl
 
 ## Key dependencies
 
-VS-07 (stores), VS-29 (pricing master W289), VS-13 (loyalty), VS-79 (BIR), VS-118 (revenue assurance)
+VS-07 (stores), VS-29 (pricing master W289), VS-13 (loyalty), VS-32 (returns decisioning — W1622–W1630), VS-58 (coupon campaigns — W539 redemption), VS-79 (BIR), VS-118 (revenue assurance)
 
 ## Key controls
 

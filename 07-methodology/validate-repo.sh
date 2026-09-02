@@ -3102,6 +3102,87 @@ else
     echo "$CHECK64" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 65: cross-VS duplicate-event guard (identical event Triggers / distinctive Frequency canons) ---
+echo "--- Check 65: Cross-VS duplicate-event guard ---"
+# The 2026-09-03 second custody wave found the copy/generator duplicate class the
+# custody register cannot see mechanically: parallel full implementations of the same
+# event living in different value streams (W12 'Returns & Exchanges' in VS-07 vs
+# W1622/W1623 in VS-32 — same trigger semantics, same 56,000/month frequency canon,
+# same owner, zero pointers between them until the register's E-09 scope note).
+# Paraphrased duplicates (the W12/W1622 class itself) are caught only by semantic
+# review; this guard catches the byte-identical class — future generator/copy-paste
+# splits — via two signals, each with the adjudicated-legalitimate shared-cadence /
+# shared-canon clusters allowlisted (same convention as Check 52's 20-cluster
+# allowlist):
+#   Part A — byte-identical event Triggers in different VS folders (pure-cadence
+#            phrases like 'monthly reporting cycle' are auto-exempt via the cadence
+#            vocabulary; 24 clusters adjudicated legitimate parallel programs);
+#   Part B — byte-identical distinctive Frequency canons (containing a ≥3-digit figure
+#            or %, length ≥ 12) in different VS folders (9 clusters adjudicated
+#            legitimate shared enterprise canons: 200-store cadences, new-store
+#            rates, TEU volumes, hire volumes).
+CHECK65=$(python3 - "$REPO_ROOT" <<'PY'
+import re, glob, os, collections, sys
+ROOT = sys.argv[1]
+CAD = set("monthly quarterly annual semiannual weekly daily review cycle reporting close monitoring analysis audit program strategy governance maturity ongoing continuous management financial period end event driven ad hoc scheduled per".split())
+ALLOW_A = {
+    "analytics cycle program review", "annual capital planning", "annual comprehensive review",
+    "annual cycle strategic change", "annual planning cycle",
+    "annual program review benchmark refresh maturity assessment vs133",
+    "annual program review maturity assessment", "annual review strategic shift underperformance",
+    "annual strategic review", "audit plan links to vs21 controls cycle", "delivery completion",
+    "monthend close cycle w9a", "monthly analytics cycle", "monthly billing cycle",
+    "monthly close margin review", "monthly cost analysis", "monthly ic settlement cycle",
+    "monthlyquarterly programperformance review", "onboarding annual refresh",
+    "quarterly competitive intelligence cycle", "quarterly planning cycle",
+    "quarterly profitability review", "realtime monitoring",
+    "risk assessment audit control remediation annual review",
+}
+ALLOW_B = {
+    "1015 new storesyear", "400600 teusmonth", "6year 200 stores", "daily 200 stores",
+    "daily all 200 stores", "monthly 200 stores", "monthly 200 stores 8 zones",
+    "per hire 12001600 hiresyr", "quarterly 200 stores",
+}
+def norm(s):
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9% ]", "", s.lower())).strip()
+trig, freq = collections.defaultdict(list), collections.defaultdict(list)
+cur_w = cur_vs = None
+for f in sorted(glob.glob(os.path.join(ROOT, "01-model-company", "workflows", "VS-*", "PA-*.md"))):
+    vs = re.match(r"(VS-\d+)", os.path.basename(os.path.dirname(f))).group(1)
+    for line in open(f, encoding="utf-8"):
+        m = re.match(r"^#{2,3} (W\d+[A-Z]?)\.", line)
+        if m:
+            cur_w, cur_vs = m.group(1), vs
+            continue
+        m = re.match(r"^\|\s*\*\*Trigger\*\*\s*\|\s*(.+?)\s*\|\s*$", line)
+        if m and cur_w:
+            t = norm(m.group(1))
+            if t and not all(w in CAD for w in t.split()):
+                trig[t].append(f"{cur_w} ({cur_vs})")
+        m = re.match(r"^\|\s*\*\*Frequency\*\*\s*\|\s*(.+?)\s*\|\s*$", line)
+        if m and cur_w:
+            t = norm(m.group(1))
+            if t and len(t) >= 12 and (re.search(r"\d{3,}", t.replace(",", "")) or "%" in t):
+                freq[t].append(f"{cur_w} ({cur_vs})")
+errs = []
+for label, table, allow in (("duplicate-event Trigger", trig, ALLOW_A),
+                            ("shared distinctive Frequency canon", freq, ALLOW_B)):
+    for t, ws in table.items():
+        if len({w.split("(")[1] for w in ws}) > 1 and t not in allow:
+            errs.append(f"{label} '{t}' shared by {len(ws)} workflows across value streams: {', '.join(ws[:5])} — parallel implementations of one event must be scoped via the event-custody register or reworded")
+print(f"TOTALS problems={len(errs)}")
+for e in errs:
+    print("BAD|" + e)
+PY
+)
+C65_BAD=$(echo "$CHECK65" | sed -n 's/^TOTALS problems=\([0-9]*\)/\1/p')
+if [ "${C65_BAD:-1}" -eq 0 ]; then
+    ok "No cross-VS byte-identical event Triggers or distinctive Frequency canons outside the 33 adjudicated shared-cadence/shared-canon clusters (guard added by the 2026-09-03 second custody wave; the paraphrase class is covered by the event-custody register's scope notes)"
+else
+    error "$C65_BAD cross-VS duplicate-event violation(s):"
+    echo "$CHECK65" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

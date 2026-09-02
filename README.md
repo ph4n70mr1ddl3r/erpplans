@@ -240,7 +240,7 @@ erpplans/
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
     ├── it-product-operating-model.md IT product teams, roles, RACI, governance, sizing
-    ├── validate-repo.sh              Cross-reference validation (64 checks)
+    ├── validate-repo.sh              Cross-reference validation (65 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── confirm-postcatalog-14.py     One-time post-catalog confirmation pass (W5497–W5510: 14 → 0 unclassified, 2026-09-02)

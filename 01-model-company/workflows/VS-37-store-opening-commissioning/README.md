@@ -2,6 +2,8 @@
 
 > **Sell & Serve** · [Value Stream Index](../value-stream-index.md)
 
+**Event custody:** owns the new-store commissioning lifecycle; permanent closure/decommissioning runs VS-59 and remodels/refurbishments run VS-109 (a closure-then-reopen remodel chains VS-59 → VS-109 → the reopening leg here) — boundaries per the [Event Custody & Precedence Register](../event-custody-and-precedence-register.md) (E-18).
+
 ## Overview
 
 Manages the end-to-end process of commissioning new BuildRight Depot stores — from project kickoff after site approval and lease signing through staffing, initial inventory allocation, system configuration, visual merchandising setup, grand opening execution, and post-opening stabilization. At 10–15 new stores per year, this is a repeatable, high-stakes process that coordinates across Real Estate, HR, IT, Supply Chain, Marketing, and Store Operations. Each new big-box store (8,000–15,000 sqm) represents a PHP 40–60M capital investment and must be operational within a defined timeline.
