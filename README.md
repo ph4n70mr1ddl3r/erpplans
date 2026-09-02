@@ -275,7 +275,7 @@ erpplans/
     ├── unit-less-time-estimate-census.txt  Completed unit-less `per occurrence` Time Estimate census (131 spots repaired in review #62; now guarded structurally in Check 62)
     ├── batch18-deferred-candidates.txt  Batch-18 verified-but-deferred candidates — COMPLETED 2026-09-02 by review #70's re-audit + repair pass (~0 spots remain; all candidates repaired, closed with pointers, or dismissed)
     ├── batch17-deferred-candidates.txt  Batch-17 deferred candidates (~185 of ~190 spots repaired in review #62; both named residuals since closed — the W16.1 four-matrix conflict consolidated on W24's canonical ladder in review #64, and the W712 quote was not locatable with current text verified correct)
-    ├── batch23-deferred-candidates.txt  Batch-23 deferred candidates — items 1–4 (VP Operations ghost family, W126 scope, the W239 move, the 204-vs-205 family) RESOLVED in the #69 successor adjudication pass; the VP Digital / role-charter residuals tracked in the CHANGELOG batch entries
+    ├── batch23-deferred-candidates.txt  Batch-23 deferred candidates — items 1–4 (VP Operations ghost family, W126 scope, the W239 move, the 204-vs-205 family) RESOLVED in the #69 successor adjudication pass; the remaining role-charter/org residuals closed by the fork-local #72 ghost-role sweep and worklist closures (see CHANGELOG)
     ├── defragment-automation.py      One-time fragment-Automation-bullet repairer
     ├── fix-headcount-6757.py         Stale-headcount figure repairer (Check 24 companion)
     ├── fix-toc-anchors.py            Intra-file TOC anchor repairer (Check 23 companion)

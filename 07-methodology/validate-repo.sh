@@ -2348,7 +2348,7 @@ bad_literals = [
     (r'DAO\s?2015-09', 'phantom/misapplied hazardous-waste order (correct: DENR DAO 2004-36 Procedural Manual under RA 6969)'),
     (r'(?:DAO\s?|DENR Administrative Order\s?)2015-08', 'mis-cited toxic-substances/SDS order (correct: RA 6969 and its implementing rules; workplace SDS also per OSH Standards / D.O. 198-18)'),
     (r'DAO\s?2021-19', 'mis-attributed hazardous-waste penalty citation (fines run under RA 6969 / DAO 2004-36)'),
-    (r'DAO\s?2005-10', 'mis-cited septic-tank standards order (correct: Sanitation Code PD 856 Ch. XVII + National Plumbing Code)'),
+    (r'(?:DA|A)O\s?2005-10', 'mis-cited septic-tank standards order (correct: Sanitation Code PD 856 Ch. XVII + National Plumbing Code; bare "AO 2005-10" caught too — the dodge class reviews #32/#71 documented)'),
     (r'DOLE Department Order\s?1989-114', 'dubious OSHS promulgation citation (correct: OSH Standards as amended, per DOLE D.O. 198-18)'),
     (r'DOLE Department Order\s?136-14', 'DO 136-14 governs construction-site OSH, not chemical/SDS duties (correct here: RA 6969 + implementing rules / OSH Standards per D.O. 198-18)'),
     (r'RR\s?34-2022', 'phantom BIR transfer-pricing regulation (correct: RR 02-2013)'),

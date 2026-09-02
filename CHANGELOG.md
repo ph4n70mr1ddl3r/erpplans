@@ -2,9 +2,22 @@
 
 ---
 
+## 2026-09-02 — Post-merge consistency review pass (independent re-audit of the branch reconciliation): one retired-citation straggler repaired + its guard extended to the bare-"AO" dodge form (teeth-verified); fork-local repair counts trued; W265 staffing line polished — validator green 0/0 across 63 checks
+
+An independent re-audit of the merge's resolutions in the repo's own tradition (re-derive from raw files, cross-check both parents, hunt stragglers): field-support counts coherent corpus-wide at the 5-technician canon (5 spots incl. the IT operating model's FS roster, W48's pain point/summary, and W265's Participants/PM/staffing); no "batch 30"/"loop continues" claims survive outside the frozen CHANGELOG history; no PA-07.1 old-supervisor-load echoes; W48↔W265 helpdesk/technician counts aligned; working tree and coverage-registry count (5,363) verified.
+
+- **W998 (PA-09.2) — the AO 2005-10 straggler:** the merge-base carried 4 "AO 2005-10" spots; fork-remote #71 repaired 3, but Step 4's "tank sizing meets AO 2005-10 minimum requirements" survived both sweeps by dropping the "DAO" prefix the Check 46 literal matched — the exact dodge class reviews #32/#71 documented. Repaired to the PD 856 Ch. XVII minimum-effective-capacity canon (matching the same block's Step 2), and the guard literal extended from `DAO\s?2005-10` to `(?:DA|A)O\s?2005-10` so the bare form can never dodge again. Teeth verified by synthetic injection (both "DAO 2005-10" and bare "AO 2005-10" caught, restored clean).
+- **Counts trued in the merge documentation:** the reconciliation entry and the coverage-registry header had "~1,300 defect spots" for the fork-local line — an undercount. Trued to ≈1,600 named hand-repairs plus the programmatic classes (≈1,100 ghost-role unifications, 1,902 section-order normalizations, ~3,500 unnumbered-CTL/degenerate-quote rewrites, ~230 paste-family re-maps).
+- **W265 staffing-line polish:** the merged Regional IT Field Technicians bullet's trailing fragments smoothed into one sentence (no figure changes).
+- **Root-README batch23 row** re-pointed to the actual closure path of the remaining residuals (the fork-local #72 ghost-role sweep and worklist closures).
+
+Canonical totals unchanged: **188 VS / 569 PA / 5,363 WF / 728 Req / 808 CTL / 6,762 HC (current) · HQ 469 / 6,869 (target)**. `validate-repo.sh` green **0 errors / 0 warnings** across all **63 checks**.
+
+---
+
 ## 2026-09-02 — Branch reconciliation merge: the two parallel post-#67 review lineages unified — review numbers #68–#72 exist twice (fork-local batches 22–29 vs fork-remote loop-closure line); all conflicts adjudicated, coverage registry at 5,363/5,363 (closed), validator reconciled to 63 checks
 
-The repository forked at consistency review #67 (merge-base 9217773) into two parallel review lineages that each continued numbering from #68: the **fork-local lineage** (semantic batches 22–29, reviews #68–#75, 2,241 → 3,073 W-ids read in full, ~1,300 further defect spots repaired) and the **fork-remote lineage** (the IT Product Operating Model + target-state TO issued, post-catalog criticality confirmation, reviews #68–#72 incl. the detector-based final-coverage pass that closed the sampling loop at 5,363/5,363, and validator Check 63). This merge unifies them. The entries below are presented fork-remote-first (2026-09-02/01) then fork-local (2026-08-30); where both lineages titled an entry "Consistency review #NN", the body text distinguishes them (fork-local = "semantic batch"; fork-remote = "independent review"/"loop CLOSED"/worklist closures).
+The repository forked at consistency review #67 (merge-base 9217773) into two parallel review lineages that each continued numbering from #68: the **fork-local lineage** (semantic batches 22–29, reviews #68–#75, 2,241 → 3,073 W-ids read in full — ≈1,600 named hand-repairs plus the programmatic classes: ≈1,100 ghost-role unifications, 1,902 section-order normalizations, ~3,500 unnumbered-CTL/degenerate-quote rewrites, ~230 paste-family re-maps) and the **fork-remote lineage** (the IT Product Operating Model + target-state TO issued, post-catalog criticality confirmation, reviews #68–#72 incl. the detector-based final-coverage pass that closed the sampling loop at 5,363/5,363, and validator Check 63). This merge unifies them. The entries below are presented fork-remote-first (2026-09-02/01) then fork-local (2026-08-30); where both lineages titled an entry "Consistency review #NN", the body text distinguishes them (fork-local = "semantic batch"; fork-remote = "independent review"/"loop CLOSED"/worklist closures).
 
 **Merge adjudications (every conflict resolved on the web-verified canon, later adjudication winning where both lineages ruled on the same spot):**
 
