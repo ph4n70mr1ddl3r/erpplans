@@ -685,7 +685,7 @@ FIELD_DETAIL=$(echo "$FIELDS" | cut -d'|' -f3-)
 if [ "$FIELD_TOTAL_MISSING" -eq 0 ]; then
     ok "All $FIELD_TOTAL_WF workflows have all 9 required fields"
 else
-    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). All 5,349 workflows carried all 9 fields after the 2026-06-27 completeness pass (Participants derived from Steps; System Touchpoints / Pain Points authored) — any reading above zero is a regression from a new generation artifact."
+    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). All 5,363 workflows carried all 9 fields after the 2026-06-27 completeness pass (Participants derived from Steps; System Touchpoints / Pain Points authored) — any reading above zero is a regression from a new generation artifact."
 fi
 
 # --- Check 23: Intra-file TOC anchor resolution ---
@@ -1115,7 +1115,7 @@ DEP = os.path.join(ROOT, '01-model-company', 'workflows', 'workflow-dependency-m
 dep = open(DEP, encoding='utf-8', errors='replace').read()
 for i, ln in enumerate(dep.split('\n'), 1):
     if 'remains unclassified' in ln or 'pending criticality review' in ln:
-        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,349 workflows have been classified since the 2026-06-28 Full-Coverage Confirmation Pass")
+        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,363 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510)")
 print(f"A_STALE={len(stale)}")
 for s in stale[:12]: print(f"A_STALE|{s}")
 print(f"B_ERRS={len(errs)}")
@@ -1125,9 +1125,9 @@ PY
 C27_STALE=$(echo "$CHECK27" | sed -n 's/^A_STALE=//p')
 C27_ERRS=$(echo "$CHECK27" | sed -n 's/^B_ERRS=//p')
 if [ "$C27_STALE" -eq 0 ]; then
-    ok "No stale register-row figure '2,776'/'2,753' in current-state prose (canonical figures are 5,372 rows / 5,349 unique since the 2026-06-28 Full-Coverage Confirmation Pass; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
+    ok "No stale register-row figure '2,776'/'2,753' in current-state prose (canonical figures are 5,386 rows / 5,363 unique since the 2026-09-02 post-catalog confirmation; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
 else
-    warn "Stale register-row figure '2,776'/'2,753' appears $C27_STALE time(s) in current-state prose (canonical figures are 5,372 rows / 5,349 unique — use an 'X -> Y' change-note or update the figure):"
+    warn "Stale register-row figure '2,776'/'2,753' appears $C27_STALE time(s) in current-state prose (canonical figures are 5,386 rows / 5,363 unique — use an 'X -> Y' change-note or update the figure):"
     echo "$CHECK27" | grep '^A_STALE|' | sed 's/^A_STALE|/    /'
 fi
 if [ "$C27_ERRS" -eq 0 ]; then
@@ -2214,9 +2214,8 @@ surfaces = [
     ("WORKFLOW-FORMAT-GUIDE.md", r"\(([\d,]+) confirmed rows; (\d+) post-catalog workflows keyword-proposed\)",
      lambda m: (n(m.group(1)) != rows and bad.append(f"format-guide layout row: confirmed-rows figure {n(m.group(1))} != classification {rows}"),
                 int(m.group(2)) != unclassified and bad.append(f"format-guide layout row: post-catalog figure {m.group(2)} != register {unclassified}")), 1),
-    ("WORKFLOW-FORMAT-GUIDE.md", r"holds the (\d+) unclassified post-catalog workflows (W\d+)–(W\d+)",
-     lambda m: (int(m.group(1)) != unclassified and bad.append(f"format-guide proposed-register row: count {m.group(1)} != register {unclassified}"),
-                lo is not None and (int(m.group(2)[1:]), int(m.group(3)[1:])) != (lo, hi) and bad.append(f"format-guide proposed-register row: range {m.group(2)}–{m.group(3)} != register W{lo}–W{hi}")), 2),
+    ("WORKFLOW-FORMAT-GUIDE.md", r"currently empty — 0 unclassified",
+     lambda m: (unclassified != 0 and bad.append(f"format-guide proposed-register rows claim 'currently empty — 0 unclassified' but the register holds {unclassified} unclassified workflows")), 2),
     (os.path.join("..", "requirement-workflow-matrix.md"), r"The full ([\d,]+)-workflow / 188-value-stream inventory",
      lambda m: want_total("requirement-matrix inventory line", n(m.group(1))), 1),
 ]

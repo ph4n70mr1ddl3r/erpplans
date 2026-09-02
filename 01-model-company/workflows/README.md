@@ -12,10 +12,10 @@
 | Value Streams | 188 |
 | Process Areas | 569 |
 | Workflows | 5,363 |
-| Classified (Tier 1) | 1,375 |
-| Classified (Tier 2) | 3,243 |
-| Classified (Tier 3) | 754 |
-| Classified total | 5,372 rows = 5,349 unique workflows + 23 parent/summary sub-workflow rows (full coverage confirmed 2026-06-28; the 14 post-catalog workflows W5497–W5510, added 2026-08-24/26, ship unclassified with keyword-driven proposed tiers) |
+| Classified (Tier 1) | 1,381 |
+| Classified (Tier 2) | 3,249 |
+| Classified (Tier 3) | 756 |
+| Classified total | 5,386 rows = 5,363 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass and re-achieved 2026-09-02 when the 14 post-catalog workflows W5497–W5510 were confirmed 6 T1 / 6 T2 / 2 T3) |
 
 ---
 
@@ -26,7 +26,7 @@
 | [value-stream-index.md](value-stream-index.md) | **Master index** — all 188 value streams with workflow counts |
 | [WORKFLOW-FORMAT-GUIDE.md](WORKFLOW-FORMAT-GUIDE.md) | Workflow format, RACI key & conventions |
 | [workflow-criticality-classification.md](workflow-criticality-classification.md) | Tier 1/2/3 implementation priorities (confirmed) |
-| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — holds the 14 unclassified post-catalog workflows (W5497–W5510, added 2026-08-24/26) pending confirmation; regenerates automatically whenever new workflows ship unclassified |
+| [workflow-criticality-proposed.md](workflow-criticality-proposed.md) | Keyword-driven tier proposal register for workflows outside the confirmed register — currently empty (0 unclassified since the 2026-09-02 post-catalog confirmation of W5497–W5510); regenerates automatically whenever new workflows ship unclassified |
 | [workflow-dependency-map.md](workflow-dependency-map.md) | Prerequisite relationships, critical path |
 | [workflow-system-touchpoint-map.md](workflow-system-touchpoint-map.md) | ERP module-to-workflow cross-reference |
 | [workflow-gap-analysis.md](workflow-gap-analysis.md) | Gap analysis methodology & results |
