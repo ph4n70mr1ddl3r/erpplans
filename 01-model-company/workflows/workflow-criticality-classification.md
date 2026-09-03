@@ -1,14 +1,15 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,364 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,387 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,367 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,390 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
 > confirmed on 2026-09-02 by the post-catalog confirmation pass
-> (`07-methodology/confirm-postcatalog-14.py`; 6 → Tier 1, 6 → Tier 2, 2 → Tier 3), and
+> (`07-methodology/confirm-postcatalog-14.py`; 6 → Tier 1, 6 → Tier 2, 2 → Tier 3),
 > W5511 (VS-54.3 gift-card dormancy/escheat) shipped directly confirmed Tier 2 in the
-> 2026-09-03 event-custody pass.
+> 2026-09-03 event-custody pass, and W5512–W5514 (the agentic-AI platform lifecycle gap fill
+> in VS-128.3) shipped directly confirmed Tier 2 in the 2026-09-03 agentic gap-fill pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -763,12 +764,12 @@ These 756 workflows deliver advanced capabilities for competitive differentiatio
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
 | Phase 1 | Go-Live Critical (Tier 1) | 1,381 | 25.6% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,250 | 60.3% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,253 | 60.4% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 756 | 14.0% |
-| **Confirmed Total** | | **5,387** | 100% |
+| **Confirmed Total** | | **5,390** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,364 are canonical `##` workflows.
+> own classification row; the remaining 5,367 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -792,14 +793,16 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,387 rows (5,364 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,390 rows (5,367 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,364** unique `##` workflows (5,364 confirmed + 0 unclassified) |
+| **Grand Total** | **5,367** unique `##` workflows (5,367 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,387 classified register rows (5,364 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,364 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,390 classified register rows (5,367 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,367 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+
+> **2026-09-03 addition (agentic-AI platform gap fill, batch 6):** Three workflow-level gap fills — W5512 (Agentic Candidate Intake, Sourcing Routing & Agent Registry Registration), W5513 (Agent Shadow & Canary Evaluation, Graduation & Autonomy-Tier Ratification), and W5514 (Agent Runtime Operations, Guardrail & Kill-Switch Telemetry, Quarterly Re-Registration & Portfolio Sunset; all VS-128.3) — were added after re-running the gap methodology at workflow granularity against the 2026-09-03 Agentic-AI extension (capability-sourcing-and-engineering-model.md §12, OM v2.1 AAP team #15): the agent lifecycle (intake → SIB sourcing routing → VS-128 registration → shadow/canary evaluation → runtime operation → QBR sunset) had no dedicated owner in any PA file ('agentic', 'agent runtime', 'shadow mode', 'canary', 'kill-switch', and 'non-human identity' each appeared in zero dedicated `## W` headers — the adjacent slices are each model-generic: W3931 owns the model registry, W3946 model pre-deployment assurance, W3947 model monitoring, W3948 model retirement). All three ship **directly confirmed Tier 2** — the lifecycle-operations class of their PA-128.3 siblings (W3945–W3948), with the statutory/boundary dimension carried inside W5513's ratification gate (the hard boundaries — no statutory filings, no POS/OT, no SoD conflicts — are verification steps, not standalone statutory registers, matching the W5511 sibling pattern).
 
 > **2026-08-26 addition (batch 5):** One further post-catalog workflow-level gap fill — W5510 (Supplier Service-Fee Billing & Account Deduction for Store-Rendered Services (Barcode Labels & Promotional Collaterals); VS-15.1) — was added after a supplier-expense-model review found the two existing recovery paths each own a different money flow (co-op funds W513/W1799 = pre-agreed campaign reimbursement; compliance chargebacks W245 = penalties for non-performance) while per-event, store-rendered services billed to the supplier's account — barcode/price-label printing, promotional-collateral production, source-tag re-application — had no owner ('service fee'/'supplier billing' appeared in zero merchandise-supplier PA files as dedicated headers; only the concessionaire analog W5507 existed, in VS-07.1); it ships **unclassified** with a keyword-driven proposed Tier 1 tier (the `barcode` core-transactional keyword, same precedent as W5507), joining W5497–W5509 in the pending-confirmation register (its settlement rides W770/W556, which are already Tier 1, so the Tier 1 proposal is recovery-integrity driven rather than go-live blocking — warrants explicit confirmation review).
 
@@ -1837,6 +1840,16 @@ The event-custody pass added one workflow-level gap fill and confirmed it direct
 | ID | Workflow | Value Stream |
 |---|---|---|
 | W5511 | Gift Card Dormancy Monitoring, Escheat Evaluation & Expired-Liability Derecognition | Gift Card & Stored Value Management |
+
+#### Agentic-AI Platform Gap-Fill Pass (2026-09-03)
+
+The agentic gap-fill pass added three workflows and confirmed them directly **Tier 2** — the lifecycle-operations class of their PA-128.3 siblings (W3945–W3948 model lifecycle ops); the hard-boundary dimension (no statutory filings, no POS/OT, no SoD conflicts) rides W5513's ratification gate inside the workflow rather than a standalone statutory register:
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5512 | Agentic Candidate Intake, Sourcing Routing & Agent Registry Registration | AI/ML Governance & Responsible AI |
+| W5513 | Agent Shadow & Canary Evaluation, Graduation & Autonomy-Tier Ratification | AI/ML Governance & Responsible AI |
+| W5514 | Agent Runtime Operations, Guardrail & Kill-Switch Telemetry, Quarterly Re-Registration & Portfolio Sunset | AI/ML Governance & Responsible AI |
 
 ### Tier 3 Additions (130 Workflows)
 
@@ -6622,6 +6635,8 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 ---
 
+
+*Date: 2026-09-03 | Workflow Criticality Classification v7.44 — agentic-AI platform gap-fill pass: re-running the workflow-granularity gap methodology against the 2026-09-03 Agentic-AI extension (sourcing model §12; OM v2.1 AAP team #15) found the agent lifecycle (intake → SIB sourcing routing → VS-128 registration → shadow/canary evaluation → runtime operation → QBR sunset) unowned at workflow level — 'agentic'/'agent runtime'/'shadow mode'/'canary'/'kill-switch'/'non-human identity' in zero dedicated `## W` headers while the adjacent VS-128 slices are each model-generic (W3931 registry, W3946 pre-deployment assurance, W3947 monitoring, W3948 retirement). Three workflows added to VS-128.3 and confirmed directly **Tier 2** (the W3945–W3948 lifecycle-operations sibling class; hard boundaries carried inside W5513's ratification gate, matching the W5511 precedent): **W5512** candidate intake, SIB sourcing routing & agent registry registration; **W5513** shadow & canary evaluation, graduation & autonomy-tier ratification; **W5514** runtime operations, guardrail & kill-switch telemetry, quarterly re-registration & portfolio sunset. Register 5,387 → 5,390 rows (5,364 → 5,367 unique; T2 3,250 → 3,253); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Technology & Data family + reconciliation line, value-stream-index header/VS-128 row/T&D subtotal/grand total/footer, root-README tree/coverage/Key-Metrics/diagram, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows, dependency-map intro + VS-133 row, gap-analysis batch-6 note, executive-summary top footer, IT-model §3.2/§9.1 DP 210 → 213 and 4,868+499=5,367 reconciliation, sourcing-model §12.1 Tier-2 ladder count 3,250 → 3,253, semantic-audit-coverage registry 5,367/5,367). `validate-repo.sh`: 0 errors / 0 warnings.*
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.43 — event-custody pass: W5511 (gift-card dormancy monitoring, escheat evaluation & expired-liability derecognition; VS-54.3) added to the catalog and confirmed directly Tier 2 (the finance-operations class of its W2158–W2165 siblings; the statutory escheat filing rides the Legal Counsel gate inside the workflow). Register 5,386 → 5,387 rows (5,363 → 5,364 unique; T2 3,249 → 3,250); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Finance family + reconciliation line, root-README coverage rows + tree rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows, dependency-map intro + VS-133 row, gap-analysis current-state clause, IT-model §4.9 reconciliation 4,864+499 → 4,865+499). `validate-repo.sh`: 0 errors / 0 warnings across 64 checks.*
 

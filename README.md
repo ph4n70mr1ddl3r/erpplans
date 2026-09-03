@@ -29,11 +29,11 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            728 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      5,364 workflows organized by value stream
+│   ├── workflows/                      5,367 workflows organized by value stream
 │   │   ├── README.md                           Navigation hub & quick stats
 │   │   ├── value-stream-index.md              Master index (8 families · 188 value streams · 569 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
-│   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (5,387 rows)
+│   │   ├── workflow-criticality-classification.md  Tier 1/2/3 confirmed priorities (5,390 rows)
 │   │   ├── workflow-criticality-proposed.md    Keyword-driven tier proposal register for unclassified workflows (currently empty — 0 unclassified; regenerates via classify-workflows.py)
 │   │   ├── workflow-dependency-map.md           Prerequisite relationships, critical path
 │   │   ├── workflow-system-touchpoint-map.md    ERP module-to-workflow cross-reference
@@ -162,7 +162,7 @@ erpplans/
 │   │   ├── VS-125-cross-channel-fraud-management-payment-fraud-protection/ 24 workflows (3 process areas)
 │   │   ├── VS-126-customer-data-platform-single-customer-view-identity-resolution/ 24 workflows (3 process areas)
 │   │   ├── VS-127-sales-operations-planning-integrated-business-planning/ 32 workflows (4 process areas)
-│   │   ├── VS-128-ai-ml-governance-responsible-ai/ 24 workflows (3 process areas)
+│   │   ├── VS-128-ai-ml-governance-responsible-ai/ 27 workflows (3 process areas)
 │   │   ├── VS-129-competition-and-antitrust-compliance/ 24 workflows (3 process areas)
 │   │   ├── VS-130-corporate-development-ma-divestiture/ 24 workflows (3 process areas)
 │   │   ├── VS-131-human-rights-responsible-supply-chain-due-diligence/ 24 workflows (3 process areas)
@@ -267,8 +267,8 @@ erpplans/
     ├── audit-semantic-anchors.py    Semantic-sample anchor guard (Check 62)
     ├── audit-misdirected-ctl.py     Misdirected-CTL-citation family measurer (the batch-26/27 paste-family audits)
     ├── classify-isolated-ctl.py     Isolated colon-form CTL-citation classifier (gloss-vs-control overlap scoring, batch-27)
-    ├── final-semantic-coverage.py    Final full-coverage semantic pass (review #71 — detector suite over the 3,122 unaudited workflows; closed the sampling loop to 5,363/5,363; the 2026-09-03 W5511 transition re-run extends the registry to 5,364/5,364)
-    ├── semantic-audit-coverage.txt  Audited-W-id registry — LOOP CLOSED 2026-09-02 at 5,363 of 5,363; W5511 audited in full + detector-swept and admitted 2026-09-03 → 5,364 of 5,364 (2,241 stratified full-reads reviews #44–#67 + the review-#71 final-coverage detector pass; the fork-local batches 22–29 read their 832 post-fork W-ids in full — see the 2026-09-02 branch-reconciliation merge entry in CHANGELOG)
+    ├── final-semantic-coverage.py    Final full-coverage semantic pass (review #71 — detector suite over the 3,122 unaudited workflows; closed the sampling loop to 5,363/5,363; the 2026-09-03 W5511 transition re-run extends the registry to 5,364/5,364; the agentic gap-fill transition extends it to 5,367/5,367)
+    ├── semantic-audit-coverage.txt  Audited-W-id registry — LOOP CLOSED 2026-09-02 at 5,363 of 5,363; W5511 audited in full + detector-swept and admitted 2026-09-03 → 5,364 of 5,364; W5512–W5514 audited in full + detector-swept and admitted the same day → 5,367 of 5,367 (2,241 stratified full-reads reviews #44–#67 + the review-#71 final-coverage detector pass; the fork-local batches 22–29 read their 832 post-fork W-ids in full — see the 2026-09-02 branch-reconciliation merge entry in CHANGELOG)
     ├── draw-batch26.py             Batch-26 semantic-audit sample drawer (seed 7070, 104 workflows, expansion-weighted)
     ├── draw-batch27.py             Batch-27 semantic-audit sample drawer (seed 7171)
     ├── draw-batch28.py             Batch-28 semantic-audit sample drawer (seed 7272)
@@ -320,7 +320,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **728** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **5,364** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **5,367** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 808 (88 preventive, 720 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 429 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 293 | `01-model-company/erp-requirements.md` |
@@ -331,8 +331,8 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 728 fully specified (429 Must / 293 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 5,364 fully specified across 188 value streams (all 5,364 confirmed-classified — the 14 post-catalog additions W5497–W5510 were confirmed 2026-09-02; W5511 gift-card dormancy/escheat shipped confirmed 2026-09-03 in the event-custody pass) | `workflows/value-stream-index.md` |
-| Criticality classification | **5,364 of 5,364 workflows classified (full coverage)** — the confirmed register holds 5,387 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted); the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were confirmed 2026-09-02 (6 → Tier 1, 6 → Tier 2, 2 → Tier 3); and W5511 (gift-card dormancy monitoring, escheat evaluation & expired-liability derecognition, VS-54.3) shipped confirmed Tier 2 in the 2026-09-03 event-custody pass; `workflow-criticality-proposed.md` is empty | `workflows/workflow-criticality-classification.md` |
+| Workflows | 5,367 fully specified across 188 value streams (all 5,367 confirmed-classified — the 14 post-catalog additions W5497–W5510 were confirmed 2026-09-02; W5511 gift-card dormancy/escheat shipped confirmed 2026-09-03 in the event-custody pass; W5512–W5514 agentic-AI platform lifecycle shipped confirmed 2026-09-03 in the agentic gap-fill pass) | `workflows/value-stream-index.md` |
+| Criticality classification | **5,367 of 5,367 workflows classified (full coverage)** — the confirmed register holds 5,390 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted); the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were confirmed 2026-09-02 (6 → Tier 1, 6 → Tier 2, 2 → Tier 3); W5511 (gift-card dormancy monitoring, escheat evaluation & expired-liability derecognition, VS-54.3) shipped confirmed Tier 2 in the 2026-09-03 event-custody pass; and W5512–W5514 (the agentic-AI platform lifecycle, VS-128.3) shipped confirmed Tier 2 in the 2026-09-03 agentic gap-fill pass; `workflow-criticality-proposed.md` is empty | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 808 controls mapped to workflows and requirements (67 core + 172 domain anchors CTL-68–239 + 569 process-area operating controls CTL-240–808) — CTL-XX citation coverage is 100% of workflows | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 
@@ -354,7 +354,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (5,364 WF)    │
+   │  erp-requirements.md ←→ workflows/ (5,367 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (808 CTL)  classification.md          │

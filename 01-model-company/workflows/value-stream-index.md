@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,364 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,367 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -222,13 +222,13 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | Gap analysis | 3 | 24 |
 |  | [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | Gap analysis | 3 | 24 |
 |  | [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | Gap analysis | 3 | 24 |
-|  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Gap analysis | 3 | 24 |
+|  | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | Gap analysis | 3 | 27 |
 |  | [VS-135](VS-135-technology-business-management-it-financial-management-cloud-finops/README.md) | Technology Business Management, IT Financial Management & Cloud FinOps | Gap analysis | 3 | 24 |
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **39** | **374** |
-| | | | **Grand Total** | **569** | **5,364** |
+| | | | **Subtotal** | **39** | **377** |
+| | | | **Grand Total** | **569** | **5,367** |
 
 ---
 
@@ -1357,11 +1357,11 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-126.2** [Customer Segmentation, Activation & Personalization Foundation](./VS-126-customer-data-platform-single-customer-view-identity-resolution/PA-126.2-segmentation-activation-personalization.md) — 8 workflows
 - **PA-126.3** [Customer 360 Consumption, Privacy & Governance Analytics](./VS-126-customer-data-platform-single-customer-view-identity-resolution/PA-126.3-customer-360-consumption-privacy-analytics.md) — 8 workflows
 
-**[VS-128: AI/ML Governance & Responsible AI](./VS-128-ai-ml-governance-responsible-ai/README.md)** (24 workflows)
+**[VS-128: AI/ML Governance & Responsible AI](./VS-128-ai-ml-governance-responsible-ai/README.md)** (27 workflows)
 
 - **PA-128.1** [AI Strategy, Governance Framework & Model Risk Management](./VS-128-ai-ml-governance-responsible-ai/PA-128.1-ai-strategy-governance-framework-model-risk.md) — 8 workflows
 - **PA-128.2** [Responsible AI — Fairness, Explainability, Privacy & Safety](./VS-128-ai-ml-governance-responsible-ai/PA-128.2-responsible-ai-fairness-explainability-privacy-safety.md) — 8 workflows
-- **PA-128.3** [AI Lifecycle Operations, Assurance & Value Realization](./VS-128-ai-ml-governance-responsible-ai/PA-128.3-ai-lifecycle-operations-assurance-value-realization.md) — 8 workflows
+- **PA-128.3** [AI Lifecycle Operations, Assurance & Value Realization](./VS-128-ai-ml-governance-responsible-ai/PA-128.3-ai-lifecycle-operations-assurance-value-realization.md) — 11 workflows
 
 **[VS-135: Technology Business Management, IT Financial Management & Cloud FinOps](./VS-135-technology-business-management-it-financial-management-cloud-finops/README.md)** (24 workflows)
 
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,364 workflows across 188 value streams · Date: 2026-09-03*
+*Total: 5,367 workflows across 188 value streams · Date: 2026-09-03*

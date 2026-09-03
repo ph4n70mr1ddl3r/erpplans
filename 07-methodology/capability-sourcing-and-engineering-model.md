@@ -263,14 +263,14 @@ automated-decision obligations, ISO 42001/NIST-AI-RMF alignment).
 | Workflow tier | Agent autonomy | Rule |
 |---|---|---|
 | **Tier 1** (1,381 workflows) | **Human-approval-gated only** | Agent drafts, summarizes, flags, or prepares — a named human decides and signs (approval-matrix evidence retained) |
-| **Tier 2** (3,250) | **Bounded autonomy** | Agent acts inside hard guardrails (limits, whitelists, value caps); sampled human audit; auto-escalation on anomaly |
+| **Tier 2** (3,253) | **Bounded autonomy** | Agent acts inside hard guardrails (limits, whitelists, value caps); sampled human audit; auto-escalation on anomaly |
 | **Tier 3** (756) | **Autonomous-in-bounds** | Agent completes the task unattended; full audit trail; kill-switch active |
 
 Hard boundaries regardless of tier: no agent owns a statutory filing path (BIR/SSS/PhilHealth/Pag-IBIG — human sign-off terminal); no agent acts on the POS/OT estate; no agent may hold SoD-conflicting duties (e.g., vendor-create + payment-approve); every agent action is audit-trailed as control evidence against the 808-control register.
 
 ### 12.2 Agent lifecycle (extends the VS-128 model discipline)
 
-1. **Candidate intake** — the per-workflow Automation Opportunity inventory (5,364 workflows)
+1. **Candidate intake** — the per-workflow Automation Opportunity inventory (5,367 workflows)
    plus VS-133 process mining surface candidates; scored by hours × frequency × error rate ×
    feasibility (derivable from each workflow's Time Estimate / Staffing Implication data).
 2. **Proposal** — the **owning product team** (the team whose workflow it is) proposes with its
@@ -315,7 +315,7 @@ a represented role; the Change & Training Lead pool carries rollout for the 6,76
 
 ---
 
-*Document Version: 1.2 | Date: 2026-09-03 | **Consistency repair (§12.1 tier-count true-up):** the
+*Document Version: 1.3 | Date: 2026-09-03 | **Agentic gap-fill reconciliation:** the §12.2 agent lifecycle now has workflow-level owners — W5512–W5514 in VS-128.3 (intake/sourcing/registration, shadow & canary evaluation with autonomy-tier ratification, runtime/guardrail/kill-switch telemetry with quarterly re-registration & QBR sunset), admitted directly confirmed Tier 2 — so the §12.1 ladder's Tier-2 count is trued 3,250 → 3,253 (register 5,390 rows = 5,367 unique + 23 sub-workflow rows) and the §12.2 intake figure reads 5,367 workflows. No program-rule changes. Prior v1.2 (2026-09-03): **Consistency repair (§12.1 tier-count true-up):** the
 autonomy ladder's tier figures are re-pointed to the criticality register's current Summary counts
 (1,381 / 3,250 / 756 register rows; sum 5,387 rows = 5,364 unique workflows + 23 parent/summary
 sub-workflow rows) — v1.1 had quoted the pre-confirmation snapshot (1,375 / 3,243 / 754 of the

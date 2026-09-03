@@ -27,7 +27,11 @@ RA 10173 profiling consent, AI safety and robustness, human oversight and interv
 AI content governance, AI incident management, ISO 42001/NIST-AI-RMF alignment and future PH AI-
 regulation readiness, the AI development lifecycle with responsible-by-design controls, pre-
 deployment testing/evaluation, production monitoring and drift detection, AI change/retrain/retire,
-AI security/adversarial threats, and an AI ethics review board.
+AI security/adversarial threats, and an AI ethics review board. Since the 2026-09-03 agentic
+extension (sourcing model §12), PA-128.3 also owns the **agent lifecycle operations** for the
+AI & Agent Platform — candidate intake & registry registration, shadow/canary evaluation with
+autonomy-tier ratification, and runtime/guardrail telemetry with quarterly re-registration —
+extending the model discipline to governed agents.
 
 This is distinct from **VS-30.2 (AI/ML & Automation)** which engineers and deploys AI/ML solutions
 (this value stream owns the *governance and controls* layered on top of those solutions). It is
@@ -61,8 +65,8 @@ that no existing value stream owns end-to-end.
 |---|---|---|
 | [PA-128.1](PA-128.1-ai-strategy-governance-framework-model-risk.md) | AI Strategy, Governance Framework & Model Risk Management | 8 |
 | [PA-128.2](PA-128.2-responsible-ai-fairness-explainability-privacy-safety.md) | Responsible AI — Fairness, Explainability, Privacy & Safety | 8 |
-| [PA-128.3](PA-128.3-ai-lifecycle-operations-assurance-value-realization.md) | AI Lifecycle Operations, Assurance & Value Realization | 8 |
-| | **Total** | **24** |
+| [PA-128.3](PA-128.3-ai-lifecycle-operations-assurance-value-realization.md) | AI Lifecycle Operations, Assurance & Value Realization | 11 |
+| | **Total** | **27** |
 
 ---
 

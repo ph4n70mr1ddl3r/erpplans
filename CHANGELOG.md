@@ -2,6 +2,67 @@
 
 ---
 
+## 2026-09-03 — Agentic-AI platform gap-fill pass (batch 6): the sourcing model's §12 agent lifecycle had no workflow-level owner — 'agentic'/'agent runtime'/'shadow mode'/'canary'/'kill-switch'/'non-human identity' in zero dedicated `## W` headers while the adjacent VS-128 slices are each model-generic (W3931 registry, W3946 pre-deployment assurance, W3947 monitoring, W3948 retirement); three workflows added to PA-128.3 and shipped directly confirmed Tier 2 (the W3945–W3948 lifecycle-operations sibling class, hard boundaries carried inside W5513's ratification gate per the W5511 precedent) — canonical totals 5,364 → 5,367 workflows / 5,387 → 5,390 register rows / T2 3,250 → 3,253
+
+**Gap finding (workflow-granularity re-run of the §2 methodology against the 2026-09-03 Agentic-AI
+extension — sourcing model §12, OM v2.1 AAP team #15):** the agent lifecycle (candidate intake →
+SIB sourcing routing → VS-128 registration → shadow/canary evaluation → runtime operation →
+QBR sunset) was defined as a program but owned by no workflow. The defining terms appeared in
+zero dedicated `## W` headers; 'non-human identity'/'service account' in zero PA files at all;
+the only 'agentic'/'AI agent' mentions in workflow files are incidental ('bank/agent platform',
+'Transfer Agent').
+
+**Three workflows created (all PA-128.3 — AI Lifecycle Operations, Assurance & Value Realization):**
+
+- **W5512 Agentic Candidate Intake, Sourcing Routing & Agent Registry Registration** — quarterly
+  hours × frequency × error × feasibility scoring over the 5,367-workflow Automation Opportunity
+  inventory + VS-133 process-mining candidates; owning-team proposal with BPO case; SIB
+  configure → buy → build routing; VS-128 registry registration as the hard gate behind
+  runtime-identity provisioning; ethics/DPIA routing (W3952/W3939).
+- **W5513 Agent Shadow & Canary Evaluation, Graduation & Autonomy-Tier Ratification** — offline
+  evals → shadow beside humans (no action rights) → canary with tier-scaled sampled audit
+  (100% → ≥10% floor); dual-sign graduation gate (AAP eval engineer + owning QA analyst);
+  Tier-1/2/3 autonomy-ladder ratification at SIB with the hard boundaries verified — no
+  statutory filing path, no POS/OT estate, no SoD-conflicting duties.
+- **W5514 Agent Runtime Operations, Guardrail & Kill-Switch Telemetry, Quarterly
+  Re-Registration & Portfolio Sunset** — IAP-contract-only tool access under non-human
+  least-privilege identity (VS-27/W1408); drift/human-takeover/cost-per-task telemetry feeding
+  the AAP KPI row and VS-135 TBM; quarterly kill-switch drills; quarterly registry
+  re-registration with suspension of lapsed agents; QBR sunset of underperformers; incident
+  feed to W3943.
+
+All three absorbed within the sized AAP platform team (OM §5.3, 7 FTE) — no headcount changes
+(OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911).
+
+**Consistency cascade (every figure re-derived):** PA-128.3 TOC + footer 8 → 11; VS-128 README
+PA table 24 → 27; value-stream-index architecture line / VS-128 row 3 PA · 27 WF / T&D subtotal
+39 PA · 377 WF / grand total 569 · 5,367 / footer; workflows/README Quick Stats (5,367 / T1
+1,381 / T2 3,253 / T3 756 / 5,390 rows) + Technology & Data family 374 → 377 + family-subtotal
+reconciliation line; criticality register v7.44 (banner, Summary + %, coverage/grand-total
+rows, Domain Breakdown, batch-6 addition note, Tier-2 'Agentic-AI Platform Gap-Fill Pass'
+subsection, version-history entry); dependency-map v4.18 (intro 5,367/5,390, §8 block size
+2,748 → 2,751, §8.1 anchors VS-27 1,229 → 1,232 and VS-91 977 → 979, VS-133 row, footer);
+touchpoint-map v84.0; WORKFLOW-FORMAT-GUIDE completeness/100%-presence/layout rows; VS-133
+README + PA-133.1/.3 Volume self-descriptions; requirement-matrix inventory line; root-README
+tree (workflows total, VS-128 dir row, classification row, semantic-registry rows) + Key
+Metrics + coverage rows + diagram; executive-summary top footer re-based to '728 requirements,
+5,367 workflows' with the batch named; gap-analysis batch-6 note (ID allocation; canonical
+totals line; GA_ANCHOR re-pointed); IT-model v2.3 (intro, §3.2 DP 210 → 213 + subtotals,
+§9.1 DP row + 4,868+499=5,367, related-docs, Downstream pointer → sourcing v1.3) with the
+two-sided interlock catching the three stale version pins its bump created (methodology-index
+row, OM Downstream, reality-check STATUS banner — all trued); sourcing model v1.3 (§12.1 Tier-2
+ladder count 3,253 — re-derived by Check 59 from the register Summary; §12.2 intake figure);
+methodology-index OM row; semantic-audit-coverage registry closed at 5,367/5,367 (W5512–W5514
+admitted via the documented transition path — full read + D1–D4 detector sweep over the
+PA-128.3 block, 0 flags; final-semantic-coverage.py default run vacuous). Guard-message
+literals trued (validate-repo.sh Checks 22/27 messages; audit-exec-ctl anchor + '5,364'
+retired; audit-model-docs IT-model anchor 4,868+499=5,367; audit-matrix-refs GA_ANCHOR).
+Independent re-derivations all exact: 5,367 unique `## W` headers; 5,390 register rows; tier
+sum 1,381+3,253+756 = 5,390; family subtotals sum 5,367; T&D family 377 = 27+62+24+43+29+24+
+24+24+24+24+24+24+24+24+24; validator green 0 errors / 0 warnings across all 66 checks.
+
+---
+
 ## 2026-09-03 — Description-trueness review pass: three live description-surface staleness defects found outside the guarded docs (the executive summary's top footer still claiming the pre-W5511 '5,363 workflows'; the IT operating model's footer 'Downstream:' pointer still pinning TO v1.4 / technical-guidelines v3.1 / sourcing v1.1 after the post-AAP bumps; the headcount-reality-check STATUS banner still citing TO v1.4 / OM v2.1) + a fourth on the guard side (Check 60's own exec-summary anchor still pinned to the 5,363 string — green-on-stale since the W5511 pass) — new audit-model-docs structural rule live_pin_hits, teeth verified by synthetic injection — validator green 0 errors / 0 warnings across all 66 checks
 
 Independent full-repo review (every headline figure re-derived from raw files, then the description layer hunted). Re-derivations all exact: 188 VS dirs / 569 PA files / 5,364 unique `## W` headers + 23 `###` sub-workflows = 5,387 register rows (tiers 1,381 + 3,250 + 756 re-derived from the register Summary and the workflows-README Quick Stats); 728 requirement rows, 728 distinct; 808 CTL rows, 808 distinct; event-custody register 18 events / 17 declared pairs; root-README tree/Key-Metrics/coverage rows cross-foot (6,762 current; 362 → 511 / 6,911 target); profile live-body target-state notes current (511 / 6,911, IT = 122, band ~440–515); methodology-index version pins current; no live '5,363' outside CHANGELOG/historical notes; semantic-audit registry 5,364/5,364; final-semantic-coverage.py default run vacuous at audited-set 5,364.

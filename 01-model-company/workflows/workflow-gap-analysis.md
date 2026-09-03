@@ -116,6 +116,36 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 6 (2026-09-03) — not a gap pass.** The
+> agentic gap-fill review re-ran the §2 gap methodology at *workflow* granularity against the
+> 2026-09-03 Agentic-AI extension (capability-sourcing-and-engineering-model.md §12; OM v2.1
+> AAP platform team #15) and found the agent lifecycle unowned at workflow level: 'agentic',
+> 'agent runtime', 'shadow mode', 'canary', 'kill-switch', and 'non-human identity' each
+> appeared in zero dedicated `## W` headers, while the adjacent VS-128 slices are each
+> model-generic (W3931 owns the model registry, W3946 model pre-deployment assurance, W3947
+> model monitoring, W3948 model retirement). Three workflows fill the gap inside PA-128.3,
+> owning the sourcing-model §12 lifecycle end-to-end: **W5512** Agentic Candidate Intake,
+> Sourcing Routing & Agent Registry Registration (quarterly hours × frequency × error ×
+> feasibility scoring over the Automation Opportunity inventory + VS-133 process-mining
+> candidates; owning-team proposal with BPO case; SIB configure → buy → build routing;
+> VS-128 registry registration as the gate behind runtime-identity provisioning; ethics/DPIA
+> routing per W3952/W3939), **W5513** Agent Shadow & Canary Evaluation, Graduation &
+> Autonomy-Tier Ratification (offline evals → shadow beside humans → canary with tier-scaled
+> sampled audit; dual-sign graduation gate; Tier-1/2/3 autonomy-ladder ratification with the
+> hard boundaries verified — no statutory filing path, no POS/OT estate, no SoD conflicts —
+> at SIB), and **W5514** Agent Runtime Operations, Guardrail & Kill-Switch Telemetry,
+> Quarterly Re-Registration & Portfolio Sunset (IAP-contract-only tool access under non-human
+> least-privilege identity per VS-27/W1408; drift/takeover/cost-per-task telemetry feeding the
+> AAP KPI row and VS-135 TBM; quarterly kill-switch drills; quarterly registry re-registration
+> with suspension of lapsed agents; QBR sunset of underperformers). All three shipped
+> **directly confirmed Tier 2** — the lifecycle-operations class of their PA-128.3 siblings
+> (W3945–W3948), with the hard-boundary dimension carried inside W5513's ratification gate
+> (matching the W5511 precedent where the statutory check rides inside the workflow). The
+> trio was admitted to the semantic-audit registry via the documented transition path (full
+> read + D1–D4 detector sweep over the PA-128.3 block, 0 flags). Canonical totals are now
+> **188 value streams · 569 process areas · 5,367 workflows** (5,390 confirmed register rows;
+> Tier 2 3,250 → 3,253).
+>
 > **Post-Pass-30 workflow-level additions, batch 5 (2026-08-26) — not a gap pass.** A
 > supplier-expense-model review found the two existing supplier-recovery paths each own a
 > different money flow — co-op marketing funds (W513/W1799 in VS-03/VS-39) settle *pre-agreed
