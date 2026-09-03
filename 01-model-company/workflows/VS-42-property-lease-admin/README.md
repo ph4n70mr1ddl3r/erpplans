@@ -12,8 +12,8 @@ Manages all real estate leasing operations for BuildRight Property Management, I
 |---|---|---|
 | [PA-42.1](PA-42.1-lease-negotiation-administration.md) | Lease Negotiation & Administration | 8 |
 | [PA-42.2](PA-42.2-rent-payment-escalation.md) | Rent Payment, Escalation & CAM Reconciliation | 8 |
-| [PA-42.3](PA-42.3-property-tax-compliance.md) | Property Tax, LGU Compliance & Lease Accounting | 8 |
-| | **Total** | **24** |
+| [PA-42.3](PA-42.3-property-tax-compliance.md) | Property Tax, LGU Compliance & Lease Accounting | 9 |
+| | **Total** | **25** |
 
 ---
 

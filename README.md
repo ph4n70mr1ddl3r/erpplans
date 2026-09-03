@@ -29,7 +29,7 @@ erpplans/
 │   ├── model-company-profile.md       Company profile, operations, financials
 │   ├── erp-requirements.md            728 requirements across 38 categories
 │   ├── data-volumes-and-integrations.md  Transaction volumes, integration map (canonical integration diagram)
-│   ├── workflows/                      5,381 workflows organized by value stream
+│   ├── workflows/                      5,384 workflows organized by value stream
 │   │   ├── README.md                           Navigation hub & quick stats
 │   │   ├── value-stream-index.md              Master index (8 families · 188 value streams · 569 process areas)
 │   │   ├── WORKFLOW-FORMAT-GUIDE.md            Workflow format, RACI key & conventions
@@ -55,7 +55,7 @@ erpplans/
 │   │   ├── VS-14-marketing/                     40 workflows (3 process areas)
 │   │   ├── VS-15-procure-to-pay/                43 workflows (2 process areas)
 │   │   ├── VS-16-order-to-cash/                 31 workflows (3 process areas)
-│   │   ├── VS-17-record-to-report/              68 workflows (4 process areas)
+│   │   ├── VS-17-record-to-report/              70 workflows (4 process areas)
 │   │   ├── VS-18-treasury-cash/                 33 workflows (3 process areas)
 │   │   ├── VS-19-hire-to-retire/                78 workflows (5 process areas)
 │   │   ├── VS-20-real-estate-construction/      32 workflows (3 process areas)
@@ -80,7 +80,7 @@ erpplans/
 │   │   ├── VS-39-vendor-rebate-incentive/       24 workflows (3 process areas)
 │   │   ├── VS-40-capex-project-accounting/      24 workflows (3 process areas)
 │   │   ├── VS-41-private-label-brand/           24 workflows (3 process areas)
-│   │   ├── VS-42-property-lease-admin/          24 workflows (3 process areas)
+│   │   ├── VS-42-property-lease-admin/          25 workflows (3 process areas)
 │   │   ├── VS-43-trade-professional-program/    24 workflows (3 process areas)
 │   │   ├── VS-44-consumer-insights-market-research/ 24 workflows (3 process areas)
 │   │   ├── VS-45-consignment-vmi-operations/    24 workflows (3 process areas)
@@ -320,7 +320,7 @@ erpplans/
 | Metric | Value | Source |
 |---|---|---|
 | Requirements | **728** across 38 categories | `01-model-company/erp-requirements.md` |
-| Workflows (total) | **5,381** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
+| Workflows (total) | **5,384** across 188 value streams, 569 process areas | `01-model-company/workflows/value-stream-index.md` |
 | Internal Controls | 808 (88 preventive, 720 detective) | `01-model-company/internal-controls-matrix.md` |
 | Must Have Requirements | 429 | `01-model-company/erp-requirements.md` |
 | Should Have Requirements | 293 | `01-model-company/erp-requirements.md` |
@@ -331,8 +331,8 @@ erpplans/
 | Coverage Area | Status | Source |
 |---|---|---|
 | Requirements | 728 fully specified (429 Must / 293 Should / 6 Nice) | `erp-requirements.md` |
-| Workflows | 5,381 fully specified across 188 value streams (all 5,381 confirmed-classified — the 14 post-catalog additions W5497–W5510 were confirmed 2026-09-02; W5511 gift-card dormancy/escheat shipped confirmed 2026-09-03 in the event-custody pass; W5512–W5514 agentic-AI platform lifecycle shipped confirmed 2026-09-03 in the agentic gap-fill pass; W5515–W5517 capability-sourcing & engineering shipped confirmed 2026-09-03 in the sourcing-model gap-fill pass; W5518–W5524 the IT operating-model gap fill shipped confirmed 2026-09-03 (5 Tier 2 / 2 Tier 3) in the IT workflow gap-fill pass; W5525–W5528 the people-capability & reporting-policy gap fill shipped confirmed 2026-09-03 (4 Tier 2) in the people-workflow gap-fill pass) | `workflows/value-stream-index.md` |
-| Criticality classification | **5,381 of 5,381 workflows classified (full coverage)** — the confirmed register holds 5,404 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted); the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were confirmed 2026-09-02 (6 → Tier 1, 6 → Tier 2, 2 → Tier 3); W5511 (gift-card dormancy monitoring, escheat evaluation & expired-liability derecognition, VS-54.3) shipped confirmed Tier 2 in the 2026-09-03 event-custody pass; W5512–W5514 (the agentic-AI platform lifecycle, VS-128.3) shipped confirmed Tier 2 in the 2026-09-03 agentic gap-fill pass; W5515–W5517 (the capability-sourcing & engineering surface, VS-113) shipped confirmed Tier 2 in the 2026-09-03 sourcing-model gap-fill pass; and W5518–W5524 (the IT operating-model surface, VS-27) shipped confirmed Tier 2 (5) / Tier 3 (2) in the 2026-09-03 IT workflow gap-fill pass; W5525–W5528 (the people-capability & reporting-policy surface, VS-19.4/VS-17.4) shipped confirmed Tier 2 (4) in the 2026-09-03 people-workflow gap-fill pass; `workflow-criticality-proposed.md` is empty | `workflows/workflow-criticality-classification.md` |
+| Workflows | 5,384 fully specified across 188 value streams (all 5,384 confirmed-classified — the 14 post-catalog additions W5497–W5510 were confirmed 2026-09-02; W5511 gift-card dormancy/escheat shipped confirmed 2026-09-03 in the event-custody pass; W5512–W5514 agentic-AI platform lifecycle shipped confirmed 2026-09-03 in the agentic gap-fill pass; W5515–W5517 capability-sourcing & engineering shipped confirmed 2026-09-03 in the sourcing-model gap-fill pass; W5518–W5524 the IT operating-model gap fill shipped confirmed 2026-09-03 (5 Tier 2 / 2 Tier 3) in the IT workflow gap-fill pass; W5525–W5528 the people-capability & reporting-policy gap fill shipped confirmed 2026-09-03 (4 Tier 2) in the people-workflow gap-fill pass; W5529–W5531 the finance-workflow gap fill shipped confirmed 2026-09-03 (2 Tier 1 / 1 Tier 2) in the finance-workflow gap-fill pass) | `workflows/value-stream-index.md` |
+| Criticality classification | **5,384 of 5,384 workflows classified (full coverage)** — the confirmed register holds 5,407 rows incl. 23 `###` parent/summary sub-workflows; the 2026-06-28 Full-Coverage Confirmation Pass promoted the remaining keyword-proposed workflows (unclassified 2,596 → 0; 65 → Tier 1 statutory, 179 → Tier 3 analytics, 3 demoted to Tier 2, remainder adopted); the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were confirmed 2026-09-02 (6 → Tier 1, 6 → Tier 2, 2 → Tier 3); W5511 (gift-card dormancy monitoring, escheat evaluation & expired-liability derecognition, VS-54.3) shipped confirmed Tier 2 in the 2026-09-03 event-custody pass; W5512–W5514 (the agentic-AI platform lifecycle, VS-128.3) shipped confirmed Tier 2 in the 2026-09-03 agentic gap-fill pass; W5515–W5517 (the capability-sourcing & engineering surface, VS-113) shipped confirmed Tier 2 in the 2026-09-03 sourcing-model gap-fill pass; W5518–W5524 (the IT operating-model surface, VS-27) shipped confirmed Tier 2 (5) / Tier 3 (2) in the 2026-09-03 IT workflow gap-fill pass; W5525–W5528 (the people-capability & reporting-policy surface, VS-19.4/VS-17.4) shipped confirmed Tier 2 (4) in the 2026-09-03 people-workflow gap-fill pass; W5529–W5531 (the finance-workflow surface, VS-42.3/VS-17.3/VS-17.4) shipped confirmed Tier 1 (2) / Tier 2 (1) in the 2026-09-03 finance-workflow gap-fill pass; `workflow-criticality-proposed.md` is empty | `workflows/workflow-criticality-classification.md` |
 | Internal controls | 808 controls mapped to workflows and requirements (67 core + 172 domain anchors CTL-68–239 + 569 process-area operating controls CTL-240–808) — CTL-XX citation coverage is 100% of workflows | `internal-controls-matrix.md` |
 | Retired VS numbers | VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass detail (candidates considered/rejected, workflow-ID allocation, family-subtotal impact) lives in [`workflows/workflow-gap-analysis.md`](01-model-company/workflows/workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](CHANGELOG.md) | — |
 

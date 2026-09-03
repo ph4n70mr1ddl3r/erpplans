@@ -116,6 +116,41 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 10 (2026-09-03) — finance-workflow gap fill.**
+> A dedicated Finance-domain gap analysis ([workflow-gap-analysis-finance.md](workflow-gap-analysis-finance.md))
+> re-ran the §2 methodology across the Finance family (775 workflows) plus treasury/tax/property-adjacent
+> streams, and filled three single-workflow gaps:
+> **W5529** Utility, Telecommunications & Site Deposits Paid — Register, Interest Reconciliation,
+> Surety Replacement & Recovery-on-Closure (PA-42.3; 'utility deposit' appeared in 2 PA files with
+> zero dedicated `## W` headers — PA-42.3's own W1877 pain point carries the **PHP 10M–40M
+> locked-capital** canon for ~205 locations with no downstream owner, recovery exists only as a
+> closure sub-step in PA-20.3 and a connection-transaction step in W1877, while the landlord-deposit
+> sibling W1867 shows the fully-owned pattern), **W5530** Minimum Corporate Income Tax (MCIT)
+> Computation, Regime Evaluation & 3-Year Excess-Credit Carry-Forward (PA-17.3; 'MCIT'/'minimum
+> corporate income' appeared in **zero** PA files corpus-wide — W407 computes normal tax and
+> deferred tax (PAS 12) but the 2% gross-income floor of NIRC §27(E)/§28(A)(e), its regime
+> evaluation and the 3-year excess-credit carry-forward are absent), and **W5531** PFRS 8
+> Operating-Segment Reporting, CODM Disclosure Package & Segment-Note Production (PA-17.4;
+> 'segment reporting'/'operating segment' appeared in **zero** PA files corpus-wide — the CODM
+> review packages exist in W1653/W231/W102/W1657 and the AFS filing machinery in W9B/W481, but the
+> segment-note production binding them for the audited statements is unowned).
+> Workflow-ID allocation: W5529–W5531 (next available). W5530 and W5531 shipped **directly
+> confirmed Tier 1** (the statutory-execution class of their Record-to-Report siblings W407/W481
+> and the W5508 statutory-filing precedent) and W5529 **directly confirmed Tier 2** (the
+> treasury-asset-lifecycle class of W1867/W317). All three are absorbed within sized teams
+> (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Candidates examined in the same review
+> and confirmed already covered (not duplicated): bank-relationship & fee governance (W317 owns
+> the annual relationship review and monthly fee review; W320 step 9 + W1468 step 6 are
+> supplementary), electricity supply/retail-competition sourcing (PA-120.1 step 1 owns the RCOA
+> contestable-account program), insurance broking (W59 step 3), BIR audit defense (W77), deposits
+> received from customers (W94/W4630) and from landlords (W1867), RTP/pallet deposits (PA-04.3),
+> collection agencies (W108 steps 6–7), payroll accounting (W816/W1416), financial-statement
+> preparation (W9/W9B + W481), prior-period restatement (W712), ECL provisioning (W81 + W5412),
+> corporate cards (W713/W1685), promotion-effectiveness analytics (W2254–W2258), electricity
+> tariff structures (W4775/W163.1 steps). Canonical totals are now **188 value streams · 569
+> process areas · 5,384 workflows** (5,407 confirmed register rows; Tier 1 1,381 → 1,383,
+> Tier 2 3,265 → 3,266).
+>
 > **Post-Pass-30 workflow-level additions, batch 9 (2026-09-03) — people-capability & reporting-policy gap fill.**
 > A dedicated People/organization-domain gap analysis ([workflow-gap-analysis-people.md](workflow-gap-analysis-people.md))
 > re-ran the §2 methodology across the People family (437 workflows) plus people-scoped and
