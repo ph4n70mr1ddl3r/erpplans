@@ -116,6 +116,30 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 9 (2026-09-03) — people-capability & reporting-policy gap fill.**
+> A dedicated People/organization-domain gap analysis ([workflow-gap-analysis-people.md](workflow-gap-analysis-people.md))
+> re-ran the §2 methodology across the People family (437 workflows) plus people-scoped and
+> finance-policy adjacent streams, and filled four single-workflow gaps:
+> **W5525** Learning Platform (LMS) Administration, Integration & Learning-Records Operations
+> (PA-19.4; 'LMS' appeared in 58 PA files / 101 hits with zero dedicated `## W` headers — even a
+> 'LMS Administrator' role was named in W1484's staffing note with no owning workflow — while
+> W3351 HRIS and W3782 ATS own the adjacent HR platforms), **W5526** Learning-Content
+> Development, Course-Catalog & Certification-Program Lifecycle (PA-19.4; 'instructional
+> design'/'course catalog' in zero PA files — W51 step 2 develops materials as a sub-duty of the
+> calendar owner and W1484 owns only the onboarding curriculum slice), **W5527** Leadership
+> Development & Management-Capability Program (HiPo Development) (PA-19.4; 'leadership
+> development' existed only as one W51 calendar line-item while W178 identifies HiPos and nothing
+> develops them), and **W5528** Accounting Policy, Technical Accounting (PFRS) Position &
+> New-Standard Adoption Governance (PA-17.4; PFRS appears in 93 PA files but every dedicated
+> owner is transaction-specific — VS-157 PFRS 15, VS-148 PFRS 16, W407 PAS 12, W1875 lease
+> policy — leaving the policy manual, position papers and new-standard adoption layer unowned).
+> Workflow-ID allocation: W5525–W5528 (next available). All four shipped **directly confirmed
+> Tier 2** (the platform-operations/governance-layer/program-support class of their siblings
+> W3351/W51/W9). All four are absorbed within the existing HR and corporate-accounting
+> organizations (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are
+> now **188 value streams · 569 process areas · 5,381 workflows** (5,404 confirmed register
+> rows; Tier 2 3,261 → 3,265).
+>
 > **Post-Pass-30 workflow-level additions, batch 8 (2026-09-03) — IT operating-model gap fill.**
 > A dedicated IT-domain gap analysis ([workflow-gap-analysis-it.md](workflow-gap-analysis-it.md))
 > re-ran the §2 methodology across all 9 Technology & Data value streams (284 workflows) and the

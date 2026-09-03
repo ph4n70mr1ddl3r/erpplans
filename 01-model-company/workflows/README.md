@@ -11,11 +11,11 @@
 |---|---|
 | Value Streams | 188 |
 | Process Areas | 569 |
-| Workflows | 5,377 |
+| Workflows | 5,381 |
 | Classified (Tier 1) | 1,381 |
-| Classified (Tier 2) | 3,261 |
+| Classified (Tier 2) | 3,265 |
 | Classified (Tier 3) | 758 |
-| Classified total | 5,400 rows = 5,377 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass, re-achieved 2026-09-02 on the 14 post-catalog workflows W5497–W5510, maintained 2026-09-03 when W5511 shipped confirmed Tier 2 in the event-custody pass, extended the same day when W5512–W5514 — the agentic-AI platform lifecycle gap fill in VS-128.3 — shipped directly confirmed Tier 2, extended again when W5515–W5517 — the capability-sourcing & engineering gap fill in VS-113 — shipped directly confirmed Tier 2, and extended once more when W5518–W5524 — the IT operating-model gap fill in VS-27 — shipped directly confirmed Tier 2 (5) / Tier 3 (2)) |
+| Classified total | 5,404 rows = 5,381 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass, re-achieved 2026-09-02 on the 14 post-catalog workflows W5497–W5510, maintained 2026-09-03 when W5511 shipped confirmed Tier 2 in the event-custody pass, extended the same day when W5512–W5514 — the agentic-AI platform lifecycle gap fill in VS-128.3 — shipped directly confirmed Tier 2, extended again when W5515–W5517 — the capability-sourcing & engineering gap fill in VS-113 — shipped directly confirmed Tier 2, extended once more when W5518–W5524 — the IT operating-model gap fill in VS-27 — shipped directly confirmed Tier 2 (5) / Tier 3 (2), and extended again when W5525–W5528 — the people-capability & reporting-policy gap fill — shipped directly confirmed Tier 2 (4)) |
 
 ---
 
@@ -128,12 +128,12 @@
 | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | 24 |
 | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | 24 |
 
-### Finance (774 workflows)
+### Finance (775 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | 43 |
 | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | 31 |
-| [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 67 |
+| [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | 68 |
 | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | 33 |
 | [VS-34](VS-34-expense-procurement/README.md) | Expense & Non-Merchandise Procurement | 22 |
 | [VS-38](VS-38-consumer-credit-financing/README.md) | Consumer Credit & Financing | 24 |
@@ -161,10 +161,10 @@
 | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | 24 |
 | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | 24 |
 
-### People (437 workflows)
+### People (440 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
-| [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 75 |
+| [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 78 |
 | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 25 |
 | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 25 |
 | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | 24 |
@@ -256,7 +256,7 @@
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 461 + 499 + 1,535 + 774 + 437 + 320 + 964 + 387 = 5,377
+Family subtotal reconciliation: 461 + 499 + 1,535 + 775 + 440 + 320 + 964 + 387 = 5,381
 
 > **Note (2026-06-21):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 through 2026-06-21, VS-89–VS-192; W2993–W5488). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

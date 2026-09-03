@@ -1,8 +1,8 @@
 # Workflow Dependency Map
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
-> relationships for system functions. All 5,377 workflows are classified into
-> criticality tiers (the confirmed register holds 5,400 rows, incl. 23 `###` parent/summary
+> relationships for system functions. All 5,381 workflows are classified into
+> criticality tiers (the confirmed register holds 5,404 rows, incl. 23 `###` parent/summary
 > sub-workflows) — the fourteen post-catalog additions W5497–W5510 (added 2026-08-24/26) were
 > confirmed 2026-09-02 by the post-catalog confirmation pass, W5511 (VS-54.3) shipped
 > confirmed 2026-09-03 in the event-custody pass, and W5512–W5514 (VS-128.3) and
@@ -724,7 +724,7 @@ value streams. They depend on the Tier-1 core but are not themselves go-live blo
 | VS-130 Corporate Development, M&A & Divestiture | Executes inorganic growth; consumes strategy (VS-33), capex (VS-40), treasury (VS-18); secures PCC clearance via VS-129 and legal/IP via VS-100. Depends on VS-100, VS-17 (finance), VS-36 (governance). |
 | VS-131 Human Rights & Responsible Supply Chain Due Diligence | Due-diligence overlay on global sourcing (VS-122) and the vendor base (VS-03/VS-67); feeds ESG reporting (VS-25) and ethics intake (VS-119). Depends on VS-122, VS-03, VS-25. |
 | VS-132 Corporate Political Engagement & Election Compliance | Governance of political activity/associations (VS-104), B2G (VS-46), and comms (VS-14); anti-graft/ABC interface (VS-86/VS-119). Depends on VS-104, VS-119, VS-36. |
-| VS-133 Operational Excellence, Process Mining & CI | Continuous-improvement OS over the ~5,377 workflows; mines ERP event logs (VS-15/VS-10/VS-04); shares benefit tracking with VS-17.4 and VS-135. Depends on VS-21 (audit), VS-17, VS-30 (innovation). |
+| VS-133 Operational Excellence, Process Mining & CI | Continuous-improvement OS over the ~5,381 workflows; mines ERP event logs (VS-15/VS-10/VS-04); shares benefit tracking with VS-17.4 and VS-135. Depends on VS-21 (audit), VS-17, VS-30 (innovation). |
 | VS-134 Organizational Change Management & Digital Adoption | People-side of transformation; equips PMO portfolio (VS-112), HR/EX (VS-103), training (VS-19.4), and the service desk (VS-27); runs a DAP over cloud ERP. Depends on VS-103, VS-133, VS-112. |
 | VS-135 Technology Business Management, IT Financial Mgmt & FinOps | Financial governance of tech spend; consumes ITAM (VS-99), EA portfolio (VS-113), FP&A (VS-17.4), procurement (VS-34), and cloud ops (VS-27). Depends on VS-17, VS-27, VS-99. |
 | VS-136 Supply Chain Network Design, MEIO & Flow Engineering | Structural network/inventory engineering; consumes supply planning (VS-02), S&OP (VS-127), logistics (VS-06), DC ops (VS-04), and real estate (VS-97/VS-20). Depends on VS-02, VS-28 (analytics), VS-01. |

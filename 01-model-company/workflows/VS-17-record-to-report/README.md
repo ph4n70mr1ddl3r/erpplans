@@ -23,8 +23,8 @@ Record-to-report: GL & financial close, consolidation & intercompany, tax & stat
 | [PA-17.1](PA-17.1-gl-and-financial-close.md) | GL & Financial Close | 26 |
 | [PA-17.2](PA-17.2-consolidation-and-intercompany.md) | Consolidation & Intercompany | 10 |
 | [PA-17.3](PA-17.3-tax-and-statutory.md) | Tax & Statutory | 14 |
-| [PA-17.4](PA-17.4-fpanda-and-reporting.md) | FP&A & Reporting | 17 |
-| | **Total** | **67** |
+| [PA-17.4](PA-17.4-fpanda-and-reporting.md) | FP&A & Reporting | 18 |
+| | **Total** | **68** |
 
 ## Key dependencies
 

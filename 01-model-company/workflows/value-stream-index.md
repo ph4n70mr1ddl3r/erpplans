@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,377 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,381 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -117,7 +117,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | | | | **Subtotal** | **139** | **1535** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 43 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
-|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 67 |
+|  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 68 |
 |  | [VS-18](VS-18-treasury-cash/README.md) | Treasury & Cash | Core | 3 | 33 |
 |  | [VS-34](VS-34-expense-procurement/README.md) | Expense & Non-Merchandise Procurement | Core | 3 | 22 |
 |  | [VS-38](VS-38-consumer-credit-financing/README.md) | Consumer Credit & Financing | Core | 3 | 24 |
@@ -144,8 +144,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-181](VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/README.md) | B2B Project Financing, Escrow Account Orchestration & Lien Release | Gap analysis | 3 | 24 |
 |  | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | Gap analysis | 3 | 24 |
 |  | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **87** | **774** |
-| People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 75 |
+| | | | **Subtotal** | **87** | **775** |
+| People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 78 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 25 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 25 |
 |  | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | Gap analysis | 3 | 24 |
@@ -161,7 +161,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | Gap analysis | 3 | 24 |
 |  | [VS-169](VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md) | Employee Uniform, Workwear & PPE-Issuance Program | Gap analysis | 3 | 24 |
 |  | [VS-183](VS-183-dual-training-system-dts-and-tesda-partnership-program/README.md) | Dual Training System (DTS) & TESDA Partnership Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **50** | **437** |
+| | | | **Subtotal** | **50** | **440** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 24 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **387** |
-| | | | **Grand Total** | **569** | **5,377** |
+| | | | **Grand Total** | **569** | **5,381** |
 
 ---
 
@@ -737,12 +737,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-16.2** [AR & Collections](./VS-16-order-to-cash/PA-16.2-ar-and-collections.md) — 10 workflows
 - **PA-16.3** [Customer Payment & Settlement](./VS-16-order-to-cash/PA-16.3-customer-payment-and-settlement.md) — 9 workflows
 
-**[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (67 workflows)
+**[VS-17: Record-to-Report](./VS-17-record-to-report/README.md)** (68 workflows)
 
 - **PA-17.1** [GL & Financial Close](./VS-17-record-to-report/PA-17.1-gl-and-financial-close.md) — 26 workflows
 - **PA-17.2** [Consolidation & Intercompany](./VS-17-record-to-report/PA-17.2-consolidation-and-intercompany.md) — 10 workflows
 - **PA-17.3** [Tax & Statutory](./VS-17-record-to-report/PA-17.3-tax-and-statutory.md) — 14 workflows
-- **PA-17.4** [FP&A & Reporting](./VS-17-record-to-report/PA-17.4-fpanda-and-reporting.md) — 17 workflows
+- **PA-17.4** [FP&A & Reporting](./VS-17-record-to-report/PA-17.4-fpanda-and-reporting.md) — 18 workflows
 
 **[VS-18: Treasury & Cash](./VS-18-treasury-cash/README.md)** (33 workflows)
 
@@ -903,12 +903,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 ### People
 
-**[VS-19: Hire-to-Retire](./VS-19-hire-to-retire/README.md)** (75 workflows)
+**[VS-19: Hire-to-Retire](./VS-19-hire-to-retire/README.md)** (78 workflows)
 
 - **PA-19.1** [Recruitment & Onboarding](./VS-19-hire-to-retire/PA-19.1-recruitment-and-onboarding.md) — 35 workflows
 - **PA-19.2** [Payroll & Compensation](./VS-19-hire-to-retire/PA-19.2-payroll-and-compensation.md) — 10 workflows
 - **PA-19.3** [Workforce Management](./VS-19-hire-to-retire/PA-19.3-workforce-management.md) — 11 workflows
-- **PA-19.4** [Learning & Development](./VS-19-hire-to-retire/PA-19.4-learning-and-development.md) — 11 workflows
+- **PA-19.4** [Learning & Development](./VS-19-hire-to-retire/PA-19.4-learning-and-development.md) — 14 workflows
 - **PA-19.5** [Separation & Benefits](./VS-19-hire-to-retire/PA-19.5-separation-and-benefits.md) — 8 workflows
 
 **[VS-83: Occupational Health, Safety Clinic & Employee Wellness](./VS-83-occupational-health-clinic-wellness/README.md)** (25 workflows)
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,377 workflows across 188 value streams · Date: 2026-09-03*
+*Total: 5,381 workflows across 188 value streams · Date: 2026-09-03*

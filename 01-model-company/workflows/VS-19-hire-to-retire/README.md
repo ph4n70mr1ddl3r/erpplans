@@ -23,9 +23,9 @@ Hire-to-retire: recruitment, payroll & compensation, workforce management, learn
 | [PA-19.1](PA-19.1-recruitment-and-onboarding.md) | Recruitment & Onboarding | 35 |
 | [PA-19.2](PA-19.2-payroll-and-compensation.md) | Payroll & Compensation | 10 |
 | [PA-19.3](PA-19.3-workforce-management.md) | Workforce Management | 11 |
-| [PA-19.4](PA-19.4-learning-and-development.md) | Learning & Development | 11 |
+| [PA-19.4](PA-19.4-learning-and-development.md) | Learning & Development | 14 |
 | [PA-19.5](PA-19.5-separation-and-benefits.md) | Separation & Benefits | 8 |
-| | **Total** | **75** |
+| | **Total** | **78** |
 
 ## Key dependencies
 
