@@ -79,6 +79,23 @@ target docs' own '*Document Version:' footer and the executive-summary top foote
 canonical register totals (index Grand Total; requirement row count). Teeth verified by
 synthetic injection (stale OM pin, stale banner pin, and a regressed exec-summary count
 all caught, then restored clean).
+
+2026-09-03 consistency review pass: two more straggler classes found and trued, both
+outside every previously-read surface. (a) The criticality register's '### Tier 2
+Additions' sub-heading still claimed (495 Workflows) after the two 2026-09-03 gap-fill
+passes appended six rows to that section (W5512–W5514 agentic, W5515–W5517 sourcing) —
+the batch-7 pass had trued the top-level Tier-2 heading and Summary but not this
+parenthetical. New structural rule register_heading_hits: every '(n Workflows)'
+parenthetical in the register is re-derived from its data rows (direct rows for
+family/Additions/history-pass/####-tier headings; the effective per-tier total for the
+three '## Tier N' headings), and the effective per-tier totals must equal both the
+heading claims and the ## Summary table's per-phase counts — closing the
+rows → headings → Summary chain end-to-end. (b) The VS-24 and VS-87 README Process-Areas
+tables still carried the pre-W239-move counts (PA-24.3 8/Total 27, PA-87.3 8/Total 24 —
+the 03235a5 cascade re-pointed the index/root-README/dependency-map but missed both
+README tables; now validator Check 67). Three stale live-body version pins in the
+guarded docs also trued in place (sourcing-model header '(v2.0+)' and §13 row '(v2.1:'
+re-pinned to OM v2.4; OM §13 row 'this v2.0 model' re-pinned to v2.4).
 """
 
 def _doc_versions():
@@ -499,6 +516,91 @@ def methodology_index_hits():
     return hits
 
 
+def register_heading_hits():
+    """2026-09-03 consistency review pass — structural guard for the criticality
+    register's own section-heading counts. Every '(n Workflows)' parenthetical is
+    re-derived from the data rows beneath it (nested sub-heading rows roll up):
+    family/Additions/history-pass/####-tier headings hold their subtree rows; the
+    three '## Tier N' headings (checked at end-of-file) must equal the effective
+    per-tier total — original + Additions + history-pass '#### Tier N' blocks — and
+    that total must also equal the ## Summary table's per-phase counts (the canon
+    source that sourcing_tier_hits re-derives from — with this rule the
+    rows -> headings -> Summary chain is closed end-to-end). The pass found
+    '### Tier 2 Additions (495 Workflows)' holding 501 rows after the two 2026-09-03
+    gap-fill passes appended six rows without bumping the parenthetical — exactly the
+    straggler class that survived because the Summary table was trued while the
+    intermediate heading was not."""
+    rel = "workflow-criticality-classification.md"
+    hits = []
+    lines = open(os.path.join(MC, "workflows", rel), encoding="utf-8").read().splitlines()
+    tier_rows = {1: 0, 2: 0, 3: 0}
+    tier_heading_claim = {}
+    summary_claim = {}
+    cur = None                      # effective tier attribution context
+    stack = []                      # [level, text, line_no, rows]
+
+    def close_top():
+        level, text, ln, rows = stack.pop()
+        if re.match(r"^Tier \d:", text):
+            return                  # '## Tier N' totals checked at end-of-file
+        m = re.search(r"\(([\d,]+)\s*[Ww]orkflows?\)", text)
+        if m and int(m.group(1).replace(",", "")) != rows:
+            hits.append((rel, ln, f"heading '{text[:70]}' claims ({m.group(1)}) "
+                                  f"but holds {rows} row(s)"))
+        if stack:
+            stack[-1][3] += rows    # roll up into the enclosing heading
+
+    for ln, l in enumerate(lines, 1):
+        m = re.match(r"^(#{1,4}) (.*)", l)
+        if m:
+            level = len(m.group(1))
+            text = m.group(2)
+            while stack and stack[-1][0] >= level:
+                close_top()
+            tm = re.match(r"^Tier (\d):", text)
+            am = re.match(r"^Tier (\d) Additions", text)
+            t4 = re.match(r"^Tier (\d)", text)
+            if tm:
+                cur = int(tm.group(1))
+                tier_heading_claim[int(tm.group(1))] = (text, ln)
+            elif am:
+                cur = int(am.group(1))
+            elif level == 4 and t4:
+                cur = int(t4.group(1))
+            elif level <= 2:
+                cur = None
+            stack.append([level, text, ln, 0])
+            continue
+        sm = re.match(r"^\| Phase (\d) \|[^|]+\|\s*([\d,]+)\s*\|", l)
+        if sm and stack and stack[-1][1].startswith("Confirmed classification"):
+            summary_claim[int(sm.group(1))] = int(sm.group(2).replace(",", ""))
+            continue
+        if re.match(r"^\| (W\d+[A-Z]?) \| ", l):
+            if stack:
+                stack[-1][3] += 1
+            if cur:
+                tier_rows[cur] += 1
+    while stack:
+        close_top()
+
+    for n in (1, 2, 3):
+        claim = tier_heading_claim.get(n)
+        if claim is None:
+            hits.append((rel, 0, f"## Tier {n} heading not found"))
+            continue
+        text, ln = claim
+        m = re.search(r"\(([\d,]+)\s*[Ww]orkflows?\)", text)
+        declared = int(m.group(1).replace(",", "")) if m else None
+        if declared != tier_rows[n]:
+            hits.append((rel, ln, f"## Tier {n} heading claims ({declared}) but the "
+                                  f"register holds {tier_rows[n]} Tier-{n} row(s)"))
+        want = summary_claim.get(n)
+        if want is not None and want != tier_rows[n]:
+            hits.append((rel, ln, f"## Summary Phase {n} count {want} != the register's "
+                                  f"{tier_rows[n]} Tier-{n} row(s)"))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true",
@@ -571,6 +673,7 @@ def main():
     hits.extend(dc_roster_hits(os.path.join(MC, "optimal-table-of-organization.md")))
     hits.extend(to_phase_hits())
     hits.extend(sourcing_tier_hits())
+    hits.extend(register_heading_hits())
     hits.extend(methodology_index_hits())
     hits.extend(live_pin_hits())
     for doc, line, detail in hits:

@@ -241,7 +241,7 @@ erpplans/
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security, multi-vendor sourcing architecture
     ├── capability-sourcing-and-engineering-model.md  Configure/buy/build decision gate, sourcing register, build squads, SEP
     ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds + AI agent platform), roles, RACI, governance, sizing (50 → 122 FTE)
-    ├── validate-repo.sh              Cross-reference validation (66 checks)
+    ├── validate-repo.sh              Cross-reference validation (67 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── confirm-postcatalog-14.py     One-time post-catalog confirmation pass (W5497–W5510: 14 → 0 unclassified, 2026-09-02)

@@ -714,7 +714,7 @@ at its top. L1 support and the 24/7 SOC remain partner-operated.
 | [`headcount-reality-check.md`](../01-model-company/headcount-reality-check.md) | §3.2 IT staffing gap record this sizing resolves |
 | [`erp-requirements.md`](../01-model-company/erp-requirements.md) | Capability requirements the products deliver |
 | [`technical-guidelines.md`](technical-guidelines.md) | Infrastructure, integration, and security reference underpinning the platform teams; §5 multi-vendor sourcing-architecture reference; §6 agentic-runtime reference |
-| [`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md) | The sourcing decision gate, Capability Sourcing Register, build-squad engineering standard, and SEP definition this v2.0 model is built on |
+| [`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md) | The sourcing decision gate, Capability Sourcing Register, build-squad engineering standard, and SEP definition this v2.4 model is built on |
 | [`data-volumes-and-integrations.md`](../01-model-company/data-volumes-and-integrations.md) | Transaction volumes and integration touchpoints owned by IAP/INFRA |
 
 ---

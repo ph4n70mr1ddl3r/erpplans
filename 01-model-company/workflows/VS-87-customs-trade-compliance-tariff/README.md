@@ -24,8 +24,8 @@ optimization, preference claims, and BOC regulatory compliance and audit defense
 |---|---|---|
 | [PA-87.1](PA-87.1-tariff-classification-origin-valuation.md) | Tariff Classification, Origin & Valuation | 8 |
 | [PA-87.2](PA-87.2-fta-preference-duty-drawback-bonded.md) | FTA Preference, Duty Drawback & Bonded Operations | 8 |
-| [PA-87.3](PA-87.3-trade-compliance-audit-broker-governance.md) | Trade Compliance Audit, Broker Governance & ADC | 8 |
-| | **Total** | **24** |
+| [PA-87.3](PA-87.3-trade-compliance-audit-broker-governance.md) | Trade Compliance Audit, Broker Governance & ADC | 9 |
+| | **Total** | **25** |
 
 ---
 

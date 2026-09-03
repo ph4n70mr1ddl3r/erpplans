@@ -2866,7 +2866,7 @@ C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
-    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py, now 7 docs; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68; sourcing model + technical guidelines brought under the guard with §12.1 tier-count and TO §11 phase-sum structural rules, 2026-09-03 post-AAP pass; methodology-index version pins and the two-state TO-anchor description pinned to the live docs, 2026-09-03 index-trueness pass; the OM 'Downstream:' pointer, the reality-check STATUS banner pins, and the executive-summary top-footer counts pinned to the live docs/registers, 2026-09-03 description-trueness pass)"
+    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py, now 7 docs; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68; sourcing model + technical guidelines brought under the guard with §12.1 tier-count and TO §11 phase-sum structural rules, 2026-09-03 post-AAP pass; methodology-index version pins and the two-state TO-anchor description pinned to the live docs, 2026-09-03 index-trueness pass; the OM 'Downstream:' pointer, the reality-check STATUS banner pins, and the executive-summary top-footer counts pinned to the live docs/registers, 2026-09-03 description-trueness pass; every register '(n Workflows)' heading claim and the Summary per-phase counts re-derived from the register's own rows via register_heading_hits, 2026-09-03 consistency review pass)"
 else
     C59_HITS=$(echo "$C59_OUT" | grep -c "^model-doc:" || true)
     error "$C59_HITS model-doc violation(s) (run 07-methodology/audit-model-docs.py for detail):"
@@ -3228,6 +3228,67 @@ if [ "${C66_BAD:-1}" -eq 0 ]; then
 else
     error "$C66_BAD broken relative link(s) outside PA files:"
     echo "$CHECK66" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 67: VS-README Process-Areas tables cross-foot vs disk ---
+echo "--- Check 67: VS-README process-area counts vs disk ---"
+# The value-stream-index per-VS rows are re-derived (Check 61 family), but each VS
+# README carries its own Process-Areas table (one row per PA file with a workflow
+# count, plus a **Total** row) that no check read. The 2026-09-03 worklist-adjudication
+# pass moved W239 from PA-24.3 (8→7) to PA-87.3 (8→9), re-pointed the index, the root
+# README tree and the dependency map — and missed exactly these two README tables
+# (VS-24 stale 8/27, VS-87 stale 8/24). This check re-derives every VS README's
+# per-PA row and Total row from the PA files' own '## W' headers.
+CHECK67=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+wf = os.path.join(ROOT, "01-model-company", "workflows")
+bad = []
+rows = 0
+for d in sorted(os.listdir(wf)):
+    if not d.startswith("VS-"):
+        continue
+    rd = os.path.join(wf, d, "README.md")
+    if not os.path.exists(rd):
+        continue
+    disk = {}
+    for f in os.listdir(os.path.join(wf, d)):
+        if f.startswith("PA-") and f.endswith(".md"):
+            txt = open(os.path.join(wf, d, f), encoding="utf-8").read()
+            disk[f] = len(re.findall(r"^## W\d+[A-Z]?\.", txt, re.M))
+    text = open(rd, encoding="utf-8").read()
+    seen = {}
+    total_claim = None
+    for line in text.splitlines():
+        m = re.match(r"^\|\s*\[?(PA-\d+\.\d+)[^|]*\]\((PA-[\w.-]+\.md)\)\s*\|[^|]+\|\s*(\d+)\s*\|", line)
+        if m:
+            fname = m.group(2)
+            seen[fname] = int(m.group(3))
+            rows += 1
+            if fname not in disk:
+                bad.append(f"{d}/README.md: row for {fname} but no such PA file on disk")
+            elif seen[fname] != disk[fname]:
+                bad.append(f"{d}/README.md: {fname} row says {seen[fname]} workflows, disk has {disk[fname]}")
+            continue
+        m = re.match(r"^\|\s*\|?\s*\*\*Total\*\*\s*\|\s*\*\*(\d[\d,]*)\*\*\s*\|", line)
+        if m:
+            total_claim = int(m.group(1).replace(",", ""))
+    for f in disk:
+        if f not in seen:
+            bad.append(f"{d}/README.md: PA file {f} on disk has no Process-Areas table row")
+    if total_claim is not None and total_claim != sum(disk.values()):
+        bad.append(f"{d}/README.md: Total row says {total_claim}, disk sums to {sum(disk.values())}")
+print(f"TOTALS rows={rows} problems={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C67_BAD=$(echo "$CHECK67" | sed -n 's/^TOTALS rows=[0-9]* problems=\([0-9]*\)/\1/p')
+if [ "${C67_BAD:-1}" -eq 0 ]; then
+    ok "All 188 VS-README Process-Areas tables cross-foot against the PA files' own ## W headers (guard added by the 2026-09-03 consistency review pass after the W239 move left VS-24/VS-87 stale)"
+else
+    error "$C67_BAD VS-README process-area-count problem(s):"
+    echo "$CHECK67" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
 echo ""

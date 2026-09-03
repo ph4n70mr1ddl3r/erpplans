@@ -1,6 +1,6 @@
 # BuildRight Depot Corp. — Capability Sourcing & Engineering Model
 
-> Companion to [`it-product-operating-model.md`](it-product-operating-model.md) (v2.0+): how
+> Companion to [`it-product-operating-model.md`](it-product-operating-model.md) (v2.4): how
 > each business capability is **sourced** — configured in the unified ERP core, bought
 > best-of-breed, or built in-house — plus the decision gate, the Capability Sourcing
 > Register, the build-squad engineering standard, and the Software Engineering Platform (SEP)
@@ -306,7 +306,7 @@ a represented role; the Change & Training Lead pool carries rollout for the 6,76
 
 | Document | Relationship |
 |---|---|
-| [`it-product-operating-model.md`](it-product-operating-model.md) | The operating model this sourcing strategy reshapes (v2.1: 17 teams incl. AAP, three archetypes, SEP, SIB, 122 FTE) |
+| [`it-product-operating-model.md`](it-product-operating-model.md) | The operating model this sourcing strategy reshapes (v2.4: 17 teams incl. AAP, three archetypes, SEP, SIB, 122 FTE) |
 | [`technical-guidelines.md`](technical-guidelines.md) | §1 POS/offline architecture protected by the Core-tier guardrail; §5 multi-vendor integration reference |
 | [`../01-model-company/model-company-profile.md`](../01-model-company/model-company-profile.md) | §14.1 hybrid landscape (unified core + BoB edges + in-house products) |
 | [`../01-model-company/data-volumes-and-integrations.md`](../01-model-company/data-volumes-and-integrations.md) | The ten external integration clusters and transaction volumes IAP dimensions against |
