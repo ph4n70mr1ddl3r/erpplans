@@ -2,6 +2,91 @@
 
 ---
 
+## 2026-09-03 — Sourcing-model gap-fill pass (batch 7): the rest of the hybrid capability-sourcing model (§3–§9) had no workflow-level owner — 'sourcing gate'/'golden path'/'paved road'/'ring deployment'/'upgrade currency'/'exit reserve'/'release intake'/'DORA'/'best-of-breed'/'configure' in zero dedicated `## W` headers while the adjacent VS-113 slices are each strategy/portfolio-generic (W3588 investment-governance ROI, W3589 vendor/platform strategy, W3577 portfolio rationalization, W3573 architecture exceptions); three workflows added to VS-113 (one per PA) and shipped directly confirmed Tier 2 (the W3588/W3589 governance sibling class, the RA 10173/statutory-warranty clause dimension carried inside W5516's Step-3 verification gate per the W5513/W5511 precedent) — canonical totals 5,367 → 5,370 workflows / 5,390 → 5,393 register rows / T2 3,253 → 3,256
+
+**Gap finding (workflow-granularity re-run of the §2 methodology against the rest of the 2026-09-03
+hybrid capability-sourcing extension — sourcing model §3–§9, the surface batch 6's §12 scope
+deliberately left unexamined):** the sourcing decision gate + Capability Sourcing Register, the
+best-of-breed product lifecycle, and the SEP paved road/engineering standard were each defined as
+a program (with named owners — SIB, Vendor Product Managers, SEP — in the model and the OM) but
+owned by no workflow. The defining terms appeared in zero dedicated `## W` headers; 'exit
+reserve'/'upgrade currency'/'golden path'/'ring deployment'/'DORA' in zero PA files at all; the
+literal 'golden path'/'paved road'/'readiness review'/'DORA' hits that do exist are coincidental
+('unpaved roads' in PA-09.1, 'staging-to-production readiness' in PA-10.1, a person's name in
+PA-167.3).
+
+**Three workflows created (one per VS-113 PA — hosted where the theme lives):**
+
+- **W5515 Sourcing Decision Gate Operation & Capability Sourcing Register** (PA-113.3) — the §3
+  gate and §4 Register: the scored configure → buy → build assessment (differentiation, ERP
+  fit-to-standard gap, de-unification integration cost, data gravity, PH regulatory fit, 3-year
+  TCO, talent/key-person, exit strategy; default order configure → buy → build); the five
+  mandatory §3.3 appendices (IAP integration estimate, 808-control mapping appendix, FinOps-
+  verified TCO sheet, exit/run-cost plan, re-evaluation trigger); ARB architecture opinion + SEC
+  TPRM pre-read; the monthly SIB decision recorded in the Register by the vendor-portfolio
+  analyst; decision-rights routing (3-year TCO > PHP 25M → Product Council ratification; Core-tier
+  removal → CEO-noted waiver); annual QBR reaffirmation and re-evaluation-trigger monitoring.
+- **W5516 Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves**
+  (PA-113.2) — the §8 lifecycle: vendor releases land in the owning team's staging ring and pass
+  the intake checklist plus the domain regression pack (Tier-1 coverage mandatory) before
+  production; defer one cycle, never two — the upgrade-currency KPI (at most one major version
+  behind vendor current) with Tier & Control Board escalation at two behind; RA 10173 data-
+  residency, statutory-readiness-warranty, exit/transition-assistance, open-format-export, and
+  price-escalation-cap clauses verified at signature and each renewal; tier-1 annual TPRM
+  reassessment (VS-161/W4729/W4734); QBR exit-reserve accrual into the CIO Office central bucket
+  with QBR FinOps disclosure; vendor health/EOL and Register re-evaluation-trigger monitoring
+  (W5515), retirement via W3578.
+- **W5517 SEP Paved Road & Engineering Standard Governance for Built Products** (PA-113.1) — the
+  §6/§7 standard enforced by the paved road rather than by memo: golden-path service templates
+  (repo, CI/CD, observability, IaC) with ARB-recorded exceptions as the only deviation path;
+  trunk-based development + feature flags; contract-first IAP integration with consumer-driven
+  contract tests and DP data contracts; ring deployment (internal → canary stores/DCs → fleet)
+  with automated SLO-burn rollback gates independent of the ERP monthly train; the security gates
+  (SAST + dependency scan per merge, DAST before ring expansion, SBOM per release, secrets never
+  in code) with the AppSec block right; the SEP + INFRA production readiness review before first
+  fleet ring (typhoon-season resilience as a launch criterion); DORA-at-QBR reporting (deploy
+  frequency ≥ weekly, lead time < 1 week, MTTR < 4 h, change-failure rate < 15%) plus Tier &
+  Control Board sign-off for Tier-1-touching changes.
+
+All three ship **directly confirmed Tier 2** — the governance/lifecycle-operations class of
+their VS-113 siblings (W3588/W3589), with the contract-clause dimension carried inside W5516's
+Step-3 verification gate (not a standalone statutory register, matching the W5513/W5511
+precedent) — and are absorbed within the sized CIO Office, the four Vendor PM seats, and the SEP
+platform team (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911).
+
+**Consistency cascade:** VS-113 PA TOCs + footers 8 → 9 ×3; VS-113 README 24 → 27; value-stream-
+index (header, VS-113 row, grand total, T&D section, footer); workflows/README Quick Stats +
+Classified-total note + T&D family 377 → 380 + family-subtotal reconciliation line; criticality
+register v7.45 (banner, Summary Phase-2 row + Confirmed Total + sub-workflow note, Coverage rows,
+Grand Total, Domain Breakdown prose, batch-7 addition note, Tier-2 'Sourcing-Model Gap-Fill Pass'
+subsection, version history); the register's Tier-2 section heading + intro prose — stragglered
+at 3,250 by the batch-6 pass, which trued only the Summary — trued 3,250 → 3,256; dependency-map
+v4.19 (intro totals + W5515–W5517 lineage, §8 block 2,751 → 2,754, §8.1 anchor VS-100
+1,607 → 1,609 with membership unchanged, §8.3 VS-113 row extended, VS-133 row 5,367 → 5,370);
+touchpoint-map v85.0; format-guide completeness/100%-presence/Layout rows; VS-133 README +
+PA-133.1/.3 Volume rows; PA-128.3 W5512's own intake figure; requirement-matrix inventory line;
+root-README tree (workflows/ line, VS-113 row)/Key Metrics/coverage rows/diagram/final-coverage
+tree row; executive-summary top footer re-based to 5,370 with the batch named; gap-analysis
+batch-7 note (ID allocation W5515–W5517 + canonical totals); IT-model v2.4 (§1 line, §3.2 CIO
+77 → 80 + Platform+CIO subtotal 499 → 502 + Total 5,370, §4.9 CIO row + reconciliation
+4,868+502=5,370, §11 related-docs line, Downstream → sourcing v1.4); sourcing model v1.4 (§12.1
+Tier-2 ladder 3,253 → 3,256 re-derived by Check 59; §12.2 intake figure 5,370; version footer
+naming the three new owners); headcount-reality-check STATUS banner OM pin v2.3 → v2.4;
+methodology-index OM row pin v2.4 + audit-model-docs description row's reconciliation literal;
+semantic-audit-coverage registry closed at 5,370/5,370 (W5515–W5517 admitted via the documented
+transition path — full read + D1–D4 detector sweep over the three VS-113 PA blocks, 0 flags);
+guard literals trued (validate-repo.sh Check 22 field-message chain + Check 27 canonical
+5,393/5,370 + unclassified-message chain; audit-exec-ctl anchor re-based to 5,370 with '5,367'
+retired; audit-matrix-refs GA_ANCHOR; audit-model-docs OM anchor 4,868+502=5,370).
+
+**Independent re-derivations all exact:** 5,370 unique `## W` headers (5,367 + 3); 5,393 register
+rows = 1,381 + 3,256 + 756; family subtotals sum 5,370 (T&D 380 = 62+43+29+27+27+24×8, the second 27 being VS-113); OM §3.2 rows sum to 5,370 and §4.9
+to 4,868 + 502; §8.1 top-10 re-mined from disk (VS-100 1,609 — the gate/lifecycle workflows'
+contract-clause and control-mapping references; all other anchors unchanged); validator green
+0 errors / 0 warnings across all 66 checks.
+
+---
+
 ## 2026-09-03 — Agentic-AI platform gap-fill pass (batch 6): the sourcing model's §12 agent lifecycle had no workflow-level owner — 'agentic'/'agent runtime'/'shadow mode'/'canary'/'kill-switch'/'non-human identity' in zero dedicated `## W` headers while the adjacent VS-128 slices are each model-generic (W3931 registry, W3946 pre-deployment assurance, W3947 monitoring, W3948 retirement); three workflows added to PA-128.3 and shipped directly confirmed Tier 2 (the W3945–W3948 lifecycle-operations sibling class, hard boundaries carried inside W5513's ratification gate per the W5511 precedent) — canonical totals 5,364 → 5,367 workflows / 5,387 → 5,390 register rows / T2 3,250 → 3,253
 
 **Gap finding (workflow-granularity re-run of the §2 methodology against the 2026-09-03 Agentic-AI

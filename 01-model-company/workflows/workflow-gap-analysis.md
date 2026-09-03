@@ -116,6 +116,38 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 7 (2026-09-03) — not a gap pass.** The
+> sourcing-model gap-fill review re-ran the §2 gap methodology at *workflow* granularity
+> against the rest of the 2026-09-03 hybrid capability-sourcing extension
+> (capability-sourcing-and-engineering-model.md §3–§9 — the surface batch 6's §12 scope
+> deliberately left unexamined) and found three program surfaces unowned at workflow level:
+> 'sourcing gate', 'golden path', 'paved road', 'ring deployment', 'upgrade currency',
+> 'exit reserve', 'release intake', 'DORA', 'best-of-breed', and 'configure' each appeared
+> in zero dedicated `## W` headers, while the adjacent VS-113 slices are each
+> strategy/portfolio-generic (W3588 owns investment-governance ROI, W3589 vendor/platform
+> strategy direction, W3577 portfolio rationalization, W3573 architecture exceptions). Three
+> workflows fill the gap inside VS-113 — one per PA, hosted where the theme lives: **W5515**
+> Sourcing Decision Gate Operation & Capability Sourcing Register (PA-113.3 — the scored
+> configure → buy → build assessment, the five mandatory §3.3 appendices incl. the
+> 808-control mapping, SIB/Product-Council/CEO decision-rights routing, the Register record
+> with annual QBR reaffirmation and re-evaluation triggers), **W5516** Best-of-Breed Product
+> Lifecycle Management, Vendor Release Intake & Exit Reserves (PA-113.2 — staging-ring
+> release intake with the Tier-1-mandatory regression pack, the defer-one-never-two
+> upgrade-currency KPI with Tier & Control Board escalation, RA 10173/statutory-warranty/
+> export/price-cap clause verification, tier-1 TPRM reassessment, QBR exit-reserve accrual),
+> and **W5517** SEP Paved Road & Engineering Standard Governance for Built Products
+> (PA-113.1 — golden-path starts with ARB-recorded exceptions, trunk-based/feature-flag
+> delivery, contract-first IAP + data contracts, ring deployment with SLO-burn rollback and
+> the AppSec block right, production readiness review, DORA-at-QBR reporting). All three
+> shipped **directly confirmed Tier 2** — the governance/lifecycle-operations class of their
+> VS-113 siblings (W3588/W3589), with the contract-clause dimension carried inside W5516's
+> Step-3 verification gate (matching the W5513/W5511 precedent) — and were admitted to the
+> semantic-audit registry via the documented transition path (full read + D1–D4 detector
+> sweep over the VS-113 PA blocks, 0 flags). All three are absorbed within sized teams
+> (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Workflow-ID allocation: W5515–
+> W5517 (next available). Canonical totals are now **188 value streams · 569 process areas · 5,370 workflows**
+> (5,393 confirmed register rows; Tier 2 3,253 → 3,256).
+>
 > **Post-Pass-30 workflow-level additions, batch 6 (2026-09-03) — not a gap pass.** The
 > agentic gap-fill review re-ran the §2 gap methodology at *workflow* granularity against the
 > 2026-09-03 Agentic-AI extension (capability-sourcing-and-engineering-model.md §12; OM v2.1

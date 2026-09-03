@@ -1,15 +1,17 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,367 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,390 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,370 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,393 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
 > confirmed on 2026-09-02 by the post-catalog confirmation pass
 > (`07-methodology/confirm-postcatalog-14.py`; 6 → Tier 1, 6 → Tier 2, 2 → Tier 3),
 > W5511 (VS-54.3 gift-card dormancy/escheat) shipped directly confirmed Tier 2 in the
-> 2026-09-03 event-custody pass, and W5512–W5514 (the agentic-AI platform lifecycle gap fill
-> in VS-128.3) shipped directly confirmed Tier 2 in the 2026-09-03 agentic gap-fill pass.
+> 2026-09-03 event-custody pass, W5512–W5514 (the agentic-AI platform lifecycle gap fill
+> in VS-128.3) shipped directly confirmed Tier 2 in the 2026-09-03 agentic gap-fill pass,
+> and W5515–W5517 (the capability-sourcing & engineering gap fill in VS-113) shipped
+> directly confirmed Tier 2 in the 2026-09-03 sourcing-model gap-fill pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -265,9 +267,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (3,250 Workflows)
+## Tier 2: Standard Support (3,256 Workflows)
 
-These 3,250 workflows are needed for standard operational support, cost controls, and category management.
+These 3,256 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -764,12 +766,12 @@ These 756 workflows deliver advanced capabilities for competitive differentiatio
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
 | Phase 1 | Go-Live Critical (Tier 1) | 1,381 | 25.6% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,253 | 60.4% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,256 | 60.4% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 756 | 14.0% |
-| **Confirmed Total** | | **5,390** | 100% |
+| **Confirmed Total** | | **5,393** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,367 are canonical `##` workflows.
+> own classification row; the remaining 5,370 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -793,14 +795,16 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,390 rows (5,367 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,393 rows (5,370 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,367** unique `##` workflows (5,367 confirmed + 0 unclassified) |
+| **Grand Total** | **5,370** unique `##` workflows (5,370 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,390 classified register rows (5,367 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,367 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,393 classified register rows (5,370 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,370 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+
+> **2026-09-03 addition (sourcing-model gap fill, batch 7):** Three workflow-level gap fills — W5515 (Sourcing Decision Gate Operation & Capability Sourcing Register; PA-113.3), W5516 (Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves; PA-113.2), and W5517 (SEP Paved Road & Engineering Standard Governance for Built Products; PA-113.1) — were added after re-running the gap methodology at workflow granularity against the rest of the 2026-09-03 hybrid capability-sourcing extension (capability-sourcing-and-engineering-model.md §3–§9, the surface the batch-6 pass's §12 scope deliberately left unexamined): the sourcing gate + Register machinery, the bought-edge lifecycle, and the build-side paved road/standard each had no dedicated owner in any PA file ('sourcing gate', 'golden path', 'paved road', 'ring deployment', 'upgrade currency', 'exit reserve', 'release intake', 'DORA', 'best-of-breed', and 'configure' each appeared in zero dedicated `## W` headers — the adjacent VS-113 slices are each strategy/portfolio-generic: W3588 owns investment-governance ROI, W3589 vendor/platform strategy direction, W3577 portfolio rationalization, W3573 architecture exceptions). All three ship **directly confirmed Tier 2** — the governance/lifecycle-operations class of their VS-113 siblings (W3588/W3589) and the batch-6 W5512–W5514 precedent; the contract-clause dimension (RA 10173 data-residency terms, statutory-readiness warranties) rides W5516's Step-3 verification gate, not a standalone statutory register, matching the W5513/W5511 sibling pattern.
 
 > **2026-09-03 addition (agentic-AI platform gap fill, batch 6):** Three workflow-level gap fills — W5512 (Agentic Candidate Intake, Sourcing Routing & Agent Registry Registration), W5513 (Agent Shadow & Canary Evaluation, Graduation & Autonomy-Tier Ratification), and W5514 (Agent Runtime Operations, Guardrail & Kill-Switch Telemetry, Quarterly Re-Registration & Portfolio Sunset; all VS-128.3) — were added after re-running the gap methodology at workflow granularity against the 2026-09-03 Agentic-AI extension (capability-sourcing-and-engineering-model.md §12, OM v2.1 AAP team #15): the agent lifecycle (intake → SIB sourcing routing → VS-128 registration → shadow/canary evaluation → runtime operation → QBR sunset) had no dedicated owner in any PA file ('agentic', 'agent runtime', 'shadow mode', 'canary', 'kill-switch', and 'non-human identity' each appeared in zero dedicated `## W` headers — the adjacent slices are each model-generic: W3931 owns the model registry, W3946 model pre-deployment assurance, W3947 model monitoring, W3948 model retirement). All three ship **directly confirmed Tier 2** — the lifecycle-operations class of their PA-128.3 siblings (W3945–W3948), with the statutory/boundary dimension carried inside W5513's ratification gate (the hard boundaries — no statutory filings, no POS/OT, no SoD conflicts — are verification steps, not standalone statutory registers, matching the W5511 sibling pattern).
 
@@ -1850,6 +1854,16 @@ The agentic gap-fill pass added three workflows and confirmed them directly **Ti
 | W5512 | Agentic Candidate Intake, Sourcing Routing & Agent Registry Registration | AI/ML Governance & Responsible AI |
 | W5513 | Agent Shadow & Canary Evaluation, Graduation & Autonomy-Tier Ratification | AI/ML Governance & Responsible AI |
 | W5514 | Agent Runtime Operations, Guardrail & Kill-Switch Telemetry, Quarterly Re-Registration & Portfolio Sunset | AI/ML Governance & Responsible AI |
+
+#### Sourcing-Model Gap-Fill Pass (2026-09-03)
+
+The sourcing-model gap-fill pass added three workflows and confirmed them directly **Tier 2** — the governance/lifecycle-operations class of their VS-113 siblings (W3588/W3589); the contract-clause dimension (RA 10173 data-residency terms, statutory-readiness warranties) rides W5516's Step-3 verification gate inside the workflow rather than a standalone statutory register:
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5515 | Sourcing Decision Gate Operation & Capability Sourcing Register | Enterprise Architecture, Application Portfolio & Technology Strategy |
+| W5516 | Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves | Enterprise Architecture, Application Portfolio & Technology Strategy |
+| W5517 | SEP Paved Road & Engineering Standard Governance for Built Products | Enterprise Architecture, Application Portfolio & Technology Strategy |
 
 ### Tier 3 Additions (130 Workflows)
 
@@ -6635,6 +6649,8 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 ---
 
+
+*Date: 2026-09-03 | Workflow Criticality Classification v7.45 — sourcing-model gap-fill pass: re-running the workflow-granularity gap methodology against the rest of the 2026-09-03 hybrid capability-sourcing extension (capability-sourcing-and-engineering-model.md §3–§9 — the surface batch 6's §12 scope deliberately left unexamined) found three program surfaces unowned at workflow level — the sourcing decision gate + Capability Sourcing Register, the best-of-breed product lifecycle, and the SEP paved road/engineering standard ('sourcing gate'/'golden path'/'paved road'/'ring deployment'/'upgrade currency'/'exit reserve'/'release intake'/'DORA'/'best-of-breed'/'configure' in zero dedicated `## W` headers while the adjacent VS-113 slices are each strategy/portfolio-generic: W3588 investment-governance ROI, W3589 vendor/platform strategy, W3577 portfolio rationalization, W3573 architecture exceptions). Three workflows added to VS-113 (one per PA, hosted where their theme lives) and confirmed directly **Tier 2** (the W3588/W3589 governance sibling class; the RA 10173/statutory-warranty clause dimension carried inside W5516's Step-3 verification gate, matching the W5513/W5511 precedent): **W5515** Sourcing Decision Gate Operation & Capability Sourcing Register (PA-113.3 — scored configure → buy → build assessment, the five mandatory appendices incl. the 808-control mapping, decision-rights routing to Product Council > PHP 25M and the CEO core-tier waiver, Register record + annual QBR reaffirmation + re-evaluation triggers); **W5516** Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves (PA-113.2 — staging-ring intake with Tier-1-mandatory regression pack, defer-one-never-two upgrade currency with Tier & Control Board escalation, RA 10173/statutory-warranty/export/price-cap clause verification, tier-1 annual TPRM reassessment, QBR exit-reserve accrual); **W5517** SEP Paved Road & Engineering Standard Governance for Built Products (PA-113.1 — golden-path starts with ARB-recorded exceptions, trunk-based/feature-flag delivery, contract-first IAP with data contracts, ring deployment with SLO-burn rollback and the AppSec block right, production readiness review with typhoon resilience as a launch criterion, DORA-at-QBR reporting). All three absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,390 → 5,393 rows (5,367 → 5,370 unique; T2 3,253 → 3,256); proposed register stays empty (0 unclassified); the Tier-2 section heading + intro prose — stragglered at 3,250 by the batch-6 pass, which trued only the Summary — trued 3,250 → 3,256. Downstream figures re-pointed (workflows/README Quick Stats + Technology & Data family + reconciliation line, value-stream-index header/VS-113 row/T&D subtotal/grand total/footer, VS-113 README 24 → 27, root-README tree/coverage/Key-Metrics/diagram, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows + W5512's own intake figure, dependency-map intro + §8 block + §8.1 anchors + VS-113 row, touchpoint-map, gap-analysis batch-7 note + canonical totals line, executive-summary top footer, IT-model §3.2 CIO 77 → 80 and 4,868+499 → 4,868+502=5,370, sourcing-model §12.1 Tier-2 ladder 3,253 → 3,256 and §12.2 intake figure, OM v2.4, semantic-audit-coverage registry 5,370/5,370). `validate-repo.sh`: 0 errors / 0 warnings.*
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.44 — agentic-AI platform gap-fill pass: re-running the workflow-granularity gap methodology against the 2026-09-03 Agentic-AI extension (sourcing model §12; OM v2.1 AAP team #15) found the agent lifecycle (intake → SIB sourcing routing → VS-128 registration → shadow/canary evaluation → runtime operation → QBR sunset) unowned at workflow level — 'agentic'/'agent runtime'/'shadow mode'/'canary'/'kill-switch'/'non-human identity' in zero dedicated `## W` headers while the adjacent VS-128 slices are each model-generic (W3931 registry, W3946 pre-deployment assurance, W3947 monitoring, W3948 retirement). Three workflows added to VS-128.3 and confirmed directly **Tier 2** (the W3945–W3948 lifecycle-operations sibling class; hard boundaries carried inside W5513's ratification gate, matching the W5511 precedent): **W5512** candidate intake, SIB sourcing routing & agent registry registration; **W5513** shadow & canary evaluation, graduation & autonomy-tier ratification; **W5514** runtime operations, guardrail & kill-switch telemetry, quarterly re-registration & portfolio sunset. Register 5,387 → 5,390 rows (5,364 → 5,367 unique; T2 3,250 → 3,253); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Technology & Data family + reconciliation line, value-stream-index header/VS-128 row/T&D subtotal/grand total/footer, root-README tree/coverage/Key-Metrics/diagram, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows, dependency-map intro + VS-133 row, gap-analysis batch-6 note, executive-summary top footer, IT-model §3.2/§9.1 DP 210 → 213 and 4,868+499=5,367 reconciliation, sourcing-model §12.1 Tier-2 ladder count 3,250 → 3,253, semantic-audit-coverage registry 5,367/5,367). `validate-repo.sh`: 0 errors / 0 warnings.*
 

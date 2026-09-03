@@ -38,7 +38,7 @@ MC = os.path.join(REPO, "01-model-company")
 TG_ANCHORS = ["~362 HQ staff (≈325 concurrent users)", "~540 Mbps aggregate",
               "≥ 8 hours", "933 peak-day transactions per store",
               "10 years"]
-GA_ANCHOR = "**188 value streams · 569 process areas · 5,367 workflows**"
+GA_ANCHOR = "**188 value streams · 569 process areas · 5,370 workflows**"
 
 
 def main():
