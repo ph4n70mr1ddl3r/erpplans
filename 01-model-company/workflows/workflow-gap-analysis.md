@@ -116,6 +116,45 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 11 (2026-09-04) — operations-workflow gap fill.**
+> A dedicated operations-domain gap analysis ([workflow-gap-analysis-operations.md](workflow-gap-analysis-operations.md))
+> re-ran the §2 methodology across the four workflow-level families not yet covered by batches 8–10
+> (Plan & Source 461, Make & Move 499, Sell & Serve 1,535, Asset & Infrastructure 321, Governance &
+> Assurance 964), and filled three single-workflow gaps:
+> **W5532** Workforce Time & Attendance (Biometric/Time-Clock) Platform Estate & Punch-Data Operations
+> (PA-19.3; 'time and attendance'/'timekeeping'/'biometric' appeared in 38 PA files with zero dedicated
+> `## W` headers — W561's own trigger names the "biometric/attendance system", W586/W796 name
+> "timekeeping" as a labor-metrics data source and new-store readiness names "biometric system
+> installed", but the ~420–450-device estate, its punch-data payroll interfaces and offline-outage
+> fallback have no owner — the batch-9 LMS pattern), **W5533** BIR Form 2316 Annual Issuance, Employee
+> Acknowledgment & Certificate Lifecycle (PA-79.2; '2316' appeared in 10 PA files with zero dedicated
+> `## W` headers — generation exists only as sub-steps W90.8/W1384.7 and an ESS view bullet, with no
+> owner of the January 31 furnishing campaign to ~6,762 employees, its ≥ 98% acknowledgment gate or
+> its reconciliation to W2764/W2765), and **W5534** Company-Property Gate Pass & Asset-Exit Control
+> (Stores, DCs & HQ) (PA-23.2; 'gate pass'/'property pass' appeared in 5 PA files with zero dedicated
+> `## W` headers — W585 passes trucks at DC gates and PA-09.1 expects a "Gate Pass Integration
+> (Security exit clearance)" system integration, but nobody owns the ~8,000–12,000-movement/year
+> property-exit control across ~205 stores, 4 DCs and HQ).
+> Workflow-ID allocation: W5532–W5534 (next available). W5533 shipped **directly confirmed Tier 1**
+> (the statutory furnishing layer of the withholding regime — the W2764/W2765 sibling class and the
+> W5508 statutory-filing precedent) and W5532/W5534 **directly confirmed Tier 2** (the
+> platform-operations class of W5525/W3351 and the physical-security control class of W1477/W1478).
+> All three are absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911).
+> Candidates examined in the same review and confirmed already covered (not duplicated): DC trailer
+> yard/dock discipline (W585 dock scheduling + W222 container yard + W1478 gate/visitor control; the
+> operating model runs live-unload — 'yard jockey'/'drop trailer' = 0 hits), forklift & warehouse
+> equipment maintenance (W650/W240/W1403/W1021), elevator/escalator servicing (PA-07.2 PM table +
+> VS-138 hard-services SLA), marketing paid-media planning & buying (W83 step 12 + W676/W677/W1559),
+> wage-order monitoring & pay-structure adjustment (PA-102.1's wage-order-triggered workflow),
+> corporate secretarial (W2987 SEC records + W1714–W1716 board mechanics + W243 POA/board
+> resolutions + W1719 retention), OSH program/committee (W512 + W436 + W4973), office print fleet
+> (W241 HQ facilities scope — monitor), inter-store stock balancing (W154/W204/W218/W1423), customer
+> complaints (W41/W597/W1116/W1907), sponsorship/donation intake (VS-152 program-owned), baler/cardboard
+> recycling (W1564), counterfeit banknote handling (W541/W842 variance protocol), product photography
+> (W4154), toll/RFID reconciliation (VS-61 scope — 2 incidental hits, monitor). Canonical totals are
+> now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
+> Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
+>
 > **Post-Pass-30 workflow-level additions, batch 10 (2026-09-03) — finance-workflow gap fill.**
 > A dedicated Finance-domain gap analysis ([workflow-gap-analysis-finance.md](workflow-gap-analysis-finance.md))
 > re-ran the §2 methodology across the Finance family (775 workflows) plus treasury/tax/property-adjacent

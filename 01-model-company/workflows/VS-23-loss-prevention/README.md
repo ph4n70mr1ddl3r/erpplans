@@ -7,9 +7,9 @@
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-23.1](PA-23.1-exception-monitoring-and-investigation.md) | Exception Monitoring & Investigation | 10 |
-| [PA-23.2](PA-23.2-physical-security-and-surveillance.md) | Physical Security & Surveillance | 9 |
+| [PA-23.2](PA-23.2-physical-security-and-surveillance.md) | Physical Security & Surveillance | 10 |
 | [PA-23.3](PA-23.3-shrinkage-reduction.md) | Shrinkage Reduction | 9 |
-| | **Total** | **28** |
+| | **Total** | **29** |
 
 ---
 

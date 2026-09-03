@@ -14,9 +14,10 @@ surfaces:
     requirements (offline ≥ 8 hours, 300+ store scalability per profile §10),
     the operational metrics (POS uptime 99.9% = NFR-001, month-end close
     ≤ 5 working days = FIN-015, inventory accuracy ≥ 97%), and the footer
-    counts (728 requirements / 5,384 workflows / 188 VS / 6,762 HC [re-based
-    5,381 → 5,384 by the 2026-09-03 finance-workflow gap-fill pass
-    (batch 10, W5529–W5531); previously re-based 5,377 → 5,381 by the
+    counts (728 requirements / 5,387 workflows / 188 VS / 6,762 HC [re-based
+    5,384 → 5,387 by the 2026-09-04 operations-workflow gap-fill pass
+    (batch 11, W5532–W5534); previously re-based 5,381 → 5,384 by the
+    2026-09-03 finance-workflow gap-fill pass (batch 10, W5529–W5531)
     2026-09-03 people-capability & reporting-policy gap-fill pass
     (batch 9, W5525–W5528); previously re-based 5,363 → 5,364
     by the description-trueness pass when the event-custody pass's W5511
@@ -55,8 +56,8 @@ ANCHORS = ["| Employees | 6,762 |", "| Active SKUs | 35,000 |",
            "| Monthly Transactions | 2.8 million |",
            "| Annual Revenue | ~PHP 62.3 Billion |",
            "| Loyalty Members | ~600,000 |",
-           "728 requirements, 5,384 workflows across 188 value streams, 6,762 employees"]
-RETIRED = ["6,757", "6,715", "5,357", "5,362", "5,349", "5,341", "5,364", "5,367"]
+           "728 requirements, 5,387 workflows across 188 value streams, 6,762 employees"]
+RETIRED = ["6,757", "6,715", "5,357", "5,362", "5,349", "5,341", "5,364", "5,367", "5,384"]
 SPEND = ("purchase", "purchasing", "procurement", "capex", "capital", "spend",
          "expenditure", "buying", "vendor", "supplier", "po ", "order")
 

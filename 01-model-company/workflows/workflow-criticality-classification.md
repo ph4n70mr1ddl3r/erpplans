@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,384 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,407 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,387 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,410 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
@@ -17,7 +17,9 @@
 > (the people-capability & reporting-policy gap fill in VS-19.4/VS-17.4) shipped directly
 > confirmed Tier 2 (4) in the 2026-09-03 people-workflow gap-fill pass, and W5529–W5531
 > (the finance-workflow gap fill in VS-42.3/VS-17.3/VS-17.4) shipped directly confirmed
-> Tier 1 (2) / Tier 2 (1) in the 2026-09-03 finance-workflow gap-fill pass.
+> Tier 1 (2) / Tier 2 (1) in the 2026-09-03 finance-workflow gap-fill pass, and W5532–W5534
+> (the operations-workflow gap fill in VS-19.3/VS-79.2/VS-23.2) shipped directly confirmed
+> Tier 2 (2) / Tier 1 (1) in the 2026-09-04 operations-workflow gap-fill pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -50,9 +52,9 @@
 
 ---
 
-## Tier 1: Core Operations (1,383 Workflows)
+## Tier 1: Core Operations (1,384 Workflows)
 
-These 1,383 workflows are foundational to daily store and supply chain operations.
+These 1,384 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
 
 ### Core Finance (30 workflows)
@@ -273,9 +275,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (3,266 Workflows)
+## Tier 2: Standard Support (3,268 Workflows)
 
-These 3,266 workflows are needed for standard operational support, cost controls, and category management.
+These 3,268 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -771,13 +773,13 @@ These 758 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 1,383 | 25.6% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,266 | 60.4% |
+| Phase 1 | Go-Live Critical (Tier 1) | 1,384 | 25.6% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,268 | 60.4% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 758 | 14.0% |
-| **Confirmed Total** | | **5,407** | 100% |
+| **Confirmed Total** | | **5,410** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,384 are canonical `##` workflows.
+> own classification row; the remaining 5,387 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -801,14 +803,16 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,407 rows (5,384 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,410 rows (5,387 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,384** unique `##` workflows (5,384 confirmed + 0 unclassified) |
+| **Grand Total** | **5,387** unique `##` workflows (5,387 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,407 classified register rows (5,384 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,384 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,410 classified register rows (5,387 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,387 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+
+> **2026-09-04 addition (operations-workflow gap fill, batch 11):** Three workflow-level gap fills — W5532 (Workforce Time & Attendance (Biometric/Time-Clock) Platform Estate & Punch-Data Operations; PA-19.3), W5533 (BIR Form 2316 Annual Issuance, Employee Acknowledgment & Certificate Lifecycle; PA-79.2), and W5534 (Company-Property Gate Pass & Asset-Exit Control (Stores, DCs & HQ); PA-23.2) — were added after a dedicated operations-domain gap analysis (workflow-gap-analysis-operations.md) re-ran the §2 gap methodology across the four workflow-level families not yet covered by a domain pass (Plan & Source, Make & Move, Sell & Serve, Asset & Infrastructure, Governance & Assurance): the workforce time-&-attendance (biometric/time-clock) platform estate cited only as infrastructure (W561's trigger source, W586/W796's labor-metrics feed, new-store readiness's "biometric system installed"), the BIR Form 2316 annual furnishing layer generated only as W90.8/W1384.7 sub-steps, and the company-property gate-pass/asset-exit control PA-09.1 expects as a "Gate Pass Integration (Security exit clearance)" system integration each had no dedicated owner in any PA file ('time and attendance'/'timekeeping'/'biometric' = 38 PA files with zero dedicated headers, '2316' = 10 PA files / 0 dedicated headers, 'gate pass'/'property pass' = 5 PA files / 0 dedicated headers). W5533 ships **directly confirmed Tier 1** (the statutory furnishing layer of the withholding regime — the W2764/W2765 sibling class, W5508 precedent); W5532/W5534 ship **directly confirmed Tier 2** (the platform-operations class of W5525/W3351 and the physical-security control class of W1477/W1478).
 
 > **2026-09-03 addition (IT operating-model gap fill, batch 8):** Seven workflow-level gap fills — W5518 (Collaboration & Productivity Platform (M365/Email/Teams) Operations & Tenant Governance; PA-27.2), W5519 (Enterprise Messaging & Store Telephony Services (UCC) Lifecycle; PA-27.2), W5520 (Core Network Services & IPAM (DNS/DHCP/IP-Schema) Management; PA-27.2), W5521 (Enterprise Release Calendar & Peak-Season Change-Freeze Governance; PA-27.1), W5522 (ISMS Program, Security Certification & Security-Policy Lifecycle (ISO/IEC 27001); PA-27.3), W5523 (Enterprise Pentest, Red/Purple-Team & Attack-Surface Management Program; PA-27.3), and W5524 (Enterprise DLP & Insider-Risk Monitoring (Endpoint/Email/Cloud); PA-27.3) — were added after a dedicated IT-domain gap analysis (workflow-gap-analysis-it.md) re-ran the gap methodology across all 9 Technology & Data value streams: the ~6,762-user M365/email/telephony collaboration estate, the internal core network services, the cross-estate change freeze, and the ISMS/adversarial-validation/insider-risk assurance layer each had no dedicated owner in any PA file ('Microsoft 365', 'tenant administration', 'digital workplace', 'email security', 'DMARC', 'IPAM', 'DHCP', 'change freeze', and a true-word 'ISMS' each appeared in zero dedicated `## W` headers — the adjacent VS-27 slices are each operations-generic: W366 owns WAN/ISP/Wi-Fi, W367 vulnerability ops, W387 quarterly ITGC CSA sampling, W1205 the PCI QSA cycle, W1409 the weekly CAB). Five ship **directly confirmed Tier 2** (W5518/W5520/W5521/W5522/W5524 — the infrastructure-operations and governance class of their VS-27 siblings), two ship **Tier 3** (W5519 store telephony/UCC — support-layer communications; W5523 pentest/red-team — periodic assurance), matching the batch-7 governance precedent.
 
@@ -846,7 +850,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 > have been classified by value stream context, process area, and operational criticality.
 > Classification: **284 Tier 1** (core) · **293 Tier 2** (support) · **104 Tier 3** (optimization).
 
-### Tier 1 Additions (409 Workflows)
+### Tier 1 Additions (410 Workflows)
 
 #### Plan & Source
 
@@ -1311,7 +1315,15 @@ The finance-workflow gap fill added three workflows — two confirmed directly *
 | W5530 | Minimum Corporate Income Tax (MCIT) Computation, Regime Evaluation & 3-Year Excess-Credit Carry-Forward | Record-to-Report |
 | W5531 | PFRS 8 Operating-Segment Reporting, CODM Disclosure Package & Segment-Note Production | Record-to-Report |
 
-### Tier 2 Additions (511 Workflows)
+#### Operations-Workflow Gap-Fill Pass (2026-09-04)
+
+The operations-workflow gap fill added one workflow confirmed directly **Tier 1** on the statutory-execution class of its PA-79.2 siblings (W2764 compensation-withholding remittances, W2765 annual 1604E/1604C filing, and the W5508 quarterly-BIR-filing precedent): the BIR Form 2316 furnishing to every employee is the certificate layer of the same withholding regime — a January 31 statutory deadline whose evidence pack the BIR examines first:
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5533 | BIR Form 2316 Annual Issuance, Employee Acknowledgment & Certificate Lifecycle | Tax Management & BIR Reporting |
+
+### Tier 2 Additions (513 Workflows)
 
 #### Plan & Source
 
@@ -1912,6 +1924,15 @@ The finance-workflow gap fill added one workflow confirmed directly **Tier 2** �
 | ID | Workflow | Value Stream |
 |---|---|---|
 | W5529 | Utility, Telecommunications & Site Deposits Paid — Register, Interest Reconciliation, Surety Replacement & Recovery-on-Closure | Property & Lease Administration |
+
+#### Operations-Workflow Gap-Fill Pass (2026-09-04)
+
+The operations-workflow gap fill added two workflows confirmed directly **Tier 2** — the platform-operations class of W5525/W3351 (W5532, the T&A/biometric estate whose exception queues W561/W594 already own) and the physical-security control class of W1477/W1478 (W5534, the property-exit sibling of the people/visitor gate controls):
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5532 | Workforce Time & Attendance (Biometric/Time-Clock) Platform Estate & Punch-Data Operations | Hire-to-Retire |
+| W5534 | Company-Property Gate Pass & Asset-Exit Control (Stores, DCs & HQ) | Loss Prevention & Asset Protection |
 
 ### Tier 3 Additions (132 Workflows)
 
@@ -6708,6 +6729,8 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.47 — people-capability & reporting-policy gap fill (batch 9): the dedicated People/organization-domain gap analysis (workflow-gap-analysis-people.md) re-ran the §2 gap methodology across the People family and adjacent corporate/finance-policy streams and found four workflow-level surfaces unowned — the LMS platform & learning-records layer, the learning-content/course-catalog production lifecycle, the leadership-development program, and the accounting-policy/technical-accounting (PFRS) layer ('LMS' 58 PA files / 101 hits / zero dedicated `## W` headers with even an LMS Administrator role named in W1484's staffing; 'instructional design'/'course catalog'/a true 'accounting-policy owner' all absent — PFRS appears in 93 PA files but every dedicated owner is transaction-specific: VS-157 PFRS 15, VS-148 PFRS 16, W407 PAS 12, W1875 lease policy; adjacent slices program-generic: W51 training programs, W178 succession planning, W645 workforce planning, W3351 HRIS, W9 financial close). Four workflows added — W5525 Learning Platform (LMS) Administration, Integration & Learning-Records Operations, W5526 Learning-Content Development, Course-Catalog & Certification-Program Lifecycle, W5527 Leadership Development & Management-Capability Program (HiPo Development) (all PA-19.4), and W5528 Accounting Policy, Technical Accounting (PFRS) Position & New-Standard Adoption Governance (PA-17.4) — and confirmed directly **Tier 2 (4)** (the platform-operations/governance-layer/program-support class of their siblings W3351/W51/W9); statutory dimensions (OSH training-record evidence, mandatory pass/fail regulatory courses) ride verification steps inside the workflows, matching the W5513/W5515/W5518 precedent. All four absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,400 → 5,404 rows (5,377 → 5,381 unique; T2 3,261 → 3,265); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Finance/People families + reconciliation line, value-stream-index header/VS-17+VS-19 rows/grand total/footer/detailed sections, VS-19 README 75 → 78, VS-17 README 67 → 68, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, dependency-map intro, touchpoint-map reconciliation footer, gap-analysis batch-9 note + companion doc, executive-summary footer, OM v2.6 FIN 798 → 799 / PEO 437 → 440 and 4,868+509 → 4,872+509=5,381, sourcing-model v1.6 §12.1 ladder 3,261 → 3,265, semantic-audit-coverage registry annotated). `validate-repo.sh`: 0 errors / 0 warnings.*
+
+*Date: 2026-09-04 | Workflow Criticality Classification v7.49 — operations-workflow gap fill (batch 11): the dedicated operations-domain gap analysis (workflow-gap-analysis-operations.md) re-ran the §2 gap methodology across the four workflow-level families not yet covered by batches 8–10 (Plan & Source, Make & Move, Sell & Serve, Asset & Infrastructure, Governance & Assurance) and found three workflow-level surfaces unowned — the workforce time-&-attendance (biometric/time-clock) platform estate ('time and attendance'/'timekeeping'/'biometric' = 38 PA files / ~130 hits / 0 dedicated headers — the W561 trigger names 'biometric/attendance system', W586/W796 name 'timekeeping' as a labor-metrics data source and new-store readiness names 'biometric system installed', but the ~420–450-device estate, its punch-data payroll interfaces and offline fallback have no owner — the batch-9 LMS pattern), the BIR Form 2316 annual issuance layer ('2316' = 10 PA files / 22 hits / 0 dedicated headers — generation exists only as sub-steps W90.8/W1384.7 and an ESS view bullet, with no owner of the January 31 furnishing campaign to ~6,762 employees, its acknowledgment gate or its reconciliation to W2764/W2765), and the company-property gate-pass & asset-exit control ('gate pass'/'property pass' = 5 PA files / 7 hits / 0 dedicated headers — W585 passes trucks at DC gates and PA-09.1 expects 'Gate Pass Integration (Security exit clearance)', but nobody owns the ~8,000–12,000-movement/year property-exit control across ~205 stores + 4 DCs + HQ). Three workflows added — W5532 Workforce Time & Attendance (Biometric/Time-Clock) Platform Estate & Punch-Data Operations (PA-19.3), W5533 BIR Form 2316 Annual Issuance, Employee Acknowledgment & Certificate Lifecycle (PA-79.2), and W5534 Company-Property Gate Pass & Asset-Exit Control (Stores, DCs & HQ) (PA-23.2) — and confirmed directly **Tier 2 (2)** — W5532 (the platform-operations class of W5525/W3351) and W5534 (the physical-security control class of W1477/W1478) — and **Tier 1 (1)** — W5533 (the statutory furnishing layer of the withholding regime, the W2764/W2765/W5508 class). All three absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,407 → 5,410 rows (5,384 → 5,387 unique; T1 1,383 → 1,384, T2 3,266 → 3,268); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Sell & Serve/Finance/People families + reconciliation line, value-stream-index header/VS-19+VS-23+VS-79 rows/family subtotals/grand total/footer/detailed sections, VS-19 README 78 → 79, VS-79 README 25 → 26, VS-23 README 28 → 29, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, dependency-map intro + VS-133 row, touchpoint-map v89.0 footer, gap-analysis batch-11 note + companion doc, executive-summary footer, IT-model v2.8 PEO 440 → 441 / FIN 801 → 802 / SSP 873 → 874 and 4,875+509 → 4,878+509=5,387 with the §4.9 FIN straggler 799 → 802 trued, sourcing-model v1.8 §12.1 ladder 1,384/3,268, semantic-audit-coverage registry annotated, audit-model-docs/audit-exec-ctl ANCHOR re-pins). `validate-repo.sh`: 0 errors / 0 warnings.*
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.48 — finance-workflow gap fill (batch 10): the dedicated Finance-domain gap analysis (workflow-gap-analysis-finance.md) re-ran the §2 gap methodology across the Finance family (775 workflows) plus treasury/tax/property-adjacent streams and found three workflow-level surfaces unowned — the utility/telecom/site deposits-paid lifecycle (PA-42.3's own W1877 pain point carries the PHP 10M–40M locked-capital canon with no downstream owner; recovery exists only as a closure sub-step in PA-20.3 and a connection-transaction step in W1877, while the landlord-deposit sibling W1867 shows the owned pattern), the minimum corporate income tax layer ('MCIT'/'minimum corporate income' = 0 corpus-wide hits — W407 computes normal tax and deferred tax but the 2% gross-income floor, its regime evaluation and the 3-year excess-credit carry-forward are absent), and the PFRS 8 operating-segment disclosure layer ('segment reporting'/'operating segment' = 0 corpus-wide hits — the CODM review packages exist in W1653/W231/W102/W1657 and the AFS filing machinery in W9B/W481, but the segment-note production that binds them for the audited statements is unowned). Three workflows added — W5529 Utility, Telecommunications & Site Deposits Paid — Register, Interest Reconciliation, Surety Replacement & Recovery-on-Closure (PA-42.3), W5530 Minimum Corporate Income Tax (MCIT) Computation, Regime Evaluation & 3-Year Excess-Credit Carry-Forward (PA-17.3), and W5531 PFRS 8 Operating-Segment Reporting, CODM Disclosure Package & Segment-Note Production (PA-17.4) — and confirmed directly **Tier 1 (2)** — W5530 (the statutory tax-floor computation feeding the 1702RT/1702Q filings, the W407/W481/W5508 class) and W5531 (the statutory disclosure layer of the audited AFS, the W481 class) — and **Tier 2 (1)** — W5529 (the treasury-asset-lifecycle class of W1867/W317, no statutory filing dependency). All three absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,404 → 5,407 rows (5,381 → 5,384 unique; T1 1,381 → 1,383, T2 3,265 → 3,266); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Finance family + reconciliation line, value-stream-index header/VS-17+VS-42 rows/Finance subtotal/grand total/footer/detailed sections, VS-17 README 68 → 70, VS-42 README 24 → 25, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, dependency-map intro + VS-133 row, touchpoint-map v88.0 footer, gap-analysis batch-10 note + companion doc, executive-summary footer, IT-model v2.7 FIN 799 → 802 and 4,872+509 → 4,875+509=5,384, sourcing-model v1.7 §12.1 ladder 3,265 → 3,266, semantic-audit-coverage registry annotated, audit-model-docs/audit-exec-ctl ANCHOR re-pins). `validate-repo.sh`: 0 errors / 0 warnings.*
 

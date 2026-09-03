@@ -23,9 +23,9 @@ tax credit reconciliation, BIR assessment response, and tax risk governance.
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-79.1](PA-79.1-indirect-tax-vat-and-einvoicing.md) | Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing | 8 |
-| [PA-79.2](PA-79.2-withholding-tax-and-2307-management.md) | Withholding Tax (EWT/CWT) & Form 2307 Management | 9 |
+| [PA-79.2](PA-79.2-withholding-tax-and-2307-management.md) | Withholding Tax (EWT/CWT) & Form 2307 Management | 10 |
 | [PA-79.3](PA-79.3-income-tax-local-tax-and-audit-defense.md) | Corporate Income Tax, Local Tax, DST & BIR Audit Defense | 8 |
-| | **Total** | **25** |
+| | **Total** | **26** |
 
 ---
 
