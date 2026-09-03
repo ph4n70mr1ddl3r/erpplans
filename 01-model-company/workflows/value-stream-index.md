@@ -242,7 +242,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-01.2** [Pricing & Promotions](./VS-01-merchandise-strategy/PA-01.2-pricing-and-promotions.md) — 16 workflows
 - **PA-01.3** [Product Information & Content](./VS-01-merchandise-strategy/PA-01.3-product-information-and-content.md) — 8 workflows
 
-**[VS-02: Supply Planning](./VS-02-supply-planning/README.md)** (37 workflows)
+**[VS-02: Supply Planning](./VS-02-supply-planning/README.md)** (38 workflows)
 
 - **PA-02.1** [Demand Forecasting & S&OP](./VS-02-supply-planning/PA-02.1-demand-forecasting-and-sandop.md) — 14 workflows
 - **PA-02.2** [Import & Customs Operations](./VS-02-supply-planning/PA-02.2-import-and-customs-operations.md) — 8 workflows
@@ -792,7 +792,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-72.2** [Inter-Entity Service Level & Billing](./VS-72-cross-entity-shared-services/PA-72.2-inter-entity-service-level-billing.md) — 8 workflows
 - **PA-72.3** [Shared Services Performance & Analytics](./VS-72-cross-entity-shared-services/PA-72.3-shared-services-performance-analytics.md) — 8 workflows
 
-**[VS-79: Tax Management & BIR Statutory Reporting](./VS-79-tax-management-bir-reporting/README.md)** (24 workflows)
+**[VS-79: Tax Management & BIR Statutory Reporting](./VS-79-tax-management-bir-reporting/README.md)** (25 workflows)
 
 - **PA-79.1** [Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing](./VS-79-tax-management-bir-reporting/PA-79.1-indirect-tax-vat-and-einvoicing.md) — 8 workflows
 - **PA-79.2** [Withholding Tax (EWT/CWT) & Form 2307 Management](./VS-79-tax-management-bir-reporting/PA-79.2-withholding-tax-and-2307-management.md) — 9 workflows

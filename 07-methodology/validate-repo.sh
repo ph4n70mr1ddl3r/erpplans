@@ -3232,9 +3232,9 @@ fi
 
 # --- Check 67: VS-README Process-Areas tables cross-foot vs disk ---
 echo "--- Check 67: VS-README process-area counts vs disk ---"
-# The value-stream-index per-VS rows are re-derived (Check 61 family), but each VS
-# README carries its own Process-Areas table (one row per PA file with a workflow
-# count, plus a **Total** row) that no check read. The 2026-09-03 worklist-adjudication
+# The value-stream-index per-VS rows are re-derived by Check 68 (same pass), but
+# each VS README carries its own Process-Areas table (one row per PA file with a
+# workflow count, plus a **Total** row) that no check read. The 2026-09-03 worklist-adjudication
 # pass moved W239 from PA-24.3 (8→7) to PA-87.3 (8→9), re-pointed the index, the root
 # README tree and the dependency map — and missed exactly these two README tables
 # (VS-24 stale 8/27, VS-87 stale 8/24). This check re-derives every VS README's
@@ -3289,6 +3289,83 @@ if [ "${C67_BAD:-1}" -eq 0 ]; then
 else
     error "$C67_BAD VS-README process-area-count problem(s):"
     echo "$CHECK67" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 68: Value-stream-index per-VS rows cross-foot vs disk ---
+echo "--- Check 68: Value-stream-index per-VS rows vs disk ---"
+# Check 2 compares each PA file's workflow count against its PA bullet in the
+# index's detailed section and Check 9 guards the Grand Total, but two VS-level
+# count surfaces read nothing: the 'Value Stream Architecture' summary-table
+# rows (per-VS Process-Areas and Workflows cells) and the detailed section's
+# per-VS headings ('(n workflows)'). The 2026-08-26 batch-4 gap-fill (W5508
+# into VS-79.2, W5509 into VS-02.1) trued the summary-table cells, the VS
+# READMEs, workflows/README and the Grand Total but left both headings stale
+# (VS-02 '37 workflows' vs disk 38; VS-79 '24 workflows' vs disk 25) — drift
+# invisible to every check, and to subsequent full re-derivations that read
+# the summary table, until the 2026-09-03 second consistency review pass.
+# This check re-derives both surfaces from the PA files' own '## W' headers:
+# per-VS workflow counts on both surfaces and per-VS process-area counts on
+# the summary table; missing rows for on-disk VSs and phantom rows for VSs
+# with no directory both error. (The index-side sibling of Check 67.)
+CHECK68=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+wf = os.path.join(ROOT, "01-model-company", "workflows")
+idx = open(os.path.join(wf, "value-stream-index.md"), encoding="utf-8").read()
+disk = {}
+for d in sorted(os.listdir(wf)):
+    m = re.match(r"VS-(\d+)-", d)
+    if not m:
+        continue
+    vs = m.group(1)
+    pas = 0
+    wfs = 0
+    for f in os.listdir(os.path.join(wf, d)):
+        if re.match(r"PA-\d+\.\d+-", f) and f.endswith(".md"):
+            pas += 1
+            wfs += len(re.findall(r"^## W\d+[A-Z]?\.", open(os.path.join(wf, d, f), encoding="utf-8").read(), re.M))
+    disk[vs] = (pas, wfs)
+bad = []
+sum_rows = 0
+head_rows = 0
+seen_sum = set()
+seen_head = set()
+for line in idx.splitlines():
+    m = re.match(r"^\|[^|]*\|\s*\[VS-(\d+)\]\([^)]*\)\s*\|[^|]*\|[^|]*\|\s*(\d+)\s*\|\s*(\d[\d,]*)\s*\|", line)
+    if m:
+        vs, pa, n = m.group(1), int(m.group(2)), int(m.group(3).replace(",", ""))
+        sum_rows += 1
+        seen_sum.add(vs)
+        if vs not in disk:
+            bad.append(f"summary-table row for VS-{vs} but no such VS directory on disk")
+        elif disk[vs] != (pa, n):
+            bad.append(f"summary-table VS-{vs} cells say {pa} PAs / {n} workflows, disk has {disk[vs][0]} / {disk[vs][1]}")
+        continue
+    m = re.match(r"^\*\*\[VS-(\d+): [^\]]+\]\([^)]*\)\*\* \((\d[\d,]*) workflows\)", line)
+    if m:
+        vs, n = m.group(1), int(m.group(2).replace(",", ""))
+        head_rows += 1
+        seen_head.add(vs)
+        if vs not in disk:
+            bad.append(f"detailed heading for VS-{vs} but no such VS directory on disk")
+        elif disk[vs][1] != n:
+            bad.append(f"detailed heading VS-{vs} says {n} workflows, disk has {disk[vs][1]}")
+for vs in disk:
+    if vs not in seen_sum:
+        bad.append(f"VS-{vs} on disk has no summary-table row")
+    if vs not in seen_head:
+        bad.append(f"VS-{vs} on disk has no detailed-section heading")
+print(f"TOTALS summary_rows={sum_rows} headings={head_rows} problems={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C68_BAD=$(echo "$CHECK68" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
+if [ "${C68_BAD:-1}" -eq 0 ]; then
+    ok "All value-stream-index per-VS rows (summary table + detailed headings) cross-foot against disk (guard added by the 2026-09-03 second consistency review pass after the batch-4 additions left VS-02/VS-79 headings stale)"
+else
+    error "$C68_BAD value-stream-index per-VS problem(s):"
+    echo "$CHECK68" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
 echo ""
