@@ -115,13 +115,16 @@ The company operates through **5 legal entities** organized as follows:
 
 > Rebalanced to the **minimum** staffing required to cover the roles and volumes referenced across the workflow catalog (see `headcount-reality-check.md`). Six functions previously rolled into an un-enumerated ~40-person bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and four transactional functions (Finance, IT, HR, Legal) were increased to resolve contradictions the workflows themselves exposed (e.g., AP "~10 clerks" cannot fit inside a 37-person Finance team; IT field support flagged inadequate for a 200-store archipelago footprint). Store (5,800) and DC (600) headcounts are unchanged. **Supply Chain & Logistics** was subsequently rebalanced 35 → 40 (2026-06-25) to stand up a dedicated **S&OP/IBP sub-team** — the single accountable owner of the VS-127 monthly demand–supply consensus cycle that had previously been an unowned program (see the team breakdown below and `headcount-reality-check.md` §4, “S&OP Lead”).
 >
-> **Target state (2026-09-02).** The breakdown above is the **current baseline** — the minimum
-> coverage implemented 2026-06-20/25. The adopted **target-state table of organization** is
-> defined in [`optimal-table-of-organization.md`](optimal-table-of-organization.md): HQ
-> **469** / total **6,869** at 200 stores (upper edge of the `headcount-reality-check.md`
-> comfortable band; IT = 80 per `it-product-operating-model.md` §9), reached in three
-> demand-triggered phases — regulatory floor → transaction scale → capability scale — with
-> store (5,800) and DC (600) staffing unchanged.
+> **Target state (2026-09-02; revised 2026-09-03).** The breakdown above is the **current
+> baseline** — the minimum coverage implemented 2026-06-20/25. The adopted **target-state
+> table of organization** is defined in
+> [`optimal-table-of-organization.md`](optimal-table-of-organization.md): HQ **504** / total
+> **6,904** at 200 stores (upper edge of the `headcount-reality-check.md` comfortable band
+> ~440–510; IT = 115 per `it-product-operating-model.md` §9 under the hybrid capability-
+> sourcing model adopted 2026-09-03 — best-of-breed edges and in-house builds around the
+> unified ERP core; see `07-methodology/capability-sourcing-and-engineering-model.md`),
+> reached in three demand-triggered phases — regulatory floor → transaction scale →
+> capability scale — with store (5,800) and DC (600) staffing unchanged.
 
 - **Executive Office**: CEO, CFO, COO, CIO, CMO, CHRO, VP Legal & Compliance (7)
 - **Merchandising & Buying**: Category managers, buyers, pricing analysts, planners (40)
@@ -182,10 +185,10 @@ The company operates through **5 legal entities** organized as follows:
 
 > **Revenue per employee**: ~PHP 9.22M/year (~PHP 62.3B ÷ 6,762) — driven by BuildRight's optimized store staffing model (29 per store). The headcount per store was increased from 28 to 29 to implement the recommendation for an additional Stock Associate (4 total per store) to ensure adequate coverage for continuous replenishment, cycle counting, and omnichannel fulfillment. HQ headcount was rebalanced from 315 to 357 (2026-06-20), then to 362 (2026-06-25) to stand up a dedicated S&OP/IBP sub-team in Supply Chain & Logistics — closing the previously-unowned VS-127 consensus cycle and the “S&OP Lead” gap in `headcount-reality-check.md` §4: the six functions previously rolled into an un-enumerated bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and Finance, IT, HR, and Legal were increased to the minimum required to cover the roles and transaction volumes referenced across the workflow catalog (e.g., dedicated DPO W53, Regulatory Officer W54, Tax Accountant W90, Logistics Finance Analyst W277, IT Helpdesk W48, AML/MLRO, and Regional Loss Prevention's 20 Officers for variance investigation across the 200-store chain).
 
-> **Target-state headcount:** HQ 362 → **469** and total 6,762 → **6,869** per the adopted
+> **Target-state headcount:** HQ 362 → **504** and total 6,762 → **6,904** per the adopted
 > target-state table of organization ([`optimal-table-of-organization.md`](optimal-table-of-organization.md)
-> §5.1/§11); the current-state figures in this table remain canonical until each phase
-> trigger fires.
+> §5.1/§11, revised 2026-09-03 for the hybrid IT capability-sourcing model); the
+> current-state figures in this table remain canonical until each phase trigger fires.
 
 ---
 
@@ -689,17 +692,22 @@ BuildRight Holdings, Inc.
 ## 14. IT Infrastructure & Systems
 
 ### 14.1 Active ERP Landscape
-> Note: All legacy systems (siloed accounting, standalone POS, manual spreadsheets, separate payroll, custom ecommerce, etc.) have been decommissioned and consolidated.
+> Note: All legacy systems (siloed accounting, standalone POS, manual spreadsheets, separate payroll, custom ecommerce, etc.) have been decommissioned and consolidated. Since 2026-09-03 the landscape is **hybrid** (see `07-methodology/capability-sourcing-and-engineering-model.md`): the unified cloud ERP remains the **core**; four edge capabilities run on **best-of-breed** products; two differentiating capabilities are **built in-house**. All are integrated through the IAP middleware/event backbone.
 
 | Core System Module | Function | Status |
 |---|---|---|
-| Financials & Consolidation | GL, AP, AR, Fixed Assets, Multi-Entity Group Accounting | Live & Unified |
-| Integrated Omnichannel POS | In-store sales, cashiering, offline cache management | Live & Unified |
-| Automated Procurement | Blanket purchase orders, automated ROP releases, supplier management | Live & Unified |
-| Warehouse & Inventory Mgmt | Real-time stock levels, RF-directed bin-level tracking | Live & Unified |
-| Integrated Payroll & HR | Statutory remittances, biometric attendance synchronization | Live & Unified |
-| Unified E-commerce Engine | Web/Mobile catalog, BOPIS & home delivery fulfillment | Live & Unified |
-| Integrated Workflow Approvals | Tiered approval workflows for POs, Capex, and inventory adjustments | Live & Unified |
+| Financials & Consolidation | GL, AP, AR, Fixed Assets, Multi-Entity Group Accounting | Live & Unified (core) |
+| Integrated Omnichannel POS | In-store sales, cashiering, offline cache management | Live & Unified (core) |
+| Automated Procurement | Blanket purchase orders, automated ROP releases, supplier management | Live & Unified (core) |
+| Warehouse & Inventory Mgmt | Real-time stock levels (inventory ledger of record); RF-directed execution moved to the best-of-breed WMS | Live & Unified (core) + Best-of-Breed WMS |
+| Integrated Payroll & HR | Statutory remittances, biometric attendance synchronization | Live & Unified (core) |
+| Unified E-commerce Engine | Web/Mobile catalog, BOPIS & home delivery fulfillment | Live & Unified (core) |
+| Integrated Workflow Approvals | Tiered approval workflows for POs, Capex, and inventory adjustments | Live & Unified (core) |
+| Best-of-Breed TMS | Transport planning, carrier tendering, freight audit | Live — Best-of-Breed |
+| Store Workforce Management | Store labor scheduling and time capture (payroll stays in the ERP core) | Live — Best-of-Breed |
+| Field Service Management | Installation & home-service dispatch, technician mobile app | Live — Best-of-Breed |
+| Order Orchestration (in-house) | Omnichannel order routing, split-order & mixed-basket fulfillment (VS-60) | Live — Built In-House (OMO) |
+| Trade & Project Services Platform (in-house) | Job-site delivery, material staging/phased delivery, bulky install coordination (VS-74/VS-77/VS-143) | Live — Built In-House (TPS) |
 
 ### 14.2 Configured ERP Capabilities
 
@@ -850,7 +858,8 @@ The following external systems are actively integrated with the core ERP system.
 | **DOLE** | Department of Labor and Employment (Philippines) |
 | **DSD** | Direct Store Delivery |
 | **EOQ** | Economic Order Quantity |
-| **ERP Platform** | The single, cloud-deployed, single-vendor ERP platform running BuildRight's entire business end-to-end (financials, procurement, inventory, POS, WMS, ecommerce, HR, treasury). The canonical term used across all documents is **“unified cloud ERP”**. |
+| **ERP Platform** | The cloud-deployed ERP platform running BuildRight's core end-to-end processes (financials, procurement, inventory ledger, POS, HR/payroll, approvals). Since the 2026-09-03 hybrid capability-sourcing decision the canonical “unified cloud ERP” term is scoped to this **core**; best-of-breed edge products and in-house built platforms surround it (§14.1; `07-methodology/capability-sourcing-and-engineering-model.md`). |
+| **Best-of-Breed (BoB)** | A specialist vendor product adopted for an edge capability (WMS, TMS, store WFM, FSM) where the specialist market outperforms the ERP suite, integrated via IAP under a registered sourcing decision. |
 | **EWT** | Expanded Withholding Tax (Philippines) |
 | **GMV** | Gross Merchandise Value |
 | **IC** | Intercompany |
@@ -870,4 +879,9 @@ The following external systems are actively integrated with the core ERP system.
 
 ---
 
-*Document Version: 2.25 | Date: 2026-09-02 | §3.3/§4/§11.1 cross-referenced the **adopted target-state table of organization** ([`optimal-table-of-organization.md`](optimal-table-of-organization.md)): target HQ 469 / total 6,869 at 200 stores via three demand-triggered phases; all current-state figures unchanged. Prior 2.24: §10.5/§16 EWT rows updated to the post-RR 11-2018 regime — Withholding Tax (Expanded) is filed **Quarterly** on BIR Form **1601-EQ** (due the last day of the month following quarter close; 1601-E was discontinued in 2018), aligning the profile with the batch-13 PA-file canon (W90/W260/W711, FIN-008); part of consistency review #60. Prior 2.23: §9.2/§10.2 B2B account counts canonicalized to the catalog-majority scheme — Trade Account Customers ~5,000 → ~5,200 and Active AR Accounts ~5,200 → ~5,400 (5,200 trade + 200 corporate) — aligning the profile with the ~40 downstream citations (VS-11/16/68 PA files, gap-analysis passes, and the CCR/CRM requirement rows) that already carried the 5,200/200 split; part of consistency review #19. Prior 2.22: §3.3 Supply Chain & Logistics rebalanced 35 → 40 to stand up a dedicated S&OP/IBP sub-team (S&OP/IBP Lead + Senior Demand Planner + 2 Demand Planners + Supply & Allocation Planner), closing the previously-unowned VS-127 consensus cycle and the “S&OP Lead” gap in `headcount-reality-check.md` §4; a new §3.3 “Supply Chain & Logistics Team Structure (40 total)” subsection documents the breakdown (mirrors §13.1). §4 HQ 357 → 362, total 6,757 → 6,762 (revenue/employee ~9.22M); §11.1 COO row 126 → 131 and total 350 + 7 = 357 → 355 + 7 = 362. Prior v2.21: §12.1 added a Regional/District Manager field-layer note cross-referencing VS-177 (resolving the “Regional Manager (~6)” vs “District Manager (~13)” tier ambiguity that recurred across requirements); §12.3 “Sales per Store per Month” clarified (≈ PHP 25.2M per §9.4); §11.1 table-total cell made the “17 departments here + Executive Office = 18 total” relationship explicit. Prior v2.20: §11.1 org chart now maps **all 18 HQ departments** to their C-suite owner (previously only 6 of 18 had a visible reporting line) with a 357-headcount reconciliation row and an Internal-Audit independence note; §13.1 Merchandising team breakdown expanded to sum explicitly to **40** (rebalanced toward planning/pricing/assortment per `headcount-reality-check.md` §7.4). Prior v2.19: §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*
+*Document Version: 2.26 | Date: 2026-09-03 | Hybrid capability-sourcing revision (with
+`it-product-operating-model.md` v2.0): §14.1 re-framed as the hybrid landscape (unified ERP
+core + best-of-breed WMS/TMS/WFM/FSM edges + in-house OMO/TPS builds); glossary "ERP
+Platform" scoped to the core with a new "Best-of-Breed" entry; target-state notes re-based
+to HQ 504 / total 6,904 (IT = 115) per `optimal-table-of-organization.md` v1.3. Current-state
+canonical figures (§3.3/§4/§11.1: HQ 362, total 6,762, IT 50) unchanged. Prior 2.25: §3.3/§4/§11.1 cross-referenced the **adopted target-state table of organization** ([`optimal-table-of-organization.md`](optimal-table-of-organization.md)): target HQ 469 / total 6,869 at 200 stores via three demand-triggered phases; all current-state figures unchanged. Prior 2.24: §10.5/§16 EWT rows updated to the post-RR 11-2018 quarterly-remittance regime (1601-EQ), aligning the profile with the batch-13 PA-file canon (W90/W260/W711, FIN-008); part of consistency review #60. Prior 2.23: §9.2/§10.2 B2B account counts canonicalized to the catalog-majority scheme — Trade Account Customers ~5,000 → ~5,200 and Active AR Accounts ~5,200 → ~5,400 (5,200 trade + 200 corporate) — aligning the profile with the ~40 downstream citations (VS-11/16/68 PA files, gap-analysis passes, and the CCR/CRM requirement rows) that already carried the 5,200/200 split; part of consistency review #19. Prior 2.22: §3.3 Supply Chain & Logistics rebalanced 35 → 40 to stand up a dedicated S&OP/IBP sub-team (S&OP/IBP Lead + Senior Demand Planner + 2 Demand Planners + Supply & Allocation Planner), closing the previously-unowned VS-127 consensus cycle and the “S&OP Lead” gap in `headcount-reality-check.md` §4; a new §3.3 “Supply Chain & Logistics Team Structure (40 total)” subsection documents the breakdown (mirrors §13.1). §4 HQ 357 → 362, total 6,757 → 6,762 (revenue/employee ~9.22M); §11.1 COO row 126 → 131 and total 350 + 7 = 357 → 355 + 7 = 362. Prior v2.21: §12.1 added a Regional/District Manager field-layer note cross-referencing VS-177 (resolving the “Regional Manager (~6)” vs “District Manager (~13)” tier ambiguity that recurred across requirements); §12.3 “Sales per Store per Month” clarified (≈ PHP 25.2M per §9.4); §11.1 table-total cell made the “17 departments here + Executive Office = 18 total” relationship explicit. Prior v2.20: §11.1 org chart now maps **all 18 HQ departments** to their C-suite owner (previously only 6 of 18 had a visible reporting line) with a 357-headcount reconciliation row and an Internal-Audit independence note; §13.1 Merchandising team breakdown expanded to sum explicitly to **40** (rebalanced toward planning/pricing/assortment per `headcount-reality-check.md` §7.4). Prior v2.19: §15.1 added a **Goods Receipts scope** note clarifying the ~6,000/~72,000 figure is DC-only; total inbound incl. DSD is ~6,500–6,600/month (~79,000–79,200/year) per §7.1 and `data-volumes-and-integrations.md` §1.1 (same scope-note pattern as the AP row). Prior v2.18: §15.3 Data-retention row updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.17: §15.1 AP-Invoices row labelled `AP Invoices (merchandise, 3-way match per W7)` and a scope note added — the ~6,715/~80,500 figure is merchandise-only; total AP (~8,500–9,500/mo incl. non-PO/recurring per W7C) is in §10.2 and `data-volumes-and-integrations.md` §1.1, resolving the merchandise-vs-total scope ambiguity. Prior v2.16: glossary scope clarified (covers model-company / Philippine-retail / ERP-domain terms; widely-understood industry acronyms used inline). Prior v2.15: glossary designated as single source of truth; "ERP Platform / unified cloud ERP" canonical term added; counts reconciled with README.md*

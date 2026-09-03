@@ -1,8 +1,11 @@
 # BuildRight Depot Corp. — IT Product Operating Model & Product-Team Design
 
 > How the Information Technology department organizes as long-lived, business-paired **product
-> teams** to run and continuously improve the unified cloud ERP across all 188 value streams —
-> team structure, membership, roles, RACI, governance, and sizing.
+> teams** to run and continuously improve the IT landscape across all 188 value streams —
+> team structure, membership, roles, RACI, governance, and sizing. Since v2.0 the landscape is
+> **hybrid**: a unified cloud ERP **core**, **best-of-breed** edge products, and **in-house
+> built** differentiators, with sourcing decisions governed by the companion
+> [`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md).
 
 ---
 
@@ -15,8 +18,9 @@ headcount. It is the organizational counterpart to the system landscape defined 
 [`workflows/value-stream-index.md`](../01-model-company/workflows/value-stream-index.md)
 (188 value streams, 569 process areas, 5,364 workflows).
 
-Scope covers the steady state **after** the unified cloud ERP go-live (the "Live & Unified"
-landscape of `model-company-profile.md` §14.1). Implementation-phase structures (SI governance,
+Scope covers the steady state **after** the unified cloud ERP go-live under the hybrid
+landscape adopted 2026-09-03 (the unified core + bought edges + built differentiators of
+`model-company-profile.md` §14.1). Implementation-phase structures (SI governance,
 cutover command centers) are out of scope; see §10 for the transition.
 
 ---
@@ -35,30 +39,42 @@ cutover command centers) are out of scope; see §10 for the transition.
    a product team owns the *systems and configuration* that enable it. Every one of the 188 value
    streams has exactly **one primary product team** (gap-free, overlap-free ownership — §4),
    while controls embedded in those workflows remain jointly governed (§6.3).
-4. **Configure-first talent model.** The landscape is a single-vendor unified cloud ERP
-   (§14.1); therefore domain teams are built around **ERP functional analysts and process
-   architects**, not classical software developers. Dedicated engineers concentrate in the
-   platform layer (integration, ecommerce app edge, data engineering).
+4. **Capability-sourced talent model.** The landscape is a hybrid: a **unified cloud ERP
+   core**, **best-of-breed edge products**, and **in-house built differentiators**
+   (`model-company-profile.md` §14.1; decisions per the
+   [`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md)
+   register). Team shape follows the sourcing archetype: **configure** teams are built around
+   ERP functional analysts and process architects; **buy-and-integrate** teams add Vendor
+   Product Managers; **build** products are delivered by software squads on the SEP paved
+   road. Dedicated engineers live in the build squads and the platform layer (integration,
+   data, engineering enablement).
 5. **Tier-aware service levels.** The workflow criticality register
    ([`workflow-criticality-classification.md`](../01-model-company/workflows/workflow-criticality-classification.md):
    1,375 Tier-1 / 3,243 Tier-2 / 754 Tier-3) drives each team's regression coverage, incident
    SLAs, and roadmap prioritization. Every Tier-1 workflow in a team's domain maps to at least
    one automated regression test.
 6. **Platform thinking.** Domain ("stream-aligned") teams build on shared **platform teams**
-   (integration, infrastructure, security, data, field services) that treat domain teams as
-   their customers, following Team-Topologies-style separation: stream-aligned, platform, and
-   enabling (GRC) team types.
+   (integration, infrastructure, security, data, engineering enablement, field services) that
+   treat domain teams as their customers, following Team-Topologies-style separation:
+   stream-aligned, platform, and enabling (GRC) team types.
+7. **Configure by default; buy before build.** Every capability decision routes through the
+   Sourcing & Investment Board gate in the order configure → buy → build, with the ERP core
+   protected by a CEO-noted waiver rule. No capability may be re-sourced without a registered
+   decision carrying an IAP integration estimate, a control-mapping appendix against the
+   808-control register, a TCO sheet, and a re-evaluation trigger.
 
 ---
 
-## 3. Product Taxonomy — From 188 Value Streams to 12 IT Products
+## 3. Product Taxonomy — From 188 Value Streams to 16 IT Products
 
 ### 3.1 The mapping rule
 
 The 8 value-stream families do not translate 1:1 into teams (188 teams is absurd; 8 teams is too
 coarse for the selling side). The taxonomy below groups by **system domain and business
-partner**, then assigns every value stream to exactly one primary product team. Two
-consequences worth stating explicitly:
+partner**, then assigns every value stream to exactly one primary product team — **16 teams in
+all**: 9 stream-aligned domain products (including the two in-house **build** products OMO and
+TPS, created by sourcing decisions rather than value-stream families), 6 platform teams, and
+the CIO Office. Two consequences worth stating explicitly:
 
 - The **Governance & Assurance family (37 VS)** gets **no dedicated team**: those workflows are
   controls *embedded in* other products' configurations, with a small GRC/controls cell (§5.3)
@@ -71,20 +87,23 @@ consequences worth stating explicitly:
 
 | # | Product Team | Code | Type | Primary Business Partner(s) | VS | Workflows |
 |---|---|---|---|---|---|---|
-| 1 | Merchandising & Supply Chain Systems | MSC | Stream-aligned | VP Supply Chain; VP Merchandising | 16 | 485 |
-| 2 | Warehouse, Logistics & Inventory Systems | WLI | Stream-aligned | VP Supply Chain (DC Ops, Fleet & Logistics) | 22 | 571 |
-| 3 | Store Systems & POS | SSP | Stream-aligned | Store Operations Director | 25 | 873 |
-| 4 | Commerce & Customer Platforms | CCP | Stream-aligned | CMO; Digital Commerce Inc. GM; Trade/Account Mgmt | 27 | 786 |
-| 5 | Finance & Treasury Systems | FIN | Stream-aligned | CFO (Controller, Treasurer, Tax) | 30 | 798 |
-| 6 | Corporate, Governance & Asset Systems | CORP | Stream-aligned | VP Legal & Compliance; Facilities & Real Estate; Quality; Internal Audit & Risk | 35 | 915 |
-| 7 | People Systems | PEO | Stream-aligned | CHRO | 16 | 437 |
+| 1 | Merchandising & Supply Chain Systems | MSC | Stream-aligned (configure) | VP Supply Chain; VP Merchandising | 16 | 485 |
+| 2 | Warehouse, Logistics & Inventory Systems | WLI | Stream-aligned (buy & integrate) | VP Supply Chain (DC Ops, Fleet & Logistics) | 20 | 523 |
+| 3 | Store Systems & POS | SSP | Stream-aligned (buy & integrate) | Store Operations Director | 25 | 873 |
+| 4 | Commerce & Customer Platforms | CCP | Stream-aligned (buy & integrate) | CMO; Digital Commerce Inc. GM; Trade/Account Mgmt | 25 | 738 |
+| 5 | Finance & Treasury Systems | FIN | Stream-aligned (configure) | CFO (Controller, Treasurer, Tax) | 30 | 798 |
+| 6 | Corporate, Governance & Asset Systems | CORP | Stream-aligned (configure) | VP Legal & Compliance; Facilities & Real Estate; Quality; Internal Audit & Risk | 35 | 915 |
+| 7 | People Systems | PEO | Stream-aligned (configure) | CHRO | 16 | 437 |
+| 8 | Order Orchestration | OMO | Stream-aligned (build) | Digital Commerce with Supply Chain | 1 | 24 |
+| 9 | Trade & Project Services Platform | TPS | Stream-aligned (build) | VP Supply Chain (Fleet & Logistics) with Trade/Account Mgmt | 3 | 72 |
 | | **Domain subtotal** | | | | **171** | **4,865** |
-| 8 | Integration & API Platform | IAP | Platform | All product teams | 0 | 0 |
-| 9 | Cloud Infrastructure & SRE | INFRA | Platform | All product teams | 3 | 116 |
-| 10 | Cybersecurity, Privacy & OT Security | SEC | Platform + enabling | All product teams; DPO; Internal Audit | 3 | 72 |
-| 11 | Data Platform & MDM | DP | Platform | All product teams; Strategy/CPM; Marketing | 7 | 210 |
-| 12 | Field & End-User Services | FS | Platform | All 205 locations; 6,762 users | 1 | 24 |
-| | CIO Office (EA, Portfolio Governance, FinOps) | CIO | Enabling | CIO; CEO; Finance | 3 | 77 |
+| 10 | Integration & API Platform | IAP | Platform | All product teams | 0 | 0 |
+| 11 | Cloud Infrastructure & SRE | INFRA | Platform | All product teams | 3 | 116 |
+| 12 | Cybersecurity, Privacy & OT Security | SEC | Platform + enabling | All product teams; DPO; Internal Audit | 3 | 72 |
+| 13 | Data Platform & MDM | DP | Platform | All product teams; Strategy/CPM; Marketing | 7 | 210 |
+| 14 | Software Engineering Platform | SEP | Platform | Build squads (OMO, TPS); all product teams | 0 | 0 |
+| 15 | Field & End-User Services | FS | Platform | All 205 locations; 6,762 users | 1 | 24 |
+| | CIO Office (EA, Portfolio Governance, FinOps, Vendor Portfolio) | CIO | Enabling | CIO; CEO; Finance | 3 | 77 |
 | | **Platform + CIO subtotal** | | | | **17** | **499** |
 | | **Total** | | | | **188** | **5,364** |
 
@@ -121,7 +140,7 @@ consequences worth stating explicitly:
 | [VS-131](../01-model-company/workflows/VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | MSC | Supply Chain (Vendor Management) with Legal & Compliance |
 | [VS-182](../01-model-company/workflows/VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md) | B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations) | MSC | Merchandising with Trade/Account Management |
 
-### 4.2 Make & Move (19 VS → all WLI)
+### 4.2 Make & Move (19 VS → 17 WLI, 2 TPS)
 
 | VS | Value Stream | Team | Business Process Owner |
 |---|---|---|---|
@@ -131,7 +150,7 @@ consequences worth stating explicitly:
 | [VS-32](../01-model-company/workflows/VS-32-returns-reverse-logistics/README.md) | Returns & Reverse Logistics | WLI | DC Operations with Store Operations |
 | [VS-56](../01-model-company/workflows/VS-56-third-party-delivery-partner/README.md) | Third-Party Delivery Partner Management | WLI | Fleet & Logistics |
 | [VS-61](../01-model-company/workflows/VS-61-fuel-fleet-cost-management/README.md) | Fuel & Fleet Cost Management | WLI | Fleet & Logistics |
-| [VS-74](../01-model-company/workflows/VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | WLI | Fleet & Logistics |
+| [VS-74](../01-model-company/workflows/VS-74-contractor-jobsite-delivery/README.md) | Professional Contractor Job Site Delivery | TPS | Fleet & Logistics |
 | [VS-81](../01-model-company/workflows/VS-81-cash-in-transit-vault-armored/README.md) | Cash-in-Transit, Vault & Armored Car Operations | WLI | Treasury with Loss Prevention |
 | [VS-90](../01-model-company/workflows/VS-90-damage-claims-freight-recovery/README.md) | Damage, Claims & Freight Recovery Management | WLI | Fleet & Logistics |
 | [VS-92](../01-model-company/workflows/VS-92-kitting-bundling-build-to-order-assembly/README.md) | Kitting, Bundling & Build-to-Order Assembly Operations | WLI | DC Operations |
@@ -139,13 +158,13 @@ consequences worth stating explicitly:
 | [VS-110](../01-model-company/workflows/VS-110-freight-procurement-carrier-management-and-freight-audit/README.md) | Freight Procurement, Carrier Management & Freight Audit | WLI | Fleet & Logistics |
 | [VS-111](../01-model-company/workflows/VS-111-packaging-pallet-and-returnable-transport-item-management/README.md) | Packaging, Pallet & Returnable Transport Item (RTI) Management | WLI | DC Operations |
 | [VS-136](../01-model-company/workflows/VS-136-supply-chain-network-design-multi-echelon-inventory-optimization-flow-engineering/README.md) | Supply Chain Network Design, Multi-Echelon Inventory Optimization & Flow Engineering | WLI | VP Supply Chain |
-| [VS-143](../01-model-company/workflows/VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | WLI | Fleet & Logistics |
+| [VS-143](../01-model-company/workflows/VS-143-bulky-white-goods-delivery-installation-haul-away-and-recycling/README.md) | Bulky & White-Goods Delivery, Installation, Haul-Away & Recycling Operations | TPS | Fleet & Logistics |
 | [VS-155](../01-model-company/workflows/VS-155-trade-in-buy-back-and-certified-pre-owned-product-resale/README.md) | Trade-In, Buy-Back & Certified Pre-Owned Product Resale | WLI | Store Operations |
 | [VS-180](../01-model-company/workflows/VS-180-disaster-relief-supply-chain-logistics-and-humanitarian-aid-coordination/README.md) | Disaster Relief Supply Chain Logistics & Humanitarian Aid Coordination | WLI | VP Supply Chain |
 | [VS-191](../01-model-company/workflows/VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md) | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | WLI | Fleet & Logistics |
 | [VS-192](../01-model-company/workflows/VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | WLI | Fleet & Logistics |
 
-### 4.3 Sell & Serve (46 VS → 20 SSP, 26 CCP)
+### 4.3 Sell & Serve (46 VS → 20 SSP, 24 CCP, 1 OMO, 1 TPS)
 
 | VS | Value Stream | Team | Business Process Owner |
 |---|---|---|---|
@@ -166,14 +185,14 @@ consequences worth stating explicitly:
 | [VS-53](../01-model-company/workflows/VS-53-warranty-guarantee-management/README.md) | Warranty & Guarantee Management | CCP | Customer Service |
 | [VS-55](../01-model-company/workflows/VS-55-store-planogram-space-optimization/README.md) | Store Planogram & Space Optimization | SSP | Merchandising (Assortment & Space) |
 | [VS-58](../01-model-company/workflows/VS-58-coupon-digital-promotions/README.md) | Coupon & Digital Promotions Management | CCP | Marketing |
-| [VS-60](../01-model-company/workflows/VS-60-omnichannel-order-routing/README.md) | Omnichannel Order Routing & Fulfillment Orchestration | CCP | Digital Commerce with Supply Chain |
+| [VS-60](../01-model-company/workflows/VS-60-omnichannel-order-routing/README.md) | Omnichannel Order Routing & Fulfillment Orchestration | OMO | Digital Commerce with Supply Chain |
 | [VS-62](../01-model-company/workflows/VS-62-product-sample-display-management/README.md) | Product Sample & Display Management | SSP | Merchandising |
 | [VS-63](../01-model-company/workflows/VS-63-store-communication-task-management/README.md) | Store Communication & Task Management | SSP | Store Operations |
 | [VS-65](../01-model-company/workflows/VS-65-ecommerce-marketplace-integration/README.md) | E-Commerce Marketplace Integration | CCP | Digital Commerce |
 | [VS-66](../01-model-company/workflows/VS-66-customer-project-design-services/README.md) | Customer Project & Design Services | CCP | Trade/Account Management |
 | [VS-70](../01-model-company/workflows/VS-70-solar-renewable-energy/README.md) | Solar & Renewable Energy Product Operations | CCP | Merchandising |
 | [VS-75](../01-model-company/workflows/VS-75-digital-engagement-app/README.md) | Digital Engagement & Mobile App Operations | CCP | Digital Commerce |
-| [VS-77](../01-model-company/workflows/VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | CCP | Trade/Account Management |
+| [VS-77](../01-model-company/workflows/VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | TPS | Trade/Account Management |
 | [VS-78](../01-model-company/workflows/VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | CCP | Merchandising |
 | [VS-82](../01-model-company/workflows/VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | CCP | Trade/Account Management |
 | [VS-95](../01-model-company/workflows/VS-95-marketplace-operator-third-party-seller/README.md) | Marketplace Operator & Third-Party Seller Management | CCP | Digital Commerce |
@@ -340,16 +359,19 @@ consequences worth stating explicitly:
 | Team | VS | Workflows |
 |---|---|---|
 | MSC | 15 (§4.1) + 1 (VS-117) | 485 |
-| WLI | 19 (§4.2) + 3 (VS-87, VS-89, VS-114) | 571 |
+| WLI | 17 (§4.2) + 3 (VS-87, VS-89, VS-114) | 523 |
 | SSP | 20 (§4.3) + 1 (VS-59) + 3 (VS-23, VS-85, VS-147) + 1 (VS-151) | 873 |
-| CCP | 26 (§4.3) + 1 (VS-146) | 786 |
+| CCP | 24 (§4.3) + 1 (VS-146) | 738 |
 | FIN | 29 (§4.4) + 1 (VS-86) | 798 |
 | CORP | 12 (§4.6) + 22 (§4.7) + 1 (VS-115) | 915 |
 | PEO | 16 (§4.5) | 437 |
+| OMO | 1 (VS-60, from §4.3) | 24 |
+| TPS | 2 (§4.2: VS-74, VS-143) + 1 (§4.3: VS-77) | 72 |
 | INFRA | 2 (VS-26, VS-69) + 1 (VS-27) | 116 |
 | SEC | 2 (VS-91, VS-161) + 1 (VS-190) | 72 |
 | DP | 2 (VS-33, VS-133) + 5 (VS-28, VS-29, VS-126, VS-128, VS-137) | 210 |
 | FS | 1 (VS-99) | 24 |
+| SEP | 0 (build-enablement platform for OMO/TPS) | 0 |
 | CIO Office | 3 (VS-30, VS-113, VS-135) | 77 |
 | **Total** | **171 + 17 = 188** | **4,865 + 499 = 5,364** |
 
@@ -357,19 +379,42 @@ consequences worth stating explicitly:
 
 ## 5. Product-Team Membership & Roles
 
-### 5.1 Standard domain-team shape
+### 5.1 Domain-team shapes — three archetypes
 
-Every domain team (MSC, WLI, SSP, CCP, FIN, CORP, PEO) is built on the same 6-role core. IT
-headcount figures below are FTE; §9 sizes each team.
+Sourcing decisions shape domain teams into three archetypes
+([`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md) §5):
+**configure** teams (MSC, FIN, PEO, CORP), **buy-and-integrate** teams (WLI, SSP, CCP), and
+**build** squads (OMO, TPS). All three start from the same 6-role core below; the
+buy-and-integrate teams add the Vendor Product Manager role, and build squads are staffed
+per the squad table at the end of this section. IT headcount figures below are FTE; §9 sizes
+each team.
 
 | Member | IT HC | Reports to | Role & Responsibilities |
 |---|---|---|---|
 | **IT Product Owner (PO)** | 1 | CIO (solid); product-domain exec (dotted) | Single accountable owner of the product backlog, roadmap, and budget. Prioritizes enhancements, defects, regulatory changes, and tech debt. Owns product KPIs (§8.3). Represents the product at the Product Council. Manages the vendor relationship for the product's ERP modules (escalations, roadmap influence, release intake). |
 | **Product/Process Architect** | 1 | Head of EA (solid); team PO (dotted) | Owns end-to-end process design across the team's process areas; enforces fit-to-standard; maintains the team's portion of the enterprise architecture (VS-113); chairs the team's design reviews; prepares customization-exception requests for the Architecture Review Board. |
-| **ERP Functional Analysts / Configurators** | 2–4 | Team PO | Day-to-day configuration: approval matrices, pricing rules, WMS parameters, tax setups, workflow conditions. Analyze incidents that are configuration defects. Write functional specifications for integrations and reports. Each analyst owns named sub-domains (e.g., AP vs AR vs tax inside FIN). |
+| **ERP Functional Analysts / Configurators** | 2–4 | Team PO | Day-to-day configuration of the ERP core (and, in buy-and-integrate teams, the best-of-breed products' configuration surfaces): approval matrices, pricing rules, warehouse/transport parameters, tax setups, workflow conditions. Analyze incidents that are configuration defects. Write functional specifications for integrations and reports. Each analyst owns named sub-domains (e.g., AP vs AR vs tax inside FIN). |
 | **Commerce/App Engineer** (CCP only) | 1 | Team PO | Builds and maintains the custom edge on top of the SaaS ecommerce engine — storefront theming, mobile-app releases, marketplace connectors — under platform standards (IAP APIs, CI/CD). |
 | **Data & Reporting Analyst** | 1 | Team PO (solid); DP lead (dotted) | Product-specific dashboards and reports on the DP semantic layer; data-quality checks on the product's master-data domains; close-cycle reporting (e.g., FIN's 5-working-day close pack). |
 | **QA & Release Analyst** | 1 | Team PO | Owns the regression suite (every Tier-1 workflow in the domain covered), UAT coordination with business SMEs, release notes, cutover checklists, and post-release verification. |
+
+> **Buy-and-integrate teams (WLI, SSP, CCP) add:** a **Vendor Product Manager** (1–2 per team,
+> one per best-of-breed product — WLI: WMS and TMS; SSP: store workforce management; CCP:
+> field service management) who owns the vendor contract/SLA, roadmap intelligence,
+> release intake, upgrade currency, and the TPRM (VS-161) liaison; plus added
+> functional-analyst depth for the vendor products' configuration surface.
+
+**Build-squad shape (OMO, TPS).** The two in-house products are delivered by stable software
+squads on the SEP paved road (sourcing model §5–§7):
+
+| Member | IT HC | Reports to | Role & Responsibilities |
+|---|---|---|---|
+| **Product Manager (PM)** | 1 | CIO (solid); product-domain exec (dotted) | The build-side equivalent of the IT PO: outcomes, discovery, roadmap, and budget; pairs with the BPO like any domain PO; owns product KPIs (§8.3) and delivery trade-offs. |
+| **Tech Lead** | 1 | Head of Engineering (solid); squad PM (dotted) | Technical design authority for the product; chairs squad design reviews; holds the product's seat in the architect community; prepares ARB records for the product. |
+| **Software Engineers** | 3–4 | Tech Lead | Build and run the product: implementation, code review, P1/P2 on-call, telemetry, and the FinOps-tagged cost of the services they own. |
+| **QA Automation Engineer** | 1 | Squad PM | Automated acceptance and contract tests, regression harness, ring-release verification — the build twin of the configure teams' QA & release analyst. |
+| **UX / Product Designer** | 0.5 (SEP pool) | Head of Engineering | Flows, screens, and usability for the product's internal and customer-facing surfaces. |
+| *Dotted:* IAP engineer (0.4) + DP data analyst | — | — | Matrixed integration-touchpoint owner and data-contract steward, same matrix rules as configure teams (§5.4). |
 
 ### 5.2 Business-side membership (not IT headcount)
 
@@ -379,7 +424,7 @@ headcount figures below are FTE; §9 sizes each team.
 | **Business SMEs** | Named per sub-domain (a buyer, a DC manager, a store manager, an AP clerk, a payroll officer) | ~5–10% each, 2–4 people per team | Consulted continuously on design; participate in UAT as first users; validate training content; feed pain points into the backlog. |
 | **Change & Training Lead** | Shared pool under HR (Training) with CIO Office funding | ~0.25–0.5 FTE per team | Training curriculum and materials per release, adoption metrics, floor-walking for major rollouts — essential for 6,762 users of varying tech literacy across the archipelago. |
 
-> These roles sit in their own §3.3 departments and are **not** counted in the 80-FTE IT
+> These roles sit in their own §3.3 departments and are **not** counted in the 115-FTE IT
 > sizing (§9). Their time commitments are agreed in each BPO's objectives, reviewed at the
 > Quarterly Business Review.
 
@@ -387,20 +432,23 @@ headcount figures below are FTE; §9 sizes each team.
 
 | Platform Team | Members (§9) | Role & Responsibilities |
 |---|---|---|
-| **Integration & API Platform (IAP)** | Platform lead; 3 integration engineers; 1 events/monitoring engineer | Owns the integration backbone all domain teams consume: middleware/iPaaS, event streaming (near-real-time POS-to-ERP inventory sync), API standards and contracts, error handling and replay, integration monitoring dashboards. Owns the ~10 external integration clusters of `data-volumes-and-integrations.md` (payment gateways, banks, BIR eFPS, SSS/PhilHealth/Pag-IBIG, delivery partners, loyalty engine, WMS RF, supplier portal). Most engineering-heavy team. |
+| **Integration & API Platform (IAP)** | Platform lead; 5 integration engineers; 1 events/monitoring engineer; 1 API-contract engineer; 1 integration-support engineer | Owns the integration backbone all product teams consume: middleware/iPaaS, event streaming (near-real-time POS-to-ERP inventory sync), API standards and contracts, error handling and replay, integration monitoring dashboards. Under the hybrid landscape IAP additionally owns the **canonical event/API contract catalog** with consumer-driven contract testing for every product-to-product flow (best-of-breed WMS/TMS/WFM/FSM and in-house OMO/TPS included) — the single-integration-path rule of the sourcing model. Owns the ~10 external integration clusters of `data-volumes-and-integrations.md` (payment gateways, banks, BIR eFPS, SSS/PhilHealth/Pag-IBIG, delivery partners, loyalty engine, WMS RF, supplier portal). Most engineering-heavy team. |
 | **Cloud Infrastructure & SRE (INFRA)** | Lead; 2 cloud engineers; 1 network engineer; 1 SRE; 1 DBA/SaaS administrator | Uptime (POS 99.9%, back-office 99.5%), performance (POS transaction < 3s; standard reports < 30s), environment management, patch intake, DR/BCP execution (typhoon resilience, VS-26/VS-69), capacity planning for the 1,000–1,500 peak concurrent users (§15.3). |
-| **Cybersecurity, Privacy & OT Security (SEC)** | Lead; 1 security engineer; 1 security analyst; 2 GRC/controls analysts | SOC liaison and monitoring (with managed-SOC partner), vulnerability management, penetration-test remediation, access reviews and SOD enforcement, RA 10173 privacy program support with the DPO (VS-91), OT/retail-tech security for POS terminals, RF guns, CCTV (VS-190), third-party risk assessments (VS-161). The GRC/controls analysts form the **enabling cell** that coordinates control design, test evidence, and audit responses across all product teams against the 808-control register. |
-| **Data Platform & MDM (DP)** | Lead; 2 data engineers; 1 MDM stewardship lead; 1 BI platform administrator | Data warehouse and semantic layer; the item/customer/vendor/employee master-data platforms (55,000-SKU item master; ~600,000 loyalty members); CDP/identity resolution (VS-126); PIM/DAM (VS-137); AI/ML governance tooling (VS-128); process-mining platform (VS-133). Domain data analysts build on DP's certified layer; DP enforces the shared-object change process (§6.3). |
+| **Cybersecurity, Privacy & OT Security (SEC)** | Lead; 2 security engineers; 1 security analyst; 2 GRC/controls analysts; 1 TPRM analyst | SOC liaison and monitoring (with managed-SOC partner), vulnerability management, penetration-test remediation, access reviews and SOD enforcement, RA 10173 privacy program support with the DPO (VS-91), OT/retail-tech security for POS terminals, RF guns, CCTV (VS-190), third-party risk assessments (VS-161). The second security engineer pairs with SEP's AppSec engineer on SDLC gates for built products; the TPRM analyst carries best-of-breed vendor tiering and annual reassessments. The GRC/controls analysts form the **enabling cell** that coordinates control design, test evidence, and audit responses across all product teams against the 808-control register. |
+| **Data Platform & MDM (DP)** | Lead; 3 data engineers; 2 MDM stewardship leads; 1 BI platform administrator | Data warehouse and semantic layer; the item/customer/vendor/employee master-data platforms (55,000-SKU item master; ~600,000 loyalty members); CDP/identity resolution (VS-126); PIM/DAM (VS-137); AI/ML governance tooling (VS-128); process-mining platform (VS-133). Under the hybrid landscape the second steward carries dual-record harmonization (e.g., WMS execution data vs the ERP inventory ledger) and the data-contract tests built products publish against (§6.3; sourcing model §7). Domain data analysts build on DP's certified layer; DP enforces the shared-object change process (§6.3). |
+| **Software Engineering Platform (SEP)** | Head of Engineering; 2 DevEx engineers; 1 AppSec engineer; 1 QA automation lead; 1 UX/product designer; 1 build SRE | The paved road for in-house products (OMO, TPS): golden-path templates, CI/CD, feature flags and telemetry, SAST/DAST/dependency/SBOM security gates, the shared test and contract-testing harness, ring-deployment infrastructure, production-readiness reviews, and the engineering career track. Full definition in [`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md) §6. Treats build squads as customers; nothing ships off the paved road without an ARB-recorded exception. |
 | **Field & End-User Services (FS)** | Supervisor; 2 helpdesk L2 analysts; 1 ITAM administrator; 5 regional field technicians (one per major island region: Mindanao, Visayas, South Luzon, Metro Manila, North/Central Luzon) | L1 (outsourced contact center) and L2 support for 200 stores, 4 DCs, and HQ; hardware lifecycle for the 600-terminal POS estate, RF guns, biometric devices, and printers (VS-99); store-visit SLAs and storm-season readiness stock. This team closes the archipelago field-support gap flagged in `headcount-reality-check.md` §3.2. |
-| **CIO Office** | Head of Enterprise Architecture; 1 portfolio-governance lead; 1 FinOps/TBM analyst | Chairs the Architecture Review Board (VS-113); runs the Product Council secretariat and portfolio kanban; IT financial management and cloud FinOps (VS-135); innovation pipeline governance (VS-30). The CIO is counted in the Executive Office (§11.1), not in IT headcount. |
+| **CIO Office** | Head of Enterprise Architecture; 1 portfolio-governance lead; 1 FinOps/TBM analyst; 1 vendor-portfolio analyst | Chairs the Architecture Review Board (VS-113); runs the Product Council secretariat and portfolio kanban; IT financial management and cloud FinOps (VS-135); innovation pipeline governance (VS-30). The vendor-portfolio analyst maintains the Capability Sourcing Register and the best-of-breed contract/exit-reserve records (sourcing model §4, §8). The CIO is counted in the Executive Office (§11.1), not in IT headcount. |
 
 ### 5.4 Role definitions (cross-team reference)
 
 | Role | Definition |
 |---|---|
 | **Accountable (single-wielder) roles** | Each product has exactly one IT PO and one BPO. Each platform has exactly one lead. Single-point accountability mirrors the "single accountable owner" fix applied to VS-127. |
-| **Matrixed integration analyst** | IAP integration engineers are matrixed ~0.4 FTE to each domain team as its touchpoint owner; they sit in domain ceremonies and hold the domain's integration health. |
-| **Architect community** | The 7 product architects plus IAP/INFRA/SEC/DP leads form the Architecture Review Board quorum, chaired by the Head of EA. |
+| **Matrixed integration analyst** | IAP integration engineers are matrixed ~0.4 FTE to each domain team as its touchpoint owner; they sit in domain ceremonies and hold the domain's integration health. Build squads get the same matrixed touchpoint owner. |
+| **Vendor Product Manager** | One per best-of-breed product (WLI ×2: WMS, TMS; SSP ×1: WFM; CCP ×1: FSM). Contract/SLA owner, vendor roadmap intelligence, release-intake owner, TPRM liaison, upgrade-currency KPI owner (sourcing model §8). |
+| **Engineering career track** | All software engineers, tech leads, DevEx, AppSec, build-SRE and the UX pool sit on one track under the Head of Engineering (SEP) — hired centrally, staffed to squads, never squad-owned. Bus-factor ≥ 2 per service is a standing rule (sourcing model §11). |
+| **Architect community** | The domain architects (the MSC/WLI/SSP/CCP/FIN/PEO product architects — FIN's covering CORP — plus the OMO/TPS tech leads) and the IAP/INFRA/SEC/DP/SEP leads form the Architecture Review Board quorum, chaired by the Head of EA. |
 | **Escalation path** | L1 (outsourced) → FS L2 → domain functional analyst (config defects) or IAP (integration) or INFRA (platform) → PO → Product Council for prioritization conflicts. |
 
 ---
@@ -418,6 +466,7 @@ RACI key per [`WORKFLOW-FORMAT-GUIDE.md`](../01-model-company/workflows/WORKFLOW
 | Process design & fit-to-standard decision | C | A | R | R | I | C |
 | Configuration change (within own domain) | A | C | C | R | C | I |
 | Customization-exception request | R | C | R | C | I | A |
+| Capability sourcing decision (configure/buy/build) | R | C | R | C | I | C (SIB gate; Council ratifies >PHP 25M TCO) |
 | UAT execution | R | A | I | C | R | I |
 | Regression-pack maintenance | I | I | C | C | A/R | I |
 | Production release (monthly train) | A | C | I | C | R | I |
@@ -434,6 +483,8 @@ RACI key per [`WORKFLOW-FORMAT-GUIDE.md`](../01-model-company/workflows/WORKFLOW
 | Vendor ERP release intake & regression | I | A/R | R | C | C |
 | DR exercise (annual, pre-typhoon season) | R | C | A/R | C | I |
 | New-store technology commissioning | R | A (SSP) | C | C | I |
+| P1 on a bought product (vendor-side defect) | R | A | C | I | I |
+| P1 on a built product (code defect; squad on-call) | R | A | R | C | I |
 
 ### 6.3 Shared-object changes & controls
 
@@ -449,15 +500,27 @@ RACI key per [`WORKFLOW-FORMAT-GUIDE.md`](../01-model-company/workflows/WORKFLOW
 > validates test evidence, and Internal Audit is informed through the monthly Tier & Control
 > Board (§7).
 
+### 6.4 Build-squad delivery (OMO, TPS)
+
+| Activity | Squad PM | Tech Lead | Engineers | QA Automation | SEP | ARB |
+|---|---|---|---|---|---|---|
+| Discovery & outcome roadmap | A/R | C | C | C | I | I |
+| Technical design & architecture record | C | A/R | R | C | C | C |
+| Code, peer review & merge to trunk | I | A | R | C | C (golden path) | I |
+| Security gate before ring expansion | I | R | R | R | A (AppSec may block) | I |
+| Ring deployment (internal → canary → fleet) | C | A | R | R | C | I |
+| Production on-call, incident & rollback | C | A | R | C | C | I |
+
 ---
 
 ## 7. Governance Bodies
 
 | Body | Cadence | Chair | Members | Decision Rights |
 |---|---|---|---|---|
-| **Product Council** | Monthly | CIO | 7 domain IT POs; BPOs or executive delegates (CFO/COO/CMO/CHRO offices); Head of EA; FinOps analyst (secretariat) | Capacity allocation between products (funding runs, not projects); roadmap approval above PHP 5M; cross-product priority conflicts; product KPI review; new-product creation or team split/merge recommendations |
-| **Architecture Review Board (ARB)** | Bi-weekly | Head of EA | 7 product architects; IAP, INFRA, SEC, DP leads | Customization exceptions; new applications, integrations, or data pipelines; retirement of capabilities; waivers to the unified-ERP single-vendor principle (rare, CEO-noted) |
-| **Product Sync** | Weekly | Rotating PO | Domain POs; platform leads; FS supervisor | Dependency sequencing; release-window coordination; matrixed-resource booking; incident-trend review |
+| **Product Council** | Monthly | CIO | 9 domain POs/PMs; BPOs or executive delegates (CFO/COO/CMO/CHRO offices); Head of EA; FinOps analyst with vendor-portfolio analyst (secretariat) | Capacity allocation between products (funding runs, not projects); roadmap approval above PHP 5M; cross-product priority conflicts; product KPI review; new-product creation or team split/merge recommendations; ratifies Sourcing & Investment Board recommendations above PHP 25M 3-year TCO |
+| **Sourcing & Investment Board (SIB)** | Monthly + on demand | CIO | Head of EA (assessment lead); affected IT PO/PM and BPO; FinOps analyst; CFO delegate; SEC lead (TPRM); Head of Engineering (build decisions) | Configure/buy/build routing for every capability (default order configure → buy → build); maintains the Capability Sourcing Register; recommends >PHP 25M-TCO decisions to the Product Council; core-tier waiver recommendations to the CEO (sourcing model §3) |
+| **Architecture Review Board (ARB)** | Bi-weekly | Head of EA | Domain architects (incl. the OMO/TPS tech leads); IAP, INFRA, SEC, DP, SEP leads | Customization exceptions; new applications, integrations, or data pipelines; architecture opinions on sourcing proposals; retirement of capabilities; waivers removing a capability from the ERP core (rare, CEO-noted; core guardrail per the sourcing model §2) |
+| **Product Sync** | Weekly | Rotating PO | Domain POs/PMs; platform leads (IAP, INFRA, SEC, DP, SEP); FS supervisor | Dependency sequencing; release-window and contract-change coordination across the ERP train, vendor release intake, and build-squad rings; matrixed-resource booking; incident-trend review |
 | **Tier & Control Board** | Monthly | SEC GRC lead (senior analyst) | Domain QA/release analysts; Internal Audit liaison; Legal & Compliance liaison | Sign-off on changes touching Tier-1 workflows; audit-finding remediation tracking; annual control-test calendar against the 808-control register |
 | **Quarterly Business Review (QBR)** | Quarterly | CIO with CEO/CFO/COO | Executive team; POs presenting their products | Outcome review against KPIs; funding continuation; BPO time-commitment health; structural adjustments (headcount reallocation between products) |
 
@@ -475,17 +538,27 @@ Risk, which retains its Board Audit Committee reporting line per `model-company-
 |---|---|
 | Continuous | Backlog refinement with BPO; incident and problem management; P2/P3 fixes |
 | 2-week | Team build cycles: configuration, integration, and report work items; demo to BPO/SMEs |
-| Monthly | Cross-product release train (see §8.2); Product Council; Tier & Control Board |
+| Monthly | ERP-core release train + best-of-breed vendor-release intake (see §8.2); Product Council; Sourcing & Investment Board; Tier & Control Board |
 | Quarterly | Roadmap re-plan fed by S&OP/IBP outputs and seasonal calendar; QBR; funding reallocation |
 | Annual | IT plan aligned to corporate budget; DR exercise before typhoon season; penetration test; control-test calendar refresh |
 
-### 8.2 Release train
+### 8.2 Release cadences by archetype
 
-A single monthly cross-product release window, sequenced by Product Sync and executed by the
-QA/release analysts, **avoiding the bi-monthly sale-event windows and the December peak**
-(§13.2 seasonal calendar). Vendor ERP releases are intake-tested by INFRA and domain teams in a
-staging ring before the train. Each release carries: regression evidence (Tier-1 coverage
-mandatory), release notes for BPOs, updated training content, and a rollback plan.
+The single monthly cross-product train of v1.x is replaced by per-archetype cadences, still
+sequenced by Product Sync and **avoiding the bi-monthly sale-event windows and the December
+peak** (§13.2 seasonal calendar):
+
+- **Configure (ERP core):** the monthly release train as in v1.x, executed by the QA/release
+  analysts. Each release carries: regression evidence (Tier-1 coverage mandatory), release
+  notes for BPOs, updated training content, and a rollback plan. Vendor ERP releases are
+  intake-tested by INFRA and domain teams in a staging ring before the train.
+- **Buy (best-of-breed):** vendor releases land in the owning team's staging ring and must
+  pass the domain regression pack (Tier-1 mandatory) and the Vendor PM's intake checklist
+  before production. A team may defer a vendor release one cycle, never two
+  (upgrade-currency KPI, §8.3).
+- **Build (OMO, TPS):** continuous delivery on the SEP ring model (internal → canary
+  stores/DCs → fleet) behind feature flags, with SLO-burn rollback gates (sourcing model §7),
+  independent of the monthly train.
 
 ### 8.3 Product KPIs (headline set)
 
@@ -498,11 +571,14 @@ mandatory), release notes for BPOs, updated training content, and a rollback pla
 | FIN | Month-end close ≤ 5 working days; 3-way-match automation rate; BIR filing timeliness (zero penalties) |
 | PEO | Payroll accuracy and on-time runs (semi-monthly, 5 entities); statutory remittance accuracy |
 | CORP | Permit/renewal tracking completeness; GRC platform adoption; audit-finding closure rate |
-| IAP | Integration availability; event-streaming latency (inventory sync near-real-time, < 30s per POS-013); contract coverage |
+| OMO | Routing decision latency; split-order/mixed-basket success rate; order-event end-to-end latency; DORA four (deployment frequency, lead time, MTTR, change-failure rate) |
+| TPS | On-time job-site/phased delivery; staging schedule adherence; technician-app adoption; DORA four |
+| IAP | Integration availability; event-streaming latency (inventory sync near-real-time, < 30s per POS-013); contract coverage; contract-test pass rate across the product-to-product catalog |
 | INFRA | POS 99.9% / back-office 99.5%; report generation < 30s; DR RTO/RPO met in exercises |
 | SEC | Vulnerability SLA compliance; access-review completion; privacy DSAR turnaround; zero material incidents |
 | DP | Master-data quality scores (item/customer/vendor); dashboard freshness; AI-model governance coverage |
 | FS | First-contact resolution; regional store-visit SLA; POS terminal MTTR; asset-register accuracy |
+| SEP | Paved-road adoption (share of build traffic on the golden path = 100% minus ARB-recorded exceptions); pipeline availability; AppSec gate pass rate; squad DORA attainment (enablement) |
 
 ### 8.4 Funding model
 
@@ -513,6 +589,12 @@ mandatory), release notes for BPOs, updated training content, and a rollback pla
   team (e.g., BIR e-invoicing readiness, eFPS form changes), protecting team capacity plans.
 - **Innovation fund** (VS-30): competitive bids presented at the Product Council; prototypes
   run through the ARB before production.
+- **Sourcing & exit reserves (CIO Office):** a central sourcing reserve funds transitions
+  (evaluations, migrations, exits) so no team's steady-state capacity is cannibalized by a
+  sourcing move; each best-of-breed product accrues a funded exit reserve (sourcing model §9).
+- **Capitalization of built products:** qualifying in-house development costs are assessed
+  for PFRS/IAS 38 capitalization quarterly with FIN (Controller) — FIN owns the accounting
+  policy, the squads own the evidence trail.
 - **FinOps discipline** (VS-135): the FinOps analyst reports cloud/SaaS spend per product at
   every QBR, tagging 100% of spend to products.
 
@@ -520,53 +602,66 @@ mandatory), release notes for BPOs, updated training content, and a rollback pla
 
 ## 9. Sizing & Headcount Reconciliation
 
-### 9.1 Steady-state design (80 IT FTE)
+### 9.1 Steady-state design (115 IT FTE)
 
-| Team | PO | Architect | Functional Analysts | Engineer | Data Analyst | QA/Release | Platform Roles | Total |
-|---|---|---|---|---|---|---|---|---|
-| MSC | 1 | 1 | 3 | — | 1 | 1 | — | 7 |
-| WLI | 1 | 1 | 3 | — | 1 | 1 | — | 7 |
-| SSP | 1 | 1 | 4 | — | 1 | 1 | — | 8 |
-| CCP | 1 | 1 | 2 | 1 | 1 | 1 | — | 7 |
-| FIN | 1 | 1 | 4 | — | 1 | 1 | — | 8 |
-| CORP | 1 | — (¹) | 2 | — | — (¹) | 1 | — | 4 |
-| PEO | 1 | 1 | 2 | — | 1 | 1 | — | 6 |
-| **Domain subtotal** | 7 | 6 | 20 | 1 | 6 | 7 | — | **47** |
-| IAP | — | — | — | — | — | — | lead 1 + integration 3 + events 1 | 5 |
-| INFRA | — | — | — | — | — | — | lead 1 + cloud 2 + network 1 + SRE 1 + DBA 1 | 6 |
-| SEC | — | — | — | — | — | — | lead 1 + engineer 1 + analyst 1 + GRC 2 | 5 |
-| DP | — | — | — | — | — | — | lead 1 + data eng 2 + MDM 1 + BI admin 1 | 5 |
-| FS | — | — | — | — | — | — | supervisor 1 + L2 2 + ITAM 1 + field techs 5 | 9 |
-| CIO Office | — | — | — | — | — | — | Head of EA 1 + portfolio 1 + FinOps 1 | 3 |
-| **Platform + CIO subtotal** | | | | | | | | **33** |
-| **Total** | | | | | | | | **80** |
+| Team | PO/PM | Architect/TL | Functional Analysts | Engineers | Data Analyst | QA/Release | Vendor PM | Platform Roles | Total |
+|---|---|---|---|---|---|---|---|---|---|
+| MSC | 1 | 1 | 3 | — | 1 | 1 | — | — | 7 |
+| WLI | 1 | 1 | 4 | — | 1 | 1 | 2 | — | 10 |
+| SSP | 1 | 1 | 4 | — | 1 | 1 | 1 | — | 9 |
+| CCP | 1 | 1 | 2 | 1 | 1 | 1 | 1 | — | 8 |
+| FIN | 1 | 1 | 4 | — | 1 | 1 | — | — | 8 |
+| CORP | 1 | — (¹) | 2 | — | — (¹) | 1 | — | — | 4 |
+| PEO | 1 | 1 | 2 | — | 1 | 1 | — | — | 6 |
+| OMO | 1 | 1 (TL) | — | 4 | — (²) | 1 | — | — | 7 |
+| TPS | 1 | 1 (TL) | — | 4 | — (²) | 1 | — | — | 7 |
+| **Domain subtotal** | 9 | 8 | 21 | 9 | 6 | 9 | 4 | — | **66** |
+| IAP | — | — | — | — | — | — | — | lead 1 + integration 5 + events 1 + API-contract 1 + support 1 | 9 |
+| INFRA | — | — | — | — | — | — | — | lead 1 + cloud 2 + network 1 + SRE 1 + DBA 1 | 6 |
+| SEC | — | — | — | — | — | — | — | lead 1 + security eng 2 + analyst 1 + GRC 2 + TPRM 1 | 7 |
+| DP | — | — | — | — | — | — | — | lead 1 + data eng 3 + MDM stewardship 2 + BI admin 1 | 7 |
+| SEP | — | — | — | — | — | — | — | Head of Eng 1 + DevEx 2 + AppSec 1 + QA-auto lead 1 + designer 1 + build-SRE 1 | 7 |
+| FS | — | — | — | — | — | — | — | supervisor 1 + L2 2 + ITAM 1 + field techs 5 | 9 |
+| CIO Office | — | — | — | — | — | — | — | Head of EA 1 + portfolio 1 + FinOps 1 + vendor-portfolio 1 | 4 |
+| **Platform + CIO subtotal** | | | | | | | | | **49** |
+| **Total** | | | | | | | | | **115** |
 
 > (¹) CORP is covered by the FIN architect (dotted line) and uses FIN/DP analysts for its
-> reporting needs; its GRC-tooling work is co-delivered with the SEC GRC cell.
+> reporting needs; its GRC-tooling work is co-delivered with the SEC GRC cell. (²) OMO and
+> TPS are staffed as build squads (§5.1); their data analysts are matrixed from DP and their
+> integration touchpoints from IAP. Steady state under the hybrid capability-sourcing model:
+> domain **66** + platform/CIO **49** = **66 + 49 = 115** IT FTE — up from the v1.x
+> unified-model 80, the increment being engineering mass (squads, SEP, IAP/SEC/DP expansion,
+> vendor product management).
 
 ### 9.2 Reconciliation to the current state and benchmarks
 
 | Reference | Figure | Source |
 |---|---|---|
 | Current IT department | 50 | `model-company-profile.md` §3.3 |
-| Gap-record need band | 65–80 | `headcount-reality-check.md` §3.2 (table row "Information Technology") |
+| Gap-record need band (pre-hybrid, single-vendor model) | 65–80 | `headcount-reality-check.md` §3.2 (table row "Information Technology") |
+| Hybrid-model need band (best-of-breed edges + in-house builds) | 65–130 | `headcount-reality-check.md` §3.2 amendment (2026-09-03) |
 | Industry benchmark | 100–168 (1.5–2.5% of 6,762 headcount); lean outsourced floor ~60–70 | `headcount-reality-check.md` §3.2 |
-| This design | 80 (top of the need band; below industry benchmark) | §9.1 |
+| This design, v1.x (unified model) | 80 | OM v1.x §9 |
+| This design, v2.0 (hybrid) | 115 | §9.1 |
 
-The design lands at the top of the gap-record band deliberately: the additional mass over the
-~60–70 lean floor is concentrated exactly where the gap record flagged failures — archipelago
-field coverage (FS), the integration backbone for near-real-time POS/ecommerce sync (IAP), and
-the security/privacy regulatory load (SEC). Remaining lean relative to the 100–168 benchmark
-is viable because the single-vendor SaaS model transfers DBA, OS, and availability operations
-to the ERP provider, and L1 support plus the 24/7 SOC are partner-operated.
+The hybrid design lands mid-benchmark. The +35 over the unified-model 80 is deliberate and
+concentrated exactly where the sourcing strategy creates permanent work: two build squads
+(+14), the SEP platform (+7), the integration backbone for a multi-product landscape
+(IAP +4), security engineering and TPRM for the vendor/software estate (SEC +2), data
+contracts and dual-record MDM stewardship (DP +2), and vendor product management in the buy
+domains (+4, net of configure-side relief). The v1.x argument that single-vendor SaaS
+transfers DBA, OS, and availability operations away still holds for the ERP core — which is
+why the design sits mid-benchmark and below the 130 ceiling of the hybrid band rather than
+at its top. L1 support and the 24/7 SOC remain partner-operated.
 
-### 9.3 Phased build-up (50 → 80)
+### 9.3 Phased build-up (50 → 115)
 
 | Phase | Focus | Net adds | End state |
 |---|---|---|---|
-| **Phase 0 — Reorganize (next 2 quarters)** | Stand up the 12 teams, name POs/BPOs, adopt single backlogs, Product Council/ARB/Product Sync cadence; fill IAP lead + INFRA lead + FS supervisor from existing staff | +3 | ~53 |
-| **Phase 1 — Field & integration first** | FS regional field technicians and L2; IAP integration engineers; SEC lead + engineer | +17 | ~70 |
-| **Phase 2 — Data & domain depth** | DP data engineers/MDM; remaining functional-analyst depth in SSP/FIN/MSC; second GRC analyst; FinOps analyst | +10 | 80 |
+| **Phase 0 — Reorganize & decide (next 2 quarters)** | Stand up the 16 teams (9 domain incl. the OMO/TPS squads, 6 platform incl. SEP, CIO Office), name POs/PMs/BPOs, adopt single backlogs, SIB/ARB/Product Council cadence; issue the first Capability Sourcing Register; SEP nucleus (Head of Engineering + 2 DevEx engineers); CIO Office vendor-portfolio analyst; first senior IAP integration engineer | +5 | ~55 |
+| **Phase 1 — Field, backbone & first build** | FS regional field technicians and L2 (the archipelago gap); INFRA to full strength; IAP build-out toward 9; SEC security engineering + TPRM analyst; DP data-contract steward; SEP completed (AppSec, QA-automation lead, designer, build-SRE); **OMO squad #1** — the order-orchestration MVP on the paved road | +35 | ~90 |
+| **Phase 2 — Buys, second build & depth** | Best-of-breed onboarding (WMS + TMS → WLI vendor PMs and analyst depth; WFM → SSP; FSM → CCP); **TPS squad #2**; remaining domain functional-analyst depth (MSC/SSP/FIN); IAP final engineer; FinOps analyst | +25 | 115 |
 
 ---
 
@@ -575,10 +670,16 @@ to the ERP provider, and L1 support plus the 24/7 SOC are partner-operated.
 - **Day-1 artifacts per team**: product charter (mission, KPIs, VS coverage from §4), current
   backlog seeded from the workflow gap analysis
   ([`workflow-gap-analysis.md`](../01-model-company/workflows/workflow-gap-analysis.md)),
-  named BPO/SME roster, regression inventory mapped to Tier-1 workflows.
+  named BPO/SME roster, regression inventory mapped to Tier-1 workflows. For build squads
+  additionally: architecture record, paved-road onboarding, SLOs and on-call runbook with a
+  scheduled production-readiness review. For buy domains additionally: vendor-product dossier
+  (contract, SLA, release calendar, TPRM tier, exit clause).
 - **Anti-patterns to avoid**: project-style exception lanes around the backlog; BPO delegated
   to a junior analyst (the BPO must be the process owner); customization approved outside the
-  ARB; domain teams building private integrations outside IAP; per-team data marts outside DP.
+  ARB; domain teams building private integrations outside IAP; per-team data marts outside DP
+  (the DP rule now extends to built products); buying without an exit reserve or a
+  Philippine-localization warranty; building what a vendor already does well; squads shipping
+  off the SEP paved road.
 - **Split/merge triggers** (reviewed at QBR): a team sustaining > 25% overflow demand for two
   consecutive quarters is a split candidate (first candidate if growth continues: SSP store
   execution vs store-adjacent services); a team below 60% utilization for two quarters is a
@@ -594,24 +695,28 @@ to the ERP provider, and L1 support plus the 24/7 SOC are partner-operated.
 | [`internal-controls-matrix.md`](../01-model-company/internal-controls-matrix.md) | 808-control register governed via the Tier & Control Board |
 | [`headcount-reality-check.md`](../01-model-company/headcount-reality-check.md) | §3.2 IT staffing gap record this sizing resolves |
 | [`erp-requirements.md`](../01-model-company/erp-requirements.md) | Capability requirements the products deliver |
-| [`technical-guidelines.md`](technical-guidelines.md) | Infrastructure, integration, and security reference underpinning the platform teams |
+| [`technical-guidelines.md`](technical-guidelines.md) | Infrastructure, integration, and security reference underpinning the platform teams; §5 multi-vendor sourcing-architecture reference |
+| [`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md) | The sourcing decision gate, Capability Sourcing Register, build-squad engineering standard, and SEP definition this v2.0 model is built on |
 | [`data-volumes-and-integrations.md`](../01-model-company/data-volumes-and-integrations.md) | Transaction volumes and integration touchpoints owned by IAP/INFRA |
 
 ---
 
-*Document Version: 1.1 | Date: 2026-09-02 | Consistency review #68: §5.3 IAP integration-cluster
-count trued to the canonical integration architecture (the `data-volumes-and-integrations.md`
-§2 diagram and §3 detail matrix carry **ten** external clusters; was stated one high), and the
-§8.2 release-train profile cross-reference re-pointed to **§13.2**, the Seasonal Calendar
-section (was §13.3, Promotional Strategy). This document is now under the permanent regression
-guard of `audit-model-docs.py` (validator Check 59). Prior v1.0 (2026-09-01): initial issue.
-Defines the 12-product IT operating
-model (7 stream-aligned domain teams + IAP/INFRA/SEC/DP/FS platform teams + CIO Office) with
-full 188-VS assignment (§4.9 reconciliation: 171 domain + 17 platform = 188 VS; 4,864 + 499 =
-5,363 workflows, matching the value-stream index grand totals), standard team membership and
-role definitions (§5), RACI (§6), governance bodies (§7), cadence/funding (§8), and an 80-FTE
-steady-state sizing (§9) reconciled to the §3.3 current IT headcount of 50, the
-`headcount-reality-check.md` §3.2 need band of 65–80, and the 100–168 industry benchmark —
-built up 50 → 80 in three phases. All figures quoted from `model-company-profile.md`,
-`headcount-reality-check.md`, and `workflows/value-stream-index.md` as of their current
-versions.*
+*Document Version: 2.0 | Date: 2026-09-03 | **Hybrid capability-sourcing revision.** The
+single-vendor assumption is replaced by a three-tier landscape — unified cloud ERP core,
+best-of-breed edges (WMS, TMS, store WFM, FSM), in-house builds (OMO: VS-60; TPS:
+VS-74/VS-77/VS-143) — governed by the new companion
+`capability-sourcing-and-engineering-model.md` (Sourcing & Investment Board gate, Capability
+Sourcing Register, SEP paved road). Product portfolio 12 → 16 teams (new: OMO, TPS, SEP;
+VS/workflow reconciliation unchanged: 171 + 17 = 188 VS, 4,865 + 499 = 5,364 workflows;
+CCP 27 → 25 VS / 786 → 738 workflows; WLI 22 → 20 VS / 571 → 523 workflows); domain-team
+archetypes and the Vendor Product Manager / build-squad roles added (§5); sourcing and
+build-delivery RACI rows (§6.1, §6.2, §6.4); Sourcing & Investment Board added to governance
+(§7); per-archetype release cadences replace the single monthly train (§8.2); OMO/TPS/SEP KPI
+rows (§8.3); sourcing & exit reserves and PFRS/IAS 38 capitalization rules (§8.4); sizing
+re-based 80 → 115 FTE (66 + 49 = 115, §9.1) against the hybrid need band 65–130, built up
+50 → 115 in three phases (§9.3). Downstream: `model-company-profile.md` v2.26 (§14.1 hybrid
+landscape; target HQ 504 / total 6,904), `optimal-table-of-organization.md` v1.3,
+`headcount-reality-check.md` §3.2 amendment, `technical-guidelines.md` §5. Prior v1.1
+(2026-09-02, consistency review #68): §5.3 IAP cluster count trued to ten, §8.2 §-ref
+re-pointed to §13.2; document brought under the `audit-model-docs.py` guard (validator
+Check 59). Prior v1.0 (2026-09-01): initial issue — 12-product model, 80-FTE sizing.*

@@ -1,6 +1,6 @@
 # Headcount Reality Check — HQ vs. Workflow Coverage
 
-> **STATUS — ACTIONED 2026-06-20.** This analysis identified that HQ (315) was understaffed and omitted 6 functions. Per direction to apply the **minimum** increase that resolves the gaps, HQ was rebalanced **315 → 357** and total **6,715 → 6,757** (see `model-company-profile.md` §3.3/§4 and the CHANGELOG entry for 2026-06-20). The comfortable/fully-cushioned range estimated below (~440–470) was **not** adopted; the implemented 357 is the floor that (a) fixes the Executive inconsistency, (b) breaks out the 6 hidden departments explicitly, and (c) relieves only the contradictions the workflows themselves expose (e.g., AP "10 clerks", IT archipelago field support). **2026-06-25 update:** Supply Chain & Logistics was subsequently rebalanced **35 → 40** to stand up a dedicated **S&OP/IBP sub-team** (5) — the single accountable owner of [VS-127](workflows/VS-127-sales-operations-planning-integrated-business-planning/README.md) — closing the §4 "S&OP Lead" missing-role gap and the VS-127 "unowned-as-a-program" finding; HQ is now **357 → 362** and total **6,757 → 6,762** (see `model-company-profile.md` §3.3 "Supply Chain & Logistics Team Structure" and the CHANGELOG entry for 2026-06-25). The analysis below is retained as the gap record. **2026-09-02 update:** the comfortable range (~440–470) estimated below has now been **adopted as the target state** — HQ **469** / total **6,869** — via [`optimal-table-of-organization.md`](optimal-table-of-organization.md) (phased per its §11); the implemented 362 remains the current-state baseline, so this analysis now serves as both the gap record and the sizing authority behind the target bands.
+> **STATUS — ACTIONED 2026-06-20.** This analysis identified that HQ (315) was understaffed and omitted 6 functions. Per direction to apply the **minimum** increase that resolves the gaps, HQ was rebalanced **315 → 357** and total **6,715 → 6,757** (see `model-company-profile.md` §3.3/§4 and the CHANGELOG entry for 2026-06-20). The comfortable/fully-cushioned range estimated below (~440–470) was **not** adopted; the implemented 357 is the floor that (a) fixes the Executive inconsistency, (b) breaks out the 6 hidden departments explicitly, and (c) relieves only the contradictions the workflows themselves expose (e.g., AP "10 clerks", IT archipelago field support). **2026-06-25 update:** Supply Chain & Logistics was subsequently rebalanced **35 → 40** to stand up a dedicated **S&OP/IBP sub-team** (5) — the single accountable owner of [VS-127](workflows/VS-127-sales-operations-planning-integrated-business-planning/README.md) — closing the §4 "S&OP Lead" missing-role gap and the VS-127 "unowned-as-a-program" finding; HQ is now **357 → 362** and total **6,757 → 6,762** (see `model-company-profile.md` §3.3 "Supply Chain & Logistics Team Structure" and the CHANGELOG entry for 2026-06-25). The analysis below is retained as the gap record. **2026-09-02 update:** the comfortable range (~440–470) estimated below has now been **adopted as the target state** — HQ **469** / total **6,869** — via [`optimal-table-of-organization.md`](optimal-table-of-organization.md) (phased per its §11); the implemented 362 remains the current-state baseline, so this analysis now serves as both the gap record and the sizing authority behind the target bands. **2026-09-03 update:** the hybrid capability-sourcing decision (best-of-breed edges + in-house builds around the unified ERP core; [`07-methodology/capability-sourcing-and-engineering-model.md`](../07-methodology/capability-sourcing-and-engineering-model.md)) extends the IT band **65–80 → 65–130** and the comfortable HQ range **~440–470 → ~440–510**; the adopted target moves to HQ **504** / total **6,904** with IT = 115 ([`optimal-table-of-organization.md`](optimal-table-of-organization.md) v1.3; [`it-product-operating-model.md`](../07-methodology/it-product-operating-model.md) v2.0 §9).
 
 **Scope:** Cross-reference the stated HQ department headcounts (`model-company-profile.md` §3.3 / §4) against the actual job roles, volumes, and responsibilities referenced across all workflow markdown files (**569 process-area specs across 188 value streams**).
 
@@ -69,7 +69,7 @@ The 6,757 total company headcount is **plausible overall**, but the **HQ allocat
 **Roles the workflows demand but the 37 doesn't cover:**
 AP Manager, AR Supervisor, Credit Manager, Intercompany Accountant, Revenue Accountant, Cost Accountant, Inventory Accountant, Logistics Finance Analyst, GL Accountant (×4–5 for 5 entities), Tax specialists (5 entities × VAT/WHT/income tax needs a team of 4+, not 1 accountant + 1 manager), FP&A team (only 1 generic "Finance Analyst" listed).
 
-### 3.2 Information Technology — stated 33, need 65–80
+### 3.2 Information Technology — stated 33, need 65–80 (hybrid model: 65–130)
 **Workload evidence:**
 - **6,757 end users** to support across 200 stores + 4 DCs + HQ
 - 600 POS terminals (real-time inventory sync <30s latency)
@@ -79,6 +79,16 @@ AP Manager, AR Supervisor, Credit Manager, Intercompany Accountant, Revenue Acco
 - PMO for the ERP program itself
 
 Industry benchmark for retail IT is **1.5–2.5% of headcount = 100–168**; even a heavily outsourced/lean model floors at ~60–70. **33 is roughly half the minimum.** The workflow mentions 14 distinct IT role families (helpdesk, infra, apps, data eng, BI, data scientist, security, privacy, PMO, architect, DBA, dev, DevOps, sysadmin).
+
+> **2026-09-03 amendment (hybrid capability-sourcing model).** The 65–80 band above assumed
+> the single-vendor unified-ERP model (no classical developers; configure-first). With the
+> hybrid landscape — best-of-breed WMS/TMS/WFM/FSM edges and the in-house OMO/TPS build
+> squads on the SEP engineering platform — the band extends to **65–130**
+> (`it-product-operating-model.md` v2.0 §9.2 sizes the steady state at 115: 66 domain +
+> 49 platform/CIO). The 14 role families listed above — notably dev, DevOps, and data
+> scientist — now have permanent structural homes instead of being absorbed by the ERP
+> vendor's delivery model. The historical 65–80 band is retained above as the pre-hybrid
+> gap record.
 
 ### 3.3 Human Resources — stated 18, need 38–48
 **Workload evidence:**

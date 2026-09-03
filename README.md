@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository contains the operational specifications, active workflows, and system architecture for **BuildRight Depot Corp.** (the **"Model Company"**), operating with all its capabilities and systems fully enabled under a modern, unified cloud ERP platform. Each subfolder contains the configuration, design, and architecture for running the model company on specific ERP platforms.
+This repository contains the operational specifications, active workflows, and system architecture for **BuildRight Depot Corp.** (the **"Model Company"**), operating with all its capabilities and systems fully enabled on a modern **hybrid IT landscape**: a unified cloud ERP **core**, best-of-breed edge products, and in-house built differentiating platforms (sourcing governed by [`07-methodology/capability-sourcing-and-engineering-model.md`](07-methodology/capability-sourcing-and-engineering-model.md)). Each subfolder contains the configuration, design, and architecture for running the model company on specific ERP platforms.
 
 ## Out of Scope
 
@@ -230,7 +230,7 @@ erpplans/
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
-│   ├── optimal-table-of-organization.md  Adopted TARGET-STATE TO: HQ 469 / total 6,869 (phased from current 362 / 6,762)
+│   ├── optimal-table-of-organization.md  Adopted TARGET-STATE TO: HQ 504 / total 6,904 (phased from current 362 / 6,762; revised 2026-09-03 for the hybrid IT sourcing model)
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
 │   ├── internal-controls-matrix.md     808 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
@@ -238,8 +238,9 @@ erpplans/
 ├── CHANGELOG.md                 ← Revision history
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
-    ├── technical-guidelines.md       POS hardware, infrastructure, integration, security
-    ├── it-product-operating-model.md IT product teams, roles, RACI, governance, sizing
+    ├── technical-guidelines.md       POS hardware, infrastructure, integration, security, multi-vendor sourcing architecture
+    ├── capability-sourcing-and-engineering-model.md  Configure/buy/build decision gate, sourcing register, build squads, SEP
+    ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds), roles, RACI, governance, sizing (50 → 115 FTE)
     ├── validate-repo.sh              Cross-reference validation (66 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)

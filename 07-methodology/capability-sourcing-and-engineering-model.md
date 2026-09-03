@@ -1,0 +1,265 @@
+# BuildRight Depot Corp. — Capability Sourcing & Engineering Model
+
+> Companion to [`it-product-operating-model.md`](it-product-operating-model.md) (v2.0+): how
+> each business capability is **sourced** — configured in the unified ERP core, bought
+> best-of-breed, or built in-house — plus the decision gate, the Capability Sourcing
+> Register, the build-squad engineering standard, and the Software Engineering Platform (SEP)
+> team definition.
+
+---
+
+## 1. Purpose & Scope
+
+The IT product operating model v1.x assumed a **single-vendor unified cloud ERP**: the vendor
+delivered all code and BuildRight's IT configured it. On 2026-09-03 the company adopted a
+**hybrid capability-sourcing strategy**: the ERP remains the unified core, selected edge
+capabilities move to **best-of-breed (BoB) products** from specialist vendors, and genuinely
+differentiating capabilities are **built in-house** by dedicated software squads.
+
+This document defines:
+
+1. The **landscape principle** — what stays core, what is bought, what is built (§2).
+2. The **sourcing decision gate** (Configure / Buy / Build) and its governance (§3).
+3. The **Capability Sourcing Register** — the single record of every sourcing decision (§4).
+4. The **team archetypes and build-squad shape** the strategy requires (§5).
+5. The **Software Engineering Platform (SEP)** team and the paved road (§6).
+6. The **engineering standard** build squads must meet (SDLC, security, delivery) (§7).
+7. The **best-of-breed lifecycle** — vendor management, release intake, exit reserves (§8).
+8. **Funding, TCO and capitalization** rules per archetype (§9).
+9. KPIs and **risks** (§10–§11).
+
+Scope is the same steady state as the operating model: post-go-live operations of the 188
+value streams. Team membership, RACI, sizing and governance bodies live in the operating
+model; this document governs the sourcing decisions that determine team shape.
+
+---
+
+## 2. Landscape Principle — Unified Core, Bought Edges, Built Differentiators
+
+The strategy does **not** abandon the unified ERP. It partitions the landscape into three
+tiers, each with a default sourcing posture:
+
+| Tier | What it contains | Default posture | Why |
+|---|---|---|---|
+| **Core** | Financials & consolidation, procure-to-pay, the inventory ledger, HR & payroll (PH statutory), POS (offline-capable estate), approvals workflow | **Configure** in the unified cloud ERP | Protects the 5-working-day close (FIN KPI), BIR/SSS/PhilHealth/Pag-IBIG statutory compliance, the 808-control register's single control surface, and the ≥ 8h offline POS + event-replay architecture (`technical-guidelines.md` §1) — too costly and risky to de-unify |
+| **Edges** | Capabilities where specialist vendors outperform the ERP suite: warehouse execution (WMS), transport management (TMS), store workforce management (WFM), field service management (FSM) | **Buy** best-of-breed, integrate via IAP | ERP fit-to-standard gap is high **and** a mature specialist market exists; commodity capability is not a moat |
+| **Differentiators** | Capabilities where BuildRight's operating model is genuinely unlike generic retail: omnichannel order orchestration; trade & project services coordination | **Build** in-house squads | High gap, no vendor solves it well, deep data/control needs — the capability *is* competitive advantage |
+
+**Guardrail:** nothing may be removed from the Core tier without a CEO-noted waiver of the
+unified-core principle — the same protection the single-vendor principle had in operating
+model v1.x, now scoped to the core rather than the whole landscape.
+
+---
+
+## 3. The Sourcing Decision Gate
+
+Every capability decision routes through one gate with three exits. The default order is
+**configure → buy → build**: build is chosen only when both alternatives are demonstrably
+inadequate.
+
+### 3.1 Decision criteria (scored, not vibes)
+
+| Criterion | Points toward **Configure** | Points toward **Buy** | Points toward **Build** |
+|---|---|---|---|
+| Strategic differentiation | Commodity (GL, AP, payroll) | Commodity, ERP-weak | **Differentiating** — customers would notice if a competitor had it |
+| ERP fit-to-standard gap | Low | High but market-solved | High **and** unsolved by the market |
+| Integration cost of de-unifying | — | IAP estimate must be < value gained | Same |
+| Data gravity | Ledger/master data lives here | Own operational data model | Needs deep data control (e.g., order-state machine) |
+| Regulatory fit | Deep (BIR, SSS built in) | **Verify PH localization** — a BoB vendor without Philippine statutory readiness is disqualifying | BuildRight owns the compliance burden entirely |
+| Total cost of ownership | Config analysts | License + TPRM + integration run cost | Squad cost + permanent tech-debt backlog |
+| Talent & key-person risk | Low | Low (vendor's talent) | Permanent hiring/retention obligation |
+| Exit strategy | Vendor roadmap risk | Contract/portability clauses, escrow | None — in-house is forever |
+
+### 3.2 Decision rights
+
+| Decision | Body | Notes |
+|---|---|---|
+| Configure/buy/build routing (any capability) | **Sourcing & Investment Board (SIB)** — chaired by CIO; Head of EA runs the assessment; members: affected IT PO/BPO, FinOps/TBM analyst, CFO delegate, SEC lead (TPRM, VS-161), Head of Engineering (for builds) | Monthly and on demand; every decision recorded in the Register (§4) |
+| Sourcing decision with 3-year TCO > PHP 25M | SIB recommends → **Product Council** ratifies | Product Council already holds funding rights above PHP 5M |
+| Removal of a capability from the Core tier | SIB recommends → **CEO** (noted waiver) | Rare; same weight as the v1.x single-vendor waiver |
+| Architecture opinion on any sourcing proposal | **Architecture Review Board (ARB)** | Integration patterns, data ownership, retirement of capabilities |
+
+### 3.3 Mandatory appendices per decision
+
+No sourcing decision is valid without:
+
+1. **IAP integration estimate** — flows, contracts, latency budget, run cost.
+2. **Control-mapping appendix** — which of the 808 controls in
+   [`internal-controls-matrix.md`](../01-model-company/internal-controls-matrix.md) touch the
+   capability, and where evidence will come from after the change (vendor attestation, API,
+   or in-product audit trail).
+3. **TCO sheet** — 3-year license + integration + run + (build) squad cost, FinOps-verified.
+4. **Exit plan** (buy) or **run-cost & talent plan** (build).
+5. **Re-evaluation trigger** — e.g., "revisit if the ERP vendor ships native WMS execution
+   at parity", "revisit at 260 stores".
+
+---
+
+## 4. Capability Sourcing Register (initial issue)
+
+The Register is the single source of truth for what is sourced how. Initial decisions adopted
+2026-09-03 (amendments only via the SIB):
+
+| Capability | Value streams | Decision | Product / system | Owning team | Re-evaluation trigger |
+|---|---|---|---|---|---|
+| Financials, P2P, inventory ledger, HR/payroll, POS, approvals | VS-15–VS-19, VS-07/08 and the rest of the core | **Configure** (reaffirmed) | Unified cloud ERP (core) | FIN, PEO, SSP, MSC, CORP as mapped in OM §4 | Annual reaffirmation at QBR |
+| Warehouse execution (RF-directed putaway/pick, wave planning, lot/serial capture) | VS-04, VS-05 | **Buy** — best-of-breed WMS | BoB WMS; ERP remains inventory ledger of record | WLI | ERP vendor ships native WMS at parity |
+| Transport planning, carrier tendering, freight audit | VS-06, VS-110 | **Buy** — best-of-breed TMS | BoB TMS; ERP keeps freight cost postings | WLI | Freight spend < PHP 1.2B/yr |
+| Store labor scheduling & time capture | VS-07 (staffing PAs) | **Buy** — store workforce management | BoB WFM; payroll stays in ERP core (statutory) | SSP | None scheduled |
+| Installation & home-service dispatch, technician mobile app | VS-12 | **Buy** — field service management | BoB FSM | CCP | FSM vendor adds trade-project features |
+| Omnichannel order routing, split-order & mixed-basket fulfillment | VS-60 | **Build** — Order Orchestration product (OMO) | In-house event-driven order-state engine on IAP contracts | OMO | None — differentiating |
+| Trade & project services coordination (job-site delivery, material staging/phased delivery, bulky install/haul-away) | VS-74, VS-77, VS-143 | **Build** — Trade & Project Services platform (TPS) | In-house scheduling/coordination platform | TPS | None — differentiating |
+
+The two build decisions create the new stream-aligned products **OMO** and **TPS** in the
+operating model §3.2/§4 (VS-60 moves from CCP; VS-74/VS-143 from WLI and VS-77 from CCP).
+The four buy decisions add **Vendor Product Manager** capacity inside the existing WLI, SSP
+and CCP teams. No value stream changes business-process owner.
+
+---
+
+## 5. Team Archetypes & Build Squads
+
+Domain teams come in three shapes (full membership tables in OM §5):
+
+| Archetype | Teams | Shape |
+|---|---|---|
+| **Configure** | MSC, FIN, PEO, CORP | The OM v1.x six-role core: PO, product/process architect, 2–4 ERP functional analysts, data & reporting analyst, QA & release analyst |
+| **Buy-and-integrate** | WLI, SSP, CCP | Configure core **plus** 1–2 Vendor Product Managers (contract, SLA, vendor release intake, TPRM liaison per BoB product) and added functional-analyst depth for the vendor products' configuration surface |
+| **Build** (squads) | OMO, TPS | Product Manager, Tech Lead, 3–4 software engineers, QA automation engineer; shared UX/product designer (SEP pool); matrixed IAP engineer and DP data analyst |
+
+### 5.1 Build-squad roles
+
+| Role | Reports to | Responsibilities |
+|---|---|---|
+| **Product Manager (PM)** | CIO (solid); product-domain exec (dotted) | The build-side equivalent of the IT PO: outcomes, discovery, roadmap, budget; pairs with the BPO like any domain PO; owns product KPIs and DORA-aware delivery trade-offs |
+| **Tech Lead** | Head of Engineering (solid); squad PM (dotted) | Technical design authority for the product; chairs squad design reviews; owns the product's architecture record at the ARB; one of the two build-side seats in the architect community |
+| **Software Engineers (3–4)** | Tech Lead | Build and run the product: implementation, code review, on-call for P1/P2, telemetry, cost of the services they own (FinOps tags) |
+| **QA Automation Engineer** | Squad PM | Test strategy, automated acceptance and contract tests, regression harness, release verification — the build twin of the configure teams' QA & release analyst |
+| **UX / Product Designer** (SEP pool, ~0.5 FTE per squad) | Head of Engineering | Flows, screens, and usability for internal and customer-facing surfaces of built products |
+
+Engineers are **hired into the engineering career track** under the Head of Engineering, not
+into per-squad silos — the track and the SEP paved road (§6) are what keep two squads from
+becoming two incompatible cultures.
+
+---
+
+## 6. Software Engineering Platform (SEP)
+
+A new **platform team** (the sixth) in the operating model's platform layer. SEP treats build
+squads — and, increasingly, configure teams' automation needs — as its customers.
+
+| Member | Role |
+|---|---|
+| **Head of Engineering** | Engineering standards, squad staffing, technical career track, SEP roadmap; ARB member |
+| **DevEx engineers (2)** | The **paved road**: golden-path service templates, CI/CD pipelines, feature-flag and telemetry tooling, internal developer platform — the default way to ship, so squads never assemble their own toolchain |
+| **AppSec engineer** | SDLC security: SAST/DAST gates, dependency and SBOM policy, secrets management, threat-review facilitation (dotted to SEC lead) |
+| **QA automation lead** | Shared test framework, contract-testing harness against IAP contracts, load-test rigs |
+| **Product designer** | Shared UX pool for build squads (~0.5 FTE each) |
+| **Build SRE** | Ring-deployment infrastructure, production readiness reviews, on-call coaching for squads (pairs with INFRA SRE) |
+
+---
+
+## 7. Engineering Standard (SDLC for built products)
+
+Built products follow one standard, enforced by the paved road rather than by memo:
+
+1. **Golden path.** New services start from SEP templates (repo layout, CI/CD, observability,
+   IaC). Deviating requires an ARB-recorded exception.
+2. **Trunk-based development, feature flags.** Continuous integration; incomplete work ships
+   dark behind flags; no long-lived branches.
+3. **Contract-first integration.** Every integration to another product is an IAP-published
+   contract (event or API) with automated consumer-driven contract tests; no squad may call
+   another product's database directly.
+4. **Ring deployment.** Internal ring → canary stores/DCs → fleet, with automated rollback
+   gates on SLO burn. Built products deploy independently of the ERP monthly train (OM §8.2).
+5. **Security gates.** SAST + dependency scan on every merge; DAST before each release ring
+   expansion; SBOM per release; secrets never in code. The AppSec engineer can block a ring
+   expansion.
+6. **Data contracts.** Every dataset a built product publishes to DP carries a tested schema
+   contract; breaking changes go through the DP shared-object change process (OM §6.3).
+7. **Production readiness review** (SEP + INFRA) before first fleet ring: on-call runbook,
+   SLOs, capacity model, DR posture — typhoon-season resilience is a launch criterion, not a
+   follow-up.
+8. **DORA targets** (per squad, reported at QBR): deployment frequency ≥ weekly; change lead
+   time < 1 week; MTTR < 4 hours; change-failure rate < 15%.
+
+---
+
+## 8. Best-of-Breed Lifecycle Management
+
+Buying does not outsource ownership. Each BoB product has:
+
+- **A named Vendor Product Manager** in the owning domain team — contract and SLA owner,
+  vendor roadmap intelligence, release-intake owner, escalation single point of contact.
+- **Contract clauses required at signature:** Philippine data-residency/processing terms
+  (RA 10173), statutory-readiness warranty where applicable, exit/transition assistance,
+  data-export in open formats, and price-escalation caps.
+- **Release intake ring:** vendor releases land in a staging ring and pass the domain's
+  regression pack (Tier-1 workflows mandatory) before production — the same standard the ERP
+  vendor train meets (OM §8.2).
+- **Upgrade currency KPI:** at most one major version behind vendor current — a product two
+  versions behind is a Tier & Control Board escalation.
+- **TPRM tiering (VS-161):** every BoB vendor is risk-tiered by SEC; tier-1 vendors get
+  annual reassessment and audit-report review.
+- **Exit reserve:** funded at each QBR (a percentage of license cost, held centrally by the
+  CIO Office) so a vendor exit is never unfundable.
+
+---
+
+## 9. Funding, TCO & Capitalization
+
+| Rule | Detail |
+|---|---|
+| **Persistent envelopes survive** | All teams — configure, buy, build — remain persistent-capacity funded (OM §8.4); nothing reverts to project funding |
+| **Build envelopes** | Build squads carry their run cost (squad + infrastructure) in the product envelope; **PFRS / IAS 38** capitalization of qualifying development costs is assessed quarterly with FIN (Controller) — FIN owns the accounting policy, the squad owns the evidence trail |
+| **TCO-per-product accounting** | FinOps tags 100% of spend to products (already OM policy); BoB products carry license + integration run cost; built products carry squad + cloud cost. Every QBR shows TCO per product |
+| **Sourcing reserve** | The CIO Office central bucket (OM §8.4) funds sourcing transitions — evaluations, migrations, exit execution — so no team's steady-state capacity is cannibalized by a sourcing move |
+| **Exit reserves** | Per §8 — accrued centrally, disclosed in the QBR FinOps pack |
+
+---
+
+## 10. KPIs by Archetype
+
+Headline KPIs live in OM §8.3 (which adds OMO, TPS and SEP rows). Summary:
+
+- **Configure products:** unchanged OM v1.x KPIs (uptime, close cycle, filing timeliness…).
+- **Buy products:** vendor SLA attainment, integration latency vs budget, upgrade currency,
+  regression-pack pass rate on vendor releases.
+- **Build products:** DORA metrics (§7.8) **plus** product outcome KPIs (e.g., OMO: routing
+  decision latency, split-order success rate; TPS: on-time job-site delivery, staging
+  schedule adherence) — a squad green on DORA but flat on outcomes is failing.
+
+---
+
+## 11. Risks & Mitigations
+
+| Risk | Mitigation |
+|---|---|
+| Integration sprawl silently recreating the pre-ERP silo estate | IAP is the only integration path; contract-first rule (§7.3); ARB reviews every new pipeline; SEP/IAP co-own the contract catalog |
+| Fragmented statutory compliance (payroll/tax outside the core) | Core-tier guardrail (§2); PH-localization warranty clause (§8); control-mapping appendix per decision (§3.3) |
+| Build squads drifting from the paved road into private toolchains | Golden path + exception records; Head of Engineering owns the engineering track; DORA reporting surfaces drift quickly |
+| Key-person risk on built products | Bus-factor ≥ 2 per service (squad review rule); SEP owns runbooks; no solo-owned services |
+| Vendor lock-in on BoB edges | Exit clauses, data-export rights, funded exit reserves (§8), annual re-evaluation triggers (§4) |
+| Sizing creep — engineering hiring outpacing value | SIB gate requires the build case to beat configure **and** buy; QBR structural review can merge/sunset squads like any product (OM §10); IT sizing stays inside the 65–130 hybrid band (OM §9.2) |
+| Control-evidence gaps across vendor boundaries | Control-mapping appendix at decision time; Tier & Control Board signs off changes touching Tier-1 workflows on any product (OM §6.3) |
+
+---
+
+## 12. Related Documents
+
+| Document | Relationship |
+|---|---|
+| [`it-product-operating-model.md`](it-product-operating-model.md) | The operating model this sourcing strategy reshapes (v2.0: 16 teams, three archetypes, SEP, SIB, 115 FTE) |
+| [`technical-guidelines.md`](technical-guidelines.md) | §1 POS/offline architecture protected by the Core-tier guardrail; §5 multi-vendor integration reference |
+| [`../01-model-company/model-company-profile.md`](../01-model-company/model-company-profile.md) | §14.1 hybrid landscape (unified core + BoB edges + in-house products) |
+| [`../01-model-company/data-volumes-and-integrations.md`](../01-model-company/data-volumes-and-integrations.md) | The ten external integration clusters and transaction volumes IAP dimensions against |
+| [`../01-model-company/internal-controls-matrix.md`](../01-model-company/internal-controls-matrix.md) | The 808-control register every sourcing decision must map to |
+| [`../01-model-company/headcount-reality-check.md`](../01-model-company/headcount-reality-check.md) | IT need band (65–80 pre-hybrid; 65–130 hybrid) the 115-FTE sizing lands in |
+
+---
+
+*Document Version: 1.0 | Date: 2026-09-03 | Initial issue with the hybrid capability-sourcing
+decision (best-of-breed edges + in-house differentiators + unified ERP core). Companion to
+`it-product-operating-model.md` v2.0; landscape rows in `model-company-profile.md` §14.1;
+IT sizing impact in OM §9 (115 FTE) and `optimal-table-of-organization.md` v1.3 (HQ 504 /
+total 6,904).*

@@ -32,6 +32,11 @@ unresolvable §2.4 self-reference, and added: doc-scoped retired literals, the
 required corrected anchors (incl. the 171+17=188 / 4,864+499=5,363 IT-model
 reconciliation sums and the TO's two-state 469/6,869 totals), and a structural
 rule that re-derives every §7.3 DC-roster group total from its own HC cells.
+
+2026-09-03 hybrid capability-sourcing revision: anchors re-based to OM v2.0 (adds the
+66+49=115 sizing sum) and TO v1.3 (HQ 504 / total 6,904; IT = 115 / 16 product teams),
+with the v1.x sizing/shape literals retired doc-scoped. See the CHANGELOG entry for
+2026-09-03 and 07-methodology/capability-sourcing-and-engineering-model.md.
 """
 import argparse, glob, os, re, sys
 
@@ -59,12 +64,22 @@ RETIRED_LITERALS = {
         "11 external integration clusters",
         # the profile's seasonal calendar is §13.2; §13.3 is Promotional Strategy
         "§13.3 seasonal calendar",
+        # 2026-09-03 hybrid capability-sourcing revision (OM v2.0): the unified-model
+        # sizing/shape literals are retired — 16 teams / 115 FTE is the canon
+        "80-FTE steady-state sizing",
+        "Phased build-up (50 → 80)",
+        "80-FTE IT sizing",
     ],
     "optimal-table-of-organization.md": [
         # §7.3 Outbound role HCs sum to 50 (the 150 grand total confirms)
         "Outbound (51)",
         # unresolvable subsection-style self-reference (§2 has no §2.4 heading)
         "three-lines model, §2.4",
+        # 2026-09-03 hybrid revision (TO v1.3): target is HQ 504 / total 6,904 with
+        # IT = 115 / 16 product teams — the v1.2 literals are retired
+        "12 product teams per",
+        "IT 50→80",
+        "80 FTE, 12 product teams",
     ],
 }
 ANCHORS = {
@@ -73,11 +88,14 @@ ANCHORS = {
         "§13.2 seasonal calendar",
         "**171 + 17 = 188**",
         "**4,865 + 499 = 5,364**",
+        # v2.0 hybrid sizing anchor (66 domain + 49 platform/CIO = 115 FTE)
+        "**66 + 49 = 115**",
     ],
     "optimal-table-of-organization.md": [
         "Outbound (50)",
-        "**469** | **6,869**",
-        "**Total HQ** | **362** | **~440–470** | **469**",
+        "**504** | **6,904**",
+        "**Total HQ** | **362** | **~440–510** | **504**",
+        "**497 + 7 = 504**",
         "× 4 DCs = **600**",
     ],
 }

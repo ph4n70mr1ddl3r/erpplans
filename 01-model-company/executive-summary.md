@@ -1,12 +1,12 @@
 # BuildRight Depot Corp. — Executive Summary
 
-> One-page overview of the model company and unified cloud ERP system architecture for C-suite stakeholders.
+> One-page overview of the model company and its hybrid IT landscape — a unified cloud ERP core with best-of-breed edges and in-house builds — for C-suite stakeholders.
 
 ---
 
 ## The Company
 
-**BuildRight Depot Corp.** is a model big-box hardware/home improvement retail chain in the Philippines, operating with all its capabilities and systems running under an optimized, unified cloud ERP platform provided by a theoretical software vendor.
+**BuildRight Depot Corp.** is a model big-box hardware/home improvement retail chain in the Philippines, operating with all its capabilities and systems fully enabled on a hybrid landscape (adopted 2026-09-03): a **unified cloud ERP core** provided by a theoretical software vendor, surrounded by **best-of-breed** edge products and **in-house built** differentiating platforms (see `07-methodology/capability-sourcing-and-engineering-model.md`).
 
 | Parameter | Value |
 |---|---|
@@ -27,13 +27,15 @@
 
 
 
-## Unified Cloud ERP System
+## IT Landscape (Hybrid — Unified Core + Bought Edges + Built Differentiators)
 
-BuildRight is supported by a single, fully optimized unified cloud ERP system running the entire business end-to-end:
+The business runs on a unified cloud ERP **core**, with specialist edges bought best-of-breed and differentiating capabilities built in-house:
 
 | Platform | Provider | Status |
 |---|---|---|
-| Unified Cloud ERP | Theoretical Software Vendor | Fully Operational |
+| Unified Cloud ERP (financials, P2P, inventory ledger, POS, HR/payroll, approvals) | Theoretical Software Vendor | Fully Operational (core) |
+| Best-of-breed WMS / TMS / Store WFM / Field Service | Specialist vendors (registered sourcing decisions) | Fully Operational (edges) |
+| Order Orchestration (OMO) · Trade & Project Services (TPS) | Built in-house (SEP paved road) | Fully Operational (differentiators) |
 
 ---
 

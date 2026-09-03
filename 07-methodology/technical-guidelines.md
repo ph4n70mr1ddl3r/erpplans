@@ -189,4 +189,27 @@ These are the active security controls implemented across the unified cloud ERP 
 
 ---
 
-*Document Version: 2.5 | Date: 2026-06-26 | §2.2 HQ bandwidth row reconciled with the 2026-06-25 headcount change — `~357 HQ staff (≈320 concurrent users)` → `~362 HQ staff (≈325 concurrent users)` (the +5 Supply Chain & Logistics S&OP/IBP sub-team; concurrent estimate held at the same ~90% ratio). §2.1 already carried 6,762 employees. Prior v2.4: §3.1 fixed broken in-page anchor `#143-integration-touchpoints` → `#143-active-integration-touchpoints` to match the `### 14.3 Active Integration Touchpoints` heading in `model-company-profile.md` (same fix applied to NFR-012 in `erp-requirements.md`). Prior v2.3: §2.3 Data-retention row and §2.3 backup archive updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.2: Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); counts reconciled with README.md*
+## 5. Multi-Vendor Sourcing-Architecture Reference
+
+> Added with the hybrid capability-sourcing decision (2026-09-03): the unified cloud ERP
+> remains the **core**; best-of-breed WMS/TMS/WFM/FSM edge products and the in-house
+> OMO/TPS platforms surround it (see
+> [`capability-sourcing-and-engineering-model.md`](capability-sourcing-and-engineering-model.md)
+> and `model-company-profile.md` §14.1). The external integration clusters of §3.2 and
+> `data-volumes-and-integrations.md` are unchanged; this section governs the
+> **product-to-product** integration layer.
+
+| Rule | Requirement |
+|---|---|
+| **Single integration path** | Every product-to-product flow runs on the IAP middleware/event backbone (published event or API contract). Direct database-to-database access between products is prohibited. |
+| **Canonical contracts** | IAP owns the canonical event/API contract catalog with consumer-driven contract tests; every consuming product pins a contract version and passes tests in CI before release. |
+| **Inventory truth** | The ERP remains the inventory **ledger of record**; the best-of-breed WMS owns execution state. Stock-truth reconciliation runs as a continuous IAP-monitored flow (drift alerting, replay from last-acknowledged sequence — same at-least-once/idempotency semantics as the POS event bus in §1). |
+| **POS offline resilience preserved** | No sourcing decision may weaken the ≥ 8h offline POS architecture and event replay of §1 — the POS/omnichannel commerce core stays in the ERP. |
+| **Built products (OMO/TPS)** | Deploy on the SEP paved road (golden-path templates, feature flags, ring deployment); expose only IAP contracts; publish datasets to DP under tested data contracts. |
+| **Vendor release intake** | Best-of-breed vendor releases pass the owning team's staging ring and Tier-1 regression pack before production (same standard as ERP vendor releases). |
+| **Statutory boundary** | BIR/SSS/PhilHealth/Pag-IBIG filings and payroll remain on the ERP core; no best-of-breed or built product may own a statutory filing path directly. |
+| **DR posture** | Every product — bought or built — must meet the §2.3 DR/BCP targets and join the annual pre-typhoon-season exercise; ring-deployed built products must demonstrate rollback within the exercise. |
+
+---
+
+*Document Version: 3.0 | Date: 2026-09-03 | §5 multi-vendor sourcing-architecture reference added with the hybrid capability-sourcing decision (single integration path, canonical contracts, inventory-ledger-of-record rule, POS-offline preservation, SEP paved road, vendor release intake, statutory boundary, DR posture). Prior v2.5 (2026-06-26): §2.2 HQ bandwidth row reconciled with the 2026-06-25 headcount change — `~357 HQ staff (≈320 concurrent users)` → `~362 HQ staff (≈325 concurrent users)` (the +5 Supply Chain & Logistics S&OP/IBP sub-team; concurrent estimate held at the same ~90% ratio). §2.1 already carried 6,762 employees. Prior v2.4: §3.1 fixed broken in-page anchor `#143-integration-touchpoints` → `#143-active-integration-touchpoints` to match the `### 14.3 Active Integration Touchpoints` heading in `model-company-profile.md` (same fix applied to NFR-012 in `erp-requirements.md`). Prior v2.3: §2.3 Data-retention row and §2.3 backup archive updated to **10 years (BIR per TRAIN/NIRC — Sec. 235, as amended by RA 10963)**; was 7 years. Prior v2.2: Integration diagram canonical reference updated; bank list reconciled to 4 banks (BDO, BPI, Metrobank, Chinabank); POS offline-capacity figure tied to the documented 2.0× peak factor (~933/store peak-day); counts reconciled with README.md*
