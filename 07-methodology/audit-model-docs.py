@@ -37,6 +37,10 @@ rule that re-derives every §7.3 DC-roster group total from its own HC cells.
 66+49=115 sizing sum) and TO v1.3 (HQ 504 / total 6,904; IT = 115 / 16 product teams),
 with the v1.x sizing/shape literals retired doc-scoped. See the CHANGELOG entry for
 2026-09-03 and 07-methodology/capability-sourcing-and-engineering-model.md.
+
+2026-09-03 agentic-AI extension: OM v2.1 sizing anchor re-based 66+49=115 → 66+56=122
+(AI & Agent Platform +7); TO v1.4 anchors re-based to HQ 511 / total 6,911 (~440–515
+band row; 504+7=511) with the 115-era literals retired.
 """
 import argparse, glob, os, re, sys
 
@@ -69,6 +73,10 @@ RETIRED_LITERALS = {
         "80-FTE steady-state sizing",
         "Phased build-up (50 → 80)",
         "80-FTE IT sizing",
+        # 2026-09-03 agentic extension (OM v2.1): sizing 115 → 122 (AAP +7)
+        "Steady-state design (115 IT FTE)",
+        "Phased build-up (50 → 115)",
+        "115-FTE IT sizing",
     ],
     "optimal-table-of-organization.md": [
         # §7.3 Outbound role HCs sum to 50 (the 150 grand total confirms)
@@ -80,6 +88,9 @@ RETIRED_LITERALS = {
         "12 product teams per",
         "IT 50→80",
         "80 FTE, 12 product teams",
+        # 2026-09-03 agentic extension (TO v1.4): target HQ 511 / total 6,911, IT = 122 / 17 teams
+        "16 product teams per",
+        "IT 50→115",
     ],
 }
 ANCHORS = {
@@ -88,14 +99,15 @@ ANCHORS = {
         "§13.2 seasonal calendar",
         "**171 + 17 = 188**",
         "**4,865 + 499 = 5,364**",
-        # v2.0 hybrid sizing anchor (66 domain + 49 platform/CIO = 115 FTE)
-        "**66 + 49 = 115**",
+        # v2.0 hybrid sizing anchor (66 domain + platform/CIO = 115 FTE); v2.1 agentic
+        # re-bases it to 122 (66 + 56, AAP +7)
+        "**66 + 56 = 122**",
     ],
     "optimal-table-of-organization.md": [
         "Outbound (50)",
-        "**504** | **6,904**",
-        "**Total HQ** | **362** | **~440–510** | **504**",
-        "**497 + 7 = 504**",
+        "**511** | **6,911**",
+        "**Total HQ** | **362** | **~440–515** | **511**",
+        "**504 + 7 = 511**",
         "× 4 DCs = **600**",
     ],
 }

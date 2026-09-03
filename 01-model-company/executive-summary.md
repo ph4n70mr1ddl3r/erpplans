@@ -36,6 +36,7 @@ The business runs on a unified cloud ERP **core**, with specialist edges bought 
 | Unified Cloud ERP (financials, P2P, inventory ledger, POS, HR/payroll, approvals) | Theoretical Software Vendor | Fully Operational (core) |
 | Best-of-breed WMS / TMS / Store WFM / Field Service | Specialist vendors (registered sourcing decisions) | Fully Operational (edges) |
 | Order Orchestration (OMO) · Trade & Project Services (TPS) | Built in-house (SEP paved road) | Fully Operational (differentiators) |
+| AI & Agent Platform (AAP) | Built in-house on bought foundation-model APIs (VS-128 governance) | Fully Operational (agentic automation) |
 
 ---
 

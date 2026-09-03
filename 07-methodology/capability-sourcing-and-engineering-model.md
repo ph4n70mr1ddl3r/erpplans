@@ -109,11 +109,16 @@ The Register is the single source of truth for what is sourced how. Initial deci
 | Installation & home-service dispatch, technician mobile app | VS-12 | **Buy** — field service management | BoB FSM | CCP | FSM vendor adds trade-project features |
 | Omnichannel order routing, split-order & mixed-basket fulfillment | VS-60 | **Build** — Order Orchestration product (OMO) | In-house event-driven order-state engine on IAP contracts | OMO | None — differentiating |
 | Trade & project services coordination (job-site delivery, material staging/phased delivery, bulky install/haul-away) | VS-74, VS-77, VS-143 | **Build** — Trade & Project Services platform (TPS) | In-house scheduling/coordination platform | TPS | None — differentiating |
+| Agentic automation runtime (agent platform) | VS-30 (PA-30.2 AI/ML & Automation engineering); governed by VS-128 | **Build** — AI & Agent Platform (AAP) on bought foundation-model APIs | In-house agent runtime: tool registry (IAP contracts only), guardrails, evaluation harness, human-in-the-loop gates | AAP | Foundation-model vendor ships a governed agent runtime at parity |
+| Foundation-model access (LLM APIs) | Cross-cutting (all agent use cases) | **Buy** — tier-1 TPRM API contracts | Vendor foundation models consumed through IAP-governed API edges | AAP with SEC (TPRM) | Philippine AI-regulation / NPC guidance change |
 
 The two build decisions create the new stream-aligned products **OMO** and **TPS** in the
 operating model §3.2/§4 (VS-60 moves from CCP; VS-74/VS-143 from WLI and VS-77 from CCP).
 The four buy decisions add **Vendor Product Manager** capacity inside the existing WLI, SSP
-and CCP teams. No value stream changes business-process owner.
+and CCP teams. No value stream changes business-process owner. The two agentic rows
+(2026-09-03b) create the **AI & Agent Platform (AAP)** platform team (§12; OM v2.1) —
+agents themselves are delivered by the domain product teams that own the workflows being
+automated, on the AAP paved road.
 
 ---
 
@@ -245,21 +250,78 @@ Headline KPIs live in OM §8.3 (which adds OMO, TPS and SEP rows). Summary:
 
 ---
 
-## 12. Related Documents
+## 12. Agentic Automation Program (VS-30 Engineering · VS-128 Governance)
+
+The company maximizes **agentic AI**: AI agents that execute manual tasks end-to-end inside
+guardrails. The program rides entirely on structures that already exist — the sourcing gate
+(§3), the register (§4), the AAP platform team (OM §5.3), and VS-128's governance discipline
+(model registry, risk tiering, kill-switch, AI incident management, ethics review, RA 10173
+automated-decision obligations, ISO 42001/NIST-AI-RMF alignment).
+
+### 12.1 The autonomy ladder (agents obey the workflow Tier register)
+
+| Workflow tier | Agent autonomy | Rule |
+|---|---|---|
+| **Tier 1** (1,375 workflows) | **Human-approval-gated only** | Agent drafts, summarizes, flags, or prepares — a named human decides and signs (approval-matrix evidence retained) |
+| **Tier 2** (3,243) | **Bounded autonomy** | Agent acts inside hard guardrails (limits, whitelists, value caps); sampled human audit; auto-escalation on anomaly |
+| **Tier 3** (754) | **Autonomous-in-bounds** | Agent completes the task unattended; full audit trail; kill-switch active |
+
+Hard boundaries regardless of tier: no agent owns a statutory filing path (BIR/SSS/PhilHealth/Pag-IBIG — human sign-off terminal); no agent acts on the POS/OT estate; no agent may hold SoD-conflicting duties (e.g., vendor-create + payment-approve); every agent action is audit-trailed as control evidence against the 808-control register.
+
+### 12.2 Agent lifecycle (extends the VS-128 model discipline)
+
+1. **Candidate intake** — the per-workflow Automation Opportunity inventory (5,364 workflows)
+   plus VS-133 process mining surface candidates; scored by hours × frequency × error rate ×
+   feasibility (derivable from each workflow's Time Estimate / Staffing Implication data).
+2. **Proposal** — the **owning product team** (the team whose workflow it is) proposes with its
+   BPO; SIB routes the sourcing (ERP-native automation = configure; vendor agent products =
+   buy; custom agents on the paved road = build) — the same gate, one more domain.
+3. **Registration & review** — agent registered in the VS-128 registry with a risk tier; AI
+   ethics review for anything touching customers, employees, money, or personal data
+   (RA 10173 DPIA where automated decisions affect data subjects).
+4. **Evaluation** — offline evals → **shadow mode** (agent runs beside humans, no actions) →
+   **canary** (bounded actions, sampled audit) — graduation gated by AAP's eval engineer and
+   the owning team's QA analyst.
+5. **Operation** — AAP runtime: tools are IAP contracts only (no direct database access);
+   non-human identity with its own ERP roles; kill-switch with rule-based fallback; drift and
+   cost telemetry; quarterly re-registration (or retirement).
+6. **Sunset** — QBR portfolio review retires underperforming agents like any product.
+
+### 12.3 Rollout posture (crawl → walk → run)
+
+- **Crawl (read-only):** revenue-assurance leak candidates (VS-118), vendor-scorecard drafts
+  (VS-67), LP exception triage (VS-23), store-audit prep, contract-clause checks (VS-100).
+- **Walk (draft-with-approval):** PO/reorder drafts feeding the VS-02 ROP engine, journal-entry
+  drafts for FIN's close pack, freight-audit matching proposals (VS-110).
+- **Run (bounded autonomy on T2/T3):** returns triage, document classification (VS-88),
+  planogram-compliance checks (VS-55), data-hygiene sweeps.
+
+### 12.4 Workforce and change
+
+Augmentation-first sequencing; VS-134 owns task redesign, reskilling, and adoption metrics;
+CBA/labor-relations sensitivity (VS-84) is assessed before any agent that materially changes
+a represented role; the Change & Training Lead pool carries rollout for the 6,762-user base.
+
+## 13. Related Documents
 
 | Document | Relationship |
 |---|---|
-| [`it-product-operating-model.md`](it-product-operating-model.md) | The operating model this sourcing strategy reshapes (v2.0: 16 teams, three archetypes, SEP, SIB, 115 FTE) |
+| [`it-product-operating-model.md`](it-product-operating-model.md) | The operating model this sourcing strategy reshapes (v2.1: 17 teams incl. AAP, three archetypes, SEP, SIB, 122 FTE) |
 | [`technical-guidelines.md`](technical-guidelines.md) | §1 POS/offline architecture protected by the Core-tier guardrail; §5 multi-vendor integration reference |
 | [`../01-model-company/model-company-profile.md`](../01-model-company/model-company-profile.md) | §14.1 hybrid landscape (unified core + BoB edges + in-house products) |
 | [`../01-model-company/data-volumes-and-integrations.md`](../01-model-company/data-volumes-and-integrations.md) | The ten external integration clusters and transaction volumes IAP dimensions against |
 | [`../01-model-company/internal-controls-matrix.md`](../01-model-company/internal-controls-matrix.md) | The 808-control register every sourcing decision must map to |
-| [`../01-model-company/headcount-reality-check.md`](../01-model-company/headcount-reality-check.md) | IT need band (65–80 pre-hybrid; 65–130 hybrid) the 115-FTE sizing lands in |
+| [`../01-model-company/headcount-reality-check.md`](../01-model-company/headcount-reality-check.md) | IT need band (65–80 pre-hybrid; 65–130 hybrid) the 122-FTE sizing lands in |
 
 ---
 
-*Document Version: 1.0 | Date: 2026-09-03 | Initial issue with the hybrid capability-sourcing
-decision (best-of-breed edges + in-house differentiators + unified ERP core). Companion to
-`it-product-operating-model.md` v2.0; landscape rows in `model-company-profile.md` §14.1;
-IT sizing impact in OM §9 (115 FTE) and `optimal-table-of-organization.md` v1.3 (HQ 504 /
-total 6,904).*
+*Document Version: 1.1 | Date: 2026-09-03 | **Agentic extension (with OM v2.1):** new §12
+Agentic Automation Program — autonomy ladder wired to the workflow Tier register, agent
+lifecycle (intake → SIB routing → VS-128 registration → shadow/canary evaluation → operation
+→ QBR sunset), hard boundaries (statutory filings, POS/OT, SoD), crawl-walk-run posture, and
+workforce/change rules (VS-134, VS-84); two register rows added (agentic runtime = build →
+AAP; foundation-model access = buy under tier-1 TPRM); related-docs table renumbered to §13.
+Prior v1.0 (2026-09-03): initial issue with the hybrid capability-sourcing decision
+(unified ERP core + best-of-breed WMS/TMS/WFM/FSM edges + in-house OMO/TPS differentiators);
+IT sizing impact in OM §9 (115 FTE at v2.0) and `optimal-table-of-organization.md`
+(HQ 504 / total 6,904 at v1.3).*

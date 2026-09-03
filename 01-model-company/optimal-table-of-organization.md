@@ -7,13 +7,13 @@
 > **STATUS — ADOPTED AS TARGET STATE 2026-09-02.** The organization recognizes exactly two
 > states. The **current baseline** is the minimum-coverage structure in
 > [`model-company-profile.md`](model-company-profile.md) §3.3/§11.1 (HQ 362; total 6,762).
-> The **target state** is this document: **HQ 504 / total 6,904** at 200 stores (revised
-> 2026-09-03 for the hybrid IT capability-sourcing model), reached through the three
-> demand-triggered phases in §11. It does **not** rewrite current-state canon — every delta is
-> stated explicitly (§5.1, §11), every figure traces to a source
+> The **target state** is this document: **HQ 511 / total 6,911** at 200 stores (revised
+> 2026-09-03 for the hybrid IT capability-sourcing model + agentic-AI extension), reached
+> through the three demand-triggered phases in §11. It does **not** rewrite current-state
+> canon — every delta is stated explicitly (§5.1, §11), every figure traces to a source
 > ([`headcount-reality-check.md`](headcount-reality-check.md) need bands;
 > [`it-product-operating-model.md`](../07-methodology/it-product-operating-model.md) §9 —
-> IT = 115 FTE; VS-177 field retail operating model), and each phase's promotion is
+> IT = 122 FTE; VS-177 field retail operating model), and each phase's promotion is
 > CHANGELOG-recorded. The 300-store continuation of the target is defined in §12.
 
 ---
@@ -36,13 +36,13 @@
 | State | HQ | Total | Status |
 |---|---|---|---|
 | **Current baseline** | 362 | 6,762 | Minimum-coverage TO implemented 2026-06-20/25 (profile §3.3) — canonical until phase triggers fire |
-| **Target (this document)** | **504** | **6,904** | Adopted 2026-09-02 (HQ 469 / 6,869); revised 2026-09-03 for the hybrid IT capability-sourcing model (+35 IT); optimal steady state at 200 stores; phased per §11; scales per §12 |
+| **Target (this document)** | **511** | **6,911** | Adopted 2026-09-02 (HQ 469 / 6,869); revised 2026-09-03 for the hybrid IT capability-sourcing model (+35 IT) and agentic-AI extension (+7 IT); optimal steady state at 200 stores; phased per §11; scales per §12 |
 
 **Design stance.** The current baseline (HQ 362) is the *minimum-viable* TO — the floor that
-resolves the known gaps. The adopted target lands at **HQ 504** — the upper edge of the
-reality-check's comfortable band (~440–510 under the hybrid IT capability-sourcing model
-adopted 2026-09-03; the band was ~440–470 under the unified-ERP model, when IT = 80), pushed
-to the top by IT = 115 per the product
+resolves the known gaps. The adopted target lands at **HQ 511** — the upper edge of the
+reality-check's comfortable band (~440–515 after the 2026-09-03 hybrid + agentic revisions;
+the band was ~440–470 under the unified-ERP model, when IT = 80), pushed to the top by
+IT = 122 per the product
 operating model) — reached through **three demand-triggered phases** (§11), never big-bang
 hiring.
 
@@ -73,7 +73,7 @@ hiring.
    ceiling. No inserting of coordination layers between DM and Store Manager, ever.
 7. **Field-first, HQ-lean.** HQ designs and standardizes; the field executes and feeds back.
    The store support center is a service to stores, not an inspection bureaucracy. Target
-   HQ-to-field ratio ≈ 8% (504 : 6,400 = 7.9%), inside the 6–10% big-box norm.
+   HQ-to-field ratio ≈ 8% (511 : 6,400 = 8.0%), inside the 6–10% big-box norm.
 8. **Business-partner model over silos.** HRBPs sit in the regions; Finance partners sit
    with Supply Chain (S&OP finance) and Merchandising (OTB/margin); IT Product Owners pair
    with Business Product Owners in every department (per the IT operating model). The TO
@@ -110,8 +110,8 @@ hiring.
    │                                   Regional Loss Prevention ··· Customer Service
    │                                   Trade / Account Management
    │
-   ├── CIO ──────────────────────────── Information Technology (9 domain + 6 platform product
-   │                                      teams + CIO Office = 115 FTE; DPO administrative line)
+   ├── CIO ──────────────────────────── Information Technology (9 domain + 7 platform product
+   │                                      teams + CIO Office = 122 FTE; DPO administrative line)
    │
    ├── CMO ──────────────────────────── Marketing (brand · promo · loyalty · digital · retail
    │                                      media · insights) [+ GM, Digital Commerce Inc. — dotted]
@@ -156,7 +156,7 @@ CEO
 ├── CIO
 │   └── IT product portfolio (see it-product-operating-model.md §3–§5)
 │         Domain: MSC · WLI · SSP · CCP · FIN · CORP · PEO · OMO · TPS
-│         Platform: IAP · INFRA · SEC · DP · SEP · FS (+ CIO Office)
+│         Platform: IAP · INFRA · SEC · DP · SEP · AAP · FS (+ CIO Office)
 ├── CMO
 │   └── VP Marketing — brand & creative · promotions · loyalty/CRM · digital ·
 │         retail media & marketplace · insights · marketing ops
@@ -184,11 +184,11 @@ CEO
 | CEO / President | 7 (six officers + VP Merchandising) + strategy cell | 47 (+ Exec Office 7) | ✅ at ceiling, by design |
 | CFO | 2 + Controller org | 71 (Finance 62 + IA 9) | ✅ |
 | COO | 7 | 155 (7 depts) | ✅ at ceiling — all operations under one P&L |
-| CIO | 2 (Head of EA / portfolio, FinOps & vendor-portfolio) via CIO Office; 16 product teams | 115 | ✅ (platform-led span) |
+| CIO | 2 (Head of EA / portfolio, FinOps & vendor-portfolio) via CIO Office; 17 product teams | 122 | ✅ (platform-led span) |
 | CMO | 1 + dotted GM Digital Commerce Inc. | 30 | ✅ light span absorbs retail-media growth |
 | CHRO | 2 | 55 | ✅ |
 | VP Legal & Compliance | 2 + CorpSec (statutory) | 24 | ✅ |
-| **Total** | **18 departments + Executive Office** | **497 + 7 = 504** | |
+| **Total** | **18 departments + Executive Office** | **504 + 7 = 511** | |
 
 ### 4.2 Value-stream family ownership (gap-free)
 
@@ -215,7 +215,7 @@ CEO
 | 2 | Finance & Accounting | 46 | 58–68 | **62** | ~9,000 AP invoices/mo; 5 entities; PFRS 15; monthly VAT ×5 |
 | 3 | Merchandising & Buying | 40 | 40–45 | **43** | 35K active SKUs; 6 promo events/yr; competitive pricing (VS-57) |
 | 4 | Supply Chain & Logistics | 40 | 42–50 | **46** | 800–1K vendors; 400–600 TEU/mo; VS-127 consensus cycle; 4 DCs |
-| 5 | Information Technology | 50 | 65–130 | **115** | 16 product teams per it-product-operating-model.md §9.1 (authoritative — hybrid capability-sourcing model, 2026-09-03) |
+| 5 | Information Technology | 50 | 65–130 | **122** | 17 product teams per it-product-operating-model.md §9.1 (authoritative — hybrid capability-sourcing + agentic-AI model, 2026-09-03) |
 | 6 | Human Resources | 26 | 38–48 | **42** | 6,800+ staff; ~1,400 hires/yr; 13,400+ payslips/mo; CBA (VS-84) |
 | 7 | Marketing | 25 | 28–34 | **30** | Loyalty 600K members; retail media (VS-48); marketplace (VS-95); ecom ramp 3→7% |
 | 8 | Store Operations | 24 | 24 | **24** | 6 RM + 13 DM + store support center (VS-177) |
@@ -229,16 +229,17 @@ CEO
 | 16 | Sustainability / ESG | 3 | 3–4 | **4** | VS-25; DENR; ESG reporting cadence |
 | 17 | Strategy / Corp Planning | 3 | 4–5 | **4** | Annual plan; CPM; competitive intelligence (VS-33) |
 | 18 | Trade / Account Management | 5 | 6–8 | **7** | 5,200 trade accounts; VS-43 program; VS-107 key accounts |
-| | **Total HQ** | **362** | **~440–510** | **504** | |
+| | **Total HQ** | **362** | **~440–515** | **511** | |
 | | Store personnel | 5,800 | OK | **5,800** | 29/store affirmed (§13) |
 | | DC personnel | 600 | OK | **600** | 150/DC affirmed (§13) |
-| | **Total company** | **6,762** | | **6,904** | Revenue/employee ≈ PHP 9.02M |
+| | **Total company** | **6,762** | | **6,911** | Revenue/employee ≈ PHP 9.01M |
 
-> 504 lands inside the reality-check comfortable band (~440–510, as amended 2026-09-03) at
-> its upper edge — the increment over ~470 is IT at 115 (hybrid capability-sourcing model),
-> sized independently and authoritatively by the IT product operating model §9.2. The IT
-> band was extended 65–80 → 65–130 and the HQ band ~440–470 → ~440–510 by the 2026-09-03
-> hybrid capability-sourcing decision; all other department bands are unchanged.
+> 511 lands inside the reality-check comfortable band (~440–515, as amended 2026-09-03) at
+> its upper edge — the increment over ~470 is IT at 122 (hybrid capability-sourcing +
+> agentic model), sized independently and authoritatively by the IT product operating model
+> §9.2. The IT band was extended 65–80 → 65–130 and the HQ band ~440–470 → ~440–510 →
+> ~440–515 by the 2026-09-03 hybrid + agentic decisions; all other department bands are
+> unchanged.
 
 ### 5.2 Sub-team architecture (where structure changes, not just size)
 
@@ -316,12 +317,13 @@ Company Nurse + wellness coordinator. (Per-store safety duties are held by train
 Trade/Acct Mgmt (7)** — as profiled in §5.1; each closes a named-role gap from the reality
 check (metrology, energy manager, competitive intelligence, key-account managers).
 
-**Information Technology (115)** — governed by the IT product operating model, not restated
+**Information Technology (122)** — governed by the IT product operating model, not restated
 here: 9 stream-aligned domain products (7 configure / buy-and-integrate teams paired to
-business owners + the two in-house **build** squads OMO and TPS), 6 platform teams
-(integration, infra, security/GRC, data, engineering enablement, field services), CIO Office.
-Target = 115 (authoritative steady-state sizing under the hybrid capability-sourcing model,
-mid-band of the 65–130 hybrid need band).
+business owners + the two in-house **build** squads OMO and TPS), 7 platform teams
+(integration, infra, security/GRC, data, engineering enablement, agentic enablement,
+field services), CIO Office.
+Target = 122 (authoritative steady-state sizing under the hybrid capability-sourcing +
+agentic model, mid-band of the 65–130 hybrid need band).
 
 ---
 
@@ -429,7 +431,7 @@ afternoon); DC3 (40,000 sqm) may split the AM roles into two each during peak.
 | Merchandising & Promo Council | Bi-monthly | VP Merchandising | Catalog events, markdowns, vendor funding |
 | Pricing Exception Review Board | Weekly | VP Merchandising (CFO delegate) | Price-override / margin-exception approvals |
 | Architecture Review Board | Bi-weekly | Head of EA (CIO) | VS-113; configuration & integration standards |
-| Sourcing & Investment Board | Monthly + on demand | CIO | Configure/buy/build routing per the capability sourcing model; Capability Sourcing Register |
+| Sourcing & Investment Board | Monthly + on demand | CIO | Configure/buy/build routing per the capability sourcing model; Capability Sourcing Register; agent autonomy ratifications |
 | IT Product Council / QBR | Monthly / Quarterly | CIO | Product backlogs, KPIs, funding |
 | Risk & Compliance Committee | Monthly | VP Legal & Compliance | ERM, AML/ABC, privacy, TPRM dashboard |
 | Data Privacy Council | Quarterly | DPO (functional to VP Legal) | DPA/NPC posture, breach readiness |
@@ -451,7 +453,7 @@ afternoon); DC3 (40,000 sqm) may split the AM roles into two each during peak.
 | Store Manager | 6–10 | 8 | ✅ |
 | Dept Supervisor (store) | 4–8 | 4 | ✅ |
 | **Layers (CEO → associate)** | **≤ 8** | **8** | ✅ |
-| **HQ : field ratio** | 6–10% | 504 : 6,400 = **7.9%** | ✅ |
+| **HQ : field ratio** | 6–10% | 511 : 6,400 = **8.0%** | ✅ |
 
 Exceptions policy: any new box that violates band/layer rules needs ExCo sign-off with a
 workload justification — the mechanism that prevents silent org creep between redesigns.
@@ -473,7 +475,7 @@ workload justification — the mechanism that prevents silent org creep between 
 
 ---
 
-## 11. Sizing & Phasing — Current 362 → Target 504
+## 11. Sizing & Phasing — Current 362 → Target 511
 
 The adopted target state is reached through three demand-triggered phases (no speculative
 hiring; each phase has explicit triggers):
@@ -482,11 +484,11 @@ hiring; each phase has explicit triggers):
 |---|---|---|---|
 | **1 — Regulatory floor** | 0–6 mo | Legal 14→20 (MLRO cell, privacy staff, gov-affairs); HSE 10→13 (SO coverage + nurse); IA 7→9 | +18 |
 | **2 — Transaction scale** | 6–18 mo | Finance 46→62 (tied to AP-automation threshold: ≤800 inv/clerk/mo); CS 30→34 (hybrid model decision) | +26 |
-| **3 — Capability scale** | 18–36 mo | IT 50→115 (per the hybrid capability-sourcing product-model sequencing, OM §9.3); HR 26→42 (field HRBPs as regions mature); SC 40→46; Merch 40→43; Marketing 25→30; LP 20→27; Facilities 8→12; Quality 4→5; ESG/Strategy/Trade top-ups | +98 |
-| | | **Total** | **362 → 504 (+142)** |
+| **3 — Capability scale** | 18–36 mo | IT 50→122 (per the hybrid + agentic product-model sequencing, OM §9.3); HR 26→42 (field HRBPs as regions mature); SC 40→46; Merch 40→43; Marketing 25→30; LP 20→27; Facilities 8→12; Quality 4→5; ESG/Strategy/Trade top-ups | +105 |
+| | | **Total** | **362 → 511 (+149)** |
 
-**Guardrails.** Total HQ never exceeds the 440–510 band (as amended 2026-09-03 for the hybrid
-IT model) at 200 stores; any phase that would
+**Guardrails.** Total HQ never exceeds the 440–515 band (as amended 2026-09-03 for the
+hybrid + agentic IT model) at 200 stores; any phase that would
 breach it defers into the next scaling review (§12). Store/DC staffing unchanged throughout.
 Each phase promotion is recorded in [CHANGELOG.md](../CHANGELOG.md) and flips the affected
 §5.1 row from *target* to *current* — the mechanism that keeps the two states honest.
@@ -504,9 +506,9 @@ Each phase promotion is recorded in [CHANGELOG.md](../CHANGELOG.md) and flips th
 | Districts | 13 (~15 stores) | 20 | linear |
 | Regional LP Officers | 20 | 30 | 1 per ~10 stores |
 | Store Ops HQ | 24 | 30 | support-center grows sub-linearly |
-| HR / CS / Finance / IT | 42 / 34 / 62 / 115 | 52 / 45 / 70 / 130 | HQ grows at ≤ half the store rate via ERP automation |
-| **HQ total** | **504** | **~565** | discipline: ~8% → ~5% of company |
-| **Company total** | **6,904** | **~9,900** | revenue/employee ≥ PHP 9M preserved |
+| HR / CS / Finance / IT | 42 / 34 / 62 / 122 | 52 / 45 / 70 / 135 | HQ grows at ≤ half the store rate via ERP automation |
+| **HQ total** | **511** | **~575** | discipline: ~8% → ~5% of company |
+| **Company total** | **6,911** | **~9,900** | revenue/employee ≥ PHP 9M preserved |
 
 ---
 
@@ -548,28 +550,27 @@ Each phase promotion is recorded in [CHANGELOG.md](../CHANGELOG.md) and flips th
 |---|---|
 | [`model-company-profile.md`](model-company-profile.md) §3.3/§11.1 | Current canonical TO (minimum-viable, HQ 362) this design optimizes |
 | [`headcount-reality-check.md`](headcount-reality-check.md) | Need bands (§2 table) and named-role gaps (§4) driving optimal sizing |
-| [`it-product-operating-model.md`](../07-methodology/it-product-operating-model.md) | Authoritative IT structure & sizing (115 FTE, 16 product teams) |
+| [`it-product-operating-model.md`](../07-methodology/it-product-operating-model.md) | Authoritative IT structure & sizing (122 FTE, 17 product teams) |
 | `workflows/VS-177-…` | Field retail operating model (RM/DM cadence) this TO instantiates |
 | `workflows/VS-127-…` | S&OP/IBP cycle owned by the Supply Chain sub-team |
 | [`internal-controls-matrix.md`](internal-controls-matrix.md) | 808 controls embedded in 1st-line departments (three-lines model, §2 principle 4) |
 
 ---
 
-*Document Version: 1.3 | Date: 2026-09-03 | **Hybrid capability-sourcing revision** (with
-`it-product-operating-model.md` v2.0 and the new
-`07-methodology/capability-sourcing-and-engineering-model.md`): IT target 80 → 115 (16
-product teams: +OMO/TPS build squads, +SEP platform, +vendor product managers), target HQ
-469 → 504 and company total 6,869 → 6,904; reality-check bands annotated (IT 65–130, HQ
-~440–510); §11 Phase 3 +63 → +98 and total +107 → +142; §12 scaling rows re-based
-(IT 115 → ~130 at 300 stores; HQ ~565; company ~9,900); §8 adds the Sourcing & Investment
-Board; revenue/employee ≈ PHP 9.02M at the 200-store target. Prior v1.2 (2026-09-02):
-adopted as the BuildRight target-state TO; two-state framing declared (§1); guardrails
-extended with CHANGELOG-recorded phase promotion (§11). v1.1 (same date, consistency review
-#68): §7.3 DC-roster Outbound group-total label trued to its own role sum (was stated one
-high; the section's grand total of 150 and the company total are unchanged), and the §15
-internal-controls cross-reference made mechanically resolvable. Under the permanent regression
-guard of `07-methodology/audit-model-docs.py` (validator Check 59), including a structural
-rule that re-derives every §7.3 roster group total from its own HC cells. v1.0 (2026-09-02):
-initial optimal TO design issued as a proposal. Current-state canon (model-company-profile.md
-§3.3/§4/§11.1 — HQ 362 / total 6,762) is unchanged; the deltas in §5.1/§11 define the target
-until each phase trigger fires.*
+*Document Version: 1.4 | Date: 2026-09-03 | **Agentic-AI extension** (with
+`it-product-operating-model.md` v2.1): IT target 115 → 122 (17 product teams: +AI & Agent
+Platform), target HQ 504 → 511 and company total 6,904 → 6,911; HQ band extended
+~440–510 → ~440–515 (IT band 65–130 unchanged — 122 stays mid-band); §11 Phase 3 +98 →
++105 and total +142 → +149; §12 scaling rows re-based (IT 122 → ~135 at 300 stores; HQ
+~575); §8 SIB row gains agent autonomy ratifications; revenue/employee ≈ PHP 9.01M.
+Prior v1.3 (2026-09-03): hybrid capability-sourcing revision — IT 80 → 115 (16 teams), HQ
+469 → 504 / 6,869 → 6,904, bands IT 65–130 / HQ ~440–510, §12 re-based, SIB added.
+Prior v1.2 (2026-09-02): adopted as the BuildRight target-state TO; two-state framing
+declared (§1); guardrails extended with CHANGELOG-recorded phase promotion (§11). v1.1
+(consistency review #68): §7.3 DC-roster Outbound group-total label trued; §15
+internal-controls cross-reference made mechanically resolvable. Under the permanent
+regression guard of `07-methodology/audit-model-docs.py` (validator Check 59), including a
+structural rule that re-derives every §7.3 roster group total from its own HC cells.
+v1.0 (2026-09-02): initial issue. Current-state canon (model-company-profile.md §3.3/§4/§11.1
+— HQ 362 / total 6,762) is unchanged; the deltas in §5.1/§11 define the target until each
+phase trigger fires.*

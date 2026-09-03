@@ -230,7 +230,7 @@ erpplans/
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
-│   ├── optimal-table-of-organization.md  Adopted TARGET-STATE TO: HQ 504 / total 6,904 (phased from current 362 / 6,762; revised 2026-09-03 for the hybrid IT sourcing model)
+│   ├── optimal-table-of-organization.md  Adopted TARGET-STATE TO: HQ 511 / total 6,911 (phased from current 362 / 6,762; revised 2026-09-03 for the hybrid IT sourcing + agentic-AI model)
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
 │   ├── internal-controls-matrix.md     808 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
@@ -240,7 +240,7 @@ erpplans/
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security, multi-vendor sourcing architecture
     ├── capability-sourcing-and-engineering-model.md  Configure/buy/build decision gate, sourcing register, build squads, SEP
-    ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds), roles, RACI, governance, sizing (50 → 115 FTE)
+    ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds + AI agent platform), roles, RACI, governance, sizing (50 → 122 FTE)
     ├── validate-repo.sh              Cross-reference validation (66 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
