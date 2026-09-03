@@ -190,6 +190,86 @@ identify capability gaps not addressed by any existing value stream.
 > family measured at batch 27 was already 0. Canonical totals unchanged: **188 value streams ·
 > 569 process areas · 5,387 workflows · 808 controls** (88 P / 720 D).
 >
+> **Post-batch-12 confirmation sweep & item-B colon-form closure (2026-09-04) — not a capability gap pass.**
+> A second fresh corpus-wide re-sweep of the §2 methodology at workflow granularity — ~40 further
+> candidate capabilities across lenses not yet exhausted after batch 12 (pro-customer
+> estimation/takeoff services, rain checks, returns-to-vendor, customer warranty & vendor
+> recovery, delivery-slot scheduling, own-loss insurance-claims intake, own-site pest control,
+> water potability & treatment, sharpening, paint tint/color-matching, cut-to-size services,
+> standby power, guard-services contracting, duty drawback, transfer pricing, intercompany
+> allocations, gift registry, Incoterms/trade-finance documentation, FX & commodity hedging,
+> cold chain, data-science platform, API management/middleware, ITSM/service desk,
+> physical-security monitoring, board evaluation, subsidiary governance, tax-treaty relief,
+> warranty spares, loaner tools, loyalty accrual accounting) — found **zero surviving capability
+> gaps**: every candidate resolved to a dedicated `## W`-header owner (representative
+> adjudications: gift registry W1039, duty drawback W2955 + PA-87.2 bonded operations,
+> Incoterm & marine-insurance tracking W191, FX hedging PA-18.3 + commodity hedging VS-106,
+> unfulfilled-demand/rain-check capture W5509, board evaluation & committees W1727/W1730 +
+> VS-36, reinsurance treaty placement W4540, guard-force contracting inside the W5A/W5F/W37
+> physical-security estate, generator & standby power W808 + PA-24.2, loyalty-liability
+> accuracy CTL-32/W17.11a, middleware/API governance inside the PA-113.1 architecture
+> standards + W595/W614/W733/W787 integration-monitoring estate) or dissolved under
+> verification (water potability & treatment = customer-advisory content in PA-09.2 plus
+> BuildRight's own wastewater/DENR compliance in PA-25.1/PA-22; cold chain = "if applicable"
+> paint/chemical environmental zones in PA-04.3 plus the PA-83 clinic vaccine cold chain;
+> loaner units = PA-13.1/PA-53.2 repair-accommodation steps; cut-to-size blinds & sharpening =
+> not offered services in the VS-09 fabrication catalog — correctly absent; tax-treaty relief =
+> a computed sub-step of the PA-18.1 dividend withholding schedule). The batch-12 corpus-wide
+> verdict — no unowned capability at workflow granularity — is confirmed and extended.
+>
+> The same pass executed the **definition-aware adjudication of the entire residual item-B
+> colon-form family** — the batch-27-classified, batch-12-remaining citations (9 fabricated +
+> 62 uncertain by token-overlap scoring; 95 unique lines after de-duplication against the
+> unnumbered family). Every line was hand-read against the two-sided test (gloss
+> definition-matches the cited control AND the control plausibly governs the workflow's
+> subject): **53 lines re-mapped/re-pointed** to the semantically correct register control with
+> definition-matched glosses — the CTL-46 loyalty-fraud misdirects in the OT estate
+> (PA-190.2/190.3) → CTL-151 OT/ICS posture + the files' own CTL-801/CTL-802; CTL-06
+> vendor-onboarding guard → CTL-41 LGU-permit compliance for the PA-76.1 permit workflows and
+> → CTL-50 master-data change control for vendor-master status/assessment updates; the CTL-44
+> duplicate-*vendor*-payment paste family re-pointed by subject — CTL-185 B2B billing
+> integrity (W2443), CTL-212 trade-credit exposure (W2490/W2701), CTL-213 chargeback integrity
+> (W2575), CTL-21 inventory accuracy (W2383); the CTL-26 fixed-asset-disposal paste family
+> re-pointed by subject — CTL-104 equipment-rental safety & recovery
+> (W5323/W5327/W5330/W5334/W5337/W5338/W5341), CTL-198 sample/display-asset accountability
+> (W2179/W2240/W2341/W2349), CTL-219 fixed-asset register (W5324/W2672/W2674), CTL-178 fleet
+> maintenance (W2324), CTL-176 clearance disposition (W2270), CTL-227 ESG evidence (W2474),
+> CTL-171/CTL-100 take-back & cylinder controls (W5349/W5353/W5359); privacy misdirects →
+> CTL-153 (W2121/W2192/W2481/W2491/W5262); competition-law gloss → CTL-159 (W2683); BSP/SEC
+> truth-in-lending → CTL-208 (W5400); factoring-fee accuracy → CTL-120 (W5409); proof-of-loss
+> tax → CTL-34 (W5276/W5383); board-governance receipts → CTL-349 (W2597/W2284); site access →
+> CTL-311 (W5273); collections fraud → CTL-109 (W5386); return-fraud → CTL-179
+> (W5353/W2308/W2335/W2336); incentive gaming → CTL-46 (W5350); cylinder assets → CTL-100
+> (W5359); recovery revenue → CTL-114 (W5362); pick/fulfillment fraud → CTL-197
+> (W2300/W2290/W2286); damage claims → CTL-75 (W2201); TPRM tiering → CTL-167 (W2190);
+> margin-floor guard → CTL-108 (W2215/W2218/W2224/W2225); DTI-permit pointers corrected
+> W868 → W833 and re-mapped → CTL-283 (W2223/W2238); vendor-cost accuracy → CTL-115 (W2232);
+> multi-account abuse → CTL-196 (W2252); tax settlement/filing → CTL-214 (W2275/W2594);
+> TP arm's-length → CTL-18 (W2584/W2592); entity profitability → CTL-213 (W2596); mobile-app
+> privacy → CTL-203 (W2652); 3PL payment-terms accuracy → own CTL-399 (W2212, already listed);
+> stored-value expiry → CTL-211 (W2148, already listed); drop-ship revenue-recognition →
+> CTL-114 with the line's primary citation folded to the own CTL-409 (W2289) — and **18 lines
+> confirmed as legitimate deliberate cross-references** and left unchanged (e.g., CTL-02 capex
+> Board-tier in W5281 — "capex" vs "capital expenditure" is a token-mismatch false positive;
+> the CTL-51 master-data-currency family in W2174/W2184/W2186/W2281/W2339; CTL-39 rebate/co-op
+> terms in W2382; CTL-37 warranty validation in W5247; CTL-22 VAT in W5238; CTL-13 payroll/time
+> SoD in W5257; CTL-26 disposals in W5277/W5296; CTL-20 cash accountability in W5292; CTL-24
+> receiving fraud in W5294; CTL-41 LGU/agency renewals in W5256; CTL-06 vendor-master blocking
+> in W2466; CTL-05 credit re-check in W5333; CTL-349 board resolution in W2264). The **last 24
+> mid-line unnumbered `CTL (gloss)` degenerate forms** — a family the batch-12 sweep (which
+> measured the unnumbered-bullet surface) reported closed at 8 — were folded to numbered
+> register controls or honest prose (the two RA 7394 consumer-act fragments re-written as
+> compliance prose; a further W868 DTI-pointer straggler in PA-64.1 prose repaired).
+> [internal-controls-matrix.md](../internal-controls-matrix.md) W-ref lists were extended for
+> the 37 newly-cited controls. The corpus-wide `CTL (`-without-number sweep now returns **0 at
+> any line position**, and the DTI-context 'links to W868' family is 0 (remaining W868 links
+> are vendor-catalog-appropriate). Token-overlap scoring now reports 170 isolated colon-form
+> citations — every one a hand-adjudicated verbatim-objective restatement or
+> definition-matched paraphrase (the residual low scores are token-mismatch false positives
+> such as 'capex'/'anti-competitive'). Canonical totals unchanged: **188 value streams · 569
+> process areas · 5,387 workflows · 808 controls** (88 P / 720 D); the workflow-dependency-map
+> §8.1 anchor table refreshed (VS-91 979 → 980, membership unchanged, v4.20 footer).
+>
 > **Post-Pass-30 workflow-level additions, batch 10 (2026-09-03) — finance-workflow gap fill.**
 > A dedicated Finance-domain gap analysis ([workflow-gap-analysis-finance.md](workflow-gap-analysis-finance.md))
 > re-ran the §2 methodology across the Finance family (775 workflows) plus treasury/tax/property-adjacent
