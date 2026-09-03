@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,370 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,393 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,377 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,400 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
@@ -10,8 +10,10 @@
 > W5511 (VS-54.3 gift-card dormancy/escheat) shipped directly confirmed Tier 2 in the
 > 2026-09-03 event-custody pass, W5512–W5514 (the agentic-AI platform lifecycle gap fill
 > in VS-128.3) shipped directly confirmed Tier 2 in the 2026-09-03 agentic gap-fill pass,
-> and W5515–W5517 (the capability-sourcing & engineering gap fill in VS-113) shipped
-> directly confirmed Tier 2 in the 2026-09-03 sourcing-model gap-fill pass.
+> W5515–W5517 (the capability-sourcing & engineering gap fill in VS-113) shipped
+> directly confirmed Tier 2 in the 2026-09-03 sourcing-model gap-fill pass, and
+> W5518–W5524 (the IT operating-model gap fill in VS-27) shipped directly confirmed
+> Tier 2 (5) / Tier 3 (2) in the 2026-09-03 IT workflow gap-fill pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -267,9 +269,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (3,256 Workflows)
+## Tier 2: Standard Support (3,261 Workflows)
 
-These 3,256 workflows are needed for standard operational support, cost controls, and category management.
+These 3,261 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -558,9 +560,9 @@ These 3,256 workflows are needed for standard operational support, cost controls
 
 ---
 
-## Tier 3: Advanced Optimization (756 Workflows)
+## Tier 3: Advanced Optimization (758 Workflows)
 
-These 756 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
+These 758 workflows deliver advanced capabilities for competitive differentiation, AI-driven automation, and deep business analytics.
 
 ### Innovation & Digital Transformation (8 workflows)
 
@@ -766,12 +768,12 @@ These 756 workflows deliver advanced capabilities for competitive differentiatio
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
 | Phase 1 | Go-Live Critical (Tier 1) | 1,381 | 25.6% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,256 | 60.4% |
-| Phase 3 | Innovation & Optimization (Tier 3) | 756 | 14.0% |
-| **Confirmed Total** | | **5,393** | 100% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,261 | 60.4% |
+| Phase 3 | Innovation & Optimization (Tier 3) | 758 | 14.0% |
+| **Confirmed Total** | | **5,400** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,370 are canonical `##` workflows.
+> own classification row; the remaining 5,377 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -795,14 +797,16 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,393 rows (5,370 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,400 rows (5,377 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,370** unique `##` workflows (5,370 confirmed + 0 unclassified) |
+| **Grand Total** | **5,377** unique `##` workflows (5,377 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,393 classified register rows (5,370 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,370 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,400 classified register rows (5,377 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,377 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+
+> **2026-09-03 addition (IT operating-model gap fill, batch 8):** Seven workflow-level gap fills — W5518 (Collaboration & Productivity Platform (M365/Email/Teams) Operations & Tenant Governance; PA-27.2), W5519 (Enterprise Messaging & Store Telephony Services (UCC) Lifecycle; PA-27.2), W5520 (Core Network Services & IPAM (DNS/DHCP/IP-Schema) Management; PA-27.2), W5521 (Enterprise Release Calendar & Peak-Season Change-Freeze Governance; PA-27.1), W5522 (ISMS Program, Security Certification & Security-Policy Lifecycle (ISO/IEC 27001); PA-27.3), W5523 (Enterprise Pentest, Red/Purple-Team & Attack-Surface Management Program; PA-27.3), and W5524 (Enterprise DLP & Insider-Risk Monitoring (Endpoint/Email/Cloud); PA-27.3) — were added after a dedicated IT-domain gap analysis (workflow-gap-analysis-it.md) re-ran the gap methodology across all 9 Technology & Data value streams: the ~6,762-user M365/email/telephony collaboration estate, the internal core network services, the cross-estate change freeze, and the ISMS/adversarial-validation/insider-risk assurance layer each had no dedicated owner in any PA file ('Microsoft 365', 'tenant administration', 'digital workplace', 'email security', 'DMARC', 'IPAM', 'DHCP', 'change freeze', and a true-word 'ISMS' each appeared in zero dedicated `## W` headers — the adjacent VS-27 slices are each operations-generic: W366 owns WAN/ISP/Wi-Fi, W367 vulnerability ops, W387 quarterly ITGC CSA sampling, W1205 the PCI QSA cycle, W1409 the weekly CAB). Five ship **directly confirmed Tier 2** (W5518/W5520/W5521/W5522/W5524 — the infrastructure-operations and governance class of their VS-27 siblings), two ship **Tier 3** (W5519 store telephony/UCC — support-layer communications; W5523 pentest/red-team — periodic assurance), matching the batch-7 governance precedent.
 
 > **2026-09-03 addition (sourcing-model gap fill, batch 7):** Three workflow-level gap fills — W5515 (Sourcing Decision Gate Operation & Capability Sourcing Register; PA-113.3), W5516 (Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves; PA-113.2), and W5517 (SEP Paved Road & Engineering Standard Governance for Built Products; PA-113.1) — were added after re-running the gap methodology at workflow granularity against the rest of the 2026-09-03 hybrid capability-sourcing extension (capability-sourcing-and-engineering-model.md §3–§9, the surface the batch-6 pass's §12 scope deliberately left unexamined): the sourcing gate + Register machinery, the bought-edge lifecycle, and the build-side paved road/standard each had no dedicated owner in any PA file ('sourcing gate', 'golden path', 'paved road', 'ring deployment', 'upgrade currency', 'exit reserve', 'release intake', 'DORA', 'best-of-breed', and 'configure' each appeared in zero dedicated `## W` headers — the adjacent VS-113 slices are each strategy/portfolio-generic: W3588 owns investment-governance ROI, W3589 vendor/platform strategy direction, W3577 portfolio rationalization, W3573 architecture exceptions). All three ship **directly confirmed Tier 2** — the governance/lifecycle-operations class of their VS-113 siblings (W3588/W3589) and the batch-6 W5512–W5514 precedent; the contract-clause dimension (RA 10173 data-residency terms, statutory-readiness warranties) rides W5516's Step-3 verification gate, not a standalone statutory register, matching the W5513/W5511 sibling pattern.
 
@@ -1294,7 +1298,7 @@ Six post-catalog workflows confirmed **Tier 1** — statutory / regulatory execu
 | W5505 | Concession Item Catalog, Barcode & Price-Label Onboarding & Governance | Store Operations |
 | W5508 | Fringe Benefits Tax (FBT) Determination, Valuation & Quarterly BIR Form 1605 Filing | Tax Management & BIR Reporting |
 
-### Tier 2 Additions (501 Workflows)
+### Tier 2 Additions (506 Workflows)
 
 #### Plan & Source
 
@@ -1865,7 +1869,19 @@ The sourcing-model gap-fill pass added three workflows and confirmed them direct
 | W5516 | Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves | Enterprise Architecture, Application Portfolio & Technology Strategy |
 | W5517 | SEP Paved Road & Engineering Standard Governance for Built Products | Enterprise Architecture, Application Portfolio & Technology Strategy |
 
-### Tier 3 Additions (130 Workflows)
+#### IT Operating-Model Gap-Fill Pass (2026-09-03)
+
+The IT gap-fill pass added five workflows and confirmed them directly **Tier 2** — the infrastructure-operations and governance/assurance class of their VS-27 siblings (W366 network ops, W367 vulnerability ops, W387 ITGC CSA, W1409 CAB); the statutory dimension (RA 10173 proportionality for W5524's employee monitoring, BIR CAS timestamp integrity inside W5520) rides verification steps inside the workflows rather than standalone statutory registers, matching the W5513/W5515 sibling pattern:
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5518 | Collaboration & Productivity Platform (M365/Email/Teams) Operations & Tenant Governance | IT Operations & Security |
+| W5520 | Core Network Services & IPAM (DNS/DHCP/IP-Schema) Management | IT Operations & Security |
+| W5521 | Enterprise Release Calendar & Peak-Season Change-Freeze Governance | IT Operations & Security |
+| W5522 | ISMS Program, Security Certification & Security-Policy Lifecycle (ISO/IEC 27001) | IT Operations & Security |
+| W5524 | Enterprise DLP & Insider-Risk Monitoring (Endpoint/Email/Cloud) | IT Operations & Security |
+
+### Tier 3 Additions (132 Workflows)
 
 #### Plan & Source
 
@@ -2044,6 +2060,15 @@ Two post-catalog workflows confirmed **Tier 3** — analytics/optimization class
 |---|---|---|
 | W5501 | Climate Physical & Transition Risk Assessment, Scenario Analysis & Resilience Response Planning | Internal Audit & Risk |
 | W5509 | Unfulfilled-Demand & Lost-Sales Capture, Substitution Analytics & Replenishment Feedback | Supply Planning |
+#### IT Operating-Model Gap-Fill Pass (2026-09-03)
+
+Two IT gap-fill workflows confirmed **Tier 3** — the support-layer/periodic-assurance class: W5519 (store telephony/UCC — support-layer communications with a continuity failover slice) and W5523 (enterprise pentest/red-team — periodic adversarial assurance; the annual program sits above W367's continuous operations). Both ride the absorbed-staffing statement; no statutory register dimension:
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5519 | Enterprise Messaging & Store Telephony Services (UCC) Lifecycle | IT Operations & Security |
+| W5523 | Enterprise Pentest, Red/Purple-Team & Attack-Surface Management Program | IT Operations & Security |
+
 ### Statutory-Compliance Classification Pass (192 workflows; VS-79/85/89/91/114/117/118/125)
 
 > **Hand-reviewed 2026-06-20.** The classifier's `FAMILY_DEFAULTS` force all 8 wholly-statutory
@@ -6649,6 +6674,8 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 ---
 
+
+*Date: 2026-09-03 | Workflow Criticality Classification v7.46 — IT operating-model gap fill (batch 8): the dedicated IT-domain gap analysis (workflow-gap-analysis-it.md) re-ran the §2 gap methodology across all 9 Technology & Data value streams plus IT-facing adjacent streams and found seven workflow-level surfaces unowned — the ~6,762-user M365/email/collaboration/telephony estate, internal core network services (DNS/DHCP/IPAM), the cross-estate peak-season change freeze, and the ISMS / adversarial-validation / insider-risk assurance layer ('Microsoft 365'/'tenant administration'/'digital workplace'/'email security'/'DMARC'/'IPAM'/'DHCP'/'change freeze' and a true-word 'ISMS' in zero dedicated `## W` headers; adjacent slices operations-generic: W366 WAN/ISP/Wi-Fi, W367 vulnerability ops, W387 quarterly ITGC CSA, W1205 PCI QSA cycle, W1409 weekly CAB). Seven workflows added to VS-27 and confirmed directly **Tier 2 (5)** — W5518 Collaboration & Productivity Platform (M365/Email/Teams) Operations & Tenant Governance, W5520 Core Network Services & IPAM (DNS/DHCP/IP-Schema) Management, W5521 Enterprise Release Calendar & Peak-Season Change-Freeze Governance (PA-27.1), W5522 ISMS Program, Security Certification & Security-Policy Lifecycle (ISO/IEC 27001), W5524 Enterprise DLP & Insider-Risk Monitoring (Endpoint/Email/Cloud) — the infrastructure-operations and governance/assurance class of their VS-27 siblings — and **Tier 3 (2)** — W5519 Enterprise Messaging & Store Telephony Services (UCC) Lifecycle (support-layer communications) and W5523 Enterprise Pentest, Red/Purple-Team & Attack-Surface Management Program (periodic assurance). Statutory dimensions (RA 10173 employee-monitoring proportionality in W5524, BIR CAS timestamp integrity in W5520) ride verification steps inside the workflows, matching the W5513/W5515 precedent. All seven absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,393 → 5,400 rows (5,370 → 5,377 unique; T2 3,256 → 3,261; T3 756 → 758); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Technology & Data family + reconciliation line, value-stream-index header/VS-27 row/T&D subtotal/grand total/footer/detailed section, VS-27 README 62 → 69, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows, dependency-map intro + VS-133 row, touchpoint-map v86.0 footer, gap-analysis batch-8 note, executive-summary footer, IT-model v2.5 INFRA 116 → 123 and 4,868+502 → 4,868+509=5,377, sourcing-model companion pin, audit-model-docs ANCHOR re-pin).
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.45 — sourcing-model gap-fill pass: re-running the workflow-granularity gap methodology against the rest of the 2026-09-03 hybrid capability-sourcing extension (capability-sourcing-and-engineering-model.md §3–§9 — the surface batch 6's §12 scope deliberately left unexamined) found three program surfaces unowned at workflow level — the sourcing decision gate + Capability Sourcing Register, the best-of-breed product lifecycle, and the SEP paved road/engineering standard ('sourcing gate'/'golden path'/'paved road'/'ring deployment'/'upgrade currency'/'exit reserve'/'release intake'/'DORA'/'best-of-breed'/'configure' in zero dedicated `## W` headers while the adjacent VS-113 slices are each strategy/portfolio-generic: W3588 investment-governance ROI, W3589 vendor/platform strategy, W3577 portfolio rationalization, W3573 architecture exceptions). Three workflows added to VS-113 (one per PA, hosted where their theme lives) and confirmed directly **Tier 2** (the W3588/W3589 governance sibling class; the RA 10173/statutory-warranty clause dimension carried inside W5516's Step-3 verification gate, matching the W5513/W5511 precedent): **W5515** Sourcing Decision Gate Operation & Capability Sourcing Register (PA-113.3 — scored configure → buy → build assessment, the five mandatory appendices incl. the 808-control mapping, decision-rights routing to Product Council > PHP 25M and the CEO core-tier waiver, Register record + annual QBR reaffirmation + re-evaluation triggers); **W5516** Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves (PA-113.2 — staging-ring intake with Tier-1-mandatory regression pack, defer-one-never-two upgrade currency with Tier & Control Board escalation, RA 10173/statutory-warranty/export/price-cap clause verification, tier-1 annual TPRM reassessment, QBR exit-reserve accrual); **W5517** SEP Paved Road & Engineering Standard Governance for Built Products (PA-113.1 — golden-path starts with ARB-recorded exceptions, trunk-based/feature-flag delivery, contract-first IAP with data contracts, ring deployment with SLO-burn rollback and the AppSec block right, production readiness review with typhoon resilience as a launch criterion, DORA-at-QBR reporting). All three absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,390 → 5,393 rows (5,367 → 5,370 unique; T2 3,253 → 3,256); proposed register stays empty (0 unclassified); the Tier-2 section heading + intro prose — stragglered at 3,250 by the batch-6 pass, which trued only the Summary — trued 3,250 → 3,256, and the `### Tier 2 Additions` sub-heading — stragglered at 495 by the same two passes (their six rows were appended to this section without bumping its parenthetical) — trued 495 → 501 by the 2026-09-03 consistency review pass. Downstream figures re-pointed (workflows/README Quick Stats + Technology & Data family + reconciliation line, value-stream-index header/VS-113 row/T&D subtotal/grand total/footer, VS-113 README 24 → 27, root-README tree/coverage/Key-Metrics/diagram, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows + W5512's own intake figure, dependency-map intro + §8 block + §8.1 anchors + VS-113 row, touchpoint-map, gap-analysis batch-7 note + canonical totals line, executive-summary top footer, IT-model §3.2 CIO 77 → 80 and 4,868+499 → 4,868+502=5,370, sourcing-model §12.1 Tier-2 ladder 3,253 → 3,256 and §12.2 intake figure, OM v2.4, semantic-audit-coverage registry 5,370/5,370). `validate-repo.sh`: 0 errors / 0 warnings.*
 

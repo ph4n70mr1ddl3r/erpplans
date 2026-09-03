@@ -116,6 +116,34 @@ identify capability gaps not addressed by any existing value stream.
 > workflows** (the six ship unclassified with keyword-driven proposed tiers pending a
 > confirmation pass).
 
+> **Post-Pass-30 workflow-level additions, batch 8 (2026-09-03) — IT operating-model gap fill.**
+> A dedicated IT-domain gap analysis ([workflow-gap-analysis-it.md](workflow-gap-analysis-it.md))
+> re-ran the §2 methodology across all 9 Technology & Data value streams (284 workflows) and the
+> IT-facing adjacent value streams, and filled seven single-workflow gaps inside VS-27:
+> **W5518** Collaboration & Productivity Platform (M365/Email/Teams) Operations & Tenant
+> Governance (PA-27.2; 'Microsoft 365'/'tenant administration'/'digital workplace'/'email
+> security'/'DMARC' appeared in zero PA files — the ~6,762-user M365 estate was cited only as a
+> license count in W370/W152/W1408), **W5519** Enterprise Messaging & Store Telephony Services
+> (UCC) Lifecycle (PA-27.2; 'telephony' 1 incidental CS-queue reference, 'VoIP' 1 incidental
+> service-request example), **W5520** Core Network Services & IPAM (DNS/DHCP/IP-Schema)
+> Management (PA-27.2; 'IPAM'/'DHCP' in zero PA files, DNS only in DR-failover contexts — W366
+> owns WAN/ISP/Wi-Fi but not core services), **W5521** Enterprise Release Calendar &
+> Peak-Season Change-Freeze Governance (PA-27.1; 'change freeze' in zero PA files — W1409 CAB,
+> W495 ERP train and W5517 rings run with no cross-estate freeze), **W5522** ISMS Program,
+> Security Certification & Security-Policy Lifecycle (ISO/IEC 27001) (PA-27.3; a true-word
+> 'ISMS' appeared in zero PA files — ISO 27001 existed only as a *vendor* attestation in W4730
+> and an IA audit request, while W387 owns only quarterly ITGC CSA sampling), **W5523**
+> Enterprise Pentest, Red/Purple-Team & Attack-Surface Management Program (PA-27.3; pentest
+> existed only for OT in W5436, AI models in VS-128.3, and as a PCI gap-remediation bullet in
+> W1205), and **W5524** Enterprise DLP & Insider-Risk Monitoring (Endpoint/Email/Cloud)
+> (PA-27.3; 'DLP' in zero dedicated headers — insider threat was owned only at physical scope
+> in PA-159.3 and OT scope in W5438). Workflow-ID allocation: W5518–W5524 (next available).
+> Five shipped **directly confirmed Tier 2** (W5518/W5520/W5521/W5522/W5524) and two **Tier 3**
+> (W5519, W5523). All seven are absorbed within the existing IT organization (OM stays
+> 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now **188 value streams ·
+> 569 process areas · 5,377 workflows** (5,400 confirmed register rows; Tier 2 3,256 → 3,261,
+> Tier 3 756 → 758).
+>
 > **Post-Pass-30 workflow-level additions, batch 7 (2026-09-03) — not a gap pass.** The
 > sourcing-model gap-fill review re-ran the §2 gap methodology at *workflow* granularity
 > against the rest of the 2026-09-03 hybrid capability-sourcing extension

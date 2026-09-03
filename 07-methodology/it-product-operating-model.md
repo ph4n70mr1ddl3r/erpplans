@@ -19,7 +19,7 @@ taxonomy, product-team membership, role definitions, RACI, governance bodies, ca
 headcount. It is the organizational counterpart to the system landscape defined in
 [`technical-guidelines.md`](technical-guidelines.md) and the business process catalog in
 [`workflows/value-stream-index.md`](../01-model-company/workflows/value-stream-index.md)
-(188 value streams, 569 process areas, 5,370 workflows).
+(188 value streams, 569 process areas, 5,377 workflows).
 
 Scope covers the steady state **after** the unified cloud ERP go-live under the hybrid
 landscape adopted 2026-09-03 (the unified core + bought edges + built differentiators of
@@ -107,15 +107,15 @@ the CIO Office. Two consequences worth stating explicitly:
 | 9 | Trade & Project Services Platform | TPS | Stream-aligned (build) | VP Supply Chain (Fleet & Logistics) with Trade/Account Mgmt | 3 | 72 |
 | | **Domain subtotal** | | | | **171** | **4,868** |
 | 10 | Integration & API Platform | IAP | Platform | All product teams | 0 | 0 |
-| 11 | Cloud Infrastructure & SRE | INFRA | Platform | All product teams | 3 | 116 |
+| 11 | Cloud Infrastructure & SRE | INFRA | Platform | All product teams | 3 | 123 |
 | 12 | Cybersecurity, Privacy & OT Security | SEC | Platform + enabling | All product teams; DPO; Internal Audit | 3 | 72 |
 | 13 | Data Platform & MDM | DP | Platform | All product teams; Strategy/CPM; Marketing | 7 | 213 |
 | 14 | Software Engineering Platform | SEP | Platform | Build squads (OMO, TPS); all product teams | 0 | 0 |
 | 15 | AI & Agent Platform | AAP | Platform | All product teams (agent enablement); VS-128 governance | 0 | 0 |
 | 16 | Field & End-User Services | FS | Platform | All 205 locations; 6,762 users | 1 | 24 |
 | | CIO Office (EA, Portfolio Governance, FinOps, Vendor Portfolio) | CIO | Enabling | CIO; CEO; Finance | 3 | 80 |
-| | **Platform + CIO subtotal** | | | | **17** | **502** |
-| | **Total** | | | | **188** | **5,370** |
+| | **Platform + CIO subtotal** | | | | **17** | **509** |
+| | **Total** | | | | **188** | **5,377** |
 
 > Team **workload is weighted by Tier-1 density and transaction volume, not raw VS count** —
 > CORP's 35 VS are mostly registers and GRC tooling with modest system complexity, while SSP's
@@ -377,14 +377,14 @@ the CIO Office. Two consequences worth stating explicitly:
 | PEO | 16 (§4.5) | 437 |
 | OMO | 1 (VS-60, from §4.3) | 24 |
 | TPS | 2 (§4.2: VS-74, VS-143) + 1 (§4.3: VS-77) | 72 |
-| INFRA | 2 (VS-26, VS-69) + 1 (VS-27) | 116 |
+| INFRA | 2 (VS-26, VS-69) + 1 (VS-27, incl. the W5518–W5524 IT gap fill) | 123 |
 | SEC | 2 (VS-91, VS-161) + 1 (VS-190) | 72 |
 | DP | 2 (VS-33, VS-133) + 5 (VS-28, VS-29, VS-126, VS-128, VS-137) | 213 |
 | FS | 1 (VS-99) | 24 |
 | SEP | 0 (build-enablement platform for OMO/TPS) | 0 |
 | AAP | 0 (agentic-automation enablement platform) | 0 |
 | CIO Office | 3 (VS-30, VS-113, VS-135) | 80 |
-| **Total** | **171 + 17 = 188** | **4,868 + 502 = 5,370** |
+| **Total** | **171 + 17 = 188** | **4,868 + 509 = 5,377** |
 
 ---
 
@@ -708,7 +708,7 @@ at its top. L1 support and the 24/7 SOC remain partner-operated.
 | Document | Relationship |
 |---|---|
 | [`model-company-profile.md`](../01-model-company/model-company-profile.md) | Departments (§3.3), org chart (§11.1), performance targets (§12.3/§15.3), ERP landscape (§14) |
-| [`workflows/value-stream-index.md`](../01-model-company/workflows/value-stream-index.md) | The 188-VS / 569-PA / 5,370-WF catalog this model assigns to products |
+| [`workflows/value-stream-index.md`](../01-model-company/workflows/value-stream-index.md) | The 188-VS / 569-PA / 5,377-WF catalog this model assigns to products |
 | [`workflows/workflow-criticality-classification.md`](../01-model-company/workflows/workflow-criticality-classification.md) | Tier 1/2/3 register driving regression coverage and SLAs |
 | [`internal-controls-matrix.md`](../01-model-company/internal-controls-matrix.md) | 808-control register governed via the Tier & Control Board |
 | [`headcount-reality-check.md`](../01-model-company/headcount-reality-check.md) | §3.2 IT staffing gap record this sizing resolves |
@@ -719,7 +719,7 @@ at its top. L1 support and the 24/7 SOC remain partner-operated.
 
 ---
 
-*Document Version: 2.4 | Date: 2026-09-03 | Sourcing-model gap-fill reconciliation: VS-113 gains three workflow-level owners for the hybrid sourcing machinery (W5515 Sourcing Decision Gate Operation & Capability Sourcing Register in PA-113.3, W5516 Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves in PA-113.2, W5517 SEP Paved Road & Engineering Standard Governance for Built Products in PA-113.1; sourcing model §3–§9), so the CIO Office's workflow load is trued 77 → 80 and the reconciliation reads **171 + 17 = 188 / 4,868 + 502 = 5,370**. No team, sizing, or phase changes — the three are absorbed within the sized CIO Office and buy-archetype Vendor PM seats, and the SEP engineering standard remains enforced by the paved road. Prior v2.3 (2026-09-03): Agentic gap-fill reconciliation: VS-128 gains three workflow-level agentic-platform lifecycle owners (W5512–W5514 in PA-128.3 — intake/sourcing/registration, shadow & canary evaluation with autonomy-tier ratification, runtime/guardrail/kill-switch telemetry with quarterly re-registration & sunset; sourcing model §12), so DP's workflow load is trued 210 → 213 and the reconciliation reads **171 + 17 = 188 / 4,868 + 499 = 5,367**. No team, sizing, or phase changes — the three are absorbed within the sized AAP enablement + DP portfolio. Prior v2.2 (2026-09-03): §9.3 Phase-0 row clarified (no figure changes): it stands up the first **16 of the 17** teams — the AAP platform team follows in Phase 2, matching the sizing ladder 50 → ~55 → ~90 → 122. Prior v2.1 (2026-09-03): **Agentic-AI extension.** The AI & Agent Platform
+*Document Version: 2.5 | Date: 2026-09-03 | IT gap-fill reconciliation: VS-27 gains seven workflow-level owners for the IT operating-model surfaces ([workflow-gap-analysis-it.md](../01-model-company/workflows/workflow-gap-analysis-it.md) — W5518 collaboration/productivity tenant ops, W5519 store telephony/UCC lifecycle, W5520 core network services & IPAM in PA-27.2; W5521 release calendar & peak-season change freeze in PA-27.1; W5522 ISMS/security certification, W5523 enterprise pentest/red-team, W5524 DLP & insider-risk in PA-27.3), so INFRA's workflow load is trued 116 → 123 and the reconciliation reads **171 + 17 = 188 / 4,868 + 509 = 5,377**. No team, sizing, or phase changes — the seven are absorbed within the sized INFRA stream-aligned + SEC/FS platform teams (end-user services, network engineering, security analysis, IT compliance), matching the absorbed staffing statements in each workflow. Prior v2.4 (2026-09-03): Sourcing-model gap-fill reconciliation: VS-113 gains three workflow-level owners for the hybrid sourcing machinery (W5515 Sourcing Decision Gate Operation & Capability Sourcing Register in PA-113.3, W5516 Best-of-Breed Product Lifecycle Management, Vendor Release Intake & Exit Reserves in PA-113.2, W5517 SEP Paved Road & Engineering Standard Governance for Built Products in PA-113.1; sourcing model §3–§9), so the CIO Office's workflow load is trued 77 → 80 and the reconciliation reads **171 + 17 = 188 / 4,868 + 502 = 5,370**. No team, sizing, or phase changes — the three are absorbed within the sized CIO Office and buy-archetype Vendor PM seats, and the SEP engineering standard remains enforced by the paved road. Prior v2.3 (2026-09-03): Agentic gap-fill reconciliation: VS-128 gains three workflow-level agentic-platform lifecycle owners (W5512–W5514 in PA-128.3 — intake/sourcing/registration, shadow & canary evaluation with autonomy-tier ratification, runtime/guardrail/kill-switch telemetry with quarterly re-registration & sunset; sourcing model §12), so DP's workflow load is trued 210 → 213 and the reconciliation reads **171 + 17 = 188 / 4,868 + 499 = 5,367**. No team, sizing, or phase changes — the three are absorbed within the sized AAP enablement + DP portfolio. Prior v2.2 (2026-09-03): §9.3 Phase-0 row clarified (no figure changes): it stands up the first **16 of the 17** teams — the AAP platform team follows in Phase 2, matching the sizing ladder 50 → ~55 → ~90 → 122. Prior v2.1 (2026-09-03): **Agentic-AI extension.** The AI & Agent Platform
 (AAP) joins as platform team #15/17 — the paved road for governed AI agents that automate
 manual tasks: tool registry (IAP contracts only), guardrails and human-in-the-loop gates,
 evaluation harness (offline → shadow → canary), non-human identity, kill-switch, cost
@@ -738,4 +738,4 @@ archetypes + Vendor PM + build squads, SIB governance, per-archetype release cad
 sizing 80 → 115. Prior v1.1 (2026-09-02, review #68) and v1.0 (2026-09-01): unified-model
 12-team design at 80 FTE. Downstream: `optimal-table-of-organization.md` v1.5 (HQ 511 /
 total 6,911), `model-company-profile.md` v2.27, `technical-guidelines.md` v3.2,
-`capability-sourcing-and-engineering-model.md` v1.4.*
+`capability-sourcing-and-engineering-model.md` v1.5.*
