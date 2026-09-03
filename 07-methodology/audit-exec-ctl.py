@@ -14,7 +14,10 @@ surfaces:
     requirements (offline ≥ 8 hours, 300+ store scalability per profile §10),
     the operational metrics (POS uptime 99.9% = NFR-001, month-end close
     ≤ 5 working days = FIN-015, inventory accuracy ≥ 97%), and the footer
-    counts (728 requirements / 5,363 workflows / 188 VS / 6,762 HC, the
+    counts (728 requirements / 5,364 workflows / 188 VS / 6,762 HC [re-based
+    5,363 → 5,364 by the 2026-09-03 description-trueness pass when the
+    event-custody pass's W5511 re-point list was found to have missed both
+    this anchor and the doc line it pins], the
     14-workflow post-catalog set, and the 733 → 728 dedup note). CLEAN.
   * the internal-controls-matrix CTL register's descriptive text vs the PA
     files that cite each CTL — CTL-240–808 citations already carry canonical
@@ -48,7 +51,7 @@ ANCHORS = ["| Employees | 6,762 |", "| Active SKUs | 35,000 |",
            "| Monthly Transactions | 2.8 million |",
            "| Annual Revenue | ~PHP 62.3 Billion |",
            "| Loyalty Members | ~600,000 |",
-           "728 requirements, 5,363 workflows across 188 value streams, 6,762 employees"]
+           "728 requirements, 5,364 workflows across 188 value streams, 6,762 employees"]
 RETIRED = ["6,757", "6,715", "5,357", "5,362", "5,349", "5,341"]
 SPEND = ("purchase", "purchasing", "procurement", "capex", "capital", "spend",
          "expenditure", "buying", "vendor", "supplier", "po ", "order")

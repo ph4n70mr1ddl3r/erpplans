@@ -66,7 +66,127 @@ pair must not reappear. Teeth verified by synthetic injection (stale pin and ret
 both caught, then restored clean). The root README's drifted 'merge note atop CHANGELOG'
 pointer was also re-pointed to the 2026-09-02 branch-reconciliation entry — a
 position-independent phrasing, so the class cannot recur there.
+
+2026-09-03 description-trueness pass: three more live description-surface staleness spots
+outside the 7 guarded docs — the executive summary's top footer still claimed
+"updated counts: … 5,363 workflows" after the event-custody pass moved the canon to 5,364
+(batch 5 had trued exactly this line; the W5511 re-point list missed it), the IT operating
+model's footer 'Downstream:' pointer still pinned TO v1.4 / technical-guidelines v3.1 /
+sourcing v1.1 after the post-AAP pass bumped all three (v1.5 / v3.2 / v1.2), and the
+headcount reality-check STATUS banner still cited TO v1.4 / OM v2.1. All three trued, and
+the new structural rule live_pin_hits pins every version pin on those surfaces to the
+target docs' own '*Document Version:' footer and the executive-summary top footer to the
+canonical register totals (index Grand Total; requirement row count). Teeth verified by
+synthetic injection (stale OM pin, stale banner pin, and a regressed exec-summary count
+all caught, then restored clean).
 """
+
+def _doc_versions():
+    """Current '*Document Version:' footer of each versioned doc (basename -> 'N.M')."""
+    versions = {}
+    for rel in ["optimal-table-of-organization.md",
+                "model-company-profile.md",
+                "../07-methodology/it-product-operating-model.md",
+                "../07-methodology/capability-sourcing-and-engineering-model.md",
+                "../07-methodology/technical-guidelines.md"]:
+        m = re.search(r"^\*Document Version: (\d+\.\d+)",
+                      open(os.path.join(MC, rel), encoding="utf-8").read(), re.M)
+        if m:
+            versions[os.path.basename(rel)] = m.group(1)
+    return versions
+
+
+def _pin_hits(segment, base_line, where, versions, names):
+    """The LAST 'name' occurrence in the segment carries the live pin (both surfaces
+    append newest-at-the-end / newest-on-top respectively, so the newest pin is the
+    one adjacent to the last mention); it must equal the target doc's footer version,
+    and a bare mention with no 'vN.M' within the pin window is itself a defect."""
+    hits = []
+    for name in names:
+        want = versions.get(name)
+        if want is None:
+            hits.append((where, 0, f"{name} has no parseable '*Document Version:' footer"))
+            continue
+        pos = segment.rfind(name)
+        if pos < 0:
+            hits.append((where, 0, f"{name} not referenced in {where}"))
+            continue
+        line = base_line + segment[:pos].count("\n")
+        # pin window ends at the next '.md' boundary so an adjacent doc's pin
+        # can never be attributed to this name
+        nxt = segment.find(".md", pos + len(name))
+        window = segment[pos + len(name): nxt + 3 if nxt >= 0 else pos + len(name) + 120]
+        m = re.search(r"v(\d+\.\d+)", window)
+        if not m:
+            hits.append((where, line,
+                         f"{name} mentioned in {where} without a version pin "
+                         f"(doc footer says v{want})"))
+        elif m.group(1) != want:
+            hits.append((where, line,
+                         f"{name} pinned at v{m.group(1)} in {where} but the doc "
+                         f"footer says v{want}"))
+    return hits
+
+
+def live_pin_hits():
+    """2026-09-03 description-trueness pass — pins the three live description surfaces
+    outside the guarded docs (all three found stale in the same pass): the IT operating
+    model's footer 'Downstream:' pointer, the headcount reality-check STATUS banner, and
+    the executive summary's top footer count line (its only workflow/requirement-count
+    claim). Version pins must equal the target docs' own '*Document Version:' footers,
+    and the executive-summary counts must equal the canonical registers (index Grand
+    Total row; requirement register row count)."""
+    hits = []
+    versions = _doc_versions()
+    # (a) IT operating model footer 'Downstream:' pointer (last 'Downstream:' in the doc)
+    om = open(os.path.join(MC, "..", "07-methodology", "it-product-operating-model.md"),
+              encoding="utf-8").read()
+    pos = om.rfind("Downstream:")
+    if pos < 0:
+        hits.append(("it-product-operating-model.md", 0,
+                     "footer 'Downstream:' pointer not found"))
+    else:
+        hits.extend(_pin_hits(om[pos:], om[:pos].count("\n") + 1,
+                              "it-product-operating-model.md (Downstream)",
+                              versions,
+                              ["optimal-table-of-organization.md",
+                               "model-company-profile.md",
+                               "technical-guidelines.md",
+                               "capability-sourcing-and-engineering-model.md"]))
+    # (b) headcount reality-check STATUS banner (first 10 lines — newest-last chain)
+    rc = open(os.path.join(MC, "headcount-reality-check.md"), encoding="utf-8").read()
+    banner_lines = rc.splitlines()[:10]
+    banner = "\n".join(banner_lines)
+    hits.extend(_pin_hits(banner, 1,
+                          "headcount-reality-check.md (STATUS banner)", versions,
+                          ["optimal-table-of-organization.md",
+                           "it-product-operating-model.md"]))
+    # (c) executive summary top footer counts vs the canonical registers
+    ex = open(os.path.join(MC, "executive-summary.md"), encoding="utf-8").read()
+    top = re.search(r"^\*Date: (.*)$", ex, re.M)
+    if not top:
+        hits.append(("executive-summary.md", 0, "no '*Date:' footer entry found"))
+    else:
+        ex_line = ex[:top.start()].count("\n") + 1
+        idx = open(os.path.join(MC, "workflows", "value-stream-index.md"),
+                   encoding="utf-8").read()
+        mwf = re.search(r"\*\*Grand Total\*\* \| \*\*[\d,]+\*\* \| \*\*([\d,]+)\*\*", idx)
+        reqs = open(os.path.join(MC, "erp-requirements.md"), encoding="utf-8").read()
+        nreq = len(set(re.findall(r"^\| (?:\*\*)?[A-Z]+-\d+[a-z]?\b", reqs, re.M)))
+        if not mwf:
+            hits.append(("executive-summary.md", 0,
+                         "value-stream-index Grand Total row not parseable"))
+        elif f"{mwf.group(1)} workflows" not in top.group(0):
+            hits.append(("executive-summary.md", ex_line,
+                         f"top footer does not carry the canonical '{mwf.group(1)} workflows' "
+                         f"(index Grand Total)"))
+        if f"{nreq} requirements" not in top.group(0):
+            hits.append(("executive-summary.md", ex_line,
+                         f"top footer does not carry the canonical '{nreq} requirements' "
+                         f"(requirement register row count)"))
+    return hits
+
+
 import argparse, glob, os, re, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -452,6 +572,7 @@ def main():
     hits.extend(to_phase_hits())
     hits.extend(sourcing_tier_hits())
     hits.extend(methodology_index_hits())
+    hits.extend(live_pin_hits())
     for doc, line, detail in hits:
         print(f"model-doc: {doc}:{line}: {detail}")
     print(f"audit-model-docs: {len(hits)} hit(s) across {len(DOCS)} documents")
