@@ -54,6 +54,18 @@ pass found the cells internally inconsistent since adoption: −7/−6/+13 again
 with each IT re-base bumping only the Phase 3 cell). The change-note exemption is also
 fixed to strip the whole version-history footer (from the first '*Date:' or
 '*Document Version:' line to end-of-file) instead of only up to its first ')'.
+
+2026-09-03 index-trueness pass: the description surfaces OUTSIDE the 7 guarded docs can
+also go stale, and 07-methodology/README.md had two such live defects — its OM row still
+pinned '(v2.1' after the doc bumped to v2.2 (the §9.3 clarification pass), and its
+validate-repo.sh row still described this guard's TO anchors as the superseded two-state
+pair 469/6,869 after the v1.4 re-base to 511/6,911. New structural rule
+methodology_index_hits: every '(vN.M' version pin on a row naming one of the versioned
+methodology docs must equal that doc's own '*Document Version:' footer, and the retired
+pair must not reappear. Teeth verified by synthetic injection (stale pin and retired pair
+both caught, then restored clean). The root README's drifted 'merge note atop CHANGELOG'
+pointer was also re-pointed to the 2026-09-02 branch-reconciliation entry — a
+position-independent phrasing, so the class cannot recur there.
 """
 import argparse, glob, os, re, sys
 
@@ -332,6 +344,41 @@ def to_phase_hits():
     return hits
 
 
+def methodology_index_hits():
+    """2026-09-03 index-trueness pass — the description surfaces outside the 7 guarded
+    docs can go stale in exactly two ways, both found live in 07-methodology/README.md:
+    a '(vN.M' version pin left behind by a doc bump (OM row said v2.1 after v2.2
+    shipped), and a description of this guard's TO anchors quoting the superseded
+    two-state pair (469/6,869 after the 511/6,911 re-base). Rule: every '(vN.M' pin on a
+    row naming one of the versioned methodology docs must equal that doc's own
+    '*Document Version:' footer, and the retired pair must not reappear."""
+    rel = "README.md"
+    hits = []
+    index_path = os.path.join(REPO, "07-methodology", rel)
+    versioned = {"it-product-operating-model.md",
+                 "capability-sourcing-and-engineering-model.md",
+                 "technical-guidelines.md"}
+    current = {}
+    for name in versioned:
+        m = re.search(r"^\*Document Version: (\d+\.\d+)",
+                      open(os.path.join(REPO, "07-methodology", name),
+                           encoding="utf-8").read(), re.M)
+        if m:
+            current[name] = m.group(1)
+    for ln, l in enumerate(open(index_path, encoding="utf-8").read().splitlines(), 1):
+        if "469/6,869" in l:
+            hits.append((rel, ln, 'retired TO-anchor pair "469/6,869" (the guard\'s '
+                         'two-state anchors are 362/6,762 → 511/6,911)'))
+        for name, ver in current.items():
+            if name not in l:
+                continue
+            for m in re.finditer(r"\(v(\d+\.\d+)", l):
+                if m.group(1) != ver:
+                    hits.append((rel, ln, f"{name} pinned at v{m.group(1)} but the doc "
+                                          f"footer says v{ver}"))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true",
@@ -404,6 +451,7 @@ def main():
     hits.extend(dc_roster_hits(os.path.join(MC, "optimal-table-of-organization.md")))
     hits.extend(to_phase_hits())
     hits.extend(sourcing_tier_hits())
+    hits.extend(methodology_index_hits())
     for doc, line, detail in hits:
         print(f"model-doc: {doc}:{line}: {detail}")
     print(f"audit-model-docs: {len(hits)} hit(s) across {len(DOCS)} documents")

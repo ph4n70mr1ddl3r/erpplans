@@ -2866,7 +2866,7 @@ C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
-    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py, now 7 docs; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68; sourcing model + technical guidelines brought under the guard with §12.1 tier-count and TO §11 phase-sum structural rules, 2026-09-03 post-AAP pass)"
+    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py, now 7 docs; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68; sourcing model + technical guidelines brought under the guard with §12.1 tier-count and TO §11 phase-sum structural rules, 2026-09-03 post-AAP pass; methodology-index version pins and the two-state TO-anchor description pinned to the live docs, 2026-09-03 index-trueness pass)"
 else
     C59_HITS=$(echo "$C59_OUT" | grep -c "^model-doc:" || true)
     error "$C59_HITS model-doc violation(s) (run 07-methodology/audit-model-docs.py for detail):"
