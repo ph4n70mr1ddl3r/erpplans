@@ -676,7 +676,7 @@ at its top. L1 support and the 24/7 SOC remain partner-operated.
 
 | Phase | Focus | Net adds | End state |
 |---|---|---|---|
-| **Phase 0 — Reorganize & decide (next 2 quarters)** | Stand up the 16 teams (9 domain incl. the OMO/TPS squads, 6 platform incl. SEP, CIO Office), name POs/PMs/BPOs, adopt single backlogs, SIB/ARB/Product Council cadence; issue the first Capability Sourcing Register; SEP nucleus (Head of Engineering + 2 DevEx engineers); CIO Office vendor-portfolio analyst; first senior IAP integration engineer | +5 | ~55 |
+| **Phase 0 — Reorganize & decide (next 2 quarters)** | Stand up the first 16 of the 17 teams (9 domain incl. the OMO/TPS squads, 6 platform incl. SEP, CIO Office — the AAP platform team follows in Phase 2), name POs/PMs/BPOs, adopt single backlogs, SIB/ARB/Product Council cadence; issue the first Capability Sourcing Register; SEP nucleus (Head of Engineering + 2 DevEx engineers); CIO Office vendor-portfolio analyst; first senior IAP integration engineer | +5 | ~55 |
 | **Phase 1 — Field, backbone & first build** | FS regional field technicians and L2 (the archipelago gap); INFRA to full strength; IAP build-out toward 9; SEC security engineering + TPRM analyst; DP data-contract steward; SEP completed (AppSec, QA-automation lead, designer, build-SRE); **OMO squad #1** — the order-orchestration MVP on the paved road | +35 | ~90 |
 | **Phase 2 — Buys, second build, agentic platform & depth** | Best-of-breed onboarding (WMS + TMS → WLI vendor PMs and analyst depth; WFM → SSP; FSM → CCP); **TPS squad #2**; **AAP stand-up** (lead, agent engineers, evaluation engineer — the crawl-phase read-only agents); remaining domain functional-analyst depth (MSC/SSP/FIN); IAP final engineer; FinOps analyst | +32 | 122 |
 
@@ -719,7 +719,7 @@ at its top. L1 support and the 24/7 SOC remain partner-operated.
 
 ---
 
-*Document Version: 2.1 | Date: 2026-09-03 | **Agentic-AI extension.** The AI & Agent Platform
+*Document Version: 2.2 | Date: 2026-09-03 | §9.3 Phase-0 row clarified (no figure changes): it stands up the first **16 of the 17** teams — the AAP platform team follows in Phase 2, matching the sizing ladder 50 → ~55 → ~90 → 122. Prior v2.1 (2026-09-03): **Agentic-AI extension.** The AI & Agent Platform
 (AAP) joins as platform team #15/17 — the paved road for governed AI agents that automate
 manual tasks: tool registry (IAP contracts only), guardrails and human-in-the-loop gates,
 evaluation harness (offline → shadow → canary), non-human identity, kill-switch, cost

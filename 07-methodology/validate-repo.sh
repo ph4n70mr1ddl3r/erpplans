@@ -685,7 +685,7 @@ FIELD_DETAIL=$(echo "$FIELDS" | cut -d'|' -f3-)
 if [ "$FIELD_TOTAL_MISSING" -eq 0 ]; then
     ok "All $FIELD_TOTAL_WF workflows have all 9 required fields"
 else
-    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). All 5,363 workflows carried all 9 fields after the 2026-06-27 completeness pass (Participants derived from Steps; System Touchpoints / Pain Points authored) — any reading above zero is a regression from a new generation artifact."
+    warn "$FIELD_TOTAL_MISSING missing required-field instance(s) across $FIELD_TOTAL_WF workflows (WORKFLOW-FORMAT-GUIDE.md 'Required fields'). Per-field: $(echo "$FIELD_DETAIL" | sed 's/|/, /g'). All 5,364 workflows carry all 9 fields (baseline: the 2026-06-27 completeness pass at 5,363 workflows; W5511 added 2026-09-03 with all fields) — any reading above zero is a regression from a new generation artifact."
 fi
 
 # --- Check 23: Intra-file TOC anchor resolution ---
@@ -1115,7 +1115,7 @@ DEP = os.path.join(ROOT, '01-model-company', 'workflows', 'workflow-dependency-m
 dep = open(DEP, encoding='utf-8', errors='replace').read()
 for i, ln in enumerate(dep.split('\n'), 1):
     if 'remains unclassified' in ln or 'pending criticality review' in ln:
-        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,363 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510)")
+        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,364 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510; 2026-09-03 W5511)")
 print(f"A_STALE={len(stale)}")
 for s in stale[:12]: print(f"A_STALE|{s}")
 print(f"B_ERRS={len(errs)}")
@@ -1125,13 +1125,13 @@ PY
 C27_STALE=$(echo "$CHECK27" | sed -n 's/^A_STALE=//p')
 C27_ERRS=$(echo "$CHECK27" | sed -n 's/^B_ERRS=//p')
 if [ "$C27_STALE" -eq 0 ]; then
-    ok "No stale register-row figure '2,776'/'2,753' in current-state prose (canonical figures are 5,386 rows / 5,363 unique since the 2026-09-02 post-catalog confirmation; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
+    ok "No stale register-row figure '2,776'/'2,753' in current-state prose (canonical figures are 5,387 rows / 5,364 unique since the 2026-09-03 event-custody pass added W5511; historical 'X -> Y' notes and CHANGELOG/workflow-gap-analysis/headcount-reality-check excluded)"
 else
-    warn "Stale register-row figure '2,776'/'2,753' appears $C27_STALE time(s) in current-state prose (canonical figures are 5,386 rows / 5,363 unique — use an 'X -> Y' change-note or update the figure):"
+    warn "Stale register-row figure '2,776'/'2,753' appears $C27_STALE time(s) in current-state prose (canonical figures are 5,387 rows / 5,364 unique — use an 'X -> Y' change-note or update the figure):"
     echo "$CHECK27" | grep '^A_STALE|' | sed 's/^A_STALE|/    /'
 fi
 if [ "$C27_ERRS" -eq 0 ]; then
-    ok "No unclassified-workflow claims in workflow-dependency-map.md (all 5,349 workflows classified since 2026-06-28)"
+    ok "No unclassified-workflow claims in workflow-dependency-map.md (all 5,364 workflows classified since 2026-06-28)"
 else
     error "workflow-dependency-map.md carries unclassified-workflow claims that the 2026-06-28 Full-Coverage Confirmation Pass superseded ($C27_ERRS):"
     echo "$CHECK27" | grep '^B_ERR|' | sed 's/^B_ERR|/    /'
@@ -2866,7 +2866,7 @@ C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
-    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68)"
+    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py, now 7 docs; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68; sourcing model + technical guidelines brought under the guard with §12.1 tier-count and TO §11 phase-sum structural rules, 2026-09-03 post-AAP pass)"
 else
     C59_HITS=$(echo "$C59_OUT" | grep -c "^model-doc:" || true)
     error "$C59_HITS model-doc violation(s) (run 07-methodology/audit-model-docs.py for detail):"

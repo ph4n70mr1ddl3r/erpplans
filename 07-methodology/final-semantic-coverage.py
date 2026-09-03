@@ -38,7 +38,10 @@ Usage:
     python3 07-methodology/final-semantic-coverage.py --all      # regression net: D1/D3/D4 over ALL workflows
     python3 07-methodology/final-semantic-coverage.py --quiet    # exit code only
 
-Post-closure note: the registry is complete (5,363/5,363 since review #71), so the
+Post-closure note: the registry is complete (5,363/5,363 since review #71; W5511 — the
+ one workflow that shipped after the closure, 2026-09-03 — was admitted the same day via
+ this exact transition path: full read + D1–D4 over its block, 0 flags, then registered,
+ bringing the registry to 5,364/5,364), so the
  default run is vacuous (no unaudited blocks) — it exists for re-running the
  transition if workflows ever ship outside the registry again. The --all mode is
  the standing regression net (D2 is skipped there: with no unaudited set there is

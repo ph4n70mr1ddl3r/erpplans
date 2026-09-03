@@ -41,6 +41,19 @@ with the v1.x sizing/shape literals retired doc-scoped. See the CHANGELOG entry 
 2026-09-03 agentic-AI extension: OM v2.1 sizing anchor re-based 66+49=115 → 66+56=122
 (AI & Agent Platform +7); TO v1.4 anchors re-based to HQ 511 / total 6,911 (~440–515
 band row; 504+7=511) with the 115-era literals retired.
+
+2026-09-03 post-AAP consistency pass: the two remaining uncovered methodology documents —
+capability-sourcing-and-engineering-model.md and technical-guidelines.md — join DOCS (the
+sourcing doc had quoted the stale pre-confirmation tier trio 1,375/3,243/754 in its §12.1
+autonomy ladder precisely because it shipped outside this guard). Two structural rules are
+added: (a) sourcing_tier_hits — the §12.1 autonomy-ladder tier counts are re-derived from
+the criticality register's Summary table on every run; (b) to_phase_hits — the TO's §11
+phase rows must have each HC-delta cell equal the sum of its own named from→to moves, the
+three deltas sum to the stated total, and that total equal target-minus-current HQ (the
+pass found the cells internally inconsistent since adoption: −7/−6/+13 against their rows,
+with each IT re-base bumping only the Phase 3 cell). The change-note exemption is also
+fixed to strip the whole version-history footer (from the first '*Date:' or
+'*Document Version:' line to end-of-file) instead of only up to its first ')'.
 """
 import argparse, glob, os, re, sys
 
@@ -54,7 +67,9 @@ MC = os.path.join(REPO, "01-model-company")
 DOCS = ["mobile-app-strategy.md", "data-migration-mapping.md",
         "assumptions-and-design-decisions.md",
         "optimal-table-of-organization.md",
-        "../07-methodology/it-product-operating-model.md"]
+        "../07-methodology/it-product-operating-model.md",
+        "../07-methodology/capability-sourcing-and-engineering-model.md",
+        "../07-methodology/technical-guidelines.md"]
 RETIRED_FIGURES = ["6,757", "6,715", "5,357", "5,362", "5,349", "5,341",
                    "80,000 SKU", "1,000 POS terminal"]
 
@@ -159,6 +174,16 @@ def sections_of(path):
                           open(path, encoding="utf-8").read(), re.M))
 
 
+def strip_footer(text):
+    """Change-note exemption: everything from the first version-history footer line
+    ('*Date: …' or '*Document Version: …') to end-of-file is a change-note and is
+    exempt from the retired-literal / resolution checks. (The previous regex stripped
+    only up to the footer's first ')' — which exempted almost nothing for the
+    '*Document Version:'-style footers the 2026-09-03 org documents use.)"""
+    m = re.search(r"^\*(?:Date|Document Version):", text, flags=re.M)
+    return text[:m.start()] if m else text
+
+
 def dc_roster_hits(path):
     """Consistency review #68 — structural guard for the target-state TO's §7.3
     DC roster: re-derives every group header's '(N)' from the HC cells beneath
@@ -206,6 +231,107 @@ def dc_roster_hits(path):
     return hits
 
 
+def sourcing_tier_hits():
+    """2026-09-03 post-AAP pass — structural guard for the sourcing model's §12.1
+    autonomy ladder: its three tier counts are re-derived from the criticality
+    register's Summary table on every run. (The pass found the ladder quoting the
+    pre-confirmation trio 1,375/3,243/754 — the register as it stood before the
+    2026-09-02 post-catalog confirmation — because the doc shipped outside this
+    guard's doc set.)"""
+    rel = "capability-sourcing-and-engineering-model.md"
+    hits = []
+    reg = open(os.path.join(MC, "workflows", "workflow-criticality-classification.md"),
+               encoding="utf-8").read()
+    canon = {}
+    confirmed = re.search(r"### Confirmed classification.*?(?=^### |^## )", reg,
+                          re.M | re.S)
+    if confirmed:
+        for m in re.finditer(r"^\| Phase (\d) \| [^|]+ \| ([\d,]+) \|", confirmed.group(0), re.M):
+            canon[f"Tier {m.group(1)}"] = int(m.group(2).replace(",", ""))
+    if len(canon) != 3:
+        return [(rel, 0, "criticality register Summary table not parseable — "
+                         "cannot derive canon tier counts")]
+    src = open(os.path.normpath(os.path.join(MC, "..", "07-methodology", rel)),
+               encoding="utf-8").read()
+    body = strip_footer(src)
+    quoted = {}
+    for m in re.finditer(r"\*\*Tier (\d)\*\* \(([\d,]+)", body):
+        quoted[f"Tier {m.group(1)}"] = int(m.group(2).replace(",", ""))
+    if len(quoted) != 3:
+        hits.append((rel, 0, f"autonomy-ladder tier counts incomplete: found "
+                             f"{sorted(quoted)} — expected three '**Tier N** (n)' cells"))
+    for tier, want in sorted(canon.items()):
+        got = quoted.get(tier)
+        if got != want:
+            hits.append((rel, 0, f"autonomy ladder quotes {tier} = {got} but the "
+                                 f"register Summary says {want}"))
+    return hits
+
+
+def to_phase_hits():
+    """2026-09-03 post-AAP pass — structural guard for the target-state TO's §11
+    phasing table: each phase row's HC-delta cell must equal the sum of the
+    from→to moves named in its own Moves cell; the three deltas must sum to the
+    stated total; and that total must equal target-minus-current HQ. (The pass
+    found the cells internally inconsistent since adoption — −7/−6/+13 against
+    their rows — because each IT re-base bumped only the Phase 3 cell.)"""
+    rel = "optimal-table-of-organization.md"
+    hits = []
+    lines = open(os.path.join(MC, rel), encoding="utf-8").read().splitlines()
+    start = next((i for i, l in enumerate(lines) if "Sizing & Phasing" in l), None)
+    if start is None:
+        return [(rel, 0, "§11 Sizing & Phasing section not found")]
+    pair_re = re.compile(r"([A-Za-z][A-Za-z/&\- ]*?)\s*(\d[\d,]*)\s*[→-]>?\s*(\d[\d,]*)")
+    # (the doc uses the unspaced '14→20' form; a spaced '14 -> 20' form is accepted too)
+    deltas = []
+    total_declared = None
+    total_range = None
+    for l in lines[start:start + 40]:
+        if not l.strip().startswith("|"):
+            if deltas and total_declared is None:
+                break
+            continue
+        cells = [c.strip() for c in l.strip().strip("|").split("|")]
+        if len(cells) < 4:
+            continue
+        if cells[2] == "**Total**" or (cells[0] == "" and "**Total**" in cells):
+            mm = re.search(r"\*\*(\d[\d,]*)\s*→\s*(\d[\d,]*)\s*\(\+([\d,]+)\)\*\*",
+                           cells[3] or "")
+            if mm:
+                total_range = (int(mm.group(1).replace(",", "")),
+                               int(mm.group(2).replace(",", "")))
+                total_declared = int(mm.group(3).replace(",", ""))
+            continue
+        if not re.match(r"\*\*\d", cells[0] or ""):
+            continue
+        moves, declared = cells[2], cells[3]
+        moves, declared = cells[2], cells[3]
+        mm = re.search(r"\+([\d,]+)", declared)
+        if not mm:
+            continue
+        declared_n = int(mm.group(1).replace(",", ""))
+        named = 0
+        for a, b, c in pair_re.findall(moves):
+            named += int(c.replace(",", "")) - int(b.replace(",", ""))
+        phase = re.search(r"\*\*(\d)", cells[0]).group(1)
+        if named != declared_n:
+            hits.append((rel, start + 1,
+                         f"§11 Phase {phase} delta cell says +{declared_n} but its named "
+                         f"moves sum to {named:+d}"))
+        deltas.append((phase, declared_n))
+    if total_declared is None:
+        hits.append((rel, 0, "§11 total row ('362 → 511 (+149)') not found"))
+    else:
+        if sum(d for _, d in deltas) != total_declared:
+            hits.append((rel, 0, f"§11 phase deltas {[d for _, d in deltas]} do not sum "
+                                 f"to the stated total +{total_declared}"))
+        if total_range and total_range[1] - total_range[0] != total_declared:
+            hits.append((rel, 0, f"§11 total row range {total_range[0]} → {total_range[1]} "
+                                 f"implies +{total_range[1] - total_range[0]}, not "
+                                 f"+{total_declared}"))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true",
@@ -225,7 +351,7 @@ def main():
         doc = os.path.basename(rel)
         path = os.path.normpath(os.path.join(MC, rel))
         text = open(path, encoding="utf-8").read()
-        body = re.sub(r"^\*Date:.*?\)$", "", text, flags=re.M | re.S)  # change-notes exempt
+        body = strip_footer(text)
         for m in re.finditer(r"\b(W\d+[A-Z]?|VS-\d+|CTL-\d+|PA-\d+\.\d+|[A-Z]{2,4}-\d{3})\b", body):
             tok = m.group(1)
             line = body[:m.start()].count("\n") + 1
@@ -276,6 +402,8 @@ def main():
         for d, line, detail in legacy_form_hits(os.path.join(MC, doc)):
             hits.append((d, line, detail))
     hits.extend(dc_roster_hits(os.path.join(MC, "optimal-table-of-organization.md")))
+    hits.extend(to_phase_hits())
+    hits.extend(sourcing_tier_hits())
     for doc, line, detail in hits:
         print(f"model-doc: {doc}:{line}: {detail}")
     print(f"audit-model-docs: {len(hits)} hit(s) across {len(DOCS)} documents")

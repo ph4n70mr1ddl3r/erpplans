@@ -230,7 +230,7 @@ Headline KPIs live in OM §8.3 (which adds OMO, TPS and SEP rows). Summary:
 - **Configure products:** unchanged OM v1.x KPIs (uptime, close cycle, filing timeliness…).
 - **Buy products:** vendor SLA attainment, integration latency vs budget, upgrade currency,
   regression-pack pass rate on vendor releases.
-- **Build products:** DORA metrics (§7.8) **plus** product outcome KPIs (e.g., OMO: routing
+- **Build products:** DORA metrics (§7 rule 8) **plus** product outcome KPIs (e.g., OMO: routing
   decision latency, split-order success rate; TPS: on-time job-site delivery, staging
   schedule adherence) — a squad green on DORA but flat on outcomes is failing.
 
@@ -240,7 +240,7 @@ Headline KPIs live in OM §8.3 (which adds OMO, TPS and SEP rows). Summary:
 
 | Risk | Mitigation |
 |---|---|
-| Integration sprawl silently recreating the pre-ERP silo estate | IAP is the only integration path; contract-first rule (§7.3); ARB reviews every new pipeline; SEP/IAP co-own the contract catalog |
+| Integration sprawl silently recreating the pre-ERP silo estate | IAP is the only integration path; contract-first rule (§7 rule 3); ARB reviews every new pipeline; SEP/IAP co-own the contract catalog |
 | Fragmented statutory compliance (payroll/tax outside the core) | Core-tier guardrail (§2); PH-localization warranty clause (§8); control-mapping appendix per decision (§3.3) |
 | Build squads drifting from the paved road into private toolchains | Golden path + exception records; Head of Engineering owns the engineering track; DORA reporting surfaces drift quickly |
 | Key-person risk on built products | Bus-factor ≥ 2 per service (squad review rule); SEP owns runbooks; no solo-owned services |
@@ -262,9 +262,9 @@ automated-decision obligations, ISO 42001/NIST-AI-RMF alignment).
 
 | Workflow tier | Agent autonomy | Rule |
 |---|---|---|
-| **Tier 1** (1,375 workflows) | **Human-approval-gated only** | Agent drafts, summarizes, flags, or prepares — a named human decides and signs (approval-matrix evidence retained) |
-| **Tier 2** (3,243) | **Bounded autonomy** | Agent acts inside hard guardrails (limits, whitelists, value caps); sampled human audit; auto-escalation on anomaly |
-| **Tier 3** (754) | **Autonomous-in-bounds** | Agent completes the task unattended; full audit trail; kill-switch active |
+| **Tier 1** (1,381 workflows) | **Human-approval-gated only** | Agent drafts, summarizes, flags, or prepares — a named human decides and signs (approval-matrix evidence retained) |
+| **Tier 2** (3,250) | **Bounded autonomy** | Agent acts inside hard guardrails (limits, whitelists, value caps); sampled human audit; auto-escalation on anomaly |
+| **Tier 3** (756) | **Autonomous-in-bounds** | Agent completes the task unattended; full audit trail; kill-switch active |
 
 Hard boundaries regardless of tier: no agent owns a statutory filing path (BIR/SSS/PhilHealth/Pag-IBIG — human sign-off terminal); no agent acts on the POS/OT estate; no agent may hold SoD-conflicting duties (e.g., vendor-create + payment-approve); every agent action is audit-trailed as control evidence against the 808-control register.
 
@@ -315,7 +315,14 @@ a represented role; the Change & Training Lead pool carries rollout for the 6,76
 
 ---
 
-*Document Version: 1.1 | Date: 2026-09-03 | **Agentic extension (with OM v2.1):** new §12
+*Document Version: 1.2 | Date: 2026-09-03 | **Consistency repair (§12.1 tier-count true-up):** the
+autonomy ladder's tier figures are re-pointed to the criticality register's current Summary counts
+(1,381 / 3,250 / 756 register rows; sum 5,387 rows = 5,364 unique workflows + 23 parent/summary
+sub-workflow rows) — v1.1 had quoted the pre-confirmation snapshot (1,375 / 3,243 / 754 of the
+5,372-row register as it stood before the 2026-09-02 post-catalog confirmation of
+W5497–W5510 and the 2026-09-03 W5511 addition). Guarded going forward: validator Check 59
+now re-derives this table from the register's Summary on every run. No program-rule changes.
+Prior v1.1 (2026-09-03): **Agentic extension (with OM v2.1):** new §12
 Agentic Automation Program — autonomy ladder wired to the workflow Tier register, agent
 lifecycle (intake → SIB routing → VS-128 registration → shadow/canary evaluation → operation
 → QBR sunset), hard boundaries (statutory filings, POS/OT, SoD), crawl-walk-run posture, and

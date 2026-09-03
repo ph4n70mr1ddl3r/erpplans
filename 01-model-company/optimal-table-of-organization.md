@@ -482,9 +482,9 @@ hiring; each phase has explicit triggers):
 
 | Phase | Horizon | Moves | HC delta |
 |---|---|---|---|
-| **1 — Regulatory floor** | 0–6 mo | Legal 14→20 (MLRO cell, privacy staff, gov-affairs); HSE 10→13 (SO coverage + nurse); IA 7→9 | +18 |
-| **2 — Transaction scale** | 6–18 mo | Finance 46→62 (tied to AP-automation threshold: ≤800 inv/clerk/mo); CS 30→34 (hybrid model decision) | +26 |
-| **3 — Capability scale** | 18–36 mo | IT 50→122 (per the hybrid + agentic product-model sequencing, OM §9.3); HR 26→42 (field HRBPs as regions mature); SC 40→46; Merch 40→43; Marketing 25→30; LP 20→27; Facilities 8→12; Quality 4→5; ESG/Strategy/Trade top-ups | +105 |
+| **1 — Regulatory floor** | 0–6 mo | Legal 14→20 (MLRO cell, privacy staff, gov-affairs); HSE 10→13 (SO coverage + nurse); IA 7→9 | +11 |
+| **2 — Transaction scale** | 6–18 mo | Finance 46→62 (tied to AP-automation threshold: ≤800 inv/clerk/mo); CS 30→34 (hybrid model decision) | +20 |
+| **3 — Capability scale** | 18–36 mo | IT 50→122 (per the hybrid + agentic product-model sequencing, OM §9.3); HR 26→42 (field HRBPs as regions mature); SC 40→46; Merch 40→43; Marketing 25→30; LP 20→27; Facilities 8→12; Quality 4→5; ESG 3→4; Strategy 3→4; Trade 5→7 (top-ups) | +118 |
 | | | **Total** | **362 → 511 (+149)** |
 
 **Guardrails.** Total HQ never exceeds the 440–515 band (as amended 2026-09-03 for the
@@ -557,7 +557,18 @@ Each phase promotion is recorded in [CHANGELOG.md](../CHANGELOG.md) and flips th
 
 ---
 
-*Document Version: 1.4 | Date: 2026-09-03 | **Agentic-AI extension** (with
+*Document Version: 1.5 | Date: 2026-09-03 | **Consistency repair (§11 phase-delta true-up):**
+each phase row's HC-delta cell now equals the sum of its own named moves — Phase 1
++18 → **+11** (Legal +6, HSE +3, IA +2), Phase 2 +26 → **+20** (Finance +16, CS +4),
+Phase 3 +105 → **+118** with the ESG/Strategy/Trade top-ups made explicit (ESG 3→4,
+Strategy 3→4, Trade 5→7 = +4 on top of the +114 named pairs). The per-phase cells had
+been internally inconsistent since adoption — every IT re-base had bumped only the Phase 3
+cell (+63 → +98 → +105) while the named moves carried the full department targets, so the
+cells under/over-stated their rows by −7/−6/+13. Total **+149** and the 362 → 511 /
+6,911 targets are unchanged (11 + 20 + 118 = 149 = 511 − 362); validator Check 59 now
+carries a §11 phase-sum structural rule (audit-model-docs.py) so the class cannot recur.
+No department target, band, or §12 scaling figure changed. Prior v1.4 (2026-09-03):
+**Agentic-AI extension** (with
 `it-product-operating-model.md` v2.1): IT target 115 → 122 (17 product teams: +AI & Agent
 Platform), target HQ 504 → 511 and company total 6,904 → 6,911; HQ band extended
 ~440–510 → ~440–515 (IT band 65–130 unchanged — 122 stays mid-band); §11 Phase 3 +98 →
