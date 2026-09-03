@@ -155,6 +155,41 @@ identify capability gaps not addressed by any existing value stream.
 > now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
 > Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
 >
+> **Post-batch-11 confirmation sweep & controls-register gap fill (2026-09-04) — not a capability gap pass.**
+> A fresh corpus-wide re-sweep of the §2 methodology at workflow granularity — ~200 candidate
+> capabilities drawn from reference operating-model lenses not yet exhausted after batches 8–11
+> (counter-service fabrication, statutory-filing layers incl. BIR 0605/eSales/PTU/books-of-accounts,
+> IT platform/endpoint/IAM/monitoring estates, contact-center & social ops, customer-journey
+> services, support functions incl. canteen/mailroom/office-supplies, people programs incl.
+> OJT/internship/seasonal staffing, POS-consumables & store supplies, review/reputation ops) —
+> found **zero surviving capability gaps**: every validated candidate resolved to a dedicated
+> `## W`-header owner (representative adjudications: key duplication W945, glass cutting W943,
+> pipe threading W944, screen fabrication W946, tool-rental damage W1104 + rental-fleet VS-186,
+> identity & access W152/W375/W393/W832/W1408, endpoint lifecycle W3235/W3236/W3249/W3250,
+> test environments W384, backups W382, ERP monitoring W595/W787, mPOS queue-busting W206,
+> price matching W61, canteen/cafeteria W4182, mailroom W4183, office supplies W1673, store
+> supplies category W1668, OJT placement W3826, seasonal staffing W555, consent & cookies
+> W3043/W3046/W3885, back-in-stock W930, wishlist W934, SEO/on-site search W563, marketplace
+> feeds W2415/W2419, store-locator/product pages VS-10.1, BIR annual registration fee — repealed
+> by CREATE (RA 11534), correctly absent; recall mock-drill/effectiveness testing W627). The
+> batch-11 §5 verdict therefore extends
+> corpus-wide: **no unowned capability remains at workflow granularity**.
+> The same sweep did close the one genuine residual *content* gap class carried on the
+> batch-26/27 worklist (batch23-deferred-candidates.txt item B residue): **8 degenerate
+> unnumbered `CTL (gloss)` references across 8 workflows** (the last of the batch-27-measured
+> unnumbered family) were re-mapped to their owning register controls with definition-matched
+> glosses — W2146→CTL-283 (campaign regulatory compliance — DTI promo-permit review per W833;
+> the old gloss's 'links to W868' was a fabricated pointer to a vendor-catalog workflow),
+> W2206→CTL-178 (3PL SLA penalties applied at billing), W2246/W2247→CTL-196 (coupon & promo-code
+> abuse prevention), W2250→CTL-179 (refunds/credits to original tender with exception approval),
+> W2269→CTL-221 (store-closure regulatory deregistration & labor-law separation; two degenerate
+> refs collapsed to one), W2397→CTL-176 (clearance events reconciled financially post-event),
+> W2595→CTL-637 (technology value realization) — with the four newly-cited controls' W-ref
+> lists extended in [internal-controls-matrix.md](../internal-controls-matrix.md)
+> (CTL-178 + W2206, CTL-179 + W2250, CTL-283 + W2146, CTL-637 + W2595). The `CTL:` colon-form
+> family measured at batch 27 was already 0. Canonical totals unchanged: **188 value streams ·
+> 569 process areas · 5,387 workflows · 808 controls** (88 P / 720 D).
+>
 > **Post-Pass-30 workflow-level additions, batch 10 (2026-09-03) — finance-workflow gap fill.**
 > A dedicated Finance-domain gap analysis ([workflow-gap-analysis-finance.md](workflow-gap-analysis-finance.md))
 > re-ran the §2 methodology across the Finance family (775 workflows) plus treasury/tax/property-adjacent
