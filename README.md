@@ -241,7 +241,7 @@ erpplans/
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security, multi-vendor sourcing architecture
     ├── capability-sourcing-and-engineering-model.md  Configure/buy/build decision gate, sourcing register, build squads, SEP
     ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds + AI agent platform), roles, RACI, governance, sizing (50 → 122 FTE)
-    ├── validate-repo.sh              Cross-reference validation (68 checks)
+    ├── validate-repo.sh              Cross-reference validation (69 checks)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── confirm-postcatalog-14.py     One-time post-catalog confirmation pass (W5497–W5510: 14 → 0 unclassified, 2026-09-02)
@@ -267,8 +267,8 @@ erpplans/
     ├── audit-semantic-anchors.py    Semantic-sample anchor guard (Check 62)
     ├── audit-misdirected-ctl.py     Misdirected-CTL-citation family measurer (the batch-26/27 paste-family audits)
     ├── classify-isolated-ctl.py     Isolated colon-form CTL-citation classifier (gloss-vs-control overlap scoring, batch-27)
-    ├── final-semantic-coverage.py    Final full-coverage semantic pass (review #71 — detector suite over the 3,122 unaudited workflows; closed the sampling loop to 5,363/5,363; the 2026-09-03 W5511 transition re-run extends the registry to 5,364/5,364; the agentic gap-fill transition extends it to 5,367/5,367; the sourcing-model gap-fill transition extends it to 5,370/5,370)
-    ├── semantic-audit-coverage.txt  Audited-W-id registry — LOOP CLOSED 2026-09-02 at 5,363 of 5,363; W5511 audited in full + detector-swept and admitted 2026-09-03 → 5,364 of 5,364; W5512–W5514 audited in full + detector-swept and admitted the same day → 5,367 of 5,367 (2,241 stratified full-reads reviews #44–#67 + the review-#71 final-coverage detector pass; the fork-local batches 22–29 read their 832 post-fork W-ids in full — see the 2026-09-02 branch-reconciliation merge entry in CHANGELOG)
+    ├── final-semantic-coverage.py    Final full-coverage semantic pass (review #71 — detector suite over the 3,122 unaudited workflows; closed the sampling loop to 5,363/5,363; the 2026-09-03 W5511 transition re-run extends the registry to 5,364/5,364; the agentic gap-fill transition extends it to 5,367/5,367; the sourcing-model gap-fill transition extends it to 5,370/5,370 — the current audited set; the 17 post-closure gap-fill workflows W5518–W5534, batches 8–11, are registry-pending, not audited)
+    ├── semantic-audit-coverage.txt  Audited-W-id registry — LOOP CLOSED 2026-09-02 at 5,363 of 5,363; W5511 audited in full + detector-swept and admitted 2026-09-03 → 5,364 of 5,364; W5512–W5514 audited in full + detector-swept and admitted the same day → 5,367 of 5,367; W5515–W5517 (the capability-sourcing & engineering surface) admitted via the same path → 5,370 of 5,370, the current admitted set (2,241 stratified full-reads reviews #44–#67 + the review-#71 final-coverage detector pass; the fork-local batches 22–29 read their 832 post-fork W-ids in full — see the 2026-09-02 branch-reconciliation merge entry in CHANGELOG). The 17 post-closure workflows W5518–W5534 (the IT/people/finance/operations gap-fill passes, batches 8–11, 2026-09-03→04) carry the registry's transition-path-pending notes — NOT yet admitted; admission follows the documented W5511 transition path (full read + D1–D4 detector sweep), and Check 69 enforces live = admitted + pending
     ├── draw-batch26.py             Batch-26 semantic-audit sample drawer (seed 7070, 104 workflows, expansion-weighted)
     ├── draw-batch27.py             Batch-27 semantic-audit sample drawer (seed 7171)
     ├── draw-batch28.py             Batch-28 semantic-audit sample drawer (seed 7272)
@@ -355,7 +355,7 @@ erpplans/
    ┌──────────▼──────────────────────────▼───────────┐
    │              CROSS-REFERENCE LAYER               │
    │                                                   │
-   │  erp-requirements.md ←→ workflows/ (5,370 WF)    │
+   │  erp-requirements.md ←→ workflows/ (5,387 WF)    │
    │       ↕                    ↕                      │
    │  internal-controls-   workflow-criticality-      │
    │  matrix.md (808 CTL)  classification.md          │

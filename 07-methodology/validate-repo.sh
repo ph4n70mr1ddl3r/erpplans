@@ -3368,6 +3368,89 @@ else
     echo "$CHECK68" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 69: Semantic-audit registry integrity (admitted-set vs live workflows vs pending notes) ---
+echo "--- Check 69: Semantic-audit registry integrity ---"
+# final-semantic-coverage.py (Check 62 family) derives its audited set from the bare
+# W-id lines in semantic-audit-coverage.txt, so the registry's line-list discipline IS
+# the detector pass's coverage claim. The 2026-09-04 consistency review found the
+# batch-9 pass (c56dc3c) had appended its four workflow ids W5525–W5528 as bare lines
+# immediately above its own 'NOT yet in the audited registry' pending note — a
+# self-contradiction no check read: the tool's audited-set silently read 5,374
+# (matching neither the closed-loop 5,370 nor the live 5,387), four never-audited
+# workflows were treated as detector-swept, and the tree rows describing the file had
+# stranded at the 5,367/5,370 era. Repaired by deleting the stray lines and widening
+# the second pending note to its real coverage (W5525–W5534, batches 9–11). Four
+# invariants now guard the file so the class cannot recur:
+#   (a) every bare W-id line is distinct;
+#   (b) every bare W-id resolves to a live '## W' workflow header (no ghosts);
+#   (c) no W-id may appear both as a bare line and inside a '(transition-path pending)'
+#       note's declared range (the comment/bare-line contradiction class itself);
+#   (d) the sets close: live workflows = admitted bare ids + ids named in the pending
+#       notes' en-dash ranges (the file's naming convention) — so an admission that
+#       forgets to retire its pending note, or a pending note that forgets its own
+#       ids, both error. (Standalone prose mentions inside notes — e.g. 'the documented
+#       W5511 transition path', which references the admitted exemplar — are not set
+#       membership; the closure invariant is what pins the note to its real id set.)
+CHECK69=$(python3 - "$REPO_ROOT" <<'PY'
+import glob, os, re, sys
+ROOT = sys.argv[1]
+reg = os.path.join(ROOT, "07-methodology", "semantic-audit-coverage.txt")
+lines = open(reg, encoding="utf-8").read().splitlines()
+bare, pend = [], set()
+in_pending = False
+for i, l in enumerate(lines, 1):
+    s = l.strip()
+    if re.fullmatch(r"W\d+[A-Z]?", s):
+        bare.append((s, i))
+        continue
+    if s.startswith("#") and "transition-path pending" in s:
+        in_pending = True
+    elif s and not s.startswith("#"):
+        in_pending = False
+    if in_pending:
+        for a, b in re.findall(r"W(\d+)[A-Z]?\s*[\u2013\u2014-]\s*W(\d+)", s):
+            pend.update(f"W{n}" for n in range(int(a), int(b) + 1))
+errs = []
+seen = {}
+for w, i in bare:
+    if w in seen:
+        errs.append(f"duplicate bare id {w} (lines {seen[w]} and {i})")
+    seen[w] = i
+live = set()
+for f in glob.glob(os.path.join(ROOT, "01-model-company", "workflows", "VS-*", "PA-*.md")):
+    live |= set(re.findall(r"^## (W\d+[A-Z]?)\.", open(f, encoding="utf-8").read(), re.M))
+def wk(x):
+    return int(re.sub(r"\D", "", x))
+for w in sorted(seen, key=wk):
+    if w not in live:
+        errs.append(f"bare id {w} resolves to no live '## W' workflow header (ghost)")
+for w, i in bare:
+    if w in pend:
+        errs.append(f"line {i}: bare id {w} is also named in a '(transition-path pending)' note — a pending workflow must not be listed as audited")
+admitted = set(seen)
+if live - admitted != pend:
+    only_live = sorted(live - admitted - pend, key=wk)
+    only_pend = sorted(pend - (live - admitted), key=wk)
+    if only_live:
+        errs.append(f"closure: {len(only_live)} live workflow(s) neither admitted nor pending-named: {', '.join(only_live[:8])}")
+    if only_pend:
+        errs.append(f"closure: {len(only_pend)} pending-named id(s) already admitted or not live: {', '.join(only_pend[:8])}")
+print(f"TOTALS admitted={len(admitted)} pending={len(pend)} live={len(live)} problems={len(errs)}")
+for e in errs:
+    print("BAD|" + e)
+PY
+)
+C69_ADM=$(echo "$CHECK69" | sed -n 's/^TOTALS admitted=\([0-9]*\).*/\1/p')
+C69_PEND=$(echo "$CHECK69" | sed -n 's/^TOTALS admitted=[0-9]* pending=\([0-9]*\).*/\1/p')
+C69_LIVE=$(echo "$CHECK69" | sed -n 's/^TOTALS admitted=[0-9]* pending=[0-9]* live=\([0-9]*\).*/\1/p')
+C69_BAD=$(echo "$CHECK69" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
+if [ "${C69_BAD:-1}" -eq 0 ]; then
+    ok "Semantic-audit registry closes: $C69_ADM admitted + $C69_PEND pending = $C69_LIVE live workflows; no ghosts, duplicates, or pending/bare contradictions (guard added by the 2026-09-04 consistency review pass after the batch-9 pending-note contradiction left the detector audited-set at 5,374)"
+else
+    error "$C69_BAD semantic-audit-registry violation(s):"
+    echo "$CHECK69" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
