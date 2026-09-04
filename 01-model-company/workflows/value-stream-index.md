@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,418 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,422 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -34,7 +34,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |---|---|---|---|---|---|
 | Plan & Source | [VS-01](VS-01-merchandise-strategy/README.md) | Merchandise Strategy | Core | 3 | 46 |
 |  | [VS-02](VS-02-supply-planning/README.md) | Supply Planning | Core | 3 | 38 |
-|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | Core | 4 | 81 |
+|  | [VS-03](VS-03-vendor-management/README.md) | Vendor Management & Procurement | Core | 4 | 82 |
 |  | [VS-41](VS-41-private-label-brand/README.md) | Private Label & Exclusive Brand Management | Core | 3 | 24 |
 |  | [VS-45](VS-45-consignment-vmi-operations/README.md) | Consignment & Vendor-Managed Inventory Operations | Core | 3 | 24 |
 |  | [VS-57](VS-57-competitive-price-intelligence/README.md) | Competitive Price Intelligence & Monitoring | Expansion | 3 | 24 |
@@ -47,7 +47,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-127](VS-127-sales-operations-planning-integrated-business-planning/README.md) | Sales & Operations Planning (S&OP) & Integrated Business Planning | Gap analysis | 4 | 32 |
 |  | [VS-131](VS-131-human-rights-responsible-supply-chain-due-diligence/README.md) | Human Rights, Modern Slavery & Responsible Supply Chain Due Diligence | Gap analysis | 3 | 24 |
 |  | [VS-182](VS-182-b2b-bulk-project-custom-import-indent-sourcing-and-brokerage/README.md) | B2B Bulk-Project Custom Import (Indent Sourcing & Brokerage Operations) | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **47** | **461** |
+| | | | **Subtotal** | **47** | **462** |
 | Make & Move | [VS-04](VS-04-dc-warehouse/README.md) | DC & Warehouse Operations | Core | 3 | 45 |
 |  | [VS-05](VS-05-inventory-lifecycle/README.md) | Inventory Lifecycle | Core | 3 | 35 |
 |  | [VS-06](VS-06-logistics-fleet/README.md) | Logistics & Fleet | Core | 3 | 37 |
@@ -69,13 +69,13 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-192](VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **57** | **500** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 150 |
-|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 60 |
+|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 61 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
 |  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | Core | 3 | 63 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | Core | 3 | 52 |
 |  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | Core | 3 | 40 |
 |  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | Core | 3 | 64 |
-|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | Core | 3 | 40 |
+|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | Core | 3 | 41 |
 |  | [VS-37](VS-37-store-opening-commissioning/README.md) | Store Opening & Commissioning | Core | 3 | 26 |
 |  | [VS-43](VS-43-trade-professional-program/README.md) | Trade Professional Program & Contractor Services | Core | 3 | 24 |
 |  | [VS-44](VS-44-consumer-insights-market-research/README.md) | Consumer Insights & Market Research | Core | 3 | 24 |
@@ -114,7 +114,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
 |  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
 |  | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **139** | **1542** |
+| | | | **Subtotal** | **139** | **1544** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 43 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 70 |
@@ -154,14 +154,14 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-121](VS-121-talent-acquisition-employer-brand-candidate-experience/README.md) | Talent Acquisition, Employer Brand & Candidate Experience | Gap analysis | 3 | 25 |
 |  | [VS-123](VS-123-skilled-trade-apprenticeship-vocational-education-capability-pipeline/README.md) | Skilled-Trade Apprenticeship, Vocational Education & Capability Pipeline | Gap analysis | 3 | 24 |
 |  | [VS-134](VS-134-organizational-change-management-digital-adoption-transformation-enablement/README.md) | Organizational Change Management, Digital Adoption & Transformation Enablement | Gap analysis | 3 | 24 |
-|  | [VS-141](VS-141-employee-transport-shuttle-and-daily-commute-management/README.md) | Employee Transport, Shuttle & Daily Commute Management | Gap analysis | 3 | 24 |
+|  | [VS-141](VS-141-employee-transport-shuttle-and-daily-commute-management/README.md) | Employee Transport, Shuttle & Daily Commute Management | Gap analysis | 3 | 25 |
 |  | [VS-144](VS-144-employee-accommodation-dormitory-and-staff-housing/README.md) | Employee Accommodation, Dormitory & Staff Housing Operations | Gap analysis | 3 | 24 |
 |  | [VS-150](VS-150-drug-free-workplace-and-substance-abuse-program/README.md) | Drug-Free Workplace & Substance Abuse Program | Gap analysis | 3 | 24 |
 |  | [VS-160](VS-160-global-mobility-immigration-and-foreign-worker-compliance/README.md) | Global Mobility, Immigration & Foreign Worker Compliance | Gap analysis | 3 | 24 |
 |  | [VS-167](VS-167-workforce-background-screening-credentialing-and-personnel-vetting/README.md) | Workforce Background Screening, Credentialing & Personnel Vetting | Gap analysis | 3 | 24 |
 |  | [VS-169](VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md) | Employee Uniform, Workwear & PPE-Issuance Program | Gap analysis | 3 | 24 |
 |  | [VS-183](VS-183-dual-training-system-dts-and-tesda-partnership-program/README.md) | Dual Training System (DTS) & TESDA Partnership Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **50** | **444** |
+| | | | **Subtotal** | **50** | **445** |
 | Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 33 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 25 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **389** |
-| | | | **Grand Total** | **569** | **5,418** |
+| | | | **Grand Total** | **569** | **5,422** |
 
 ---
 
@@ -248,10 +248,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-02.2** [Import & Customs Operations](./VS-02-supply-planning/PA-02.2-import-and-customs-operations.md) — 8 workflows
 - **PA-02.3** [Supply Chain Orchestration & Risk](./VS-02-supply-planning/PA-02.3-supply-chain-orchestration-and-risk.md) — 16 workflows
 
-**[VS-03: Vendor Management & Procurement](./VS-03-vendor-management/README.md)** (81 workflows)
+**[VS-03: Vendor Management & Procurement](./VS-03-vendor-management/README.md)** (82 workflows)
 
 - **PA-03.1** [Vendor Sourcing & Onboarding](./VS-03-vendor-management/PA-03.1-vendor-sourcing-and-onboarding.md) — 43 workflows
-- **PA-03.2** [Purchase Order Cycle](./VS-03-vendor-management/PA-03.2-purchase-order-cycle.md) — 9 workflows
+- **PA-03.2** [Purchase Order Cycle](./VS-03-vendor-management/PA-03.2-purchase-order-cycle.md) — 10 workflows
 - **PA-03.3** [Vendor Performance & Contracts](./VS-03-vendor-management/PA-03.3-vendor-performance-and-contracts.md) — 12 workflows
 - **PA-03.4** [Vendor Portal & Collaboration](./VS-03-vendor-management/PA-03.4-vendor-portal-and-collaboration.md) — 17 workflows
 
@@ -454,10 +454,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-07.3** [Store Receiving & Replenishment](./VS-07-store-operations/PA-07.3-store-receiving-and-replenishment.md) — 28 workflows
 - **PA-07.4** [Store Staffing & People](./VS-07-store-operations/PA-07.4-store-staffing-and-people.md) — 10 workflows
 
-**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (60 workflows)
+**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (61 workflows)
 
 - **PA-08.1** [Transaction Processing](./VS-08-pos-checkout/PA-08.1-transaction-processing.md) — 38 workflows
-- **PA-08.2** [Payment & Cash Management](./VS-08-pos-checkout/PA-08.2-payment-and-cash-management.md) — 10 workflows
+- **PA-08.2** [Payment & Cash Management](./VS-08-pos-checkout/PA-08.2-payment-and-cash-management.md) — 11 workflows
 - **PA-08.3** [POS Compliance & Controls](./VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md) — 12 workflows
 
 **[VS-09: In-Store Customer Services](./VS-09-in-store-services/README.md)** (158 workflows)
@@ -490,10 +490,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-13.2** [Loyalty Program Operations](./VS-13-customer-experience/PA-13.2-loyalty-program-operations.md) — 19 workflows
 - **PA-13.3** [Customer Data & CRM](./VS-13-customer-experience/PA-13.3-customer-data-and-crm.md) — 13 workflows
 
-**[VS-14: Marketing & Communications](./VS-14-marketing/README.md)** (40 workflows)
+**[VS-14: Marketing & Communications](./VS-14-marketing/README.md)** (41 workflows)
 
 - **PA-14.1** [Campaign Planning & Execution](./VS-14-marketing/PA-14.1-campaign-planning-and-execution.md) — 17 workflows
-- **PA-14.2** [Digital Marketing & Social Media](./VS-14-marketing/PA-14.2-digital-marketing-and-social-media.md) — 12 workflows
+- **PA-14.2** [Digital Marketing & Social Media](./VS-14-marketing/PA-14.2-digital-marketing-and-social-media.md) — 13 workflows
 - **PA-14.3** [Brand, PR & Corporate Communications](./VS-14-marketing/PA-14.3-brand-pr-and-corporate-communications.md) — 11 workflows
 
 **[VS-37: Store Opening & Commissioning](./VS-37-store-opening-commissioning/README.md)** (26 workflows)
@@ -959,10 +959,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-134.2** [Change Delivery, Communications & Stakeholder Engagement](./VS-134-organizational-change-management-digital-adoption-transformation-enablement/PA-134.2-change-delivery-communications-and-stakeholder-engagement.md) — 8 workflows
 - **PA-134.3** [Digital Adoption, Training & Sustainment Analytics](./VS-134-organizational-change-management-digital-adoption-transformation-enablement/PA-134.3-digital-adoption-training-and-sustainment-analytics.md) — 8 workflows
 
-**[VS-141: Employee Transport, Shuttle & Daily Commute Management](./VS-141-employee-transport-shuttle-and-daily-commute-management/README.md)** (24 workflows)
+**[VS-141: Employee Transport, Shuttle & Daily Commute Management](./VS-141-employee-transport-shuttle-and-daily-commute-management/README.md)** (25 workflows)
 
 - **PA-141.1** [Transport Strategy, Policy & Commute-Allowance Framework](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.1-transport-strategy-policy-and-commute-allowance-framework.md) — 8 workflows
-- **PA-141.2** [Shuttle Service, Route & Daily Commute Operations](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.2-shuttle-service-route-and-daily-commute-operations.md) — 8 workflows
+- **PA-141.2** [Shuttle Service, Route & Daily Commute Operations](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.2-shuttle-service-route-and-daily-commute-operations.md) — 9 workflows
 - **PA-141.3** [Transport Vendor, Safety, Cost & Commute Analytics](./VS-141-employee-transport-shuttle-and-daily-commute-management/PA-141.3-transport-vendor-safety-cost-and-commute-analytics.md) — 8 workflows
 
 **[VS-144: Employee Accommodation, Dormitory & Staff Housing Operations](./VS-144-employee-accommodation-dormitory-and-staff-housing/README.md)** (24 workflows)
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,418 workflows across 188 value streams · Date: 2026-09-05*
+*Total: 5,422 workflows across 188 value streams · Date: 2026-09-05*

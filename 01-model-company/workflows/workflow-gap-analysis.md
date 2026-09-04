@@ -241,6 +241,45 @@ identify capability gaps not addressed by any existing value stream.
 > absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now
 > **188 value streams · 569 process areas · 5,418 workflows** (5,441 confirmed register rows; Tier 1 1,393 →
 > 1,394, Tier 2 3,286 → 3,289).
+>>
+> **Post-Pass-30 workflow-level additions, batch 22 (2026-09-05) — terminal-tampering, procurement-impersonation,
+> account-takeover & commute-disruption gap fill.**
+> The batch-16/17/18/19/20/21 edge-case sweeps were re-run across scenario families not yet probed (payment-device
+> compromise at the lane, fraudsters impersonating BuildRight as the buyer, takeover of BuildRight's own verified
+> accounts, commute interruptions stranding crews at undamaged sites) and filled four single-workflow gaps inside
+> existing value streams: **W5566** Payment-Terminal Tampering & Card-Skimmer Response (PIN-Pad Compromise Event)
+> (VS-08.2; 'card skimmer'/'tampered terminal' appear in zero PA files — W537 owns the terminal's daily operations
+> and settlement, W5547/W5564 the outage rails, W1205 the PCI compliance program and annual QSA audit, and VS-125.2
+> transaction-level card-present fraud; nobody owned the device-compromise event: the freeze-in-place evidence rule
+> (the overlay is forensic evidence under chain of custody, never pried off by store staff), the lane quarantine and
+> chain-wide terminal-fleet sweep, the acquirer/card-brand notification duty with its 24-hour liability clock, the
+> compromised-card population assessment, or the tamper-evident-seal retrofit into the W537 daily check),
+> **W5567** Procurement-Impersonation & Fake-PO Goods-Diversion Response (VS-03.2; 'fake PO'/'fraudulent purchase
+> order'/'supplier impersonation' appear in zero PA files — the buyer-side mirror of W5559's diverted payments and
+> W5563's fake sellers: fraudsters posing as BuildRight order goods to a fraudster's address with a carrier
+> BuildRight never booked, so no payment moves and no recall exists; nobody owned the void-order posture with
+> same-day authenticated notice, the supplier-notification wave with portal-only verification, the receiving hold
+> flags on diverted PO numbers, the W839 insider check, or the self-verifiable order-code retrofit),
+> **W5568** Official-Channel Account-Takeover Response (Brand-Account Hijack) (VS-14.2; 'account hijack'/'brand
+> account' appear in zero PA files — W5563 owns the fake pages that only pretend to be BuildRight, W3871
+> customer-account ATO, and W5550 platform-side enforcement against us; nobody owned the takeover of BuildRight's
+> own verified accounts, where a scam post inherits the platform's verification badge and defeats follower
+> self-verification: the first-hour credential kill-chain and queue freeze, the platform-recovery appeal with
+> corporate proof, the same-day follower advisory from unaffected channels, or the W53 privacy clock where follower
+> messages were exposed), and **W5569** Mass-Commute Disruption & Transport-Strike Continuity Protocol (VS-141.2;
+> 'transport strike'/'commute disruption' appear in zero PA files — W4255 responds to a single shuttle incident,
+> W850/W2510 decide site closures, and the W576/W848/W1387 site-protection canons target buildings, not commutes;
+> nobody owned the event where every site is open yet unstaffed: the attendance-forecast call, the critical-role
+> matrix with no-penalty absence coding, the W4253-gated shuttle-surge and ride-share activation, the explicit
+> service-level matrix for skeleton-crew trading, or the customer-impact decision riding the E-02 custody). The same
+> analysis produced the custody register's ninth wave (event-custody-and-precedence-register.md v1.9, events
+> E-42–E-45: payment-terminal tampering canon W5566, procurement-impersonation canon W5567, brand-account-hijack
+> canon W5568, commute-disruption canon W5569). Workflow-ID allocation: W5566–W5569 (next available). All four ship
+> **directly confirmed Tier 2** (W5566 the payment-device security class of W1205/W5547, W5567 the procurement-fraud
+> contingency class of W5559/W5563, W5568 the brand-integrity channel-contingency class of W5563/W5550, and W5569
+> the workforce-continuity class of W5561/W4255). All four are absorbed within sized teams (OM stays 122 FTE / 17
+> teams; TO stays HQ 511 / 6,911). Canonical totals are now **188 value streams · 569 process areas · 5,422
+> workflows** (5,445 confirmed register rows; Tier 1 unchanged at 1,394, Tier 2 3,289 → 3,293).
 >
 > **Post-Pass-30 workflow-level additions, batch 19 (2026-09-05) — in-transit-security, fatality-scene, tampering-extortion & recruitment-fraud gap fill.**
 > The batch-16/17/18 edge-case sweeps were re-run across scenario families not yet probed (in-transit cargo crime,

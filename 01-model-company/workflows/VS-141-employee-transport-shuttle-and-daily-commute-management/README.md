@@ -56,9 +56,9 @@ reputational event.
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-141.1](PA-141.1-transport-strategy-policy-and-commute-allowance-framework.md) | Transport Strategy, Policy & Commute-Allowance Framework | 8 |
-| [PA-141.2](PA-141.2-shuttle-service-route-and-daily-commute-operations.md) | Shuttle Service, Route & Daily Commute Operations | 8 |
+| [PA-141.2](PA-141.2-shuttle-service-route-and-daily-commute-operations.md) | Shuttle Service, Route & Daily Commute Operations | 9 |
 | [PA-141.3](PA-141.3-transport-vendor-safety-cost-and-commute-analytics.md) | Transport Vendor, Safety, Cost & Commute Analytics | 8 |
-| | **Total** | **24** |
+| | **Total** | **25** |
 
 ---
 
