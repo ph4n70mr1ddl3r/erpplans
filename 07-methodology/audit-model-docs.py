@@ -55,6 +55,16 @@ with each IT re-base bumping only the Phase 3 cell). The change-note exemption i
 fixed to strip the whole version-history footer (from the first '*Date:' or
 '*Document Version:' line to end-of-file) instead of only up to its first ')'.
 
+2026-09-04 guard-extension pass: the AI-first operating guide (ai-first-operating-guide.md,
+v1.0) joins DOCS — it shipped with zero guard coverage, the sourcing-model precedent (a
+quantitative doc outside this guard is the one that drifts). Dry-run of the generic checks
+against it was clean (tokens, §-refs, retired figures), so the extension is guard-side only,
+plus a structural rule guide_figure_hits that re-derives the guide's canonical-figure
+citations from the primary registers on every run (the §5 catalog triple in both its prose
+and compressed forms, the Tier-wired autonomy-ladder sentence, and the control- and
+requirement-register canon-table counts). The methodology-index version-pin rule now also
+watches the guide's index row.
+
 2026-09-03 index-trueness pass: the description surfaces OUTSIDE the 7 guarded docs can
 also go stale, and 07-methodology/README.md had two such live defects — its OM row still
 pinned '(v2.1' after the doc bumped to v2.2 (the §9.3 clarification pass), and its
@@ -218,7 +228,10 @@ DOCS = ["mobile-app-strategy.md", "data-migration-mapping.md",
         "optimal-table-of-organization.md",
         "../07-methodology/it-product-operating-model.md",
         "../07-methodology/capability-sourcing-and-engineering-model.md",
-        "../07-methodology/technical-guidelines.md"]
+        "../07-methodology/technical-guidelines.md",
+        # 2026-09-04 guard-extension pass: shipped v1.0 outside the guard (the
+        # sourcing-model precedent); generic checks verified clean on dry-run.
+        "../07-methodology/ai-first-operating-guide.md"]
 RETIRED_FIGURES = ["6,757", "6,715", "5,357", "5,362", "5,349", "5,341",
                    "80,000 SKU", "1,000 POS terminal"]
 
@@ -494,7 +507,8 @@ def methodology_index_hits():
     index_path = os.path.join(REPO, "07-methodology", rel)
     versioned = {"it-product-operating-model.md",
                  "capability-sourcing-and-engineering-model.md",
-                 "technical-guidelines.md"}
+                 "technical-guidelines.md",
+                 "ai-first-operating-guide.md"}
     current = {}
     for name in versioned:
         m = re.search(r"^\*Document Version: (\d+\.\d+)",
@@ -513,6 +527,115 @@ def methodology_index_hits():
                 if m.group(1) != ver:
                     hits.append((rel, ln, f"{name} pinned at v{m.group(1)} but the doc "
                                           f"footer says v{ver}"))
+    return hits
+
+
+def guide_figure_hits():
+    """2026-09-04 guard-extension pass — structural guard for the AI-first operating
+    guide's canonical-figure citations: the process-catalog triple (both its prose and
+    compressed forms), the Tier-wired autonomy-ladder sentence, and the control- and
+    requirement-register canon-table counts are re-derived from the primary registers
+    on every run. (The guide shipped v1.0 outside this guard's doc set — the
+    sourcing-model precedent: the quantitative claim quoted outside the guard is the
+    one that drifts. Checks 40/41 already guard its check-count and the 'across N
+    categories' requirement-total forms repo-wide; this rule covers the forms they
+    cannot see.)"""
+    rel = "ai-first-operating-guide.md"
+    hits = []
+    wf_dir = os.path.join(MC, "workflows")
+    n_vs = sum(1 for n in os.listdir(wf_dir)
+               if n.startswith("VS-") and os.path.isdir(os.path.join(wf_dir, n)))
+    n_pa = len(glob.glob(os.path.join(wf_dir, "VS-*", "PA-*.md")))
+    idx = open(os.path.join(wf_dir, "value-stream-index.md"), encoding="utf-8").read()
+    m = re.search(r"\*\*Grand Total\*\* \| \*\*[\d,]+\*\* \| \*\*([\d,]+)\*\*", idx)
+    if not m:
+        return [(rel, 0, "value-stream-index Grand Total row not parseable")]
+    n_wf = int(m.group(1).replace(",", ""))
+    reg = open(os.path.join(wf_dir, "workflow-criticality-classification.md"),
+               encoding="utf-8").read()
+    tiers = {}
+    confirmed = re.search(r"### Confirmed classification.*?(?=^### |^## )", reg,
+                          re.M | re.S)
+    if confirmed:
+        for mm in re.finditer(r"^\| Phase (\d) \| [^|]+ \| ([\d,]+) \|",
+                              confirmed.group(0), re.M):
+            tiers[f"Tier {mm.group(1)}"] = int(mm.group(2).replace(",", ""))
+    if len(tiers) != 3:
+        return [(rel, 0, "criticality register Summary table not parseable — "
+                         "cannot derive canon tier counts")]
+    n_rows = sum(tiers.values())
+    reqs = open(os.path.join(MC, "erp-requirements.md"), encoding="utf-8").read()
+    n_req = len(set(re.findall(r"^\| ([A-Z]{2,5}-\d+[a-z]?) \|", reqs, re.M)))
+    n_cats = len({pid.split("-")[0] for pid in
+                  re.findall(r"^\| ([A-Z]{2,5}-\d+[a-z]?) \|", reqs, re.M)})
+    ctl = open(os.path.join(MC, "internal-controls-matrix.md"), encoding="utf-8").read()
+    n_ctl = len(set(re.findall(r"CTL-\d+", ctl)))
+    body = strip_footer(open(os.path.normpath(os.path.join(MC, "..", "07-methodology",
+                                                           rel)),
+                             encoding="utf-8").read())
+
+    def qint(s):
+        return int(s.replace(",", ""))
+
+    def line_of(pos):
+        return body[:pos].count("\n") + 1
+
+    # (a) prose catalog triple — 'the process catalog (188 value streams, 569
+    # process areas, 5,388 workflows)'
+    for mm in re.finditer(r"(\d[\d,]*) value streams, (\d[\d,]*) process areas,"
+                          r" (\d[\d,]*) workflows", body):
+        got = (qint(mm.group(1)), qint(mm.group(2)), qint(mm.group(3)))
+        if got != (n_vs, n_pa, n_wf):
+            hits.append((rel, line_of(mm.start()),
+                         f"catalog triple {got} != disk canon ({n_vs}, {n_pa}, {n_wf})"))
+    # (b) compressed catalog triple — '188 VS / 569 PA / 5,388 W'
+    for mm in re.finditer(r"(\d[\d,]*) VS / (\d[\d,]*) PA / (\d[\d,]*) W\b", body):
+        got = (qint(mm.group(1)), qint(mm.group(2)), qint(mm.group(3)))
+        if got != (n_vs, n_pa, n_wf):
+            hits.append((rel, line_of(mm.start()),
+                         f"catalog triple {got} != disk canon ({n_vs}, {n_pa}, {n_wf})"))
+    # (c) the Tier-wired autonomy-ladder sentence
+    lad = re.search(r"Tier 1 = (\d[\d,]*) register rows, Tier 2 =\s*(\d[\d,]*),"
+                    r" Tier 3 = (\d[\d,]*) of (\d[\d,]*) rows over"
+                    r" (\d[\d,]*) unique workflows", body)
+    if not lad:
+        hits.append((rel, 0, "autonomy-ladder citation sentence not found (expected "
+                             "'Tier 1 = … register rows, Tier 2 = …, Tier 3 = … of … rows "
+                             "over … unique workflows')"))
+    else:
+        got = [qint(lad.group(i)) for i in (1, 2, 3, 4, 5)]
+        want = [tiers["Tier 1"], tiers["Tier 2"], tiers["Tier 3"], n_rows, n_wf]
+        if got != want:
+            hits.append((rel, line_of(lad.start()),
+                         f"autonomy ladder {got} != register canon {want}"))
+    # (d) control-register citations
+    for mm in re.finditer(r"control register \((\d[\d,]*) controls\)", body):
+        if qint(mm.group(1)) != n_ctl:
+            hits.append((rel, line_of(mm.start()),
+                         f"control-register count {mm.group(1)} != matrix canon {n_ctl}"))
+    for mm in re.finditer(r"(\d[\d,]*)-control", body):
+        if qint(mm.group(1)) != n_ctl:
+            hits.append((rel, line_of(mm.start()),
+                         f"control-register count '{mm.group(0)}' != matrix canon {n_ctl}"))
+    for mm in re.finditer(r"`internal-controls-matrix\.md` \((\d[\d,]*)\)", body):
+        if qint(mm.group(1)) != n_ctl:
+            hits.append((rel, line_of(mm.start()),
+                         f"canon-table control count {mm.group(1)} != matrix canon {n_ctl}"))
+    # (e) requirement-register citations (the 'in 38 categories' and '728 / 38'
+    # forms Check 41's 'across' forms cannot see)
+    for mm in re.finditer(r"(\d[\d,]*) requirements in (\d+) categories", body):
+        got = (qint(mm.group(1)), int(mm.group(2)))
+        if got != (n_req, n_cats):
+            hits.append((rel, line_of(mm.start()),
+                         f"requirement-total claim {got} != register canon "
+                         f"({n_req}, {n_cats})"))
+    for mm in re.finditer(r"`erp-requirements\.md` \((\d[\d,]*) / (\d+) categories\)",
+                          body):
+        got = (qint(mm.group(1)), int(mm.group(2)))
+        if got != (n_req, n_cats):
+            hits.append((rel, line_of(mm.start()),
+                         f"canon-table requirement claim {got} != register canon "
+                         f"({n_req}, {n_cats})"))
     return hits
 
 
@@ -673,6 +796,7 @@ def main():
     hits.extend(dc_roster_hits(os.path.join(MC, "optimal-table-of-organization.md")))
     hits.extend(to_phase_hits())
     hits.extend(sourcing_tier_hits())
+    hits.extend(guide_figure_hits())
     hits.extend(register_heading_hits())
     hits.extend(methodology_index_hits())
     hits.extend(live_pin_hits())
