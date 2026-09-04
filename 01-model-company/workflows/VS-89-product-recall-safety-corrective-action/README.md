@@ -26,10 +26,10 @@ ecommerce/marketplace channels and across B2C, trade, and government accounts.
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-89.1](PA-89.1-recall-initiation-risk-assessment-regulatory-notification.md) | Recall Initiation, Risk Assessment & Regulatory Notification | 8 |
+| [PA-89.1](PA-89.1-recall-initiation-risk-assessment-regulatory-notification.md) | Recall Initiation, Risk Assessment & Regulatory Notification | 9 |
 | [PA-89.2](PA-89.2-recall-execution-customer-notification-retrieval.md) | Recall Execution, Customer Notification & Product Retrieval | 8 |
 | [PA-89.3](PA-89.3-recall-resolution-reimbursement-root-cause-capa.md) | Recall Resolution, Reimbursement & Root Cause / CAPA | 8 |
-| | **Total** | **24** |
+| | **Total** | **25** |
 
 ---
 

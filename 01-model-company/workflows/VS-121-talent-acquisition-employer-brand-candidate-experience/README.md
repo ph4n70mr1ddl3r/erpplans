@@ -57,10 +57,10 @@ no existing value stream owns end-to-end.
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-121.1](PA-121.1-employer-brand-evp-and-talent-marketing-strategy.md) | Employer Brand, EVP & Talent Marketing Strategy | 8 |
+| [PA-121.1](PA-121.1-employer-brand-evp-and-talent-marketing-strategy.md) | Employer Brand, EVP & Talent Marketing Strategy | 9 |
 | [PA-121.2](PA-121.2-candidate-experience-sourcing-and-selection-operations.md) | Candidate Experience, Sourcing & Selection Operations | 8 |
 | [PA-121.3](PA-121.3-talent-community-campus-pipeline-and-ta-analytics.md) | Talent Community, Campus Pipeline & TA Analytics | 8 |
-| | **Total** | **24** |
+| | **Total** | **25** |
 
 ---
 

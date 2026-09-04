@@ -155,6 +155,42 @@ identify capability gaps not addressed by any existing value stream.
 > now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
 > Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
 >
+> **Post-Pass-30 workflow-level additions, batch 19 (2026-09-05) — in-transit-security, fatality-scene, tampering-extortion & recruitment-fraud gap fill.**
+> The batch-16/17/18 edge-case sweeps were re-run across scenario families not yet probed (in-transit cargo crime,
+> on-premises death events, merchandise-integrity extortion, employment-brand impersonation) and filled four
+> single-workflow gaps inside existing value streams: **W5554** In-Transit Cargo Hijacking, Armed Truck Robbery &
+> Driver-Safety First Response Protocol (VS-06.2; cargo theft is named only inside W1337's ORC intelligence
+> background — "cargo theft targeting BuildRight deliveries in transit or at DC loading docks" — and VS-180's
+> relief-convoy escort note; 'hijack'/'holdup'/'cargo robbery' appear in zero dedicated headers — W653 owns the
+> accident/cargo-damage event, W2814 the CIT-vendor robbery, E-21 armed violence on premises; nobody owned the
+> roadside armed-robbery event, whose first rule is the opposite of loss prevention: comply, surrender the load,
+> protect the crew — with the first-hour PNP hot-pursuit escalation, the GPS/seal evidence preservation, and the
+> own-fleet vs 3PL-carrier claim split), **W5555** Customer or Visitor Death on Premises — Scene Protocol, Family
+> Liaison & Trading-Continuity Decision (VS-147.3; W4401 owns injuries and names fatality only as W4405's
+> notification trigger — 'death on premises'/'died in store' appear in zero PA files as protocol content; nobody
+> owned the potential-crime-scene nothing-moves discipline until PNP/SOCO documented clearance, the family-liaison
+> sequencing that prevents social-media-first discovery, the dignity-first trading-continuity decision, or the
+> witnessing-staff stand-down), **W5556** Product-Tampering Threat, Extortion Demand & Merchandise-Integrity Sweep
+> Protocol (VS-89.1; VS-89 owns every found-defect trigger — W2993 intake, W2994 recall decision, W2995 regulatory
+> notification, W3000 stop-sale — but 'tampering threat'/'contamination threat'/'extortion' appear in zero dedicated
+> headers; nobody owned the never-pay rule, the specificity-gated sweep-or-monitor decision — the W5538 bomb-threat
+> decision law transposed to merchandise — or the law-enforcement assessment that must precede any W3000 stop-sale),
+> and **W5557** Recruitment Fraud & Fake Job-Offer Scam Response, Takedown & Victim-Guidance Protocol (VS-121.1;
+> 'recruitment scam'/'fake job'/'job scam' appear in zero PA files — PA-100.2's W3272 digital-IP machinery watches
+> impersonating sites/accounts through the customer-phishing lens and W3764 the review-site reputation; nobody owned
+> the event whose victims arrive at BuildRight's own door: the same-day never-charges-fees advisory, the simultaneous
+> multi-surface takedown wave, the empathy-first victim-guidance desk, and the PNP Anti-Cybercrime referral pack).
+> The same analysis produced the custody register's sixth wave (event-custody-and-precedence-register.md v1.6, events
+> E-30–E-33: in-transit cargo hijacking canon W5554, death on premises canon W5555, product-tampering threat canon
+> W5556, recruitment fraud canon W5557). Workflow-ID allocation: W5554–W5557 (next available). W5555/W5556 shipped
+> **directly confirmed Tier 1** (the life-safety scene-and-clearance class of the W5536/W5537/W5538 precedent — each
+> gates a physical-state transition on documented external assessment: PNP/SOCO scene release, and the
+> law-enforcement-assessed sweep/stop-sale decision) and W5554/W5557 **directly confirmed Tier 2** (the
+> contingency-operations class of W653/W2814 with the crew-safety dimension riding the Tier-1 W501/W717 chains, and
+> the brand-integrity channel-contingency class of the W5550/W5553 precedent). All four are absorbed within sized
+> teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now **188 value streams · 569
+> process areas · 5,410 workflows** (5,433 confirmed register rows; Tier 1 1,390 → 1,392, Tier 2 3,281 → 3,283).
+>
 > **Post-Pass-30 workflow-level additions, batch 18 (2026-09-05) — channel-enforcement, employee-legal-status, OSH-enforcement & app-store-removal gap fill.**
 > The batch-16/17 edge-case sweeps were re-run across scenario families not yet probed (platform-side channel
 > enforcement, employee criminal-case events, OSH enforcement orders, store-distribution takedowns) and filled

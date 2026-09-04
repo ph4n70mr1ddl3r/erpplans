@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,406 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,429 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,410 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,433 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
@@ -30,7 +30,10 @@
 > in the 2026-09-05 batch-17 gap-fill pass, and W5550–W5553
 > (the channel-enforcement, employee-legal-status, OSH-enforcement & app-store-removal gap
 > fill in VS-10.3/VS-19.1/VS-24.1/VS-75.1) shipped directly confirmed Tier 1 (1) / Tier 2 (3)
-> in the 2026-09-05 batch-18 gap-fill pass.
+> in the 2026-09-05 batch-18 gap-fill pass, and W5554–W5557 (the in-transit-security,
+> fatality-scene, tampering-extortion & recruitment-fraud gap fill in VS-06.2/VS-147.3/
+> VS-89.1/VS-121.1) shipped directly confirmed Tier 1 (2) / Tier 2 (2) in the 2026-09-05
+> batch-19 gap-fill pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -63,9 +66,9 @@
 
 ---
 
-## Tier 1: Core Operations (1,390 Workflows)
+## Tier 1: Core Operations (1,392 Workflows)
 
-These 1,390 workflows are foundational to daily store and supply chain operations.
+These 1,392 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
 
 ### Core Finance (30 workflows)
@@ -286,9 +289,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (3,281 Workflows)
+## Tier 2: Standard Support (3,283 Workflows)
 
-These 3,281 workflows are needed for standard operational support, cost controls, and category management.
+These 3,283 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -784,13 +787,13 @@ These 758 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 1,390 | 25.7% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,281 | 60.5% |
+| Phase 1 | Go-Live Critical (Tier 1) | 1,392 | 25.6% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,283 | 60.4% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 758 | 14.0% |
-| **Confirmed Total** | | **5,429** | 100% |
+| **Confirmed Total** | | **5,433** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,406 are canonical `##` workflows.
+> own classification row; the remaining 5,410 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -817,11 +820,13 @@ whenever new workflows ship unclassified.
 | Confirmed (hand-reviewed) | 5,429 rows (5,406 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,406** unique `##` workflows (5,406 confirmed + 0 unclassified) |
+| **Grand Total** | **5,410** unique `##` workflows (5,410 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,429 classified register rows (5,406 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,406 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,433 classified register rows (5,410 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,410 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+
+> **2026-09-05 addition (in-transit-security, fatality-scene, tampering-extortion & recruitment-fraud gap fill, batch 19):** Four workflow-level gap fills — W5554 (In-Transit Cargo Hijacking, Armed Truck Robbery & Driver-Safety First Response Protocol; PA-06.2), W5555 (Customer or Visitor Death on Premises — Scene Protocol, Family Liaison & Trading-Continuity Decision; PA-147.3), W5556 (Product-Tampering Threat, Extortion Demand & Merchandise-Integrity Sweep Protocol; PA-89.1), and W5557 (Recruitment Fraud & Fake Job-Offer Scam Response, Takedown & Victim-Guidance Protocol; PA-121.1) — were added after the batch-16/17/18 edge-case sweeps were re-run across scenario families not yet probed (in-transit cargo crime, on-premises death events, merchandise-integrity extortion, employment-brand impersonation): the in-transit hijacking event (cargo theft appears only inside W1337's ORC intelligence background and VS-180's relief-convoy escort note; W653 owns accidents/cargo damage, W2814 the CIT-vendor robbery, E-21 armed violence on premises — nobody owned the roadside armed-robbery event, whose first rule is the opposite of loss prevention: comply, surrender the load, protect the crew), the death-on-premises event (W4401 owns injuries and names fatality only as W4405's notification trigger; 'death on premises'/'died in store' in zero PA files as protocol content — nobody owned the potential-crime-scene discipline until PNP/SOCO documented clearance, the family-liaison sequencing that prevents social-media-first discovery, the dignity-first trading-continuity decision, or the witnessing-staff stand-down), the product-tampering threat/extortion event (VS-89 owns every found-defect trigger — W2993 intake, W2994 recall decision, W2995 notification, W3000 stop-sale — but 'tampering threat'/'contamination threat'/'extortion' appear in zero dedicated headers; nobody owned the never-pay rule, the specificity-gated sweep-or-monitor decision, or the law-enforcement assessment that must precede any W3000 stop-sale), and the recruitment-fraud event ('recruitment scam'/'fake job'/'job scam' in zero PA files; PA-100.2's W3272 digital-IP machinery watches impersonating sites/accounts through the customer-phishing lens, W3764 the review-site reputation — nobody owned the event whose victims arrive at BuildRight's own door: the same-day never-charges-fees advisory, the multi-surface takedown wave, the empathy-first victim-guidance desk, and the PNP Anti-Cybercrime referral). The same analysis produced the sixth custody wave (event-custody-and-precedence-register.md v1.6, events E-30–E-33: in-transit cargo hijacking, death on premises, product-tampering threat, recruitment fraud). W5555/W5556 ship **directly confirmed Tier 1** (the life-safety scene-and-clearance class of the W5536/W5537/W5538 precedent — each gates a physical-state transition on documented external assessment: PNP/SOCO scene release, and the law-enforcement-assessed sweep/stop-sale decision); W5554/W5557 ship **directly confirmed Tier 2** (the contingency-operations class of W653/W2814 with the crew-safety dimension riding the Tier-1 W501/W717 chains, and the brand-integrity channel-contingency class of the W5550/W5553 precedent).
 
 > **2026-09-05 addition (channel-enforcement, employee-legal-status, OSH-enforcement & app-store-removal gap fill, batch 18):** Four workflow-level gap fills — W5550 (Marketplace Account Suspension, Enforcement Freeze & Appeal Recovery Protocol; PA-10.3), W5551 (Employee Arrest, Detention & Criminal-Case Employment-Status Response Protocol; PA-19.1), W5552 (DOLE Imminent-Danger Work-Stoppage Order Response, Abatement & Reinstatement Gate; PA-24.1), and W5553 (Mobile App Store Removal, Policy-Violation Response & Re-Listing Recovery Protocol; PA-75.1) — were added after the batch-16/17 edge-case sweeps were re-run across scenario families not yet probed (platform-side channel enforcement, employee criminal-case events, OSH enforcement orders, store-distribution takedowns): the marketplace account-suspension event ('account suspension'/'account health'/'delisting' in zero PA files — W1470 owns the preventive seller-metrics layer ending at "escalates … to avoid platform penalties" and W659 the own-platform incidents, but nobody owns the enforcement event itself: freeze-scope containment, demand re-routing, the appeal pack, the settlement-freeze accounting and the reinstatement gate), the employee arrest/detention event ('arrest' only as a VS-167 re-screening trigger and an LP case-closure outcome; nobody owns the employment-status mechanics — the involuntary-absence leave placement, the work-relatedness/legal-support decision with the employer's Arts. 2176/2180 exposure, family liaison, acquittal-reinstatement, and the W2883/W2884 two-notice gate on verified facts), the DOLE imminent-danger stop-work order (RA 11058 cited in ~15 PA files only as the duties/penalties context of W505 — 'work stoppage'/'stoppage order'/'imminent danger' in zero dedicated headers; the OSH analog of the W5545 closure-order class: comply-first abatement, the no-wage-loss rule, and reopening only on the written DOLE lifting), and the app-store removal event ('app store removal'/'policy violation'/'app takedown' in zero files — W2647 owns listing upkeep and W2650 monitoring, not the removal: class-specific fix paths, the appeal with remediation in hand, interim-channel comms and the release-checklist gate). The same analysis produced the fifth custody wave (event-custody-and-precedence-register.md v1.5, events E-27–E-29: marketplace account suspension, DOLE work-stoppage order, employee arrest/detention). W5552 ships **directly confirmed Tier 1** (the OSH statutory-enforcement class of the W5545 closure-order precedent — a regulator-ordered halt gated on life safety with a written-lifting reopen gate); W5550/W5551/W5553 ship **directly confirmed Tier 2** (the channel-contingency class of the W5547/W5548 precedent and the specialized employee-relations event class; the OSH inspection layer rides the Tier-1 W505/W140 canons).
 
@@ -869,7 +874,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 > have been classified by value stream context, process area, and operational criticality.
 > Classification: **284 Tier 1** (core) · **293 Tier 2** (support) · **104 Tier 3** (optimization).
 
-### Tier 1 Additions (416 Workflows)
+### Tier 1 Additions (418 Workflows)
 
 #### Plan & Source
 
@@ -1369,7 +1374,16 @@ The batch-18 gap fill added one workflow confirmed directly **Tier 1** — the O
 |---|---|---|
 | W5552 | DOLE Imminent-Danger Work-Stoppage Order Response, Abatement & Reinstatement Gate | Health, Safety & Environment |
 
-### Tier 2 Additions (526 Workflows)
+#### In-Transit-Security, Fatality-Scene, Tampering-Extortion & Recruitment-Fraud Gap-Fill Pass (2026-09-05)
+
+The batch-19 gap fill added two workflows confirmed directly **Tier 1** — the life-safety scene-and-clearance class of the W5536/W5537/W5538 in-store emergency precedent, each gating a physical-state transition (scene release / stop-sale-to-trading) on documented external assessment: W5555 customer or visitor death on premises (W4401 owns injuries and names fatality only as W4405's notification trigger — 'death on premises'/'died in store' in zero PA files as protocol content; the potential-crime-scene nothing-moves discipline until PNP/SOCO documented clearance, family liaison with no social-media-first discovery, the dignity-first trading-continuity decision, and the witnessing-staff stand-down had no owner) and W5556 product-tampering threat & extortion demand (VS-89 owns every found-defect trigger — W2993 intake, W2994 recall decision, W3000 stop-sale — but 'tampering threat'/'contamination threat'/'extortion' appear in zero dedicated headers; the never-pay rule, the specificity-gated sweep-or-monitor decision — the W5538 bomb-threat decision law transposed to merchandise — and the law-enforcement assessment preceding any W3000 stop-sale had no owner):
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5555 | Customer or Visitor Death on Premises — Scene Protocol, Family Liaison & Trading-Continuity Decision | Customer Safety, Premises Liability & In-Store Risk Management |
+| W5556 | Product-Tampering Threat, Extortion Demand & Merchandise-Integrity Sweep Protocol | Product Recall & Safety Corrective Action Management |
+
+### Tier 2 Additions (528 Workflows)
 
 #### Plan & Source
 
@@ -2020,6 +2034,15 @@ The batch-18 gap fill added three workflows confirmed directly **Tier 2** — th
 | W5550 | Marketplace Account Suspension, Enforcement Freeze & Appeal Recovery Protocol | Ecommerce & Digital Channels |
 | W5551 | Employee Arrest, Detention & Criminal-Case Employment-Status Response Protocol | Hire-to-Retire |
 | W5553 | Mobile App Store Removal, Policy-Violation Response & Re-Listing Recovery Protocol | Customer Digital Engagement & Mobile App Operations |
+
+#### In-Transit-Security, Fatality-Scene, Tampering-Extortion & Recruitment-Fraud Gap-Fill Pass (2026-09-05)
+
+The batch-19 gap fill added two workflows confirmed directly **Tier 2** — the contingency-operations and brand-integrity event classes: W5554 in-transit cargo hijacking, armed truck robbery & driver-safety first response (cargo theft is named only inside W1337's ORC intelligence background and VS-180's relief-convoy escorts — 'hijack'/'holdup'/'cargo robbery' in zero dedicated headers while W653 owns accidents, W2814 the CIT-vendor robbery, and E-21 armed violence on premises; the comply-first/no-pursuit discipline with the no-discipline guarantee, the first-hour PNP hot-pursuit escalation, the GPS/seal evidence preservation, and the carrier-liability vs own-fleet claim split had no owner; the crew-safety dimension rides the Tier-1 W501/W717 chains) and W5557 recruitment fraud & fake job-offer scam response ('recruitment scam'/'fake job'/'job scam' in zero PA files while PA-100.2's digital-IP machinery watches impersonating accounts through the customer-phishing lens — nobody owned the event whose victims arrive at BuildRight's own door: the same-day never-charges-fees advisory, the simultaneous multi-surface takedown wave via W3272, the empathy-first victim-guidance desk, and the PNP Anti-Cybercrime referral pack):
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5554 | In-Transit Cargo Hijacking, Armed Truck Robbery & Driver-Safety First Response Protocol | Logistics & Fleet |
+| W5557 | Recruitment Fraud & Fake Job-Offer Scam Response, Takedown & Victim-Guidance Protocol | Talent Acquisition, Employer Brand & Candidate Experience |
 
 ### Tier 3 Additions (132 Workflows)
 
@@ -6817,6 +6840,7 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.47 — people-capability & reporting-policy gap fill (batch 9): the dedicated People/organization-domain gap analysis (workflow-gap-analysis-people.md) re-ran the §2 gap methodology across the People family and adjacent corporate/finance-policy streams and found four workflow-level surfaces unowned — the LMS platform & learning-records layer, the learning-content/course-catalog production lifecycle, the leadership-development program, and the accounting-policy/technical-accounting (PFRS) layer ('LMS' 58 PA files / 101 hits / zero dedicated `## W` headers with even an LMS Administrator role named in W1484's staffing; 'instructional design'/'course catalog'/a true 'accounting-policy owner' all absent — PFRS appears in 93 PA files but every dedicated owner is transaction-specific: VS-157 PFRS 15, VS-148 PFRS 16, W407 PAS 12, W1875 lease policy; adjacent slices program-generic: W51 training programs, W178 succession planning, W645 workforce planning, W3351 HRIS, W9 financial close). Four workflows added — W5525 Learning Platform (LMS) Administration, Integration & Learning-Records Operations, W5526 Learning-Content Development, Course-Catalog & Certification-Program Lifecycle, W5527 Leadership Development & Management-Capability Program (HiPo Development) (all PA-19.4), and W5528 Accounting Policy, Technical Accounting (PFRS) Position & New-Standard Adoption Governance (PA-17.4) — and confirmed directly **Tier 2 (4)** (the platform-operations/governance-layer/program-support class of their siblings W3351/W51/W9); statutory dimensions (OSH training-record evidence, mandatory pass/fail regulatory courses) ride verification steps inside the workflows, matching the W5513/W5515/W5518 precedent. All four absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,400 → 5,404 rows (5,377 → 5,381 unique; T2 3,261 → 3,265); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Finance/People families + reconciliation line, value-stream-index header/VS-17+VS-19 rows/grand total/footer/detailed sections, VS-19 README 75 → 78, VS-17 README 67 → 68, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, dependency-map intro, touchpoint-map reconciliation footer, gap-analysis batch-9 note + companion doc, executive-summary footer, OM v2.6 FIN 798 → 799 / PEO 437 → 440 and 4,868+509 → 4,872+509=5,381, sourcing-model v1.6 §12.1 ladder 3,261 → 3,265, semantic-audit-coverage registry annotated). `validate-repo.sh`: 0 errors / 0 warnings.*
 
+*Date: 2026-09-05 | Workflow Criticality Classification v7.54 — in-transit-security, fatality-scene, tampering-extortion & recruitment-fraud gap fill (batch 19): the batch-16/17/18 edge-case sweeps were re-run across scenario families not yet probed (in-transit cargo crime, on-premises death events, merchandise-integrity extortion, employment-brand impersonation) and found four unowned surfaces (keyword verification: 'hijack'/'holdup'/'cargo robbery' = 0 dedicated headers with cargo theft named only inside W1337's ORC intelligence background and VS-180's relief-convoy escorts; 'death on premises'/'died in store' = 0 protocol content with W4401 owning injuries and naming fatality only as W4405's notification trigger; 'tampering threat'/'contamination threat'/'extortion' = 0 dedicated headers with VS-89 owning only found-defect triggers; 'recruitment scam'/'fake job'/'job scam' = 0 hits with W3272 watching impersonating accounts through the customer-phishing lens only). Four workflows added — W5554 In-Transit Cargo Hijacking, Armed Truck Robbery & Driver-Safety First Response Protocol (PA-06.2), W5555 Customer or Visitor Death on Premises — Scene Protocol, Family Liaison & Trading-Continuity Decision (PA-147.3), W5556 Product-Tampering Threat, Extortion Demand & Merchandise-Integrity Sweep Protocol (PA-89.1), W5557 Recruitment Fraud & Fake Job-Offer Scam Response, Takedown & Victim-Guidance Protocol (PA-121.1) — confirmed directly **Tier 1 (2)** (W5555/W5556, the life-safety scene-and-clearance class of the W5536/W5537/W5538 precedent — each gates a physical-state transition on documented external assessment) and **Tier 2 (2)** (W5554/W5557 — the contingency-operations class of W653/W2814 with the crew-safety dimension riding the Tier-1 W501/W717 chains, and the brand-integrity channel-contingency class of the W5550/W5553 precedent). The same pass produced the sixth custody wave (v1.6, E-30–E-33). All four absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,429 → 5,433 rows (5,406 → 5,410 unique; T1 1,390 → 1,392, T2 3,281 → 3,283, Tier 3 unchanged at 758); proposed register stays empty (0 unclassified).*
 *Date: 2026-09-05 | Workflow Criticality Classification v7.53 — channel-enforcement, employee-legal-status, OSH-enforcement & app-store-removal gap fill (batch 18): the batch-16/17 edge-case sweeps were re-run across scenario families not yet probed and found four unowned surfaces (keyword verification: 'account suspension'/'account health'/'delisting' = 0 hits with W1470 owning only the preventive metrics layer and W659 the own-platform incidents; 'arrest' present only as a VS-167 re-screening trigger and an LP case-closure outcome — no owner of the employment-status mechanics; 'work stoppage'/'stoppage order'/'imminent danger' = 0 dedicated headers with RA 11058 cited in ~15 PA files only as W505's penalties context; 'app store removal'/'policy violation' = 0 hits with W2647 owning listing upkeep only). Four workflows added — W5550 Marketplace Account Suspension, Enforcement Freeze & Appeal Recovery Protocol (PA-10.3), W5551 Employee Arrest, Detention & Criminal-Case Employment-Status Response Protocol (PA-19.1), W5552 DOLE Imminent-Danger Work-Stoppage Order Response, Abatement & Reinstatement Gate (PA-24.1), W5553 Mobile App Store Removal, Policy-Violation Response & Re-Listing Recovery Protocol (PA-75.1) — confirmed directly **Tier 1 (1)** (W5552, the OSH statutory-enforcement class of the W5545 closure-order precedent) and **Tier 2 (3)** (W5550/W5551/W5553 — the channel-contingency class of the W5547/W5548 precedent and the specialized employee-relations event class). The same pass produced the fifth custody wave (v1.5, E-27–E-29). All four absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,425 → 5,429 rows (5,402 → 5,406 unique; T1 1,389 → 1,390, T2 3,278 → 3,281, Tier 3 unchanged at 758); proposed register stays empty (0 unclassified).*
 *Date: 2026-09-05 | Workflow Criticality Classification v7.52 — regulatory-shock, platform-outage & governance-continuity gap fill (batch 17): the batch-16 edge-case sweep was re-run across scenario families not yet probed and found six unowned surfaces (keyword verification: 'emergency succession'/'board continuity' = 0 hits with 'incapacity' appearing only as PA-36.2's records trigger; 'Oplan Kandado'/'tax suspension'/'closure order' = 0 hits; 'card network outage'/'card scheme outage'/'acquirer failure' = 0 hits; 'gift card system outage'/'loyalty system failure' = 0 hits; 'suicide'/'self-harm' = 0 hits; eFPS downtime cited as a pain point in 4 PA files with a one-bullet mitigation only — the batch-11 'adjacent-owners-exist-but-no-event-owner' pattern). Six workflows added — W5544 Emergency Executive Succession & Decision-Rights Continuity Protocol (PA-36.1), W5545 BIR Tax-Enforcement Suspension & Closure-Order Response (Oplan Kandado) (PA-79.3), W5546 BIR eFPS & Government-Portal Outage Filing Contingency, AAB Fallback & Penalty-Relief Documentation (PA-79.3), W5547 Payment-Network & Acquirer Outage Response (Card Scheme / Acquirer Downtime) (PA-08.1), W5548 Stored-Value & Loyalty Platform Outage, Downtime-Acceptance & Manual-Redemption Protocol (PA-54.2), W5549 Suicide Attempt / Self-Harm Incident Response & Psychosocial-Aftermath Protocol (PA-24.1) — confirmed directly **Tier 1 (2)** (W5545/W5546, the statutory-deadline-protection class of the W2764/W2765/W5508 filing siblings) and **Tier 2 (4)** (W5544/W5547/W5548/W5549 — governance-continuity and platform-contingency classes; the medical core of W5549 rides the Tier-1 W501 chain, the batch-16 W5539 precedent). The same pass produced the fourth custody wave (v1.4, E-23–E-26). All six absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,419 → 5,425 rows (5,396 → 5,402 unique; T1 1,387 → 1,389, T2 3,274 → 3,278, Tier 3 unchanged at 758); proposed register stays empty (0 unclassified).*
 
