@@ -49,8 +49,8 @@ No prior value stream owned the comprehensive SCF & working-capital program.
 |---|---|---|
 | [PA-105.1](PA-105.1-supplier-finance-and-reverse-factoring-program.md) | Supplier Finance & Reverse-Factoring Program Management | 8 |
 | [PA-105.2](PA-105.2-dynamic-discounting-and-early-payment-operations.md) | Dynamic Discounting & Early-Payment Operations | 8 |
-| [PA-105.3](PA-105.3-working-capital-analytics-and-cash-conversion-governance.md) | Working Capital Analytics & Cash-Conversion-Cycle Governance | 8 |
-| | **Total** | **24** |
+| [PA-105.3](PA-105.3-working-capital-analytics-and-cash-conversion-governance.md) | Working Capital Analytics & Cash-Conversion-Cycle Governance | 9 |
+| | **Total** | **25** |
 
 ---
 

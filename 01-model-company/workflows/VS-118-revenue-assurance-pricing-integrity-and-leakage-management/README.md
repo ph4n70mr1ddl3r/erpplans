@@ -64,9 +64,9 @@ audit findings, and compounding loss — risks that no existing value stream own
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-118.1](PA-118.1-revenue-assurance-strategy-governance-and-leak-detection-framework.md) | Revenue Assurance Strategy, Governance & Leak Detection Framework | 8 |
-| [PA-118.2](PA-118.2-pricing-promotion-loyalty-and-payment-integrity-monitoring.md) | Pricing, Promotion, Loyalty & Payment Integrity Monitoring | 8 |
+| [PA-118.2](PA-118.2-pricing-promotion-loyalty-and-payment-integrity-monitoring.md) | Pricing, Promotion, Loyalty & Payment Integrity Monitoring | 9 |
 | [PA-118.3](PA-118.3-leakage-recovery-revenue-analytics-and-continuous-assurance.md) | Leakage Recovery, Revenue Analytics & Continuous Assurance | 8 |
-| | **Total** | **24** |
+| | **Total** | **25** |
 
 ---
 

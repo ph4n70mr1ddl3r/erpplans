@@ -155,6 +155,45 @@ identify capability gaps not addressed by any existing value stream.
 > now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
 > Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
 >
+> **Post-Pass-30 workflow-level additions, batch 16 (2026-09-05) — emergency & continuity workflow gap fill.**
+> A dedicated emergency/edge-case gap analysis re-ran the §2 methodology at *scenario* granularity (rare events and
+> failure modes rather than capabilities) — probing the corpus for the questions "what happens when X fails" and
+> "who owns the event" across the disaster, life-safety, finance-failure and integrity-event families — and filled
+> eight single-workflow gaps inside existing value streams: **W5536** Missing-Child / Code Adam In-Store Response
+> Protocol (VS-07.2; 'missing child' appeared in the corpus only as cart-child-straps — PA-07.3's cart-fleet narrative
+> — with zero emergency-protocol hits; the retail-standard Code Adam protocol with exit-hold, coded PA, zone sweep,
+> verified reunification and a 10-minute police-escalation clock had no owner), **W5537** Fire Event Response,
+> Suppression & Post-Fire BFP Clearance — Store & DC (VS-24.2; fire was owned only as prevention/testing — W806
+> annual BFP certification, W1296 equipment inspection, VS-04 DC PM checks — plus W330's one classification row;
+> nobody owned suppression activation, BFP coordination, structural assessment or the three-party
+> BFP-clearance-to-reopen gate), **W5538** Bomb Threat Response & Search-or-Evacuation Decision Protocol (VS-24.2;
+> a W330 Major-classification example and a PA-24.2 plan-template bullet only; no call-takedown checklist,
+> search-vs-evacuate decision rule, PNP-EOD handoff or radio-RF discipline), **W5539** Elevator & Escalator Entrapment
+> Response Protocol (VS-07.2; 25 files mention elevators — all maintenance/accessibility; the 'entrapment' hits were
+> law-enforcement ops; nobody owned passenger contact, the medical-vulnerability triage, the licensed-technician-only
+> release rule or the 2-in-12-months modernization trigger), **W5540** Payroll Run Failure, Correction & Emergency
+> Off-Cycle Payment (VS-19.2; W10 owns the run and W641 planned off-cycle payments; 'payroll failure' = 0 hits;
+> nobody owned the abort/reject classification clock, bank-file reject regeneration, the < 24 h emergency-net-pay
+> decision or statutory-remittance protection when the register is broken), **W5541** Bank-Failure & Frozen-Deposit
+> Contingency (VS-18.3; W1474 owns steady-state counterparty limits and the PDIC-cap note; nobody owned the exposure
+> census, the 10-day obligations-vs-stranded-cash gap, disbursement rerouting or the PDIC claim file), **W5542**
+> Liquidity Stress, Covenant-Breach & Payment-Prioritization Escalation (VS-105.3; W319/W3400 own routine covenant
+> monitoring and working-capital policy; 'liquidity crisis'/'cash crunch' = 0 hits; nobody owned the stress
+> declaration, cash council, reversibility-ordered lever sequence, statutory-first payment tiers or the never-lapse
+> covenant-engagement rule), and **W5543** Price-File Integrity Event Response & Mass-Mispricing Rollback (VS-118.2;
+> W13 executes price files, W3697 monitors accuracy, W1622/W1538 refund; nobody owned the event: blast-radius
+> scoping, RA 7581 SRP triage, the rollback + re-label sweep, overcharge remediation or the DTI evidence pack).
+> The same analysis produced the custody register's third wave (event-custody-and-precedence-register.md v1.3,
+> events E-19–E-22: structure fire, earthquake — naming W1450 as the canon the ladder had never routed — armed
+> violence (W717 vs W330 during-event command), and the mispricing event). Workflow-ID allocation: W5536–W5543
+> (next available). W5536/W5537/W5538 shipped **directly confirmed Tier 1** (the life-safety in-store emergency
+> class of W330/W501/W576 — each gates reopening/reunification on verified external clearance: RA 7610 safeguarding,
+> RA 9514 re-occupancy, PNP-EOD all-clear) and W5539–W5543 **directly confirmed Tier 2** (the contingency-operations
+> and integrity-event classes of W470/W641/W319/W3697 — the statutory dimensions ride the existing Tier-1 chains
+> W501/W10/W1527/W1306/W13/W427). All eight are absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays
+> HQ 511 / 6,911). Canonical totals are now **188 value streams · 569 process areas · 5,396 workflows** (5,419
+> confirmed register rows; Tier 1 1,384 → 1,387, Tier 2 3,269 → 3,274).
+>
 > **Post-Pass-30 workflow-level additions, batch 15 (2026-09-04) — capability demand-intake & backlog-triage gap fill.**
 > The end-to-end stakeholder demand cycle — a BPO/executive raises a new software-capability need with their paired
 > IT PO/PM → the need is logged and triaged by EA (existing coverage vs. missing workflow-level owners vs. genuinely
