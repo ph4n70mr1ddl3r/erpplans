@@ -155,6 +155,39 @@ identify capability gaps not addressed by any existing value stream.
 > now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
 > Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
 >
+> **Post-Pass-30 workflow-level additions, batch 18 (2026-09-05) — channel-enforcement, employee-legal-status, OSH-enforcement & app-store-removal gap fill.**
+> The batch-16/17 edge-case sweeps were re-run across scenario families not yet probed (platform-side channel
+> enforcement, employee criminal-case events, OSH enforcement orders, store-distribution takedowns) and filled
+> four single-workflow gaps inside existing value streams: **W5550** Marketplace Account Suspension, Enforcement
+> Freeze & Appeal Recovery Protocol (VS-10.3; 'account suspension'/'account health'/'delisting' in zero PA files —
+> W1470 owns the preventive seller-metrics layer, ending its escalation at "corrective action plan to avoid platform
+> penalties," and W659 owns incidents on BuildRight's *own* platform; nobody owned the enforcement event itself —
+> freeze-scope containment, demand re-routing to the own channel, the appeal pack with platform deadlines, the
+> settlement-freeze accounting and the reinstatement gate), **W5551** Employee Arrest, Detention & Criminal-Case
+> Employment-Status Response Protocol (VS-19.1; 'arrest' appears only as a VS-167 re-screening trigger and an LP
+> case-closure outcome — nobody owned the employment-status mechanics: the involuntary-absence leave placement
+> (detention is neither misconduct nor severance), the work-relatedness classification that fixes who pays for
+> counsel and opens the employer's Arts. 2176/2180 quasi-delict exposure, family liaison with written pay
+> computations, the 30/60/90-day reviews, acquittal-reinstatement, and the W2883/W2884 two-notice separation gate
+> on verified facts), **W5552** DOLE Imminent-Danger Work-Stoppage Order Response, Abatement & Reinstatement Gate
+> (VS-24.1; RA 11058 is cited in ~15 PA files only as the duties/penalties context of W505, and PA-24.1's own DOLE
+> pain point names work-stoppage orders solely as a late-reporting consequence — 'work stoppage'/'stoppage order'/
+> 'imminent danger' in zero dedicated headers; the OSH analog of the W5545 BIR closure-order class: comply-first
+> abatement with evidence, the no-wage-loss rule for stoppage-affected workers, and reopening only on DOLE's written
+> lifting order), and **W5553** Mobile App Store Removal, Policy-Violation Response & Re-Listing Recovery Protocol
+> (VS-75.1; 'app store removal'/'policy violation'/'app takedown' in zero PA files — W2647 owns listing upkeep and
+> review response, W2650 performance monitoring; nobody owned the removal event: class-specific fix paths
+> (privacy-declaration, payment-rule, metadata, binary), the appeal with remediation in hand, interim-channel
+> customer comms and the release-checklist prevention gate). The same analysis produced the fifth custody wave
+> (event-custody-and-precedence-register.md v1.5, events E-27–E-29: marketplace account suspension canon W5550,
+> DOLE work-stoppage order canon W5552, employee arrest/detention canon W5551). Workflow-ID allocation: W5550–W5553
+> (next available). W5552 shipped **directly confirmed Tier 1** (the OSH statutory-enforcement class of the W5545
+> closure-order precedent — a regulator-ordered halt gated on life safety with a written-lifting reopen gate) and
+> W5550/W5551/W5553 **directly confirmed Tier 2** (the channel-contingency class of the W5547/W5548 precedent and
+> the specialized employee-relations event class). All four are absorbed within sized teams (OM stays 122 FTE /
+> 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now **188 value streams · 569 process areas · 5,406
+> workflows** (5,429 confirmed register rows; Tier 1 1,389 → 1,390, Tier 2 3,278 → 3,281).
+
 > **Post-Pass-30 workflow-level additions, batch 17 (2026-09-05) — regulatory-shock, platform-outage & governance-continuity gap fill.**
 > The batch-16 edge-case sweep was re-run across scenario families not yet probed (governance continuity,
 > regulatory enforcement, payment-platform failure, tender-program failure, sensitive psychosocial incidents)

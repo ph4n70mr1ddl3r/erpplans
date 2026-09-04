@@ -11,11 +11,11 @@
 |---|---|
 | Value Streams | 188 |
 | Process Areas | 569 |
-| Workflows | 5,402 |
-| Classified (Tier 1) | 1,389 |
-| Classified (Tier 2) | 3,278 |
+| Workflows | 5,406 |
+| Classified (Tier 1) | 1,390 |
+| Classified (Tier 2) | 3,281 |
 | Classified (Tier 3) | 758 |
-| Classified total | 5,425 rows = 5,402 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass, re-achieved 2026-09-02 on the 14 post-catalog workflows W5497–W5510, maintained 2026-09-03 when W5511 shipped confirmed Tier 2 in the event-custody pass, extended the same day when W5512–W5514 — the agentic-AI platform lifecycle gap fill in VS-128.3 — shipped directly confirmed Tier 2, extended again when W5515–W5517 — the capability-sourcing & engineering gap fill in VS-113 — shipped directly confirmed Tier 2, extended once more when W5518–W5524 — the IT operating-model gap fill in VS-27 — shipped directly confirmed Tier 2 (5) / Tier 3 (2), extended again when W5525–W5528 — the people-capability & reporting-policy gap fill — shipped directly confirmed Tier 2 (4), extended again when W5529–W5531 — the finance-workflow gap fill — shipped directly confirmed Tier 1 (2) / Tier 2 (1), extended again when W5532–W5534 — the operations-workflow gap fill in VS-19.3/VS-79.2/VS-23.2 — shipped directly confirmed Tier 2 (2) / Tier 1 (1), extended again when W5535 — the capability demand-intake & backlog-triage gap fill in PA-113.2 (VS-113) — shipped directly confirmed Tier 2 (1), and extended again when W5536–W5543 — the emergency & continuity workflow gap fill in VS-07.2/VS-24.2/VS-19.2/VS-18.3/VS-105.3/VS-118.2 — shipped directly confirmed Tier 1 (3) / Tier 2 (5), and extended again when W5544–W5549 — the regulatory-shock, platform-outage & governance-continuity gap fill in VS-36.1/VS-79.3/VS-08.1/VS-54.2/VS-24.1 — shipped directly confirmed Tier 1 (2) / Tier 2 (4)) |
+| Classified total | 5,429 rows = 5,406 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass, re-achieved 2026-09-02 on the 14 post-catalog workflows W5497–W5510, maintained 2026-09-03 when W5511 shipped confirmed Tier 2 in the event-custody pass, extended the same day when W5512–W5514 — the agentic-AI platform lifecycle gap fill in VS-128.3 — shipped directly confirmed Tier 2, extended again when W5515–W5517 — the capability-sourcing & engineering gap fill in VS-113 — shipped directly confirmed Tier 2, extended once more when W5518–W5524 — the IT operating-model gap fill in VS-27 — shipped directly confirmed Tier 2 (5) / Tier 3 (2), extended again when W5525–W5528 — the people-capability & reporting-policy gap fill — shipped directly confirmed Tier 2 (4), extended again when W5529–W5531 — the finance-workflow gap fill — shipped directly confirmed Tier 1 (2) / Tier 2 (1), extended again when W5532–W5534 — the operations-workflow gap fill in VS-19.3/VS-79.2/VS-23.2 — shipped directly confirmed Tier 2 (2) / Tier 1 (1), extended again when W5535 — the capability demand-intake & backlog-triage gap fill in PA-113.2 (VS-113) — shipped directly confirmed Tier 2 (1), and extended again when W5536–W5543 — the emergency & continuity workflow gap fill in VS-07.2/VS-24.2/VS-19.2/VS-18.3/VS-105.3/VS-118.2 — shipped directly confirmed Tier 1 (3) / Tier 2 (5), and extended again when W5544–W5549 — the regulatory-shock, platform-outage & governance-continuity gap fill in VS-36.1/VS-79.3/VS-08.1/VS-54.2/VS-24.1 — shipped directly confirmed Tier 1 (2) / Tier 2 (4), and extended again when W5550–W5553 — the channel-enforcement, employee-legal-status, OSH-enforcement & app-store-removal gap fill in VS-10.3/VS-19.1/VS-24.1/VS-75.1 — shipped directly confirmed Tier 1 (1) / Tier 2 (3)) |
 
 ---
 
@@ -78,13 +78,13 @@
 | [VS-191](VS-191-customer-construction-debris-demolition-waste-and-site-cleanup-operations/README.md) | Customer Construction Debris, Demolition Waste & Site Cleanup Operations | 24 |
 | [VS-192](VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | 24 |
 
-### Sell & Serve (1,538 workflows)
+### Sell & Serve (1,540 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-07](VS-07-store-operations/README.md) | Store Operations | 149 |
 | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | 59 |
 | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | 158 |
-| [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 62 |
+| [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | 63 |
 | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | 52 |
 | [VS-12](VS-12-installation-services/README.md) | Installation & Services | 40 |
 | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | 64 |
@@ -104,7 +104,7 @@
 | [VS-65](VS-65-ecommerce-marketplace-integration/README.md) | E-Commerce Marketplace Integration | 24 |
 | [VS-66](VS-66-customer-project-design-services/README.md) | Customer Project & Design Services | 24 |
 | [VS-70](VS-70-solar-renewable-energy/README.md) | Solar & Renewable Energy Product Operations | 24 |
-| [VS-75](VS-75-digital-engagement-app/README.md) | Customer Digital Engagement & Mobile App Operations | 24 |
+| [VS-75](VS-75-digital-engagement-app/README.md) | Customer Digital Engagement & Mobile App Operations | 25 |
 | [VS-77](VS-77-construction-material-staging/README.md) | Construction Project Material Staging & Phased Delivery | 24 |
 | [VS-78](VS-78-green-building-advisory/README.md) | Green Building & Sustainable Product Advisory | 24 |
 | [VS-82](VS-82-sari-sari-msme-micro-wholesale/README.md) | Sari-Sari Store & MSME Micro-Wholesale Program | 24 |
@@ -161,10 +161,10 @@
 | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | 24 |
 | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | 24 |
 
-### People (442 workflows)
+### People (443 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
-| [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 80 |
+| [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | 81 |
 | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | 25 |
 | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | 25 |
 | [VS-98](VS-98-contingent-contract-outsourced-workforce/README.md) | Contingent, Contract & Outsourced Workforce Management | 24 |
@@ -198,13 +198,13 @@
 | [VS-178](VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md) | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | 24 |
 | [VS-184](VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md) | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | 24 |
 
-### Governance & Assurance (969 workflows)
+### Governance & Assurance (970 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | 49 |
 | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | 57 |
 | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | 29 |
-| [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 29 |
+| [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | 30 |
 | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | 31 |
 | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | 30 |
 | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | 23 |
@@ -256,7 +256,7 @@
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 461 + 499 + 1,538 + 784 + 442 + 321 + 969 + 388 = 5,402
+Family subtotal reconciliation: 461 + 499 + 1,540 + 784 + 443 + 321 + 970 + 388 = 5,406
 
 > **Note (2026-06-21):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 through 2026-06-21, VS-89–VS-192; W2993–W5488). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

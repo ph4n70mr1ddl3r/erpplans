@@ -22,8 +22,8 @@ Ecommerce & digital channels: platform operations, order fulfillment & delivery,
 |---|---|---|
 | [PA-10.1](PA-10.1-ecommerce-platform-operations.md) | Ecommerce Platform Operations | 32 |
 | [PA-10.2](PA-10.2-order-fulfillment-and-delivery.md) | Order Fulfillment & Delivery | 20 |
-| [PA-10.3](PA-10.3-marketplace-and-social-commerce.md) | Marketplace & Social Commerce | 10 |
-| | **Total** | **62** |
+| [PA-10.3](PA-10.3-marketplace-and-social-commerce.md) | Marketplace & Social Commerce | 11 |
+| | **Total** | **63** |
 
 ## Key dependencies
 
