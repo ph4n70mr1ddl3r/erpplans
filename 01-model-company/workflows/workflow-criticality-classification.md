@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,387 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,410 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,388 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,411 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
@@ -19,7 +19,9 @@
 > (the finance-workflow gap fill in VS-42.3/VS-17.3/VS-17.4) shipped directly confirmed
 > Tier 1 (2) / Tier 2 (1) in the 2026-09-03 finance-workflow gap-fill pass, and W5532–W5534
 > (the operations-workflow gap fill in VS-19.3/VS-79.2/VS-23.2) shipped directly confirmed
-> Tier 2 (2) / Tier 1 (1) in the 2026-09-04 operations-workflow gap-fill pass.
+> Tier 2 (2) / Tier 1 (1) in the 2026-09-04 operations-workflow gap-fill pass, and W5535
+> (the capability demand-intake & backlog-triage gap fill in PA-113.2, VS-113) shipped
+> directly confirmed Tier 2 in the 2026-09-04 demand-intake gap-fill pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -275,9 +277,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (3,268 Workflows)
+## Tier 2: Standard Support (3,269 Workflows)
 
-These 3,268 workflows are needed for standard operational support, cost controls, and category management.
+These 3,269 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -774,12 +776,12 @@ These 758 workflows deliver advanced capabilities for competitive differentiatio
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
 | Phase 1 | Go-Live Critical (Tier 1) | 1,384 | 25.6% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,268 | 60.4% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,269 | 60.4% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 758 | 14.0% |
-| **Confirmed Total** | | **5,410** | 100% |
+| **Confirmed Total** | | **5,411** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,387 are canonical `##` workflows.
+> own classification row; the remaining 5,388 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -803,14 +805,16 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,410 rows (5,387 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,411 rows (5,388 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,387** unique `##` workflows (5,387 confirmed + 0 unclassified) |
+| **Grand Total** | **5,388** unique `##` workflows (5,388 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,410 classified register rows (5,387 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,387 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,411 classified register rows (5,388 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,388 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+
+> **2026-09-04 addition (demand-intake gap fill, batch 15):** One workflow-level gap fill — W5535 (Capability Demand Intake & Backlog Triage; PA-113.2, VS-113) — was added after re-running the gap methodology at workflow granularity against the end-to-end stakeholder demand cycle described in the IT operating model (OM §5.1/§7 governance) and the sourcing model (§3 gate): a BPO/executive raises a new software-capability need → the paired IT PO/PM logs it → EA triages (existing coverage vs. missing workflows vs. genuinely new value stream vs. sourcing candidate) → routing (team backlog, workflow-catalog gap-admission, or the W5515 SIB gate) → Product-Council capacity funding — the front door had no dedicated owner in any PA file ('capability demand intake'/'backlog triage'/'accepted or routed or declined' appear in zero dedicated `## W` headers — the adjacent VS-113 slices are each post-intake: W3577 portfolio rationalization, W3580 solution architecture for approved initiatives, W3588 investment-governance ROI, and the batch-7 machinery W5515–W5517 all start after intake). Ships **directly confirmed Tier 2** — the governance/lifecycle-operations class of its W5515/W5516 siblings; no statutory dimension (the front door routes and never executes statutory filings), matching the batch-7 governance precedent.
 
 > **2026-09-04 addition (operations-workflow gap fill, batch 11):** Three workflow-level gap fills — W5532 (Workforce Time & Attendance (Biometric/Time-Clock) Platform Estate & Punch-Data Operations; PA-19.3), W5533 (BIR Form 2316 Annual Issuance, Employee Acknowledgment & Certificate Lifecycle; PA-79.2), and W5534 (Company-Property Gate Pass & Asset-Exit Control (Stores, DCs & HQ); PA-23.2) — were added after a dedicated operations-domain gap analysis (workflow-gap-analysis-operations.md) re-ran the §2 gap methodology across the four workflow-level families not yet covered by a domain pass (Plan & Source, Make & Move, Sell & Serve, Asset & Infrastructure, Governance & Assurance): the workforce time-&-attendance (biometric/time-clock) platform estate cited only as infrastructure (W561's trigger source, W586/W796's labor-metrics feed, new-store readiness's "biometric system installed"), the BIR Form 2316 annual furnishing layer generated only as W90.8/W1384.7 sub-steps, and the company-property gate-pass/asset-exit control PA-09.1 expects as a "Gate Pass Integration (Security exit clearance)" system integration each had no dedicated owner in any PA file ('time and attendance'/'timekeeping'/'biometric' = 38 PA files with zero dedicated headers, '2316' = 10 PA files / 0 dedicated headers, 'gate pass'/'property pass' = 5 PA files / 0 dedicated headers). W5533 ships **directly confirmed Tier 1** (the statutory furnishing layer of the withholding regime — the W2764/W2765 sibling class, W5508 precedent); W5532/W5534 ship **directly confirmed Tier 2** (the platform-operations class of W5525/W3351 and the physical-security control class of W1477/W1478).
 
@@ -1323,7 +1327,7 @@ The operations-workflow gap fill added one workflow confirmed directly **Tier 1*
 |---|---|---|
 | W5533 | BIR Form 2316 Annual Issuance, Employee Acknowledgment & Certificate Lifecycle | Tax Management & BIR Reporting |
 
-### Tier 2 Additions (513 Workflows)
+### Tier 2 Additions (514 Workflows)
 
 #### Plan & Source
 
@@ -1933,6 +1937,14 @@ The operations-workflow gap fill added two workflows confirmed directly **Tier 2
 |---|---|---|
 | W5532 | Workforce Time & Attendance (Biometric/Time-Clock) Platform Estate & Punch-Data Operations | Hire-to-Retire |
 | W5534 | Company-Property Gate Pass & Asset-Exit Control (Stores, DCs & HQ) | Loss Prevention & Asset Protection |
+
+#### Demand-Intake Gap-Fill Pass (2026-09-04)
+
+The demand-intake gap fill added one workflow confirmed directly **Tier 2** — the governance/lifecycle-operations class of its VS-113 siblings (W5515 gate, W5516 BoB lifecycle): the stakeholder front door that receives, triages, and routes capability demand upstream of the sourcing gate — the statutory-free routing dimension (the front door routes and never executes statutory filings) rides the workflow's own accepted/routed/declined state:
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5535 | Capability Demand Intake & Backlog Triage | Enterprise Architecture, Application Portfolio & Technology Strategy |
 
 ### Tier 3 Additions (132 Workflows)
 
@@ -6729,6 +6741,8 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.47 — people-capability & reporting-policy gap fill (batch 9): the dedicated People/organization-domain gap analysis (workflow-gap-analysis-people.md) re-ran the §2 gap methodology across the People family and adjacent corporate/finance-policy streams and found four workflow-level surfaces unowned — the LMS platform & learning-records layer, the learning-content/course-catalog production lifecycle, the leadership-development program, and the accounting-policy/technical-accounting (PFRS) layer ('LMS' 58 PA files / 101 hits / zero dedicated `## W` headers with even an LMS Administrator role named in W1484's staffing; 'instructional design'/'course catalog'/a true 'accounting-policy owner' all absent — PFRS appears in 93 PA files but every dedicated owner is transaction-specific: VS-157 PFRS 15, VS-148 PFRS 16, W407 PAS 12, W1875 lease policy; adjacent slices program-generic: W51 training programs, W178 succession planning, W645 workforce planning, W3351 HRIS, W9 financial close). Four workflows added — W5525 Learning Platform (LMS) Administration, Integration & Learning-Records Operations, W5526 Learning-Content Development, Course-Catalog & Certification-Program Lifecycle, W5527 Leadership Development & Management-Capability Program (HiPo Development) (all PA-19.4), and W5528 Accounting Policy, Technical Accounting (PFRS) Position & New-Standard Adoption Governance (PA-17.4) — and confirmed directly **Tier 2 (4)** (the platform-operations/governance-layer/program-support class of their siblings W3351/W51/W9); statutory dimensions (OSH training-record evidence, mandatory pass/fail regulatory courses) ride verification steps inside the workflows, matching the W5513/W5515/W5518 precedent. All four absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,400 → 5,404 rows (5,377 → 5,381 unique; T2 3,261 → 3,265); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Finance/People families + reconciliation line, value-stream-index header/VS-17+VS-19 rows/grand total/footer/detailed sections, VS-19 README 75 → 78, VS-17 README 67 → 68, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, dependency-map intro, touchpoint-map reconciliation footer, gap-analysis batch-9 note + companion doc, executive-summary footer, OM v2.6 FIN 798 → 799 / PEO 437 → 440 and 4,868+509 → 4,872+509=5,381, sourcing-model v1.6 §12.1 ladder 3,261 → 3,265, semantic-audit-coverage registry annotated). `validate-repo.sh`: 0 errors / 0 warnings.*
+
+*Date: 2026-09-04 | Workflow Criticality Classification v7.50 — demand-intake gap fill (batch 15): re-running the workflow-granularity gap methodology against the end-to-end stakeholder demand cycle (IT operating model OM §5.1/§7 governance; sourcing model §3 gate) found one program surface unowned at workflow level — the capability demand-intake & backlog-triage front door (raise → log & triage → route to team backlog / workflow-catalog gap-admission / SIB sourcing gate → Product-Council capacity funding; 'capability demand intake'/'backlog triage' in zero dedicated `## W` headers while the adjacent VS-113 slices are each post-intake: W3577 portfolio rationalization, W3580 solution architecture for approved initiatives, W3588 investment ROI, and the batch-7 machinery W5515–W5517). One workflow added — **W5535 Capability Demand Intake & Backlog Triage** (PA-113.2, the application-portfolio front door it feeds: triage pack with IAP integration sketch W3579, rough TCO W4100, RA 10173/BIR compliance constraints, preliminary Tier proposal; routing to W5515's gate; accepted/routed/declined closed loop via the BPO) — and confirmed directly **Tier 2** (the governance/lifecycle-operations class of its W5515/W5516 siblings; no statutory dimension — the front door routes and never executes statutory filings, matching the batch-7 precedent). Absorbed within the sized CIO Office (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,410 → 5,411 rows (5,387 → 5,388 unique; T2 3,268 → 3,269; Tier 1/3 unchanged); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Technology & Data family + reconciliation line, value-stream-index header/VS-113 rows/T&D subtotal/grand total/footer, VS-113 README 27 → 28, PA-113.2 footer 9 → 10, root-README tree/Key-Metrics/coverage/diagram rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, VS-133 README + PA-133.1/.3 Volume rows, dependency-map intro + §8 block + §8.3 VS-113 row + VS-133 row, touchpoint-map v90.0, gap-analysis batch-15 note, executive-summary top footer, OM v2.9 CIO Office 80 → 81 and 4,878+509 → 4,878+510=5,388, sourcing-model v1.9 §12.1 ladder 3,268 → 3,269 + §12.2 intake figure + header/§13 OM pins, semantic-audit-coverage registry pending note W5535). `validate-repo.sh`: 0 errors / 0 warnings.*
 
 *Date: 2026-09-04 | Workflow Criticality Classification v7.49 — operations-workflow gap fill (batch 11): the dedicated operations-domain gap analysis (workflow-gap-analysis-operations.md) re-ran the §2 gap methodology across the four workflow-level families not yet covered by batches 8–10 (Plan & Source, Make & Move, Sell & Serve, Asset & Infrastructure, Governance & Assurance) and found three workflow-level surfaces unowned — the workforce time-&-attendance (biometric/time-clock) platform estate ('time and attendance'/'timekeeping'/'biometric' = 38 PA files / ~130 hits / 0 dedicated headers — the W561 trigger names 'biometric/attendance system', W586/W796 name 'timekeeping' as a labor-metrics data source and new-store readiness names 'biometric system installed', but the ~420–450-device estate, its punch-data payroll interfaces and offline fallback have no owner — the batch-9 LMS pattern), the BIR Form 2316 annual issuance layer ('2316' = 10 PA files / 22 hits / 0 dedicated headers — generation exists only as sub-steps W90.8/W1384.7 and an ESS view bullet, with no owner of the January 31 furnishing campaign to ~6,762 employees, its acknowledgment gate or its reconciliation to W2764/W2765), and the company-property gate-pass & asset-exit control ('gate pass'/'property pass' = 5 PA files / 7 hits / 0 dedicated headers — W585 passes trucks at DC gates and PA-09.1 expects 'Gate Pass Integration (Security exit clearance)', but nobody owns the ~8,000–12,000-movement/year property-exit control across ~205 stores + 4 DCs + HQ). Three workflows added — W5532 Workforce Time & Attendance (Biometric/Time-Clock) Platform Estate & Punch-Data Operations (PA-19.3), W5533 BIR Form 2316 Annual Issuance, Employee Acknowledgment & Certificate Lifecycle (PA-79.2), and W5534 Company-Property Gate Pass & Asset-Exit Control (Stores, DCs & HQ) (PA-23.2) — and confirmed directly **Tier 2 (2)** — W5532 (the platform-operations class of W5525/W3351) and W5534 (the physical-security control class of W1477/W1478) — and **Tier 1 (1)** — W5533 (the statutory furnishing layer of the withholding regime, the W2764/W2765/W5508 class). All three absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,407 → 5,410 rows (5,384 → 5,387 unique; T1 1,383 → 1,384, T2 3,266 → 3,268); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Sell & Serve/Finance/People families + reconciliation line, value-stream-index header/VS-19+VS-23+VS-79 rows/family subtotals/grand total/footer/detailed sections, VS-19 README 78 → 79, VS-79 README 25 → 26, VS-23 README 28 → 29, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, dependency-map intro + VS-133 row, touchpoint-map v89.0 footer, gap-analysis batch-11 note + companion doc, executive-summary footer, IT-model v2.8 PEO 440 → 441 / FIN 801 → 802 / SSP 873 → 874 and 4,875+509 → 4,878+509=5,387 with the §4.9 FIN straggler 799 → 802 trued, sourcing-model v1.8 §12.1 ladder 1,384/3,268, semantic-audit-coverage registry annotated, audit-model-docs/audit-exec-ctl ANCHOR re-pins). `validate-repo.sh`: 0 errors / 0 warnings.*
 

@@ -11,11 +11,11 @@
 |---|---|
 | Value Streams | 188 |
 | Process Areas | 569 |
-| Workflows | 5,387 |
+| Workflows | 5,388 |
 | Classified (Tier 1) | 1,384 |
-| Classified (Tier 2) | 3,268 |
+| Classified (Tier 2) | 3,269 |
 | Classified (Tier 3) | 758 |
-| Classified total | 5,410 rows = 5,387 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass, re-achieved 2026-09-02 on the 14 post-catalog workflows W5497–W5510, maintained 2026-09-03 when W5511 shipped confirmed Tier 2 in the event-custody pass, extended the same day when W5512–W5514 — the agentic-AI platform lifecycle gap fill in VS-128.3 — shipped directly confirmed Tier 2, extended again when W5515–W5517 — the capability-sourcing & engineering gap fill in VS-113 — shipped directly confirmed Tier 2, extended once more when W5518–W5524 — the IT operating-model gap fill in VS-27 — shipped directly confirmed Tier 2 (5) / Tier 3 (2), extended again when W5525–W5528 — the people-capability & reporting-policy gap fill — shipped directly confirmed Tier 2 (4), extended again when W5529–W5531 — the finance-workflow gap fill — shipped directly confirmed Tier 1 (2) / Tier 2 (1), and extended again when W5532–W5534 — the operations-workflow gap fill in VS-19.3/VS-79.2/VS-23.2 — shipped directly confirmed Tier 2 (2) / Tier 1 (1)) |
+| Classified total | 5,411 rows = 5,388 unique workflows + 23 parent/summary sub-workflow rows (full coverage: confirmed 2026-06-28 by the Full-Coverage Confirmation Pass, re-achieved 2026-09-02 on the 14 post-catalog workflows W5497–W5510, maintained 2026-09-03 when W5511 shipped confirmed Tier 2 in the event-custody pass, extended the same day when W5512–W5514 — the agentic-AI platform lifecycle gap fill in VS-128.3 — shipped directly confirmed Tier 2, extended again when W5515–W5517 — the capability-sourcing & engineering gap fill in VS-113 — shipped directly confirmed Tier 2, extended once more when W5518–W5524 — the IT operating-model gap fill in VS-27 — shipped directly confirmed Tier 2 (5) / Tier 3 (2), extended again when W5525–W5528 — the people-capability & reporting-policy gap fill — shipped directly confirmed Tier 2 (4), extended again when W5529–W5531 — the finance-workflow gap fill — shipped directly confirmed Tier 1 (2) / Tier 2 (1), extended again when W5532–W5534 — the operations-workflow gap fill in VS-19.3/VS-79.2/VS-23.2 — shipped directly confirmed Tier 2 (2) / Tier 1 (1), and extended again when W5535 — the capability demand-intake & backlog-triage gap fill in PA-113.2 (VS-113) — shipped directly confirmed Tier 2 (1)) |
 
 ---
 
@@ -239,7 +239,7 @@
 | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | 24 |
 | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | 24 |
 
-### Technology & Data (387 workflows)
+### Technology & Data (388 workflows)
 | VS | Value Stream | Workflows |
 |---|---|---|
 | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | 69 |
@@ -247,7 +247,7 @@
 | [VS-29](VS-29-master-data/README.md) | Master Data Management | 43 |
 | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | 29 |
 | [VS-99](VS-99-it-asset-technology-lifecycle-management/README.md) | IT Asset & Technology Lifecycle Management | 24 |
-| [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | 27 |
+| [VS-113](VS-113-enterprise-architecture-application-portfolio-and-technology-strategy/README.md) | Enterprise Architecture, Application Portfolio & Technology Strategy | 28 |
 | [VS-115](VS-115-calibration-metrology-and-measurement-traceability-management/README.md) | Calibration, Metrology & Measurement Traceability Management | 24 |
 | [VS-126](VS-126-customer-data-platform-single-customer-view-identity-resolution/README.md) | Customer Data Platform, Single Customer View & Identity Resolution | 24 |
 | [VS-128](VS-128-ai-ml-governance-responsible-ai/README.md) | AI/ML Governance & Responsible AI | 27 |
@@ -256,7 +256,7 @@
 | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | 24 |
 | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | 24 |
 
-Family subtotal reconciliation: 461 + 499 + 1,535 + 778 + 441 + 321 + 965 + 387 = 5,387
+Family subtotal reconciliation: 461 + 499 + 1,535 + 778 + 441 + 321 + 965 + 388 = 5,388
 
 > **Note (2026-06-21):** VS-49–VS-52 were retired (auto-generated placeholder content) and the resulting capability gaps — plus additional uncovered capabilities — were filled across thirty gap-analysis passes (2026-06-14 through 2026-06-21, VS-89–VS-192; W2993–W5488). The retired numbers (49–52) remain unused. Full per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the register-rows-vs-unique reconciliation — lives in [`workflow-gap-analysis.md`](workflow-gap-analysis.md) and [`CHANGELOG.md`](../../CHANGELOG.md).
 

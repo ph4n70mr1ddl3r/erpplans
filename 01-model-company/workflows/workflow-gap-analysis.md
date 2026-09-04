@@ -155,6 +155,25 @@ identify capability gaps not addressed by any existing value stream.
 > now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
 > Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
 >
+> **Post-Pass-30 workflow-level additions, batch 15 (2026-09-04) — capability demand-intake & backlog-triage gap fill.**
+> The end-to-end stakeholder demand cycle — a BPO/executive raises a new software-capability need with their paired
+> IT PO/PM → the need is logged and triaged by EA (existing coverage vs. missing workflow-level owners vs. genuinely
+> new value stream vs. sourcing candidate) → routed (team backlog, workflow-catalog gap-admission, or the W5515 SIB
+> sourcing gate) → funded as capacity at the Product Council — had no dedicated workflow-level owner: every stage
+> existed only as governance prose in the IT operating model (OM §5.1/§7) and the sourcing model (§3), with the
+> downstream sourcing machinery itself owned since batch 7 by W5515–W5517. Keyword verification: 'capability demand
+> intake'/'backlog triage' appear in zero dedicated `## W` headers (the adjacent VS-113 slices are each post-intake:
+> W3577 portfolio rationalization, W3580 solution architecture for approved initiatives, W3588 investment-governance
+> ROI — and W5515's gate opens only for a fully triaged sourcing proposal). One workflow added inside the existing
+> VS-113 — **W5535 Capability Demand Intake & Backlog Triage** (PA-113.2, the application-portfolio front door it
+> feeds: triage pack with IAP integration sketch W3579, rough TCO W4100, RA 10173/BIR compliance constraints and a
+> preliminary Tier proposal; routing to the W5515 gate; an accepted/routed/declined-with-reason closed loop back to
+> the stakeholder via the BPO) — and confirmed **directly confirmed Tier 2** (the governance/lifecycle-operations
+> class of its W5515/W5516 siblings; no statutory dimension — the front door routes and never executes statutory
+> filings). Absorbed within the sized CIO Office (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911).
+> Workflow-ID allocation: W5535 (next available). Canonical totals are now **188 value streams · 569 process areas ·
+> 5,388 workflows** (5,411 confirmed register rows; Tier 1 unchanged at 1,384, Tier 2 3,268 → 3,269).
+>
 > **Post-batch-11 confirmation sweep & controls-register gap fill (2026-09-04) — not a capability gap pass.**
 > A fresh corpus-wide re-sweep of the §2 methodology at workflow granularity — ~200 candidate
 > capabilities drawn from reference operating-model lenses not yet exhausted after batches 8–11
