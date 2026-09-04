@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,414 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,418 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -69,7 +69,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-192](VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **57** | **500** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 150 |
-|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 59 |
+|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 60 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
 |  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | Core | 3 | 63 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | Core | 3 | 52 |
@@ -114,7 +114,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
 |  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
 |  | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **139** | **1541** |
+| | | | **Subtotal** | **139** | **1542** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 43 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 70 |
@@ -162,7 +162,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-169](VS-169-employee-uniform-workwear-and-ppe-issuance-program/README.md) | Employee Uniform, Workwear & PPE-Issuance Program | Gap analysis | 3 | 24 |
 |  | [VS-183](VS-183-dual-training-system-dts-and-tesda-partnership-program/README.md) | Dual Training System (DTS) & TESDA Partnership Program | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **50** | **444** |
-| Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 32 |
+| Asset & Infrastructure | [VS-20](VS-20-real-estate-construction/README.md) | Real Estate & Construction | Core | 3 | 33 |
 |  | [VS-35](VS-35-fixed-asset-management/README.md) | Fixed Asset Management | Core | 3 | 24 |
 |  | [VS-42](VS-42-property-lease-admin/README.md) | Property & Lease Administration | Core | 3 | 25 |
 |  | [VS-59](VS-59-store-closure-decommissioning/README.md) | Store Closure & Decommissioning | Expansion | 3 | 24 |
@@ -175,7 +175,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-163](VS-163-electric-vehicle-ev-charging-station-host-network-operations/README.md) | Electric Vehicle (EV) Charging Station Host Network Operations | Gap analysis | 3 | 24 |
 |  | [VS-178](VS-178-landbanking-site-acquisition-and-agrarian-lgu-zoning-conversion/README.md) | Landbanking, Site Acquisition & Agrarian/LGU Zoning Conversion Operations | Gap analysis | 3 | 25 |
 |  | [VS-184](VS-184-post-disaster-store-infrastructure-reconstruction-and-rehabilitation/README.md) | Post-Disaster Store Infrastructure Reconstruction & Rehabilitation | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **39** | **322** |
+| | | | **Subtotal** | **39** | **323** |
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 49 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 29 |
@@ -195,7 +195,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-88](VS-88-document-control-records-retention/README.md) | Document Control, Records Management & Retention | Statutory | 3 | 24 |
 |  | [VS-89](VS-89-product-recall-safety-corrective-action/README.md) | Product Recall & Safety Corrective Action Management | Gap analysis | 3 | 25 |
 |  | [VS-91](VS-91-consumer-data-privacy-protection/README.md) | Consumer Data Privacy & Data Protection Program | Gap analysis | 3 | 24 |
-|  | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & Intellectual Property Management | Gap analysis | 3 | 24 |
+|  | [VS-100](VS-100-legal-operations-litigation-ip-management/README.md) | Legal Operations, Litigation & Intellectual Property Management | Gap analysis | 3 | 25 |
 |  | [VS-104](VS-104-government-affairs-public-policy-industry-relations/README.md) | Government Affairs, Public Policy & Industry Relations | Gap analysis | 3 | 24 |
 |  | [VS-114](VS-114-dangerous-goods-hazmat-transport-ecommerce-regulatory-compliance/README.md) | Dangerous Goods (DG) & Hazmat Transport, Ecommerce & Regulatory Compliance | Gap analysis | 3 | 24 |
 |  | [VS-117](VS-117-dti-bps-product-standards-certification-ps-mark-icc-compliance/README.md) | DTI-BPS Product Standards Certification & PS Mark/ICC Compliance | Gap analysis | 3 | 24 |
@@ -205,7 +205,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-132](VS-132-corporate-political-engagement-election-compliance/README.md) | Corporate Political Engagement, Election Compliance & Public Affairs Governance | Gap analysis | 3 | 24 |
 |  | [VS-133](VS-133-operational-excellence-process-mining-continuous-improvement/README.md) | Operational Excellence, Process Mining & Continuous Improvement Program | Gap analysis | 3 | 24 |
 |  | [VS-146](VS-146-customer-mystery-shopping-and-service-quality-assurance/README.md) | Customer Mystery Shopping & Service Quality Assurance Program | Gap analysis | 3 | 24 |
-|  | [VS-147](VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md) | Customer Safety, Premises Liability & In-Store Risk Management | Gap analysis | 3 | 25 |
+|  | [VS-147](VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md) | Customer Safety, Premises Liability & In-Store Risk Management | Gap analysis | 3 | 26 |
 |  | [VS-152](VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md) | Corporate Social Responsibility, Foundation & Community Investment | Gap analysis | 3 | 24 |
 |  | [VS-159](VS-159-corporate-security-executive-protection-and-travel-risk-management/README.md) | Corporate Security, Executive Protection & Travel Risk Management | Gap analysis | 3 | 24 |
 |  | [VS-161](VS-161-third-party-and-supplier-risk-management-tprm/README.md) | Third-Party & Supplier Risk Management (TPRM) | Gap analysis | 3 | 24 |
@@ -213,7 +213,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | Gap analysis | 3 | 24 |
 |  | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | Gap analysis | 3 | 24 |
 |  | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **111** | **972** |
+| | | | **Subtotal** | **111** | **974** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 70 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **389** |
-| | | | **Grand Total** | **569** | **5,414** |
+| | | | **Grand Total** | **569** | **5,418** |
 
 ---
 
@@ -454,9 +454,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-07.3** [Store Receiving & Replenishment](./VS-07-store-operations/PA-07.3-store-receiving-and-replenishment.md) — 28 workflows
 - **PA-07.4** [Store Staffing & People](./VS-07-store-operations/PA-07.4-store-staffing-and-people.md) — 10 workflows
 
-**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (59 workflows)
+**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (60 workflows)
 
-- **PA-08.1** [Transaction Processing](./VS-08-pos-checkout/PA-08.1-transaction-processing.md) — 37 workflows
+- **PA-08.1** [Transaction Processing](./VS-08-pos-checkout/PA-08.1-transaction-processing.md) — 38 workflows
 - **PA-08.2** [Payment & Cash Management](./VS-08-pos-checkout/PA-08.2-payment-and-cash-management.md) — 10 workflows
 - **PA-08.3** [POS Compliance & Controls](./VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md) — 12 workflows
 
@@ -1003,11 +1003,11 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 ### Asset & Infrastructure
 
-**[VS-20: Real Estate & Construction](./VS-20-real-estate-construction/README.md)** (32 workflows)
+**[VS-20: Real Estate & Construction](./VS-20-real-estate-construction/README.md)** (33 workflows)
 
 - **PA-20.1** [Site Selection & Lease Management](./VS-20-real-estate-construction/PA-20.1-site-selection-and-lease-management.md) — 11 workflows
 - **PA-20.2** [Engineering & Construction](./VS-20-real-estate-construction/PA-20.2-engineering-and-construction.md) — 10 workflows
-- **PA-20.3** [Facility Maintenance & Equipment](./VS-20-real-estate-construction/PA-20.3-facility-maintenance-and-equipment.md) — 11 workflows
+- **PA-20.3** [Facility Maintenance & Equipment](./VS-20-real-estate-construction/PA-20.3-facility-maintenance-and-equipment.md) — 12 workflows
 
 **[VS-35: Fixed Asset Management](./VS-35-fixed-asset-management/README.md)** (24 workflows)
 
@@ -1198,10 +1198,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-91.2** [Privacy Impact Assessment, Data Mapping & Vendor Privacy Due Diligence](./VS-91-consumer-data-privacy-protection/PA-91.2-privacy-impact-assessment-data-mapping-vendor-privacy.md) — 8 workflows
 - **PA-91.3** [Breach Detection, Notification & NPC Regulatory Response](./VS-91-consumer-data-privacy-protection/PA-91.3-breach-detection-notification-npc-response.md) — 8 workflows
 
-**[VS-100: Legal Operations, Litigation & Intellectual Property Management](./VS-100-legal-operations-litigation-ip-management/README.md)** (24 workflows)
+**[VS-100: Legal Operations, Litigation & Intellectual Property Management](./VS-100-legal-operations-litigation-ip-management/README.md)** (25 workflows)
 
 - **PA-100.1** [Legal Matter, Case & Outside Counsel Management](./VS-100-legal-operations-litigation-ip-management/PA-100.1-legal-matter-case-outside-counsel-management.md) — 8 workflows
-- **PA-100.2** [Intellectual Property Portfolio & Brand Protection](./VS-100-legal-operations-litigation-ip-management/PA-100.2-intellectual-property-portfolio-brand-protection.md) — 8 workflows
+- **PA-100.2** [Intellectual Property Portfolio & Brand Protection](./VS-100-legal-operations-litigation-ip-management/PA-100.2-intellectual-property-portfolio-brand-protection.md) — 9 workflows
 - **PA-100.3** [Corporate Legal Advisory, Contracts & Risk Governance](./VS-100-legal-operations-litigation-ip-management/PA-100.3-corporate-legal-advisory-contracts-risk-governance.md) — 8 workflows
 
 **[VS-104: Government Affairs, Public Policy & Industry Relations](./VS-104-government-affairs-public-policy-industry-relations/README.md)** (24 workflows)
@@ -1258,10 +1258,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-146.2** [Mystery Shopping, Service Audit & Measurement Operations](./VS-146-customer-mystery-shopping-and-service-quality-assurance/PA-146.2-mystery-shopping-service-audit-and-measurement-operations.md) — 8 workflows
 - **PA-146.3** [Findings Remediation, Recognition & Service-Quality Analytics](./VS-146-customer-mystery-shopping-and-service-quality-assurance/PA-146.3-findings-remediation-recognition-and-service-quality-analytics.md) — 8 workflows
 
-**[VS-147: Customer Safety, Premises Liability & In-Store Risk Management](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md)** (25 workflows)
+**[VS-147: Customer Safety, Premises Liability & In-Store Risk Management](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/README.md)** (26 workflows)
 
 - **PA-147.1** [Customer Safety Risk Strategy, Standards & Premises-Liability Framework](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/PA-147.1-customer-safety-risk-strategy-standards-and-premises-liability-framework.md) — 8 workflows
-- **PA-147.2** [In-Store Customer Safety Operations & Hazard Control](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/PA-147.2-in-store-customer-safety-operations-and-hazard-control.md) — 8 workflows
+- **PA-147.2** [In-Store Customer Safety Operations & Hazard Control](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/PA-147.2-in-store-customer-safety-operations-and-hazard-control.md) — 9 workflows
 - **PA-147.3** [Customer Incident Response, Claims & Safety Analytics](./VS-147-customer-safety-premises-liability-and-in-store-risk-management/PA-147.3-customer-incident-response-claims-and-safety-analytics.md) — 9 workflows
 
 **[VS-152: Corporate Social Responsibility, Foundation & Community Investment](./VS-152-corporate-social-responsibility-foundation-and-community-investment/README.md)** (24 workflows)
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,414 workflows across 188 value streams · Date: 2026-09-05*
+*Total: 5,418 workflows across 188 value streams · Date: 2026-09-05*

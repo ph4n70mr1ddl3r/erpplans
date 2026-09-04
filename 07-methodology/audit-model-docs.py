@@ -275,7 +275,7 @@ ANCHORS = {
         "10 external integration clusters",
         "§13.2 seasonal calendar",
         "**171 + 17 = 188**",
-        "**4,903 + 511 = 5,414**",
+        "**4,907 + 511 = 5,418**",
         # v2.0 hybrid sizing anchor (66 domain + platform/CIO = 115 FTE); v2.1 agentic
         # re-bases it to 122 (66 + 56, AAP +7)
         "**66 + 56 = 122**",

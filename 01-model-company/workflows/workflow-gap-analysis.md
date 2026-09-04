@@ -198,6 +198,50 @@ identify capability gaps not addressed by any existing value stream.
 > FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now **188 value streams · 569 process areas ·
 > 5,414 workflows** (5,437 confirmed register rows; Tier 1 1,392 → 1,393, Tier 2 3,283 → 3,286).
 >
+> **Post-Pass-30 workflow-level additions, batch 21 (2026-09-05) — storefront-crash, brand-impersonation-scam,
+> wallet-outage & adjacent-works gap fill.**
+> The batch-16/17/18/19/20 edge-case sweeps were re-run across scenario families not yet probed (vehicle impact
+> into an operating store, brand-impersonation commerce scams whose victims arrive at stores, mobile-wallet
+> provider outages, adjacent construction damaging occupied property) and filled four single-workflow gaps
+> inside existing value streams: **W5562** Vehicle-Impact & Storefront-Crash Response Protocol (VS-147.2;
+> 'vehicle into building'/'storefront crash' appear in zero PA files — W330's in-store emergency trigger names
+> structural failure generically but defers event-specific execution, W5555 owns the fatality scene protocol,
+> W1450's structural assessment is quake-specific, and W653 owns our fleet crashing elsewhere; nobody owned the
+> survivable-crash class: the crash-scene safety law (unstable vehicle, fuel leak, compromised glazing), the
+> driver's-CTPL-first liability ordering with BuildRight's loss running as subrogation, the red-tag structural
+> discipline before any zone reopens (the W5537 BFP-gate analog for impact damage), or the bollard/barrier
+> retrofit feedback into the site-standards register), **W5563** Brand-Impersonation Commerce-Scam Response
+> (Fake Sellers & Fraudulent Pickup Offers) (VS-100.2; 'fake seller'/'scam listing' appear in zero PA files —
+> W3271/W3272 own the monitoring and takedown machinery, W5557 the recruitment variant whose victims also
+> arrive at BuildRight's door, and VS-125 watches customer-side payment fraud; nobody owned the commerce-scam
+> event: the victims-arrive-at-our-stores protocol, the same-day advisory with a single verification source of
+> truth, the one-simultaneous-wave takedown discipline, the e-wallet recall guidance and PNP-ACG referral, or
+> the data-harvesting variant that triggers the W53 breach-assessment clock), **W5564** Mobile-Wallet Platform
+> Outage Response (E-Wallet Tender Downtime) (VS-08.1; one tender-outage canon per rail — W5547 owns the
+> card-scheme/acquirer rail and W535 the store-connectivity layer, but the wallet-provider rail had no owner:
+> the counterparty is the wallet provider, the authorization rail is QR/NFC wallet APIs, the fallback is a clean
+> tender-type suspension (cards and cash keep working), the settlement catch-up runs on the provider's T+1
+> payout statement, and the fraud window is phished-OTP social engineering and double-scan attempts rather than
+> offline-auth abuse; nobody owned the rail-diagnosis protocol, the tender-type directive flag, the
+> no-manual-receipt double-charge rule, or the stranded-authorization sweep against the provider statement),
+> and **W5565** Third-Party Construction Damage & Adjacent-Works Response Protocol (VS-20.3; 'adjacent
+> construction'/'neighboring construction'/'excavation damage' appear in zero dedicated headers — W650 executes
+> emergency repairs with no liability discipline, W5133 owns boundary lines not damage events, W5560 owns
+> occupation of banked land, and W876 processes whatever claim reaches it; nobody owned the third-party-damage
+> event: the evidence-before-repair rule with the dated crack survey and engineering baseline, the red-tag
+> safety gate for affected zones, the adjacent contractor's CAR/TPD-first claim ordering, the LGU
+> permit-leverage track, or the monitoring regime while works continue beside an operating site). The same
+> analysis produced the custody register's eighth wave (event-custody-and-precedence-register.md v1.8, events
+> E-38–E-41: vehicle-impact crash canon W5562, brand-impersonation commerce-scam canon W5563, mobile-wallet
+> platform-outage canon W5564, adjacent-works damage canon W5565). Workflow-ID allocation: W5562–W5565 (next
+> available). W5562 shipped **directly confirmed Tier 1** (the life-safety structural-clearance class of the
+> W5537/W5555 precedent — gating zone reopening on documented external assessment) and W5563/W5564/W5565
+> **directly confirmed Tier 2** (the brand-integrity event class of W5557/W5550, the payment-platform
+> contingency class of W5547/W5548, and the asset-protection contingency class of W5560/W5133). All four are
+> absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now
+> **188 value streams · 569 process areas · 5,418 workflows** (5,441 confirmed register rows; Tier 1 1,393 →
+> 1,394, Tier 2 3,286 → 3,289).
+>
 > **Post-Pass-30 workflow-level additions, batch 19 (2026-09-05) — in-transit-security, fatality-scene, tampering-extortion & recruitment-fraud gap fill.**
 > The batch-16/17/18 edge-case sweeps were re-run across scenario families not yet probed (in-transit cargo crime,
 > on-premises death events, merchandise-integrity extortion, employment-brand impersonation) and filled four

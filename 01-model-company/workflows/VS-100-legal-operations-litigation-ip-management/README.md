@@ -40,9 +40,9 @@ counterfeit BuildRight-brand goods (links to VS-71/VS-41).
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-100.1](PA-100.1-legal-matter-case-outside-counsel-management.md) | Legal Matter, Case & Outside Counsel Management | 8 |
-| [PA-100.2](PA-100.2-intellectual-property-portfolio-brand-protection.md) | Intellectual Property Portfolio & Brand Protection | 8 |
+| [PA-100.2](PA-100.2-intellectual-property-portfolio-brand-protection.md) | Intellectual Property Portfolio & Brand Protection | 9 |
 | [PA-100.3](PA-100.3-corporate-legal-advisory-contracts-risk-governance.md) | Corporate Legal Advisory, Contracts & Risk Governance | 8 |
-| | **Total** | **24** |
+| | **Total** | **25** |
 
 ---
 

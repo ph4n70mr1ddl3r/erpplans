@@ -60,9 +60,9 @@ solvents, thinners, adhesives accessible to customers).
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-147.1](PA-147.1-customer-safety-risk-strategy-standards-and-premises-liability-framework.md) | Customer Safety Risk Strategy, Standards & Premises-Liability Framework | 8 |
-| [PA-147.2](PA-147.2-in-store-customer-safety-operations-and-hazard-control.md) | In-Store Customer Safety Operations & Hazard Control | 8 |
+| [PA-147.2](PA-147.2-in-store-customer-safety-operations-and-hazard-control.md) | In-Store Customer Safety Operations & Hazard Control | 9 |
 | [PA-147.3](PA-147.3-customer-incident-response-claims-and-safety-analytics.md) | Customer Incident Response, Claims & Safety Analytics | 9 |
-| | **Total** | **25** |
+| | **Total** | **26** |
 
 ---
 
