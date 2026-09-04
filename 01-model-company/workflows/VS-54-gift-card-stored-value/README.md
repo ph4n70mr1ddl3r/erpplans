@@ -11,9 +11,9 @@ Manages BuildRight's gift card program including physical gift cards sold in-sto
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-54.1](PA-54.1-gift-card-issuance-distribution.md) | Gift Card Issuance & Distribution | 8 |
-| [PA-54.2](PA-54.2-gift-card-redemption-balance.md) | Gift Card Redemption & Balance Management | 8 |
+| [PA-54.2](PA-54.2-gift-card-redemption-balance.md) | Gift Card Redemption & Balance Management | 9 |
 | [PA-54.3](PA-54.3-gift-card-reconciliation-analytics.md) | Gift Card Reconciliation & Analytics | 9 |
-| | **Total** | **25** |
+| | **Total** | **26** |
 
 ---
 

@@ -22,10 +22,10 @@ POS & checkout: transaction processing, payment & cash management, and POS compl
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-08.1](PA-08.1-transaction-processing.md) | Transaction Processing | 36 |
+| [PA-08.1](PA-08.1-transaction-processing.md) | Transaction Processing | 37 |
 | [PA-08.2](PA-08.2-payment-and-cash-management.md) | Payment & Cash Management | 10 |
 | [PA-08.3](PA-08.3-pos-compliance-and-controls.md) | POS Compliance & Controls | 12 |
-| | **Total** | **58** |
+| | **Total** | **59** |
 
 ## Key dependencies
 

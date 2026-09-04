@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,396 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,402 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -69,7 +69,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-192](VS-192-green-fleet-transition-electric-vehicle-fleet-operations-and-sustainable-transportation/README.md) | Green Fleet Transition, EV Fleet Operations & Sustainable Transportation | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **57** | **499** |
 | Sell & Serve | [VS-07](VS-07-store-operations/README.md) | Store Operations | Core | 4 | 149 |
-|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 58 |
+|  | [VS-08](VS-08-pos-checkout/README.md) | POS & Checkout | Core | 3 | 59 |
 |  | [VS-09](VS-09-in-store-services/README.md) | In-Store Customer Services | Core | 3 | 158 |
 |  | [VS-10](VS-10-ecommerce-digital/README.md) | Ecommerce & Digital Channels | Core | 3 | 62 |
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | Core | 3 | 52 |
@@ -114,7 +114,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
 |  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
 |  | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **139** | **1537** |
+| | | | **Subtotal** | **139** | **1538** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 43 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 70 |
@@ -123,10 +123,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-38](VS-38-consumer-credit-financing/README.md) | Consumer Credit & Financing | Core | 3 | 24 |
 |  | [VS-39](VS-39-vendor-rebate-incentive/README.md) | Vendor Rebate & Incentive Management | Core | 3 | 24 |
 |  | [VS-40](VS-40-capex-project-accounting/README.md) | Capex & Project Accounting | Core | 3 | 24 |
-|  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | Expansion | 3 | 25 |
+|  | [VS-54](VS-54-gift-card-stored-value/README.md) | Gift Card & Stored Value Management | Expansion | 3 | 26 |
 |  | [VS-68](VS-68-trade-credit-risk-management/README.md) | Trade Credit Insurance & Risk Management | Expansion | 3 | 24 |
 |  | [VS-72](VS-72-cross-entity-shared-services/README.md) | Cross-Entity Shared Services & Chargeback | Expansion | 3 | 24 |
-|  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | Statutory | 3 | 26 |
+|  | [VS-79](VS-79-tax-management-bir-reporting/README.md) | Tax Management & BIR Statutory Reporting | Statutory | 3 | 28 |
 |  | [VS-80](VS-80-payment-operations-acquirer-settlement/README.md) | Payment Operations, Acquirer & Settlement Management | Statutory | 3 | 24 |
 |  | [VS-96](VS-96-equipment-leasing-capital-equipment-finance/README.md) | Equipment Leasing & Capital Equipment Finance | Gap analysis | 3 | 24 |
 |  | [VS-105](VS-105-supply-chain-finance-working-capital-management/README.md) | Supply Chain Finance & Working Capital Management | Gap analysis | 3 | 25 |
@@ -144,7 +144,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-181](VS-181-b2b-project-financing-escrow-account-orchestration-and-lien-release/README.md) | B2B Project Financing, Escrow Account Orchestration & Lien Release | Gap analysis | 3 | 24 |
 |  | [VS-188](VS-188-trade-reseller-floor-plan-and-dealer-inventory-financing/README.md) | Trade Reseller Floor-Plan & Dealer Inventory Financing | Gap analysis | 3 | 24 |
 |  | [VS-189](VS-189-trade-receivables-factoring-invoice-discounting-and-securitization/README.md) | Trade Accounts Receivable Factoring, Invoice Discounting & Receivables Securitization | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **87** | **781** |
+| | | | **Subtotal** | **87** | **784** |
 | People | [VS-19](VS-19-hire-to-retire/README.md) | Hire-to-Retire | Core | 5 | 80 |
 |  | [VS-83](VS-83-occupational-health-clinic-wellness/README.md) | Occupational Health, Safety Clinic & Employee Wellness | Statutory | 3 | 25 |
 |  | [VS-84](VS-84-labor-relations-collective-bargaining/README.md) | Labor Relations & Collective Bargaining Management | Statutory | 3 | 25 |
@@ -179,12 +179,12 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 49 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 29 |
-|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 28 |
+|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 29 |
 |  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | Core | 3 | 31 |
 |  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | Core | 3 | 30 |
 |  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | Core | 3 | 23 |
 |  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | Core | 3 | 23 |
-|  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | Core | 3 | 24 |
+|  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | Core | 3 | 25 |
 |  | [VS-69](VS-69-typhoon-disaster-response/README.md) | Typhoon & Natural Disaster Preparedness & Response | Expansion | 3 | 24 |
 |  | [VS-71](VS-71-anti-counterfeit-authentication/README.md) | Anti-Counterfeit & Product Authentication | Expansion | 3 | 24 |
 |  | [VS-73](VS-73-store-waste-circular-economy/README.md) | Store-Level Waste Management & Circular Economy | Expansion | 3 | 24 |
@@ -213,7 +213,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | Gap analysis | 3 | 24 |
 |  | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | Gap analysis | 3 | 24 |
 |  | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **111** | **967** |
+| | | | **Subtotal** | **111** | **969** |
 | Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 69 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
@@ -228,7 +228,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
 | | | | **Subtotal** | **39** | **388** |
-| | | | **Grand Total** | **569** | **5,396** |
+| | | | **Grand Total** | **569** | **5,402** |
 
 ---
 
@@ -454,9 +454,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-07.3** [Store Receiving & Replenishment](./VS-07-store-operations/PA-07.3-store-receiving-and-replenishment.md) — 28 workflows
 - **PA-07.4** [Store Staffing & People](./VS-07-store-operations/PA-07.4-store-staffing-and-people.md) — 10 workflows
 
-**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (58 workflows)
+**[VS-08: POS & Checkout](./VS-08-pos-checkout/README.md)** (59 workflows)
 
-- **PA-08.1** [Transaction Processing](./VS-08-pos-checkout/PA-08.1-transaction-processing.md) — 36 workflows
+- **PA-08.1** [Transaction Processing](./VS-08-pos-checkout/PA-08.1-transaction-processing.md) — 37 workflows
 - **PA-08.2** [Payment & Cash Management](./VS-08-pos-checkout/PA-08.2-payment-and-cash-management.md) — 10 workflows
 - **PA-08.3** [POS Compliance & Controls](./VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md) — 12 workflows
 
@@ -774,10 +774,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-40.2** [Project Cost Tracking & Capitalization](./VS-40-capex-project-accounting/PA-40.2-project-cost-tracking.md) — 8 workflows
 - **PA-40.3** [Construction-in-Progress & Asset Turnover](./VS-40-capex-project-accounting/PA-40.3-cip-asset-turnover.md) — 8 workflows
 
-**[VS-54: Gift Card & Stored Value Management](./VS-54-gift-card-stored-value/README.md)** (25 workflows)
+**[VS-54: Gift Card & Stored Value Management](./VS-54-gift-card-stored-value/README.md)** (26 workflows)
 
 - **PA-54.1** [Gift Card Issuance & Distribution](./VS-54-gift-card-stored-value/PA-54.1-gift-card-issuance-distribution.md) — 8 workflows
-- **PA-54.2** [Gift Card Redemption & Balance Management](./VS-54-gift-card-stored-value/PA-54.2-gift-card-redemption-balance.md) — 8 workflows
+- **PA-54.2** [Gift Card Redemption & Balance Management](./VS-54-gift-card-stored-value/PA-54.2-gift-card-redemption-balance.md) — 9 workflows
 - **PA-54.3** [Gift Card Reconciliation & Analytics](./VS-54-gift-card-stored-value/PA-54.3-gift-card-reconciliation-analytics.md) — 9 workflows
 
 **[VS-68: Trade Credit Insurance & Risk Management](./VS-68-trade-credit-risk-management/README.md)** (24 workflows)
@@ -792,11 +792,11 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-72.2** [Inter-Entity Service Level & Billing](./VS-72-cross-entity-shared-services/PA-72.2-inter-entity-service-level-billing.md) — 8 workflows
 - **PA-72.3** [Shared Services Performance & Analytics](./VS-72-cross-entity-shared-services/PA-72.3-shared-services-performance-analytics.md) — 8 workflows
 
-**[VS-79: Tax Management & BIR Statutory Reporting](./VS-79-tax-management-bir-reporting/README.md)** (26 workflows)
+**[VS-79: Tax Management & BIR Statutory Reporting](./VS-79-tax-management-bir-reporting/README.md)** (28 workflows)
 
 - **PA-79.1** [Indirect Tax (VAT & Percentage Tax) & BIR E-Invoicing](./VS-79-tax-management-bir-reporting/PA-79.1-indirect-tax-vat-and-einvoicing.md) — 8 workflows
 - **PA-79.2** [Withholding Tax (EWT/CWT) & Form 2307 Management](./VS-79-tax-management-bir-reporting/PA-79.2-withholding-tax-and-2307-management.md) — 10 workflows
-- **PA-79.3** [Corporate Income Tax, Local Tax, DST & BIR Audit Defense](./VS-79-tax-management-bir-reporting/PA-79.3-income-tax-local-tax-and-audit-defense.md) — 8 workflows
+- **PA-79.3** [Corporate Income Tax, Local Tax, DST & BIR Audit Defense](./VS-79-tax-management-bir-reporting/PA-79.3-income-tax-local-tax-and-audit-defense.md) — 10 workflows
 
 **[VS-80: Payment Operations, Acquirer & Settlement Management](./VS-80-payment-operations-acquirer-settlement/README.md)** (24 workflows)
 
@@ -1102,9 +1102,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-23.2** [Physical Security & Surveillance](./VS-23-loss-prevention/PA-23.2-physical-security-and-surveillance.md) — 10 workflows
 - **PA-23.3** [Shrinkage Reduction](./VS-23-loss-prevention/PA-23.3-shrinkage-reduction.md) — 9 workflows
 
-**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (28 workflows)
+**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (29 workflows)
 
-- **PA-24.1** [Occupational Health & Safety](./VS-24-health-safety-environment/PA-24.1-occupational-health-and-safety.md) — 11 workflows
+- **PA-24.1** [Occupational Health & Safety](./VS-24-health-safety-environment/PA-24.1-occupational-health-and-safety.md) — 12 workflows
 - **PA-24.2** [Emergency Preparedness](./VS-24-health-safety-environment/PA-24.2-emergency-preparedness.md) — 10 workflows
 - **PA-24.3** [Hazmat Management](./VS-24-health-safety-environment/PA-24.3-hazmat-management.md) — 7 workflows
 
@@ -1132,9 +1132,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-33.2** [Corporate Performance Management](./VS-33-strategic-planning/PA-33.2-corporate-performance-management.md) — 8 workflows
 - **PA-33.3** [Competitive Intelligence & Market Analysis](./VS-33-strategic-planning/PA-33.3-competitive-intelligence.md) — 7 workflows
 
-**[VS-36: Corporate Governance & Board Management](./VS-36-corporate-governance/README.md)** (24 workflows)
+**[VS-36: Corporate Governance & Board Management](./VS-36-corporate-governance/README.md)** (25 workflows)
 
-- **PA-36.1** [Board Meeting Management & Corporate Records](./VS-36-corporate-governance/PA-36.1-board-meeting-corporate-records.md) — 9 workflows
+- **PA-36.1** [Board Meeting Management & Corporate Records](./VS-36-corporate-governance/PA-36.1-board-meeting-corporate-records.md) — 10 workflows
 - **PA-36.2** [Shareholder & Equity Management](./VS-36-corporate-governance/PA-36.2-shareholder-equity-management.md) — 7 workflows
 - **PA-36.3** [Corporate Policy & Entity Governance](./VS-36-corporate-governance/PA-36.3-corporate-policy-entity-governance.md) — 8 workflows
 
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,396 workflows across 188 value streams · Date: 2026-09-05*
+*Total: 5,402 workflows across 188 value streams · Date: 2026-09-05*

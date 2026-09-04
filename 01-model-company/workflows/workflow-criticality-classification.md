@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,396 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,419 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,402 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,425 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
@@ -24,7 +24,10 @@
 > directly confirmed Tier 2 in the 2026-09-04 demand-intake gap-fill pass, and W5536–W5543
 > (the emergency & continuity workflow gap fill in VS-07.2/VS-24.2/VS-19.2/VS-18.3/VS-105.3/
 > VS-118.2) shipped directly confirmed Tier 1 (3) / Tier 2 (5) in the 2026-09-05 emergency
-> & continuity gap-fill pass.
+> & continuity gap-fill pass, and W5544–W5549
+> (the regulatory-shock, platform-outage & governance-continuity workflow gap fill in
+> VS-36.1/VS-79.3/VS-08.1/VS-54.2/VS-24.1) shipped directly confirmed Tier 1 (2) / Tier 2 (4)
+> in the 2026-09-05 batch-17 gap-fill pass.
 > [`workflow-criticality-proposed.md`](workflow-criticality-proposed.md) is empty and is
 > re-derived from the register on every run of
 > `07-methodology/classify-workflows.py` whenever new workflows ship unclassified.
@@ -57,9 +60,9 @@
 
 ---
 
-## Tier 1: Core Operations (1,387 Workflows)
+## Tier 1: Core Operations (1,389 Workflows)
 
-These 1,387 workflows are foundational to daily store and supply chain operations.
+These 1,389 workflows are foundational to daily store and supply chain operations.
 Failure in any of these workflows would disrupt store operations or legal compliance.
 
 ### Core Finance (30 workflows)
@@ -280,9 +283,9 @@ Failure in any of these workflows would disrupt store operations or legal compli
 
 ---
 
-## Tier 2: Standard Support (3,274 Workflows)
+## Tier 2: Standard Support (3,278 Workflows)
 
-These 3,274 workflows are needed for standard operational support, cost controls, and category management.
+These 3,278 workflows are needed for standard operational support, cost controls, and category management.
 
 ### Merchandising & Pricing (15 workflows)
 
@@ -778,13 +781,13 @@ These 758 workflows deliver advanced capabilities for competitive differentiatio
 
 | Phase | Label | Workflow Count | % of Classified |
 |---|---|---|---|
-| Phase 1 | Go-Live Critical (Tier 1) | 1,387 | 25.7% |
-| Phase 2 | Operational Excellence (Tier 2) | 3,274 | 60.4% |
+| Phase 1 | Go-Live Critical (Tier 1) | 1,389 | 25.7% |
+| Phase 2 | Operational Excellence (Tier 2) | 3,278 | 60.5% |
 | Phase 3 | Innovation & Optimization (Tier 3) | 758 | 14.0% |
-| **Confirmed Total** | | **5,419** | 100% |
+| **Confirmed Total** | | **5,425** | 100% |
 
 > Counts include 23 `###` parent/summary sub-workflows (e.g. W5A/W9A/W54A) that receive their
-> own classification row; the remaining 5,396 are canonical `##` workflows.
+> own classification row; the remaining 5,402 are canonical `##` workflows.
 
 ### Proposed classification (keyword-driven, pending human review)
 
@@ -808,14 +811,16 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,419 rows (5,396 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,425 rows (5,402 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,396** unique `##` workflows (5,396 confirmed + 0 unclassified) |
+| **Grand Total** | **5,402** unique `##` workflows (5,402 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,419 classified register rows (5,396 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,396 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,425 classified register rows (5,402 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,402 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+
+> **2026-09-05 addition (regulatory-shock, platform-outage & governance-continuity gap fill, batch 17):** Six workflow-level gap fills — W5544 (Emergency Executive Succession & Decision-Rights Continuity Protocol; PA-36.1), W5545 (BIR Tax-Enforcement Suspension & Closure-Order Response (Oplan Kandado); PA-79.3), W5546 (BIR eFPS & Government-Portal Outage Filing Contingency, AAB Fallback & Penalty-Relief Documentation; PA-79.3), W5547 (Payment-Network & Acquirer Outage Response (Card Scheme / Acquirer Downtime); PA-08.1), W5548 (Stored-Value & Loyalty Platform Outage, Downtime-Acceptance & Manual-Redemption Protocol; PA-54.2), and W5549 (Suicide Attempt / Self-Harm Incident Response & Psychosocial-Aftermath Protocol; PA-24.1) — were added after the batch-16 edge-case sweep was re-run across scenario families not yet probed (governance continuity, regulatory enforcement, payment-platform failure, tender-program failure, and sensitive psychosocial incidents): the emergency executive succession ('emergency succession'/'incapacity'/'board continuity' appeared only as PA-36.2's records-update trigger "(d) death or incapacity" — no owner of the first-24-hour board mechanics, the delegation-of-authority bridge, bank/BIR signatory continuity or the disclosure clock; W178 owns only planned succession), the BIR enforcement closure event ('Oplan Kandado'/'tax suspension'/'closure order' in zero PA files — W2773 owns audit defense and W658 inspection response, neither owns the closure order that halts trading at a site), the eFPS-outage filing contingency (downtime cited as a pain point in four PA files — W590-class, PA-17.3 twice, PA-79.1 — with only a one-bullet AAB mitigation and no owner of the filing-day decision tree, evidence pack or penalty-relief documentation), the card-network/acquirer outage ('card network outage'/'card scheme outage' in zero files — W535 owns store-side offline POS and W537 the settlement cycle, but the network-side outage is a chain-wide tender-policy event with no owner), the stored-value/loyalty platform outage ('gift card system outage'/'loyalty system failure' in zero files — W2150–W2157 own the lifecycle and W3699 integrity monitoring, but the downtime-acceptance decision, manual-redemption mode and liability true-up had no owner), and the suicide/self-harm incident protocol ('suicide'/'self-harm' in zero files — W140/W1266 own the incident frameworks but not the crime-scene/witness-care/no-speculation/aftermath disciplines specific to this event class). The same analysis produced the fourth custody wave (event-custody-and-precedence-register.md v1.4, events E-23–E-26: stored-value & loyalty outage, card-network/acquirer outage, regulator-ordered suspension/closure, and key-executive incapacitation). W5545/W5546 ship **directly confirmed Tier 1** (the statutory-deadline-protection class of the W2764/W2765/W5508 filing siblings — enforcement response and filing-failure protection); W5544/W5547/W5548/W5549 ship **directly confirmed Tier 2** (the governance-continuity and platform-contingency classes of their PA siblings; the life-safety medical dimension of W5549 rides the Tier-1 W501 chain).
 
 > **2026-09-05 addition (emergency & continuity workflow gap fill, batch 16):** Eight workflow-level gap fills — W5536 (Missing-Child / Code Adam In-Store Response Protocol; PA-07.2), W5537 (Fire Event Response, Suppression & Post-Fire BFP Clearance (Store & DC); PA-24.2), W5538 (Bomb Threat Response & Search-or-Evacuation Decision Protocol; PA-24.2), W5539 (Elevator & Escalator Entrapment Response Protocol; PA-07.2), W5540 (Payroll Run Failure, Correction & Emergency Off-Cycle Payment; PA-19.2), W5541 (Bank-Failure & Frozen-Deposit Contingency; PA-18.3), W5542 (Liquidity Stress, Covenant-Breach & Payment-Prioritization Escalation; PA-105.3), and W5543 (Price-File Integrity Event Response & Mass-Mispricing Rollback; PA-118.2) — were added after a dedicated emergency/edge-case gap analysis re-ran the §2 gap methodology at *scenario* granularity (failure modes and rare events rather than capabilities): the missing-child response (only corpus hits for 'missing child' were cart straps), the fire *event* (prevention/testing owned by W806/W1296 and the generic W330 protocol, but no suppression/BFP-clearance/reopen-gate owner), the bomb threat (a W330 classification row and a plan-template bullet only), elevator entrapment (maintenance/inspection owned, rescue not), the payroll run failure (W10/W641 own the run and planned off-cycle, not the failed run), the bank-failure event (W1474 owns steady-state counterparty limits, not the freeze event), liquidity-stress escalation (W319/W3400 own routine covenant/policy governance, not the stressed state), and the mass-mispricing event (W13/W3697/W1622 own fragments, no event owner). The same analysis produced the third custody-register wave (event-custody-and-precedence-register.md v1.3, events E-19–E-22) — fire, earthquake (W1450 named as the canon the register had never routed), armed violence (W717 vs W330 during-event command), and the mispricing event. W5536/W5537/W5538 ship **directly confirmed Tier 1** (the life-safety in-store emergency class of W330/W501/W576, each gating reopening/reunification on verified external clearance); W5539–W5543 ship **directly confirmed Tier 2** (the contingency-operations and integrity-event classes of W470/W641/W319/W3697).
 
@@ -859,7 +864,7 @@ The per-tier subsection headings above (Core Finance, Extended Store Operations,
 > have been classified by value stream context, process area, and operational criticality.
 > Classification: **284 Tier 1** (core) · **293 Tier 2** (support) · **104 Tier 3** (optimization).
 
-### Tier 1 Additions (413 Workflows)
+### Tier 1 Additions (415 Workflows)
 
 #### Plan & Source
 
@@ -1342,7 +1347,16 @@ The emergency & continuity workflow gap fill added three workflows confirmed dir
 | W5537 | Fire Event Response, Suppression & Post-Fire BFP Clearance (Store & DC) | Health, Safety & Environment |
 | W5538 | Bomb Threat Response & Search-or-Evacuation Decision Protocol | Health, Safety & Environment |
 
-### Tier 2 Additions (519 Workflows)
+#### Regulatory-Shock, Platform-Outage & Governance-Continuity Gap-Fill Pass (2026-09-05)
+
+The batch-17 gap fill added two workflows confirmed directly **Tier 1** — the statutory-deadline-protection class of the W2764/W2765/W5508 filing siblings: W5545 BIR tax-enforcement suspension & closure-order response (the Oplan Kandado class — the highest-severity tax-enforcement event, each closed day costing the site its full revenue day, reopening gated on the written BIR lifting order) and W5546 BIR eFPS/government-portal outage filing contingency (the statutory-filing failure path — evidence pack, AAB fallback, payment-protection rule and penalty-relief documentation; eFPS downtime was cited as a pain point in four PA files with only a one-bullet mitigation and no event owner):
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5545 | BIR Tax-Enforcement Suspension & Closure-Order Response (Oplan Kandado) | Tax Management & BIR Reporting |
+| W5546 | BIR eFPS & Government-Portal Outage Filing Contingency, AAB Fallback & Penalty-Relief Documentation | Tax Management & BIR Reporting |
+
+### Tier 2 Additions (523 Workflows)
 
 #### Plan & Source
 
@@ -1972,6 +1986,17 @@ The emergency & continuity workflow gap fill added five workflows confirmed dire
 | W5541 | Bank-Failure & Frozen-Deposit Contingency | Treasury & Cash |
 | W5542 | Liquidity Stress, Covenant-Breach & Payment-Prioritization Escalation | Supply Chain Finance & Working Capital Management |
 | W5543 | Price-File Integrity Event Response & Mass-Mispricing Rollback | Revenue Assurance, Pricing Integrity & Leakage Management |
+
+#### Regulatory-Shock, Platform-Outage & Governance-Continuity Gap-Fill Pass (2026-09-05)
+
+The batch-17 gap fill added four workflows confirmed directly **Tier 2** — the governance-continuity and platform-contingency classes: W5544 emergency executive succession & decision-rights continuity (the governance-continuity class of its PA-36.1 siblings — the emergency bridge from vacancy to interim stability, with the statutory dimensions riding W1717/W317/W1408/W5019; the permanent succession rides the W178 planning machinery), W5547 payment-network & acquirer outage response (the chain-wide tender-policy contingency class of its PA-08.1 siblings — the W535 offline layer is store-connectivity, this owns the network-side outage), W5548 stored-value & loyalty platform outage (the program-contingency class of its PA-54.2 siblings — the downtime-acceptance matrix, manual-redemption mode and liability true-up), and W5549 suicide/self-harm incident response & psychosocial aftermath (the specialized incident-handling class around the Tier-1 W501/W140 canons — scene discipline, witness care, no-speculation communication and the aftermath program):
+
+| ID | Workflow | Value Stream |
+|---|---|---|
+| W5544 | Emergency Executive Succession & Decision-Rights Continuity Protocol | Corporate Governance & Board Management |
+| W5547 | Payment-Network & Acquirer Outage Response (Card Scheme / Acquirer Downtime) | POS & Checkout |
+| W5548 | Stored-Value & Loyalty Platform Outage, Downtime-Acceptance & Manual-Redemption Protocol | Gift Card & Stored Value Management |
+| W5549 | Suicide Attempt / Self-Harm Incident Response & Psychosocial-Aftermath Protocol | Health, Safety & Environment |
 
 ### Tier 3 Additions (132 Workflows)
 
@@ -6768,6 +6793,8 @@ The 336 workflows added across gap-analysis Passes 26–29 (VS-178–VS-191; W51
 
 
 *Date: 2026-09-03 | Workflow Criticality Classification v7.47 — people-capability & reporting-policy gap fill (batch 9): the dedicated People/organization-domain gap analysis (workflow-gap-analysis-people.md) re-ran the §2 gap methodology across the People family and adjacent corporate/finance-policy streams and found four workflow-level surfaces unowned — the LMS platform & learning-records layer, the learning-content/course-catalog production lifecycle, the leadership-development program, and the accounting-policy/technical-accounting (PFRS) layer ('LMS' 58 PA files / 101 hits / zero dedicated `## W` headers with even an LMS Administrator role named in W1484's staffing; 'instructional design'/'course catalog'/a true 'accounting-policy owner' all absent — PFRS appears in 93 PA files but every dedicated owner is transaction-specific: VS-157 PFRS 15, VS-148 PFRS 16, W407 PAS 12, W1875 lease policy; adjacent slices program-generic: W51 training programs, W178 succession planning, W645 workforce planning, W3351 HRIS, W9 financial close). Four workflows added — W5525 Learning Platform (LMS) Administration, Integration & Learning-Records Operations, W5526 Learning-Content Development, Course-Catalog & Certification-Program Lifecycle, W5527 Leadership Development & Management-Capability Program (HiPo Development) (all PA-19.4), and W5528 Accounting Policy, Technical Accounting (PFRS) Position & New-Standard Adoption Governance (PA-17.4) — and confirmed directly **Tier 2 (4)** (the platform-operations/governance-layer/program-support class of their siblings W3351/W51/W9); statutory dimensions (OSH training-record evidence, mandatory pass/fail regulatory courses) ride verification steps inside the workflows, matching the W5513/W5515/W5518 precedent. All four absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,400 → 5,404 rows (5,377 → 5,381 unique; T2 3,261 → 3,265); proposed register stays empty (0 unclassified). Downstream figures re-pointed (workflows/README Quick Stats + Finance/People families + reconciliation line, value-stream-index header/VS-17+VS-19 rows/grand total/footer/detailed sections, VS-19 README 75 → 78, VS-17 README 67 → 68, root-README tree/Key-Metrics/coverage rows, WORKFLOW-FORMAT-GUIDE anchors, requirement-matrix inventory line, dependency-map intro, touchpoint-map reconciliation footer, gap-analysis batch-9 note + companion doc, executive-summary footer, OM v2.6 FIN 798 → 799 / PEO 437 → 440 and 4,868+509 → 4,872+509=5,381, sourcing-model v1.6 §12.1 ladder 3,261 → 3,265, semantic-audit-coverage registry annotated). `validate-repo.sh`: 0 errors / 0 warnings.*
+
+*Date: 2026-09-05 | Workflow Criticality Classification v7.52 — regulatory-shock, platform-outage & governance-continuity gap fill (batch 17): the batch-16 edge-case sweep was re-run across scenario families not yet probed and found six unowned surfaces (keyword verification: 'emergency succession'/'board continuity' = 0 hits with 'incapacity' appearing only as PA-36.2's records trigger; 'Oplan Kandado'/'tax suspension'/'closure order' = 0 hits; 'card network outage'/'card scheme outage'/'acquirer failure' = 0 hits; 'gift card system outage'/'loyalty system failure' = 0 hits; 'suicide'/'self-harm' = 0 hits; eFPS downtime cited as a pain point in 4 PA files with a one-bullet mitigation only — the batch-11 'adjacent-owners-exist-but-no-event-owner' pattern). Six workflows added — W5544 Emergency Executive Succession & Decision-Rights Continuity Protocol (PA-36.1), W5545 BIR Tax-Enforcement Suspension & Closure-Order Response (Oplan Kandado) (PA-79.3), W5546 BIR eFPS & Government-Portal Outage Filing Contingency, AAB Fallback & Penalty-Relief Documentation (PA-79.3), W5547 Payment-Network & Acquirer Outage Response (Card Scheme / Acquirer Downtime) (PA-08.1), W5548 Stored-Value & Loyalty Platform Outage, Downtime-Acceptance & Manual-Redemption Protocol (PA-54.2), W5549 Suicide Attempt / Self-Harm Incident Response & Psychosocial-Aftermath Protocol (PA-24.1) — confirmed directly **Tier 1 (2)** (W5545/W5546, the statutory-deadline-protection class of the W2764/W2765/W5508 filing siblings) and **Tier 2 (4)** (W5544/W5547/W5548/W5549 — governance-continuity and platform-contingency classes; the medical core of W5549 rides the Tier-1 W501 chain, the batch-16 W5539 precedent). The same pass produced the fourth custody wave (v1.4, E-23–E-26). All six absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,419 → 5,425 rows (5,396 → 5,402 unique; T1 1,387 → 1,389, T2 3,274 → 3,278, Tier 3 unchanged at 758); proposed register stays empty (0 unclassified).*
 
 *Date: 2026-09-05 | Workflow Criticality Classification v7.51 — emergency & continuity workflow gap fill (batch 16): a dedicated emergency/edge-case gap analysis re-ran the §2 gap methodology at *scenario* granularity (rare events and failure modes rather than capabilities) across the corpus and found eight unowned surfaces: the missing-child / Code Adam response ('missing child' appeared in the corpus only as cart-child-straps — PA-07.3's cart-fleet narrative — with zero emergency-protocol hits; the retail-standard Code Adam protocol with exit-hold, coded PA, zone sweep, verified-reunification and a 10-minute police-escalation clock had no owner), the fire *event* ('fire' was owned only as prevention/testing — W806 annual BFP certification, W1296 equipment inspection, VS-04 DC PM checks — plus the generic W330 protocol's one classification row; nobody owned suppression activation, BFP coordination, the structural assessment or the three-party BFP-clearance-to-reopen gate, for stores or DCs), the bomb threat (a W330 Major-classification example and a PA-24.2 plan-template bullet; no call-takedown checklist, search-vs-evacuate decision rule, PNP-EOD handoff or radio-RF discipline), elevator/escalator entrapment (25 files mention elevators — all maintenance/accessibility; the 'entrapment' hits were law-enforcement ops; nobody owned passenger contact, the ≤ 10-minute medical-vulnerability triage, the licensed-technician-only release rule or the 2-in-12-months modernization trigger), the payroll run *failure* (W10 owns the run, W641 planned off-cycle payments; nobody owned the abort/reject classification clock, bank-file reject regeneration, the < 24 h emergency-net-pay decision via W641 rails, or the statutory remittance protection when the register is broken — 0 corpus hits for 'payroll failure'), the bank-failure / frozen-deposit event (W1474 owns steady-state counterparty limits and the PDIC-cap note; nobody owned the exposure census, 10-day obligations-vs-stranded-cash gap, disbursement rerouting or the PDIC claim file), liquidity-stress & payment-prioritization escalation (W319/W3400 own routine covenant monitoring and WC policy; nobody owned the stress declaration, cash council, reversibility-ordered lever sequence, statutory-first payment tiers or the never-lapse covenant-engagement rule — 'liquidity crisis'/'cash crunch' = 0 hits), and the mass-mispricing / price-file integrity *event* (W13 executes price files, W3697 monitors accuracy, W1622/W1538 refund; nobody owned the event: blast-radius scoping, RA 7581 SRP triage, the rollback + re-label sweep, overcharge remediation or the DTI evidence pack). The same analysis produced the third custody wave (event-custody-and-precedence-register.md v1.3, E-19–E-22: fire, earthquake — naming W1450 as the canon the register had never routed — armed violence W717-vs-W330 during-event command, and the mispricing event). Eight workflows added — W5536 Missing-Child / Code Adam In-Store Response Protocol (PA-07.2), W5537 Fire Event Response, Suppression & Post-Fire BFP Clearance (Store & DC) (PA-24.2), W5538 Bomb Threat Response & Search-or-Evacuation Decision Protocol (PA-24.2), W5539 Elevator & Escalator Entrapment Response Protocol (PA-07.2), W5540 Payroll Run Failure, Correction & Emergency Off-Cycle Payment (PA-19.2), W5541 Bank-Failure & Frozen-Deposit Contingency (PA-18.3), W5542 Liquidity Stress, Covenant-Breach & Payment-Prioritization Escalation (PA-105.3), W5543 Price-File Integrity Event Response & Mass-Mispricing Rollback (PA-118.2) — confirmed directly **Tier 1 (3)** (W5536/W5537/W5538, the life-safety in-store emergency class of W330/W501/W576 — each gates reopening/reunification on verified external clearance: RA 7610 safeguarding, RA 9514 re-occupancy, PNP-EOD all-clear) and **Tier 2 (5)** (W5539–W5543: the contingency-operations and integrity-event classes of W470/W641/W319/W3697 — the statutory dimensions ride the existing Tier-1 chains W501/W10/W1527/W1306/W13/W427 rather than new statutory registers). All eight absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Register 5,411 → 5,419 rows (5,388 → 5,396 unique; T1 1,384 → 1,387, T2 3,269 → 3,274, Tier 3 unchanged at 758); proposed register stays empty (0 unclassified).*
 

@@ -155,6 +155,44 @@ identify capability gaps not addressed by any existing value stream.
 > now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
 > Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
 >
+> **Post-Pass-30 workflow-level additions, batch 17 (2026-09-05) — regulatory-shock, platform-outage & governance-continuity gap fill.**
+> The batch-16 edge-case sweep was re-run across scenario families not yet probed (governance continuity,
+> regulatory enforcement, payment-platform failure, tender-program failure, sensitive psychosocial incidents)
+> and filled six single-workflow gaps inside existing value streams: **W5544** Emergency Executive Succession &
+> Decision-Rights Continuity Protocol (VS-36.1; 'emergency succession'/'board continuity' appeared in zero PA
+> files and 'incapacity' only as PA-36.2's records-update trigger "(d) death or incapacity" — W178 owns planned
+> succession and PA-36.2 the SEC-records update, but nobody owned the first-24-hour board mechanics, the
+> delegation-of-authority bridge, bank/BIR signatory continuity, or the listed-company disclosure clock),
+> **W5545** BIR Tax-Enforcement Suspension & Closure-Order Response — Oplan Kandado (VS-79.3; 'Oplan Kandado'/
+> 'tax suspension'/'closure order' in zero PA files — W2773 owns audit defense and W658 inspection response,
+> but the enforcement closure order that halts trading at a site had no owner: the comply/protest/settle
+> decision, the W850 execution linkage and the written-lifting-order reopen gate), **W5546** BIR eFPS &
+> Government-Portal Outage Filing Contingency, AAB Fallback & Penalty-Relief Documentation (VS-79.3; eFPS
+> downtime is cited as a pain point in four PA files — the W590-class and PA-17.3 filing workflows and PA-79.1
+> — with only a one-bullet AAB mitigation and 'filing 3+ days early', and no owner of the filing-day decision
+> tree, the timestamped evidence pack that makes abatement possible, or the pay-even-if-return-follows
+> protection rule), **W5547** Payment-Network & Acquirer Outage Response (VS-08.1; 'card network outage'/'card
+> scheme outage'/'acquirer failure' in zero PA files — W535 owns store-side offline POS and W537 the settlement
+> cycle, but the network-side outage is a chain-wide tender-policy event: alternative-tender surge, offline
+> floor-limit discipline, double-charge sweep on recovery), **W5548** Stored-Value & Loyalty Platform Outage,
+> Downtime-Acceptance & Manual-Redemption Protocol (VS-54.2; 'gift card system outage'/'loyalty system
+> failure' in zero PA files — W2150–W2157 own the lifecycle and W3699 integrity monitoring, but the
+> downtime-acceptance matrix (honor-to-cap vs suspend), the manual-redemption mode with its fraud exposure,
+> the earn-posting catch-up and the liability true-up had no owner), and **W5549** Suicide Attempt / Self-Harm
+> Incident Response & Psychosocial-Aftermath Protocol (VS-24.1; 'suicide'/'self-harm' in zero PA files —
+> W140/W1266 own the incident frameworks but not the potential-crime-scene discipline, witness care, the
+> no-speculation communication rule, or the 72-hour debrief/aftermath program; the medical core rides W501).
+> The same analysis produced the fourth custody wave (event-custody-and-precedence-register.md v1.4, events
+> E-23–E-26: stored-value & loyalty outage, card-network/acquirer outage, regulator-ordered suspension/closure,
+> and key-executive incapacitation). Workflow-ID allocation: W5544–W5549 (next available). W5545/W5546 shipped
+> **directly confirmed Tier 1** (the statutory-deadline-protection class of the W2764/W2765/W5508 filing
+> siblings — enforcement response and filing-failure protection) and W5544/W5547/W5548/W5549 **directly
+> confirmed Tier 2** (the governance-continuity and platform-contingency classes of their PA siblings; the
+> life-safety medical dimension of W5549 rides the Tier-1 W501 chain, the batch-16 W5539 precedent). All six
+> are absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are
+> now **188 value streams · 569 process areas · 5,402 workflows** (5,425 confirmed register rows; Tier 1
+> 1,387 → 1,389, Tier 2 3,274 → 3,278).
+>
 > **Post-Pass-30 workflow-level additions, batch 16 (2026-09-05) — emergency & continuity workflow gap fill.**
 > A dedicated emergency/edge-case gap analysis re-ran the §2 methodology at *scenario* granularity (rare events and
 > failure modes rather than capabilities) — probing the corpus for the questions "what happens when X fails" and
