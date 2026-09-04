@@ -18,10 +18,10 @@ This value stream owns the end-to-end program: mapping workflows, configuring sy
 
 | PA | Name | Workflows |
 |---|---|---|
-| [PA-178.1](PA-178.1-land-feasibility-site-acquisition-title-consolidation.md) | Land Feasibility, Site Acquisition & Title Consolidation | 8 |
+| [PA-178.1](PA-178.1-land-feasibility-site-acquisition-title-consolidation.md) | Land Feasibility, Site Acquisition & Title Consolidation | 9 |
 | [PA-178.2](PA-178.2-agrarian-reform-ncip-ancestral-domain-land-use-conversion-operations.md) | Agrarian Reform, NCIP Ancestral Domain & Land Use Conversion Operations | 8 |
 | [PA-178.3](PA-178.3-property-joint-ventures-lgu-zoning-compliance-site-development-governance.md) | Property Joint-Ventures, LGU Zoning Compliance & Site Development Governance | 8 |
-| | **Total** | **24** |
+| | **Total** | **25** |
 
 ---
 

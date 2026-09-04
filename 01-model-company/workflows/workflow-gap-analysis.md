@@ -155,6 +155,49 @@ identify capability gaps not addressed by any existing value stream.
 > now **188 value streams · 569 process areas · 5,387 workflows** (5,410 confirmed register rows;
 > Tier 1 1,383 → 1,384, Tier 2 3,266 → 3,268).
 >
+> **Post-Pass-30 workflow-level additions, batch 20 (2026-09-05) — cyber-extortion, payment-diversion, land-occupation & water-continuity gap fill.**
+> The batch-16/17/18/19 edge-case sweeps were re-run across scenario families not yet probed (destructive
+> cyber attack with extortion, disbursement-diversion fraud, vacant-land occupation, utility-service failure
+> beyond power) and filled four single-workflow gaps inside existing value streams: **W5558** Ransomware &
+> Destructive Cyber-Attack Enterprise Response Protocol (VS-27.3; 'ransomware'/'extortion demand'/'data-
+> destruction' appear in zero dedicated headers — the class survives only as pain points and drill injects
+> (PA-27.2's DR risk names the isolate-DR-before-failover trap, W1330 injects the scenario, W5529 drills the
+> OT variant); W383 owns host-level incident response (5–10 investigations/month), W55 DR failover, W53 the
+> RA 10173 notification, W1205 the PCI layer — nobody owned the enterprise class: the no-payment default with
+> Board/counsel-gated departure, the isolate-DR-before-failover sequencing, chain-wide manual trading mode
+> under the E-02 closure custody, the privileged forensics clock, the staged clean rebuild, or the cyber-
+> insurance and listed-company disclosure clocks), **W5559** Vendor Payment-Diversion & Business Email
+> Compromise (BEC) Fraud Event Response & Recovery Protocol (VS-18.2; BEC appears in the corpus only as this
+> PA's own pain points — vendor bank-detail impersonation and executive-impersonation urgent transfers, with
+> callback verification as the one-bullet mitigation — while VS-125.2's monitoring watches only the customer-
+> side trade-account diversion class; nobody owned the event after prevention fails: the same-day bank-recall
+> race, the honest-ledger treatment that keeps the still-owed vendor's aging truthful, the master-data
+> forensics separating insider collusion from mailbox compromise, the PNP ACG and crime-policy files, or the
+> cooling-off verification retrofit), **W5560** Informal-Settler Invasion & Illegal Occupation of Banked Land —
+> Detection, Relocation & Ejection Protocol (VS-178.1; 'informal settler'/'squatter'/'illegal occupation'/
+> 'adverse possession' appear in zero PA files — W5133 owns titled-neighbor boundary disputes, W5143 the
+> agrarian tenant-compensation program, W5150 groundbreaking fencing only, and construction-site security
+> lives on active build sites; nobody owned the detect–document–negotiate–eject lifecycle of parcels held
+> vacant for years: the 72-hour prescription-interruption evidence discipline, the RA 7279 syndicate-vs-settler
+> classification, the no-self-help eviction rule, the caretaker-fraud variant, or the RPT-continuity hygiene),
+> and **W5561** Sustained Water-Service Interruption Response & Store Continuity Protocol (VS-07.2; 'water
+> interruption'/'water rationing' appear only as product-selling context in PA-09.2's rainwater-harvesting
+> advisory — W470 owns the power analog, W1223 generator operations, W1387 flood (excess water), W692
+> consumption tracking; nobody owned the absence-of-water event: the HSE-gated restroom/sanitation decision
+> law under the store's Sanitation Permit obligations, the ~200 garden centers' live-goods watering priority,
+> emergency trucked-water procurement, the trading-continuity decision riding the E-02 closure custody, or the
+> flush-and-confirm gate before restrooms and food services reopen after pressure loss). The same analysis
+> produced the custody register's seventh wave (event-custody-and-precedence-register.md v1.7, events E-34–
+> E-37: destructive cyber attack canon W5558, vendor payment diversion canon W5559, informal-settler invasion
+> canon W5560, sustained water-service interruption canon W5561). Workflow-ID allocation: W5558–W5561 (next
+> available). W5558 shipped **directly confirmed Tier 1** (the enterprise-trading-halt & statutory-continuity
+> class of the W5545/W5546 enforcement-and-filing precedent — the data-privacy core rides the Tier-1 W53
+> chain and the OT variant rides W5529) and W5559/W5560/W5561 **directly confirmed Tier 2** (the financial-
+> crime contingency class of W5541/W2814, the landbanking asset-protection class of W5133/W5143, and the
+> facility-continuity class of the W470 power analog). All four are absorbed within sized teams (OM stays 122
+> FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now **188 value streams · 569 process areas ·
+> 5,414 workflows** (5,437 confirmed register rows; Tier 1 1,392 → 1,393, Tier 2 3,283 → 3,286).
+>
 > **Post-Pass-30 workflow-level additions, batch 19 (2026-09-05) — in-transit-security, fatality-scene, tampering-extortion & recruitment-fraud gap fill.**
 > The batch-16/17/18 edge-case sweeps were re-run across scenario families not yet probed (in-transit cargo crime,
 > on-premises death events, merchandise-integrity extortion, employment-brand impersonation) and filled four
