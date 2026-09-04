@@ -1566,3 +1566,51 @@ VS-127, and model-validation/fairness-testing/human-oversight/GenAI controls in 
 ---
 
 *Date: 2026-06-21 · Back to [Workflow Index](README.md) · [Value Stream Index](value-stream-index.md)*
+
+> **Post-batch-13 sweep & item-A charter closure (2026-09-04) — batch 14.** Two passes ran in this
+> batch. **(1) A third fresh corpus-wide re-run of the §2 methodology at workflow granularity (~60
+> further candidate capabilities across lenses not yet exhausted by batches 8–13 — customer-equipment
+> fleets (shopping carts/baskets/flatbeds), corporate communications & media relations, timber/wood
+> product chain-of-custody, third-party monetization of store space (concessions/kiosks/cell-sites/
+> billboards/subleases), PAS 19 defined-benefit & actuarial program, deemed-sale VAT, ODS/refrigerant
+> handling, BFP FSIC & fire-safety organization, PICCS/chemical-control product compliance, raffle &
+> promo-permit mechanics, ESL/price-label tech, DC slotting, labor-management systems, cash pooling,
+> chargebacks, trade-credit insurance, software-license & open-source compliance, litigation holds,
+> BP 344 physical accessibility, lactation accommodation, telco rooftop leases) — found ZERO surviving
+> capability gaps**, extending the batch-12/13 corpus-wide verdict: every candidate resolved to a
+> dedicated `## W` owner or dissolved under verification (representative adjudications: cart/basket
+> fleet lifecycle **W1028**; brand/PR/corporate comms PA-14.3 with W134 crisis communication and W143
+> media relations; timber chain-of-custody **W1529**; vending & concessionaire management **W177** +
+> concession onboarding/billing **W5505–W5507**; sublease & assignment **W1860** with lessor-side
+> accounting **W4421**; signage/billboard permits **W2674**; retirement program design & actuarial
+> review PA-102.2 with GL-close pension accounting PA-17.1; deemed-sale output VAT a computed sub-step
+> of PA-17.3's VAT reconciliation (W14); ODS recovery standard PA-143.3; multi-site BFP FSIC renewal
+> campaigns **W4850**; DTI promo/raffle permits **W427** + the VS-139 event-governance step; telco
+> cell-site rooftop leasing = a lessor-side slice of W1860/W177/VS-97 — dissolved; lead-paint =
+> construction-waste handling slice of W1086/W236 — dissolved). **(2) The genuine open gap was item A
+> on the batch-26 worklist — the ghost-title charter decisions**: 25 uncharted executive/director
+> title families cited in workflow Owner/Participants/step cells had no seat in the adopted
+> target-state TO. The batch-14 charter sweep ([`07-methodology/fix-ghost-titles-batch14.py`](../../07-methodology/fix-ghost-titles-batch14.py))
+> unified **~1,285 occurrences across 137 catalog/model files** on charted seats, each mapping passing
+> the two-sided test (charted seat AND remit coverage): trade-sales ghosts (VP Sales 113, Sales
+> Director 38, Commercial Director 27, VP Sales & Trade Operations 1) → **Head of Trade / Account
+> Management**; legal-compliance ghosts (VP Compliance 75, Legal Head 87) → **VP Legal** (the 864-use
+> short form of the charted VP Legal & Compliance); real-estate/engineering ghosts (VP Property 74,
+> VP Engineering 53, Director of Real Estate 58, Facilities Director 27, Engineering Director 9,
+> Construction Director 5) → **Director, Facilities & Real Estate**; ecommerce ghosts (Ecommerce
+> Director 45, VP Ecommerce 27, VP Omnichannel 17, VP Digital Commerce 14, VP Digital 3) → **GM,
+> Digital Commerce Inc.**; IT ghosts (VP IT Finance 115 → **FinOps Lead**, IT Director 98 → **CIO**,
+> CISO 12 → **IT Security Manager**, VP Innovation 21 → **CIO**); HR/OCM ghosts (HR Director 84, VP
+> OCM 68, Chief Transformation Officer 2 → **CHRO**); OpEx ghosts (VP OpEx 45, VP Operational
+> Excellence 10 → **COO**); plus Supply Chain Director 56 → **VP Supply Chain**, VP Customer
+> Experience 15 → **Head of Customer Service**, VP Govt Affairs 37 → **Government Affairs Manager**,
+> Sustainability Director 31 → **Sustainability/ESG Manager**, store-ops variants 13 → **VP Store
+> Operations**, Regional Operations Director 4 → **Regional Manager**, and the WSL-003 SVP ladder
+> tier → **COO**. The facilities-lead canon is decided (Director, Facilities & Real Estate = the
+> seat; Head of Facilities = working-level lead); item F's VP OpEx / VP OCM families closed in the
+> same sweep. Ten same-cell executive duplications created by the mapping were hand-trued (the
+> batch-26 practice). Canonical totals, classification, required-field completeness and CTL-citation
+> coverage are all unchanged — this is an owner-attribution repair, not a structural change; the
+> semantic-anchors, matrix-refs and model-docs guards are green, and the validator passes 0 errors /
+> 0 warnings across all 68 checks (the new sweep script is listed in the methodology tree).
+

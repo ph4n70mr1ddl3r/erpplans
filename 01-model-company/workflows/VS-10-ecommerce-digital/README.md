@@ -14,7 +14,7 @@ Ecommerce & digital channels: platform operations, order fulfillment & delivery,
 
 ## Owner & participants
 
-- **Owner**: VP Ecommerce / Digital
+- **Owner**: GM, Digital Commerce Inc. / Digital
 
 ## Process Areas
 

@@ -98,7 +98,7 @@ the CIO Office. Two consequences worth stating explicitly:
 |---|---|---|---|---|---|---|
 | 1 | Merchandising & Supply Chain Systems | MSC | Stream-aligned (configure) | VP Supply Chain; VP Merchandising | 16 | 485 |
 | 2 | Warehouse, Logistics & Inventory Systems | WLI | Stream-aligned (buy & integrate) | VP Supply Chain (DC Ops, Fleet & Logistics) | 20 | 523 |
-| 3 | Store Systems & POS | SSP | Stream-aligned (buy & integrate) | Store Operations Director | 25 | 874 |
+| 3 | Store Systems & POS | SSP | Stream-aligned (buy & integrate) | VP Store Operations | 25 | 874 |
 | 4 | Commerce & Customer Platforms | CCP | Stream-aligned (buy & integrate) | CMO; Digital Commerce Inc. GM; Trade/Account Mgmt | 25 | 738 |
 | 5 | Finance & Treasury Systems | FIN | Stream-aligned (configure) | CFO (Controller, Treasurer, Tax) | 30 | 802 |
 | 6 | Corporate, Governance & Asset Systems | CORP | Stream-aligned (configure) | VP Legal & Compliance; Facilities & Real Estate; Quality; Internal Audit & Risk | 35 | 915 |
