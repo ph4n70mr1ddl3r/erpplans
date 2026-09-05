@@ -25,7 +25,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 ## Value Stream Architecture
 
 ```
-8 Families · 188 Value Streams · 569 Process Areas · 5,422 Workflows
+8 Families · 188 Value Streams · 569 Process Areas · 5,426 Workflows
 ```
 
 > **Coverage note:** VS-49–VS-52 were retired after a 2026-06-14 review found their 96 workflow files contained only auto-generated placeholder content; the numbers remain unused. The resulting capability gaps — plus additional uncovered capabilities — were subsequently filled across thirty gap-analysis passes (2026-06-14 → 2026-06-21), growing the active inventory from 84 to 188 value streams (VS-89–VS-192; W2993–W5488). The canonical per-pass history — candidates considered and rejected-as-covered, workflow-ID allocation, and the family-subtotal impact — lives in [workflow-gap-analysis.md](workflow-gap-analysis.md) §3–§4 and [CHANGELOG.md](../../CHANGELOG.md).
@@ -75,7 +75,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-11](VS-11-trade-project-wholesale/README.md) | Trade, Project & Wholesale | Core | 3 | 52 |
 |  | [VS-12](VS-12-installation-services/README.md) | Installation & Services | Core | 3 | 40 |
 |  | [VS-13](VS-13-customer-experience/README.md) | Customer Experience & Loyalty | Core | 3 | 64 |
-|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | Core | 3 | 41 |
+|  | [VS-14](VS-14-marketing/README.md) | Marketing & Communications | Core | 3 | 42 |
 |  | [VS-37](VS-37-store-opening-commissioning/README.md) | Store Opening & Commissioning | Core | 3 | 26 |
 |  | [VS-43](VS-43-trade-professional-program/README.md) | Trade Professional Program & Contractor Services | Core | 3 | 24 |
 |  | [VS-44](VS-44-consumer-insights-market-research/README.md) | Consumer Insights & Market Research | Core | 3 | 24 |
@@ -114,7 +114,7 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-177](VS-177-field-retail-operations-regional-district-management-and-multi-store-execution/README.md) | Field Retail Operations, Regional/District Management & Multi-Store Retail Execution Network | Gap analysis | 3 | 24 |
 |  | [VS-185](VS-185-b2b-cooperative-credit-and-procurement-partnerships/README.md) | B2B Cooperative Credit & Procurement Partnerships | Gap analysis | 3 | 24 |
 |  | [VS-186](VS-186-compact-and-heavy-construction-equipment-rental-fleet-operations/README.md) | Compact & Heavy Construction Equipment Rental Fleet Operations | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **139** | **1544** |
+| | | | **Subtotal** | **139** | **1545** |
 | Finance | [VS-15](VS-15-procure-to-pay/README.md) | Procure-to-Pay | Core | 2 | 43 |
 |  | [VS-16](VS-16-order-to-cash/README.md) | Order-to-Cash | Core | 3 | 31 |
 |  | [VS-17](VS-17-record-to-report/README.md) | Record-to-Report | Core | 4 | 70 |
@@ -179,9 +179,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 | Governance & Assurance | [VS-21](VS-21-internal-audit-risk/README.md) | Internal Audit & Risk | Core | 3 | 49 |
 |  | [VS-22](VS-22-compliance-regulatory/README.md) | Compliance & Regulatory | Core | 3 | 57 |
 |  | [VS-23](VS-23-loss-prevention/README.md) | Loss Prevention & Asset Protection | Core | 3 | 29 |
-|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 30 |
+|  | [VS-24](VS-24-health-safety-environment/README.md) | Health, Safety & Environment | Core | 3 | 31 |
 |  | [VS-25](VS-25-esg-sustainability/README.md) | ESG & Sustainability | Core | 3 | 31 |
-|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | Core | 3 | 30 |
+|  | [VS-26](VS-26-business-continuity-insurance/README.md) | Business Continuity & Insurance | Core | 3 | 31 |
 |  | [VS-31](VS-31-quality-management/README.md) | Quality Management & Product Compliance | Core | 3 | 23 |
 |  | [VS-33](VS-33-strategic-planning/README.md) | Strategic Planning & Corporate Performance Management | Core | 3 | 23 |
 |  | [VS-36](VS-36-corporate-governance/README.md) | Corporate Governance & Board Management | Core | 3 | 25 |
@@ -213,8 +213,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-166](VS-166-regulatory-license-permit-and-accreditation-portfolio-management/README.md) | Regulatory License, Permit & Accreditation Portfolio Management | Gap analysis | 3 | 24 |
 |  | [VS-179](VS-179-extended-producer-responsibility-compliance-and-plastic-recovery-network/README.md) | Extended Producer Responsibility (EPR) Compliance & Plastic Recovery Network | Gap analysis | 3 | 24 |
 |  | [VS-187](VS-187-household-hazardous-waste-paint-and-product-stewardship-take-back/README.md) | Household Hazardous Waste, Paint & Used-Product Stewardship Take-Back Program | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **111** | **974** |
-| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 70 |
+| | | | **Subtotal** | **111** | **976** |
+| Technology & Data | [VS-27](VS-27-it-operations-security/README.md) | IT Operations & Security | Core | 3 | 71 |
 |  | [VS-28](VS-28-data-analytics-bi/README.md) | Data, Analytics & BI | Core | 3 | 24 |
 |  | [VS-29](VS-29-master-data/README.md) | Master Data Management | Core | 3 | 43 |
 |  | [VS-30](VS-30-innovation-digital/README.md) | Innovation & Digital Transformation | Core | 3 | 29 |
@@ -227,8 +227,8 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 |  | [VS-137](VS-137-product-information-management-and-digital-asset-management/README.md) | Product Information Management (PIM) & Digital Asset Management (DAM) | Gap analysis | 3 | 24 |
 |  | [VS-151](VS-151-auto-id-barcode-rfid-labeling-and-eas-operations/README.md) | Auto-ID, Barcode, RFID, Price-Tag Labeling & EAS Operations | Gap analysis | 3 | 24 |
 |  | [VS-190](VS-190-operational-technology-ot-ics-cybersecurity-and-retail-technology-asset-protection/README.md) | Operational Technology (OT) / ICS Cybersecurity & Retail Technology Asset Protection | Gap analysis | 3 | 24 |
-| | | | **Subtotal** | **39** | **389** |
-| | | | **Grand Total** | **569** | **5,422** |
+| | | | **Subtotal** | **39** | **390** |
+| | | | **Grand Total** | **569** | **5,426** |
 
 ---
 
@@ -490,11 +490,11 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-13.2** [Loyalty Program Operations](./VS-13-customer-experience/PA-13.2-loyalty-program-operations.md) — 19 workflows
 - **PA-13.3** [Customer Data & CRM](./VS-13-customer-experience/PA-13.3-customer-data-and-crm.md) — 13 workflows
 
-**[VS-14: Marketing & Communications](./VS-14-marketing/README.md)** (41 workflows)
+**[VS-14: Marketing & Communications](./VS-14-marketing/README.md)** (42 workflows)
 
 - **PA-14.1** [Campaign Planning & Execution](./VS-14-marketing/PA-14.1-campaign-planning-and-execution.md) — 17 workflows
 - **PA-14.2** [Digital Marketing & Social Media](./VS-14-marketing/PA-14.2-digital-marketing-and-social-media.md) — 13 workflows
-- **PA-14.3** [Brand, PR & Corporate Communications](./VS-14-marketing/PA-14.3-brand-pr-and-corporate-communications.md) — 11 workflows
+- **PA-14.3** [Brand, PR & Corporate Communications](./VS-14-marketing/PA-14.3-brand-pr-and-corporate-communications.md) — 12 workflows
 
 **[VS-37: Store Opening & Commissioning](./VS-37-store-opening-commissioning/README.md)** (26 workflows)
 
@@ -1102,10 +1102,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-23.2** [Physical Security & Surveillance](./VS-23-loss-prevention/PA-23.2-physical-security-and-surveillance.md) — 10 workflows
 - **PA-23.3** [Shrinkage Reduction](./VS-23-loss-prevention/PA-23.3-shrinkage-reduction.md) — 9 workflows
 
-**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (30 workflows)
+**[VS-24: Health, Safety & Environment](./VS-24-health-safety-environment/README.md)** (31 workflows)
 
 - **PA-24.1** [Occupational Health & Safety](./VS-24-health-safety-environment/PA-24.1-occupational-health-and-safety.md) — 13 workflows
-- **PA-24.2** [Emergency Preparedness](./VS-24-health-safety-environment/PA-24.2-emergency-preparedness.md) — 10 workflows
+- **PA-24.2** [Emergency Preparedness](./VS-24-health-safety-environment/PA-24.2-emergency-preparedness.md) — 11 workflows
 - **PA-24.3** [Hazmat Management](./VS-24-health-safety-environment/PA-24.3-hazmat-management.md) — 7 workflows
 
 **[VS-25: ESG & Sustainability](./VS-25-esg-sustainability/README.md)** (31 workflows)
@@ -1114,9 +1114,9 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 - **PA-25.2** [Social Impact & Governance](./VS-25-esg-sustainability/PA-25.2-social-impact-and-governance.md) — 9 workflows
 - **PA-25.3** [ESG Reporting & Compliance](./VS-25-esg-sustainability/PA-25.3-esg-reporting-and-compliance.md) — 8 workflows
 
-**[VS-26: Business Continuity & Insurance](./VS-26-business-continuity-insurance/README.md)** (30 workflows)
+**[VS-26: Business Continuity & Insurance](./VS-26-business-continuity-insurance/README.md)** (31 workflows)
 
-- **PA-26.1** [BCP Planning & Testing](./VS-26-business-continuity-insurance/PA-26.1-bcp-planning-and-testing.md) — 9 workflows
+- **PA-26.1** [BCP Planning & Testing](./VS-26-business-continuity-insurance/PA-26.1-bcp-planning-and-testing.md) — 10 workflows
 - **PA-26.2** [Crisis Response & Recovery](./VS-26-business-continuity-insurance/PA-26.2-crisis-response-and-recovery.md) — 11 workflows
 - **PA-26.3** [Insurance Claims & Policy Management](./VS-26-business-continuity-insurance/PA-26.3-insurance-claims-and-policy-management.md) — 10 workflows
 
@@ -1309,10 +1309,10 @@ Per-pass history: [workflow-gap-analysis.md](workflow-gap-analysis.md) §4.
 
 ### Technology & Data
 
-**[VS-27: IT Operations & Security](./VS-27-it-operations-security/README.md)** (70 workflows)
+**[VS-27: IT Operations & Security](./VS-27-it-operations-security/README.md)** (71 workflows)
 
 - **PA-27.1** [Service Management](./VS-27-it-operations-security/PA-27.1-service-management.md) — 30 workflows
-- **PA-27.2** [Infrastructure & Platform](./VS-27-it-operations-security/PA-27.2-infrastructure-and-platform.md) — 23 workflows
+- **PA-27.2** [Infrastructure & Platform](./VS-27-it-operations-security/PA-27.2-infrastructure-and-platform.md) — 24 workflows
 - **PA-27.3** [Cybersecurity & Privacy](./VS-27-it-operations-security/PA-27.3-cybersecurity-and-privacy.md) — 17 workflows
 
 **[VS-28: Data, Analytics & BI](./VS-28-data-analytics-bi/README.md)** (24 workflows)
@@ -1415,4 +1415,4 @@ Does it involve control/governance/risk?     → Governance & Assurance (VS-21 t
 Is it about technology/data/platforms?   → Technology & Data (VS-27 to VS-30, VS-99, VS-113, VS-115, VS-126, VS-128, VS-135, VS-137, VS-190)
 ```
 
-*Total: 5,422 workflows across 188 value streams · Date: 2026-09-05*
+*Total: 5,426 workflows across 188 value streams · Date: 2026-09-05*

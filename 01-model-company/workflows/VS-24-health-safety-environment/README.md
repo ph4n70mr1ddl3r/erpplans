@@ -9,9 +9,9 @@
 | PA | Name | Workflows |
 |---|---|---|
 | [PA-24.1](PA-24.1-occupational-health-and-safety.md) | Occupational Health & Safety | 13 |
-| [PA-24.2](PA-24.2-emergency-preparedness.md) | Emergency Preparedness | 10 |
+| [PA-24.2](PA-24.2-emergency-preparedness.md) | Emergency Preparedness | 11 |
 | [PA-24.3](PA-24.3-hazmat-management.md) | Hazmat Management | 7 |
-| | **Total** | **30** |
+| | **Total** | **31** |
 
 ---
 

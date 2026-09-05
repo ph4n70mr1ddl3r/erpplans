@@ -241,7 +241,45 @@ identify capability gaps not addressed by any existing value stream.
 > absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911). Canonical totals are now
 > **188 value streams · 569 process areas · 5,418 workflows** (5,441 confirmed register rows; Tier 1 1,393 →
 > 1,394, Tier 2 3,286 → 3,289).
->>
+>
+> **Post-Pass-30 workflow-level additions, batch 23 (2026-09-05) — gas-leak, tsunami/storm-surge,
+> media-exposé & server-room-environmental gap fill.**
+> The batch-16/17/18/19/20/21/22 edge-case sweeps were re-run across scenario families not yet probed (pre-ignition
+> gas events at sites operating LPG exchange cages, coastal water intrusion by tsunami or storm surge, genuine-fault
+> investigative journalism, and physical-room failures inside the IT estate) and filled four single-workflow gaps
+> inside existing value streams: **W5570** Gas-Leak Event Response (LPG/Natural-Gas Odor on Premises) (VS-24.2;
+> 'gas leak'/'gas odor'/'smell of gas' appear in zero PA files as event content — W5069 owns cylinder leak
+> inspection/condemnation/quarantine as intake QC at the cage, W5537 owns the fire event after ignition, and W330
+> names in-store emergencies generically; nobody owned the pre-ignition odor event: the odor-is-real-until-proven-
+> otherwise law, the ignition-source ban with the exterior master kill, the heavier-than-air evacuate-up-and-out
+> discipline, the trained-only two-person isolation boundary, or the documented detector-clear + source-disposition +
+> ventilation reopen gate), **W5571** Tsunami & Storm-Surge Coastal-Intrusion Response Protocol (VS-26.1;
+> 'tsunami' appears in zero PA files and 'storm surge' only as PA-09.2's customer-advisory context — W1450's quake
+> protocol ends at structural assessment, W1387's flood canon is rainfall/riverine, and W1449's volcanic canon owns
+> ashfall; nobody owned the coastal-intrusion class: the quake-is-the-warning law, the move-up-not-out vertical
+> evacuation rule, the no-return law until PHIVOLCS cancellation, the surge-forecast-not-signal-number closure
+> ladder riding the E-02 custody, or the saltwater desalination gate before re-energization), **W5572**
+> Undercover-Investigation & Media-Exposé Response Protocol (Investigative-Newsroom Event) (VS-14.3;
+> 'undercover'/'hidden camera'/'investigative report'/'right of reply' appear in zero PA files — W1562 owns
+> recall/safety-incident media response and W3271/W3272 own the fake-brand-content class, which is the opposite
+> case; nobody owned genuine-fault journalism: the verification-before-response law, the no-obstruction rule, the
+> single-channel right-of-reply discipline, the self-report calculus, or the remediation track with audit-verifiable
+> milestones), and **W5573** Server-Room & Data-Center Environmental Event Response (VS-27.2; 'server room'/'cooling
+> failure'/'fire-suppression discharge' appear in zero PA files — W55 owns DR failover execution once a disaster is
+> declared, W380 owns alert triage into incident tickets, and VS-138 owns base-building HVAC to the landlord
+> boundary; nobody owned the physical-room event: the thermal-runaway clock, the power-before-water rule, the
+> suppression-aftermath discipline with the certified re-arm before restart, the RTO-bounded failover decision, or
+> the staged-repower validation). The same analysis produced the custody register's tenth wave
+> (event-custody-and-precedence-register.md v1.10, events E-46–E-49: gas-leak event canon W5570, coastal-intrusion
+> canon W5571, media-exposé canon W5572, server-room-environmental canon W5573). Workflow-ID allocation:
+> W5570–W5573 (next available). W5570/W5571 ship **directly confirmed Tier 1** (the pre-ignition life-safety class
+> of the W5537/W5538 precedent and the coastal-water evacuation-and-clearance class of the W1449/W5562 precedent —
+> each gates a physical-state transition on documented external assessment) and W5572/W5573 **directly confirmed
+> Tier 2** (the brand-integrity comms-contingency class of W5563/W5568 and the IT-facility-contingency class of
+> W5547/W5564). All four are absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays HQ 511 / 6,911).
+> Canonical totals are now **188 value streams · 569 process areas · 5,426 workflows** (5,449 confirmed register
+> rows; Tier 1 1,394 → 1,396, Tier 2 3,293 → 3,295).
+>
 > **Post-Pass-30 workflow-level additions, batch 22 (2026-09-05) — terminal-tampering, procurement-impersonation,
 > account-takeover & commute-disruption gap fill.**
 > The batch-16/17/18/19/20/21 edge-case sweeps were re-run across scenario families not yet probed (payment-device

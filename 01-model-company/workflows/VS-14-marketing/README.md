@@ -22,8 +22,8 @@ Seasonal campaigns (ber-months, payday, construction season), digital acquisitio
 |---|---|---|
 | [PA-14.1](PA-14.1-campaign-planning-and-execution.md) | Campaign Planning & Execution | 17 |
 | [PA-14.2](PA-14.2-digital-marketing-and-social-media.md) | Digital Marketing & Social Media | 13 |
-| [PA-14.3](PA-14.3-brand-pr-and-corporate-communications.md) | Brand, PR & Corporate Communications | 11 |
-| | **Total** | **41** |
+| [PA-14.3](PA-14.3-brand-pr-and-corporate-communications.md) | Brand, PR & Corporate Communications | 12 |
+| | **Total** | **42** |
 
 ## Key dependencies
 
