@@ -20,8 +20,10 @@ Conversion rules (documented in bpmn/README.md):
     every element so the files open directly in any BPMN 2.0 modeler.
 
 Validation (built in): every generated file is re-parsed and all internal
-references (sequenceFlow source/target, lane flowNodeRef, DI bpmnElement)
-are checked to resolve. Exit code 1 on any failure.
+references (sequenceFlow/association source/target, lane flowNodeRef, DI
+bpmnElement) are checked to resolve, and every node's incoming/outgoing
+wiring is checked to mirror the sequence flows exactly. Exit code 1 on any
+failure.
 """
 
 import html
@@ -247,8 +249,7 @@ def build_process(wf) -> str:
         )
         out.append(f"        <bpmn:documentation>{esc(doc)}</bpmn:documentation>")
         out.append("        <bpmn:incoming>PLACEHOLDER_IN_%d</bpmn:incoming>" % (i + 1))
-        if i + 1 < len(wf["steps"]):
-            out.append(f"        <bpmn:outgoing>PLACEHOLDER_OUT_{i + 1}</bpmn:outgoing>")
+        out.append(f"        <bpmn:outgoing>PLACEHOLDER_OUT_{i + 1}</bpmn:outgoing>")
         out.append(f"      </bpmn:{tag}>")
 
     end_id = ids.next("End")
@@ -282,13 +283,20 @@ def build_process(wf) -> str:
             f'      <bpmn:sequenceFlow id="{fid}" sourceRef="{chain[i]}" targetRef="{chain[i + 1]}" />'
         )
 
-    # resolve placeholders (outgoing/incoming)
+    # resolve placeholders. Flow k joins chain[k] -> chain[k + 1], so it is the
+    # outgoing ref of chain[k] and the incoming ref of chain[k + 1]. Replace
+    # longest placeholders first: ascending replacement would let
+    # PLACEHOLDER_OUT_1/IN_1 clobber the prefixes of OUT_10+/IN_10+ and leave
+    # digit residue pointing at flows that do not exist.
+    repl: dict[str, str] = {}
+    for k, fid in enumerate(flow_ids):
+        repl[f"PLACEHOLDER_OUT_{k}"] = fid
+        repl[f"PLACEHOLDER_IN_{k + 1}"] = fid
     body = "\n".join(out)
-    body = body.replace("PLACEHOLDER_OUT_0", flow_ids[0])
-    for i, fid in enumerate(flow_ids):
-        body = body.replace(f"PLACEHOLDER_IN_{i + 1}", fid)
-        if i < len(flow_ids) - 1:
-            body = body.replace(f"PLACEHOLDER_OUT_{i + 1}", fid)
+    for ph in sorted(repl, key=len, reverse=True):
+        body = body.replace(ph, repl[ph])
+    if "PLACEHOLDER" in body:
+        raise RuntimeError(f"unresolved wiring placeholder in process {p_id}")
     body += "\n    </bpmn:process>"
 
     # -- assign lane flowNodeRefs -----------------------------------------
@@ -468,6 +476,32 @@ def validate_file(path: Path) -> str | None:
     for el in root.iter(f"{{{NS['bpmn']}}}flowNodeRef"):
         if (el.text or "").strip() not in ids:
             return f"lane flowNodeRef broken: {el.text}"
+    # incoming/outgoing wiring must mirror the sequence flows exactly
+    flows = {
+        el.attrib["id"]: (el.attrib.get("sourceRef"), el.attrib.get("targetRef"))
+        for el in root.iter(f"{{{NS['bpmn']}}}sequenceFlow")
+    }
+    nodes = {
+        el.attrib["id"]: el
+        for tag in ("startEvent", "endEvent", "userTask", "serviceTask")
+        for el in root.iter(f"{{{NS['bpmn']}}}{tag}")
+    }
+    wire = {nid: ([], []) for nid in nodes}  # node -> (incoming, outgoing) flow ids
+    for fid, (src, tgt) in flows.items():
+        if src in wire:
+            wire[src][1].append(fid)
+        if tgt in wire:
+            wire[tgt][0].append(fid)
+    for nid, el in nodes.items():
+        outs = [(o.text or "").strip() for o in el.findall(f"{{{NS['bpmn']}}}outgoing")]
+        ins = [(i.text or "").strip() for i in el.findall(f"{{{NS['bpmn']}}}incoming")]
+        for ref in outs + ins:
+            if ref not in flows:
+                return f"{nid}: wiring ref {ref} resolves to no sequenceFlow"
+        if sorted(outs) != sorted(wire[nid][1]):
+            return f"{nid}: outgoing {sorted(outs)} != flows leaving it {sorted(wire[nid][1])}"
+        if sorted(ins) != sorted(wire[nid][0]):
+            return f"{nid}: incoming {sorted(ins)} != flows entering it {sorted(wire[nid][0])}"
     plane = root.find(f".//{{{NS['bpmndi']}}}BPMNPlane")
     if plane is None or plane.attrib.get("bpmnElement") not in ids:
         return "BPMNPlane bpmnElement unresolved"

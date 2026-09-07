@@ -55,7 +55,10 @@ The generator validates its own output before exiting:
 - every file re-parsed as well-formed XML;
 - every `sequenceFlow`/`association` `sourceRef`/`targetRef` resolves;
 - every lane `flowNodeRef` resolves;
-- every DI `BPMNShape`/`BPMNEdge`/`BPMNPlane` `bpmnElement` resolves.
+- every DI `BPMNShape`/`BPMNEdge`/`BPMNPlane` `bpmnElement` resolves;
+- every node's `incoming`/`outgoing` wiring resolves and exactly mirrors the
+  sequence flows (each flow is the outgoing ref of its source and the incoming
+  ref of its target — no off-by-one, no dangling refs).
 
 A non-zero exit code means a file failed validation.
 
