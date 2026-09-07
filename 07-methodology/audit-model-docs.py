@@ -136,6 +136,21 @@ to v3.8 and the sourcing model bumped to v2.8 so the newest footer clause reads 
 (the OM Downstream pointer re-pointed v2.7 → v2.8; the OM self-pin trued in place per
 the description-trueness convention — the OM itself stays v3.8). New structural rule
 companion_pin_hits pins all four surfaces to the pinned doc's live footer every run.
+2026-09-07 tenth-wave consistency review: adjudicated and closed the sixth wave's
+'flagged for adjudication, not repaired' residual — the OM §4.9 SSP row's VS-151
+enumeration vs its 882 workload figure. Found the mismatch as old as the document
+(the v1.0 §3.2 carried SSP 873 / DP 210 with the same asymmetry) and the mapping
+side unanimous (§4.3's SSP row, §4.9's explicit '+1 (VS-151)', the Sell & Serve
+family partition): the workflow figures were the wrong side — SSP 882 → 906, DP
+213 → 189, and the same re-derivation exposed a second latent drift, the
+hand-maintained subtotal split sitting ±3 off its own member rows (4,913 + 513
+declared vs 4,910 + 516 derived) — subtotals re-based to the member sums
+4,934 + 492 (total unchanged 5,426); the OM bumped to v3.9 with the sourcing
+companion chain re-pointed (sourcing v2.9) and the reality-check banner pin moved
+to v3.9. om_reconciliation_hits extended to re-derive every §3.2 per-team cell and
+subtotal and every §4.9 per-team workflow cell from the §4.1–4.8 mapping tables and
+the on-disk `##` headers each run — the whole portfolio series, not just its
+cross-foots; the ANCHOR re-pinned to the corrected literals.
 """
 
 def _doc_versions():
@@ -327,12 +342,14 @@ ANCHORS = {
         # itself off history. The Total row is now guarded structurally below by
         # om_reconciliation_hits (re-derived from the index Grand Total every run), so
         # this anchor can never again be the only line of defense.
-        "**4,913 + 513 = 5,426**",
-        # §3.2 portfolio-table subtotal/total rows (trued by the same pass; the workflow
-        # cells are structurally re-derived by om_reconciliation_hits — these pin the
-        # VS-split cells and the corrected forms' presence)
-        "**171** | **4,913**",
-        "**17** | **513**",
+        # 2026-09-07 tenth-wave review: re-pinned again after the VS-151 adjudication
+        # (SSP 906 / DP 189) re-based the subtotals to their member sums 4,934 + 492.
+        "**4,934 + 492 = 5,426**",
+        # §3.2 portfolio-table subtotal/total rows (structurally re-derived from the
+        # §4 mapping + disk by om_reconciliation_hits — these pin the corrected forms'
+        # presence)
+        "**171** | **4,934**",
+        "**17** | **492**",
         "**188** | **5,426**",
         # v2.0 hybrid sizing anchor (66 domain + platform/CIO = 115 FTE); v2.1 agentic
         # re-bases it to 122 (66 + 56, AAP +7)
@@ -868,6 +885,94 @@ def om_reconciliation_hits():
         if x + y != z or z != total:
             hits.append((rel, om[:mft.start()].count("\n") + 1,
                          f"live footer reconciliation declares {x:,} + {y:,} = {z:,} but the canonical total is {total:,}"))
+    # 2026-09-07 tenth-wave extension — re-derive the per-team workload cells, not
+    # just their cross-foots. The sixth wave adjudicated the VS-151 residual (SSP 906
+    # / DP 189, subtotals 4,937 + 489) and found the mismatch as old as the document:
+    # twenty reconciliation passes trued the deltas correctly without ever re-deriving
+    # the base, because the cross-foot checks here see only declared-vs-declared sums.
+    # Derive team → VS from the §4.1–4.8 mapping tables, count each VS's `## W`
+    # headers on disk, and assert §3.2's per-team rows and subtotals and §4.9's
+    # per-team workflow cells against the derivation.
+    team_vs = {}
+    for ln, l in enumerate(om.splitlines(), 1):
+        mr = re.match(r"^\| \[VS-(\d+)\]\([^)]*\) \| [^|]+ \| ([A-Za-z]+(?: Office)?) \|", l)
+        if mr:
+            team_vs.setdefault(mr.group(2).replace(" Office", ""), []).append(int(mr.group(1)))
+    if sum(len(v) for v in team_vs.values()) != 188:
+        hits.append((rel, 0, f"§4 mapping rows parse to "
+                             f"{sum(len(v) for v in team_vs.values())} VSs across "
+                             f"{len(team_vs)} teams — expected 188; mapping-table structure changed?"))
+    else:
+        disk = {}
+        for d in os.listdir(os.path.join(MC, "workflows")):
+            md = re.match(r"^VS-(\d+)-", d)
+            if not md:
+                continue
+            n = 0
+            for f in os.listdir(os.path.join(MC, "workflows", d)):
+                if f.startswith("PA-") and f.endswith(".md"):
+                    n += len(set(re.findall(r"^## (W\d+[A-Z]?)\.",
+                        open(os.path.join(MC, "workflows", d, f), encoding="utf-8").read(), re.M)))
+            disk[int(md.group(1))] = n
+        wf = {t: sum(disk[v] for v in vs) for t, vs in team_vs.items()}
+        # §3.2 per-team rows (CIO's row carries an empty leading cell); IAP/SEP/AAP
+        # have no §4 mapping rows — legitimate only while they declare 0 VS / 0 WF.
+        # Scoped to the §3.2 section — the §9.1 sizing table's | CODE | 1 | 1 | ...
+        # rows share the leading-cell shape.
+        m32s = re.search(r"### 3\.2 .*?(?=\n### 3\.3|\n## 4\.)", om, re.S)
+        sec32 = m32s.group(0) if m32s else ""
+        off32 = om[:m32s.start()].count("\n") + 1 if m32s else 1
+        for ln, l in enumerate(sec32.splitlines(), off32):
+            m32 = re.match(r"^\| (?:\d+)? \| [^|]+? \| ([A-Za-z]{2,5}) \|[^|]*\|[^|]*\| (\d+) \| ([\d,]+) \|", l)
+            if not m32 or m32.group(1) in ("Total", "Domain", "Platform"):
+                continue
+            code, mvs, mwf = m32.group(1), int(m32.group(2)), int(m32.group(3).replace(",", ""))
+            avs = len(team_vs.get(code, []))
+            awf = wf.get(code, 0)
+            if avs == 0 and awf == 0 and mvs == 0 and mwf == 0:
+                continue
+            if mvs != avs or mwf != awf:
+                hits.append((rel, ln, f"§3.2 {code} row declares {mvs} VS / {mwf:,} workflows "
+                                      f"but the §4 mapping + disk hold {avs} VS / {awf:,}"))
+        # §3.2 subtotal cells must equal their member-row sums (domain = the 9
+        # stream-aligned/enabling rows before the subtotal; platform = the rest)
+        declared32 = {}
+        for ln, l in enumerate(om.splitlines(), 1):
+            ms = re.match(r"^\| \| \*\*(Domain subtotal|Platform \+ CIO subtotal)\*\* \| \| \| \| \| \*\*(\d+)\*\* \| \*\*([\d,]+)\*\*", l)
+            if ms:
+                declared32[ms.group(1)] = (int(ms.group(2)), int(ms.group(3).replace(",", "")), ln)
+        dom = ["MSC", "WLI", "SSP", "CCP", "FIN", "CORP", "PEO", "OMO", "TPS"]
+        if len(declared32) == 2:
+            d_vs = sum(len(team_vs[t]) for t in dom if t in team_vs)
+            d_wf = sum(wf.get(t, 0) for t in dom)
+            p_vs = sum(len(v) for t, v in team_vs.items() if t not in dom)
+            p_wf = sum(wf.get(t, 0) for t, v in team_vs.items() if t not in dom)
+            if declared32["Domain subtotal"][0] != d_vs or declared32["Domain subtotal"][1] != d_wf:
+                hits.append((rel, declared32["Domain subtotal"][2],
+                             f"§3.2 Domain subtotal declares {declared32['Domain subtotal'][0]} VS / "
+                             f"{declared32['Domain subtotal'][1]:,} workflows but its member rows derive "
+                             f"{d_vs} VS / {d_wf:,}"))
+            if declared32["Platform + CIO subtotal"][0] != p_vs or declared32["Platform + CIO subtotal"][1] != p_wf:
+                hits.append((rel, declared32["Platform + CIO subtotal"][2],
+                             f"§3.2 Platform+CIO subtotal declares {declared32['Platform + CIO subtotal'][0]} VS / "
+                             f"{declared32['Platform + CIO subtotal'][1]:,} workflows but its member rows derive "
+                             f"{p_vs} VS / {p_wf:,}"))
+        # §4.9 per-team workflow cells: | CODE | VS enumeration | Workflows |
+        m49s = re.search(r"### 4\.9 .*?(?=\n## 5\.|\n---)", om, re.S)
+        sec49 = m49s.group(0) if m49s else ""
+        off49 = om[:m49s.start()].count("\n") + 1 if m49s else 1
+        for ln, l in enumerate(sec49.splitlines(), off49):
+            m49r = re.match(r"^\| ([A-Za-z]{2,5}(?: Office)?) \| [^|]+ \| ([\d,]+) \|", l)
+            if not m49r or m49r.group(1) == "Total":
+                continue
+            code = m49r.group(1).replace(" Office", "")
+            if code not in team_vs:
+                continue
+            awf = wf[code]
+            mwf49 = int(m49r.group(2).replace(",", ""))
+            if mwf49 != awf:
+                hits.append((rel, ln, f"§4.9 {m49r.group(1)} row declares {mwf49:,} workflows "
+                                      f"but its mapped VSs hold {awf:,} on disk"))
     return hits
 
 
