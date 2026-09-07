@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-07.3-store-receiving-and-replenishment"
+             name="PA 07.3 store receiving and replenishment"
+             namespace="https://erpplans.local/dmn/PA-07.3-store-receiving-and-replenishment"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Receiving by Source — Putaway Priority">
+    <description>Source: VS-07-store-operations/PA-07.3-store-receiving-and-replenishment.md · section “Receiving by Source” · rule table
+Source table: Source | Receiving Document | Scan Against | Discrepancy Route | Putaway Priority</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Putaway Priority">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>PutawayPriority</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Source" name="Source" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="Receiving Document" name="ReceivingDocument" typeRef="string"/>
+      <output id="Decision_T01_Out03" label="Scan Against" name="ScanAgainst" typeRef="string"/>
+      <output id="Decision_T01_Out04" label="Discrepancy Route" name="DiscrepancyRoute" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;Promo → A-items → B/C-items&quot;</text></inputEntry>
+        <outputEntry><text>&quot;DC delivery (W4, W106)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Transfer Order&quot;</text></outputEntry>
+        <outputEntry><text>&quot;TO lines&quot;</text></outputEntry>
+        <outputEntry><text>&quot;W22.9a (transfer discrepancy)&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;Direct to shelf/yard&quot;</text></inputEntry>
+        <outputEntry><text>&quot;DSD vendor (W18)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Purchase Order&quot;</text></outputEntry>
+        <outputEntry><text>&quot;PO lines&quot;</text></outputEntry>
+        <outputEntry><text>&quot;W18 discrepancy process&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;Per dept priority&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Inter-store transfer (W22)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Transfer Order&quot;</text></outputEntry>
+        <outputEntry><text>&quot;TO lines&quot;</text></outputEntry>
+        <outputEntry><text>&quot;W22.9a&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;Direct to shelf&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Customer return restock (W12)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Return transaction&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Return line items&quot;</text></outputEntry>
+        <outputEntry><text>&quot;N/A — already processed&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule05">
+        <inputEntry><text>&quot;To RTV holding area&quot;</text></inputEntry>
+        <outputEntry><text>&quot;RTV backhaul from vendor (W88)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;RTV shipment&quot;</text></outputEntry>
+        <outputEntry><text>&quot;RTV record&quot;</text></outputEntry>
+        <outputEntry><text>&quot;W88 vendor dispute&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

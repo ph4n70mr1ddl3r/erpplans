@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-07.1-store-daily-management"
+             name="PA 07.1 store daily management"
+             namespace="https://erpplans.local/dmn/PA-07.1-store-daily-management"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Delay Scenarios &amp; Responses — Scenario">
+    <description>Source: VS-07-store-operations/PA-07.1-store-daily-management.md · section “Delay Scenarios &amp; Responses” · rule table
+Source table: Scenario | Response | Minimum Viable Opening</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Scenario">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>Scenario</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Response" name="Response" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="Minimum Viable Opening" name="MinimumViableOpening" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;Power outage&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager contacts Meralco/utility provider for ETA; if generator available, start generator and open with reduced lighting in non-essential areas; POS runs on UPS/battery backup during generator switchover&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Open with generator power; all 3 POS terminals sufficient&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;POS system / network down&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager contacts IT Helpdesk (W48 P1); if estimated fix &lt; 2 hours, delay opening until restored; if &gt; 2 hours, open in manual mode (written receipts, manual price lookup from printed price list); reconcile per W5G offline recovery upon restoration&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Open with manual receipts if &lt; 2 hours; otherwise delay&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;Alarm malfunction&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Guard performs exterior walkthrough (W71.1); if no signs of intrusion, Store Manager enters and inspects; contacts alarm monitoring company for emergency repair; opens if interior verified safe&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Open if security verified; alarm repair scheduled per W47&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;Safety hazard found during walkthrough (water leak, structural damage, gas smell)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager isolates affected area; contacts Facilities Coordinator for emergency repair per W47; if hazard is localized, open store with restricted access to affected zone; if hazard affects entire store (gas leak, major flooding), keep closed until resolved&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Open partial if hazard isolated; full closure if building-wide&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule05">
+        <inputEntry><text>&quot;Late staff arrival (multiple no-shows due to transport, weather)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager calls in available off-duty staff; opens with minimum crew: 1 cashier, 1 floor associate, 1 stock associate, 1 manager; remaining terminals closed&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Open with 1 terminal + 1 floor associate + manager&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W1106_02" name="Authorization threshold — W1106">
+    <description>Source: VS-07-store-operations/PA-07.1-store-daily-management.md · workflow W1106 · step row (authorization thresholds)
+Note: 7 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Donation Value Assessment &amp; Approval Routing: (a) Store Manager assesses donation value at SRP (standard retail price): (i) &lt; PHP 5,000: Store Manager approval authority; items from SLOB/clearance inventory preferred (W220); (ii) PHP 5,001–25,000: Regional Manager approval required; (iii) PHP 25,001–100,000: VP Legal &amp; CMO approval required; (iv) &gt; PHP 100,000: CEO/CFO approval required via corporate CSR committee; (b) system checks inventory availability at store and nearby stores; (c) preference given to: (i) SLOB/clearance items that would otherwise be written off, (ii) slow-moving seasonal items, (iii) display/demo units; (d) Store Manager prepares donation authorization form in ERP…</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W1106_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W1106_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W1106_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W1106_02_Rule01">
+        <inputEntry><text>&lt; 5000</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1106_02_Rule02">
+        <inputEntry><text>[5001..25000]</text></inputEntry>
+        <outputEntry><text>&quot;Regional Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1106_02_Rule03">
+        <inputEntry><text>[25001..100000]</text></inputEntry>
+        <outputEntry><text>&quot;VP Legal &amp; CMO&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1106_02_Rule04">
+        <inputEntry><text>&gt; 100000</text></inputEntry>
+        <outputEntry><text>&quot;CEO/CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W1106_02_di" dmnElementRef="Decision_W1106_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

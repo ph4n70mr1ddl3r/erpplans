@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-01.2-pricing-and-promotions"
+             name="PA 01.2 pricing and promotions"
+             namespace="https://erpplans.local/dmn/PA-01.2-pricing-and-promotions"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Pricing Hierarchy Rules (System-Enforced) — Priority">
+    <description>Source: VS-01-merchandise-strategy/PA-01.2-pricing-and-promotions.md · section “Pricing Hierarchy Rules (System-Enforced)” · rule table
+Source table: Priority | Price Type | When Applied | Override Authority</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Priority">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="number">
+          <text>Priority</text>
+        </inputExpression>
+      </input>
+      <input id="Decision_T01_In02" label="Price Type">
+        <inputExpression id="Decision_T01_InExpr02" typeRef="string">
+          <text>PriceType</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Override Authority" name="OverrideAuthority" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="When Applied" name="WhenApplied" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>1</text></inputEntry>
+        <inputEntry><text>&quot;Clearance/Markdown (W93)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Category Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Item flagged as clearance&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>2</text></inputEntry>
+        <inputEntry><text>&quot;Promotional Price (W13)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Pricing Analyst (setup); system auto-applies&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Within active promo date range&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>3</text></inputEntry>
+        <inputEntry><text>&quot;Competitor Price Match (W61)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Cashier + Store Manager authorization&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Customer request with proof&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>4</text></inputEntry>
+        <inputEntry><text>&quot;Quantity Break Price (W40.15)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;System auto-applies — no override&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Scanned quantity meets threshold&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule05">
+        <inputEntry><text>5</text></inputEntry>
+        <inputEntry><text>&quot;Trade/Corporate Account Price (W5B.4c)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Cashier selects account; system auto-applies&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Customer identified at POS&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule06">
+        <inputEntry><text>6</text></inputEntry>
+        <inputEntry><text>&quot;Employee Discount (W5B.12)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Cashier; system enforces limits&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Employee ID scanned&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule07">
+        <inputEntry><text>7</text></inputEntry>
+        <inputEntry><text>&quot;Regular SRP (W40)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;N/A&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Default — no other price applies&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W93_02" name="Authorization threshold — W93">
+    <description>Source: VS-01-merchandise-strategy/PA-01.2-pricing-and-promotions.md · workflow W93 · step row (authorization thresholds)
+Note: 4 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Authorization (tiered by markdown value): (a) ≤ PHP 50,000 total markdown loss per SKU: Category Manager approves; (b) &gt; PHP 50,000 and ≤ PHP 500,000 total markdown loss: VP Merchandising approves; (c) &gt; PHP 500,000 total markdown loss: CFO approves; (d) Below-cost markdown: CFO approval required regardless of amount (loss recognition trigger) | Per tier above | VP Merchandising / CFO | 5–15 min/approval</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W93_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W93_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W93_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W93_02_Rule01">
+        <inputEntry><text>&lt;= 50000</text></inputEntry>
+        <outputEntry><text>&quot;Category Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W93_02_Rule02">
+        <inputEntry><text>(50000..500000]</text></inputEntry>
+        <outputEntry><text>&quot;VP Merchandising&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W93_02_Rule03">
+        <inputEntry><text>&gt; 500000</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W329_03" name="Authorization threshold — W329">
+    <description>Source: VS-01-merchandise-strategy/PA-01.2-pricing-and-promotions.md · workflow W329 · step row (authorization thresholds)
+Note: 2 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Decision and approval: VP Merchandising selects response strategy; for margin impact &gt; PHP 500K/month or price reduction &gt; 15% on any SKU: CEO approval required; for margin impact ≤ PHP 500K/month: VP Merchandising approves; decision documented with rationale in system | VP Merchandising | CEO (if threshold exceeded) | 30 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W329_03_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W329_03_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W329_03_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W329_03_Rule01">
+        <inputEntry><text>&lt;= 500000</text></inputEntry>
+        <outputEntry><text>&quot;VP Merchandising&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W329_03_Rule02">
+        <inputEntry><text>&gt; 500000</text></inputEntry>
+        <outputEntry><text>&quot;CEO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W93_02_di" dmnElementRef="Decision_W93_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W329_03_di" dmnElementRef="Decision_W329_03">
+        <dc:Bounds x="680" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

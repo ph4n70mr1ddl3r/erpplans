@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-03.2-purchase-order-cycle"
+             name="PA 03.2 purchase order cycle"
+             namespace="https://erpplans.local/dmn/PA-03.2-purchase-order-cycle"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="PO Lifecycle: Amendment, Cancellation &amp; Close — Trigger">
+    <description>Source: VS-03-vendor-management/PA-03.2-purchase-order-cycle.md · section “PO Lifecycle: Amendment, Cancellation &amp; Close” · rule table
+Source table: Activity | Trigger | Approval | System Action</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Trigger">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>Trigger</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Approval" name="Approval" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="System Action" name="SystemAction" typeRef="string"/>
+      <output id="Decision_T01_Out03" label="Activity" name="Activity" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;Buyer needs to change quantity, delivery date, price, or add/remove lines on an approved PO&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Re-approval per tiered matrix (same thresholds as original PO: &gt; PHP 50K → Category Manager, &gt; PHP 500K → VP Merchandising, &gt; PHP 2M → CFO for imports) if change exceeds materiality threshold (quantity change &gt; 20%, price change &gt; 5%, or any delivery date change); minor changes (within threshold) auto-approved with Buyer note&quot;</text></outputEntry>
+        <outputEntry><text>&quot;System transmits amendment to vendor (email, EDI, or portal); tracks amendment history with full audit trail (original values, amended values, reason code, approver ID, timestamp); for import POs (W2B), Finance notifies bank if LC amendment is required for value changes&quot;</text></outputEntry>
+        <outputEntry><text>&quot;PO Amendment&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;Vendor cannot deliver, demand drops, item discontinued, or PO no longer needed&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Buyer initiates with reason code; Category Manager approval required for cancellations &gt; PHP 50K; VP Merchandising for &gt; PHP 500K&quot;</text></outputEntry>
+        <outputEntry><text>&quot;System checks for existing GR against PO: if no GR, auto-cancels with vendor notification; if partial GR, Buyer confirms close of remaining quantity; system releases budget commitment; cancelled PO retained in audit trail&quot;</text></outputEntry>
+        <outputEntry><text>&quot;PO Cancellation&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;PO fully received (GR quantity matches ordered quantity within tolerance) or PO open beyond configured age limit&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Automated&quot;</text></outputEntry>
+        <outputEntry><text>&quot;System auto-closes fully received POs; system flags POs open &gt; 90 days for Buyer review (dashboard alert); Buyer reviews aged POs weekly and decides: close remaining quantity, extend delivery date (amendment), or escalate to Category Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;PO Auto-Close&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W2B_02" name="Authorization threshold — W2B">
+    <description>Source: VS-03-vendor-management/PA-03.2-purchase-order-cycle.md · workflow W2B · step row (authorization thresholds)
+The source states only escalating lower bounds (&gt; PHP A -&gt; role 1; &gt; PHP B -&gt; role 2, ...); interpreted as an approval ladder — each band runs from its threshold to the next tier&#x27;s threshold.
+Verbatim: Route for approval (&gt; PHP 50K → Category Manager; &gt; PHP 500K → VP Merchandising; &gt; PHP 2M → CFO) | Category Manager / VP / CFO | As per tier | 15–30 min/PO</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W2B_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W2B_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W2B_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W2B_02_Rule01">
+        <inputEntry><text>(50000..500000]</text></inputEntry>
+        <outputEntry><text>&quot;Category Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W2B_02_Rule02">
+        <inputEntry><text>(500000..2000000]</text></inputEntry>
+        <outputEntry><text>&quot;VP Merchandising&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W2B_02_Rule03">
+        <inputEntry><text>&gt; 2000000</text></inputEntry>
+        <outputEntry><text>&quot;CFO + Category Manager&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W60_03" name="Authorization threshold — W60">
+    <description>Source: VS-03-vendor-management/PA-03.2-purchase-order-cycle.md · workflow W60 · step row (authorization thresholds)
+Note: 1 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: System routes for expedited approval: (a) ≤ PHP 100,000: Store Manager (for stores) or Dept. Head (for HQ/DC) + Controller verbal approval, (b) PHP 100,001–500,000: CFO verbal approval required within 2 hours, (c) &gt; PHP 500,000: CEO verbal approval required within 4 hours; system logs verbal approval with timestamp and approver ID | System | Controller / CFO / CEO | 15 min – 4 hours</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W60_03_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W60_03_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W60_03_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W60_03_Rule01">
+        <inputEntry><text>&lt;= 100000</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager + Dept. Head + Controller&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W60_03_Rule02">
+        <inputEntry><text>[100001..500000]</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W60_03_Rule03">
+        <inputEntry><text>&gt; 500000</text></inputEntry>
+        <outputEntry><text>&quot;CEO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W62_04" name="Authorization threshold — W62">
+    <description>Source: VS-03-vendor-management/PA-03.2-purchase-order-cycle.md · workflow W62 · step row (authorization thresholds)
+Verbatim: Approval per tiered matrix: (a) annual value ≤ PHP 500K: Dept. Head + Finance Manager, (b) PHP 500K–2M: VP + CFO, (c) &gt; PHP 2M: CEO | Approver | Approver | 15–30 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W62_04_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W62_04_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W62_04_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W62_04_Rule01">
+        <inputEntry><text>&lt;= 500000</text></inputEntry>
+        <outputEntry><text>&quot;Dept. Head + Finance Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W62_04_Rule02">
+        <inputEntry><text>(500000..2000000]</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W62_04_Rule03">
+        <inputEntry><text>&gt; 2000000</text></inputEntry>
+        <outputEntry><text>&quot;CEO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W62B_05" name="Authorization threshold — W62B">
+    <description>Source: VS-03-vendor-management/PA-03.2-purchase-order-cycle.md · workflow W62B · step row (authorization thresholds)
+Verbatim: Approval per W62 tiered matrix (carrier contracts typically annual value ≤ PHP 2M → VP + CFO; &gt; PHP 2M → CEO) | Approver | Approver | 15–30 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W62B_05_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W62B_05_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W62B_05_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W62B_05_Rule01">
+        <inputEntry><text>&lt;= 2000000</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W62B_05_Rule02">
+        <inputEntry><text>&gt; 2000000</text></inputEntry>
+        <outputEntry><text>&quot;CEO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W2B_02_di" dmnElementRef="Decision_W2B_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W60_03_di" dmnElementRef="Decision_W60_03">
+        <dc:Bounds x="680" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W62_04_di" dmnElementRef="Decision_W62_04">
+        <dc:Bounds x="940" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W62B_05_di" dmnElementRef="Decision_W62B_05">
+        <dc:Bounds x="160" y="220" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

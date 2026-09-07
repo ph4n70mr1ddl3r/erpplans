@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-15.2-vendor-payment-and-reconciliation"
+             name="PA 15.2 vendor payment and reconciliation"
+             namespace="https://erpplans.local/dmn/PA-15.2-vendor-payment-and-reconciliation"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Refund Authorization Matrix — Refund Amount">
+    <description>Source: VS-15-procure-to-pay/PA-15.2-vendor-payment-and-reconciliation.md · section “Refund Authorization Matrix” · rule table
+Source table: Refund Amount | In-Store (CSR/Cashier) | Online (Ecom Support) | Trade/Corporate (AR)</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Refund Amount">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>RefundAmount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="In-Store (CSR/Cashier)" name="InStoreCSRCashier" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="Online (Ecom Support)" name="OnlineEcomSupport" typeRef="string"/>
+      <output id="Decision_T01_Out03" label="Trade/Corporate (AR)" name="TradeCorporateAR" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;≤ PHP 1,000&quot;</text></inputEntry>
+        <outputEntry><text>&quot;CSR approves&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Auto-approved&quot;</text></outputEntry>
+        <outputEntry><text>&quot;AR Clerk&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;PHP 1,001–5,000&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;CS Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;AR Clerk&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;PHP 5,001–50,000&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager + photo evidence&quot;</text></outputEntry>
+        <outputEntry><text>&quot;CS Manager + VP approval&quot;</text></outputEntry>
+        <outputEntry><text>&quot;AR Supervisor&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;&gt; PHP 50,000&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Regional Manager + Controller&quot;</text></outputEntry>
+        <outputEntry><text>&quot;CMO + Controller&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Controller + CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

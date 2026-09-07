@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-03.1-vendor-sourcing-and-onboarding"
+             name="PA 03.1 vendor sourcing and onboarding"
+             namespace="https://erpplans.local/dmn/PA-03.1-vendor-sourcing-and-onboarding"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Steps — Tier">
+    <description>Source: VS-03-vendor-management/PA-03.1-vendor-sourcing-and-onboarding.md · section “Steps” · rule table
+Source table: Tier | Trigger | Action | System Impact</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Tier">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>Tier</text>
+        </inputExpression>
+      </input>
+      <input id="Decision_T01_In02" label="Trigger">
+        <inputExpression id="Decision_T01_InExpr02" typeRef="string">
+          <text>Trigger</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Action" name="Action" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="System Impact" name="SystemImpact" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;Warning&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Scorecard rating drops to C, or single significant incident (major quality failure, delivery causing stockout)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Buyer communicates performance gaps to vendor in writing with specific metrics; establishes 30-day improvement period with clear targets&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Vendor master status remains Active; Buyer monitors PO performance during improvement period&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;Probation&quot;</text></inputEntry>
+        <inputEntry><text>&quot;No improvement after Warning, or scorecard rating drops to D&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Vendor suspended from receiving new POs; existing committed POs are fulfilled; 90-day formal review period; Category Manager notifies vendor in writing of probation status and improvement requirements&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Vendor master status changed to Probation; system blocks creation of new POs for this vendor; existing POs unaffected&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;Termination&quot;</text></inputEntry>
+        <inputEntry><text>&quot;No improvement after Probation, or scorecard rating F, or vendor commits fraud/breach&quot;</text></inputEntry>
+        <outputEntry><text>&quot;VP Merchandising approves termination; Category Manager notifies vendor; all open POs cancelled or allowed to complete per agreement; vendor master deactivated&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Vendor master status changed to Inactive; system blocks all transactions; termination date and reason recorded in audit trail; vendor record retained for regulatory and historical purposes&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;Reactivation&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Buyer requests reactivation with evidence of improved capability (new ownership, new processes, reference customers)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Category Manager reviews evidence; if approved, vendor re-enters onboarding process per W36 (abbreviated: skip trial PO if recent history exists)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Vendor master status changed back to Active; full audit trail of termination and reactivation retained&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W632_02" name="Authorization threshold — W632">
+    <description>Source: VS-03-vendor-management/PA-03.1-vendor-sourcing-and-onboarding.md · workflow W632 · step row (authorization thresholds)
+The source states only escalating lower bounds (&gt; PHP A -&gt; role 1; &gt; PHP B -&gt; role 2, ...); interpreted as an approval ladder — each band runs from its threshold to the next tier&#x27;s threshold.
+Verbatim: VP Merchandising approves award for bids &gt; PHP 1M; COO approves for bids &gt; PHP 5M | VP Merchandising/COO | COO | 0.5 day</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W632_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W632_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W632_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W632_02_Rule01">
+        <inputEntry><text>(1000000..5000000]</text></inputEntry>
+        <outputEntry><text>&quot;VP Merchandising&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W632_02_Rule02">
+        <inputEntry><text>&gt; 5000000</text></inputEntry>
+        <outputEntry><text>&quot;COO + VP Merchandising/COO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W932_03" name="Authorization threshold — W932">
+    <description>Source: VS-03-vendor-management/PA-03.1-vendor-sourcing-and-onboarding.md · workflow W932 · step row (authorization thresholds)
+Note: 1 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Category Manager approves or modifies price action recommendation: Low-impact PCRs (&lt;PHP 100K) approved by Category Manager; Medium-impact (PHP 100K–1M) requires VP Merchandising approval; High-impact (&gt;PHP 1M) requires COO/CFO approval; approval documented in PCR with timestamp | Category Manager / VP Merchandising / COO | — | 30 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W932_03_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W932_03_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W932_03_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W932_03_Rule01">
+        <inputEntry><text>&lt; 100000</text></inputEntry>
+        <outputEntry><text>&quot;Category Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W932_03_Rule02">
+        <inputEntry><text>[100000..1000000]</text></inputEntry>
+        <outputEntry><text>&quot;VP Merchandising&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W932_03_Rule03">
+        <inputEntry><text>&gt; 1000000</text></inputEntry>
+        <outputEntry><text>&quot;COO/CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W632_02_di" dmnElementRef="Decision_W632_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W932_03_di" dmnElementRef="Decision_W932_03">
+        <dc:Bounds x="680" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

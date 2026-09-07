@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-04.1-dc-inbound-operations"
+             name="PA 04.1 dc inbound operations"
+             namespace="https://erpplans.local/dmn/PA-04.1-dc-inbound-operations"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Quality Inspection Standards (W3 Step 5 Detail) — Category">
+    <description>Source: VS-04-dc-warehouse/PA-04.1-dc-inbound-operations.md · section “Quality Inspection Standards (W3 Step 5 Detail)” · rule table
+Source table: Category | Inspection Criteria | Sampling Plan | AQL | Reject Action</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Category">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>Category</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Sampling Plan" name="SamplingPlan" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="Reject Action" name="RejectAction" typeRef="string"/>
+      <output id="Decision_T01_Out03" label="Inspection Criteria" name="InspectionCriteria" typeRef="string"/>
+      <output id="Decision_T01_Out04" label="AQL" name="AQL" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;Tiles &amp; ceramics&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Per lot: ≤ 100 pcs → inspect 5; 101–500 → inspect 20; 501+ → inspect 32&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Reject entire lot if defect rate exceeds AQL; Buyer notifies vendor&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Visual defects (chips, cracks, glaze inconsistencies on sampled pieces); color consistency vs. reference sample; dimensional check (±1mm tolerance on length/width); PEI rating confirmation per packaging&quot;</text></outputEntry>
+        <outputEntry><text>&quot;2.5%&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;Lumber &amp; wood&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Per bundle: inspect 5 pieces from each bundle&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Reject non-conforming pieces; accept remainder; Buyer adjusts PO quantity&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Moisture content spot-check (if meter available); warping/bowing check (visual); species/treatment verification; grade stamp verification; length/piece count&quot;</text></outputEntry>
+        <outputEntry><text>&quot;4.0% (visual)&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;Paint &amp; chemicals&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Per delivery: inspect 10% of cartons, minimum 2&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Reject entire lot if critical defect found; quarantine for Buyer review&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Manufacturing date and shelf-life capture (mandatory per shelf-life management); container integrity (dents, leaks, tamper seal); color match for tinted items; safety data sheet availability check&quot;</text></outputEntry>
+        <outputEntry><text>&quot;1.5% (critical: leaks/tamper)&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;Cement &amp; masonry&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Per pallet: inspect 5 bags from top, middle, bottom&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Reject damaged bags; accept sound bags; Buyer adjusts PO quantity&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Bag integrity (no tears, moisture damage, hardened lumps); manufacturing date check (cement shelf-life typically 3 months); weight spot-check on sampled bags&quot;</text></outputEntry>
+        <outputEntry><text>&quot;2.5%&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule05">
+        <inputEntry><text>&quot;Plumbing &amp; electrical&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Per line item: inspect 10% of units, minimum 2&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Reject non-conforming units; Buyer coordinates with vendor&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Visual defect check (finish, threads, connectors); brand/model verification against PO; quantity count; packaging integrity&quot;</text></outputEntry>
+        <outputEntry><text>&quot;2.5%&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule06">
+        <inputEntry><text>&quot;Power tools &amp; appliances&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Per unit: 100% inspection for high-value; 10% for standard&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Reject damaged units; serial-tracked items logged for warranty (W33)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;External packaging check; serial number capture for high-value items (&gt; PHP 10,000); physical damage check; accessory completeness vs. product spec&quot;</text></outputEntry>
+        <outputEntry><text>&quot;1.0% (high-value); 2.5% (standard)&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule07">
+        <inputEntry><text>&quot;Hardware &amp; fasteners&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Per line: weigh-count verification&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Reject if count variance &gt; 5%; Buyer adjusts PO&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Quantity count (weigh-count or piece count); rust/corrosion check; grade/size verification against PO&quot;</text></outputEntry>
+        <outputEntry><text>&quot;4.0%&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W648_02" name="Authorization threshold — W648">
+    <description>Source: VS-04-dc-warehouse/PA-04.1-dc-inbound-operations.md · workflow W648 · step row (authorization thresholds)
+Verbatim: DC Inventory Supervisor submits adjustment for approval per threshold: DC Manager for adjustments &lt; PHP 50,000; VP Supply Chain for adjustments PHP 50,000–500,000; CFO for adjustments &gt; PHP 500,000 | DC Inventory Supervisor | DC Manager | Varies by threshold</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W648_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W648_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W648_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W648_02_Rule01">
+        <inputEntry><text>&lt; 50000</text></inputEntry>
+        <outputEntry><text>&quot;Supervisor + DC Manager for&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W648_02_Rule02">
+        <inputEntry><text>[50000..500000]</text></inputEntry>
+        <outputEntry><text>&quot;VP Supply Chain for&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W648_02_Rule03">
+        <inputEntry><text>&gt; 500000</text></inputEntry>
+        <outputEntry><text>&quot;CFO for + DC Inventory Supervisor + DC Manager&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W648_02_di" dmnElementRef="Decision_W648_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

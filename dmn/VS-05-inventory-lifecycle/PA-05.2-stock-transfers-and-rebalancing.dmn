@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-05.2-stock-transfers-and-rebalancing"
+             name="PA 05.2 stock transfers and rebalancing"
+             namespace="https://erpplans.local/dmn/PA-05.2-stock-transfers-and-rebalancing"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Allocation Priority Hierarchy (Constrained Supply) — Priority">
+    <description>Source: VS-05-inventory-lifecycle/PA-05.2-stock-transfers-and-rebalancing.md · section “Allocation Priority Hierarchy (Constrained Supply)” · rule table
+Source table: Priority | Demand Channel | Rationale | Override Authority</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Priority">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="number">
+          <text>Priority</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Override Authority" name="OverrideAuthority" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="Demand Channel" name="DemandChannel" typeRef="string"/>
+      <output id="Decision_T01_Out03" label="Rationale" name="Rationale" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>1</text></inputEntry>
+        <outputEntry><text>&quot;Supply Planning Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Existing customer backorders (W56)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Customer already committed and waiting; highest service obligation&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>2</text></inputEntry>
+        <outputEntry><text>&quot;VP Supply Chain + VP Merchandising&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Promotional pre-positioning (W57)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Committed marketing spend; stockout during promo damages brand&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>3</text></inputEntry>
+        <outputEntry><text>&quot;Supply Planning Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Ecommerce BOPIS (W11)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Customer already paid; fulfillment SLA of 4 hours&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>4</text></inputEntry>
+        <outputEntry><text>&quot;Supply Planning Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Ecommerce home delivery (W19)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Customer already paid; fulfillment SLA of 2–5 days&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule05">
+        <inputEntry><text>5</text></inputEntry>
+        <outputEntry><text>&quot;VP Supply Chain + Sales Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;B2B trade/corporate project orders (W58)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Contractual obligation; high-value accounts&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule06">
+        <inputEntry><text>6</text></inputEntry>
+        <outputEntry><text>&quot;Supply Planning Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Store replenishment — A-items (W4)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Top 20% of SKUs generating 80% of revenue; highest retail impact&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule07">
+        <inputEntry><text>7</text></inputEntry>
+        <outputEntry><text>&quot;Supply Planning Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Store replenishment — B-items (W4)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Mid-tier items; moderate revenue impact&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule08">
+        <inputEntry><text>8</text></inputEntry>
+        <outputEntry><text>&quot;System auto-allocated from residual&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Store replenishment — C-items (W4)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Bottom 50% of SKUs; lowest revenue impact; highest tolerance for stockout&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W1535_02" name="Authorization threshold — W1535">
+    <description>Source: VS-05-inventory-lifecycle/PA-05.2-stock-transfers-and-rebalancing.md · workflow W1535 · step row (authorization thresholds)
+The source states only escalating lower bounds (&gt; PHP A -&gt; role 1; &gt; PHP B -&gt; role 2, ...); interpreted as an approval ladder — each band runs from its threshold to the next tier&#x27;s threshold.
+Verbatim: Emergency transfer authorization: If transfer is warranted (revenue at risk &gt; PHP 500K or promotional commitment affected), Supply Planning Manager creates emergency transfer order; VP Supply Chain approves if total transfer value &gt; PHP 200K or requires air freight | Supply Planning Manager | VP Supply Chain | 15 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W1535_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W1535_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W1535_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W1535_02_Rule01">
+        <inputEntry><text>(200000..500000]</text></inputEntry>
+        <outputEntry><text>&quot;VP Supply Chain + Supply Planning Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1535_02_Rule02">
+        <inputEntry><text>&gt; 500000</text></inputEntry>
+        <outputEntry><text>&quot;Supply Planning Manager&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W1535_02_di" dmnElementRef="Decision_W1535_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

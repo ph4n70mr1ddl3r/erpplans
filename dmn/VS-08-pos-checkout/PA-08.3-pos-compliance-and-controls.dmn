@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-08.3-pos-compliance-and-controls"
+             name="PA 08.3 pos compliance and controls"
+             namespace="https://erpplans.local/dmn/PA-08.3-pos-compliance-and-controls"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Exception Detection Rules (Configurable) — Default Threshold">
+    <description>Source: VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md · section “Exception Detection Rules (Configurable)” · rule table
+Source table: Pattern | Detection Method | Default Threshold | Severity</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Default Threshold">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>DefaultThreshold</text>
+        </inputExpression>
+      </input>
+      <input id="Decision_T01_In02" label="Severity">
+        <inputExpression id="Decision_T01_InExpr02" typeRef="string">
+          <text>Severity</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Pattern" name="Pattern" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="Detection Method" name="DetectionMethod" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;&gt; 5% void rate&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Medium → High if sustained&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Excessive voids&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Void count / total transactions per cashier per hour&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;&gt; 3/hour&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Medium&quot;</text></inputEntry>
+        <outputEntry><text>&quot;No-sale drawer opens&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Count per cashier per hour&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;&lt; 0.6 ratio + weight mismatch&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Critical&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Sweethearting&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Item price vs. expected basket value ratio&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;&gt; 20% weight deviation&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Critical&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Pass-through fraud&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Weight mismatch at SCO or barcode anomaly&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule05">
+        <inputEntry><text>&quot;&gt; 2 voids in 5 min&quot;</text></inputEntry>
+        <inputEntry><text>&quot;High&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Rapid void sequence&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Consecutive voids within time window&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule06">
+        <inputEntry><text>&quot;&gt; 50% coupon-to-sale ratio&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Medium → High if repeated&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Coupon abuse&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Coupon value vs. basket ratio&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule07">
+        <inputEntry><text>&quot;&gt; 3 returns in 7 days&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Medium → High if across stores&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Serial returner&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Return frequency by customer identifier&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule08">
+        <inputEntry><text>&quot;&gt; 2% of card transactions per cashier&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Medium&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Manual card entry&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Non-EMV transaction frequency&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W529_02" name="Authorization threshold — W529">
+    <description>Source: VS-08-pos-checkout/PA-08.3-pos-compliance-and-controls.md · workflow W529 · step row (authorization thresholds)
+Verbatim: System determines authorization tier based on void/refund amount: Tier 1 — Department Supervisor: ≤ PHP 5,000 (covers most common voids — wrong item, duplicate scan, minor pricing error); Tier 2 — Assistant Store Manager: &gt; PHP 5,000 and ≤ PHP 20,000; Tier 3 — Store Manager: &gt; PHP 20,000 and ≤ PHP 100,000; Tier 4 — Regional Manager: &gt; PHP 100,000 (rare — large trade account returns, high-value project material returns) | System | — | Automated</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W529_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W529_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W529_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W529_02_Rule01">
+        <inputEntry><text>&lt;= 5000</text></inputEntry>
+        <outputEntry><text>&quot;Department Supervisor&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W529_02_Rule02">
+        <inputEntry><text>(5000..20000]</text></inputEntry>
+        <outputEntry><text>&quot;Assistant Store Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W529_02_Rule03">
+        <inputEntry><text>(20000..100000]</text></inputEntry>
+        <outputEntry><text>&quot;Store Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W529_02_Rule04">
+        <inputEntry><text>&gt; 100000</text></inputEntry>
+        <outputEntry><text>&quot;Regional Manager&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W529_02_di" dmnElementRef="Decision_W529_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

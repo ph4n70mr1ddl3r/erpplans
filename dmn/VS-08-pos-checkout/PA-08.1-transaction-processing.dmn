@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-08.1-transaction-processing"
+             name="PA 08.1 transaction processing"
+             namespace="https://erpplans.local/dmn/PA-08.1-transaction-processing"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Offline Capability Matrix — Offline Status">
+    <description>Source: VS-08-pos-checkout/PA-08.1-transaction-processing.md · section “Offline Capability Matrix” · rule table
+Source table: POS Function | Offline Status | Behavior</description>
+    <decisionTable hitPolicy="C">
+      <input id="Decision_T01_In01" label="Offline Status">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>OfflineStatus</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="POS Function" name="POSFunction" typeRef="string"/>
+      <output id="Decision_T01_Out02" label="Behavior" name="Behavior" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Barcode scanning&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Scans all 1D/2D barcodes against local SKU catalog&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Price lookup / calculation&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Uses local price file including promotional rules active at time of last sync&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Promotional pricing auto-apply&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Promos active at last sync continue to apply; new promos activated during outage not applied&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Cash tender&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Cash accepted, change given, cash drawer managed&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule05">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Offline card authorization&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Store-and-forward card authorization (terminal stores encrypted card data for later clearing); floor limit configurable per store&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule06">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Receipt printing (BIR format)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Thermal receipt with BIR-compliant format; offline indicator printed on receipt&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule07">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Void with manager auth&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Manager swipes/authorizes locally; void logged with full audit trail&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule08">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Returns / exchanges&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Return processed against local transaction history; refund issued as cash or store credit per W12&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule09">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Catch-weight selling&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Weight/length measurement and pricing per local catch-weight rules&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule10">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Age-restricted prompts&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Mandatory prompts per local age-restricted SKU list&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule11">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Price override with auth&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Manager authorization per standard override rules&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule12">
+        <inputEntry><text>&quot;⚠️ Degraded&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Loyalty points earning&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Points earned queued locally; customer&#x27;s current balance not displayable; points posted on reconnection&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule13">
+        <inputEntry><text>&quot;⚠️ Degraded&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Loyalty points redemption&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Available only if customer&#x27;s cached balance supports redemption; cannot verify real-time balance; floor limit per customer tier&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule14">
+        <inputEntry><text>&quot;⚠️ Degraded&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Gift card balance inquiry&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Cached balance only (from last sync); balance may not reflect recent online transactions&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule15">
+        <inputEntry><text>&quot;⚠️ Degraded&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Trade account charge&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Customer&#x27;s credit limit not verifiable in real-time; floor limit per account tier (configurable); charges queued for verification on reconnection&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule16">
+        <inputEntry><text>&quot;✅ Full&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Layaway payment&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Payment collected and queued; layaway balance updated on reconnection&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule17">
+        <inputEntry><text>&quot;⚠️ Degraded&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Customer lookup&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Local cache of loyalty members (top 80% by transaction frequency) and all trade accounts; new customer enrollment unavailable&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule18">
+        <inputEntry><text>&quot;❌ Unavailable&quot;</text></inputEntry>
+        <outputEntry><text>&quot;New customer enrollment&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Requires ERP customer master creation; customer advised to enroll at customer service counter when system restored&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule19">
+        <inputEntry><text>&quot;❌ Unavailable&quot;</text></inputEntry>
+        <outputEntry><text>&quot;E-wallet payments (GCash, Maya)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Requires online payment gateway; customer advised to use cash or card instead&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule20">
+        <inputEntry><text>&quot;❌ Unavailable&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Digital receipt delivery&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Receipt printed on paper; e-receipt queued for delivery on reconnection&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule21">
+        <inputEntry><text>&quot;❌ Unavailable&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Tax exemption verification&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Government/PEZA tax exemption certificates require online verification; full VAT charged; adjustment processed on reconnection&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule22">
+        <inputEntry><text>&quot;⚠️ Queued&quot;</text></inputEntry>
+        <outputEntry><text>&quot;BIR e-invoice transmission&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Sales invoices queued locally; transmitted to BIR EIS on reconnection per FIN-034 (3-day BIR tolerance window)&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T02" name="Fulfillment Routing Rules (Configurable) — Priority">
+    <description>Source: VS-08-pos-checkout/PA-08.1-transaction-processing.md · section “Fulfillment Routing Rules (Configurable)” · rule table
+Source table: Rule | Priority | Description</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T02_In01" label="Priority">
+        <inputExpression id="Decision_T02_InExpr01" typeRef="number">
+          <text>Priority</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T02_Out01" label="Rule" name="Rule" typeRef="string"/>
+      <output id="Decision_T02_Out02" label="Description" name="Description" typeRef="string"/>
+      <rule id="Decision_T02_Rule01">
+        <inputEntry><text>1</text></inputEntry>
+        <outputEntry><text>&quot;Channel-specific ATP reservation&quot;</text></outputEntry>
+        <outputEntry><text>&quot;INV-019 allocation rules reserve inventory per channel; BOPIS reserves store stock, home delivery reserves DC stock, marketplace reserves DC stock&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule02">
+        <inputEntry><text>2</text></inputEntry>
+        <outputEntry><text>&quot;Customer proximity&quot;</text></outputEntry>
+        <outputEntry><text>&quot;For delivery orders, route to nearest fulfillment origin with ATP&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule03">
+        <inputEntry><text>3</text></inputEntry>
+        <outputEntry><text>&quot;Cost optimization&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Compare store pick labor cost vs. DC pick + shipping cost vs. drop-ship margin; choose lowest total cost&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule04">
+        <inputEntry><text>4</text></inputEntry>
+        <outputEntry><text>&quot;SLA compliance&quot;</text></outputEntry>
+        <outputEntry><text>&quot;If routing decision impacts promised delivery SLA, escalate to Ecommerce Operations Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule05">
+        <inputEntry><text>5</text></inputEntry>
+        <outputEntry><text>&quot;Store capacity&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Store-origin fulfillment capped at configurable limit to prevent disruption to in-store operations&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule06">
+        <inputEntry><text>6</text></inputEntry>
+        <outputEntry><text>&quot;Dark store priority&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Dark store/fulfillment hub (W210) preferred for high-density urban ecommerce orders&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T03" name="Coupon Type Matrix — Coupon Type">
+    <description>Source: VS-08-pos-checkout/PA-08.1-transaction-processing.md · section “Coupon Type Matrix” · rule table
+Source table: Coupon Type | Source | Validation | GL Impact | Reimbursement</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T03_In01" label="Coupon Type">
+        <inputExpression id="Decision_T03_InExpr01" typeRef="string">
+          <text>CouponType</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T03_Out01" label="GL Impact" name="GLImpact" typeRef="string"/>
+      <output id="Decision_T03_Out02" label="Source" name="Source" typeRef="string"/>
+      <output id="Decision_T03_Out03" label="Validation" name="Validation" typeRef="string"/>
+      <output id="Decision_T03_Out04" label="Reimbursement" name="Reimbursement" typeRef="string"/>
+      <rule id="Decision_T03_Rule01">
+        <inputEntry><text>&quot;Store paper coupon&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Promo discount account&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Marketing&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Barcode scan + master data&quot;</text></outputEntry>
+        <outputEntry><text>&quot;N/A (store cost)&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T03_Rule02">
+        <inputEntry><text>&quot;Digital voucher (app/email)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Promo discount account&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Marketing/CRM&quot;</text></outputEntry>
+        <outputEntry><text>&quot;QR/barcode + loyalty ID + time validity&quot;</text></outputEntry>
+        <outputEntry><text>&quot;N/A (store cost)&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T03_Rule03">
+        <inputEntry><text>&quot;Manufacturer coupon&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Vendor receivable&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Vendor&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Barcode scan + item eligibility&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Monthly vendor claim&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T03_Rule04">
+        <inputEntry><text>&quot;Store credit voucher&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Store credit liability&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Customer Service&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Barcode scan + master data&quot;</text></outputEntry>
+        <outputEntry><text>&quot;N/A (already accrued)&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T03_Rule05">
+        <inputEntry><text>&quot;Partner/bank coupon&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Co-op marketing share&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Bank/partner&quot;</text></outputEntry>
+        <outputEntry><text>&quot;BIN-triggered + barcode&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Per partnership agreement&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T04" name="Damage Discount Matrix (Configurable) — Condition Tier">
+    <description>Source: VS-08-pos-checkout/PA-08.1-transaction-processing.md · section “Damage Discount Matrix (Configurable)” · rule table
+Source table: Condition Tier | Discount Range | Warranty | Return Policy | Authorization</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T04_In01" label="Condition Tier">
+        <inputExpression id="Decision_T04_InExpr01" typeRef="string">
+          <text>ConditionTier</text>
+        </inputExpression>
+      </input>
+      <input id="Decision_T04_In02" label="Discount Range">
+        <inputExpression id="Decision_T04_InExpr02" typeRef="string">
+          <text>DiscountRange</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T04_Out01" label="Return Policy" name="ReturnPolicy" typeRef="string"/>
+      <output id="Decision_T04_Out02" label="Authorization" name="Authorization" typeRef="string"/>
+      <output id="Decision_T04_Out03" label="Warranty" name="Warranty" typeRef="string"/>
+      <rule id="Decision_T04_Rule01">
+        <inputEntry><text>&quot;Minor cosmetic&quot;</text></inputEntry>
+        <inputEntry><text>&quot;10–20%&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Standard return&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Dept Supervisor&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Standard warranty&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T04_Rule02">
+        <inputEntry><text>&quot;Moderate damage&quot;</text></inputEntry>
+        <inputEntry><text>&quot;20–35%&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Exchange only&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Store Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;90-day functional&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T04_Rule03">
+        <inputEntry><text>&quot;Significant damage&quot;</text></inputEntry>
+        <inputEntry><text>&quot;35–50%&quot;</text></inputEntry>
+        <outputEntry><text>&quot;No returns&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Store Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;30-day functional&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T04_Rule04">
+        <inputEntry><text>&quot;Unsellable&quot;</text></inputEntry>
+        <inputEntry><text>&quot;N/A (refused)&quot;</text></inputEntry>
+        <outputEntry><text>&quot;N/A&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Removed per W91&quot;</text></outputEntry>
+        <outputEntry><text>&quot;N/A&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_T02_di" dmnElementRef="Decision_T02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_T03_di" dmnElementRef="Decision_T03">
+        <dc:Bounds x="680" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_T04_di" dmnElementRef="Decision_T04">
+        <dc:Bounds x="940" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

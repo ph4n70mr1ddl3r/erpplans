@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-18.2-banking-and-payments"
+             name="PA 18.2 banking and payments"
+             namespace="https://erpplans.local/dmn/PA-18.2-banking-and-payments"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_W320_01" name="Authorization threshold — W320">
+    <description>Source: VS-18-treasury-cash/PA-18.2-banking-and-payments.md · workflow W320 · step row (authorization thresholds)
+Note: 2 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Second-level approval (Authorizer): for payments above threshold — (a) ≤ PHP 5M: Treasury Manager or AP Supervisor, (b) PHP 5M–20M: CFO, (c) &gt; PHP 20M: CEO + CFO; authorizer reviews and releases payment batch in bank portal (or ERP-to-bank integration); system records approver ID, timestamp, and authorization level | Treasury Mgr / CFO / CEO | CFO | 10–15 min/batch</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W320_01_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W320_01_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W320_01_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W320_01_Rule01">
+        <inputEntry><text>&lt;= 5000000</text></inputEntry>
+        <outputEntry><text>&quot;Treasury Manager + AP Supervisor&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W320_01_Rule02">
+        <inputEntry><text>(5000000..20000000]</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W320_01_Rule03">
+        <inputEntry><text>&gt; 20000000</text></inputEntry>
+        <outputEntry><text>&quot;CEO + CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W1342_02" name="Authorization threshold — W1342">
+    <description>Source: VS-18-treasury-cash/PA-18.2-banking-and-payments.md · workflow W1342 · step row (authorization thresholds)
+Note: 2 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Second-level authorization (Authorizer): CFO authorizes high-value payment: (a) for payments PHP 5M–20M: CFO reviews and authorizes via bank portal or ERP-to-bank integration, (b) for payments &gt; PHP 20M: CEO and CFO dual authorization per W320.3 — both must authorize independently in bank portal, (c) authorizer reviews: payment summary, beneficiary, amount, supporting documentation reference, (d) system records authorizer ID, timestamp, and authorization level for audit trail | CFO / CEO | — | 10–20 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W1342_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W1342_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W1342_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W1342_02_Rule01">
+        <inputEntry><text>[5000000..20000000]</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1342_02_Rule02">
+        <inputEntry><text>&gt; 20000000</text></inputEntry>
+        <outputEntry><text>&quot;CEO and CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_W320_01_di" dmnElementRef="Decision_W320_01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W1342_02_di" dmnElementRef="Decision_W1342_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-16.1-credit-application-and-scoring"
+             name="PA 16.1 credit application and scoring"
+             namespace="https://erpplans.local/dmn/PA-16.1-credit-application-and-scoring"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Credit Approval Matrix — Credit Limit">
+    <description>Source: VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md · section “Credit Approval Matrix” · rule table
+Source table: Credit Limit | Approver</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Credit Limit">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>CreditLimit</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;≤ PHP 200,000&quot;</text></inputEntry>
+        <outputEntry><text>&quot;AR Supervisor&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;PHP 200,001 – 1,000,000&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Finance Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;&gt; PHP 1,000,000&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Credit Committee (CFO + Finance Manager + AR Supervisor)&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W886_02" name="Authorization threshold — W886">
+    <description>Source: VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md · workflow W886 · step row (authorization thresholds)
+Verbatim: Credit approval authorization per W24&#x27;s canonical matrix — (a) ≤ PHP 200,000: AR Supervisor, (b) PHP 200,001–1,000,000: Finance Manager, (c) &gt; PHP 1,000,000: Credit Committee (CFO + Finance Manager + AR Supervisor) | Credit Manager | CFO | 15–30 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W886_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W886_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W886_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W886_02_Rule01">
+        <inputEntry><text>&lt;= 200000</text></inputEntry>
+        <outputEntry><text>&quot;AR Supervisor&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W886_02_Rule02">
+        <inputEntry><text>[200001..1000000]</text></inputEntry>
+        <outputEntry><text>&quot;Finance Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W886_02_Rule03">
+        <inputEntry><text>&gt; 1000000</text></inputEntry>
+        <outputEntry><text>&quot;Credit Committee + CFO + Finance Manager&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W887_03" name="Authorization threshold — W887">
+    <description>Source: VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md · workflow W887 · step row (authorization thresholds)
+Note: 2 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Obtain approval — per W24&#x27;s canonical matrix (≤ PHP 200K: AR Supervisor; PHP 200K–1M: Finance Manager; &gt; PHP 1M: Credit Committee); for limit decreases, Credit Manager can approve all; for suspensions, Finance Controller approval required | Credit Manager | Finance Controller | 15 min</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W887_03_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W887_03_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W887_03_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W887_03_Rule01">
+        <inputEntry><text>&lt;= 200000</text></inputEntry>
+        <outputEntry><text>&quot;AR Supervisor&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W887_03_Rule02">
+        <inputEntry><text>(200000..1000000]</text></inputEntry>
+        <outputEntry><text>&quot;Finance Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W887_03_Rule03">
+        <inputEntry><text>&gt; 1000000</text></inputEntry>
+        <outputEntry><text>&quot;Credit Committee&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W1300_04" name="Authorization threshold — W1300">
+    <description>Source: VS-16-order-to-cash/PA-16.1-credit-application-and-scoring.md · workflow W1300 · step row (authorization thresholds)
+Note: 5 non-monetary tier(s) in the source list are excluded from this amount-based table.
+The source states only escalating lower bounds (&gt; PHP A -&gt; role 1; &gt; PHP B -&gt; role 2, ...); interpreted as an approval ladder — each band runs from its threshold to the next tier&#x27;s threshold.
+Verbatim: Credit limit decision: Credit Analyst reviews score and recommends: (a) maintain current limit and terms, (b) increase limit and/or improve terms (for improving accounts), (c) decrease limit and/or tighten terms (for deteriorating accounts), (d) suspend credit and convert to COD (for severely deteriorating accounts); for limit increases &gt; PHP 1M: Credit &amp; Collections Manager approval required; for limit increases &gt; PHP 3M: CFO approval required; for credit suspension: Credit &amp; Collections Manager approval with Sales Manager notification | Credit Analyst | Credit &amp; Collections Manager (or CFO for large increases) | 5–10 min per account</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W1300_04_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W1300_04_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W1300_04_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W1300_04_Rule01">
+        <inputEntry><text>(1000000..3000000]</text></inputEntry>
+        <outputEntry><text>&quot;Credit &amp; Collections Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1300_04_Rule02">
+        <inputEntry><text>&gt; 3000000</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W886_02_di" dmnElementRef="Decision_W886_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W887_03_di" dmnElementRef="Decision_W887_03">
+        <dc:Bounds x="680" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W1300_04_di" dmnElementRef="Decision_W1300_04">
+        <dc:Bounds x="940" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

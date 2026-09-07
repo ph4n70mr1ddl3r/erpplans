@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-13.1-customer-support-and-complaints"
+             name="PA 13.1 customer support and complaints"
+             namespace="https://erpplans.local/dmn/PA-13.1-customer-support-and-complaints"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_T01" name="Reactivation Scenarios — Scenario">
+    <description>Source: VS-13-customer-experience/PA-13.1-customer-support-and-complaints.md · section “Reactivation Scenarios” · rule table
+Source table: Scenario | Prior Status | Risk Level | Reactivation Path</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T01_In01" label="Scenario">
+        <inputExpression id="Decision_T01_InExpr01" typeRef="string">
+          <text>Scenario</text>
+        </inputExpression>
+      </input>
+      <input id="Decision_T01_In02" label="Prior Status">
+        <inputExpression id="Decision_T01_InExpr02" typeRef="string">
+          <text>PriorStatus</text>
+        </inputExpression>
+      </input>
+      <input id="Decision_T01_In03" label="Risk Level">
+        <inputExpression id="Decision_T01_InExpr03" typeRef="string">
+          <text>RiskLevel</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T01_Out01" label="Reactivation Path" name="ReactivationPath" typeRef="string"/>
+      <rule id="Decision_T01_Rule01">
+        <inputEntry><text>&quot;Dormant reactivation&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Inactive (credit limit reduced to PHP 0)&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Low&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Abbreviated credit review&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule02">
+        <inputEntry><text>&quot;Voluntarily closed → reopen&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Closed by customer request&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Low–Medium&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Standard W24 credit application&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule03">
+        <inputEntry><text>&quot;Written-off → repayment &amp; reactivate&quot;</text></inputEntry>
+        <inputEntry><text>&quot;Written off per W81&quot;</text></inputEntry>
+        <inputEntry><text>&quot;High&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Enhanced credit review + approval&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T01_Rule04">
+        <inputEntry><text>&quot;Written-off → new entity&quot;</text></inputEntry>
+        <inputEntry><text>&quot;New company formed by same principal&quot;</text></inputEntry>
+        <inputEntry><text>&quot;High&quot;</text></inputEntry>
+        <outputEntry><text>&quot;Full W24 + legal review&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_T02" name="Severity Classification Matrix — Severity">
+    <description>Source: VS-13-customer-experience/PA-13.1-customer-support-and-complaints.md · section “Severity Classification Matrix” · rule table
+Source table: Severity | Definition | Examples | First Response SLA | Resolution SLA | Escalation Path</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_T02_In01" label="Severity">
+        <inputExpression id="Decision_T02_InExpr01" typeRef="string">
+          <text>Severity</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_T02_Out01" label="First Response SLA" name="FirstResponseSLA" typeRef="string"/>
+      <output id="Decision_T02_Out02" label="Resolution SLA" name="ResolutionSLA" typeRef="string"/>
+      <output id="Decision_T02_Out03" label="Escalation Path" name="EscalationPath" typeRef="string"/>
+      <output id="Decision_T02_Out04" label="Definition" name="Definition" typeRef="string"/>
+      <output id="Decision_T02_Out05" label="Examples" name="Examples" typeRef="string"/>
+      <rule id="Decision_T02_Rule01">
+        <inputEntry><text>&quot;1 — Critical&quot;</text></inputEntry>
+        <outputEntry><text>&quot;30 min&quot;</text></outputEntry>
+        <outputEntry><text>&quot;4 hours&quot;</text></outputEntry>
+        <outputEntry><text>&quot;CSR → CS Manager → VP Store Operations → Legal → COO&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Safety risk, legal exposure, media/DTI escalation potential, social media viral risk&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Product-related injury, building code violation in installation, DTI consumer adjudication notice, viral social media complaint (&gt;1,000 shares/engagements), fraud accusation, racial/gender discrimination&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule02">
+        <inputEntry><text>&quot;2 — High&quot;</text></inputEntry>
+        <outputEntry><text>&quot;2 hours&quot;</text></outputEntry>
+        <outputEntry><text>&quot;24 hours&quot;</text></outputEntry>
+        <outputEntry><text>&quot;CSR → CS Manager → Store Manager → VP Store Operations&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Financial impact &gt;PHP 5,000, multiple affected customers, systemic issue&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Batch product defect affecting multiple purchases, pricing error affecting multiple transactions, delivery failure for project-critical materials (contractor loses project day), staff behavior requiring HR investigation&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule03">
+        <inputEntry><text>&quot;3 — Medium&quot;</text></inputEntry>
+        <outputEntry><text>&quot;4 hours&quot;</text></outputEntry>
+        <outputEntry><text>&quot;48 hours&quot;</text></outputEntry>
+        <outputEntry><text>&quot;CSR → CS Manager&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Standard product/service issue, single customer, financial impact &lt;PHP 5,000&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Individual product defect (not batch), delivery delay (not project-critical), incorrect item delivered, billing discrepancy, loyalty points not credited&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_T02_Rule04">
+        <inputEntry><text>&quot;4 — Low&quot;</text></inputEntry>
+        <outputEntry><text>&quot;8 hours&quot;</text></outputEntry>
+        <outputEntry><text>&quot;72 hours&quot;</text></outputEntry>
+        <outputEntry><text>&quot;CSR (auto-resolve)&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Minor issue, suggestion, non-urgent feedback&quot;</text></outputEntry>
+        <outputEntry><text>&quot;Product information request, store layout suggestion, general feedback, non-critical loyalty inquiry, minor packaging damage (product usable)&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W783_03" name="Authorization threshold — W783">
+    <description>Source: VS-13-customer-experience/PA-13.1-customer-support-and-complaints.md · workflow W783 · step row (authorization thresholds)
+Note: 1 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Approval workflow: (a) Credit limit ≤ PHP 500K: Credit Analyst recommends, Finance Manager approves, (b) PHP 500K–2M: Finance Manager recommends, CFO approves, (c) &gt; PHP 2M: CFO recommends, CEO approves, (d) annual review with limit increase &gt; 25%: escalates one approval level | Finance Manager | CFO / CEO | 10 min/review</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W783_03_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W783_03_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W783_03_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W783_03_Rule01">
+        <inputEntry><text>&lt;= 500000</text></inputEntry>
+        <outputEntry><text>&quot;Credit Analyst + Finance Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W783_03_Rule02">
+        <inputEntry><text>(500000..2000000]</text></inputEntry>
+        <outputEntry><text>&quot;Finance Manager + CFO&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W783_03_Rule03">
+        <inputEntry><text>&gt; 2000000</text></inputEntry>
+        <outputEntry><text>&quot;CFO + CEO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_T01_di" dmnElementRef="Decision_T01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_T02_di" dmnElementRef="Decision_T02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W783_03_di" dmnElementRef="Decision_W783_03">
+        <dc:Bounds x="680" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="https://www.omg.org/spec/DMN/20181101/DC/"
+             xmlns:di="https://www.omg.org/spec/DMN/20181101/DI/"
+             id="Definitions_PA-11.2-project-sales-and-b2b"
+             name="PA 11.2 project sales and b2b"
+             namespace="https://erpplans.local/dmn/PA-11.2-project-sales-and-b2b"
+             exporter="erpplans generate-dmn.py" exporterVersion="1.0">
+  <decision id="Decision_W229_01" name="Authorization threshold — W229">
+    <description>Source: VS-11-trade-project-wholesale/PA-11.2-project-sales-and-b2b.md · workflow W229 · step row (authorization thresholds)
+Verbatim: Tiered Routing: System routes the request based on exception value for digital approval:&lt;br&gt;• Up to PHP 100K: Approved by Credit Manager;&lt;br&gt;• PHP 100K to PHP 1M: Approved by Credit Manager + Head of Trade / Account Management;&lt;br&gt;• Above PHP 1M: Approved by CFO | System | — | Automated</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W229_01_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W229_01_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W229_01_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W229_01_Rule01">
+        <inputEntry><text>&lt;= 100000</text></inputEntry>
+        <outputEntry><text>&quot;Credit Manager&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W229_01_Rule02">
+        <inputEntry><text>(100000..1000000]</text></inputEntry>
+        <outputEntry><text>&quot;Credit Manager + Head of Trade&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W229_01_Rule03">
+        <inputEntry><text>&gt; 1000000</text></inputEntry>
+        <outputEntry><text>&quot;CFO&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_W1225_02" name="Authorization threshold — W1225">
+    <description>Source: VS-11-trade-project-wholesale/PA-11.2-project-sales-and-b2b.md · workflow W1225 · step row (authorization thresholds)
+Note: 5 non-monetary tier(s) in the source list are excluded from this amount-based table.
+Verbatim: Contract award and execution: (a) BAC issues Notice of Award; (b) Legal Counsel reviews contract terms: delivery schedule, payment terms, warranty, penalties for non-performance, force majeure provisions, (c) COO approves contract (Head of Trade / Account Management for &lt; PHP 10M; COO for PHP 10M–50M; CEO for &gt; PHP 50M), (d) sign contract; post performance security (bank guarantee or surety bond — typically 5% of contract value for supply of goods (10% for infrastructure works) per RA 9184) | Legal Counsel / Head of Trade / Account Management / COO | COO/CEO | 1–2 weeks</description>
+    <decisionTable hitPolicy="U">
+      <input id="Decision_W1225_02_In01" label="Amount (PHP)">
+        <inputExpression id="Decision_W1225_02_InExpr01" typeRef="number">
+          <text>Amount</text>
+        </inputExpression>
+      </input>
+      <output id="Decision_W1225_02_Out01" label="Approver" name="Approver" typeRef="string"/>
+      <rule id="Decision_W1225_02_Rule01">
+        <inputEntry><text>&lt; 10000000</text></inputEntry>
+        <outputEntry><text>&quot;COO + Head of Trade&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1225_02_Rule02">
+        <inputEntry><text>[10000000..50000000]</text></inputEntry>
+        <outputEntry><text>&quot;COO for PHP&quot;</text></outputEntry>
+      </rule>
+      <rule id="Decision_W1225_02_Rule03">
+        <inputEntry><text>&gt; 50000000</text></inputEntry>
+        <outputEntry><text>&quot;CEO for&quot;</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="Diagram_1">
+      <dmndi:DMNShape id="Decision_W229_01_di" dmnElementRef="Decision_W229_01">
+        <dc:Bounds x="160" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="Decision_W1225_02_di" dmnElementRef="Decision_W1225_02">
+        <dc:Bounds x="420" y="80" width="200" height="90"/>
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
