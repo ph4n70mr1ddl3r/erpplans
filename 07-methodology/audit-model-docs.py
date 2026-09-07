@@ -151,6 +151,18 @@ to v3.9. om_reconciliation_hits extended to re-derive every §3.2 per-team cell 
 subtotal and every §4.9 per-team workflow cell from the §4.1–4.8 mapping tables and
 the on-disk `##` headers each run — the whole portfolio series, not just its
 cross-foots; the ANCHOR re-pinned to the corrected literals.
+
+2026-09-07 eleventh-wave consistency review: the AI-first operating guide's version
+footer was found inverted — the header had stayed at '1.0 | Initial issue' while all
+eight batch-16–23 re-point cascades appended 'Prior v1.1'–'Prior v1.8' clauses BELOW
+it, each with a higher version number and a later date; methodology_index_hits could
+not see it because the index row's own '(v1.0' pin satisfied itself off the same
+stale footer (the anchor-satisfying-itself-off-history failure mode, in its pin
+form). Footer re-based newest-first to live v1.9 with the initial issue demoted to
+the chain's end; the index and root-README pins re-pointed; the class is now closed
+repo-wide by validate-repo.sh Check 72 (every versioned footer's Prior chain must be
+strictly decreasing below the live version), which this module deliberately does not
+duplicate — the footer chain is a cross-document invariant, not a per-doc one.
 """
 
 def _doc_versions():

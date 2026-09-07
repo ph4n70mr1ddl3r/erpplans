@@ -3622,6 +3622,68 @@ else
     echo "$CHECK71" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 72: Document version-chain monotonicity (repo-wide) ---
+echo "--- Check 72: Version-chain monotonicity ---"
+# The eleventh-wave consistency review (2026-09-07) found the AI-first operating
+# guide carrying all eight batch-16-23 re-point clauses labeled 'Prior v1.1'-
+# 'Prior v1.8' BENEATH a version header that never left '1.0 | Initial issue' —
+# a priors-newer-than-live inversion that no rule read: methodology_index_hits
+# passed because the index row's own '(v1.0' pin satisfied itself off the same
+# stale footer (the wave-6 'anchor satisfying itself off history' failure mode,
+# in its version-pin form). Every other maintained doc keeps its newest clause
+# leading under the live version with a strictly decreasing Prior chain. This
+# check pins that invariant repo-wide: for every .md with a '*Document Version:'
+# footer, every 'Prior vN.M' on the footer line must be strictly below the live
+# version and the chain strictly decreasing in document order — so the class is
+# caught at the first inverted clause, not eight batches later. CHANGELOG and the
+# generated bpmn//dmn trees are exempt (no versioned footers; the CHANGELOG is a
+# historical record). The footer line only is scanned, so body-narrative 'Prior'
+# mentions can never false-trigger the order rule.
+CHECK72=$(python3 - "$REPO_ROOT" <<'PY'
+import re, os, sys
+ROOT = sys.argv[1]
+bad, checked = [], 0
+for dirpath, dirnames, filenames in os.walk(ROOT):
+    dirnames[:] = [d for d in dirnames if d not in ('.git', 'bpmn', 'dmn', '__pycache__')]
+    for fn in filenames:
+        if not fn.endswith('.md') or fn.startswith('CHANGELOG'):
+            continue
+        f = os.path.join(dirpath, fn)
+        rel = os.path.relpath(f, ROOT)
+        lines = open(f, encoding='utf-8').read().split('\n')
+        fi = next((i for i, l in enumerate(lines) if l.startswith('*Document Version: ')), None)
+        if fi is None:
+            continue
+        m = re.match(r'\*Document Version: (\d+)\.(\d+)', lines[fi])
+        if not m:
+            bad.append(f"{rel}:{fi+1}: unparseable '*Document Version:' header")
+            continue
+        checked += 1
+        live = int(m.group(1)) * 1000 + int(m.group(2))
+        priors = [(int(a) * 1000 + int(b), f"{a}.{b}")
+                  for a, b in re.findall(r'Prior v(\d+)\.(\d+)', lines[fi])]
+        for val, txt in priors:
+            if val >= live:
+                bad.append(f"{rel}:{fi+1}: 'Prior v{txt}' is at/above the live version "
+                           f"v{m.group(1)}.{m.group(2)} (priors-newer-than-live inversion)")
+        for i in range(len(priors) - 1):
+            if priors[i][0] <= priors[i + 1][0]:
+                bad.append(f"{rel}:{fi+1}: version chain not strictly decreasing at "
+                           f"'Prior v{priors[i][1]}' -> 'Prior v{priors[i+1][1]}'")
+print(f"TOTALS versioned_docs={checked} errors={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C72_BAD=$(echo "$CHECK72" | sed -n 's/^TOTALS .* errors=\([0-9]*\)$/\1/p')
+if [ "${C72_BAD:-1}" -eq 0 ]; then
+    V72=$(echo "$CHECK72" | sed -n 's/^TOTALS versioned_docs=\([0-9]*\) .*/\1/p')
+    ok "All $V72 versioned document footers carry a strictly decreasing Prior chain below the live version (guard added by the 2026-09-07 eleventh-wave consistency review — the AI-first operating guide had shipped all eight batch-16\u201323 re-point clauses labeled v1.1\u2013v1.8 beneath a version header that never left '1.0 | Initial issue', an inversion invisible to the index-pin rule because the pin satisfied itself off the same stale footer)"
+else
+    error "Document version-chain monotonicity violated:"
+    echo "$CHECK72" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
