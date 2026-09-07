@@ -1,0 +1,1340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-18.2-banking-and-payments" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W232" name="W232. Letter of Credit (LC) &amp; Bank Guarantee Lifecycle" isExecutable="false">
+      <bpmn:documentation>Trigger: Approved Import PO (W2B) requiring LC; or contract requirement for Bank Guarantee
+Frequency: 40–60 LCs/month (imports, consistent with W1199); 5–10 Bank Guarantees/year
+Volume: High-value import shipments (Machinery, bulk construction materials)
+Owner: Treasury Manager
+Participants: Import Coordinator, Buyer, Bank, Finance
+Source: workflow W232 — Letter of Credit (LC) &amp; Bank Guarantee Lifecycle</bpmn:documentation>
+      <bpmn:laneSet id="W232_LaneSet5">
+        <bpmn:lane id="W232_Lane1" name="Import Coord">
+        <bpmn:flowNodeRef>W232_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W232_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W232_Lane2" name="Treasury Mgr">
+        <bpmn:flowNodeRef>W232_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W232_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W232_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W232_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W232_Lane3" name="Bank">
+        <bpmn:flowNodeRef>W232_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W232_Lane4" name="Vendor">
+        <bpmn:flowNodeRef>W232_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W232_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W232_Start6" name="Approved Import PO (W2B) requiring LC; or contract requirement for Bank Guarantee">
+        <bpmn:outgoing>W232_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W232_Task7" name="Application">
+        <bpmn:documentation>Step 1: Application: Import Coordinator requests LC issuance based on Pro-forma Invoice and PO
+Responsible (R): Import Coord
+Accountable (A): Treasury Mgr
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W232_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W232_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W232_Task8" name="Bank Submission">
+        <bpmn:documentation>Step 2: Bank Submission: Treasury submits LC application to partner bank via electronic portal
+Responsible (R): Treasury Mgr
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W232_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W232_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W232_Task9" name="LC Issuance">
+        <bpmn:documentation>Step 3: LC Issuance: Bank issues LC; notifies Vendor&#x27;s bank (Advising Bank)
+Responsible (R): Bank
+Accountable (A): —
+Duration: 2–3 days</bpmn:documentation>
+        <bpmn:incoming>W232_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W232_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W232_Task10" name="Document Negotiation">
+        <bpmn:documentation>Step 4: Document Negotiation: Vendor ships goods; submits shipping documents (Bill of Lading, Invoice, Packing List) to bank
+Responsible (R): Vendor
+Accountable (A): —
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W232_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W232_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W232_Task11" name="Discrepancy Check">
+        <bpmn:documentation>Step 5: Discrepancy Check: Treasury and Bank review documents for discrepancies vs. LC terms
+Responsible (R): Treasury Mgr
+Accountable (A): —
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W232_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W232_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W232_Task12" name="Payment/Acceptance">
+        <bpmn:documentation>Step 6: Payment/Acceptance: Treasury authorizes payment or acceptance of draft; Bank releases documents to BuildRight for customs clearance (W233)
+Responsible (R): Treasury Mgr
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W232_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W232_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W232_Task13" name="Closure">
+        <bpmn:documentation>Step 7: Closure: LC closed in system once goods received (W3) and payment settled
+Responsible (R): Treasury Mgr
+Accountable (A): —
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W232_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W232_End14" name="Complete">
+        <bpmn:incoming>W232_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W232_Annotation15">
+        <bpmn:text>Controls: - CTL-63 (ensure FX exposure reporting accuracy.) | - operational: Treasury Manager review and approval gate
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W232_Assoc16" sourceRef="W232_Annotation15" targetRef="W232_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W232_Flow17" sourceRef="W232_Start6" targetRef="W232_Task7" />
+      <bpmn:sequenceFlow id="W232_Flow18" sourceRef="W232_Task7" targetRef="W232_Task8" />
+      <bpmn:sequenceFlow id="W232_Flow19" sourceRef="W232_Task8" targetRef="W232_Task9" />
+      <bpmn:sequenceFlow id="W232_Flow20" sourceRef="W232_Task9" targetRef="W232_Task10" />
+      <bpmn:sequenceFlow id="W232_Flow21" sourceRef="W232_Task10" targetRef="W232_Task11" />
+      <bpmn:sequenceFlow id="W232_Flow22" sourceRef="W232_Task11" targetRef="W232_Task12" />
+      <bpmn:sequenceFlow id="W232_Flow23" sourceRef="W232_Task12" targetRef="W232_Task13" />
+      <bpmn:sequenceFlow id="W232_Flow24" sourceRef="W232_Task13" targetRef="W232_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W232_diag">
+      <bpmndi:BPMNPlane id="W232_plane" bpmnElement="W_W232">
+        <bpmndi:BPMNShape id="W232_Lane1_di" bpmnElement="W232_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Lane2_di" bpmnElement="W232_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Lane3_di" bpmnElement="W232_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Lane4_di" bpmnElement="W232_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Task7_di" bpmnElement="W232_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Task8_di" bpmnElement="W232_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Task9_di" bpmnElement="W232_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Task10_di" bpmnElement="W232_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Task11_di" bpmnElement="W232_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Task12_di" bpmnElement="W232_Task12"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Task13_di" bpmnElement="W232_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Start6_di" bpmnElement="W232_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_End14_di" bpmnElement="W232_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W232_Annotation15_di" bpmnElement="W232_Annotation15"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W232_Flow17_di" bpmnElement="W232_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Flow18_di" bpmnElement="W232_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Flow19_di" bpmnElement="W232_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Flow20_di" bpmnElement="W232_Flow20"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Flow21_di" bpmnElement="W232_Flow21"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Flow22_di" bpmnElement="W232_Flow22"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Flow23_di" bpmnElement="W232_Flow23"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Flow24_di" bpmnElement="W232_Flow24"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W232_Assoc16_di" bpmnElement="W232_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W317" name="W317. Bank Account Lifecycle &amp; Signatory Management" isExecutable="false">
+      <bpmn:documentation>Trigger: New store opening (W16), new entity setup, new banking relationship, signatory role change, employee separation (W43), or store closure (W45)
+Frequency: ~10–15 new accounts/year (new stores); ~5–8 signatory updates/month (employee turnover); ~2–3 account closures/year
+Volume: ~215–230 bank accounts across 5 entities and 4 banks (BDO, BPI, Metrobank, Chinabank): ~200 store deposit accounts, 4 DC operating accounts, 5 entity main operating accounts, 5 USD import accounts, and additional payroll, savings, and investment accounts per entity
+Owner: Treasury Manager
+Participants: Treasury Analyst, CFO, Legal (Board Resolutions), HR (separation alerts), Store Operations (new store setup)
+Source: workflow W317 — Bank Account Lifecycle &amp; Signatory Management</bpmn:documentation>
+      <bpmn:laneSet id="W317_LaneSet5">
+        <bpmn:lane id="W317_Lane1" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W317_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W317_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W317_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W317_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W317_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W317_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W317_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W317_Lane2" name="Legal">
+        <bpmn:flowNodeRef>W317_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W317_Lane3" name="System">
+        <bpmn:flowNodeRef>W317_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W317_Lane4" name="Treasury Mgr">
+        <bpmn:flowNodeRef>W317_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W317_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W317_Start6" name="New store opening (W16), new entity setup, new banking relationship, signatory role…">
+        <bpmn:outgoing>W317_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W317_Task7" name="Account opening request">
+        <bpmn:documentation>Step 1: Account opening request: triggered by new store (W16), new entity, or operational need — Treasury Analyst prepares account opening checklist per bank requirements: Board Resolution (per entity), Secretary&#x27;s Certificate, authorized signatory list with specimen signatures, business registration documents (SEC, DTI, BIR, LGU permit), latest audited financial statements
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Mgr
+Duration: 2–3 hours/account</bpmn:documentation>
+        <bpmn:incoming>W317_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W317_Task8" name="Legal documentation">
+        <bpmn:documentation>Step 2: Legal documentation: Legal prepares Board Resolution authorizing account opening and designating authorized signatories; Secretary&#x27;s Certificate signed by Corporate Secretary
+Responsible (R): Legal / Corp Secretary
+Accountable (A): CFO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W317_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W317_Task9" name="Bank submission">
+        <bpmn:documentation>Step 3: Bank submission: Treasury Analyst submits complete documentation package to bank; tracks application status via bank portal or relationship manager
+Responsible (R): Treasury Analyst
+Accountable (A): —
+Duration: 1–2 weeks (bank processing)</bpmn:documentation>
+        <bpmn:incoming>W317_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W317_Task10" name="Account activation">
+        <bpmn:documentation>Step 4: Account activation: upon bank confirmation, Treasury Analyst records new account in system — account number, bank name, entity, account type (operating, deposit, payroll, USD, investment), purpose, signatory tier (single, dual, any-two-of-three), opening date; links to entity in GL
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Mgr
+Duration: 30 min/account</bpmn:documentation>
+        <bpmn:incoming>W317_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W317_Task11" name="Signatory management — ongoing">
+        <bpmn:documentation>Step 5: Signatory management — ongoing: system tracks authorized signatories per account with signatory tier, specimen signature on file, and last update date; when a signatory changes role (promotion, transfer) or separates (W43), HR alerts Treasury Analyst within 5 business days; Treasury Analyst prepares signatory update documentation per bank requirements and submits within 10 business days of trigger event
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Mgr
+Duration: 1–2 hours/signatory change</bpmn:documentation>
+        <bpmn:incoming>W317_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W317_Task12" name="Signatory staleness review">
+        <bpmn:documentation>Step 6: Signatory staleness review: system alerts Treasury Manager when any account has had no signatory update in &gt; 12 months; Treasury Analyst reviews all signatories for current employment status and authority level; updates if needed
+Responsible (R): System / Treasury Analyst
+Accountable (A): Treasury Mgr
+Duration: Quarterly review (2 hours)</bpmn:documentation>
+        <bpmn:incoming>W317_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W317_Task13" name="Account closure request">
+        <bpmn:documentation>Step 7: Account closure request: triggered by store closure (W45), account consolidation, or banking relationship termination — Treasury Analyst confirms zero balance (or arranges final transfer), obtains bank closure confirmation letter, and deactivates account in system
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Mgr
+Duration: 1–2 hours/account</bpmn:documentation>
+        <bpmn:incoming>W317_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W317_Task14" name="Banking relationship review">
+        <bpmn:documentation>Step 8: Banking relationship review: annually, Treasury Manager reviews banking relationships across all 4 banks — fee structures, service quality, credit facility availability, digital banking capabilities, and geographic coverage for provincial stores; recommends relationship changes to CFO
+Responsible (R): Treasury Mgr
+Accountable (A): CFO
+Duration: 4–6 hours/year</bpmn:documentation>
+        <bpmn:incoming>W317_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W317_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W317_Task15" name="Bank fee monitoring">
+        <bpmn:documentation>Step 9: Bank fee monitoring: monthly, Treasury Analyst reviews bank fee and charge schedule per account; compares actual fees charged (from bank statements during W89) against agreed fee schedules; disputes unexpected charges with bank relationship manager within 30 days
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Mgr
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W317_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W317_End16" name="Complete">
+        <bpmn:incoming>W317_Flow190</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W317_Annotation17">
+        <bpmn:text>Controls: - CTL-59 (prevent unauthorized bank account changes.) | - operational: and bank portal access, creating a fraud and unauthorized transaction risk
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W317_Assoc18" sourceRef="W317_Annotation17" targetRef="W317_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W317_Flow19" sourceRef="W317_Start6" targetRef="W317_Task7" />
+      <bpmn:sequenceFlow id="W317_Flow20" sourceRef="W317_Task7" targetRef="W317_Task8" />
+      <bpmn:sequenceFlow id="W317_Flow21" sourceRef="W317_Task8" targetRef="W317_Task9" />
+      <bpmn:sequenceFlow id="W317_Flow22" sourceRef="W317_Task9" targetRef="W317_Task10" />
+      <bpmn:sequenceFlow id="W317_Flow23" sourceRef="W317_Task10" targetRef="W317_Task11" />
+      <bpmn:sequenceFlow id="W317_Flow24" sourceRef="W317_Task11" targetRef="W317_Task12" />
+      <bpmn:sequenceFlow id="W317_Flow25" sourceRef="W317_Task12" targetRef="W317_Task13" />
+      <bpmn:sequenceFlow id="W317_Flow26" sourceRef="W317_Task13" targetRef="W317_Task14" />
+      <bpmn:sequenceFlow id="W317_Flow27" sourceRef="W317_Task14" targetRef="W317_Task15" />
+      <bpmn:sequenceFlow id="W317_Flow28" sourceRef="W317_Task15" targetRef="W317_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W317_diag">
+      <bpmndi:BPMNPlane id="W317_plane" bpmnElement="W_W317">
+        <bpmndi:BPMNShape id="W317_Lane1_di" bpmnElement="W317_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Lane2_di" bpmnElement="W317_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Lane3_di" bpmnElement="W317_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Lane4_di" bpmnElement="W317_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task7_di" bpmnElement="W317_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task8_di" bpmnElement="W317_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task9_di" bpmnElement="W317_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task10_di" bpmnElement="W317_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task11_di" bpmnElement="W317_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task12_di" bpmnElement="W317_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task13_di" bpmnElement="W317_Task13"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task14_di" bpmnElement="W317_Task14"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Task15_di" bpmnElement="W317_Task15"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Start6_di" bpmnElement="W317_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_End16_di" bpmnElement="W317_End16"><dc:Bounds x="2310" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W317_Annotation17_di" bpmnElement="W317_Annotation17"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W317_Flow19_di" bpmnElement="W317_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow20_di" bpmnElement="W317_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow21_di" bpmnElement="W317_Flow21"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow22_di" bpmnElement="W317_Flow22"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow23_di" bpmnElement="W317_Flow23"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow24_di" bpmnElement="W317_Flow24"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow25_di" bpmnElement="W317_Flow25"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow26_di" bpmnElement="W317_Flow26"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow27_di" bpmnElement="W317_Flow27"><di:waypoint x="2050" y="675" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Flow28_di" bpmnElement="W317_Flow28"><di:waypoint x="2260" y="165" /><di:waypoint x="2310" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W317_Assoc18_di" bpmnElement="W317_Assoc18"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W320" name="W320. Electronic Banking Security &amp; Payment Control" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily payment operations; new user onboarding; periodic access review; or security incident
+Frequency: Daily (payment operations); quarterly (access review); annual (policy review); ad-hoc (incident response)
+Volume: ~210 bank accounts across 4 banks; ~25–35 payment runs/month (W7 twice-weekly + payroll + tax + capex + intercompany); ~30–40 authorized payment users across Finance and Treasury
+Owner: Treasury Manager
+Participants: Treasury Manager, Treasury Analyst, AP Supervisor, CFO, IT Security, Banks
+Source: workflow W320 — Electronic Banking Security &amp; Payment Control</bpmn:documentation>
+      <bpmn:laneSet id="W320_LaneSet7">
+        <bpmn:lane id="W320_Lane1" name="AP Clerk">
+        <bpmn:flowNodeRef>W320_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W320_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W320_Lane2" name="AP Supervisor">
+        <bpmn:flowNodeRef>W320_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W320_Lane3" name="Treasury Mgr">
+        <bpmn:flowNodeRef>W320_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W320_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W320_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W320_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W320_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W320_Task18</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W320_Lane4" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W320_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W320_Lane5" name="System">
+        <bpmn:flowNodeRef>W320_Task17</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W320_Lane6" name="CFO">
+        <bpmn:flowNodeRef>W320_Task19</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W320_End20</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W320_Start8" name="Daily payment operations; new user onboarding; periodic access review; or security…">
+        <bpmn:outgoing>W320_Flow23</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W320_Task9" name="Payment initiation (Maker)">
+        <bpmn:documentation>Step 1: Payment initiation (Maker): authorized AP Clerk or Treasury Analyst creates payment batch in ERP — system generates payment file (vendor payments, payroll, tax, intercompany transfers); payment file includes payee name, bank account, amount, payment reference, and cost center
+Responsible (R): AP Clerk / Treasury Analyst
+Accountable (A): AP Supervisor / Treasury Mgr
+Duration: Per W7, W10, W90</bpmn:documentation>
+        <bpmn:incoming>W320_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task10" name="First-level approval (Checker)">
+        <bpmn:documentation>Step 2: First-level approval (Checker): AP Supervisor or Treasury Manager reviews payment batch — verifies payee details, amount vs. approved invoice/purpose, bank account vs. vendor master; approves batch in ERP; system locks payment details from further modification after first approval
+Responsible (R): AP Supervisor / Treasury Mgr
+Accountable (A): —
+Duration: 15–30 min/batch</bpmn:documentation>
+        <bpmn:incoming>W320_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task11" name="Second-level approval (Authorizer)">
+        <bpmn:documentation>Step 3: Second-level approval (Authorizer): for payments above threshold — (a) ≤ PHP 5M: Treasury Manager or AP Supervisor, (b) PHP 5M–20M: CFO, (c) &gt; PHP 20M: CEO + CFO; authorizer reviews and releases payment batch in bank portal (or ERP-to-bank integration); system records approver ID, timestamp, and authorization level
+Responsible (R): Treasury Mgr / CFO / CEO
+Accountable (A): CFO
+Duration: 10–15 min/batch</bpmn:documentation>
+        <bpmn:incoming>W320_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task12" name="Bank portal access control">
+        <bpmn:documentation>Step 4: Bank portal access control: Treasury Manager maintains bank portal user access matrix — (a) user roles: inquiry-only (view balances), payment initiator (create payment), payment approver (release payment), admin (manage users); (b) segregation of duties: no single user may both create and approve payments for the same account; (c) user access reviewed quarterly (step 8)
+Responsible (R): Treasury Mgr
+Accountable (A): CFO
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W320_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task13" name="New user onboarding">
+        <bpmn:documentation>Step 5: New user onboarding: when a new Treasury Analyst or AP Clerk joins (W15), Treasury Manager requests bank portal access based on role; user completes bank&#x27;s identity verification; initial access set to inquiry-only for first 30 days; elevated to payment initiator after training and competency confirmation
+Responsible (R): Treasury Mgr
+Accountable (A): CFO
+Duration: 1–2 hours/user</bpmn:documentation>
+        <bpmn:incoming>W320_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task14" name="User deactivation">
+        <bpmn:documentation>Step 6: User deactivation: when a payment user separates (W43) or transfers out of Treasury/AP, Treasury Manager immediately (same day) deactivates bank portal access; HR separation notification triggers automated alert to Treasury Manager; system cross-references bank portal user list against active employee roster weekly
+Responsible (R): Treasury Mgr
+Accountable (A): CFO
+Duration: 30 min/user</bpmn:documentation>
+        <bpmn:incoming>W320_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task15" name="Token and credential management">
+        <bpmn:documentation>Step 7: Token and credential management: bank security tokens (hardware or software OTP) are issued per user; tokens are stored securely and never shared; lost or compromised tokens reported to bank immediately and replaced; token inventory tracked per user with issuance and expiry dates
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Mgr
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W320_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task16" name="Quarterly access review">
+        <bpmn:documentation>Step 8: Quarterly access review: Treasury Manager reviews all bank portal users — (a) confirms each user&#x27;s access level is appropriate for current role, (b) identifies any users with access who have changed roles or should no longer have access, (c) reviews payment approval logs for any unusual patterns (payments approved outside business hours, rapid sequential approvals, payments to new vendors without recent PO), (d) documents review results with sign-off
+Responsible (R): Treasury Mgr
+Accountable (A): CFO
+Duration: 2–3 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W320_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W320_Task17" name="Payment anomaly detection">
+        <bpmn:documentation>Step 9: Payment anomaly detection: system flags payment exceptions for Treasury Manager review — (a) payment to vendor bank account changed within last 7 days, (b) payment amount &gt; 200% of average payment to same vendor, (c) payment to vendor not in active vendor master, (d) multiple payments to same vendor on same day exceeding PHP 5M cumulative, (e) payment initiated outside business hours (before 7 AM or after 8 PM)
+Responsible (R): System / Treasury Mgr
+Accountable (A): CFO
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W320_Flow31</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow31</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W320_Task18" name="Security incident response">
+        <bpmn:documentation>Step 10: Security incident response: if suspected unauthorized payment or bank portal breach is detected — (a) Treasury Manager immediately contacts bank to freeze affected account(s), (b) CFO and IT Security notified within 1 hour, (c) bank conducts investigation with BuildRight cooperation, (d) if confirmed unauthorized payment: Legal assesses recovery options and insurance claim (W59 cyber liability), (e) post-incident: Treasury Manager conducts root cause analysis and implements additional controls, (f) incident reported to Internal Audit for control assessment (W120)
+Responsible (R): Treasury Mgr / CFO / IT Security
+Accountable (A): CEO
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W320_Flow230</bpmn:incoming>
+        <bpmn:outgoing>W320_Flow230</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W320_Task19" name="Annual policy review">
+        <bpmn:documentation>Step 11: Annual policy review: CFO reviews and updates electronic banking security policy — maker-checker thresholds, approval tiers, user access standards, token management procedures, and incident response protocol; policy changes approved by CEO; updated policy communicated to all payment users; annual training completion required for continued bank portal access
+Responsible (R): CFO
+Accountable (A): CEO
+Duration: 4 hours/year</bpmn:documentation>
+        <bpmn:incoming>W320_Flow231</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W320_End20" name="Complete">
+        <bpmn:incoming>W320_Flow232</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W320_Annotation21">
+        <bpmn:text>Controls: - CTL-59 (prevent unauthorized bank account changes.); CTL-62 (ensure electronic banking security.) | - operational: Treasury Manager review and approval gate
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W320_Assoc22" sourceRef="W320_Annotation21" targetRef="W320_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W320_Flow23" sourceRef="W320_Start8" targetRef="W320_Task9" />
+      <bpmn:sequenceFlow id="W320_Flow24" sourceRef="W320_Task9" targetRef="W320_Task10" />
+      <bpmn:sequenceFlow id="W320_Flow25" sourceRef="W320_Task10" targetRef="W320_Task11" />
+      <bpmn:sequenceFlow id="W320_Flow26" sourceRef="W320_Task11" targetRef="W320_Task12" />
+      <bpmn:sequenceFlow id="W320_Flow27" sourceRef="W320_Task12" targetRef="W320_Task13" />
+      <bpmn:sequenceFlow id="W320_Flow28" sourceRef="W320_Task13" targetRef="W320_Task14" />
+      <bpmn:sequenceFlow id="W320_Flow29" sourceRef="W320_Task14" targetRef="W320_Task15" />
+      <bpmn:sequenceFlow id="W320_Flow30" sourceRef="W320_Task15" targetRef="W320_Task16" />
+      <bpmn:sequenceFlow id="W320_Flow31" sourceRef="W320_Task16" targetRef="W320_Task17" />
+      <bpmn:sequenceFlow id="W320_Flow32" sourceRef="W320_Task17" targetRef="W320_Task18" />
+      <bpmn:sequenceFlow id="W320_Flow33" sourceRef="W320_Task18" targetRef="W320_Task19" />
+      <bpmn:sequenceFlow id="W320_Flow34" sourceRef="W320_Task19" targetRef="W320_End20" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W320_diag">
+      <bpmndi:BPMNPlane id="W320_plane" bpmnElement="W_W320">
+        <bpmndi:BPMNShape id="W320_Lane1_di" bpmnElement="W320_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Lane2_di" bpmnElement="W320_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Lane3_di" bpmnElement="W320_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Lane4_di" bpmnElement="W320_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Lane5_di" bpmnElement="W320_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Lane6_di" bpmnElement="W320_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task9_di" bpmnElement="W320_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task10_di" bpmnElement="W320_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task11_di" bpmnElement="W320_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task12_di" bpmnElement="W320_Task12"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task13_di" bpmnElement="W320_Task13"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task14_di" bpmnElement="W320_Task14"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task15_di" bpmnElement="W320_Task15"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task16_di" bpmnElement="W320_Task16"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task17_di" bpmnElement="W320_Task17"><dc:Bounds x="2080" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task18_di" bpmnElement="W320_Task18"><dc:Bounds x="2290" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Task19_di" bpmnElement="W320_Task19"><dc:Bounds x="2500" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Start8_di" bpmnElement="W320_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_End20_di" bpmnElement="W320_End20"><dc:Bounds x="2730" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W320_Annotation21_di" bpmnElement="W320_Annotation21"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W320_Flow23_di" bpmnElement="W320_Flow23"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow24_di" bpmnElement="W320_Flow24"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow25_di" bpmnElement="W320_Flow25"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow26_di" bpmnElement="W320_Flow26"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow27_di" bpmnElement="W320_Flow27"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow28_di" bpmnElement="W320_Flow28"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow29_di" bpmnElement="W320_Flow29"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow30_di" bpmnElement="W320_Flow30"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow31_di" bpmnElement="W320_Flow31"><di:waypoint x="2050" y="505" /><di:waypoint x="2080" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow32_di" bpmnElement="W320_Flow32"><di:waypoint x="2260" y="845" /><di:waypoint x="2290" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow33_di" bpmnElement="W320_Flow33"><di:waypoint x="2470" y="505" /><di:waypoint x="2500" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Flow34_di" bpmnElement="W320_Flow34"><di:waypoint x="2680" y="1015" /><di:waypoint x="2730" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W320_Assoc22_di" bpmnElement="W320_Assoc22"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1342" name="W1342. Real-Time Gross Settlement (RTGS) &amp; High-Value Payment Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor payment &gt; PHP 5M per W7; payroll disbursement per W10; intercompany fund transfer &gt; PHP 10M; tax payment &gt; PHP 5M; or emergency payment requiring same-day settlement
+Frequency: ~15–25 RTGS transactions per month; ~5–10 high-value intercompany transfers per month
+Volume: ~20–35 RTGS transactions/month totaling ~PHP 800M–1.5B; average transaction PHP 30M–50M
+Owner: Treasury Manager
+Participants: Treasury Analyst, CFO, CEO (for payments &gt; PHP 20M), AP Supervisor, Bank Relationship Manager
+Source: workflow W1342 — Real-Time Gross Settlement (RTGS) &amp; High-Value Payment Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1342_LaneSet5">
+        <bpmn:lane id="W1342_Lane1" name="AP Supervisor">
+        <bpmn:flowNodeRef>W1342_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1342_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1342_Lane2" name="Treasury Manager">
+        <bpmn:flowNodeRef>W1342_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1342_Lane3" name="CFO">
+        <bpmn:flowNodeRef>W1342_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1342_Lane4" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1342_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1342_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1342_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1342_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1342_Start6" name="Vendor payment &gt; PHP 5M per W7; payroll disbursement per W10; intercompany fund transfer…">
+        <bpmn:outgoing>W1342_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1342_Task7" name="Payment initiation">
+        <bpmn:documentation>Step 1: Payment initiation: AP Supervisor or Treasury Analyst initiates high-value payment in ERP: (a) select payment type: vendor payment, intercompany transfer, payroll, tax payment, (b) enter payment details: beneficiary name, bank account number, bank name (BSP-member bank), amount, payment reference, purpose, (c) attach supporting documentation: approved invoice (vendor), Board Resolution (intercompany), BIR tax return (tax), payroll register (payroll), (d) system validates: vendor master match, bank account format (Philippine bank account validation), payment purpose per entity policy, (e) system flags payment as &quot;RTGS required&quot; if amount &gt; PHP 5M or payment type requires same-day settlement
+Responsible (R): AP Supervisor / Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 15–30 min</bpmn:documentation>
+        <bpmn:incoming>W1342_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1342_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1342_Task8" name="First-level verification (Maker)">
+        <bpmn:documentation>Step 2: First-level verification (Maker): Treasury Manager reviews payment in ERP: (a) verify beneficiary details match supporting documentation, (b) verify amount matches approved invoice/transfer request, (c) verify bank account matches vendor master per W320 payment anomaly detection, (d) confirm RTGS is appropriate (vs. standard PESONet batch transfer for non-urgent payments), (e) approve payment — system locks details from further modification
+Responsible (R): Treasury Manager
+Accountable (A): —
+Duration: 10–15 min</bpmn:documentation>
+        <bpmn:incoming>W1342_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1342_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1342_Task9" name="Second-level authorization (Authorizer)">
+        <bpmn:documentation>Step 3: Second-level authorization (Authorizer): CFO authorizes high-value payment: (a) for payments PHP 5M–20M: CFO reviews and authorizes via bank portal or ERP-to-bank integration, (b) for payments &gt; PHP 20M: CEO and CFO dual authorization per W320.3 — both must authorize independently in bank portal, (c) authorizer reviews: payment summary, beneficiary, amount, supporting documentation reference, (d) system records authorizer ID, timestamp, and authorization level for audit trail
+Responsible (R): CFO / CEO
+Accountable (A): —
+Duration: 10–20 min</bpmn:documentation>
+        <bpmn:incoming>W1342_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1342_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1342_Task10" name="RTGS submission">
+        <bpmn:documentation>Step 4: RTGS submission: Treasury Analyst submits payment to bank via electronic banking portal: (a) log into bank portal (dual-login for security per W320), (b) enter or confirm payment details in bank RTGS module, (c) bank validates: beneficiary bank is BSP-member, sufficient account balance, cut-off time compliance (BSP PhilPaSS cut-off: 3:30 PM for same-day settlement), (d) bank submits to PhilPaSS for real-time settlement, (e) bank confirms settlement with PhilPaSS reference number
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 15–20 min</bpmn:documentation>
+        <bpmn:incoming>W1342_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1342_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1342_Task11" name="Settlement confirmation &amp; reconciliation">
+        <bpmn:documentation>Step 5: Settlement confirmation &amp; reconciliation: (a) Treasury Analyst obtains settlement confirmation from bank portal: PhilPaSS reference number, settlement timestamp, amount, beneficiary, (b) record settlement in treasury management system: PhilPaSS reference, payment reference, settlement status = &quot;Settled&quot;, (c) update cash position per W30 — high-value payment immediately reflected in daily cash position, (d) for vendor payments: update AP invoice status to &quot;Paid&quot; per W7, (e) for intercompany transfers: update intercompany account per W17, (f) file settlement confirmation for audit trail per W120
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1342_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1342_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1342_Task12" name="Failed/rejected payment handling">
+        <bpmn:documentation>Step 6: Failed/rejected payment handling: If RTGS payment is rejected: (a) bank returns payment with rejection reason: insufficient funds, invalid beneficiary account, bank system error, past cut-off time, (b) Treasury Analyst investigates and resolves: (i) insufficient funds: arrange intraday liquidity via credit facility or fund transfer from another account, (ii) invalid account: contact beneficiary to verify bank details, (iii) past cut-off: resubmit next business day or arrange PESONet batch as alternative, (c) re-initiate payment after resolution, (d) if payment deadline is at risk (e.g., BIR tax deadline): escalate to CFO for emergency resolution
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 30–60 min per rejection</bpmn:documentation>
+        <bpmn:incoming>W1342_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1342_End13" name="Complete">
+        <bpmn:incoming>W1342_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1342_Annotation14">
+        <bpmn:text>Controls: - CTL-294 (ensure controlled execution — Banking &amp; Payments (PA-18.2).) | - operational: dual authorization, vendor master validation, and pre-submission verification checklist; operational: morning cash position review and pre-funding arrangement; operational: early processing and maintaining alternative banking relationships for contingency
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1342_Assoc15" sourceRef="W1342_Annotation14" targetRef="W1342_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1342_Flow16" sourceRef="W1342_Start6" targetRef="W1342_Task7" />
+      <bpmn:sequenceFlow id="W1342_Flow17" sourceRef="W1342_Task7" targetRef="W1342_Task8" />
+      <bpmn:sequenceFlow id="W1342_Flow18" sourceRef="W1342_Task8" targetRef="W1342_Task9" />
+      <bpmn:sequenceFlow id="W1342_Flow19" sourceRef="W1342_Task9" targetRef="W1342_Task10" />
+      <bpmn:sequenceFlow id="W1342_Flow20" sourceRef="W1342_Task10" targetRef="W1342_Task11" />
+      <bpmn:sequenceFlow id="W1342_Flow21" sourceRef="W1342_Task11" targetRef="W1342_Task12" />
+      <bpmn:sequenceFlow id="W1342_Flow22" sourceRef="W1342_Task12" targetRef="W1342_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1342_diag">
+      <bpmndi:BPMNPlane id="W1342_plane" bpmnElement="W_W1342">
+        <bpmndi:BPMNShape id="W1342_Lane1_di" bpmnElement="W1342_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Lane2_di" bpmnElement="W1342_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Lane3_di" bpmnElement="W1342_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Lane4_di" bpmnElement="W1342_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Task7_di" bpmnElement="W1342_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Task8_di" bpmnElement="W1342_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Task9_di" bpmnElement="W1342_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Task10_di" bpmnElement="W1342_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Task11_di" bpmnElement="W1342_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Task12_di" bpmnElement="W1342_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Start6_di" bpmnElement="W1342_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_End13_di" bpmnElement="W1342_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1342_Annotation14_di" bpmnElement="W1342_Annotation14"><dc:Bounds x="160" y="800" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1342_Flow16_di" bpmnElement="W1342_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1342_Flow17_di" bpmnElement="W1342_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1342_Flow18_di" bpmnElement="W1342_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1342_Flow19_di" bpmnElement="W1342_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1342_Flow20_di" bpmnElement="W1342_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1342_Flow21_di" bpmnElement="W1342_Flow21"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1342_Flow22_di" bpmnElement="W1342_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1342_Assoc15_di" bpmnElement="W1342_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1343" name="W1343. Petty Cash Fund Lifecycle, Custodian Accountability &amp; Periodic Replenishment" isExecutable="false">
+      <bpmn:documentation>Trigger: Small, urgent business expense requiring cash payment; or petty cash fund replenishment request (fund depleted to ~20% of authorized level); or annual petty cash policy review
+Frequency: ~50–80 petty cash disbursements per store per month; replenishment every 2–4 weeks per store; annual policy review
+Volume: 200 stores × the authorized petty cash fund of PHP 20,000 per store = ~PHP 4.2M total petty cash float (incl. DC floats, per profile §10.4); ~10,000–16,000 disbursements/month chain-wide
+Owner: Store Manager (custodian)
+Participants: Cash Office Clerk, Store Manager, Regional Manager (approval &gt; PHP 5,000), AP Clerk (replenishment processing), Finance Controller
+Source: workflow W1343 — Petty Cash Fund Lifecycle, Custodian Accountability &amp; Periodic Replenishment</bpmn:documentation>
+      <bpmn:laneSet id="W1343_LaneSet5">
+        <bpmn:lane id="W1343_Lane1" name="Store Manager">
+        <bpmn:flowNodeRef>W1343_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1343_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1343_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1343_Lane2" name="Requester">
+        <bpmn:flowNodeRef>W1343_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1343_Lane3" name="Internal Auditor">
+        <bpmn:flowNodeRef>W1343_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1343_Lane4" name="Finance Controller">
+        <bpmn:flowNodeRef>W1343_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1343_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1343_Start6" name="Small, urgent business expense requiring cash payment; or petty cash fund replenishment…">
+        <bpmn:outgoing>W1343_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1343_Task7" name="Petty cash fund establishment">
+        <bpmn:documentation>Step 1: Petty cash fund establishment: For new stores per W16 or when existing fund amount is adjusted: (a) Store Manager requests petty cash fund authorization from Regional Manager: proposed amount, justification, (b) standard authorized levels: small stores (PHP 20,000), medium stores (PHP 30,000), large/flagship stores (PHP 50,000), (c) Finance Controller approves fund authorization and sets up petty cash GL account per store, (d) initial funding: Treasury transfers authorized amount to store bank account; Store Manager withdraws cash and secures in store safe per W541, (e) system records petty cash fund: store, authorized amount, custodian (Store Manager), establishment date
+Responsible (R): Store Manager / Finance Controller
+Accountable (A): Regional Manager
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1343_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1343_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1343_Task8" name="Petty cash disbursement">
+        <bpmn:documentation>Step 2: Petty cash disbursement: For each expense requiring petty cash: (a) requester (Department Supervisor, stock associate) submits Petty Cash Voucher: date, amount, purpose, payee, supporting documentation (receipt, quotation), (b) Store Manager reviews and approves: (i) is the expense legitimate business purpose?, (ii) is petty cash the appropriate payment method (vs. procurement card or standard PO)?, (iii) is the amount within petty cash policy limit (max PHP 5,000 per transaction; &gt; PHP 5,000 requires Regional Manager approval), (iv) is supporting documentation adequate (official receipt from BIR-registered supplier preferred)?, (c) Cash Office Clerk disburses cash from petty cash fund, (d) requester signs Petty Cash Voucher acknowledging receipt, (e) voucher filed in petty cash binder with supporting documentation, (f) system logs disbursement: date, amount, purpose, payee, voucher number, custodian approval
+Responsible (R): Requester / Cash Office Clerk / Store Manager
+Accountable (A): Store Manager
+Duration: 5–10 min per disbursement</bpmn:documentation>
+        <bpmn:incoming>W1343_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1343_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1343_Task9" name="Periodic replenishment">
+        <bpmn:documentation>Step 3: Periodic replenishment: When petty cash fund is depleted to ~20% of authorized level (or every 4 weeks, whichever is first): (a) Store Manager prepares Petty Cash Replenishment Report: (i) summary of all disbursements since last replenishment: voucher number, date, amount, purpose, GL expense category, (ii) total disbursements = replenishment amount requested, (iii) remaining cash on hand (should equal ~20% of authorized fund), (iv) attach all Petty Cash Vouchers with supporting documentation (receipts), (b) Store Manager signs Replenishment Report certifying accuracy, (c) Regional Manager reviews and approves replenishment (spot-check 10% of vouchers for compliance), (d) AP Clerk processes replenishment per W7: creates AP voucher for replenishment amount, charges individual line items to appropriate GL expense accounts, (e) Treasury transfers replenishment amount to store bank account, (f) Store Manager withdraws cash and restores petty cash fund to authorized level
+Responsible (R): Store Manager / Regional Manager / AP Clerk
+Accountable (A): Finance Controller
+Duration: 30–60 min per replenishment</bpmn:documentation>
+        <bpmn:incoming>W1343_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1343_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1343_Task10" name="Surprise petty cash count">
+        <bpmn:documentation>Step 4: Surprise petty cash count: Internal Audit or Regional Manager conducts surprise petty cash count during store visits per W1174: (a) count actual cash on hand in petty cash fund, (b) total Petty Cash Vouchers since last replenishment, (c) verify: cash on hand + vouchers = authorized fund amount (imprest system), (d) sample 5 vouchers: verify supporting documentation, approval, GL coding accuracy, (e) flag any discrepancies: (i) shortage (cash + vouchers &lt; authorized) — potential theft or unvouchered disbursement, (ii) excess — possible commingling of personal cash or unrecorded deposits, (iii) missing receipts — non-compliance with documentation policy, (f) document findings and include in store LP compliance score per W1174
+Responsible (R): Internal Auditor / Regional Manager
+Accountable (A): Finance Controller
+Duration: 15–20 min per count</bpmn:documentation>
+        <bpmn:incoming>W1343_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1343_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1343_Task11" name="Annual policy review &amp; fund adjustment">
+        <bpmn:documentation>Step 5: Annual policy review &amp; fund adjustment: Finance Controller reviews petty cash program annually: (a) analyze average replenishment frequency and amount by store — are fund levels appropriate?, (b) identify stores with unusually high or low petty cash activity — investigate for policy abuse or under-utilization, (c) review disbursement categories: are expenses legitimate or should any be routed through standard procurement?, (d) adjust authorized fund levels for stores with changing needs (new services, increased maintenance), (e) update petty cash policy: transaction limits, documentation requirements, approval thresholds, (f) communicate policy changes to all Store Managers
+Responsible (R): Finance Controller
+Accountable (A): CFO
+Duration: 1 day/year</bpmn:documentation>
+        <bpmn:incoming>W1343_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1343_End12" name="Complete">
+        <bpmn:incoming>W1343_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1343_Annotation13">
+        <bpmn:text>Controls: - CTL-294 (ensure controlled execution — Banking &amp; Payments (PA-18.2).) | - operational: requiring at minimum a handwritten receipt signed by payee; operational: automated replenishment trigger at 20% threshold and standard 3-day AP processing SLA; operational: surprise counts, Regional Manager spot-checks, and GL expense analysis for unusual patterns
+Owner: Store Manager (custodian)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1343_Assoc14" sourceRef="W1343_Annotation13" targetRef="W1343_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1343_Flow15" sourceRef="W1343_Start6" targetRef="W1343_Task7" />
+      <bpmn:sequenceFlow id="W1343_Flow16" sourceRef="W1343_Task7" targetRef="W1343_Task8" />
+      <bpmn:sequenceFlow id="W1343_Flow17" sourceRef="W1343_Task8" targetRef="W1343_Task9" />
+      <bpmn:sequenceFlow id="W1343_Flow18" sourceRef="W1343_Task9" targetRef="W1343_Task10" />
+      <bpmn:sequenceFlow id="W1343_Flow19" sourceRef="W1343_Task10" targetRef="W1343_Task11" />
+      <bpmn:sequenceFlow id="W1343_Flow20" sourceRef="W1343_Task11" targetRef="W1343_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1343_diag">
+      <bpmndi:BPMNPlane id="W1343_plane" bpmnElement="W_W1343">
+        <bpmndi:BPMNShape id="W1343_Lane1_di" bpmnElement="W1343_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Lane2_di" bpmnElement="W1343_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Lane3_di" bpmnElement="W1343_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Lane4_di" bpmnElement="W1343_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Task7_di" bpmnElement="W1343_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Task8_di" bpmnElement="W1343_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Task9_di" bpmnElement="W1343_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Task10_di" bpmnElement="W1343_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Task11_di" bpmnElement="W1343_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Start6_di" bpmnElement="W1343_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_End12_di" bpmnElement="W1343_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1343_Annotation13_di" bpmnElement="W1343_Annotation13"><dc:Bounds x="160" y="800" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1343_Flow15_di" bpmnElement="W1343_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1343_Flow16_di" bpmnElement="W1343_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1343_Flow17_di" bpmnElement="W1343_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1343_Flow18_di" bpmnElement="W1343_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1343_Flow19_di" bpmnElement="W1343_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1343_Flow20_di" bpmnElement="W1343_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1343_Assoc14_di" bpmnElement="W1343_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1344" name="W1344. Intercompany Fund Transfer, Cash Pooling &amp; Entity Settlement" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly intercompany settlement cycle; or entity-level cash deficit requiring intragroup funding; or quarterly dividend distribution from subsidiary to holding company
+Frequency: Monthly intercompany settlement; weekly cash pooling transfers; quarterly dividend distributions; ad-hoc for cash deficit funding
+Volume: 5 legal entities: BuildRight Holdings (parent), BuildRight Depot, Inc. (primary), BuildRight Logistics, BuildRight Digital Commerce, BuildRight Property Management; ~20–30 intercompany transfers per month
+Owner: Treasury Manager
+Participants: Treasury Analyst, Finance Controller (per entity), CFO, Corporate Secretary (for dividend resolutions)
+Source: workflow W1344 — Intercompany Fund Transfer, Cash Pooling &amp; Entity Settlement</bpmn:documentation>
+      <bpmn:laneSet id="W1344_LaneSet5">
+        <bpmn:lane id="W1344_Lane1" name="Finance Controller">
+        <bpmn:flowNodeRef>W1344_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1344_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1344_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1344_Lane2" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1344_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1344_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1344_Lane3" name="Treasury Manager">
+        <bpmn:flowNodeRef>W1344_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1344_Lane4" name="Corporate Secretary">
+        <bpmn:flowNodeRef>W1344_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1344_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1344_Start6" name="Monthly intercompany settlement cycle; or entity-level cash deficit requiring intragroup…">
+        <bpmn:outgoing>W1344_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1344_Task7" name="Monthly intercompany transaction compilation">
+        <bpmn:documentation>Step 1: Monthly intercompany transaction compilation: At month-end close per W17: (a) each entity&#x27;s Finance Controller compiles intercompany transactions: (i) intercompany revenue (services provided to other entities), (ii) intercompany expenses (services received from other entities), (iii) intercompany receivables and payables outstanding, (iv) shared service cost allocations per pre-agreed allocation keys, (b) system generates intercompany transaction matrix: rows = providing entity, columns = receiving entity, values = transaction amounts by type, (c) Treasury Analyst reviews matrix for completeness and accuracy — all entities should have matching intercompany entries (providing entity revenue = receiving entity expense)
+Responsible (R): Finance Controller (per entity) / Treasury Analyst
+Accountable (A): Finance Controller (Consolidation)
+Duration: 2–3 days</bpmn:documentation>
+        <bpmn:incoming>W1344_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1344_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1344_Task8" name="Intercompany netting">
+        <bpmn:documentation>Step 2: Intercompany netting: Treasury Analyst performs intercompany netting: (a) for each entity pair (A→B and B→A): net intercompany payable/receivable to a single net amount, (b) example: Retail owes Logistics PHP 15M for delivery services; Logistics owes Retail PHP 3M for office space rental → net: Retail pays Logistics PHP 12M, (c) compile net settlement schedule: which entity pays which, and how much, (d) netting reduces total cash movement from ~PHP 80M/month (gross) to ~PHP 25M/month (net) — significant reduction in bank transfer volume and transaction costs
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1344_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1344_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1344_Task9" name="Cash pooling transfers">
+        <bpmn:documentation>Step 3: Cash pooling transfers: Treasury Manager manages weekly cash pooling: (a) review entity-level cash positions per W30: which entities have excess cash, which have deficits, (b) for entities with excess cash (&gt; 2 weeks operating expenses): transfer excess to Holdings&#x27; central treasury account for centralized management (short-term investment per W80, debt repayment, or redistribution), (c) for entities with cash deficits (insufficient for upcoming payroll, vendor payments, or capex): transfer from Holdings or from cash-rich entity to cover deficit, (d) execute transfers via RTGS per W1342 for amounts &gt; PHP 5M or PESONet for smaller amounts, (e) record intercompany loan for each transfer: principal, interest rate (arm&#x27;s length per BIR transfer pricing — greater of the BIR-prescribed rate (~12% p.a. per RR 14-2002 practice) or a benchmarked market rate), maturity date, (f) track intercompany loan balances: system maintains running balance per entity pair with interest accrual
+Responsible (R): Treasury Manager / Treasury Analyst
+Accountable (A): CFO
+Duration: 2–3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1344_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1344_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1344_Task10" name="Settlement execution">
+        <bpmn:documentation>Step 4: Settlement execution: Treasury Analyst executes monthly net settlement: (a) process net payments per settlement schedule from Step 2: RTGS per W1342 for high-value, PESONet for standard amounts, (b) obtain required authorizations per W320 (maker-checker-approver), (c) system records settlement: debit intercompany payable (paying entity), credit intercompany receivable (receiving entity), (d) update intercompany loan balances: net settlement reduces intercompany loan principal, (e) Finance Controller (Consolidation) verifies all intercompany balances are settled or carried as formal intercompany loans with interest
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1344_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1344_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1344_Task11" name="Quarterly dividend distribution">
+        <bpmn:documentation>Step 5: Quarterly dividend distribution: For profitable subsidiaries (Retail, Property Management): (a) Holdings&#x27; Board of Directors declares dividend based on quarterly financial results per W17, (b) Corporate Secretary prepares Board Resolution authorizing dividend: amount, source entity, payment date, (c) Treasury transfers dividend from subsidiary to Holdings via RTGS per W1342, (d) Finance records: subsidiary debits Retained Earnings, credits Cash; Holdings debits Cash, credits Investment in Subsidiary, (e) BIR compliance: dividend received by Holdings from domestic subsidiary is tax-exempt per Philippine tax law (subject to conditions); document tax-exempt status for annual tax return per W17
+Responsible (R): Corporate Secretary / Treasury Manager
+Accountable (A): CFO / Board of Directors
+Duration: 1–2 days per quarter</bpmn:documentation>
+        <bpmn:incoming>W1344_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1344_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1344_Task12" name="Intercompany agreement maintenance">
+        <bpmn:documentation>Step 6: Intercompany agreement maintenance: Finance Controller maintains intercompany agreements: (a) service agreements: Logistics → Retail (delivery services at arm&#x27;s length rates), Digital Commerce → Retail (platform fee at arm&#x27;s length), Property Management → Retail (rent at market rate), Holdings → all subsidiaries (shared services cost allocation), (b) pricing methodology documentation: how intercompany prices are determined (cost-plus, market-based, or negotiated), (c) BIR transfer pricing documentation per RR 02-2013 (as supplemented by RR 19-2020 TP documentation): contemporaneous documentation of intercompany pricing methodology, benchmarking analysis, and economic substance, (d) annual review and update of intercompany agreements and pricing
+Responsible (R): Finance Controller / VP Legal
+Accountable (A): CFO
+Duration: 3–5 days/year</bpmn:documentation>
+        <bpmn:incoming>W1344_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1344_End13" name="Complete">
+        <bpmn:incoming>W1344_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1344_Annotation14">
+        <bpmn:text>Controls: - CTL-294 (ensure controlled execution — Banking &amp; Payments (PA-18.2).) | - operational: documented transfer pricing methodology and annual benchmarking analysis; operational: FX hedging per W80; operational: automated intercompany matching during month-end close per W17
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1344_Assoc15" sourceRef="W1344_Annotation14" targetRef="W1344_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1344_Flow16" sourceRef="W1344_Start6" targetRef="W1344_Task7" />
+      <bpmn:sequenceFlow id="W1344_Flow17" sourceRef="W1344_Task7" targetRef="W1344_Task8" />
+      <bpmn:sequenceFlow id="W1344_Flow18" sourceRef="W1344_Task8" targetRef="W1344_Task9" />
+      <bpmn:sequenceFlow id="W1344_Flow19" sourceRef="W1344_Task9" targetRef="W1344_Task10" />
+      <bpmn:sequenceFlow id="W1344_Flow20" sourceRef="W1344_Task10" targetRef="W1344_Task11" />
+      <bpmn:sequenceFlow id="W1344_Flow21" sourceRef="W1344_Task11" targetRef="W1344_Task12" />
+      <bpmn:sequenceFlow id="W1344_Flow22" sourceRef="W1344_Task12" targetRef="W1344_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1344_diag">
+      <bpmndi:BPMNPlane id="W1344_plane" bpmnElement="W_W1344">
+        <bpmndi:BPMNShape id="W1344_Lane1_di" bpmnElement="W1344_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Lane2_di" bpmnElement="W1344_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Lane3_di" bpmnElement="W1344_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Lane4_di" bpmnElement="W1344_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Task7_di" bpmnElement="W1344_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Task8_di" bpmnElement="W1344_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Task9_di" bpmnElement="W1344_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Task10_di" bpmnElement="W1344_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Task11_di" bpmnElement="W1344_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Task12_di" bpmnElement="W1344_Task12"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Start6_di" bpmnElement="W1344_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_End13_di" bpmnElement="W1344_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1344_Annotation14_di" bpmnElement="W1344_Annotation14"><dc:Bounds x="160" y="800" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1344_Flow16_di" bpmnElement="W1344_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1344_Flow17_di" bpmnElement="W1344_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1344_Flow18_di" bpmnElement="W1344_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1344_Flow19_di" bpmnElement="W1344_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1344_Flow20_di" bpmnElement="W1344_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1344_Flow21_di" bpmnElement="W1344_Flow21"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1344_Flow22_di" bpmnElement="W1344_Flow22"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1344_Assoc15_di" bpmnElement="W1344_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1294" name="W1294. Import Letter of Credit (LC) Application &amp; Bank Coordination" isExecutable="false">
+      <bpmn:documentation>Trigger: Import purchase order confirmed with vendor requiring LC payment terms; or existing LC approaching expiry requiring amendment
+Frequency: ~50–80 new LC applications per month; ~10–20 LC amendments per month
+Volume: ~40% of COGS from imports; ~400–600 TEUs/month; LC value typically PHP 5M–50M per shipment
+Owner: Treasury Analyst
+Participants: Treasury Analyst, Import Coordinator, Category Manager, Bank Relationship Manager, AP Clerk
+Source: workflow W1294 — Import Letter of Credit (LC) Application &amp; Bank Coordination</bpmn:documentation>
+      <bpmn:laneSet id="W1294_LaneSet4">
+        <bpmn:lane id="W1294_Lane1" name="Import Coordinator">
+        <bpmn:flowNodeRef>W1294_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1294_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1294_Lane2" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1294_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1294_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1294_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1294_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1294_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1294_Lane3" name="Bank">
+        <bpmn:flowNodeRef>W1294_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1294_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1294_Start5" name="Import purchase order confirmed with vendor requiring LC payment terms; or existing LC…">
+        <bpmn:outgoing>W1294_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1294_Task6" name="LC requirement identification">
+        <bpmn:documentation>Step 1: LC requirement identification: Import Coordinator confirms LC requirement for import PO: (a) vendor payment terms specify LC (vs. TT/telegraphic transfer), (b) determine LC type (sight, usance), LC amount, validity period, and latest shipment date per PO terms, (c) identify required shipping documents: commercial invoice, packing list, bill of lading, certificate of origin, insurance certificate, inspection certificate (if applicable), (d) communicate LC requirements to Treasury Analyst with PO details and urgency
+Responsible (R): Import Coordinator
+Accountable (A): Category Manager
+Duration: 15 min/LC</bpmn:documentation>
+        <bpmn:incoming>W1294_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1294_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1294_Task7" name="LC application preparation">
+        <bpmn:documentation>Step 2: LC application preparation: Treasury Analyst prepares LC application for the bank: (a) complete bank LC application form with: applicant (BuildRight Depot, Inc.), beneficiary (vendor), LC amount (in USD or vendor currency), LC type, expiry date, shipping terms (FOB, CIF, CFR per Incoterms), required documents, (b) attach supporting documents: import PO, proforma invoice, import permit (if applicable), (c) calculate bank margin requirement: LC amount × margin rate (10–30%) and confirm available credit facility
+Responsible (R): Treasury Analyst
+Accountable (A): Corporate Treasurer
+Duration: 30 min/LC</bpmn:documentation>
+        <bpmn:incoming>W1294_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1294_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1294_Task8" name="LC issuance by bank">
+        <bpmn:documentation>Step 3: LC issuance by bank: Treasury Analyst submits LC application to relationship bank (BDO, BPI, Metrobank, or Chinabank per credit facility allocation): (a) bank reviews application and issues LC via SWIFT MT700 to vendor&#x27;s bank (advising bank), (b) bank confirms LC issuance and debits margin from BuildRight&#x27;s account, (c) Treasury Analyst records LC in treasury management system: LC number, amount, expiry, vendor, margin held, (d) LC advice sent to Import Coordinator for vendor notification
+Responsible (R): Treasury Analyst / Bank
+Accountable (A): Corporate Treasurer
+Duration: 1–3 business days</bpmn:documentation>
+        <bpmn:incoming>W1294_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1294_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1294_Task9" name="Shipping document review &amp; negotiation">
+        <bpmn:documentation>Step 4: Shipping document review &amp; negotiation: Upon vendor shipment, vendor&#x27;s bank presents shipping documents to BuildRight&#x27;s issuing bank: (a) bank examines documents against LC terms (strict compliance required per UCP 600), (b) if documents comply: bank forwards documents to Treasury Analyst for payment authorization, (c) if discrepancies: bank flags discrepancies (common: late shipment, document date errors, quantity variance); Treasury Analyst coordinates with Import Coordinator to determine if discrepancy is acceptable or requires vendor amendment
+Responsible (R): Bank / Treasury Analyst
+Accountable (A): Corporate Treasurer
+Duration: 3–5 business days</bpmn:documentation>
+        <bpmn:incoming>W1294_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1294_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1294_Task10" name="Payment authorization">
+        <bpmn:documentation>Step 5: Payment authorization: For complying documents or accepted discrepancies: (a) Treasury Analyst reviews shipping documents: verify quantities match PO, shipping terms correct, insurance adequate, (b) authorize payment: for sight LC — payment within 5 business days of document compliance, for usance LC — payment at maturity date, (c) system records AP invoice with LC payment method and due date, (d) bank debits BuildRight&#x27;s USD account at payment date and releases margin
+Responsible (R): Treasury Analyst
+Accountable (A): Corporate Treasurer
+Duration: 15 min/LC</bpmn:documentation>
+        <bpmn:incoming>W1294_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1294_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1294_Task11" name="LC closure &amp; margin release">
+        <bpmn:documentation>Step 6: LC closure &amp; margin release: Upon payment completion: (a) bank releases margin (10–30% of LC value) back to BuildRight&#x27;s account, (b) Treasury Analyst confirms margin release in treasury system, (c) update available credit facility balance, (d) archive LC documents for BIR and customs audit trail per W77, (e) feed LC cost (issuance fee, amendment fees, discrepancy fees) to AP for vendor chargeback negotiation per W7 if applicable
+Responsible (R): Treasury Analyst / Bank
+Accountable (A): Corporate Treasurer
+Duration: 15 min/LC</bpmn:documentation>
+        <bpmn:incoming>W1294_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1294_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1294_Task12" name="Monthly LC portfolio management">
+        <bpmn:documentation>Step 7: Monthly LC portfolio management: Treasury Analyst compiles monthly LC portfolio report: (a) total outstanding LC value by bank and currency, (b) total margin held by bank, (c) LC utilization rate vs. approved credit facility, (d) discrepancy rate (LCs with discrepancies ÷ total LCs) — target &lt;10%, (e) average LC processing time (application to issuance), (f) LC cost analysis (fees as % of import value)
+Responsible (R): Treasury Analyst
+Accountable (A): Corporate Treasurer
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1294_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1294_End13" name="Complete">
+        <bpmn:incoming>W1294_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1294_Annotation14">
+        <bpmn:text>Controls: - CTL-294 (ensure controlled execution — Banking &amp; Payments (PA-18.2).) | - operational: FX hedging per W80
+Owner: Treasury Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1294_Assoc15" sourceRef="W1294_Annotation14" targetRef="W1294_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1294_Flow16" sourceRef="W1294_Start5" targetRef="W1294_Task6" />
+      <bpmn:sequenceFlow id="W1294_Flow17" sourceRef="W1294_Task6" targetRef="W1294_Task7" />
+      <bpmn:sequenceFlow id="W1294_Flow18" sourceRef="W1294_Task7" targetRef="W1294_Task8" />
+      <bpmn:sequenceFlow id="W1294_Flow19" sourceRef="W1294_Task8" targetRef="W1294_Task9" />
+      <bpmn:sequenceFlow id="W1294_Flow20" sourceRef="W1294_Task9" targetRef="W1294_Task10" />
+      <bpmn:sequenceFlow id="W1294_Flow21" sourceRef="W1294_Task10" targetRef="W1294_Task11" />
+      <bpmn:sequenceFlow id="W1294_Flow22" sourceRef="W1294_Task11" targetRef="W1294_Task12" />
+      <bpmn:sequenceFlow id="W1294_Flow23" sourceRef="W1294_Task12" targetRef="W1294_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1294_diag">
+      <bpmndi:BPMNPlane id="W1294_plane" bpmnElement="W_W1294">
+        <bpmndi:BPMNShape id="W1294_Lane1_di" bpmnElement="W1294_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Lane2_di" bpmnElement="W1294_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Lane3_di" bpmnElement="W1294_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Task6_di" bpmnElement="W1294_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Task7_di" bpmnElement="W1294_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Task8_di" bpmnElement="W1294_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Task9_di" bpmnElement="W1294_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Task10_di" bpmnElement="W1294_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Task11_di" bpmnElement="W1294_Task11"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Task12_di" bpmnElement="W1294_Task12"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Start5_di" bpmnElement="W1294_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_End13_di" bpmnElement="W1294_End13"><dc:Bounds x="1890" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1294_Annotation14_di" bpmnElement="W1294_Annotation14"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1294_Flow16_di" bpmnElement="W1294_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Flow17_di" bpmnElement="W1294_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Flow18_di" bpmnElement="W1294_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Flow19_di" bpmnElement="W1294_Flow19"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Flow20_di" bpmnElement="W1294_Flow20"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Flow21_di" bpmnElement="W1294_Flow21"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Flow22_di" bpmnElement="W1294_Flow22"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Flow23_di" bpmnElement="W1294_Flow23"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1294_Assoc15_di" bpmnElement="W1294_Assoc15"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1361" name="W1361. Multi-Bank Cash Position Daily Aggregation &amp; Automated Zero-Balance Sweep" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily treasury operations cycle (every banking day morning)
+Frequency: Daily (260 banking days/year)
+Volume: 4 banking relationships (BDO, BPI, Metrobank, Chinabank) × multiple accounts per entity (5 entities) = ~20–30 bank and e-wallet settlement accounts aggregated daily (15–20 entity treasury accounts per W309 plus settlement accounts); total daily cash position ~PHP 1–3B across all accounts
+Owner: Treasury Analyst
+Participants: Treasury Analyst, Treasury Manager, CFO (approval for sweep configuration changes)
+Source: workflow W1361 — Multi-Bank Cash Position Daily Aggregation &amp; Automated Zero-Balance Sweep</bpmn:documentation>
+      <bpmn:laneSet id="W1361_LaneSet5">
+        <bpmn:lane id="W1361_Lane1" name="System">
+        <bpmn:flowNodeRef>W1361_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1361_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1361_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1361_Lane2" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1361_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1361_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1361_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1361_Lane3" name="Bank">
+        <bpmn:flowNodeRef>W1361_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1361_Lane4" name="Treasury Manager">
+        <bpmn:flowNodeRef>W1361_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1361_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1361_Start6" name="Daily treasury operations cycle (every banking day morning)">
+        <bpmn:outgoing>W1361_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1361_Task7" name="System auto-imports previous-day bank statements from all 4 banks (BDO, BPI…">
+        <bpmn:documentation>Step 1: System auto-imports previous-day bank statements from all 4 banks (BDO, BPI, Metrobank, Chinabank) via BDL/API connection by 8:00 AM
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1361_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1361_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1361_Task8" name="Treasury Analyst reviews imported balances; reconciles any failed imports or…">
+        <bpmn:documentation>Step 2: Treasury Analyst reviews imported balances; reconciles any failed imports or connection errors with respective bank IT support
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 15–30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1361_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1361_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1361_Task9" name="System generates consolidated cash position report: balances by entity, by…">
+        <bpmn:documentation>Step 3: System generates consolidated cash position report: balances by entity, by bank, by account type (operating, payroll, LC, petty cash, USD); net available position highlighted
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1361_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1361_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1361_Task10" name="For accounts with ZBS arrangement: bank automatically sweeps positive balances…">
+        <bpmn:documentation>Step 4: For accounts with ZBS arrangement: bank automatically sweeps positive balances from subsidiary accounts to master concentration account at end of banking day; system records sweep transactions
+Responsible (R): Bank / System
+Accountable (A): Treasury Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1361_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1361_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1361_Task11" name="Treasury Analyst reviews daily sweep confirmation: verifies sweep amounts match…">
+        <bpmn:documentation>Step 5: Treasury Analyst reviews daily sweep confirmation: verifies sweep amounts match expected balances; investigates any partial or failed sweeps
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 15 min/day</bpmn:documentation>
+        <bpmn:incoming>W1361_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1361_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1361_Task12" name="Treasury Manager reviews consolidated cash position dashboard by 10:00 AM…">
+        <bpmn:documentation>Step 6: Treasury Manager reviews consolidated cash position dashboard by 10:00 AM; approves any manual fund transfers needed for entities without ZBS (e.g., new accounts not yet in sweep arrangement)
+Responsible (R): Treasury Manager
+Accountable (A): CFO
+Duration: 15 min/day</bpmn:documentation>
+        <bpmn:incoming>W1361_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1361_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1361_Task13" name="Monthly: Treasury Analyst reconciles sweep transactions across all accounts…">
+        <bpmn:documentation>Step 7: Monthly: Treasury Analyst reconciles sweep transactions across all accounts; confirms ZBS configuration is correct; recommends configuration changes (add/remove accounts, change sweep timing) to Treasury Manager
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1361_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1361_End14" name="Complete">
+        <bpmn:incoming>W1361_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1361_Annotation15">
+        <bpmn:text>Controls: - CTL-294 (ensure controlled execution — Banking &amp; Payments (PA-18.2).) | - operational: Treasury Analyst review and approval gate; operational: periodic reconciliation against source documents
+Owner: Treasury Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1361_Assoc16" sourceRef="W1361_Annotation15" targetRef="W1361_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1361_Flow17" sourceRef="W1361_Start6" targetRef="W1361_Task7" />
+      <bpmn:sequenceFlow id="W1361_Flow18" sourceRef="W1361_Task7" targetRef="W1361_Task8" />
+      <bpmn:sequenceFlow id="W1361_Flow19" sourceRef="W1361_Task8" targetRef="W1361_Task9" />
+      <bpmn:sequenceFlow id="W1361_Flow20" sourceRef="W1361_Task9" targetRef="W1361_Task10" />
+      <bpmn:sequenceFlow id="W1361_Flow21" sourceRef="W1361_Task10" targetRef="W1361_Task11" />
+      <bpmn:sequenceFlow id="W1361_Flow22" sourceRef="W1361_Task11" targetRef="W1361_Task12" />
+      <bpmn:sequenceFlow id="W1361_Flow23" sourceRef="W1361_Task12" targetRef="W1361_Task13" />
+      <bpmn:sequenceFlow id="W1361_Flow24" sourceRef="W1361_Task13" targetRef="W1361_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1361_diag">
+      <bpmndi:BPMNPlane id="W1361_plane" bpmnElement="W_W1361">
+        <bpmndi:BPMNShape id="W1361_Lane1_di" bpmnElement="W1361_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Lane2_di" bpmnElement="W1361_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Lane3_di" bpmnElement="W1361_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Lane4_di" bpmnElement="W1361_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Task7_di" bpmnElement="W1361_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Task8_di" bpmnElement="W1361_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Task9_di" bpmnElement="W1361_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Task10_di" bpmnElement="W1361_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Task11_di" bpmnElement="W1361_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Task12_di" bpmnElement="W1361_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Task13_di" bpmnElement="W1361_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Start6_di" bpmnElement="W1361_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_End14_di" bpmnElement="W1361_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1361_Annotation15_di" bpmnElement="W1361_Annotation15"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1361_Flow17_di" bpmnElement="W1361_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Flow18_di" bpmnElement="W1361_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Flow19_di" bpmnElement="W1361_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Flow20_di" bpmnElement="W1361_Flow20"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Flow21_di" bpmnElement="W1361_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Flow22_di" bpmnElement="W1361_Flow22"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Flow23_di" bpmnElement="W1361_Flow23"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Flow24_di" bpmnElement="W1361_Flow24"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1361_Assoc16_di" bpmnElement="W1361_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1362" name="W1362. Vendor Payment Run Execution, File Generation &amp; Multi-Bank Disbursement Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Approved vendor payment batch in AP module; or scheduled payment run date (typically twice weekly: Tuesday and Thursday)
+Frequency: 2 payment runs/week; ~8–9 runs/month
+Volume: ~6,715 merchandise vendor invoices + ~2,000–3,000 non-PO invoices = ~8,500–9,500 AP invoices/month; ~1,000–1,500 invoices paid per run
+Owner: Treasury Analyst
+Participants: Treasury Analyst, AP Manager (approval), Treasury Manager (final authorization), Bank (processing), CFO (large-value authorization)
+Source: workflow W1362 — Vendor Payment Run Execution, File Generation &amp; Multi-Bank Disbursement Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1362_LaneSet5">
+        <bpmn:lane id="W1362_Lane1" name="AP Manager">
+        <bpmn:flowNodeRef>W1362_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1362_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1362_Lane2" name="System">
+        <bpmn:flowNodeRef>W1362_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1362_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1362_Lane3" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1362_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1362_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1362_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1362_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1362_Lane4" name="Treasury Manager">
+        <bpmn:flowNodeRef>W1362_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1362_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1362_Start6" name="Approved vendor payment batch in AP module; or scheduled payment run date (typically…">
+        <bpmn:outgoing>W1362_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1362_Task7" name="AP Manager reviews aged payables; selects invoices for payment in current run…">
+        <bpmn:documentation>Step 1: AP Manager reviews aged payables; selects invoices for payment in current run based on due date, discount eligibility, and cash availability (W88); proposes payment batch
+Responsible (R): AP Manager
+Accountable (A): Treasury Manager
+Duration: 1–2 hours/run</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1362_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1362_Task8" name="System applies automatic netting: deducts withholding tax (EWT per BIR rates)…">
+        <bpmn:documentation>Step 2: System applies automatic netting: deducts withholding tax (EWT per BIR rates), offsets vendor debit memos, applies early payment discounts where eligible
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1362_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1362_Task9" name="Treasury Analyst reviews proposed payment batch: verifies total amount against…">
+        <bpmn:documentation>Step 3: Treasury Analyst reviews proposed payment batch: verifies total amount against cash position forecast, confirms bank account funding sufficiency, checks for duplicate invoices or unusual amounts
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 30–45 min/run</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1362_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1362_Task10" name="Treasury Analyst generates payment files per bank: PESONet batch file for…">
+        <bpmn:documentation>Step 4: Treasury Analyst generates payment files per bank: PESONet batch file for BDO/BPI/Metrobank domestic transfers; check printing file for check payments; SWIFT MT103 for USD wire transfers; LC settlement instructions for import payments
+Responsible (R): Treasury Analyst
+Accountable (A): —
+Duration: 15–30 min/run</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1362_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1362_Task11" name="Treasury Manager reviews and authorizes payment batch: dual-control sign-off…">
+        <bpmn:documentation>Step 5: Treasury Manager reviews and authorizes payment batch: dual-control sign-off required (Treasury Analyst prepares, Treasury Manager authorizes); for payments &gt; PHP 5M per vendor, CFO authorization also required
+Responsible (R): Treasury Manager / CFO
+Accountable (A): CFO
+Duration: 15–30 min/run</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1362_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1362_Task12" name="Treasury Analyst uploads payment files to respective bank portals (BDO, BPI…">
+        <bpmn:documentation>Step 6: Treasury Analyst uploads payment files to respective bank portals (BDO, BPI, Metrobank, Chinabank); confirms file acceptance and processing status
+Responsible (R): Treasury Analyst
+Accountable (A): —
+Duration: 15–20 min/run</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1362_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1362_Task13" name="System updates AP invoices to &quot;Paid&quot; status; generates payment confirmation…">
+        <bpmn:documentation>Step 7: System updates AP invoices to &quot;Paid&quot; status; generates payment confirmation; transmits remittance advice to vendors via email/vendor portal
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1362_Flow24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1362_Task14" name="Next day: Treasury Analyst reconciles bank debit confirmations against payment…">
+        <bpmn:documentation>Step 8: Next day: Treasury Analyst reconciles bank debit confirmations against payment batch; investigates any rejected or returned payments
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 15–30 min/run</bpmn:documentation>
+        <bpmn:incoming>W1362_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1362_End15" name="Complete">
+        <bpmn:incoming>W1362_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1362_Annotation16">
+        <bpmn:text>Controls: - CTL-294 (ensure controlled execution — Banking &amp; Payments (PA-18.2).) | - operational: Treasury Analyst review and approval gate; operational: periodic reconciliation against source documents
+Owner: Treasury Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1362_Assoc17" sourceRef="W1362_Annotation16" targetRef="W1362_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1362_Flow18" sourceRef="W1362_Start6" targetRef="W1362_Task7" />
+      <bpmn:sequenceFlow id="W1362_Flow19" sourceRef="W1362_Task7" targetRef="W1362_Task8" />
+      <bpmn:sequenceFlow id="W1362_Flow20" sourceRef="W1362_Task8" targetRef="W1362_Task9" />
+      <bpmn:sequenceFlow id="W1362_Flow21" sourceRef="W1362_Task9" targetRef="W1362_Task10" />
+      <bpmn:sequenceFlow id="W1362_Flow22" sourceRef="W1362_Task10" targetRef="W1362_Task11" />
+      <bpmn:sequenceFlow id="W1362_Flow23" sourceRef="W1362_Task11" targetRef="W1362_Task12" />
+      <bpmn:sequenceFlow id="W1362_Flow24" sourceRef="W1362_Task12" targetRef="W1362_Task13" />
+      <bpmn:sequenceFlow id="W1362_Flow25" sourceRef="W1362_Task13" targetRef="W1362_Task14" />
+      <bpmn:sequenceFlow id="W1362_Flow26" sourceRef="W1362_Task14" targetRef="W1362_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1362_diag">
+      <bpmndi:BPMNPlane id="W1362_plane" bpmnElement="W_W1362">
+        <bpmndi:BPMNShape id="W1362_Lane1_di" bpmnElement="W1362_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Lane2_di" bpmnElement="W1362_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Lane3_di" bpmnElement="W1362_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Lane4_di" bpmnElement="W1362_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task7_di" bpmnElement="W1362_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task8_di" bpmnElement="W1362_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task9_di" bpmnElement="W1362_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task10_di" bpmnElement="W1362_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task11_di" bpmnElement="W1362_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task12_di" bpmnElement="W1362_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task13_di" bpmnElement="W1362_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Task14_di" bpmnElement="W1362_Task14"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Start6_di" bpmnElement="W1362_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_End15_di" bpmnElement="W1362_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1362_Annotation16_di" bpmnElement="W1362_Annotation16"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1362_Flow18_di" bpmnElement="W1362_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow19_di" bpmnElement="W1362_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow20_di" bpmnElement="W1362_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow21_di" bpmnElement="W1362_Flow21"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow22_di" bpmnElement="W1362_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow23_di" bpmnElement="W1362_Flow23"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow24_di" bpmnElement="W1362_Flow24"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow25_di" bpmnElement="W1362_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Flow26_di" bpmnElement="W1362_Flow26"><di:waypoint x="2050" y="505" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1362_Assoc17_di" bpmnElement="W1362_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5559" name="W5559. Vendor Payment-Diversion &amp; Business Email Compromise (BEC) Fraud Event Response &amp; Recovery Protocol" isExecutable="false">
+      <bpmn:documentation>Trigger: Discovery that a completed BuildRight disbursement was diverted to a fraudster-controlled account — the vendor reports payments unpaid after a bank-detail change, a bank flags a beneficiary anomaly, or review finds a vendor-master bank change immediately followed by payment runs — or the near-miss variant: an executive-impersonation urgent-transfer request intercepted before execution
+Frequency: Low-single-digit attempted events per year — BEC is named in this PA&#x27;s own risk register as the most common payment-fraud vector in Philippine corporate treasury; successful diversion is rarer wherever CTL-59&#x27;s callback discipline held
+Volume: 1 event × the diverted tranche (typically 1–6 payments inside one W1362 run; a PHP 0.3M–8M exposure band) × the recovery surface (bank recall window, beneficiary bank, police case, crime-policy claim)
+Owner: Treasury Manager
+Participants: CFO, AP Manager (VS-15.1 invoice-match chain W556/W770), Vendor Master Data steward (VS-29 change audit trail), Legal Counsel (VS-100), Fraud Management Lead (VS-125), IT Security (W383; mailbox audit per W5518), Insurance Coordinator (VS-26 crime/fidelity policy), Internal Audit (VS-21), the affected vendor&#x27;s pre-change verified contacts, BuildRight&#x27;s bank fraud desk and the beneficiary bank, PNP Anti-Cybercrime Group
+Source: workflow W5559 — Vendor Payment-Diversion &amp; Business Email Compromise (BEC) Fraud Event Response &amp; Recovery Protocol</bpmn:documentation>
+      <bpmn:laneSet id="W5559_LaneSet7">
+        <bpmn:lane id="W5559_Lane1" name="Treasury Manager">
+        <bpmn:flowNodeRef>W5559_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5559_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5559_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5559_Lane2" name="IT Security">
+        <bpmn:flowNodeRef>W5559_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5559_Lane3" name="Legal">
+        <bpmn:flowNodeRef>W5559_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5559_Lane4" name="Treasury">
+        <bpmn:flowNodeRef>W5559_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5559_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5559_Lane5" name="Insurance Coordinator">
+        <bpmn:flowNodeRef>W5559_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5559_Lane6" name="Internal Audit">
+        <bpmn:flowNodeRef>W5559_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5559_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5559_Start8" name="Discovery that a completed BuildRight disbursement was diverted to a fraudster-controlled…">
+        <bpmn:outgoing>W5559_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5559_Task9" name="Verify &amp; freeze">
+        <bpmn:documentation>Step 1: Verify &amp; freeze: confirm the fraud with the vendor through the pre-change verified contact held in the W317 account records — never any contact detail supplied on the change request or in the fraudulent correspondence; freeze all pending payments to the vendor; suspend the vendor-master record from further runs
+Responsible (R): Treasury Manager / AP Manager
+Accountable (A): CFO
+Duration: Same day</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W5559_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5559_Task10" name="Bank recall &amp; trace race">
+        <bpmn:documentation>Step 2: Bank recall &amp; trace race: fraud-desk engagement on both sides (remitting bank + beneficiary bank) within hours — PESONet/InstaPay recall odds collapse after the first day; document the recall trail; request a beneficiary-bank freeze while funds remain
+Responsible (R): Treasury Manager / Bank Fraud Desk
+Accountable (A): CFO
+Duration: First 24–72 hours</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W5559_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5559_Task11" name="Classify &amp; forensically contain">
+        <bpmn:documentation>Step 3: Classify &amp; forensically contain: internal (collusion/insider — the VS-29 vendor-master change audit trail shows who changed what, when, from where) vs external (mailbox compromise — export mail rules and M365 audit logs per W5518; W383 handles the host/incident core); executive-impersonation variant → preserve the correspondence and call logs
+Responsible (R): IT Security / Internal Audit
+Accountable (A): CFO
+Duration: 2–5 days</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W5559_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5559_Task12" name="Police &amp; regulatory referral">
+        <bpmn:documentation>Step 4: Police &amp; regulatory referral: sworn affidavit and evidence pack (change requests, before/after bank-detail snapshots, payment confirmations, recall trail) to PNP ACG under RA 10175; AML officer consulted where a covered-entity channel (VS-86 estate) touched the flow
+Responsible (R): Legal / Treasury
+Accountable (A): VP Legal
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W5559_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5559_Task13" name="Honest-ledger treatment">
+        <bpmn:documentation>Step 5: Honest-ledger treatment: reverse the misdirected application — the diverted payment does not discharge the payable; keep the vendor&#x27;s aging truthful; park the loss in a fraud-recovery suspense account; written notice to the vendor and re-payment of the still-owed invoices over verified rails
+Responsible (R): Treasury / AP / Corporate Accounting
+Accountable (A): CFO
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W5559_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5559_Task14" name="Recovery &amp; insurance">
+        <bpmn:documentation>Step 6: Recovery &amp; insurance: fidelity/crime-policy notice filed within the policy window (VS-26); restitution pursued through the criminal case; no double-claim against the bank absent its own control failure
+Responsible (R): Insurance Coordinator / Legal
+Accountable (A): CFO
+Duration: 1–4 months</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W5559_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5559_Task15" name="Verification retrofit &amp; sweep">
+        <bpmn:documentation>Step 7: Verification retrofit &amp; sweep: dual-channel callback audit of every vendor bank-detail change in the trailing 90 days; cooling-off window before the first payment to any changed account (the CTL-59 extension); callback evidence attached to the master-data change record; red-card briefing to Treasury and AP on the urgent-transfer impersonation script
+Responsible (R): Treasury / Vendor Master Data / Internal Audit
+Accountable (A): CFO
+Duration: 2–3 weeks</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W5559_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5559_Task16" name="Case closure &amp; intelligence">
+        <bpmn:documentation>Step 8: Case closure &amp; intelligence: full case file to the VS-21/VS-125 fraud-intelligence registers; loss and recovery reconciled; the control-failure note documented for the CTL-59 control owner
+Responsible (R): Internal Audit / Fraud Management
+Accountable (A): CFO
+Duration: 2–4 weeks</bpmn:documentation>
+        <bpmn:incoming>W5559_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5559_End17" name="Complete">
+        <bpmn:incoming>W5559_Flow28</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5559_Annotation18">
+        <bpmn:text>Controls: - CTL-59 (prevent unauthorized bank account changes) | - CTL-62 (ensure electronic banking security) | - operational: dual-channel callback on every bank-detail change before the next payment run; diverted funds never netted against the vendor payable; bank recall initiated within 24 hours of discovery
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5559_Assoc19" sourceRef="W5559_Annotation18" targetRef="W5559_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5559_Flow20" sourceRef="W5559_Start8" targetRef="W5559_Task9" />
+      <bpmn:sequenceFlow id="W5559_Flow21" sourceRef="W5559_Task9" targetRef="W5559_Task10" />
+      <bpmn:sequenceFlow id="W5559_Flow22" sourceRef="W5559_Task10" targetRef="W5559_Task11" />
+      <bpmn:sequenceFlow id="W5559_Flow23" sourceRef="W5559_Task11" targetRef="W5559_Task12" />
+      <bpmn:sequenceFlow id="W5559_Flow24" sourceRef="W5559_Task12" targetRef="W5559_Task13" />
+      <bpmn:sequenceFlow id="W5559_Flow25" sourceRef="W5559_Task13" targetRef="W5559_Task14" />
+      <bpmn:sequenceFlow id="W5559_Flow26" sourceRef="W5559_Task14" targetRef="W5559_Task15" />
+      <bpmn:sequenceFlow id="W5559_Flow27" sourceRef="W5559_Task15" targetRef="W5559_Task16" />
+      <bpmn:sequenceFlow id="W5559_Flow28" sourceRef="W5559_Task16" targetRef="W5559_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5559_diag">
+      <bpmndi:BPMNPlane id="W5559_plane" bpmnElement="W_W5559">
+        <bpmndi:BPMNShape id="W5559_Lane1_di" bpmnElement="W5559_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Lane2_di" bpmnElement="W5559_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Lane3_di" bpmnElement="W5559_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Lane4_di" bpmnElement="W5559_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Lane5_di" bpmnElement="W5559_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Lane6_di" bpmnElement="W5559_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task9_di" bpmnElement="W5559_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task10_di" bpmnElement="W5559_Task10"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task11_di" bpmnElement="W5559_Task11"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task12_di" bpmnElement="W5559_Task12"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task13_di" bpmnElement="W5559_Task13"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task14_di" bpmnElement="W5559_Task14"><dc:Bounds x="1450" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task15_di" bpmnElement="W5559_Task15"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Task16_di" bpmnElement="W5559_Task16"><dc:Bounds x="1870" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Start8_di" bpmnElement="W5559_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_End17_di" bpmnElement="W5559_End17"><dc:Bounds x="2100" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5559_Annotation18_di" bpmnElement="W5559_Annotation18"><dc:Bounds x="160" y="1140" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5559_Flow20_di" bpmnElement="W5559_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow21_di" bpmnElement="W5559_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow22_di" bpmnElement="W5559_Flow22"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow23_di" bpmnElement="W5559_Flow23"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow24_di" bpmnElement="W5559_Flow24"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow25_di" bpmnElement="W5559_Flow25"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow26_di" bpmnElement="W5559_Flow26"><di:waypoint x="1630" y="845" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow27_di" bpmnElement="W5559_Flow27"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Flow28_di" bpmnElement="W5559_Flow28"><di:waypoint x="2050" y="1015" /><di:waypoint x="2100" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5559_Assoc19_di" bpmnElement="W5559_Assoc19"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

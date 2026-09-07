@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-31.1-incoming-quality-inspection" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1600" name="W1600. DC Goods Receipt Quality Sampling &amp; Acceptance" isExecutable="false">
+      <bpmn:documentation>Trigger: Goods receipt at DC (against PO or transfer order per W18/W4)
+Frequency: ~6,000 goods receipts/month across 4 DCs
+Volume: ~1,500 GRs/DC/month; quality sampling on ~40% of GRs (high-value, new vendor, seasonal, flagged categories)
+Owner: DC Quality Inspector
+Participants: DC Quality Inspector, Receiving Clerk, DC Supervisor, Buyer
+Source: workflow W1600 — DC Goods Receipt Quality Sampling &amp; Acceptance</bpmn:documentation>
+      <bpmn:laneSet id="W1600_LaneSet5">
+        <bpmn:lane id="W1600_Lane1" name="System">
+        <bpmn:flowNodeRef>W1600_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1600_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1600_Lane2" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1600_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1600_Lane3" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1600_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1600_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1600_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1600_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1600_Lane4" name="DC Supervisor">
+        <bpmn:flowNodeRef>W1600_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1600_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1600_Start6" name="Goods receipt at DC (against PO or transfer order per W18/W4)">
+        <bpmn:outgoing>W1600_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1600_Task7" name="System auto-flags GR for quality inspection based on rules: (a) new vendor…">
+        <bpmn:documentation>Step 1: System auto-flags GR for quality inspection based on rules: (a) new vendor (first 3 shipments), (b) vendor with quality score &lt; 80%, (c) high-value PO line &gt; PHP 500K, (d) category flagged for inspection (electrical, paint/chemical, power tools), (e) random sample at configurable rate per category (default 10%)
+Responsible (R): System
+Accountable (A): DC Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1600_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1600_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1600_Task8" name="Receiving Clerk completes standard GR (quantity, condition check); system…">
+        <bpmn:documentation>Step 2: Receiving Clerk completes standard GR (quantity, condition check); system places flagged items in &quot;Quality Hold&quot; status — inventory recorded but unavailable for allocation or shipment
+Responsible (R): Receiving Clerk
+Accountable (A): DC Supervisor
+Duration: 5 min/pallet</bpmn:documentation>
+        <bpmn:incoming>W1600_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1600_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1600_Task9" name="DC Quality Inspector pulls AQL sampling plan per SKU category (per W1604…">
+        <bpmn:documentation>Step 3: DC Quality Inspector pulls AQL sampling plan per SKU category (per W1604 configuration): (a) selects random sample from received lot per AQL table (e.g., ISO 2859-1 General Inspection Level II), (b) performs visual inspection (packaging integrity, labeling accuracy, product appearance), (c) performs dimensional/functional checks per category checklist (electrical: plug fit test; tools: torque test; tiles: dimensional tolerance ±1mm), (d) checks required certifications/markings (PS mark, ICC sticker, FPA registration for chemicals)
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 15–30 min/lot</bpmn:documentation>
+        <bpmn:incoming>W1600_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1600_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1600_Task10" name="Pass">
+        <bpmn:documentation>Step 4: Pass: Inspector records &quot;Accept&quot; in quality inspection module; system releases inventory from Quality Hold to available stock; GR proceeds to putaway per W18
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1600_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1600_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1600_Task11" name="Fail — Minor">
+        <bpmn:documentation>Step 5: Fail — Minor: Inspector records defect type and quantity; system accepts lot with defect notation; defect rate feeds vendor scorecard per W44; inventory released with &quot;Accepted with Deviation&quot; status
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1600_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1600_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1600_Task12" name="Fail — Major/Reject">
+        <bpmn:documentation>Step 6: Fail — Major/Reject: Inspector records &quot;Reject&quot; with defect description and photos; system keeps inventory in Quality Hold; notifies Buyer and Category Manager; defective items quarantined for RTV per W88/W1280 or vendor negotiation; acceptable portion released
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor / Buyer
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1600_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1600_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1600_Task13" name="Monthly: DC Supervisor generates quality inspection summary report — pass rate…">
+        <bpmn:documentation>Step 7: Monthly: DC Supervisor generates quality inspection summary report — pass rate by vendor, by category, by DC; defect trend analysis; feeds into vendor quality review per W1608 (W31.2)
+Responsible (R): DC Supervisor
+Accountable (A): VP Supply Chain
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1600_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1600_End14" name="Complete">
+        <bpmn:incoming>W1600_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1600_Annotation15">
+        <bpmn:text>Controls: - CTL-334 (ensure controlled execution — Incoming Quality Inspection &amp; Control (PA-31.1).) | - operational: DC Quality Inspector review and approval gate
+Owner: DC Quality Inspector</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1600_Assoc16" sourceRef="W1600_Annotation15" targetRef="W1600_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1600_Flow17" sourceRef="W1600_Start6" targetRef="W1600_Task7" />
+      <bpmn:sequenceFlow id="W1600_Flow18" sourceRef="W1600_Task7" targetRef="W1600_Task8" />
+      <bpmn:sequenceFlow id="W1600_Flow19" sourceRef="W1600_Task8" targetRef="W1600_Task9" />
+      <bpmn:sequenceFlow id="W1600_Flow20" sourceRef="W1600_Task9" targetRef="W1600_Task10" />
+      <bpmn:sequenceFlow id="W1600_Flow21" sourceRef="W1600_Task10" targetRef="W1600_Task11" />
+      <bpmn:sequenceFlow id="W1600_Flow22" sourceRef="W1600_Task11" targetRef="W1600_Task12" />
+      <bpmn:sequenceFlow id="W1600_Flow23" sourceRef="W1600_Task12" targetRef="W1600_Task13" />
+      <bpmn:sequenceFlow id="W1600_Flow24" sourceRef="W1600_Task13" targetRef="W1600_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1600_diag">
+      <bpmndi:BPMNPlane id="W1600_plane" bpmnElement="W_W1600">
+        <bpmndi:BPMNShape id="W1600_Lane1_di" bpmnElement="W1600_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Lane2_di" bpmnElement="W1600_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Lane3_di" bpmnElement="W1600_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Lane4_di" bpmnElement="W1600_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Task7_di" bpmnElement="W1600_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Task8_di" bpmnElement="W1600_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Task9_di" bpmnElement="W1600_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Task10_di" bpmnElement="W1600_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Task11_di" bpmnElement="W1600_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Task12_di" bpmnElement="W1600_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Task13_di" bpmnElement="W1600_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Start6_di" bpmnElement="W1600_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_End14_di" bpmnElement="W1600_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1600_Annotation15_di" bpmnElement="W1600_Annotation15"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1600_Flow17_di" bpmnElement="W1600_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Flow18_di" bpmnElement="W1600_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Flow19_di" bpmnElement="W1600_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Flow20_di" bpmnElement="W1600_Flow20"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Flow21_di" bpmnElement="W1600_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Flow22_di" bpmnElement="W1600_Flow22"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Flow23_di" bpmnElement="W1600_Flow23"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Flow24_di" bpmnElement="W1600_Flow24"><di:waypoint x="1840" y="675" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1600_Assoc16_di" bpmnElement="W1600_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1601" name="W1601. Store-Level DSD Quality Verification" isExecutable="false">
+      <bpmn:documentation>Trigger: Direct store delivery (DSD) goods arrival at store — ~500–600 DSD receipts/month (~30% of inbound by value)
+Frequency: ~2–3 DSD deliveries per store per month (varies; stores with lumber/cement yards receive more)
+Volume: ~500–600 DSD receipts/month across 200 stores (per profile §7.1 and the Trigger)
+Owner: Receiving Clerk
+Participants: Receiving Clerk, Department Supervisor, Vendor Driver
+Source: workflow W1601 — Store-Level DSD Quality Verification</bpmn:documentation>
+      <bpmn:laneSet id="W1601_LaneSet3">
+        <bpmn:lane id="W1601_Lane1" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1601_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1601_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1601_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1601_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1601_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1601_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1601_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W1601_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1601_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1601_Start4" name="Direct store delivery (DSD) goods arrival at store — ~500–600 DSD receipts/month (~30% of…">
+        <bpmn:outgoing>W1601_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1601_Task5" name="Vendor driver arrives with delivery; Receiving Clerk accesses PO/ASN in system…">
+        <bpmn:documentation>Step 1: Vendor driver arrives with delivery; Receiving Clerk accesses PO/ASN in system; checks delivery against expected PO: vendor, items, quantities
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 5 min/delivery</bpmn:documentation>
+        <bpmn:incoming>W1601_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1601_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1601_Task6" name="Quick quality verification: (a) visual inspection of packaging integrity (no…">
+        <bpmn:documentation>Step 2: Quick quality verification: (a) visual inspection of packaging integrity (no crushed boxes, wet damage, broken seals), (b) count check against packing slip, (c) check cement for clumping/lumpiness (indicates moisture exposure), (d) check lumber for warping, cracks, or insect damage, (e) check tile boxes for breakage (shake test — rattling indicates broken tiles inside)
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 5 min/delivery</bpmn:documentation>
+        <bpmn:incoming>W1601_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1601_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1601_Task7" name="Accept">
+        <bpmn:documentation>Step 3: Accept: Clerk processes GR in system; inventory updated; driver signs delivery receipt
+Responsible (R): Receiving Clerk
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1601_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1601_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1601_Task8" name="Partial Reject">
+        <bpmn:documentation>Step 4: Partial Reject: Clerk records damaged/defective items with photo; processes GR for accepted quantity only; rejected items returned on driver&#x27;s truck; system creates discrepancy record for AP matching per W7
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1601_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1601_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1601_Task9" name="Full Reject">
+        <bpmn:documentation>Step 5: Full Reject: Clerk refuses delivery; records rejection reason with photos; notifies Buyer; system creates rejection record; vendor must reschedule delivery
+Responsible (R): Receiving Clerk
+Accountable (A): Store Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1601_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1601_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1601_Task10" name="Weekly: Store Manager reviews DSD rejection rate; stores with rejection rate &gt;…">
+        <bpmn:documentation>Step 6: Weekly: Store Manager reviews DSD rejection rate; stores with rejection rate &gt; 5% flagged for Buyer investigation of vendor delivery quality
+Responsible (R): Store Manager
+Accountable (A): VP Merchandising
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W1601_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1601_End11" name="Complete">
+        <bpmn:incoming>W1601_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1601_Annotation12">
+        <bpmn:text>Controls: - CTL-334 (ensure controlled execution — Incoming Quality Inspection &amp; Control (PA-31.1).) | - operational: Receiving Clerk review and approval gate
+Owner: Receiving Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1601_Assoc13" sourceRef="W1601_Annotation12" targetRef="W1601_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1601_Flow14" sourceRef="W1601_Start4" targetRef="W1601_Task5" />
+      <bpmn:sequenceFlow id="W1601_Flow15" sourceRef="W1601_Task5" targetRef="W1601_Task6" />
+      <bpmn:sequenceFlow id="W1601_Flow16" sourceRef="W1601_Task6" targetRef="W1601_Task7" />
+      <bpmn:sequenceFlow id="W1601_Flow17" sourceRef="W1601_Task7" targetRef="W1601_Task8" />
+      <bpmn:sequenceFlow id="W1601_Flow18" sourceRef="W1601_Task8" targetRef="W1601_Task9" />
+      <bpmn:sequenceFlow id="W1601_Flow19" sourceRef="W1601_Task9" targetRef="W1601_Task10" />
+      <bpmn:sequenceFlow id="W1601_Flow20" sourceRef="W1601_Task10" targetRef="W1601_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1601_diag">
+      <bpmndi:BPMNPlane id="W1601_plane" bpmnElement="W_W1601">
+        <bpmndi:BPMNShape id="W1601_Lane1_di" bpmnElement="W1601_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Lane2_di" bpmnElement="W1601_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Task5_di" bpmnElement="W1601_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Task6_di" bpmnElement="W1601_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Task7_di" bpmnElement="W1601_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Task8_di" bpmnElement="W1601_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Task9_di" bpmnElement="W1601_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Task10_di" bpmnElement="W1601_Task10"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Start4_di" bpmnElement="W1601_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_End11_di" bpmnElement="W1601_End11"><dc:Bounds x="1680" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1601_Annotation12_di" bpmnElement="W1601_Annotation12"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1601_Flow14_di" bpmnElement="W1601_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1601_Flow15_di" bpmnElement="W1601_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1601_Flow16_di" bpmnElement="W1601_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1601_Flow17_di" bpmnElement="W1601_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1601_Flow18_di" bpmnElement="W1601_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1601_Flow19_di" bpmnElement="W1601_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1601_Flow20_di" bpmnElement="W1601_Flow20"><di:waypoint x="1630" y="335" /><di:waypoint x="1680" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1601_Assoc13_di" bpmnElement="W1601_Assoc13"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1602" name="W1602. Import Shipment Pre-Delivery Inspection (PDI)" isExecutable="false">
+      <bpmn:documentation>Trigger: Import container arrives at Philippine port; customs clearance pending or completed
+Frequency: ~400–600 TEUs/month
+Volume: ~100–150 TEUs/week requiring PDI
+Owner: Supply Chain Manager — Imports
+Participants: Import Coordinator, Customs Broker, DC Quality Inspector, Buyer
+Source: workflow W1602 — Import Shipment Pre-Delivery Inspection (PDI)</bpmn:documentation>
+      <bpmn:laneSet id="W1602_LaneSet4">
+        <bpmn:lane id="W1602_Lane1" name="Import Coordinator">
+        <bpmn:flowNodeRef>W1602_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1602_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1602_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1602_Lane2" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1602_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1602_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1602_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1602_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1602_Lane3" name="Supply Chain Manager">
+        <bpmn:flowNodeRef>W1602_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1602_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1602_Start5" name="Import container arrives at Philippine port; customs clearance pending or completed">
+        <bpmn:outgoing>W1602_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1602_Task6" name="Import Coordinator receives container arrival notice from shipping line…">
+        <bpmn:documentation>Step 1: Import Coordinator receives container arrival notice from shipping line; schedules PDI at port/warehouse or at DC depending on customs status
+Responsible (R): Import Coordinator
+Accountable (A): Supply Chain Manager
+Duration: 30 min/container</bpmn:documentation>
+        <bpmn:incoming>W1602_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1602_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1602_Task7" name="DC Quality Inspector performs PDI at container opening: (a) container condition…">
+        <bpmn:documentation>Step 2: DC Quality Inspector performs PDI at container opening: (a) container condition check (seal integrity, water ingress, pest evidence, temperature log if applicable), (b) damage assessment of visible outer cartons, (c) count check of pallets/cartons against packing list, (d) random sampling of inner contents (open 3–5 cartons per container for detailed inspection), (e) photograph container condition and any damage
+Responsible (R): DC Quality Inspector
+Accountable (A): Supply Chain Manager
+Duration: 1–2 hours/container</bpmn:documentation>
+        <bpmn:incoming>W1602_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1602_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1602_Task8" name="Pass">
+        <bpmn:documentation>Step 3: Pass: Inspector signs PDI report; container released to DC for standard GR per W18
+Responsible (R): DC Quality Inspector
+Accountable (A): Supply Chain Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1602_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1602_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1602_Task9" name="Fail — Damage">
+        <bpmn:documentation>Step 4: Fail — Damage: Inspector documents damage with photos; notifies Import Coordinator; initiates cargo insurance claim per W26.3/W837; salvageable goods processed at discounted valuation; damaged goods dispositioned per W91
+Responsible (R): DC Quality Inspector
+Accountable (A): Supply Chain Manager / Insurance Officer
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1602_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1602_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1602_Task10" name="Fail — Quality">
+        <bpmn:documentation>Step 5: Fail — Quality: Inspector documents quality defects; notifies Buyer; Buyer contacts vendor for remediation (replacement shipment, credit note, price concession); defective goods quarantined pending vendor response
+Responsible (R): DC Quality Inspector / Buyer
+Accountable (A): Supply Chain Manager / Category Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W1602_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1602_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1602_Task11" name="Import Coordinator files carrier claim for transit damage if carrier liability…">
+        <bpmn:documentation>Step 6: Import Coordinator files carrier claim for transit damage if carrier liability established; tracks claim through to settlement
+Responsible (R): Import Coordinator
+Accountable (A): Supply Chain Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1602_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1602_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1602_Task12" name="Monthly: Supply Chain Manager reviews import PDI report — damage rate by origin…">
+        <bpmn:documentation>Step 7: Monthly: Supply Chain Manager reviews import PDI report — damage rate by origin port, carrier, and vendor; feeds into carrier selection and vendor quality evaluation
+Responsible (R): Supply Chain Manager
+Accountable (A): VP Supply Chain
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1602_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1602_End13" name="Complete">
+        <bpmn:incoming>W1602_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1602_Annotation14">
+        <bpmn:text>Controls: - CTL-229 (ensure supplier quality &amp; product-safety verification.) | - operational: Supply Chain Manager — Imports review and approval gate
+Owner: Supply Chain Manager — Imports</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1602_Assoc15" sourceRef="W1602_Annotation14" targetRef="W1602_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1602_Flow16" sourceRef="W1602_Start5" targetRef="W1602_Task6" />
+      <bpmn:sequenceFlow id="W1602_Flow17" sourceRef="W1602_Task6" targetRef="W1602_Task7" />
+      <bpmn:sequenceFlow id="W1602_Flow18" sourceRef="W1602_Task7" targetRef="W1602_Task8" />
+      <bpmn:sequenceFlow id="W1602_Flow19" sourceRef="W1602_Task8" targetRef="W1602_Task9" />
+      <bpmn:sequenceFlow id="W1602_Flow20" sourceRef="W1602_Task9" targetRef="W1602_Task10" />
+      <bpmn:sequenceFlow id="W1602_Flow21" sourceRef="W1602_Task10" targetRef="W1602_Task11" />
+      <bpmn:sequenceFlow id="W1602_Flow22" sourceRef="W1602_Task11" targetRef="W1602_Task12" />
+      <bpmn:sequenceFlow id="W1602_Flow23" sourceRef="W1602_Task12" targetRef="W1602_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1602_diag">
+      <bpmndi:BPMNPlane id="W1602_plane" bpmnElement="W_W1602">
+        <bpmndi:BPMNShape id="W1602_Lane1_di" bpmnElement="W1602_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Lane2_di" bpmnElement="W1602_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Lane3_di" bpmnElement="W1602_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Task6_di" bpmnElement="W1602_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Task7_di" bpmnElement="W1602_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Task8_di" bpmnElement="W1602_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Task9_di" bpmnElement="W1602_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Task10_di" bpmnElement="W1602_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Task11_di" bpmnElement="W1602_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Task12_di" bpmnElement="W1602_Task12"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Start5_di" bpmnElement="W1602_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_End13_di" bpmnElement="W1602_End13"><dc:Bounds x="1890" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1602_Annotation14_di" bpmnElement="W1602_Annotation14"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1602_Flow16_di" bpmnElement="W1602_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Flow17_di" bpmnElement="W1602_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Flow18_di" bpmnElement="W1602_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Flow19_di" bpmnElement="W1602_Flow19"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Flow20_di" bpmnElement="W1602_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Flow21_di" bpmnElement="W1602_Flow21"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Flow22_di" bpmnElement="W1602_Flow22"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Flow23_di" bpmnElement="W1602_Flow23"><di:waypoint x="1840" y="505" /><di:waypoint x="1890" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1602_Assoc15_di" bpmnElement="W1602_Assoc15"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1603" name="W1603. Batch / Lot Quality Hold &amp; Release" isExecutable="false">
+      <bpmn:documentation>Trigger: Quality inspection failure (W1600, W1601, W1602) or external notification (vendor recall notice, customer complaint pattern)
+Frequency: ~20–30 quality holds/month across all DCs and stores
+Volume: Variable — from single pallet to full container lot
+Owner: DC Supervisor (DC holds); Store Manager (store holds)
+Participants: DC Quality Inspector, Department Supervisor, Buyer, Category Manager, Compliance Officer
+Source: workflow W1603 — Batch / Lot Quality Hold &amp; Release</bpmn:documentation>
+      <bpmn:laneSet id="W1603_LaneSet3">
+        <bpmn:lane id="W1603_Lane1" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1603_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1603_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1603_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1603_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1603_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1603_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1603_Lane2" name="System">
+        <bpmn:flowNodeRef>W1603_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1603_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1603_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1603_Start4" name="Quality inspection failure (W1600, W1601, W1602) or external notification (vendor recall…">
+        <bpmn:outgoing>W1603_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1603_Task5" name="System or user places inventory batch/lot in &quot;Quality Hold&quot; status — inventory…">
+        <bpmn:documentation>Step 1: System or user places inventory batch/lot in &quot;Quality Hold&quot; status — inventory blocked from sale, allocation, transfer, and ATP calculation; physical items moved to quarantine zone
+Responsible (R): DC Quality Inspector / Department Supervisor
+Accountable (A): DC Supervisor / Store Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1603_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1603_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1603_Task6" name="Quality Hold record created: hold reason (inspection failure, customer…">
+        <bpmn:documentation>Step 2: Quality Hold record created: hold reason (inspection failure, customer complaint pattern, vendor notification, regulatory alert), affected items (SKU, lot/batch number, quantity, locations), hold date, initiating source
+Responsible (R): System / DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1603_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1603_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1603_Task7" name="Investigation: (a) DC Quality Inspector or Department Supervisor reviews…">
+        <bpmn:documentation>Step 3: Investigation: (a) DC Quality Inspector or Department Supervisor reviews quality data for the lot, (b) checks if affected lot is at multiple locations (DCs + stores), (c) if multi-location: system identifies all locations holding the affected lot/batch for potential cascade hold, (d) contacts vendor for technical assessment if root cause unclear
+Responsible (R): DC Quality Inspector / Buyer
+Accountable (A): DC Supervisor / Category Manager
+Duration: 1–4 hours</bpmn:documentation>
+        <bpmn:incoming>W1603_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1603_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1603_Task8" name="Release — Pass">
+        <bpmn:documentation>Step 4: Release — Pass: Investigation confirms quality acceptable; Inspector releases hold; inventory returns to available status; hold record closed with resolution notes
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1603_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1603_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1603_Task9" name="Release — Restricted">
+        <bpmn:documentation>Step 5: Release — Restricted: Items pass secondary inspection but with restrictions (e.g., sell at specific discount with disclosure, restrict to non-critical applications); system applies restricted status with conditions
+Responsible (R): DC Quality Inspector / Category Manager
+Accountable (A): DC Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1603_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1603_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1603_Task10" name="Reject">
+        <bpmn:documentation>Step 6: Reject: Items confirmed defective/unsafe; route to disposition per W91 — RTV (W88/W1280), scrap (W92), or recall (W1610–W1614 per PA-31.3)
+Responsible (R): DC Quality Inspector / Buyer
+Accountable (A): DC Supervisor / Category Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1603_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1603_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1603_Task11" name="Quality Hold aging report: system alerts DC Supervisor for any hold &gt; 48 hours…">
+        <bpmn:documentation>Step 7: Quality Hold aging report: system alerts DC Supervisor for any hold &gt; 48 hours without resolution; weekly aging review to prevent indefinite holds that consume warehouse space and working capital
+Responsible (R): System / DC Supervisor
+Accountable (A): VP Supply Chain
+Duration: Automated + 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W1603_Flow21</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1603_End12" name="Complete">
+        <bpmn:incoming>W1603_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1603_Annotation13">
+        <bpmn:text>Controls: - CTL-334 (ensure controlled execution — Incoming Quality Inspection &amp; Control (PA-31.1).) | - operational: DC Supervisor (DC holds); Store Manager (store holds) review and approval gate
+Owner: DC Supervisor (DC holds); Store Manager (store holds)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1603_Assoc14" sourceRef="W1603_Annotation13" targetRef="W1603_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1603_Flow15" sourceRef="W1603_Start4" targetRef="W1603_Task5" />
+      <bpmn:sequenceFlow id="W1603_Flow16" sourceRef="W1603_Task5" targetRef="W1603_Task6" />
+      <bpmn:sequenceFlow id="W1603_Flow17" sourceRef="W1603_Task6" targetRef="W1603_Task7" />
+      <bpmn:sequenceFlow id="W1603_Flow18" sourceRef="W1603_Task7" targetRef="W1603_Task8" />
+      <bpmn:sequenceFlow id="W1603_Flow19" sourceRef="W1603_Task8" targetRef="W1603_Task9" />
+      <bpmn:sequenceFlow id="W1603_Flow20" sourceRef="W1603_Task9" targetRef="W1603_Task10" />
+      <bpmn:sequenceFlow id="W1603_Flow21" sourceRef="W1603_Task10" targetRef="W1603_Task11" />
+      <bpmn:sequenceFlow id="W1603_Flow22" sourceRef="W1603_Task11" targetRef="W1603_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1603_diag">
+      <bpmndi:BPMNPlane id="W1603_plane" bpmnElement="W_W1603">
+        <bpmndi:BPMNShape id="W1603_Lane1_di" bpmnElement="W1603_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Lane2_di" bpmnElement="W1603_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Task5_di" bpmnElement="W1603_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Task6_di" bpmnElement="W1603_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Task7_di" bpmnElement="W1603_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Task8_di" bpmnElement="W1603_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Task9_di" bpmnElement="W1603_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Task10_di" bpmnElement="W1603_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Task11_di" bpmnElement="W1603_Task11"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Start4_di" bpmnElement="W1603_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_End12_di" bpmnElement="W1603_End12"><dc:Bounds x="1890" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1603_Annotation13_di" bpmnElement="W1603_Annotation13"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1603_Flow15_di" bpmnElement="W1603_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Flow16_di" bpmnElement="W1603_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Flow17_di" bpmnElement="W1603_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Flow18_di" bpmnElement="W1603_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Flow19_di" bpmnElement="W1603_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Flow20_di" bpmnElement="W1603_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Flow21_di" bpmnElement="W1603_Flow21"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Flow22_di" bpmnElement="W1603_Flow22"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1603_Assoc14_di" bpmnElement="W1603_Assoc14"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1604" name="W1604. AQL Sampling Plan Configuration &amp; Category Management" isExecutable="false">
+      <bpmn:documentation>Trigger: New SKU category created, vendor quality issue identified, or annual quality policy review
+Frequency: Quarterly review; ad-hoc updates as needed
+Volume: ~13 product categories with distinct sampling plans
+Owner: Quality Manager (proposed new role under VP Supply Chain)
+Participants: Quality Manager, Category Managers, DC Supervisor, VP Supply Chain
+Source: workflow W1604 — AQL Sampling Plan Configuration &amp; Category Management</bpmn:documentation>
+      <bpmn:laneSet id="W1604_LaneSet2">
+        <bpmn:lane id="W1604_Lane1" name="Quality Manager">
+        <bpmn:flowNodeRef>W1604_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1604_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1604_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1604_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1604_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1604_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1604_Start3" name="New SKU category created, vendor quality issue identified, or annual quality policy review">
+        <bpmn:outgoing>W1604_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1604_Task4" name="Quality Manager reviews AQL sampling parameters per category: (a) inspection…">
+        <bpmn:documentation>Step 1: Quality Manager reviews AQL sampling parameters per category: (a) inspection level (I, II, III, or S-1 through S-4 per ISO 2859-1), (b) AQL limit (% defective acceptable: Critical 0, Major 1.0–2.5, Minor 2.5–6.5), (c) sampling size based on lot size and inspection level, (d) accept/reject numbers per sample size
+Responsible (R): Quality Manager
+Accountable (A): VP Supply Chain
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1604_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1604_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1604_Task5" name="Category-specific configurations: (a) Electrical — 100% certification check…">
+        <bpmn:documentation>Step 2: Category-specific configurations: (a) Electrical — 100% certification check (PS/ICC mark), functional test on sample, (b) Paint/Chemical — batch/lot verification, shelf life check, FPA registration, (c) Power Tools — functional test sample, safety guard check, (d) Tiles — dimensional tolerance check, breakage rate, (e) Lumber — moisture content spot check, dimensional check, grading verification, (f) Hardware/Fasteners — dimension, material, and finish check on sample
+Responsible (R): Quality Manager
+Accountable (A): Category Managers
+Duration: 4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1604_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1604_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1604_Task6" name="System updates AQL configuration; new parameters applied to next quality…">
+        <bpmn:documentation>Step 3: System updates AQL configuration; new parameters applied to next quality inspection event; historical parameters retained for audit trail
+Responsible (R): Quality Manager / System
+Accountable (A): VP Supply Chain
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W1604_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1604_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1604_Task7" name="Annual: Quality Manager reviews sampling effectiveness — compare inspection…">
+        <bpmn:documentation>Step 4: Annual: Quality Manager reviews sampling effectiveness — compare inspection pass rates to actual customer complaint and return rates per category; adjust sampling stringency if gap detected
+Responsible (R): Quality Manager
+Accountable (A): VP Supply Chain
+Duration: 4 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1604_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1604_End8" name="Complete">
+        <bpmn:incoming>W1604_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1604_Annotation9">
+        <bpmn:text>Controls: - CTL-334 (ensure controlled execution — Incoming Quality Inspection &amp; Control (PA-31.1).) | - operational: Quality Manager (proposed new role under VP Supply Chain) review and approval gate
+Owner: Quality Manager (proposed new role under VP Supply Chain)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1604_Assoc10" sourceRef="W1604_Annotation9" targetRef="W1604_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1604_Flow11" sourceRef="W1604_Start3" targetRef="W1604_Task4" />
+      <bpmn:sequenceFlow id="W1604_Flow12" sourceRef="W1604_Task4" targetRef="W1604_Task5" />
+      <bpmn:sequenceFlow id="W1604_Flow13" sourceRef="W1604_Task5" targetRef="W1604_Task6" />
+      <bpmn:sequenceFlow id="W1604_Flow14" sourceRef="W1604_Task6" targetRef="W1604_Task7" />
+      <bpmn:sequenceFlow id="W1604_Flow15" sourceRef="W1604_Task7" targetRef="W1604_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1604_diag">
+      <bpmndi:BPMNPlane id="W1604_plane" bpmnElement="W_W1604">
+        <bpmndi:BPMNShape id="W1604_Lane1_di" bpmnElement="W1604_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1604_Task4_di" bpmnElement="W1604_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1604_Task5_di" bpmnElement="W1604_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1604_Task6_di" bpmnElement="W1604_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1604_Task7_di" bpmnElement="W1604_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1604_Start3_di" bpmnElement="W1604_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1604_End8_di" bpmnElement="W1604_End8"><dc:Bounds x="1260" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1604_Annotation9_di" bpmnElement="W1604_Annotation9"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1604_Flow11_di" bpmnElement="W1604_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1604_Flow12_di" bpmnElement="W1604_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1604_Flow13_di" bpmnElement="W1604_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1604_Flow14_di" bpmnElement="W1604_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1604_Flow15_di" bpmnElement="W1604_Flow15"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1604_Assoc10_di" bpmnElement="W1604_Assoc10"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1605" name="W1605. Paint &amp; Chemical Product Quality Verification" isExecutable="false">
+      <bpmn:documentation>Trigger: Paint/chemical goods receipt at DC or store; or periodic shelf-life audit
+Frequency: ~200–300 paint/chemical GRs/month; monthly shelf-life audit
+Volume: ~2,800 active SKUs in Paint &amp; Finishes category
+Owner: DC Quality Inspector (DC); Department Supervisor (store)
+Participants: DC Quality Inspector, Department Supervisor, Buyer, Compliance Officer
+Source: workflow W1605 — Paint &amp; Chemical Product Quality Verification</bpmn:documentation>
+      <bpmn:laneSet id="W1605_LaneSet4">
+        <bpmn:lane id="W1605_Lane1" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1605_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1605_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1605_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1605_Lane2" name="Department Supervisor">
+        <bpmn:flowNodeRef>W1605_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1605_Lane3" name="Buyer">
+        <bpmn:flowNodeRef>W1605_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1605_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1605_Start5" name="Paint/chemical goods receipt at DC or store; or periodic shelf-life audit">
+        <bpmn:outgoing>W1605_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1605_Task6" name="At GR: verify (a) FPA (Fertilizer and Pesticide Authority) registration for…">
+        <bpmn:documentation>Step 1: At GR: verify (a) FPA (Fertilizer and Pesticide Authority) registration for applicable products, (b) DENR Environmental Compliance Certificate (ECC) reference for restricted chemicals, (c) batch/lot number recorded in system, (d) manufacturing date and shelf life check (paint: 24–36 months from manufacture; adhesives: 12–18 months), (e) packaging integrity (no leaking, bulging, or dented containers)
+Responsible (R): DC Quality Inspector / Receiving Clerk
+Accountable (A): DC Supervisor
+Duration: 10 min/lot</bpmn:documentation>
+        <bpmn:incoming>W1605_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1605_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1605_Task7" name="Spot test: (a) paint viscosity check (visual — no excessive thickening or…">
+        <bpmn:documentation>Step 2: Spot test: (a) paint viscosity check (visual — no excessive thickening or separation), (b) colorant compatibility verification for tinting bases, (c) solvent/chemical flash point documentation check for hazmat storage compliance
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 5 min/lot</bpmn:documentation>
+        <bpmn:incoming>W1605_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1605_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1605_Task8" name="Shelf-life audit (monthly): system generates list of paint/chemical inventory…">
+        <bpmn:documentation>Step 3: Shelf-life audit (monthly): system generates list of paint/chemical inventory approaching expiry (within 6 months); Department Supervisor or Stock Associate checks physical condition of flagged items; items within 3 months of expiry flagged for markdown (W93); items past expiry quarantined for disposal per W82 (hazmat)
+Responsible (R): Department Supervisor / Stock Associate
+Accountable (A): Store Manager / DC Supervisor
+Duration: 2 hours/location/month</bpmn:documentation>
+        <bpmn:incoming>W1605_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1605_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1605_Task9" name="Buyer notified of quality issues; vendor-specific trend tracked; repeated…">
+        <bpmn:documentation>Step 4: Buyer notified of quality issues; vendor-specific trend tracked; repeated quality failures trigger vendor quality audit per W1608
+Responsible (R): Buyer
+Accountable (A): Category Manager
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W1605_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1605_End10" name="Complete">
+        <bpmn:incoming>W1605_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1605_Annotation11">
+        <bpmn:text>Controls: - CTL-334 (ensure controlled execution — Incoming Quality Inspection &amp; Control (PA-31.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Quality Inspector (DC); Department Supervisor (store)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1605_Assoc12" sourceRef="W1605_Annotation11" targetRef="W1605_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1605_Flow13" sourceRef="W1605_Start5" targetRef="W1605_Task6" />
+      <bpmn:sequenceFlow id="W1605_Flow14" sourceRef="W1605_Task6" targetRef="W1605_Task7" />
+      <bpmn:sequenceFlow id="W1605_Flow15" sourceRef="W1605_Task7" targetRef="W1605_Task8" />
+      <bpmn:sequenceFlow id="W1605_Flow16" sourceRef="W1605_Task8" targetRef="W1605_Task9" />
+      <bpmn:sequenceFlow id="W1605_Flow17" sourceRef="W1605_Task9" targetRef="W1605_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1605_diag">
+      <bpmndi:BPMNPlane id="W1605_plane" bpmnElement="W_W1605">
+        <bpmndi:BPMNShape id="W1605_Lane1_di" bpmnElement="W1605_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Lane2_di" bpmnElement="W1605_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Lane3_di" bpmnElement="W1605_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Task6_di" bpmnElement="W1605_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Task7_di" bpmnElement="W1605_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Task8_di" bpmnElement="W1605_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Task9_di" bpmnElement="W1605_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Start5_di" bpmnElement="W1605_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_End10_di" bpmnElement="W1605_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1605_Annotation11_di" bpmnElement="W1605_Annotation11"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1605_Flow13_di" bpmnElement="W1605_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1605_Flow14_di" bpmnElement="W1605_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1605_Flow15_di" bpmnElement="W1605_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1605_Flow16_di" bpmnElement="W1605_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1605_Flow17_di" bpmnElement="W1605_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1605_Assoc12_di" bpmnElement="W1605_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1606" name="W1606. Electrical Product Safety Verification &amp; Certification Check" isExecutable="false">
+      <bpmn:documentation>Trigger: Electrical product goods receipt at DC
+Frequency: ~150–200 electrical product GRs/month (~3,500 active SKUs)
+Volume: Focus on wiring, breakers, switches, panels — safety-critical items
+Owner: DC Quality Inspector
+Participants: DC Quality Inspector, Buyer, Compliance Officer
+Source: workflow W1606 — Electrical Product Safety Verification &amp; Certification Check</bpmn:documentation>
+      <bpmn:laneSet id="W1606_LaneSet2">
+        <bpmn:lane id="W1606_Lane1" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1606_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1606_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1606_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1606_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1606_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1606_Start3" name="Electrical product goods receipt at DC">
+        <bpmn:outgoing>W1606_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1606_Task4" name="At GR: verify (a) PS (Philippine Standard) mark or ICC (Import Commodity…">
+        <bpmn:documentation>Step 1: At GR: verify (a) PS (Philippine Standard) mark or ICC (Import Commodity Clearance) sticker on product and packaging, (b) DTI-BPS certification reference in vendor documentation, (c) product labeling compliance (voltage rating, wattage, country of origin, importer information), (d) for import electrical items: Bureau of Customs import clearance and BPS test report
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 10 min/lot</bpmn:documentation>
+        <bpmn:incoming>W1606_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W1606_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1606_Task5" name="Functional spot test on sample: (a) wire: conductor count, insulation thickness…">
+        <bpmn:documentation>Step 2: Functional spot test on sample: (a) wire: conductor count, insulation thickness visual check, (b) breakers/switches: physical integrity, no cracks or damage, (c) continuity test on sample wires using multimeter
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 10 min/lot</bpmn:documentation>
+        <bpmn:incoming>W1606_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1606_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1606_Task6" name="Non-compliant items: (a) items missing PS/ICC marks placed in Quality Hold per…">
+        <bpmn:documentation>Step 3: Non-compliant items: (a) items missing PS/ICC marks placed in Quality Hold per W1603, (b) Buyer notified to contact vendor for certification documentation or product replacement, (c) items without valid certification cannot be released for sale — BuildRight liability for selling uncertified electrical products per Philippine Consumer Act (RA 7394) and DTI regulations
+Responsible (R): DC Quality Inspector / Buyer
+Accountable (A): DC Supervisor / Compliance Officer
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1606_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1606_End7" name="Complete">
+        <bpmn:incoming>W1606_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1606_Annotation8">
+        <bpmn:text>Controls: - CTL-229 (ensure supplier quality &amp; product-safety verification.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Quality Inspector</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1606_Assoc9" sourceRef="W1606_Annotation8" targetRef="W1606_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1606_Flow10" sourceRef="W1606_Start3" targetRef="W1606_Task4" />
+      <bpmn:sequenceFlow id="W1606_Flow11" sourceRef="W1606_Task4" targetRef="W1606_Task5" />
+      <bpmn:sequenceFlow id="W1606_Flow12" sourceRef="W1606_Task5" targetRef="W1606_Task6" />
+      <bpmn:sequenceFlow id="W1606_Flow13" sourceRef="W1606_Task6" targetRef="W1606_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1606_diag">
+      <bpmndi:BPMNPlane id="W1606_plane" bpmnElement="W_W1606">
+        <bpmndi:BPMNShape id="W1606_Lane1_di" bpmnElement="W1606_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1606_Task4_di" bpmnElement="W1606_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1606_Task5_di" bpmnElement="W1606_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1606_Task6_di" bpmnElement="W1606_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1606_Start3_di" bpmnElement="W1606_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1606_End7_di" bpmnElement="W1606_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1606_Annotation8_di" bpmnElement="W1606_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1606_Flow10_di" bpmnElement="W1606_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1606_Flow11_di" bpmnElement="W1606_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1606_Flow12_di" bpmnElement="W1606_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1606_Flow13_di" bpmnElement="W1606_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1606_Assoc9_di" bpmnElement="W1606_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1607" name="W1607. Lumber &amp; Building Materials Dimensional &amp; Structural Quality Check" isExecutable="false">
+      <bpmn:documentation>Trigger: Lumber/building materials goods receipt at DC or store (DSD)
+Frequency: ~100–150 lumber/building materials GRs/month (high-value, bulky items)
+Volume: ~4,900 active SKUs in Lumber &amp; Building Materials category
+Owner: DC Quality Inspector (DC); Receiving Clerk (store DSD)
+Participants: DC Quality Inspector, Receiving Clerk, Department Supervisor, Buyer
+Source: workflow W1607 — Lumber &amp; Building Materials Dimensional &amp; Structural Quality Check</bpmn:documentation>
+      <bpmn:laneSet id="W1607_LaneSet3">
+        <bpmn:lane id="W1607_Lane1" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1607_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1607_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1607_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1607_Lane2" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1607_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1607_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1607_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1607_Start4" name="Lumber/building materials goods receipt at DC or store (DSD)">
+        <bpmn:outgoing>W1607_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1607_Task5" name="At GR (DC): verify (a) species/grade match PO specification (e.g., Tanguile…">
+        <bpmn:documentation>Step 1: At GR (DC): verify (a) species/grade match PO specification (e.g., Tanguile, Apitong, Yakal — Philippine commercial timber species), (b) dimensional check on sample boards (length, width, thickness against tolerance: ±3mm for dimensional lumber), (c) moisture content spot check using pin-type moisture meter (target: &lt; 20% for air-dried; &lt; 15% for kiln-dried), (d) visual check for defects: cracks, knots exceeding grade limits, warping, insect damage, fungal growth
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 15 min/lot</bpmn:documentation>
+        <bpmn:incoming>W1607_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1607_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1607_Task6" name="At store DSD: Receiving Clerk performs visual check for obvious defects…">
+        <bpmn:documentation>Step 2: At store DSD: Receiving Clerk performs visual check for obvious defects (cracked boards, broken hollow blocks, damaged cement bags); dimensional spot check on sample
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 5 min/delivery</bpmn:documentation>
+        <bpmn:incoming>W1607_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1607_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1607_Task7" name="Cement quality: (a) check for lumps (indicates moisture exposure — hardened…">
+        <bpmn:documentation>Step 3: Cement quality: (a) check for lumps (indicates moisture exposure — hardened cement is unusable), (b) check manufacturing date (cement shelf life ~3 months from manufacture per Philippine standard), (c) check bag integrity (no tears, moisture staining)
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 3 min/delivery</bpmn:documentation>
+        <bpmn:incoming>W1607_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1607_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1607_Task8" name="Steel/rebar: (a) check diameter against specification using caliper on sample…">
+        <bpmn:documentation>Step 4: Steel/rebar: (a) check diameter against specification using caliper on sample, (b) check for rust (surface rust acceptable; deep pitting is reject), (c) check length per piece, (d) check mill test certificate availability per lot
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Supervisor
+Duration: 10 min/lot</bpmn:documentation>
+        <bpmn:incoming>W1607_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1607_End9" name="Complete">
+        <bpmn:incoming>W1607_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1607_Annotation10">
+        <bpmn:text>Controls: - CTL-334 (ensure controlled execution — Incoming Quality Inspection &amp; Control (PA-31.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Quality Inspector (DC); Receiving Clerk (store DSD)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1607_Assoc11" sourceRef="W1607_Annotation10" targetRef="W1607_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1607_Flow12" sourceRef="W1607_Start4" targetRef="W1607_Task5" />
+      <bpmn:sequenceFlow id="W1607_Flow13" sourceRef="W1607_Task5" targetRef="W1607_Task6" />
+      <bpmn:sequenceFlow id="W1607_Flow14" sourceRef="W1607_Task6" targetRef="W1607_Task7" />
+      <bpmn:sequenceFlow id="W1607_Flow15" sourceRef="W1607_Task7" targetRef="W1607_Task8" />
+      <bpmn:sequenceFlow id="W1607_Flow16" sourceRef="W1607_Task8" targetRef="W1607_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1607_diag">
+      <bpmndi:BPMNPlane id="W1607_plane" bpmnElement="W_W1607">
+        <bpmndi:BPMNShape id="W1607_Lane1_di" bpmnElement="W1607_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_Lane2_di" bpmnElement="W1607_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_Task5_di" bpmnElement="W1607_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_Task6_di" bpmnElement="W1607_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_Task7_di" bpmnElement="W1607_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_Task8_di" bpmnElement="W1607_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_Start4_di" bpmnElement="W1607_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_End9_di" bpmnElement="W1607_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1607_Annotation10_di" bpmnElement="W1607_Annotation10"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1607_Flow12_di" bpmnElement="W1607_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1607_Flow13_di" bpmnElement="W1607_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1607_Flow14_di" bpmnElement="W1607_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1607_Flow15_di" bpmnElement="W1607_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1607_Flow16_di" bpmnElement="W1607_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1607_Assoc11_di" bpmnElement="W1607_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

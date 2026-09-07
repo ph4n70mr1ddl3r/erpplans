@@ -1,0 +1,802 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-192.2-ev-alt-fuel-fleet-operations-charging-and-energy-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W5473" name="W5473. EV Fleet Daily Charging Operations, Load Scheduling &amp; Smart-Charge Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicles in service; nightly/peak charging cycles
+Frequency: Daily, per vehicle and per depot
+Volume: Per EV in the owned fleet, daily; scales with conversion (~early tens → larger)
+Owner: Fleet Charging Operations Supervisor (VS-06)
+Participants: Drivers, Facilities/Energy (VS-138/VS-120), Depot/DC Ops (VS-04), EV-host ops (VS-163)
+Source: workflow W5473 — EV Fleet Daily Charging Operations, Load Scheduling &amp; Smart-Charge Management</bpmn:documentation>
+      <bpmn:laneSet id="W5473_LaneSet3">
+        <bpmn:lane id="W5473_Lane1" name="Charge Ops Supervisor">
+        <bpmn:flowNodeRef>W5473_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5473_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5473_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5473_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5473_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5473_Lane2" name="System">
+        <bpmn:flowNodeRef>W5473_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5473_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5473_Start4" name="Vehicles in service; nightly/peak charging cycles">
+        <bpmn:outgoing>W5473_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W5473_Task5" name="Each evening, the charge-management system schedules each returning EV against…">
+        <bpmn:documentation>Step 1: Each evening, the charge-management system schedules each returning EV against its next-day dispatch (W5477), state-of-charge, time-of-departure, and the site&#x27;s transformer/charger capacity (W5468).
+Responsible (R): Charge Ops Supervisor / System
+Accountable (A): Fleet Charging Operations Supervisor
+Duration: nightly</bpmn:documentation>
+        <bpmn:incoming>W5473_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5473_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W5473_Task6" name="Apply smart-charging rules: prioritize low-tariff / high-renewable hours…">
+        <bpmn:documentation>Step 2: Apply smart-charging rules: prioritize low-tariff / high-renewable hours (W5479), cap simultaneous draw to the site limit, defer non-urgent charging, and sequence to avoid peak-demand charges.
+Responsible (R): Charge Ops Supervisor / System
+Accountable (A): Fleet Charging Operations Supervisor
+Duration: nightly</bpmn:documentation>
+        <bpmn:incoming>W5473_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5473_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W5473_Task7" name="Reconcile fleet-charging priority vs the shared customer-host network (VS-163)…">
+        <bpmn:documentation>Step 3: Reconcile fleet-charging priority vs the shared customer-host network (VS-163) under a documented priority policy (fleet-priority off-hours, customer-priority during trading).
+Responsible (R): Charge Ops Supervisor
+Accountable (A): Fleet Charging Operations Supervisor
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5473_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5473_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W5473_Task8" name="Log every charging session (vehicle, charger, kWh, start/stop, tariff…">
+        <bpmn:documentation>Step 4: Log every charging session (vehicle, charger, kWh, start/stop, tariff, renewable-share) for billing (W5486), MRV (W5481), and analytics (W5488).
+Responsible (R): System
+Accountable (A): Fleet Charging Operations Supervisor
+Duration: per session</bpmn:documentation>
+        <bpmn:incoming>W5473_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5473_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W5473_Task9" name="Exception-handle charging failures (faulty charger, vehicle not accepting…">
+        <bpmn:documentation>Step 5: Exception-handle charging failures (faulty charger, vehicle not accepting charge, interrupted session) and trigger maintenance (W5474) or diesel/hybrid fallback (W5477).
+Responsible (R): Charge Ops Supervisor
+Accountable (A): Fleet Charging Operations Supervisor
+Duration: per exception</bpmn:documentation>
+        <bpmn:incoming>W5473_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5473_End10" name="Complete">
+        <bpmn:incoming>W5473_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5473_Annotation11">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: documented fleet-vs-customer priority policy; SoC-at-departure minimum enforced.
+Owner: Fleet Charging Operations Supervisor (VS-06)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5473_Assoc12" sourceRef="W5473_Annotation11" targetRef="W5473_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5473_Flow13" sourceRef="W5473_Start4" targetRef="W5473_Task5" />
+      <bpmn:sequenceFlow id="W5473_Flow14" sourceRef="W5473_Task5" targetRef="W5473_Task6" />
+      <bpmn:sequenceFlow id="W5473_Flow15" sourceRef="W5473_Task6" targetRef="W5473_Task7" />
+      <bpmn:sequenceFlow id="W5473_Flow16" sourceRef="W5473_Task7" targetRef="W5473_Task8" />
+      <bpmn:sequenceFlow id="W5473_Flow17" sourceRef="W5473_Task8" targetRef="W5473_Task9" />
+      <bpmn:sequenceFlow id="W5473_Flow18" sourceRef="W5473_Task9" targetRef="W5473_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5473_diag">
+      <bpmndi:BPMNPlane id="W5473_plane" bpmnElement="W_W5473">
+        <bpmndi:BPMNShape id="W5473_Lane1_di" bpmnElement="W5473_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Lane2_di" bpmnElement="W5473_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Task5_di" bpmnElement="W5473_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Task6_di" bpmnElement="W5473_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Task7_di" bpmnElement="W5473_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Task8_di" bpmnElement="W5473_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Task9_di" bpmnElement="W5473_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Start4_di" bpmnElement="W5473_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_End10_di" bpmnElement="W5473_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5473_Annotation11_di" bpmnElement="W5473_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5473_Flow13_di" bpmnElement="W5473_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5473_Flow14_di" bpmnElement="W5473_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5473_Flow15_di" bpmnElement="W5473_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5473_Flow16_di" bpmnElement="W5473_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5473_Flow17_di" bpmnElement="W5473_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5473_Flow18_di" bpmnElement="W5473_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5473_Assoc12_di" bpmnElement="W5473_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5474" name="W5474. Depot Charging Station Operations, Maintenance &amp; Uptime Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Chargers commissioned (W5468); daily operations; fault alerts
+Frequency: Continuous; preventive maintenance per OEM schedule
+Volume: Charging points across 4 DCs + stores (fleet-dedicated and shared with VS-163)
+Owner: Facilities &amp; Energy Manager (VS-138)
+Participants: Charger vendor/EPC, Fleet (VS-06), HSE (VS-24), EV-host ops (VS-163)
+Source: workflow W5474 — Depot Charging Station Operations, Maintenance &amp; Uptime Management</bpmn:documentation>
+      <bpmn:laneSet id="W5474_LaneSet3">
+        <bpmn:lane id="W5474_Lane1" name="Facilities">
+        <bpmn:flowNodeRef>W5474_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5474_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5474_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5474_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5474_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5474_Lane2" name="Facilities Analyst">
+        <bpmn:flowNodeRef>W5474_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5474_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5474_Start4" name="Chargers commissioned (W5468); daily operations; fault alerts">
+        <bpmn:outgoing>W5474_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5474_Task5" name="Operate the charger network (availability monitoring, session initiation…">
+        <bpmn:documentation>Step 1: Operate the charger network (availability monitoring, session initiation support, fault triage) for both fleet-dedicated and shared customer-facing units (VS-163).
+Responsible (R): Facilities / EV-Host Ops
+Accountable (A): Facilities &amp; Energy Manager
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5474_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5474_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5474_Task6" name="Execute preventive maintenance per OEM schedule (connector/cable inspection…">
+        <bpmn:documentation>Step 2: Execute preventive maintenance per OEM schedule (connector/cable inspection, cooling, firmware updates, ground-fault/earth-leakage tests) and maintain a charger asset register with uptime SLA.
+Responsible (R): Facilities / Charger Vendor
+Accountable (A): Facilities &amp; Energy Manager
+Duration: per schedule</bpmn:documentation>
+        <bpmn:incoming>W5474_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5474_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5474_Task7" name="Triage and resolve faults (error codes, communication faults, payment/OCPP…">
+        <bpmn:documentation>Step 3: Triage and resolve faults (error codes, communication faults, payment/OCPP issues, hardware faults) under a vendor SLA; escalate to OEM field service; provide a backup charger or diesel fallback.
+Responsible (R): Facilities / Charger Vendor
+Accountable (A): Facilities &amp; Energy Manager
+Duration: per fault</bpmn:documentation>
+        <bpmn:incoming>W5474_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5474_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5474_Task8" name="Track and report charger uptime/availability (target e.g., ≥98%), MTBF/MTTR…">
+        <bpmn:documentation>Step 4: Track and report charger uptime/availability (target e.g., ≥98%), MTBF/MTTR, and session success-rate per site; drive vendor performance against SLA.
+Responsible (R): Facilities Analyst
+Accountable (A): Facilities &amp; Energy Manager
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5474_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5474_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5474_Task9" name="Coordinate HSE (VS-24) for any safety event (arc-flash, cable damage…">
+        <bpmn:documentation>Step 5: Coordinate HSE (VS-24) for any safety event (arc-flash, cable damage, fire-signs) and feed incidents into the battery-fire/high-voltage safety program (W5483).
+Responsible (R): Facilities / HSE
+Accountable (A): Facilities &amp; Energy Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5474_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5474_End10" name="Complete">
+        <bpmn:incoming>W5474_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5474_Annotation11">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: charger-vendor TPRM/SLA; BFP/electrical-permit verification; uptime evidence; N+1 redundancy policy for depot fleet chargers; staged firmware rollout.
+Owner: Facilities &amp; Energy Manager (VS-138)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5474_Assoc12" sourceRef="W5474_Annotation11" targetRef="W5474_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5474_Flow13" sourceRef="W5474_Start4" targetRef="W5474_Task5" />
+      <bpmn:sequenceFlow id="W5474_Flow14" sourceRef="W5474_Task5" targetRef="W5474_Task6" />
+      <bpmn:sequenceFlow id="W5474_Flow15" sourceRef="W5474_Task6" targetRef="W5474_Task7" />
+      <bpmn:sequenceFlow id="W5474_Flow16" sourceRef="W5474_Task7" targetRef="W5474_Task8" />
+      <bpmn:sequenceFlow id="W5474_Flow17" sourceRef="W5474_Task8" targetRef="W5474_Task9" />
+      <bpmn:sequenceFlow id="W5474_Flow18" sourceRef="W5474_Task9" targetRef="W5474_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5474_diag">
+      <bpmndi:BPMNPlane id="W5474_plane" bpmnElement="W_W5474">
+        <bpmndi:BPMNShape id="W5474_Lane1_di" bpmnElement="W5474_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Lane2_di" bpmnElement="W5474_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Task5_di" bpmnElement="W5474_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Task6_di" bpmnElement="W5474_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Task7_di" bpmnElement="W5474_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Task8_di" bpmnElement="W5474_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Task9_di" bpmnElement="W5474_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Start4_di" bpmnElement="W5474_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_End10_di" bpmnElement="W5474_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5474_Annotation11_di" bpmnElement="W5474_Annotation11"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5474_Flow13_di" bpmnElement="W5474_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5474_Flow14_di" bpmnElement="W5474_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5474_Flow15_di" bpmnElement="W5474_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5474_Flow16_di" bpmnElement="W5474_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5474_Flow17_di" bpmnElement="W5474_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5474_Flow18_di" bpmnElement="W5474_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5474_Assoc12_di" bpmnElement="W5474_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5475" name="W5475. EV Battery State-of-Health, Range Assurance &amp; Battery Lifecycle Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicles in service; periodic SoH review; warranty/degradation thresholds
+Frequency: Continuous SoH telemetry; quarterly SoH review per vehicle
+Volume: Per EV in the fleet
+Owner: Fleet Maintenance Manager (VS-06.2)
+Participants: OEM/battery vendor, Telematics (VS-06), Maintenance (VS-06.2), Treasury/warranty (W5467)
+Source: workflow W5475 — EV Battery State-of-Health, Range Assurance &amp; Battery Lifecycle Management</bpmn:documentation>
+      <bpmn:laneSet id="W5475_LaneSet4">
+        <bpmn:lane id="W5475_Lane1" name="Telematics">
+        <bpmn:flowNodeRef>W5475_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5475_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5475_Lane2" name="Maintenance Analyst">
+        <bpmn:flowNodeRef>W5475_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5475_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5475_Lane3" name="Maintenance">
+        <bpmn:flowNodeRef>W5475_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5475_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5475_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5475_Start5" name="Vehicles in service; periodic SoH review; warranty/degradation thresholds">
+        <bpmn:outgoing>W5475_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5475_Task6" name="Capture battery SoH telemetry (capacity fade, internal resistance…">
+        <bpmn:documentation>Step 1: Capture battery SoH telemetry (capacity fade, internal resistance, cell-balance, temperature excursions, charge-cycle count) from the vehicle BMS via telematics (VS-06).
+Responsible (R): Telematics / Maintenance Analyst
+Accountable (A): Fleet Maintenance Manager
+Duration: continuous</bpmn:documentation>
+        <bpmn:incoming>W5475_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5475_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5475_Task7" name="Track each vehicle&#x27;s usable range vs its dispatch requirement (W5477); flag…">
+        <bpmn:documentation>Step 2: Track each vehicle&#x27;s usable range vs its dispatch requirement (W5477); flag vehicles approaching range-insufficiency for route reassignment or remediation.
+Responsible (R): Maintenance Analyst
+Accountable (A): Fleet Maintenance Manager
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5475_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5475_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5475_Task8" name="Detect degradation against the OEM warranty threshold (e.g., &lt;70% at…">
+        <bpmn:documentation>Step 3: Detect degradation against the OEM warranty threshold (e.g., &lt;70% at 5-yr/300k-km per W5467) and prepare warranty claims / battery-module replacement cases.
+Responsible (R): Maintenance / Warranty Admin
+Accountable (A): Fleet Maintenance Manager
+Duration: per threshold</bpmn:documentation>
+        <bpmn:incoming>W5475_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5475_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5475_Task9" name="Manage the battery lifecycle plan: in-service → degradation monitoring →…">
+        <bpmn:documentation>Step 4: Manage the battery lifecycle plan: in-service → degradation monitoring → warranty/replacement → second-life (W5487) → recycling (W5487), maintaining a battery passport/traceability record.
+Responsible (R): Maintenance Analyst
+Accountable (A): Fleet Maintenance Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5475_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5475_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5475_Task10" name="Maintain battery thermal-management discipline (avoid chronic high-temp…">
+        <bpmn:documentation>Step 5: Maintain battery thermal-management discipline (avoid chronic high-temp operation that accelerates degradation in the PH tropical climate) and feed any thermal event into the safety program (W5483).
+Responsible (R): Maintenance / Driver
+Accountable (A): Fleet Maintenance Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5475_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5475_End11" name="Complete">
+        <bpmn:incoming>W5475_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5475_Annotation12">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: documented thermal-management discipline; SoH-based route-assignment rule.
+Owner: Fleet Maintenance Manager (VS-06.2)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5475_Assoc13" sourceRef="W5475_Annotation12" targetRef="W5475_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5475_Flow14" sourceRef="W5475_Start5" targetRef="W5475_Task6" />
+      <bpmn:sequenceFlow id="W5475_Flow15" sourceRef="W5475_Task6" targetRef="W5475_Task7" />
+      <bpmn:sequenceFlow id="W5475_Flow16" sourceRef="W5475_Task7" targetRef="W5475_Task8" />
+      <bpmn:sequenceFlow id="W5475_Flow17" sourceRef="W5475_Task8" targetRef="W5475_Task9" />
+      <bpmn:sequenceFlow id="W5475_Flow18" sourceRef="W5475_Task9" targetRef="W5475_Task10" />
+      <bpmn:sequenceFlow id="W5475_Flow19" sourceRef="W5475_Task10" targetRef="W5475_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5475_diag">
+      <bpmndi:BPMNPlane id="W5475_plane" bpmnElement="W_W5475">
+        <bpmndi:BPMNShape id="W5475_Lane1_di" bpmnElement="W5475_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Lane2_di" bpmnElement="W5475_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Lane3_di" bpmnElement="W5475_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Task6_di" bpmnElement="W5475_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Task7_di" bpmnElement="W5475_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Task8_di" bpmnElement="W5475_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Task9_di" bpmnElement="W5475_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Task10_di" bpmnElement="W5475_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Start5_di" bpmnElement="W5475_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_End11_di" bpmnElement="W5475_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5475_Annotation12_di" bpmnElement="W5475_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5475_Flow14_di" bpmnElement="W5475_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5475_Flow15_di" bpmnElement="W5475_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5475_Flow16_di" bpmnElement="W5475_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5475_Flow17_di" bpmnElement="W5475_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5475_Flow18_di" bpmnElement="W5475_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5475_Flow19_di" bpmnElement="W5475_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5475_Assoc13_di" bpmnElement="W5475_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5476" name="W5476. Green Fleet Telematics, Eco-Driving &amp; Driver Behavior Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicles in service; driver behavior program
+Frequency: Continuous telematics; weekly/monthly driver review
+Volume: Per driver × per EV/alt-fuel vehicle
+Owner: Fleet Operations Manager (VS-06.2)
+Participants: Drivers, HR/L&amp;D (VS-19.4), Telematics vendor, HSE (VS-24)
+Source: workflow W5476 — Green Fleet Telematics, Eco-Driving &amp; Driver Behavior Management</bpmn:documentation>
+      <bpmn:laneSet id="W5476_LaneSet4">
+        <bpmn:lane id="W5476_Lane1" name="Telematics">
+        <bpmn:flowNodeRef>W5476_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5476_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5476_Lane2" name="Fleet Analyst">
+        <bpmn:flowNodeRef>W5476_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5476_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5476_Lane3" name="Fleet Ops">
+        <bpmn:flowNodeRef>W5476_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5476_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5476_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5476_Start5" name="Vehicles in service; driver behavior program">
+        <bpmn:outgoing>W5476_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5476_Task6" name="Configure telematics (links VS-06 W199) to capture EV-relevant behavior: harsh…">
+        <bpmn:documentation>Step 1: Configure telematics (links VS-06 W199) to capture EV-relevant behavior: harsh acceleration/braking (which drains battery and degrades range), over-speed, idling (for hybrids), cabin-pre-conditioning abuse, and eco-mode adherence.
+Responsible (R): Telematics / Fleet Ops
+Accountable (A): Fleet Operations Manager
+Duration: per setup</bpmn:documentation>
+        <bpmn:incoming>W5476_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5476_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5476_Task7" name="Generate per-driver and per-vehicle eco-driving scores; benchmark kWh/km (EV)…">
+        <bpmn:documentation>Step 2: Generate per-driver and per-vehicle eco-driving scores; benchmark kWh/km (EV) and L/100km (hybrid/alt-fuel) against the route baseline (W5472).
+Responsible (R): Fleet Analyst
+Accountable (A): Fleet Operations Manager
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5476_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5476_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5476_Task8" name="Coach under-performing drivers (links VS-124/VS-19.4 enablement) and recognize…">
+        <bpmn:documentation>Step 3: Coach under-performing drivers (links VS-124/VS-19.4 enablement) and recognize top performers; feed serious/safety behaviors (speeding, harsh events) into the safety program (W5483) and driver standards (VS-06.2).
+Responsible (R): Fleet Ops / L&amp;D
+Accountable (A): Fleet Operations Manager
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5476_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5476_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5476_Task9" name="Quantify the kWh/L savings from eco-driving and feed it into the TCO/benefit…">
+        <bpmn:documentation>Step 4: Quantify the kWh/L savings from eco-driving and feed it into the TCO/benefit tracking (W5488) and the driver-incentive program.
+Responsible (R): Fleet Analyst
+Accountable (A): Fleet Operations Manager
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5476_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5476_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5476_Task10" name="Maintain telematics data quality and privacy (driver-behavior data is personal…">
+        <bpmn:documentation>Step 5: Maintain telematics data quality and privacy (driver-behavior data is personal data under RA 10173 — links VS-91) and a documented driver-contest/grievance path.
+Responsible (R): Fleet Ops / DPO (VS-91)
+Accountable (A): Fleet Operations Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5476_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5476_End11" name="Complete">
+        <bpmn:incoming>W5476_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5476_Annotation12">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: documented driver-contest/grievance path; coaching threshold policy.
+Owner: Fleet Operations Manager (VS-06.2)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5476_Assoc13" sourceRef="W5476_Annotation12" targetRef="W5476_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5476_Flow14" sourceRef="W5476_Start5" targetRef="W5476_Task6" />
+      <bpmn:sequenceFlow id="W5476_Flow15" sourceRef="W5476_Task6" targetRef="W5476_Task7" />
+      <bpmn:sequenceFlow id="W5476_Flow16" sourceRef="W5476_Task7" targetRef="W5476_Task8" />
+      <bpmn:sequenceFlow id="W5476_Flow17" sourceRef="W5476_Task8" targetRef="W5476_Task9" />
+      <bpmn:sequenceFlow id="W5476_Flow18" sourceRef="W5476_Task9" targetRef="W5476_Task10" />
+      <bpmn:sequenceFlow id="W5476_Flow19" sourceRef="W5476_Task10" targetRef="W5476_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5476_diag">
+      <bpmndi:BPMNPlane id="W5476_plane" bpmnElement="W_W5476">
+        <bpmndi:BPMNShape id="W5476_Lane1_di" bpmnElement="W5476_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Lane2_di" bpmnElement="W5476_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Lane3_di" bpmnElement="W5476_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Task6_di" bpmnElement="W5476_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Task7_di" bpmnElement="W5476_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Task8_di" bpmnElement="W5476_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Task9_di" bpmnElement="W5476_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Task10_di" bpmnElement="W5476_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Start5_di" bpmnElement="W5476_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_End11_di" bpmnElement="W5476_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5476_Annotation12_di" bpmnElement="W5476_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5476_Flow14_di" bpmnElement="W5476_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5476_Flow15_di" bpmnElement="W5476_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5476_Flow16_di" bpmnElement="W5476_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5476_Flow17_di" bpmnElement="W5476_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5476_Flow18_di" bpmnElement="W5476_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5476_Flow19_di" bpmnElement="W5476_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5476_Assoc13_di" bpmnElement="W5476_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5477" name="W5477. Range-Aware Route Dispatch, Payload Optimization &amp; Charging-Stop Planning" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily dispatch; network re-design (W5472); SoH updates (W5475)
+Frequency: Daily, per vehicle and per route
+Volume: Per EV/alt-fuel dispatch across 4 DCs + last-mile + jobsite
+Owner: Dispatch Supervisor (VS-06.1/VS-06.3)
+Participants: Drivers, Network Planning (W5472), Charging Ops (W5473), Store Ops (VS-177)
+Source: workflow W5477 — Range-Aware Route Dispatch, Payload Optimization &amp; Charging-Stop Planning</bpmn:documentation>
+      <bpmn:laneSet id="W5477_LaneSet3">
+        <bpmn:lane id="W5477_Lane1" name="Dispatcher">
+        <bpmn:flowNodeRef>W5477_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5477_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5477_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5477_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5477_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5477_Lane2" name="Driver">
+        <bpmn:flowNodeRef>W5477_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5477_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5477_Start4" name="Daily dispatch; network re-design (W5472); SoH updates (W5475)">
+        <bpmn:outgoing>W5477_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5477_Task5" name="Assign vehicles to dispatches matching usable range (from SoH W5475) to the…">
+        <bpmn:documentation>Step 1: Assign vehicles to dispatches matching usable range (from SoH W5475) to the route&#x27;s energy requirement (distance, payload, grade, climate/A/C load from W5472).
+Responsible (R): Dispatcher / TMS
+Accountable (A): Dispatch Supervisor
+Duration: per dispatch</bpmn:documentation>
+        <bpmn:incoming>W5477_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5477_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5477_Task6" name="Optimize payload/cube within the EV&#x27;s reduced-payload envelope; split/combine…">
+        <bpmn:documentation>Step 2: Optimize payload/cube within the EV&#x27;s reduced-payload envelope; split/combine orders or adjust replenishment frequency (VS-02) to maintain coverage.
+Responsible (R): Dispatcher / Supply Planning
+Accountable (A): Dispatch Supervisor
+Duration: per dispatch</bpmn:documentation>
+        <bpmn:incoming>W5477_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5477_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5477_Task7" name="Plan any en-route/ opportunity charging stops (links W5474) into the schedule…">
+        <bpmn:documentation>Step 3: Plan any en-route/ opportunity charging stops (links W5474) into the schedule with dwell, and confirm charger availability at the stop.
+Responsible (R): Dispatcher / Charging Ops
+Accountable (A): Dispatch Supervisor
+Duration: per dispatch</bpmn:documentation>
+        <bpmn:incoming>W5477_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5477_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5477_Task8" name="Pre-condition the cabin (while plugged in) to preserve range and confirm…">
+        <bpmn:documentation>Step 4: Pre-condition the cabin (while plugged in) to preserve range and confirm SoC-at-departure meets the route requirement plus margin.
+Responsible (R): Driver / Charging Ops
+Accountable (A): Dispatch Supervisor
+Duration: per dispatch</bpmn:documentation>
+        <bpmn:incoming>W5477_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5477_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5477_Task9" name="Define and trigger fallback coverage (diesel/hybrid vehicle or 3PL with green…">
+        <bpmn:documentation>Step 5: Define and trigger fallback coverage (diesel/hybrid vehicle or 3PL with green clause W5485) for EV-unavailable, range-insufficient, or peak-day events; track fallback-usage (W5488).
+Responsible (R): Dispatcher / Fleet
+Accountable (A): Dispatch Supervisor
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5477_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5477_End10" name="Complete">
+        <bpmn:incoming>W5477_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5477_Annotation11">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: documented energy-buffer margin; fallback-usage ceiling and root-cause policy.
+Owner: Dispatch Supervisor (VS-06.1/VS-06.3)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5477_Assoc12" sourceRef="W5477_Annotation11" targetRef="W5477_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5477_Flow13" sourceRef="W5477_Start4" targetRef="W5477_Task5" />
+      <bpmn:sequenceFlow id="W5477_Flow14" sourceRef="W5477_Task5" targetRef="W5477_Task6" />
+      <bpmn:sequenceFlow id="W5477_Flow15" sourceRef="W5477_Task6" targetRef="W5477_Task7" />
+      <bpmn:sequenceFlow id="W5477_Flow16" sourceRef="W5477_Task7" targetRef="W5477_Task8" />
+      <bpmn:sequenceFlow id="W5477_Flow17" sourceRef="W5477_Task8" targetRef="W5477_Task9" />
+      <bpmn:sequenceFlow id="W5477_Flow18" sourceRef="W5477_Task9" targetRef="W5477_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5477_diag">
+      <bpmndi:BPMNPlane id="W5477_plane" bpmnElement="W_W5477">
+        <bpmndi:BPMNShape id="W5477_Lane1_di" bpmnElement="W5477_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Lane2_di" bpmnElement="W5477_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Task5_di" bpmnElement="W5477_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Task6_di" bpmnElement="W5477_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Task7_di" bpmnElement="W5477_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Task8_di" bpmnElement="W5477_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Task9_di" bpmnElement="W5477_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Start4_di" bpmnElement="W5477_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_End10_di" bpmnElement="W5477_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5477_Annotation11_di" bpmnElement="W5477_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5477_Flow13_di" bpmnElement="W5477_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5477_Flow14_di" bpmnElement="W5477_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5477_Flow15_di" bpmnElement="W5477_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5477_Flow16_di" bpmnElement="W5477_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5477_Flow17_di" bpmnElement="W5477_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5477_Flow18_di" bpmnElement="W5477_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5477_Assoc12_di" bpmnElement="W5477_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5478" name="W5478. Alternative-Fuel (Biodiesel/B20, LNG, Hybrid) Operations &amp; Fuel Quality Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Alt-fuel vehicles/equipment in service; fuel procurement (VS-61)
+Frequency: Per fuel-delivery; continuous quality/operations
+Volume: Alt-fuel share of the fleet (biodiesel-blend drop-in for existing diesel; LNG/CNG for heavy line-haul where viable; hybrids)
+Owner: Fuel &amp; Fleet Cost Manager (VS-61)
+Participants: Fleet (VS-06), Facilities/storage (VS-138/VS-24), Procurement (VS-03/VS-34), HSE (VS-24)
+Source: workflow W5478 — Alternative-Fuel (Biodiesel/B20, LNG, Hybrid) Operations &amp; Fuel Quality Management</bpmn:documentation>
+      <bpmn:laneSet id="W5478_LaneSet5">
+        <bpmn:lane id="W5478_Lane1" name="Procurement">
+        <bpmn:flowNodeRef>W5478_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5478_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5478_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5478_Lane2" name="Facilities">
+        <bpmn:flowNodeRef>W5478_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5478_Lane3" name="Maintenance">
+        <bpmn:flowNodeRef>W5478_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5478_Lane4" name="ESG">
+        <bpmn:flowNodeRef>W5478_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5478_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5478_Start6" name="Alt-fuel vehicles/equipment in service; fuel procurement (VS-61)">
+        <bpmn:outgoing>W5478_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5478_Task7" name="Procure biodiesel/B20 (or higher blend) and LNG/CNG from accredited suppliers…">
+        <bpmn:documentation>Step 1: Procure biodiesel/B20 (or higher blend) and LNG/CNG from accredited suppliers (links VS-61/VS-34) with documented blend ratio, feedstock/RSB/ISCC sustainability, and quality spec.
+Responsible (R): Procurement / Fuel Manager
+Accountable (A): Fuel &amp; Fleet Cost Manager
+Duration: per contract</bpmn:documentation>
+        <bpmn:incoming>W5478_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5478_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5478_Task8" name="Receive, store, and dispense alt-fuel compliantly (storage tanks, BFP Fire Code…">
+        <bpmn:documentation>Step 2: Receive, store, and dispense alt-fuel compliantly (storage tanks, BFP Fire Code for LNG/CNG, DENR where applicable — links VS-114); maintain fuel-quality testing (water, sediment, blend ratio, cetane) on receipt.
+Responsible (R): Facilities / Fuel Manager
+Accountable (A): Fuel &amp; Fleet Cost Manager
+Duration: per delivery</bpmn:documentation>
+        <bpmn:incoming>W5478_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5478_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5478_Task9" name="Monitor alt-fuel vehicle performance (fuel economy, cold-start, filter-clogging…">
+        <bpmn:documentation>Step 3: Monitor alt-fuel vehicle performance (fuel economy, cold-start, filter-clogging from biodiesel, component compatibility) and adjust maintenance intervals (VS-06.2) accordingly.
+Responsible (R): Maintenance / Fleet
+Accountable (A): Fuel &amp; Fleet Cost Manager
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5478_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5478_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5478_Task10" name="Track alt-fuel GHG reduction (lifecycle, vs diesel) for MRV (W5481) and ensure…">
+        <bpmn:documentation>Step 4: Track alt-fuel GHG reduction (lifecycle, vs diesel) for MRV (W5481) and ensure sustainability-claim evidence (feedstock, certification) supports ESG disclosure (VS-25).
+Responsible (R): ESG / Fuel Manager
+Accountable (A): Fuel &amp; Fleet Cost Manager
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5478_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5478_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5478_Task11" name="Manage alt-fuel supply continuity (single-supplier risk, blend availability by…">
+        <bpmn:documentation>Step 5: Manage alt-fuel supply continuity (single-supplier risk, blend availability by region) and a diesel-fallback for supply interruption.
+Responsible (R): Procurement / Fuel Manager
+Accountable (A): Fuel &amp; Fleet Cost Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5478_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5478_End12" name="Complete">
+        <bpmn:incoming>W5478_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5478_Annotation13">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: fuel-supplier TPRM/accreditation; BFP/DENR storage compliance; fuel-quality and sustainability-claim evidence; receipt quality-test mandatory before dispensing.
+Owner: Fuel &amp; Fleet Cost Manager (VS-61)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5478_Assoc14" sourceRef="W5478_Annotation13" targetRef="W5478_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5478_Flow15" sourceRef="W5478_Start6" targetRef="W5478_Task7" />
+      <bpmn:sequenceFlow id="W5478_Flow16" sourceRef="W5478_Task7" targetRef="W5478_Task8" />
+      <bpmn:sequenceFlow id="W5478_Flow17" sourceRef="W5478_Task8" targetRef="W5478_Task9" />
+      <bpmn:sequenceFlow id="W5478_Flow18" sourceRef="W5478_Task9" targetRef="W5478_Task10" />
+      <bpmn:sequenceFlow id="W5478_Flow19" sourceRef="W5478_Task10" targetRef="W5478_Task11" />
+      <bpmn:sequenceFlow id="W5478_Flow20" sourceRef="W5478_Task11" targetRef="W5478_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5478_diag">
+      <bpmndi:BPMNPlane id="W5478_plane" bpmnElement="W_W5478">
+        <bpmndi:BPMNShape id="W5478_Lane1_di" bpmnElement="W5478_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Lane2_di" bpmnElement="W5478_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Lane3_di" bpmnElement="W5478_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Lane4_di" bpmnElement="W5478_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Task7_di" bpmnElement="W5478_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Task8_di" bpmnElement="W5478_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Task9_di" bpmnElement="W5478_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Task10_di" bpmnElement="W5478_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Task11_di" bpmnElement="W5478_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Start6_di" bpmnElement="W5478_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_End12_di" bpmnElement="W5478_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5478_Annotation13_di" bpmnElement="W5478_Annotation13"><dc:Bounds x="160" y="800" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5478_Flow15_di" bpmnElement="W5478_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5478_Flow16_di" bpmnElement="W5478_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5478_Flow17_di" bpmnElement="W5478_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5478_Flow18_di" bpmnElement="W5478_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5478_Flow19_di" bpmnElement="W5478_Flow19"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5478_Flow20_di" bpmnElement="W5478_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5478_Assoc14_di" bpmnElement="W5478_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5479" name="W5479. Charging–Renewable Integration, Demand Response &amp; On-Site Solar Load Matching" isExecutable="false">
+      <bpmn:documentation>Trigger: Charging load established (W5473); solar generation (VS-108); tariff/DR signals
+Frequency: Continuous optimization; seasonal review
+Volume: Per charging site with co-located solar (VS-108)
+Owner: Facilities &amp; Energy Manager (VS-138/VS-120)
+Participants: Solar O&amp;M (VS-108), Fleet Charging Ops (W5473), Distribution Utility / Retail Electricity Supplier (VS-120), ESG (VS-25)
+Source: workflow W5479 — Charging–Renewable Integration, Demand Response &amp; On-Site Solar Load Matching</bpmn:documentation>
+      <bpmn:laneSet id="W5479_LaneSet3">
+        <bpmn:lane id="W5479_Lane1" name="Facilities">
+        <bpmn:flowNodeRef>W5479_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5479_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5479_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5479_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5479_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5479_Lane2" name="ESG">
+        <bpmn:flowNodeRef>W5479_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5479_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5479_Start4" name="Charging load established (W5473); solar generation (VS-108); tariff/DR signals">
+        <bpmn:outgoing>W5479_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5479_Task5" name="Integrate the charging schedule (W5473) with the on-site solar generation…">
+        <bpmn:documentation>Step 1: Integrate the charging schedule (W5473) with the on-site solar generation forecast (VS-108) and battery-storage dispatch to maximize self-consumption of renewable generation for fleet charging.
+Responsible (R): Facilities / Solar O&amp;M
+Accountable (A): Facilities &amp; Energy Manager
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5479_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5479_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5479_Task6" name="Shape charging load to off-peak/low-tariff hours and avoid peak-demand bands…">
+        <bpmn:documentation>Step 2: Shape charging load to off-peak/low-tariff hours and avoid peak-demand bands (RCOA/WESM tariff exposure per VS-120); participate in any utility demand-response (DR) program where economics support it.
+Responsible (R): Facilities / Energy Analyst
+Accountable (A): Facilities &amp; Energy Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5479_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5479_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5479_Task7" name="Track and verify the renewable-share of fleet charging (kWh-renewable /…">
+        <bpmn:documentation>Step 3: Track and verify the renewable-share of fleet charging (kWh-renewable / kWh-charged) to support a credible &quot;renewable-charged fleet&quot; ESG claim (VS-25) and avoid double-counting against the REC accounting (VS-108 W3465).
+Responsible (R): ESG / Energy Analyst
+Accountable (A): Facilities &amp; Energy Manager
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5479_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5479_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5479_Task8" name="Coordinate battery-storage dispatch (charge from solar surplus, discharge to…">
+        <bpmn:documentation>Step 4: Coordinate battery-storage dispatch (charge from solar surplus, discharge to cover charging peak) and manage battery cycle-life economics.
+Responsible (R): Facilities / Solar O&amp;M
+Accountable (A): Facilities &amp; Energy Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5479_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5479_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5479_Task9" name="Review the solar-charging match seasonally (monsoon/cloudy-season generation…">
+        <bpmn:documentation>Step 5: Review the solar-charging match seasonally (monsoon/cloudy-season generation shortfall) and define the grid-supplement/fallback plan to maintain charging continuity.
+Responsible (R): Facilities / Energy Analyst
+Accountable (A): Facilities &amp; Energy Manager
+Duration: seasonal</bpmn:documentation>
+        <bpmn:incoming>W5479_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5479_End10" name="Complete">
+        <bpmn:incoming>W5479_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5479_Annotation11">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: documented REC retirement-vs-sale policy; conservative &quot;renewable-charged&quot; claim threshold.
+Owner: Facilities &amp; Energy Manager (VS-138/VS-120)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5479_Assoc12" sourceRef="W5479_Annotation11" targetRef="W5479_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5479_Flow13" sourceRef="W5479_Start4" targetRef="W5479_Task5" />
+      <bpmn:sequenceFlow id="W5479_Flow14" sourceRef="W5479_Task5" targetRef="W5479_Task6" />
+      <bpmn:sequenceFlow id="W5479_Flow15" sourceRef="W5479_Task6" targetRef="W5479_Task7" />
+      <bpmn:sequenceFlow id="W5479_Flow16" sourceRef="W5479_Task7" targetRef="W5479_Task8" />
+      <bpmn:sequenceFlow id="W5479_Flow17" sourceRef="W5479_Task8" targetRef="W5479_Task9" />
+      <bpmn:sequenceFlow id="W5479_Flow18" sourceRef="W5479_Task9" targetRef="W5479_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5479_diag">
+      <bpmndi:BPMNPlane id="W5479_plane" bpmnElement="W_W5479">
+        <bpmndi:BPMNShape id="W5479_Lane1_di" bpmnElement="W5479_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Lane2_di" bpmnElement="W5479_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Task5_di" bpmnElement="W5479_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Task6_di" bpmnElement="W5479_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Task7_di" bpmnElement="W5479_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Task8_di" bpmnElement="W5479_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Task9_di" bpmnElement="W5479_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Start4_di" bpmnElement="W5479_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_End10_di" bpmnElement="W5479_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5479_Annotation11_di" bpmnElement="W5479_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5479_Flow13_di" bpmnElement="W5479_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5479_Flow14_di" bpmnElement="W5479_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5479_Flow15_di" bpmnElement="W5479_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5479_Flow16_di" bpmnElement="W5479_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5479_Flow17_di" bpmnElement="W5479_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5479_Flow18_di" bpmnElement="W5479_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5479_Assoc12_di" bpmnElement="W5479_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5480" name="W5480. EV-Specific Preventive Maintenance, Diagnostics, Roadside &amp; Towing Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicle in service; PM schedule; fault/roadside event
+Frequency: Per OEM PM schedule; per fault/event
+Volume: Per EV/alt-fuel vehicle in the fleet
+Owner: Fleet Maintenance Manager (VS-06.2)
+Participants: Maintenance technicians, OEM authorized service, Towing/roadside vendor, HSE (VS-24)
+Source: workflow W5480 — EV-Specific Preventive Maintenance, Diagnostics, Roadside &amp; Towing Operations</bpmn:documentation>
+      <bpmn:laneSet id="W5480_LaneSet4">
+        <bpmn:lane id="W5480_Lane1" name="Maintenance Technician">
+        <bpmn:flowNodeRef>W5480_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5480_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5480_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5480_Lane2" name="Maintenance">
+        <bpmn:flowNodeRef>W5480_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5480_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5480_Lane3" name="Towing Vendor">
+        <bpmn:flowNodeRef>W5480_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5480_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5480_Start5" name="Vehicle in service; PM schedule; fault/roadside event">
+        <bpmn:outgoing>W5480_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5480_Task6" name="Execute EV-specific preventive maintenance per OEM schedule…">
+        <bpmn:documentation>Step 1: Execute EV-specific preventive maintenance per OEM schedule (battery/thermal-system inspection, high-voltage isolation test, inverter/motor, regenerative-brake system, cooling-fluid, 12V aux) distinct from diesel PM.
+Responsible (R): Maintenance Technician
+Accountable (A): Fleet Maintenance Manager
+Duration: per schedule</bpmn:documentation>
+        <bpmn:incoming>W5480_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5480_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5480_Task7" name="Diagnose faults via OBD/EV telematics (fault codes, HV-system warnings, thermal…">
+        <bpmn:documentation>Step 2: Diagnose faults via OBD/EV telematics (fault codes, HV-system warnings, thermal events) and triage to in-house (light), OEM authorized (HV/battery), or roadside/tow.
+Responsible (R): Maintenance Technician / OEM
+Accountable (A): Fleet Maintenance Manager
+Duration: per fault</bpmn:documentation>
+        <bpmn:incoming>W5480_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5480_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5480_Task8" name="Maintain a trained/authorized technician pool (HV-qualified per OEM + DOLE-OSH)…">
+        <bpmn:documentation>Step 3: Maintain a trained/authorized technician pool (HV-qualified per OEM + DOLE-OSH) and OEM tooling; outsource HV/battery work to authorized service where in-house qualification is absent.
+Responsible (R): Maintenance / HR (VS-19.4)
+Accountable (A): Fleet Maintenance Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5480_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5480_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5480_Task9" name="Operate roadside assistance and towing for EVs: HV-safe towing (no flat-tow of…">
+        <bpmn:documentation>Step 4: Operate roadside assistance and towing for EVs: HV-safe towing (no flat-tow of driven axle), recovery of a stranded/thermal-event vehicle, and coordination with the towing vendor (links VS-56/VS-74).
+Responsible (R): Towing Vendor / Fleet
+Accountable (A): Fleet Maintenance Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5480_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5480_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5480_Task10" name="Feed all safety-relevant faults (thermal runaway signs, isolation loss, fire)…">
+        <bpmn:documentation>Step 5: Feed all safety-relevant faults (thermal runaway signs, isolation loss, fire) into the battery-fire/HV safety program (W5483) and the recall path if systemic.
+Responsible (R): Maintenance / HSE
+Accountable (A): Fleet Maintenance Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5480_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5480_End11" name="Complete">
+        <bpmn:incoming>W5480_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5480_Annotation12">
+        <bpmn:text>Controls: - CTL-807 (ensure controlled execution — EV / Alt-Fuel Fleet Operations, Charging &amp; Energy Management (PA-192.2).) | - operational: HV-qualification gating before HV work; HV-safe towing protocol mandatory; thermal-event response per W5483.
+Owner: Fleet Maintenance Manager (VS-06.2)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5480_Assoc13" sourceRef="W5480_Annotation12" targetRef="W5480_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5480_Flow14" sourceRef="W5480_Start5" targetRef="W5480_Task6" />
+      <bpmn:sequenceFlow id="W5480_Flow15" sourceRef="W5480_Task6" targetRef="W5480_Task7" />
+      <bpmn:sequenceFlow id="W5480_Flow16" sourceRef="W5480_Task7" targetRef="W5480_Task8" />
+      <bpmn:sequenceFlow id="W5480_Flow17" sourceRef="W5480_Task8" targetRef="W5480_Task9" />
+      <bpmn:sequenceFlow id="W5480_Flow18" sourceRef="W5480_Task9" targetRef="W5480_Task10" />
+      <bpmn:sequenceFlow id="W5480_Flow19" sourceRef="W5480_Task10" targetRef="W5480_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5480_diag">
+      <bpmndi:BPMNPlane id="W5480_plane" bpmnElement="W_W5480">
+        <bpmndi:BPMNShape id="W5480_Lane1_di" bpmnElement="W5480_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Lane2_di" bpmnElement="W5480_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Lane3_di" bpmnElement="W5480_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Task6_di" bpmnElement="W5480_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Task7_di" bpmnElement="W5480_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Task8_di" bpmnElement="W5480_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Task9_di" bpmnElement="W5480_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Task10_di" bpmnElement="W5480_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Start5_di" bpmnElement="W5480_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_End11_di" bpmnElement="W5480_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5480_Annotation12_di" bpmnElement="W5480_Annotation12"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5480_Flow14_di" bpmnElement="W5480_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5480_Flow15_di" bpmnElement="W5480_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5480_Flow16_di" bpmnElement="W5480_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5480_Flow17_di" bpmnElement="W5480_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5480_Flow18_di" bpmnElement="W5480_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5480_Flow19_di" bpmnElement="W5480_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5480_Assoc13_di" bpmnElement="W5480_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

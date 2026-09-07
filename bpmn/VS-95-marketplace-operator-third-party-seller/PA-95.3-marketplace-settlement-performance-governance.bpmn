@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-95.3-marketplace-settlement-performance-governance" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W3153" name="W3153. Marketplace Commission, Fee Deduction &amp; Seller Payout" isExecutable="false">
+      <bpmn:documentation>Trigger: Payout cycle (e.g., bi-weekly/monthly); order completion
+Frequency: Per payout cycle
+Volume: All sellers with completed orders
+Owner: Marketplace Manager
+Participants: Marketplace Mgr, Finance, AP/Treasury (links to VS-15/VS-18), Seller
+Source: workflow W3153 — Marketplace Commission, Fee Deduction &amp; Seller Payout</bpmn:documentation>
+      <bpmn:laneSet id="W3153_LaneSet3">
+        <bpmn:lane id="W3153_Lane1" name="System">
+        <bpmn:flowNodeRef>W3153_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3153_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3153_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3153_Lane2" name="Finance Analyst">
+        <bpmn:flowNodeRef>W3153_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3153_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3153_Start4" name="Payout cycle (e.g., bi-weekly/monthly); order completion">
+        <bpmn:outgoing>W3153_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W3153_Task5" name="System computes per-seller settlement: gross GMV (links to VS-10) − commission…">
+        <bpmn:documentation>Step 1: System computes per-seller settlement: gross GMV (links to VS-10) − commission % (W3141) − fees (listing, fulfillment, advertising — W3141/W3152) − returns/refunds (W3151) − withholding tax (W3157) − holdback reserve; produce seller statement
+Responsible (R): System / Finance
+Accountable (A): Finance Manager
+Duration: Per cycle</bpmn:documentation>
+        <bpmn:incoming>W3153_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3153_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W3153_Task6" name="Finance/AP (links to VS-15) review settlement; reconcile to order/returns…">
+        <bpmn:documentation>Step 2: Finance/AP (links to VS-15) review settlement; reconcile to order/returns records; resolve disputes; Treasury (links to VS-18) disburse net payout to seller&#x27;s verified bank account
+Responsible (R): Finance Analyst / Treasury
+Accountable (A): CFO
+Duration: Per cycle</bpmn:documentation>
+        <bpmn:incoming>W3153_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3153_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W3153_Task7" name="System posts settlement entries: marketplace revenue (commission/fees), VAT…">
+        <bpmn:documentation>Step 3: System posts settlement entries: marketplace revenue (commission/fees), VAT output (W3157), AP to seller, withholdings remitted to BIR (links to VS-79); archive statement per records (links to VS-88)
+Responsible (R): System / Finance
+Accountable (A): Finance Manager
+Duration: Per cycle</bpmn:documentation>
+        <bpmn:incoming>W3153_Flow13</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W3153_End8" name="Complete">
+        <bpmn:incoming>W3153_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3153_Annotation9">
+        <bpmn:text>Controls: - CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance &amp; Governance (PA-95.3).) | - operational: automated reconciliation and dispute window
+Owner: Marketplace Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3153_Assoc10" sourceRef="W3153_Annotation9" targetRef="W3153_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3153_Flow11" sourceRef="W3153_Start4" targetRef="W3153_Task5" />
+      <bpmn:sequenceFlow id="W3153_Flow12" sourceRef="W3153_Task5" targetRef="W3153_Task6" />
+      <bpmn:sequenceFlow id="W3153_Flow13" sourceRef="W3153_Task6" targetRef="W3153_Task7" />
+      <bpmn:sequenceFlow id="W3153_Flow14" sourceRef="W3153_Task7" targetRef="W3153_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3153_diag">
+      <bpmndi:BPMNPlane id="W3153_plane" bpmnElement="W_W3153">
+        <bpmndi:BPMNShape id="W3153_Lane1_di" bpmnElement="W3153_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3153_Lane2_di" bpmnElement="W3153_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3153_Task5_di" bpmnElement="W3153_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3153_Task6_di" bpmnElement="W3153_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3153_Task7_di" bpmnElement="W3153_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3153_Start4_di" bpmnElement="W3153_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3153_End8_di" bpmnElement="W3153_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3153_Annotation9_di" bpmnElement="W3153_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3153_Flow11_di" bpmnElement="W3153_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3153_Flow12_di" bpmnElement="W3153_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3153_Flow13_di" bpmnElement="W3153_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3153_Flow14_di" bpmnElement="W3153_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3153_Assoc10_di" bpmnElement="W3153_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3154" name="W3154. Seller Performance Scorecard &amp; Tier Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily/weekly/monthly scorecard cycle; tier review
+Frequency: Daily KPI + monthly tier review
+Volume: All active sellers
+Owner: Marketplace Manager
+Participants: Marketplace Mgr, Seller Operations, BI (links to VS-28), Finance
+Source: workflow W3154 — Seller Performance Scorecard &amp; Tier Management</bpmn:documentation>
+      <bpmn:laneSet id="W3154_LaneSet4">
+        <bpmn:lane id="W3154_Lane1" name="BI Analyst">
+        <bpmn:flowNodeRef>W3154_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3154_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3154_Lane2" name="Marketplace Mgr">
+        <bpmn:flowNodeRef>W3154_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3154_Lane3" name="Seller Operations">
+        <bpmn:flowNodeRef>W3154_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3154_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3154_Start5" name="Daily/weekly/monthly scorecard cycle; tier review">
+        <bpmn:outgoing>W3154_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3154_Task6" name="BI (links to VS-28) compute per-seller KPIs: order defect rate, cancellation…">
+        <bpmn:documentation>Step 1: BI (links to VS-28) compute per-seller KPIs: order defect rate, cancellation rate, late-ship rate, valid tracking rate, return rate, customer-satisfaction (CSAT/NPS), dispute rate, listing-quality; benchmark vs. peers
+Responsible (R): BI Analyst
+Accountable (A): Marketplace Manager
+Duration: Daily/weekly</bpmn:documentation>
+        <bpmn:incoming>W3154_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3154_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3154_Task7" name="Marketplace Mgr assign performance tier (Excellent / Good / Warning / At-Risk /…">
+        <bpmn:documentation>Step 2: Marketplace Mgr assign performance tier (Excellent / Good / Warning / At-Risk / Suspended) per thresholds; trigger benefits (W3143) or remediation/penalty path; communicate to seller
+Responsible (R): Marketplace Mgr
+Accountable (A): GM, Digital Commerce Inc.
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3154_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3154_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3154_Task8" name="For At-Risk/Suspended: Seller Operations implement Performance Improvement…">
+        <bpmn:documentation>Step 3: For At-Risk/Suspended: Seller Operations implement Performance Improvement Plan, restrict catalog/buy-box, hold payout reserve; escalate to offboarding (W3144) if uncorrected
+Responsible (R): Seller Operations
+Accountable (A): Marketplace Manager
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W3154_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3154_End9" name="Complete">
+        <bpmn:incoming>W3154_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3154_Annotation10">
+        <bpmn:text>Controls: - CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance &amp; Governance (PA-95.3).) | - operational: verified-purchase reviews and audit
+Owner: Marketplace Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3154_Assoc11" sourceRef="W3154_Annotation10" targetRef="W3154_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3154_Flow12" sourceRef="W3154_Start5" targetRef="W3154_Task6" />
+      <bpmn:sequenceFlow id="W3154_Flow13" sourceRef="W3154_Task6" targetRef="W3154_Task7" />
+      <bpmn:sequenceFlow id="W3154_Flow14" sourceRef="W3154_Task7" targetRef="W3154_Task8" />
+      <bpmn:sequenceFlow id="W3154_Flow15" sourceRef="W3154_Task8" targetRef="W3154_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3154_diag">
+      <bpmndi:BPMNPlane id="W3154_plane" bpmnElement="W_W3154">
+        <bpmndi:BPMNShape id="W3154_Lane1_di" bpmnElement="W3154_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_Lane2_di" bpmnElement="W3154_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_Lane3_di" bpmnElement="W3154_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_Task6_di" bpmnElement="W3154_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_Task7_di" bpmnElement="W3154_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_Task8_di" bpmnElement="W3154_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_Start5_di" bpmnElement="W3154_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_End9_di" bpmnElement="W3154_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3154_Annotation10_di" bpmnElement="W3154_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3154_Flow12_di" bpmnElement="W3154_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3154_Flow13_di" bpmnElement="W3154_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3154_Flow14_di" bpmnElement="W3154_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3154_Flow15_di" bpmnElement="W3154_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3154_Assoc11_di" bpmnElement="W3154_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3155" name="W3155. Seller Quality, Complaint &amp; Dispute Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer complaint about 3P order; seller-buyer dispute
+Frequency: Continuous
+Volume: Subset of marketplace orders
+Owner: Marketplace Manager
+Participants: Marketplace Mgr, CS (links to VS-13), Seller, Quality, Finance
+Source: workflow W3155 — Seller Quality, Complaint &amp; Dispute Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W3155_LaneSet4">
+        <bpmn:lane id="W3155_Lane1" name="CS">
+        <bpmn:flowNodeRef>W3155_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3155_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3155_Lane2" name="Marketplace Mgr">
+        <bpmn:flowNodeRef>W3155_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3155_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W3155_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3155_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3155_Start5" name="Customer complaint about 3P order; seller-buyer dispute">
+        <bpmn:outgoing>W3155_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3155_Task6" name="CS (links to VS-13) capture complaint: not-as-described, defective, counterfeit…">
+        <bpmn:documentation>Step 1: CS (links to VS-13) capture complaint: not-as-described, defective, counterfeit (escalate W3156), wrong item, late delivery; route to seller with SLA for response
+Responsible (R): CS / Seller
+Accountable (A): Marketplace Manager
+Duration: Per complaint (&lt;24 hr response)</bpmn:documentation>
+        <bpmn:incoming>W3155_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3155_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3155_Task7" name="Marketplace Mgr mediate dispute between buyer and seller; evaluate evidence…">
+        <bpmn:documentation>Step 2: Marketplace Mgr mediate dispute between buyer and seller; evaluate evidence (photos, listing, comms); decide remedy (refund, replacement, partial credit, deny); document decision
+Responsible (R): Marketplace Mgr / CS
+Accountable (A): GM, Digital Commerce Inc.
+Duration: Per dispute</bpmn:documentation>
+        <bpmn:incoming>W3155_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3155_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3155_Task8" name="Finance execute remedy (refund — links to VS-80, settlement debit — W3153)…">
+        <bpmn:documentation>Step 3: Finance execute remedy (refund — links to VS-80, settlement debit — W3153); track complaint themes and per-seller dispute rate to scorecard (W3154); drive systemic fixes
+Responsible (R): Finance / Marketplace Mgr
+Accountable (A): Finance Manager
+Duration: Per dispute</bpmn:documentation>
+        <bpmn:incoming>W3155_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3155_End9" name="Complete">
+        <bpmn:incoming>W3155_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3155_Annotation10">
+        <bpmn:text>Controls: - CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance &amp; Governance (PA-95.3).) | - operational: documented dispute policy and transparent evidence-based decisions
+Owner: Marketplace Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3155_Assoc11" sourceRef="W3155_Annotation10" targetRef="W3155_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3155_Flow12" sourceRef="W3155_Start5" targetRef="W3155_Task6" />
+      <bpmn:sequenceFlow id="W3155_Flow13" sourceRef="W3155_Task6" targetRef="W3155_Task7" />
+      <bpmn:sequenceFlow id="W3155_Flow14" sourceRef="W3155_Task7" targetRef="W3155_Task8" />
+      <bpmn:sequenceFlow id="W3155_Flow15" sourceRef="W3155_Task8" targetRef="W3155_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3155_diag">
+      <bpmndi:BPMNPlane id="W3155_plane" bpmnElement="W_W3155">
+        <bpmndi:BPMNShape id="W3155_Lane1_di" bpmnElement="W3155_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_Lane2_di" bpmnElement="W3155_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_Lane3_di" bpmnElement="W3155_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_Task6_di" bpmnElement="W3155_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_Task7_di" bpmnElement="W3155_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_Task8_di" bpmnElement="W3155_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_Start5_di" bpmnElement="W3155_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_End9_di" bpmnElement="W3155_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3155_Annotation10_di" bpmnElement="W3155_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3155_Flow12_di" bpmnElement="W3155_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3155_Flow13_di" bpmnElement="W3155_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3155_Flow14_di" bpmnElement="W3155_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3155_Flow15_di" bpmnElement="W3155_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3155_Assoc11_di" bpmnElement="W3155_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3156" name="W3156. Seller Fraud, Counterfeit &amp; Policy Violation Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Brand-owner complaint (links to VS-71); customer counterfeit report; automated detection
+Frequency: Event-driven
+Volume: Subset of sellers
+Owner: Marketplace Manager
+Participants: Marketplace Mgr, Brand Protection (links to VS-71), Legal, LP (links to VS-23), Seller Operations
+Source: workflow W3156 — Seller Fraud, Counterfeit &amp; Policy Violation Handling</bpmn:documentation>
+      <bpmn:laneSet id="W3156_LaneSet3">
+        <bpmn:lane id="W3156_Lane1" name="Brand Protection">
+        <bpmn:flowNodeRef>W3156_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3156_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3156_Lane2" name="Marketplace Mgr">
+        <bpmn:flowNodeRef>W3156_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3156_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3156_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3156_Start4" name="Brand-owner complaint (links to VS-71); customer counterfeit report; automated detection">
+        <bpmn:outgoing>W3156_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3156_Task5" name="Brand Protection/LP detect violation: counterfeit (links to VS-71)…">
+        <bpmn:documentation>Step 1: Brand Protection/LP detect violation: counterfeit (links to VS-71), unauthorized seller, IP infringement, prohibited items (hazmat — links to VS-24, recalled — links to VS-89), review manipulation, payment fraud (links to W3147)
+Responsible (R): Brand Protection / LP
+Accountable (A): Marketplace Manager
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W3156_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3156_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3156_Task6" name="Marketplace Mgr/Legal investigate: evidence (test buy, document review), seller…">
+        <bpmn:documentation>Step 2: Marketplace Mgr/Legal investigate: evidence (test buy, document review), seller response opportunity, decide action (listing removal, account restriction, suspension, termination — W3144, legal referral)
+Responsible (R): Marketplace Mgr / Legal
+Accountable (A): VP Legal &amp; Compliance
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W3156_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3156_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3156_Task7" name="Execute action: remove listings, withhold payout (links to W3153), refund…">
+        <bpmn:documentation>Step 3: Execute action: remove listings, withhold payout (links to W3153), refund affected buyers (links to VS-80), report to authorities (DTI/NPC/IP owner) where required, retain records (links to VS-88); feed into seller scoring (W3154)
+Responsible (R): Marketplace Mgr / Finance / Legal
+Accountable (A): Marketplace Manager
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W3156_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3156_End8" name="Complete">
+        <bpmn:incoming>W3156_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3156_Annotation9">
+        <bpmn:text>Controls: - CTL-86 (ensure marketplace seller &amp; tax compliance.) | - operational: KYB (W3138), monitoring, and decisive action
+Owner: Marketplace Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3156_Assoc10" sourceRef="W3156_Annotation9" targetRef="W3156_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3156_Flow11" sourceRef="W3156_Start4" targetRef="W3156_Task5" />
+      <bpmn:sequenceFlow id="W3156_Flow12" sourceRef="W3156_Task5" targetRef="W3156_Task6" />
+      <bpmn:sequenceFlow id="W3156_Flow13" sourceRef="W3156_Task6" targetRef="W3156_Task7" />
+      <bpmn:sequenceFlow id="W3156_Flow14" sourceRef="W3156_Task7" targetRef="W3156_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3156_diag">
+      <bpmndi:BPMNPlane id="W3156_plane" bpmnElement="W_W3156">
+        <bpmndi:BPMNShape id="W3156_Lane1_di" bpmnElement="W3156_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3156_Lane2_di" bpmnElement="W3156_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3156_Task5_di" bpmnElement="W3156_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3156_Task6_di" bpmnElement="W3156_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3156_Task7_di" bpmnElement="W3156_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3156_Start4_di" bpmnElement="W3156_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3156_End8_di" bpmnElement="W3156_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3156_Annotation9_di" bpmnElement="W3156_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3156_Flow11_di" bpmnElement="W3156_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3156_Flow12_di" bpmnElement="W3156_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3156_Flow13_di" bpmnElement="W3156_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3156_Flow14_di" bpmnElement="W3156_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3156_Assoc10_di" bpmnElement="W3156_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3157" name="W3157. Marketplace Tax (VAT / Percentage Tax) &amp; BIR Compliance per Seller" isExecutable="false">
+      <bpmn:documentation>Trigger: Order transaction; payout cycle; BIR filing
+Frequency: Per transaction + monthly filing
+Volume: All marketplace transactions
+Owner: Tax Manager
+Participants: Tax Mgr, Finance, Marketplace Mgr, Seller, Legal
+Source: workflow W3157 — Marketplace Tax (VAT / Percentage Tax) &amp; BIR Compliance per Seller</bpmn:documentation>
+      <bpmn:laneSet id="W3157_LaneSet3">
+        <bpmn:lane id="W3157_Lane1" name="Tax Manager">
+        <bpmn:flowNodeRef>W3157_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3157_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3157_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3157_Lane2" name="System">
+        <bpmn:flowNodeRef>W3157_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3157_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3157_Start4" name="Order transaction; payout cycle; BIR filing">
+        <bpmn:outgoing>W3157_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3157_Task5" name="Tax Mgr structure marketplace taxation: distinguish…">
+        <bpmn:documentation>Step 1: Tax Mgr structure marketplace taxation: distinguish BuildRight-as-marketplace-operator revenue (commission/fees — VATable) from seller revenue (sale of goods — VAT/percentage tax per seller&#x27;s BIR status); apply withholding obligations per CREATE/train law and BIR marketplace rules
+Responsible (R): Tax Manager
+Accountable (A): Tax Manager
+Duration: Setup + ongoing</bpmn:documentation>
+        <bpmn:incoming>W3157_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3157_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W3157_Task6" name="System compute per-transaction: VAT on BuildRight commission; pass-through of…">
+        <bpmn:documentation>Step 2: System compute per-transaction: VAT on BuildRight commission; pass-through of seller VAT/percentage tax to buyer where applicable; creditable withholding tax (EWT/CWT) on seller payout per BIR rules; generate BIR-compliant invoices (links to VS-79)
+Responsible (R): System / Finance
+Accountable (A): Tax Manager
+Duration: Per transaction</bpmn:documentation>
+        <bpmn:incoming>W3157_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3157_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W3157_Task7" name="Tax Mgr remit BuildRight VAT/EWT (links to VS-79); issue Form 2307 to sellers…">
+        <bpmn:documentation>Step 3: Tax Mgr remit BuildRight VAT/EWT (links to VS-79); issue Form 2307 to sellers for withheld tax; sellers remit own output VAT/income tax; facilitate BIR audit response (links to VS-21)
+Responsible (R): Tax Manager / Finance
+Accountable (A): Tax Manager
+Duration: Monthly/quarterly</bpmn:documentation>
+        <bpmn:incoming>W3157_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3157_End8" name="Complete">
+        <bpmn:incoming>W3157_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3157_Annotation9">
+        <bpmn:text>Controls: - CTL-86 (ensure marketplace seller &amp; tax compliance.) | - operational: structured tax design and ongoing review
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3157_Assoc10" sourceRef="W3157_Annotation9" targetRef="W3157_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3157_Flow11" sourceRef="W3157_Start4" targetRef="W3157_Task5" />
+      <bpmn:sequenceFlow id="W3157_Flow12" sourceRef="W3157_Task5" targetRef="W3157_Task6" />
+      <bpmn:sequenceFlow id="W3157_Flow13" sourceRef="W3157_Task6" targetRef="W3157_Task7" />
+      <bpmn:sequenceFlow id="W3157_Flow14" sourceRef="W3157_Task7" targetRef="W3157_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3157_diag">
+      <bpmndi:BPMNPlane id="W3157_plane" bpmnElement="W_W3157">
+        <bpmndi:BPMNShape id="W3157_Lane1_di" bpmnElement="W3157_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3157_Lane2_di" bpmnElement="W3157_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3157_Task5_di" bpmnElement="W3157_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3157_Task6_di" bpmnElement="W3157_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3157_Task7_di" bpmnElement="W3157_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3157_Start4_di" bpmnElement="W3157_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3157_End8_di" bpmnElement="W3157_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3157_Annotation9_di" bpmnElement="W3157_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3157_Flow11_di" bpmnElement="W3157_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3157_Flow12_di" bpmnElement="W3157_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3157_Flow13_di" bpmnElement="W3157_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3157_Flow14_di" bpmnElement="W3157_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3157_Assoc10_di" bpmnElement="W3157_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3158" name="W3158. Marketplace Consumer Protection &amp; Trust Program" isExecutable="false">
+      <bpmn:documentation>Trigger: Marketplace launch; trust incident; program review
+Frequency: Continuous + annual review
+Volume: All marketplace buyers
+Owner: Marketplace Manager
+Participants: Marketplace Mgr, CS (links to VS-13), Legal, Finance, Marketing (links to VS-14)
+Source: workflow W3158 — Marketplace Consumer Protection &amp; Trust Program</bpmn:documentation>
+      <bpmn:laneSet id="W3158_LaneSet4">
+        <bpmn:lane id="W3158_Lane1" name="Marketplace Mgr">
+        <bpmn:flowNodeRef>W3158_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3158_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3158_Lane2" name="CS">
+        <bpmn:flowNodeRef>W3158_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3158_Lane3" name="Finance Analyst">
+        <bpmn:flowNodeRef>W3158_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3158_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3158_Start5" name="Marketplace launch; trust incident; program review">
+        <bpmn:outgoing>W3158_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3158_Task6" name="Marketplace Mgr/Legal define buyer-protection policy: A-to-Z-style guarantee…">
+        <bpmn:documentation>Step 1: Marketplace Mgr/Legal define buyer-protection policy: A-to-Z-style guarantee (refund if seller fails to deliver/resolve), money-back window, item-not-as-described remedy, counterfeit guarantee, holdback fund for unfulfilled orders (links to W3144)
+Responsible (R): Marketplace Mgr / Legal
+Accountable (A): VP Legal &amp; Compliance
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W3158_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3158_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3158_Task7" name="CS (links to VS-13) operate trust program: clear claim path, fast adjudication…">
+        <bpmn:documentation>Step 2: CS (links to VS-13) operate trust program: clear claim path, fast adjudication, proactive outreach on systemic issues; Marketing (links to VS-14) communicate guarantee to buyers
+Responsible (R): CS / Marketing
+Accountable (A): Marketplace Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W3158_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3158_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3158_Task8" name="Finance fund buyer-protection reserve from marketplace fees; report claims cost…">
+        <bpmn:documentation>Step 3: Finance fund buyer-protection reserve from marketplace fees; report claims cost and trust-score uplift; calibrate policy to balance buyer trust and seller fairness
+Responsible (R): Finance Analyst
+Accountable (A): CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W3158_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3158_End9" name="Complete">
+        <bpmn:incoming>W3158_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3158_Annotation10">
+        <bpmn:text>Controls: - CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance &amp; Governance (PA-95.3).) | - operational: claim review, evidence, and abuse monitoring (links to VS-23)
+Owner: Marketplace Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3158_Assoc11" sourceRef="W3158_Annotation10" targetRef="W3158_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3158_Flow12" sourceRef="W3158_Start5" targetRef="W3158_Task6" />
+      <bpmn:sequenceFlow id="W3158_Flow13" sourceRef="W3158_Task6" targetRef="W3158_Task7" />
+      <bpmn:sequenceFlow id="W3158_Flow14" sourceRef="W3158_Task7" targetRef="W3158_Task8" />
+      <bpmn:sequenceFlow id="W3158_Flow15" sourceRef="W3158_Task8" targetRef="W3158_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3158_diag">
+      <bpmndi:BPMNPlane id="W3158_plane" bpmnElement="W_W3158">
+        <bpmndi:BPMNShape id="W3158_Lane1_di" bpmnElement="W3158_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_Lane2_di" bpmnElement="W3158_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_Lane3_di" bpmnElement="W3158_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_Task6_di" bpmnElement="W3158_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_Task7_di" bpmnElement="W3158_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_Task8_di" bpmnElement="W3158_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_Start5_di" bpmnElement="W3158_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_End9_di" bpmnElement="W3158_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3158_Annotation10_di" bpmnElement="W3158_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3158_Flow12_di" bpmnElement="W3158_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3158_Flow13_di" bpmnElement="W3158_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3158_Flow14_di" bpmnElement="W3158_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3158_Flow15_di" bpmnElement="W3158_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3158_Assoc11_di" bpmnElement="W3158_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3159" name="W3159. Marketplace Data Privacy, Seller Data Governance &amp; DPA Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: Marketplace launch; DPA obligations; privacy incident
+Frequency: Continuous + annual
+Volume: All marketplace participants
+Owner: Data Protection Officer (DPO)
+Participants: DPO, Marketplace Mgr, Legal, IT Security (links to VS-27), Seller
+Source: workflow W3159 — Marketplace Data Privacy, Seller Data Governance &amp; DPA Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W3159_LaneSet2">
+        <bpmn:lane id="W3159_Lane1" name="DPO">
+        <bpmn:flowNodeRef>W3159_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3159_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3159_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3159_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3159_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3159_Start3" name="Marketplace launch; DPA obligations; privacy incident">
+        <bpmn:outgoing>W3159_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3159_Task4" name="DPO map marketplace data flows: customer PII shared with seller (name, address…">
+        <bpmn:documentation>Step 1: DPO map marketplace data flows: customer PII shared with seller (name, address, phone) for fulfillment — Data Privacy Act (DPA) processor/controller arrangement; seller-as-processor agreement; document ROPA (links to VS-91)
+Responsible (R): DPO / Legal
+Accountable (A): DPO
+Duration: Initial + annual</bpmn:documentation>
+        <bpmn:incoming>W3159_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W3159_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3159_Task5" name="DPO implement seller data governance: minimal PII disclosure (e.g., masked…">
+        <bpmn:documentation>Step 2: DPO implement seller data governance: minimal PII disclosure (e.g., masked phone, address only), retention limits, security requirements for seller handling of PII (links to VS-27), privacy-by-design in portal/API
+Responsible (R): DPO / IT Security
+Accountable (A): DPO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W3159_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3159_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3159_Task6" name="On breach (seller or platform): execute 72-hour NPC notification (links to…">
+        <bpmn:documentation>Step 3: On breach (seller or platform): execute 72-hour NPC notification (links to VS-91 PA-91.3), notify affected customers, investigate, remediate, and apply seller sanctions if seller-attributable
+Responsible (R): DPO / Marketplace Mgr
+Accountable (A): DPO
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W3159_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3159_End7" name="Complete">
+        <bpmn:incoming>W3159_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3159_Annotation8">
+        <bpmn:text>Controls: - CTL-86 (ensure marketplace seller &amp; tax compliance.) | - operational: minimal-disclosure design, processor agreement, and audit
+Owner: Data Protection Officer (DPO)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3159_Assoc9" sourceRef="W3159_Annotation8" targetRef="W3159_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3159_Flow10" sourceRef="W3159_Start3" targetRef="W3159_Task4" />
+      <bpmn:sequenceFlow id="W3159_Flow11" sourceRef="W3159_Task4" targetRef="W3159_Task5" />
+      <bpmn:sequenceFlow id="W3159_Flow12" sourceRef="W3159_Task5" targetRef="W3159_Task6" />
+      <bpmn:sequenceFlow id="W3159_Flow13" sourceRef="W3159_Task6" targetRef="W3159_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3159_diag">
+      <bpmndi:BPMNPlane id="W3159_plane" bpmnElement="W_W3159">
+        <bpmndi:BPMNShape id="W3159_Lane1_di" bpmnElement="W3159_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3159_Task4_di" bpmnElement="W3159_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3159_Task5_di" bpmnElement="W3159_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3159_Task6_di" bpmnElement="W3159_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3159_Start3_di" bpmnElement="W3159_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3159_End7_di" bpmnElement="W3159_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3159_Annotation8_di" bpmnElement="W3159_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3159_Flow10_di" bpmnElement="W3159_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3159_Flow11_di" bpmnElement="W3159_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3159_Flow12_di" bpmnElement="W3159_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3159_Flow13_di" bpmnElement="W3159_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3159_Assoc9_di" bpmnElement="W3159_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3160" name="W3160. Marketplace P&amp;L, Take-Rate &amp; Growth Analytics" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly/quarterly P&amp;L cycle; strategy review
+Frequency: Monthly + quarterly
+Volume: Marketplace-wide
+Owner: Marketplace Director
+Participants: Marketplace Director, Finance, BI (links to VS-28), Ecommerce (links to VS-10), Category (links to VS-01)
+Source: workflow W3160 — Marketplace P&amp;L, Take-Rate &amp; Growth Analytics</bpmn:documentation>
+      <bpmn:laneSet id="W3160_LaneSet4">
+        <bpmn:lane id="W3160_Lane1" name="BI Analyst">
+        <bpmn:flowNodeRef>W3160_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3160_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3160_Lane2" name="Marketplace Director">
+        <bpmn:flowNodeRef>W3160_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3160_Lane3" name="GM, Digital Commerce Inc.">
+        <bpmn:flowNodeRef>W3160_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3160_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3160_Start5" name="Monthly/quarterly P&amp;L cycle; strategy review">
+        <bpmn:outgoing>W3160_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3160_Task6" name="BI/Finance (links to VS-28) compute marketplace P&amp;L: GMV, take-rate…">
+        <bpmn:documentation>Step 1: BI/Finance (links to VS-28) compute marketplace P&amp;L: GMV, take-rate (commission+fees ÷ GMV), net revenue, returns/chargebacks, ops cost (CS, fraud, payouts), technology amortization, buyer-protection reserve, contribution margin
+Responsible (R): BI Analyst / Finance
+Accountable (A): Marketplace Director
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3160_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3160_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3160_Task7" name="Marketplace Director analyze growth: GMV trend, seller count/active, SKUs…">
+        <bpmn:documentation>Step 2: Marketplace Director analyze growth: GMV trend, seller count/active, SKUs, category mix, buyer conversion, basket size, repeat-purchase, share of ecommerce (vs. 1P); benchmark vs. external marketplaces (links to VS-65)
+Responsible (R): Marketplace Director / BI
+Accountable (A): GM, Digital Commerce Inc.
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3160_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3160_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3160_Task8" name="Steering committee reviews P&amp;L and growth; reallocates investment (seller…">
+        <bpmn:documentation>Step 3: Steering committee reviews P&amp;L and growth; reallocates investment (seller acquisition, technology, retail-media — links to VS-48), adjusts commission (W3141), refines strategy (W3137); report to Board (links to VS-36)
+Responsible (R): GM, Digital Commerce Inc. / CFO
+Accountable (A): CEO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W3160_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3160_End9" name="Complete">
+        <bpmn:incoming>W3160_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3160_Annotation10">
+        <bpmn:text>Controls: - CTL-516 (ensure controlled execution — Marketplace Settlement, Seller Performance &amp; Governance (PA-95.3).) | - operational: milestone-gated investment and clear take-rate target
+Owner: Marketplace Director</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3160_Assoc11" sourceRef="W3160_Annotation10" targetRef="W3160_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3160_Flow12" sourceRef="W3160_Start5" targetRef="W3160_Task6" />
+      <bpmn:sequenceFlow id="W3160_Flow13" sourceRef="W3160_Task6" targetRef="W3160_Task7" />
+      <bpmn:sequenceFlow id="W3160_Flow14" sourceRef="W3160_Task7" targetRef="W3160_Task8" />
+      <bpmn:sequenceFlow id="W3160_Flow15" sourceRef="W3160_Task8" targetRef="W3160_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3160_diag">
+      <bpmndi:BPMNPlane id="W3160_plane" bpmnElement="W_W3160">
+        <bpmndi:BPMNShape id="W3160_Lane1_di" bpmnElement="W3160_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_Lane2_di" bpmnElement="W3160_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_Lane3_di" bpmnElement="W3160_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_Task6_di" bpmnElement="W3160_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_Task7_di" bpmnElement="W3160_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_Task8_di" bpmnElement="W3160_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_Start5_di" bpmnElement="W3160_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_End9_di" bpmnElement="W3160_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3160_Annotation10_di" bpmnElement="W3160_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3160_Flow12_di" bpmnElement="W3160_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3160_Flow13_di" bpmnElement="W3160_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3160_Flow14_di" bpmnElement="W3160_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3160_Flow15_di" bpmnElement="W3160_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3160_Assoc11_di" bpmnElement="W3160_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

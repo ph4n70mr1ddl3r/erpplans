@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-65.2-marketplace-order-inventory-sync" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W2414" name="W2414. Marketplace Order Download &amp; Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Continuous order sync from marketplace
+Frequency: Continuous; ~5,000–10,000 marketplace orders/month
+Volume: ~5K–10K/month across platforms
+Owner: Order Management System
+Participants: OMS, Ecommerce Ops, DC Ops, Logistics
+Source: workflow W2414 — Marketplace Order Download &amp; Processing</bpmn:documentation>
+      <bpmn:laneSet id="W2414_LaneSet2">
+        <bpmn:lane id="W2414_Lane1" name="System">
+        <bpmn:flowNodeRef>W2414_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2414_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2414_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2414_Start3" name="Continuous order sync from marketplace">
+        <bpmn:outgoing>W2414_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2414_Task4" name="System downloads marketplace orders via API; converts to BuildRight fulfillment…">
+        <bpmn:documentation>Step 1: System downloads marketplace orders via API; converts to BuildRight fulfillment orders; reserves inventory; routes to fulfillment source (DC, store, vendor) per VS-60 routing logic
+Responsible (R): System
+Accountable (A): Ecommerce Operations Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W2414_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2414_End5" name="Complete">
+        <bpmn:incoming>W2414_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2414_Annotation6">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - operational: Order Management System sign-off on the workflow output
+Owner: Order Management System</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2414_Assoc7" sourceRef="W2414_Annotation6" targetRef="W2414_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2414_Flow8" sourceRef="W2414_Start3" targetRef="W2414_Task4" />
+      <bpmn:sequenceFlow id="W2414_Flow9" sourceRef="W2414_Task4" targetRef="W2414_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2414_diag">
+      <bpmndi:BPMNPlane id="W2414_plane" bpmnElement="W_W2414">
+        <bpmndi:BPMNShape id="W2414_Lane1_di" bpmnElement="W2414_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2414_Task4_di" bpmnElement="W2414_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2414_Start3_di" bpmnElement="W2414_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2414_End5_di" bpmnElement="W2414_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2414_Annotation6_di" bpmnElement="W2414_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2414_Flow8_di" bpmnElement="W2414_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2414_Flow9_di" bpmnElement="W2414_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2414_Assoc7_di" bpmnElement="W2414_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2415" name="W2415. Marketplace Inventory Synchronization" isExecutable="false">
+      <bpmn:documentation>Trigger: Real-time inventory sync
+Frequency: Continuous; every 15 minutes
+Volume: ~35,000 SKUs × 1–2 platforms
+Owner: IT Integration Lead
+Participants: IT Integration, Inventory Mgr, Ecommerce Ops
+Source: workflow W2415 — Marketplace Inventory Synchronization</bpmn:documentation>
+      <bpmn:laneSet id="W2415_LaneSet2">
+        <bpmn:lane id="W2415_Lane1" name="System">
+        <bpmn:flowNodeRef>W2415_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2415_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2415_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2415_Start3" name="Real-time inventory sync">
+        <bpmn:outgoing>W2415_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2415_Task4" name="System pushes inventory availability to marketplace every 15 minutes…">
+        <bpmn:documentation>Step 1: System pushes inventory availability to marketplace every 15 minutes: BuildRight available quantity minus marketplace allocation; prevents overselling; handles sync errors and reconciles discrepancies
+Responsible (R): System / IT Integration Lead
+Accountable (A): Inventory Manager
+Duration: Automated + 2–3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W2415_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2415_End5" name="Complete">
+        <bpmn:incoming>W2415_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2415_Annotation6">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - operational: inventory-count integrity; Operational: IT Integration Lead sign-off on the workflow output
+Owner: IT Integration Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2415_Assoc7" sourceRef="W2415_Annotation6" targetRef="W2415_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2415_Flow8" sourceRef="W2415_Start3" targetRef="W2415_Task4" />
+      <bpmn:sequenceFlow id="W2415_Flow9" sourceRef="W2415_Task4" targetRef="W2415_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2415_diag">
+      <bpmndi:BPMNPlane id="W2415_plane" bpmnElement="W_W2415">
+        <bpmndi:BPMNShape id="W2415_Lane1_di" bpmnElement="W2415_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2415_Task4_di" bpmnElement="W2415_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2415_Start3_di" bpmnElement="W2415_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2415_End5_di" bpmnElement="W2415_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2415_Annotation6_di" bpmnElement="W2415_Annotation6"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2415_Flow8_di" bpmnElement="W2415_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2415_Flow9_di" bpmnElement="W2415_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2415_Assoc7_di" bpmnElement="W2415_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2416" name="W2416. Marketplace Fulfillment &amp; Shipping" isExecutable="false">
+      <bpmn:documentation>Trigger: Marketplace order requires fulfillment
+Frequency: ~5,000–10,000 orders/month
+Volume: ~5K–10K/month
+Owner: Ecommerce Operations Manager
+Participants: Ecom Ops Mgr, DC Ops, Marketplace Logistics
+Source: workflow W2416 — Marketplace Fulfillment &amp; Shipping</bpmn:documentation>
+      <bpmn:laneSet id="W2416_LaneSet3">
+        <bpmn:lane id="W2416_Lane1" name="System">
+        <bpmn:flowNodeRef>W2416_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2416_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2416_Lane2" name="DC Ops">
+        <bpmn:flowNodeRef>W2416_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2416_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2416_Start4" name="Marketplace order requires fulfillment">
+        <bpmn:outgoing>W2416_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2416_Task5" name="Fulfillment: (a) marketplace-managed logistics (FBS/LazMall) — system generates…">
+        <bpmn:documentation>Step 1: Fulfillment: (a) marketplace-managed logistics (FBS/LazMall) — system generates marketplace shipping label; (b) seller-managed — system routes per VS-60 to optimal source
+Responsible (R): System / Ecom Ops Manager
+Accountable (A): VP Supply Chain
+Duration: Varies</bpmn:documentation>
+        <bpmn:incoming>W2416_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W2416_Flow10</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W2416_Task6" name="DC/store picks, packs, ships; system pushes tracking number to marketplace…">
+        <bpmn:documentation>Step 2: DC/store picks, packs, ships; system pushes tracking number to marketplace; customer tracks via marketplace app; delivery confirmation auto-updates order status
+Responsible (R): DC Ops / System
+Accountable (A): Ecom Ops Manager
+Duration: 1–5 days</bpmn:documentation>
+        <bpmn:incoming>W2416_Flow11</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2416_End7" name="Complete">
+        <bpmn:incoming>W2416_Flow12</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2416_Annotation8">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - operational: Ecommerce Operations Manager sign-off on the workflow output
+Owner: Ecommerce Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2416_Assoc9" sourceRef="W2416_Annotation8" targetRef="W2416_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2416_Flow10" sourceRef="W2416_Start4" targetRef="W2416_Task5" />
+      <bpmn:sequenceFlow id="W2416_Flow11" sourceRef="W2416_Task5" targetRef="W2416_Task6" />
+      <bpmn:sequenceFlow id="W2416_Flow12" sourceRef="W2416_Task6" targetRef="W2416_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2416_diag">
+      <bpmndi:BPMNPlane id="W2416_plane" bpmnElement="W_W2416">
+        <bpmndi:BPMNShape id="W2416_Lane1_di" bpmnElement="W2416_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="740" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2416_Lane2_di" bpmnElement="W2416_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="740" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2416_Task5_di" bpmnElement="W2416_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2416_Task6_di" bpmnElement="W2416_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2416_Start4_di" bpmnElement="W2416_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2416_End7_di" bpmnElement="W2416_End7"><dc:Bounds x="840" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2416_Annotation8_di" bpmnElement="W2416_Annotation8"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2416_Flow10_di" bpmnElement="W2416_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2416_Flow11_di" bpmnElement="W2416_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2416_Flow12_di" bpmnElement="W2416_Flow12"><di:waypoint x="790" y="335" /><di:waypoint x="840" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2416_Assoc9_di" bpmnElement="W2416_Assoc9"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2417" name="W2417. Marketplace Return &amp; Refund Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Marketplace return initiated by customer
+Frequency: ~5–8% return rate; ~300–800 returns/month
+Volume: ~300–800/month
+Owner: Customer Service Agent
+Participants: CSA, Returns Mgr, Marketplace Portal
+Source: workflow W2417 — Marketplace Return &amp; Refund Processing</bpmn:documentation>
+      <bpmn:laneSet id="W2417_LaneSet2">
+        <bpmn:lane id="W2417_Lane1" name="CSA">
+        <bpmn:flowNodeRef>W2417_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2417_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2417_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2417_Start3" name="Marketplace return initiated by customer">
+        <bpmn:outgoing>W2417_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2417_Task4" name="Customer initiates return via marketplace; system receives return notification…">
+        <bpmn:documentation>Step 1: Customer initiates return via marketplace; system receives return notification; CSA reviews and approves/contests; customer ships item back; system processes refund upon receipt
+Responsible (R): CSA / System
+Accountable (A): Returns Manager
+Duration: 5–10 min + 3–7 days</bpmn:documentation>
+        <bpmn:incoming>W2417_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2417_End5" name="Complete">
+        <bpmn:incoming>W2417_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2417_Annotation6">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - operational: Customer Service Agent sign-off on the workflow output
+Owner: Customer Service Agent</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2417_Assoc7" sourceRef="W2417_Annotation6" targetRef="W2417_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2417_Flow8" sourceRef="W2417_Start3" targetRef="W2417_Task4" />
+      <bpmn:sequenceFlow id="W2417_Flow9" sourceRef="W2417_Task4" targetRef="W2417_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2417_diag">
+      <bpmndi:BPMNPlane id="W2417_plane" bpmnElement="W_W2417">
+        <bpmndi:BPMNShape id="W2417_Lane1_di" bpmnElement="W2417_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2417_Task4_di" bpmnElement="W2417_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2417_Start3_di" bpmnElement="W2417_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2417_End5_di" bpmnElement="W2417_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2417_Annotation6_di" bpmnElement="W2417_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2417_Flow8_di" bpmnElement="W2417_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2417_Flow9_di" bpmnElement="W2417_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2417_Assoc7_di" bpmnElement="W2417_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2418" name="W2418. Marketplace Pricing Sync &amp; Competitor Monitoring" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily price sync; continuous monitoring
+Frequency: Daily; ~5,000–10,000 SKUs per platform
+Volume: ~5K–10K SKUs
+Owner: Pricing Analyst
+Participants: Pricing Analyst, Ecommerce Dir, IT
+Source: workflow W2418 — Marketplace Pricing Sync &amp; Competitor Monitoring</bpmn:documentation>
+      <bpmn:laneSet id="W2418_LaneSet2">
+        <bpmn:lane id="W2418_Lane1" name="System">
+        <bpmn:flowNodeRef>W2418_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2418_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2418_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2418_Start3" name="Daily price sync; continuous monitoring">
+        <bpmn:outgoing>W2418_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2418_Task4" name="System syncs BuildRight prices to marketplace (adjusted for commission)…">
+        <bpmn:documentation>Step 1: System syncs BuildRight prices to marketplace (adjusted for commission); Analyst monitors competitor pricing on marketplace; recommends price adjustments for competitive positioning
+Responsible (R): System / Pricing Analyst
+Accountable (A): GM, Digital Commerce Inc.
+Duration: 1–2 hours/day</bpmn:documentation>
+        <bpmn:incoming>W2418_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2418_End5" name="Complete">
+        <bpmn:incoming>W2418_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2418_Annotation6">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - CTL-425 (price-change authorization — links to VS-08 / W40); Operational: Pricing Analyst sign-off on the workflow output
+Owner: Pricing Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2418_Assoc7" sourceRef="W2418_Annotation6" targetRef="W2418_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2418_Flow8" sourceRef="W2418_Start3" targetRef="W2418_Task4" />
+      <bpmn:sequenceFlow id="W2418_Flow9" sourceRef="W2418_Task4" targetRef="W2418_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2418_diag">
+      <bpmndi:BPMNPlane id="W2418_plane" bpmnElement="W_W2418">
+        <bpmndi:BPMNShape id="W2418_Lane1_di" bpmnElement="W2418_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2418_Task4_di" bpmnElement="W2418_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2418_Start3_di" bpmnElement="W2418_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2418_End5_di" bpmnElement="W2418_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2418_Annotation6_di" bpmnElement="W2418_Annotation6"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2418_Flow8_di" bpmnElement="W2418_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2418_Flow9_di" bpmnElement="W2418_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2418_Assoc7_di" bpmnElement="W2418_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2419" name="W2419. Marketplace Listing Quality Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly listing audit
+Frequency: Monthly; ~5,000–10,000 listings per platform
+Volume: ~5K–10K listings
+Owner: Ecommerce Catalog Manager
+Participants: Catalog Mgr, Digital Marketing, Analytics Manager
+Source: workflow W2419 — Marketplace Listing Quality Management</bpmn:documentation>
+      <bpmn:laneSet id="W2419_LaneSet2">
+        <bpmn:lane id="W2419_Lane1" name="Catalog Manager">
+        <bpmn:flowNodeRef>W2419_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2419_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2419_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2419_Start3" name="Monthly listing audit">
+        <bpmn:outgoing>W2419_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2419_Task4" name="Catalog Manager audits listings: image quality, title optimization, description…">
+        <bpmn:documentation>Step 1: Catalog Manager audits listings: image quality, title optimization, description accuracy, keyword relevance, customer review response; updates underperforming listings for better search ranking
+Responsible (R): Catalog Manager
+Accountable (A): GM, Digital Commerce Inc.
+Duration: 4–6 hours/month</bpmn:documentation>
+        <bpmn:incoming>W2419_Flow8</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2419_End5" name="Complete">
+        <bpmn:incoming>W2419_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2419_Annotation6">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - operational: Ecommerce Catalog Manager sign-off on the workflow output
+Owner: Ecommerce Catalog Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2419_Assoc7" sourceRef="W2419_Annotation6" targetRef="W2419_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2419_Flow8" sourceRef="W2419_Start3" targetRef="W2419_Task4" />
+      <bpmn:sequenceFlow id="W2419_Flow9" sourceRef="W2419_Task4" targetRef="W2419_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2419_diag">
+      <bpmndi:BPMNPlane id="W2419_plane" bpmnElement="W_W2419">
+        <bpmndi:BPMNShape id="W2419_Lane1_di" bpmnElement="W2419_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2419_Task4_di" bpmnElement="W2419_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2419_Start3_di" bpmnElement="W2419_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2419_End5_di" bpmnElement="W2419_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2419_Annotation6_di" bpmnElement="W2419_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2419_Flow8_di" bpmnElement="W2419_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2419_Flow9_di" bpmnElement="W2419_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2419_Assoc7_di" bpmnElement="W2419_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2420" name="W2420. Marketplace Stock-Out Prevention" isExecutable="false">
+      <bpmn:documentation>Trigger: Real-time monitoring
+Frequency: Continuous
+Volume: ~35,000 SKUs across platforms
+Owner: Merchandising Planner
+Participants: Merch Planner, Inventory Mgr, Ecom Ops
+Source: workflow W2420 — Marketplace Stock-Out Prevention</bpmn:documentation>
+      <bpmn:laneSet id="W2420_LaneSet2">
+        <bpmn:lane id="W2420_Lane1" name="System">
+        <bpmn:flowNodeRef>W2420_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2420_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2420_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2420_Start3" name="Real-time monitoring">
+        <bpmn:outgoing>W2420_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2420_Task4" name="System monitors sell-through by SKU; flags SKUs approaching stock-out on…">
+        <bpmn:documentation>Step 1: System monitors sell-through by SKU; flags SKUs approaching stock-out on marketplace; Planner adjusts allocation or generates replenishment order; delists SKUs when stock-out to prevent order cancellation
+Responsible (R): System / Merchandising Planner
+Accountable (A): GM, Digital Commerce Inc.
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W2420_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2420_End5" name="Complete">
+        <bpmn:incoming>W2420_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2420_Annotation6">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - operational: inventory-count integrity; Operational: Merchandising Planner sign-off on the workflow output
+Owner: Merchandising Planner</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2420_Assoc7" sourceRef="W2420_Annotation6" targetRef="W2420_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2420_Flow8" sourceRef="W2420_Start3" targetRef="W2420_Task4" />
+      <bpmn:sequenceFlow id="W2420_Flow9" sourceRef="W2420_Task4" targetRef="W2420_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2420_diag">
+      <bpmndi:BPMNPlane id="W2420_plane" bpmnElement="W_W2420">
+        <bpmndi:BPMNShape id="W2420_Lane1_di" bpmnElement="W2420_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2420_Task4_di" bpmnElement="W2420_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2420_Start3_di" bpmnElement="W2420_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2420_End5_di" bpmnElement="W2420_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2420_Annotation6_di" bpmnElement="W2420_Annotation6"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2420_Flow8_di" bpmnElement="W2420_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2420_Flow9_di" bpmnElement="W2420_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2420_Assoc7_di" bpmnElement="W2420_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2421" name="W2421. Marketplace Customer Review Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer posts review on marketplace
+Frequency: Continuous; ~500–800 reviews/month (per W1470&#x27;s marketplace review rate)
+Volume: ~2K–3K/month
+Owner: Customer Service Agent
+Participants: CSA, Digital Marketing, Category Mgr
+Source: workflow W2421 — Marketplace Customer Review Management</bpmn:documentation>
+      <bpmn:laneSet id="W2421_LaneSet2">
+        <bpmn:lane id="W2421_Lane1" name="CSA">
+        <bpmn:flowNodeRef>W2421_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2421_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2421_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2421_Start3" name="Customer posts review on marketplace">
+        <bpmn:outgoing>W2421_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2421_Task4" name="CSA monitors and responds to marketplace reviews: thanks positive, addresses…">
+        <bpmn:documentation>Step 1: CSA monitors and responds to marketplace reviews: thanks positive, addresses negative with resolution offer; escalates product quality issues to Category Manager; Digital Marketing incorporates feedback into listing optimization
+Responsible (R): CSA / Digital Marketing
+Accountable (A): CS Director
+Duration: 2–3 hours/day</bpmn:documentation>
+        <bpmn:incoming>W2421_Flow8</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2421_End5" name="Complete">
+        <bpmn:incoming>W2421_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2421_Annotation6">
+        <bpmn:text>Controls: - CTL-425 (ensure controlled execution — Marketplace Order &amp; Inventory Sync (PA-65.2).) | - CTL-425 (data-privacy — links to VS-91 / W53, RA 10173); Operational: Customer Service Agent sign-off on the workflow output
+Owner: Customer Service Agent</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2421_Assoc7" sourceRef="W2421_Annotation6" targetRef="W2421_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2421_Flow8" sourceRef="W2421_Start3" targetRef="W2421_Task4" />
+      <bpmn:sequenceFlow id="W2421_Flow9" sourceRef="W2421_Task4" targetRef="W2421_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2421_diag">
+      <bpmndi:BPMNPlane id="W2421_plane" bpmnElement="W_W2421">
+        <bpmndi:BPMNShape id="W2421_Lane1_di" bpmnElement="W2421_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2421_Task4_di" bpmnElement="W2421_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2421_Start3_di" bpmnElement="W2421_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2421_End5_di" bpmnElement="W2421_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2421_Annotation6_di" bpmnElement="W2421_Annotation6"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2421_Flow8_di" bpmnElement="W2421_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2421_Flow9_di" bpmnElement="W2421_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2421_Assoc7_di" bpmnElement="W2421_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

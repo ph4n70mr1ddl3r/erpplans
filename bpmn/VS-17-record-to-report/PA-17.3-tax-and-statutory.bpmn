@@ -1,0 +1,1905 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-17.3-tax-and-statutory" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W90" name="W90. Monthly Tax Filing &amp; Statutory Remittance" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly tax filing deadlines per BIR calendar; payroll statutory deduction deadlines per SSS/PhilHealth/Pag-IBIG schedules
+Frequency: Monthly (VAT, EWT, SSS, PhilHealth, Pag-IBIG); quarterly (corporate income tax); annual (1702RT, 1604-C/E)
+Volume: 5 entities × multiple tax types = ~10 monthly filings (2550M, 1601-C per entity) + quarterly cycles (2550Q, 1601-EQ, 1702Q) + annual returns (1702RT, 1604-C/E); plus payroll statutory for 5 entities
+Owner: Tax Accountant
+Participants: Tax Accountant, Controller, Treasury Analyst, Payroll Officer, HR Manager
+Source: workflow W90 — Monthly Tax Filing &amp; Statutory Remittance</bpmn:documentation>
+      <bpmn:laneSet id="W90_LaneSet5">
+        <bpmn:lane id="W90_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W90_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task19</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Task20</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W90_Lane2" name="Payroll Officer">
+        <bpmn:flowNodeRef>W90_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W90_Lane3" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W90_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W90_Lane4" name="System">
+        <bpmn:flowNodeRef>W90_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W90_End21</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W90_Start6" name="Monthly tax filing deadlines per BIR calendar; payroll statutory deduction deadlines per…">
+        <bpmn:outgoing>W90_Flow24</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W90_Task7" name="Tax data extraction">
+        <bpmn:documentation>Step 1: Tax data extraction (after W9A month-end close day 3–4): Tax Accountant extracts from ERP: (a) VAT data — output VAT (sales) and input VAT (purchases) per entity; sales/purchases split by VAT-able, VAT-exempt, zero-rated; (b) EWT data — withholding tax per vendor per ATC (Alphanumeric Tax Code) from AP (W7.9a); (c) Withholding on compensation — per employee per entity from payroll (W10.4); (d) Local business tax — per LGU per location from W9A.16c
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task8" name="VAT return preparation">
+        <bpmn:documentation>Step 2: VAT return preparation (BIR Form 2550M — monthly, or 2550Q — quarterly): (a) Tax Accountant reviews VAT data for completeness: all sales transactions captured, all purchase VAT claimed, intercompany VAT elimination correct per W14; (b) prepares 2550M per entity: gross sales, VAT-able sales, output VAT, total purchases, VAT-able purchases, input VAT, adjustments (prior period corrections), net VAT payable or refundable; (c) validates input VAT claims against supporting documents — BIR-registered sales invoices, official receipts, import entry declarations; (d) cross-references with W9A.16 VAT return schedule
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task9" name="EWT return preparation">
+        <bpmn:documentation>Step 3: EWT return preparation (BIR Form 1601-EQ — quarterly): (a) Tax Accountant reviews EWT computations per vendor per ATC; validates against AP records (W7.9a); (b) reconciles total EWT withheld per entity vs. vendor creditable withholding tax certificates (BIR Form 2307) to be issued; (c) at quarter-end, prepares 1601-EQ per entity: total withholding per ATC category, taxes remitted prior quarters, current quarter liability
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W90_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task10" name="Withholding on compensation">
+        <bpmn:documentation>Step 4: Withholding on compensation (BIR Form 1601-C): (a) Payroll Officer provides monthly withholding tax per entity from W10 payroll processing; (b) Tax Accountant validates against TRAIN law tax tables and payroll register; (c) prepares 1601-C per entity
+Responsible (R): Tax Accountant / Payroll Officer
+Accountable (A): Controller
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task11" name="Statutory remittance — SSS, PhilHealth, Pag-IBIG">
+        <bpmn:documentation>Step 5: Statutory remittance — SSS, PhilHealth, Pag-IBIG: (a) Payroll Officer generates monthly contribution schedules per entity from W10: employer share, employee share, total per employee; (b) validates against PRN (Payment Reference Number) from each agency; (c) submits payment via bank transfer or agency portal per deadline (SSS by last day of month, PhilHealth by every 10th, Pag-IBIG by every 10th of the following month)
+Responsible (R): Payroll Officer
+Accountable (A): HR Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task12" name="BIR eFPS filing">
+        <bpmn:documentation>Step 6: BIR eFPS filing: Tax Accountant files returns via BIR Electronic Filing and Payment System (eFPS) or eBIRForms for non-eFPS-covered entities: (a) uploads prepared returns (2550M, 1601-EQ, 1601-C); (b) system validates return data against BIR validation rules; (c) receives confirmation and payment reference
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task13" name="Tax payment">
+        <bpmn:documentation>Step 7: Tax payment: Treasury Analyst processes tax payments via bank: (a) eFPS auto-debit for covered entities; (b) manual bank transfer for non-eFPS entities; (c) verifies payment confirmation against filed return amounts
+Responsible (R): Treasury Analyst
+Accountable (A): Controller
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task14" name="Tax certificate generation">
+        <bpmn:documentation>Step 8: Tax certificate generation: Tax Accountant generates and distributes: (a) BIR Form 2307 (creditable withholding tax certificates) to vendors — monthly for top vendors, quarterly for others; (b) BIR Form 2316 (certificate of compensation payment/tax withheld) to all employees — annually or upon separation (W43); (c) alphalist of payees (1604-E) and employees (1604-C) — annual
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow31</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow31</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task15" name="Tax reconciliation">
+        <bpmn:documentation>Step 9: Tax reconciliation: Monthly: Tax Accountant reconciles tax liability accounts (VAT payable, EWT payable, WTC payable) per entity: (a) beginning balance + current month liability − payments = ending balance; (b) ending balance must agree with GL (W9A); (c) investigates and resolves discrepancies before next filing cycle
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W90_Flow32</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow32</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W90_Task16" name="Tax calendar compliance dashboard">
+        <bpmn:documentation>Step 10: Tax calendar compliance dashboard: System maintains tax compliance calendar per entity showing: filing deadline, filing status (pending/filed/paid), responsible person, penalty exposure for late filing; Controller reviews weekly
+Responsible (R): System / Controller
+Accountable (A): CFO
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W90_Flow240</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow240</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W90_Task17" name="Quarterly income tax return">
+        <bpmn:documentation>Step 11: Quarterly income tax return (BIR Form 1702Q): Tax Accountant prepares quarterly corporate income tax return per entity: taxable income, tax due, quarterly installment; validates against quarterly financial statements (W9A)
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W90_Flow241</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow241</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task18" name="Annual income tax return">
+        <bpmn:documentation>Step 12: Annual income tax return (BIR Form 1702RT): Tax Accountant prepares annual corporate income tax return per entity; incorporates year-end adjustments from W9B; cross-references with external auditor&#x27;s tax computations (W95)
+Responsible (R): Tax Accountant
+Accountable (A): Controller / CFO
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W90_Flow242</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow242</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task19" name="Annual information returns">
+        <bpmn:documentation>Step 13: Annual information returns (BIR Forms 1604-C, 1604-E): Tax Accountant prepares and files annual alphalist of employees and payees; reconciles with full-year withholding records
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: Annual (January)</bpmn:documentation>
+        <bpmn:incoming>W90_Flow243</bpmn:incoming>
+        <bpmn:outgoing>W90_Flow243</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W90_Task20" name="Local business tax reconciliation">
+        <bpmn:documentation>Step 14: Local business tax reconciliation: Tax Accountant reconciles quarterly LBT payments per LGU (from W9A.16c) against LGU assessment; prepares any variance explanations; LGU assessments reconciled during W54 permit renewals
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W90_Flow244</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W90_End21" name="Complete">
+        <bpmn:incoming>W90_Flow245</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W90_Annotation22">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W90_Assoc23" sourceRef="W90_Annotation22" targetRef="W90_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W90_Flow24" sourceRef="W90_Start6" targetRef="W90_Task7" />
+      <bpmn:sequenceFlow id="W90_Flow25" sourceRef="W90_Task7" targetRef="W90_Task8" />
+      <bpmn:sequenceFlow id="W90_Flow26" sourceRef="W90_Task8" targetRef="W90_Task9" />
+      <bpmn:sequenceFlow id="W90_Flow27" sourceRef="W90_Task9" targetRef="W90_Task10" />
+      <bpmn:sequenceFlow id="W90_Flow28" sourceRef="W90_Task10" targetRef="W90_Task11" />
+      <bpmn:sequenceFlow id="W90_Flow29" sourceRef="W90_Task11" targetRef="W90_Task12" />
+      <bpmn:sequenceFlow id="W90_Flow30" sourceRef="W90_Task12" targetRef="W90_Task13" />
+      <bpmn:sequenceFlow id="W90_Flow31" sourceRef="W90_Task13" targetRef="W90_Task14" />
+      <bpmn:sequenceFlow id="W90_Flow32" sourceRef="W90_Task14" targetRef="W90_Task15" />
+      <bpmn:sequenceFlow id="W90_Flow33" sourceRef="W90_Task15" targetRef="W90_Task16" />
+      <bpmn:sequenceFlow id="W90_Flow34" sourceRef="W90_Task16" targetRef="W90_Task17" />
+      <bpmn:sequenceFlow id="W90_Flow35" sourceRef="W90_Task17" targetRef="W90_Task18" />
+      <bpmn:sequenceFlow id="W90_Flow36" sourceRef="W90_Task18" targetRef="W90_Task19" />
+      <bpmn:sequenceFlow id="W90_Flow37" sourceRef="W90_Task19" targetRef="W90_Task20" />
+      <bpmn:sequenceFlow id="W90_Flow38" sourceRef="W90_Task20" targetRef="W90_End21" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W90_diag">
+      <bpmndi:BPMNPlane id="W90_plane" bpmnElement="W_W90">
+        <bpmndi:BPMNShape id="W90_Lane1_di" bpmnElement="W90_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="3260" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Lane2_di" bpmnElement="W90_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="3260" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Lane3_di" bpmnElement="W90_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="3260" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Lane4_di" bpmnElement="W90_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="3260" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task7_di" bpmnElement="W90_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task8_di" bpmnElement="W90_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task9_di" bpmnElement="W90_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task10_di" bpmnElement="W90_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task11_di" bpmnElement="W90_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task12_di" bpmnElement="W90_Task12"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task13_di" bpmnElement="W90_Task13"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task14_di" bpmnElement="W90_Task14"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task15_di" bpmnElement="W90_Task15"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task16_di" bpmnElement="W90_Task16"><dc:Bounds x="2290" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task17_di" bpmnElement="W90_Task17"><dc:Bounds x="2500" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task18_di" bpmnElement="W90_Task18"><dc:Bounds x="2710" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task19_di" bpmnElement="W90_Task19"><dc:Bounds x="2920" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Task20_di" bpmnElement="W90_Task20"><dc:Bounds x="3130" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Start6_di" bpmnElement="W90_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_End21_di" bpmnElement="W90_End21"><dc:Bounds x="3360" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W90_Annotation22_di" bpmnElement="W90_Annotation22"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W90_Flow24_di" bpmnElement="W90_Flow24"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow25_di" bpmnElement="W90_Flow25"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow26_di" bpmnElement="W90_Flow26"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow27_di" bpmnElement="W90_Flow27"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow28_di" bpmnElement="W90_Flow28"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow29_di" bpmnElement="W90_Flow29"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow30_di" bpmnElement="W90_Flow30"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow31_di" bpmnElement="W90_Flow31"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow32_di" bpmnElement="W90_Flow32"><di:waypoint x="2050" y="165" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow33_di" bpmnElement="W90_Flow33"><di:waypoint x="2260" y="165" /><di:waypoint x="2290" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow34_di" bpmnElement="W90_Flow34"><di:waypoint x="2470" y="675" /><di:waypoint x="2500" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow35_di" bpmnElement="W90_Flow35"><di:waypoint x="2680" y="165" /><di:waypoint x="2710" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow36_di" bpmnElement="W90_Flow36"><di:waypoint x="2890" y="165" /><di:waypoint x="2920" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow37_di" bpmnElement="W90_Flow37"><di:waypoint x="3100" y="165" /><di:waypoint x="3130" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Flow38_di" bpmnElement="W90_Flow38"><di:waypoint x="3310" y="165" /><di:waypoint x="3360" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W90_Assoc23_di" bpmnElement="W90_Assoc23"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W217" name="W217. Senior Citizen &amp; PWD VAT-Exemption Audit &amp; Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly and Quarterly tax filing deadlines (BIR Form 2550M/Q)
+Frequency: Monthly review; Quarterly reporting
+Volume: ~2–5% of total retail transactions
+Owner: Tax Manager
+Participants: Store Managers (data source), AR Clerk, Controller, BIR
+Source: workflow W217 — Senior Citizen &amp; PWD VAT-Exemption Audit &amp; Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W217_LaneSet5">
+        <bpmn:lane id="W217_Lane1" name="AR Clerk">
+        <bpmn:flowNodeRef>W217_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W217_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W217_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W217_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W217_Lane2" name="Tax Manager">
+        <bpmn:flowNodeRef>W217_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W217_Lane3" name="Controller">
+        <bpmn:flowNodeRef>W217_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W217_Lane4" name="Store Manager">
+        <bpmn:flowNodeRef>W217_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W217_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W217_Start6" name="Monthly and Quarterly tax filing deadlines (BIR Form 2550M/Q)">
+        <bpmn:outgoing>W217_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W217_Task7" name="Data Consolidation">
+        <bpmn:documentation>Step 1: Data Consolidation: System pulls all POS transactions flagged as &quot;SC/PWD Discount&quot; across 200 stores
+Responsible (R): AR Clerk
+Accountable (A): Tax Manager
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W217_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W217_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W217_Task8" name="ID Verification Audit">
+        <bpmn:documentation>Step 2: ID Verification Audit: Sample review of captured ID numbers (OSCA/PWD ID) and customer signatures in the system to ensure compliance
+Responsible (R): AR Clerk
+Accountable (A): Tax Manager
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W217_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W217_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W217_Task9" name="VAT-Exemption Reconciliation">
+        <bpmn:documentation>Step 3: VAT-Exemption Reconciliation: Reconcile the &quot;VAT-Exempt&quot; sales column in the Sales Journal against actual discounts given
+Responsible (R): AR Clerk
+Accountable (A): Controller
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W217_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W217_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W217_Task10" name="Report Generation">
+        <bpmn:documentation>Step 4: Report Generation: Generate &quot;Summary List of Sales&quot; (SLS) and specific SC/PWD discount reports required for BIR filing
+Responsible (R): Tax Manager
+Accountable (A): —
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W217_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W217_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W217_Task11" name="Accounting Entry">
+        <bpmn:documentation>Step 5: Accounting Entry: Verify correct posting to &quot;Discounts - SC/PWD&quot; (Operating Expense) and &quot;VAT-Exempt Sales&quot; (Revenue)
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W217_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W217_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W217_Task12" name="Document Archival">
+        <bpmn:documentation>Step 6: Document Archival: Ensure digital/physical copies of SC/PWD booklets and transaction logs are archived for 10 years
+Responsible (R): Store Manager
+Accountable (A): Tax Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W217_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W217_End13" name="Complete">
+        <bpmn:incoming>W217_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W217_Annotation14">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Tax Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W217_Assoc15" sourceRef="W217_Annotation14" targetRef="W217_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W217_Flow16" sourceRef="W217_Start6" targetRef="W217_Task7" />
+      <bpmn:sequenceFlow id="W217_Flow17" sourceRef="W217_Task7" targetRef="W217_Task8" />
+      <bpmn:sequenceFlow id="W217_Flow18" sourceRef="W217_Task8" targetRef="W217_Task9" />
+      <bpmn:sequenceFlow id="W217_Flow19" sourceRef="W217_Task9" targetRef="W217_Task10" />
+      <bpmn:sequenceFlow id="W217_Flow20" sourceRef="W217_Task10" targetRef="W217_Task11" />
+      <bpmn:sequenceFlow id="W217_Flow21" sourceRef="W217_Task11" targetRef="W217_Task12" />
+      <bpmn:sequenceFlow id="W217_Flow22" sourceRef="W217_Task12" targetRef="W217_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W217_diag">
+      <bpmndi:BPMNPlane id="W217_plane" bpmnElement="W_W217">
+        <bpmndi:BPMNShape id="W217_Lane1_di" bpmnElement="W217_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Lane2_di" bpmnElement="W217_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Lane3_di" bpmnElement="W217_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Lane4_di" bpmnElement="W217_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Task7_di" bpmnElement="W217_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Task8_di" bpmnElement="W217_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Task9_di" bpmnElement="W217_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Task10_di" bpmnElement="W217_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Task11_di" bpmnElement="W217_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Task12_di" bpmnElement="W217_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Start6_di" bpmnElement="W217_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_End13_di" bpmnElement="W217_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W217_Annotation14_di" bpmnElement="W217_Annotation14"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W217_Flow16_di" bpmnElement="W217_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W217_Flow17_di" bpmnElement="W217_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W217_Flow18_di" bpmnElement="W217_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W217_Flow19_di" bpmnElement="W217_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W217_Flow20_di" bpmnElement="W217_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W217_Flow21_di" bpmnElement="W217_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W217_Flow22_di" bpmnElement="W217_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W217_Assoc15_di" bpmnElement="W217_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W260" name="W260. BIR eFPS Filing &amp; Electronic Payment Submission" isExecutable="false">
+      <bpmn:documentation>Trigger: Tax filing deadline (monthly, quarterly, annually)
+Frequency: Monthly (2550M, 1601-C); Quarterly (2550Q, 1601-EQ, 1702Q); Annually (1702RT, 1604-C/E)
+Volume: ~10 monthly filings across 5 entities (2550M + 1601-C per entity; per W90), plus quarterly/annual cycles
+Owner: Tax Accountant
+Participants: Tax Accountant (2), Controller (1), Treasury Analyst (1)
+Source: workflow W260 — BIR eFPS Filing &amp; Electronic Payment Submission</bpmn:documentation>
+      <bpmn:laneSet id="W260_LaneSet4">
+        <bpmn:lane id="W260_Lane1" name="System">
+        <bpmn:flowNodeRef>W260_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W260_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W260_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W260_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W260_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W260_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W260_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W260_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W260_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W260_Lane3" name="Controller">
+        <bpmn:flowNodeRef>W260_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W260_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W260_Start5" name="Tax filing deadline (monthly, quarterly, annually)">
+        <bpmn:outgoing>W260_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W260_Task6" name="Filing Calendar Check">
+        <bpmn:documentation>Step 1: Filing Calendar Check: System alerts Tax Accountant of upcoming filing deadlines per BIR calendar: (a) 2550M — Monthly VAT Return (due 20th of following month), (b) 1601-EQ — Quarterly EWT Remittance Return (due last day of the month following quarter close), (c) 1601-C — Monthly CWT Remittance (due 10th of following month), (d) 2550Q — Quarterly VAT Return, (e) 1702Q — Quarterly Income Tax Return, (f) 1604-C/E — Annual Information Return; alerts triggered 7 days before deadline
+Responsible (R): System
+Accountable (A): Controller
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W260_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W260_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W260_Task7" name="Data Extraction &amp; Validation">
+        <bpmn:documentation>Step 2: Data Extraction &amp; Validation: Tax Accountant runs tax data extraction from ERP: (a) for VAT returns: system pulls sales invoices (output VAT), purchase invoices (input VAT), import entries (VAT on imports per W239), adjustments (SC/PWD VAT-exemption per W217); (b) for EWT returns: system pulls all EWT-deducted vendor payments per ATC code (WI010, WI020, etc.); (c) for CWT returns: system pulls all compensation-related withholding per BIR tax tables; (d) system performs pre-validation: checks for missing TINs, duplicate entries, amount tolerance checks, and late-filed transactions
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W260_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W260_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W260_Task8" name="Return Preparation">
+        <bpmn:documentation>Step 3: Return Preparation: System auto-generates BIR tax return in prescribed format: (a) populated fields from ERP transaction data (sales, purchases, payments, withholding); (b) Tax Accountant reviews auto-populated return against source schedules; (c) manual adjustments for: late-registered transactions, tax credit certificates (TCC), prior-period adjustments, tax relief claims; (d) system validates arithmetic consistency and cross-field validation per BIR form rules
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W260_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W260_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W260_Task9" name="Controller Review">
+        <bpmn:documentation>Step 4: Controller Review: Controller reviews prepared return: (a) verifies tax liability against GL accounts (VAT payable/receivable, EWT payable, CWT payable); (b) confirms tax credit utilization; (c) approves filing; (d) if adjustments needed, returns to Tax Accountant with comments
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W260_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W260_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W260_Task10" name="eFPS Submission">
+        <bpmn:documentation>Step 5: eFPS Submission: Tax Accountant logs into BIR Electronic Filing and Payment System (eFPS): (a) selects entity TIN and filing period; (b) uploads generated return file (or manually encodes if eFPS doesn&#x27;t support batch upload for form type); (c) system validates submission and generates eFPS confirmation reference number; (d) Tax Accountant records confirmation number in ERP against filing record
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W260_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W260_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W260_Task11" name="Payment via AAB">
+        <bpmn:documentation>Step 6: Payment via AAB: For returns with tax due: (a) system calculates net tax payable after credits; (b) Tax Accountant initiates payment via eFPS-linked Authorized Agent Bank (AAB): electronic debit from enrolled bank account (BDO, BPI, or Metrobank per FIN-009); (c) for entities not enrolled in eFPS payment: Tax Accountant generates eFPS Payment Form and pays over-the-counter at AAB; (d) Payment Reference Number (PRN) generated and recorded in ERP
+Responsible (R): Tax Accountant / Treasury Analyst
+Accountable (A): Controller
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W260_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W260_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W260_Task12" name="Confirmation &amp; Reconciliation">
+        <bpmn:documentation>Step 7: Confirmation &amp; Reconciliation: (a) Tax Accountant downloads eFS (electronic File Saved) confirmation from eFPS; (b) attaches confirmation and PRN to filing record in ERP; (c) system posts tax payment to GL (Dr. VAT/EWT/CWT Payable, Cr. Cash); (d) Treasury Analyst reconciles tax payment against bank statement per W89; (e) Tax Accountant files return in BIR CAS compliance archive per W216
+Responsible (R): Tax Accountant / Treasury Analyst
+Accountable (A): Controller
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W260_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W260_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W260_Task13" name="Quarterly/Annual Reconciliation">
+        <bpmn:documentation>Step 8: Quarterly/Annual Reconciliation: At quarter-end and year-end: (a) Tax Accountant reconciles cumulative monthly filings against quarterly returns; (b) identifies discrepancies (additional transactions booked after monthly filing, classification corrections); (c) files adjustment returns if required per BIR rules; (d) at year-end: reconciles all quarterly filings against annual return (1702RT, 1604-C/E); (e) generates annual tax summary per entity for Controller and CFO review
+Responsible (R): Tax Accountant
+Accountable (A): Controller / CFO
+Duration: 4–8 hours</bpmn:documentation>
+        <bpmn:incoming>W260_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W260_End14" name="Complete">
+        <bpmn:incoming>W260_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W260_Annotation15">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: frequently experiences downtime near filing deadlines
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W260_Assoc16" sourceRef="W260_Annotation15" targetRef="W260_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W260_Flow17" sourceRef="W260_Start5" targetRef="W260_Task6" />
+      <bpmn:sequenceFlow id="W260_Flow18" sourceRef="W260_Task6" targetRef="W260_Task7" />
+      <bpmn:sequenceFlow id="W260_Flow19" sourceRef="W260_Task7" targetRef="W260_Task8" />
+      <bpmn:sequenceFlow id="W260_Flow20" sourceRef="W260_Task8" targetRef="W260_Task9" />
+      <bpmn:sequenceFlow id="W260_Flow21" sourceRef="W260_Task9" targetRef="W260_Task10" />
+      <bpmn:sequenceFlow id="W260_Flow22" sourceRef="W260_Task10" targetRef="W260_Task11" />
+      <bpmn:sequenceFlow id="W260_Flow23" sourceRef="W260_Task11" targetRef="W260_Task12" />
+      <bpmn:sequenceFlow id="W260_Flow24" sourceRef="W260_Task12" targetRef="W260_Task13" />
+      <bpmn:sequenceFlow id="W260_Flow25" sourceRef="W260_Task13" targetRef="W260_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W260_diag">
+      <bpmndi:BPMNPlane id="W260_plane" bpmnElement="W_W260">
+        <bpmndi:BPMNShape id="W260_Lane1_di" bpmnElement="W260_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Lane2_di" bpmnElement="W260_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Lane3_di" bpmnElement="W260_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task6_di" bpmnElement="W260_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task7_di" bpmnElement="W260_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task8_di" bpmnElement="W260_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task9_di" bpmnElement="W260_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task10_di" bpmnElement="W260_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task11_di" bpmnElement="W260_Task11"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task12_di" bpmnElement="W260_Task12"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Task13_di" bpmnElement="W260_Task13"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Start5_di" bpmnElement="W260_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_End14_di" bpmnElement="W260_End14"><dc:Bounds x="2100" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W260_Annotation15_di" bpmnElement="W260_Annotation15"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W260_Flow17_di" bpmnElement="W260_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow18_di" bpmnElement="W260_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow19_di" bpmnElement="W260_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow20_di" bpmnElement="W260_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow21_di" bpmnElement="W260_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow22_di" bpmnElement="W260_Flow22"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow23_di" bpmnElement="W260_Flow23"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow24_di" bpmnElement="W260_Flow24"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Flow25_di" bpmnElement="W260_Flow25"><di:waypoint x="2050" y="335" /><di:waypoint x="2100" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W260_Assoc16_di" bpmnElement="W260_Assoc16"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W407" name="W407. Corporate Income Tax — Computation &amp; Deferred Tax (PAS 12)" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarter-end close (interim) or Year-end close (annual) (W9)
+Frequency: Quarterly (interim provision); Annual (final return &amp; deferred tax measurement)
+Volume: 5 legal entities; annual tax filings (1702RT); quarterly tax filings (1702Q)
+Owner: Tax Manager
+Participants: CFO, Controller, Tax Manager, Tax Accountant, External Audit Team (annual)
+Source: workflow W407 — Corporate Income Tax — Computation &amp; Deferred Tax (PAS 12)</bpmn:documentation>
+      <bpmn:laneSet id="W407_LaneSet3">
+        <bpmn:lane id="W407_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W407_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W407_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W407_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W407_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W407_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W407_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W407_Lane2" name="Tax Manager">
+        <bpmn:flowNodeRef>W407_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W407_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W407_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W407_Start4" name="Quarter-end close (interim) or Year-end close (annual) (W9)">
+        <bpmn:outgoing>W407_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W407_Task5" name="Tax Provisioning">
+        <bpmn:documentation>Step 1: Tax Provisioning: Tax Accountant computes current income tax liability based on quarterly pre-tax income per entity, adjusting for non-deductible expenses and tax-exempt income
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W407_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W407_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W407_Task6" name="Temporary Differences Identification">
+        <bpmn:documentation>Step 2: Temporary Differences Identification: Tax Accountant identifies temporary differences between accounting (PFRS) and tax carrying values (e.g., depreciation rates, SLOB provisions, bad debt provisions, accrued retirement benefits)
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W407_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W407_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W407_Task7" name="Deferred Tax Calculation">
+        <bpmn:documentation>Step 3: Deferred Tax Calculation: Tax Manager calculates Deferred Tax Assets (DTA) and Deferred Tax Liabilities (DTL) using the enacted tax rate (e.g., 25% under CREATE Law)
+Responsible (R): Tax Manager
+Accountable (A): Controller
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W407_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W407_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W407_Task8" name="PFRS 16 Lease Adjustments">
+        <bpmn:documentation>Step 4: PFRS 16 Lease Adjustments: Compute current and deferred tax adjustments arising from PFRS 16 lease assets (ROU) and liabilities
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W407_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W407_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W407_Task9" name="Accrual Posting">
+        <bpmn:documentation>Step 5: Accrual Posting: Post quarterly tax provision and deferred tax journal entries: Dr. Income Tax Expense (Current/Deferred) / Cr. Income Tax Payable / Cr. Net DTL
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W407_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W407_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W407_Task10" name="Annual Return Reconciliation">
+        <bpmn:documentation>Step 6: Annual Return Reconciliation: During year-end (W9B), Tax Manager prepares comprehensive tax reconciliation (PFRS Net Income to Taxable Income); coordinates with external auditors for verification (W95)
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W407_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W407_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W407_Task11" name="Filing &amp; Payment">
+        <bpmn:documentation>Step 7: Filing &amp; Payment: Tax Accountant uploads the final return via eFPS (W260) and coordinates payment of the balance due
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W407_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W407_End12" name="Complete">
+        <bpmn:incoming>W407_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W407_Annotation13">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: periodic reconciliation against source documents | ---
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W407_Assoc14" sourceRef="W407_Annotation13" targetRef="W407_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W407_Flow15" sourceRef="W407_Start4" targetRef="W407_Task5" />
+      <bpmn:sequenceFlow id="W407_Flow16" sourceRef="W407_Task5" targetRef="W407_Task6" />
+      <bpmn:sequenceFlow id="W407_Flow17" sourceRef="W407_Task6" targetRef="W407_Task7" />
+      <bpmn:sequenceFlow id="W407_Flow18" sourceRef="W407_Task7" targetRef="W407_Task8" />
+      <bpmn:sequenceFlow id="W407_Flow19" sourceRef="W407_Task8" targetRef="W407_Task9" />
+      <bpmn:sequenceFlow id="W407_Flow20" sourceRef="W407_Task9" targetRef="W407_Task10" />
+      <bpmn:sequenceFlow id="W407_Flow21" sourceRef="W407_Task10" targetRef="W407_Task11" />
+      <bpmn:sequenceFlow id="W407_Flow22" sourceRef="W407_Task11" targetRef="W407_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W407_diag">
+      <bpmndi:BPMNPlane id="W407_plane" bpmnElement="W_W407">
+        <bpmndi:BPMNShape id="W407_Lane1_di" bpmnElement="W407_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Lane2_di" bpmnElement="W407_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Task5_di" bpmnElement="W407_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Task6_di" bpmnElement="W407_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Task7_di" bpmnElement="W407_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Task8_di" bpmnElement="W407_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Task9_di" bpmnElement="W407_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Task10_di" bpmnElement="W407_Task10"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Task11_di" bpmnElement="W407_Task11"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Start4_di" bpmnElement="W407_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_End12_di" bpmnElement="W407_End12"><dc:Bounds x="1890" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W407_Annotation13_di" bpmnElement="W407_Annotation13"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W407_Flow15_di" bpmnElement="W407_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Flow16_di" bpmnElement="W407_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Flow17_di" bpmnElement="W407_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Flow18_di" bpmnElement="W407_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Flow19_di" bpmnElement="W407_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Flow20_di" bpmnElement="W407_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Flow21_di" bpmnElement="W407_Flow21"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Flow22_di" bpmnElement="W407_Flow22"><di:waypoint x="1840" y="165" /><di:waypoint x="1890" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W407_Assoc14_di" bpmnElement="W407_Assoc14"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W472" name="W472. BOI/PEZA/LGU Tax Incentive Monitoring &amp; Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: New store opening in an LGU with tax incentive program; new entity registration with BOI or PEZA; annual compliance review cycle; incentive expiration approaching
+Frequency: ~2–3 new incentive registrations/year (as new stores open or entities qualify); quarterly compliance monitoring; annual reporting per incentive
+Volume: Potentially 5–15 active incentive registrations across 5 entities and 200+ locations (varies based on qualifying entities and LGU programs)
+Owner: Tax Accountant
+Participants: Tax Accountant, Controller, CFO, VP Legal, Regulatory Officer, Treasury Manager
+Source: workflow W472 — BOI/PEZA/LGU Tax Incentive Monitoring &amp; Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W472_LaneSet2">
+        <bpmn:lane id="W472_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W472_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W472_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W472_Start3" name="New store opening in an LGU with tax incentive program; new entity registration with BOI…">
+        <bpmn:outgoing>W472_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W472_Task4" name="Incentive opportunity identification">
+        <bpmn:documentation>Step 1: Incentive opportunity identification: (a) When a new store location is selected (W116), Tax Accountant reviews the LGU&#x27;s investment incentive code — many LGUs offer property tax holidays, local business tax reductions, or streamlined permitting for new businesses; (b) when a new entity is being formed or a DC location is selected, Tax Accountant assesses BOI or PEZA registration eligibility; (c) Tax Accountant monitors CREATE Law implementing rules and BIR revenue regulations for new incentive categories; (d) annual: Tax Accountant conducts a full incentive landscape review for all 5 entities and 205+ locations
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 2–4 hours/review</bpmn:documentation>
+        <bpmn:incoming>W472_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W472_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W472_Task5" name="Registration and qualification">
+        <bpmn:documentation>Step 2: Registration and qualification: (a) For BOI: Tax Accountant prepares registration application — project description, investment amount, employment generation plan, economic impact; VP Legal reviews and submits; BOI processes registration (3–6 months); upon approval, Tax Accountant records ITH start date, duration, and conditions; (b) For PEZA: similar process with PEZA Economic Zone administration; requires physical location within a PEZA-declared zone; (c) For LGU: Tax Accountant coordinates with Regulatory Officer to include tax incentive applications in the new store LGU permitting process (W54); negotiate incentive terms with LGU Investment Promotions Office
+Responsible (R): Tax Accountant / VP Legal
+Accountable (A): CFO
+Duration: 10–20 hours/registration</bpmn:documentation>
+        <bpmn:incoming>W472_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W472_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W472_Task6" name="Compliance monitoring">
+        <bpmn:documentation>Step 3: Compliance monitoring: (a) Tax Accountant maintains incentive compliance register per entity/location: incentive type, registration number, start date, expiration date, reporting requirements, compliance conditions (e.g., minimum employment, minimum investment, local sourcing percentage); (b) quarterly: Tax Accountant verifies compliance with all active incentive conditions — if BuildRight Logistics, Inc. is BOI-registered with a minimum employment condition, quarterly headcount at DC locations is verified against the commitment; (c) system alerts Tax Accountant 6 months and 3 months before incentive expiration — enough lead time for renewal application or tax planning for reversion to standard rates
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W472_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W472_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W472_Task7" name="BIR filing integration">
+        <bpmn:documentation>Step 4: BIR filing integration: (a) For entities with ITH: Tax Accountant files BIR quarterly income tax returns (1702Q) with zero or reduced tax due, attaching BOI/PEZA certificate as supporting document; system applies reduced tax rate in tax computation module (W90, W260); (b) for entities with 5% GIT: Tax Accountant files 5% GIT return in lieu of regular corporate income tax and local business tax; system must support dual tax computation — standard rate for non-qualifying entities and 5% GIT for qualifying entities; (c) for LGU incentive: local business tax computation (W54, W9A.16c) reflects reduced or zero LBT for qualifying locations
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: Absorbed into existing tax filing</bpmn:documentation>
+        <bpmn:incoming>W472_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W472_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W472_Task8" name="Transfer pricing impact assessment">
+        <bpmn:documentation>Step 5: Transfer pricing impact assessment: (a) If one entity (e.g., Logistics, Inc.) has an income tax holiday while another (Depot, Inc.) does not, transfer pricing (W235) must be documented to demonstrate arm&#x27;s-length pricing — BIR scrutinizes IC transactions between incentivized and non-incentivized entities under CREATE Law; (b) Tax Accountant and Treasury Manager review IC pricing rules (W305) annually to ensure IC service fees and goods pricing do not artificially shift profit to the incentivized entity; (c) documentation per W235 (Transfer Pricing Compliance) updated to include incentive status analysis
+Responsible (R): Tax Accountant / Treasury Manager
+Accountable (A): CFO
+Duration: 4 hours/year</bpmn:documentation>
+        <bpmn:incoming>W472_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W472_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W472_Task9" name="Incentive benefit tracking">
+        <bpmn:documentation>Step 6: Incentive benefit tracking: (a) Tax Accountant calculates and records tax savings per incentive per quarter: ITH savings = taxable income × standard CIT rate (25%) minus tax paid (0% during ITH); GIT savings = (standard CIT + LBT) minus 5% GIT paid; LGU savings = standard LBT minus actual LBT paid; (b) quarterly report to Controller and CFO: cumulative tax savings vs. projection, compliance status, upcoming expirations; (c) annual: CFO includes incentive benefit in management reporting (W35) — total tax optimization from active incentive management
+Responsible (R): Tax Accountant
+Accountable (A): Controller / CFO
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W472_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W472_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W472_Task10" name="Expiration management">
+        <bpmn:documentation>Step 7: Expiration management: (a) 12 months before incentive expiration: Tax Accountant assesses renewal options — some incentives are non-renewable (ITH); others may convert to enhanced deductions (5% GIT after ITH expiry for BOI); (b) 6 months before: Tax Accountant prepares tax planning for reversion to standard rates — models the financial impact on entity-level and consolidated effective tax rate; (c) upon expiration: system updates entity tax rate to standard; BIR filing (W260) reflects standard computation; LGU LBT reverts to full rate; (d) if renewal is possible: Tax Accountant prepares renewal application with updated compliance documentation
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: 4–8 hours/expiration event</bpmn:documentation>
+        <bpmn:incoming>W472_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W472_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W472_Task11" name="Audit readiness">
+        <bpmn:documentation>Step 8: Audit readiness: (a) Tax Accountant maintains complete incentive documentation file per entity: registration certificate, approval letter, incentive terms, annual compliance reports filed with BOI/PEZA/LGU, quarterly benefit calculations, transfer pricing documentation; (b) file available for BIR tax audit (W77) — BIR specifically audits entities with tax incentives to verify compliance; (c) file available for Internal Audit review (W349 — Corporate Tax &amp; Statutory Reporting Audit)
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: Absorbed into documentation practices</bpmn:documentation>
+        <bpmn:incoming>W472_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W472_End12" name="Complete">
+        <bpmn:incoming>W472_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W472_Annotation13">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Tax Accountant review and approval gate
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W472_Assoc14" sourceRef="W472_Annotation13" targetRef="W472_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W472_Flow15" sourceRef="W472_Start3" targetRef="W472_Task4" />
+      <bpmn:sequenceFlow id="W472_Flow16" sourceRef="W472_Task4" targetRef="W472_Task5" />
+      <bpmn:sequenceFlow id="W472_Flow17" sourceRef="W472_Task5" targetRef="W472_Task6" />
+      <bpmn:sequenceFlow id="W472_Flow18" sourceRef="W472_Task6" targetRef="W472_Task7" />
+      <bpmn:sequenceFlow id="W472_Flow19" sourceRef="W472_Task7" targetRef="W472_Task8" />
+      <bpmn:sequenceFlow id="W472_Flow20" sourceRef="W472_Task8" targetRef="W472_Task9" />
+      <bpmn:sequenceFlow id="W472_Flow21" sourceRef="W472_Task9" targetRef="W472_Task10" />
+      <bpmn:sequenceFlow id="W472_Flow22" sourceRef="W472_Task10" targetRef="W472_Task11" />
+      <bpmn:sequenceFlow id="W472_Flow23" sourceRef="W472_Task11" targetRef="W472_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W472_diag">
+      <bpmndi:BPMNPlane id="W472_plane" bpmnElement="W_W472">
+        <bpmndi:BPMNShape id="W472_Lane1_di" bpmnElement="W472_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task4_di" bpmnElement="W472_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task5_di" bpmnElement="W472_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task6_di" bpmnElement="W472_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task7_di" bpmnElement="W472_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task8_di" bpmnElement="W472_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task9_di" bpmnElement="W472_Task9"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task10_di" bpmnElement="W472_Task10"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Task11_di" bpmnElement="W472_Task11"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Start3_di" bpmnElement="W472_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_End12_di" bpmnElement="W472_End12"><dc:Bounds x="2100" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W472_Annotation13_di" bpmnElement="W472_Annotation13"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W472_Flow15_di" bpmnElement="W472_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow16_di" bpmnElement="W472_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow17_di" bpmnElement="W472_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow18_di" bpmnElement="W472_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow19_di" bpmnElement="W472_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow20_di" bpmnElement="W472_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow21_di" bpmnElement="W472_Flow21"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow22_di" bpmnElement="W472_Flow22"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Flow23_di" bpmnElement="W472_Flow23"><di:waypoint x="2050" y="165" /><di:waypoint x="2100" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W472_Assoc14_di" bpmnElement="W472_Assoc14"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W473" name="W473. BIR Electronic Invoicing System (EIS) API Transmission &amp; Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Sales transaction completed at POS (W5B), Ecommerce order invoice generated (W11/W19), B2B invoice generated (W8/W165/W166), or customer refund processed (W101)
+Frequency: Real-time (at transaction completion) or near-real-time batch transmission (within 72-hour BIR mandate)
+Volume: ~2.8M POS transactions, ~42.9K ecommerce orders, ~3.5M line items, and ~3,500 AR invoices monthly across the 5 entities
+Owner: Tax Accountant
+Participants: POS Cashier, Billing Clerk, IT System Administrator, BIR EIS Portal, Integration Middleware, External CAS Consultant
+Source: workflow W473 — BIR Electronic Invoicing System (EIS) API Transmission &amp; Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W473_LaneSet4">
+        <bpmn:lane id="W473_Lane1" name="System">
+        <bpmn:flowNodeRef>W473_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W473_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W473_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W473_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W473_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W473_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W473_Lane2" name="POS System">
+        <bpmn:flowNodeRef>W473_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W473_Lane3" name="Tax Accountant">
+        <bpmn:flowNodeRef>W473_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W473_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W473_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W473_Start5" name="Sales transaction completed at POS (W5B), Ecommerce order invoice generated (W11/W19)…">
+        <bpmn:outgoing>W473_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W473_Task6" name="Data Capture and Schema Validation">
+        <bpmn:documentation>Step 1: Data Capture and Schema Validation: Upon POS checkout or B2B invoicing, the ERP/POS validation engine checks for mandatory BIR fields (Buyer name, buyer TIN, address, product code, description, quantity, unit price, breakdown of VATable/Exempt/Zero-rated sales, VAT amount, and withholding tax); system formats the transaction details into a standard BIR JSON schema.
+Responsible (R): System
+Accountable (A): —
+Duration: Immediate</bpmn:documentation>
+        <bpmn:incoming>W473_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W473_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W473_Task7" name="Digital Signing">
+        <bpmn:documentation>Step 2: Digital Signing: The ERP security module applies BuildRight&#x27;s digital certificate (secured in HSM/KeyVault) to sign the JSON payload, ensuring non-repudiation.
+Responsible (R): System
+Accountable (A): IT Admin
+Duration: &lt; 1 sec</bpmn:documentation>
+        <bpmn:incoming>W473_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W473_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W473_Task8" name="API Transmission">
+        <bpmn:documentation>Step 3: API Transmission: ERP transmission service calls the BIR EIS API endpoints (using secure TLS 1.2+ connection) to transmit the signed JSON payload.
+Responsible (R): System
+Accountable (A): IT Admin
+Duration: &lt; 3 sec</bpmn:documentation>
+        <bpmn:incoming>W473_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W473_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W473_Task9" name="BIR Acknowledgment &amp; UUID Storage">
+        <bpmn:documentation>Step 4: BIR Acknowledgment &amp; UUID Storage: BIR EIS portal processes the payload, validates the schema, and returns a 200 OK response with a unique transaction reference key (UUID); ERP saves this UUID and receipt timestamp in the Local Invoice Registry linked to the original sales invoice/POS transaction.
+Responsible (R): System
+Accountable (A): —
+Duration: &lt; 2 sec</bpmn:documentation>
+        <bpmn:incoming>W473_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W473_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W473_Task10" name="Transmission Exception Handling">
+        <bpmn:documentation>Step 5: Transmission Exception Handling: If the transmission fails due to network outage, BIR portal downtime, or schema validation error: (a) system flags the transaction as &quot;Failed/Pending&quot;; (b) routes validation errors to the Billing Clerk for correction; (c) for network/portal issues, automatically retries every 30 minutes; (d) queues offline POS transactions for automatic transmission upon restoration.
+Responsible (R): System / Billing Clerk
+Accountable (A): Tax Accountant
+Duration: Automated / Varies</bpmn:documentation>
+        <bpmn:incoming>W473_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W473_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W473_Task11" name="Fulfillment &amp; Customer Copy Delivery">
+        <bpmn:documentation>Step 6: Fulfillment &amp; Customer Copy Delivery: Once the UUID is received (or queued in offline mode), the POS prints the BIR-compliant receipt with a QR code containing the BIR validation link; or the ecommerce system emails the e-invoice to the customer.
+Responsible (R): POS System / Ecommerce Engine
+Accountable (A): Store Manager
+Duration: &lt; 5 sec</bpmn:documentation>
+        <bpmn:incoming>W473_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W473_Flow22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W473_Task12" name="Daily Reconciliation &amp; Audit Log Review">
+        <bpmn:documentation>Step 7: Daily Reconciliation &amp; Audit Log Review: Tax Accountant runs the e-Invoicing Transmission Report daily: compares total sales invoice count from the General Ledger (W9A) and POS sales reports against the transmitted/accepted records in the Local Invoice Registry; flags and investigates any transactions pending transmission or rejected by BIR.
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W473_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W473_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W473_Task13" name="BIR e-Invoicing Compliance Reporting">
+        <bpmn:documentation>Step 8: BIR e-Invoicing Compliance Reporting: Tax Accountant prepares monthly EIS compliance summaries, verifying that all sales records are fully accounted for in the BIR portal before filing monthly VAT returns (W90/W260).
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 1–2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W473_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W473_End14" name="Complete">
+        <bpmn:incoming>W473_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W473_Annotation15">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Tax Accountant review and approval gate; operational: periodic reconciliation against source documents
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W473_Assoc16" sourceRef="W473_Annotation15" targetRef="W473_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W473_Flow17" sourceRef="W473_Start5" targetRef="W473_Task6" />
+      <bpmn:sequenceFlow id="W473_Flow18" sourceRef="W473_Task6" targetRef="W473_Task7" />
+      <bpmn:sequenceFlow id="W473_Flow19" sourceRef="W473_Task7" targetRef="W473_Task8" />
+      <bpmn:sequenceFlow id="W473_Flow20" sourceRef="W473_Task8" targetRef="W473_Task9" />
+      <bpmn:sequenceFlow id="W473_Flow21" sourceRef="W473_Task9" targetRef="W473_Task10" />
+      <bpmn:sequenceFlow id="W473_Flow22" sourceRef="W473_Task10" targetRef="W473_Task11" />
+      <bpmn:sequenceFlow id="W473_Flow23" sourceRef="W473_Task11" targetRef="W473_Task12" />
+      <bpmn:sequenceFlow id="W473_Flow24" sourceRef="W473_Task12" targetRef="W473_Task13" />
+      <bpmn:sequenceFlow id="W473_Flow25" sourceRef="W473_Task13" targetRef="W473_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W473_diag">
+      <bpmndi:BPMNPlane id="W473_plane" bpmnElement="W_W473">
+        <bpmndi:BPMNShape id="W473_Lane1_di" bpmnElement="W473_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Lane2_di" bpmnElement="W473_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Lane3_di" bpmnElement="W473_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task6_di" bpmnElement="W473_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task7_di" bpmnElement="W473_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task8_di" bpmnElement="W473_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task9_di" bpmnElement="W473_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task10_di" bpmnElement="W473_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task11_di" bpmnElement="W473_Task11"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task12_di" bpmnElement="W473_Task12"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Task13_di" bpmnElement="W473_Task13"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Start5_di" bpmnElement="W473_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_End14_di" bpmnElement="W473_End14"><dc:Bounds x="2100" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W473_Annotation15_di" bpmnElement="W473_Annotation15"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W473_Flow17_di" bpmnElement="W473_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow18_di" bpmnElement="W473_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow19_di" bpmnElement="W473_Flow19"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow20_di" bpmnElement="W473_Flow20"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow21_di" bpmnElement="W473_Flow21"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow22_di" bpmnElement="W473_Flow22"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow23_di" bpmnElement="W473_Flow23"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow24_di" bpmnElement="W473_Flow24"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Flow25_di" bpmnElement="W473_Flow25"><di:waypoint x="2050" y="505" /><di:waypoint x="2100" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W473_Assoc16_di" bpmnElement="W473_Assoc16"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W478" name="W478. BIR Annual Inventory List Submission (RMC 57-2015)" isExecutable="false">
+      <bpmn:documentation>Trigger: Calendar year-end close (December 31) triggers the statutory compliance requirement
+Frequency: Annual (submitted on or before January 30 of the following year)
+Volume: ~35,000 active SKUs (~55,000 item-master records incl. seasonal/discontinued) across 200 stores and 4 DCs
+Owner: Tax Manager
+Participants: Tax Accountant, Cost Accountant, Inventory Control Manager, IT Database Administrator, CFO, External Auditor
+Source: workflow W478 — BIR Annual Inventory List Submission (RMC 57-2015)</bpmn:documentation>
+      <bpmn:laneSet id="W478_LaneSet4">
+        <bpmn:lane id="W478_Lane1" name="Cost Accountant">
+        <bpmn:flowNodeRef>W478_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W478_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W478_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W478_Lane2" name="IT Database Administrator">
+        <bpmn:flowNodeRef>W478_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W478_Lane3" name="Tax Accountant">
+        <bpmn:flowNodeRef>W478_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W478_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W478_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W478_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W478_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W478_Start5" name="Calendar year-end close (December 31) triggers the statutory compliance requirement">
+        <bpmn:outgoing>W478_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W478_Task6" name="Reconciliation &amp; Lock">
+        <bpmn:documentation>Step 1: Reconciliation &amp; Lock: Following year-end physical inventory counts (W42) and system close (W9B), Cost Accountant performs inventory valuation verification and posts final variance adjustments. Inventory sub-ledgers are officially closed and locked.
+Responsible (R): Cost Accountant
+Accountable (A): Inventory Control Manager
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W478_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W478_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W478_Task7" name="Raw Data Extraction">
+        <bpmn:documentation>Step 2: Raw Data Extraction: IT Database Administrator runs the specialized database script to extract ending inventory quantities and Weighted Average Costs (WAC) per SKU across all warehouses, yards (W3B), and stores as of December 31, 23:59.
+Responsible (R): IT Database Administrator
+Accountable (A): CFO
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W478_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W478_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W478_Task8" name="Cost Validation">
+        <bpmn:documentation>Step 3: Cost Validation: Cost Accountant reconciles extracted quantities and costs against general ledger balances. If variance is found (e.g. from goods in transit or unposted receipts), adjusts details to match the final audited trial balance.
+Responsible (R): Cost Accountant
+Accountable (A): Tax Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W478_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W478_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W478_Task9" name="BIR Spreadsheet Formatting">
+        <bpmn:documentation>Step 4: BIR Spreadsheet Formatting: Tax Accountant converts the validated inventory files into the mandatory format prescribed by RMC 57-2015, categorizing inventory under separate schedules (e.g. Merchandising Inventory, Supplies/Consumables).
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 1.5 days</bpmn:documentation>
+        <bpmn:incoming>W478_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W478_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W478_Task10" name="Audit Alignment">
+        <bpmn:documentation>Step 5: Audit Alignment: Tax Accountant aligns with the External Auditor to ensure ending inventory lists match the audited financial statement disclosure schedules.
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W478_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W478_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W478_Task11" name="Sworn Declaration &amp; DVD Burning">
+        <bpmn:documentation>Step 6: Sworn Declaration &amp; DVD Burning: Tax Accountant drafts the required Sworn Declaration (attesting to the accuracy of the electronic data), routing it for notarization and signatures. The formatted Excel/CSV files are written to a DVD-R or prepared for secure BIR e-submission.
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: 3 hours</bpmn:documentation>
+        <bpmn:incoming>W478_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W478_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W478_Task12" name="Submission &amp; Archiving">
+        <bpmn:documentation>Step 7: Submission &amp; Archiving: Tax Accountant submits the physical DVD-R and notarized Sworn Declaration to the Large Taxpayers Service (LTS) or local Revenue District Office (RDO) before January 30. Uploads the stamped-received copy to the Document Management System (W255) and updates the Compliance Calendar.
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W478_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W478_End13" name="Complete">
+        <bpmn:incoming>W478_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W478_Annotation14">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: periodic reconciliation against source documents
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W478_Assoc15" sourceRef="W478_Annotation14" targetRef="W478_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W478_Flow16" sourceRef="W478_Start5" targetRef="W478_Task6" />
+      <bpmn:sequenceFlow id="W478_Flow17" sourceRef="W478_Task6" targetRef="W478_Task7" />
+      <bpmn:sequenceFlow id="W478_Flow18" sourceRef="W478_Task7" targetRef="W478_Task8" />
+      <bpmn:sequenceFlow id="W478_Flow19" sourceRef="W478_Task8" targetRef="W478_Task9" />
+      <bpmn:sequenceFlow id="W478_Flow20" sourceRef="W478_Task9" targetRef="W478_Task10" />
+      <bpmn:sequenceFlow id="W478_Flow21" sourceRef="W478_Task10" targetRef="W478_Task11" />
+      <bpmn:sequenceFlow id="W478_Flow22" sourceRef="W478_Task11" targetRef="W478_Task12" />
+      <bpmn:sequenceFlow id="W478_Flow23" sourceRef="W478_Task12" targetRef="W478_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W478_diag">
+      <bpmndi:BPMNPlane id="W478_plane" bpmnElement="W_W478">
+        <bpmndi:BPMNShape id="W478_Lane1_di" bpmnElement="W478_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Lane2_di" bpmnElement="W478_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Lane3_di" bpmnElement="W478_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Task6_di" bpmnElement="W478_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Task7_di" bpmnElement="W478_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Task8_di" bpmnElement="W478_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Task9_di" bpmnElement="W478_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Task10_di" bpmnElement="W478_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Task11_di" bpmnElement="W478_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Task12_di" bpmnElement="W478_Task12"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Start5_di" bpmnElement="W478_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_End13_di" bpmnElement="W478_End13"><dc:Bounds x="1890" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W478_Annotation14_di" bpmnElement="W478_Annotation14"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W478_Flow16_di" bpmnElement="W478_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Flow17_di" bpmnElement="W478_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Flow18_di" bpmnElement="W478_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Flow19_di" bpmnElement="W478_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Flow20_di" bpmnElement="W478_Flow20"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Flow21_di" bpmnElement="W478_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Flow22_di" bpmnElement="W478_Flow22"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Flow23_di" bpmnElement="W478_Flow23"><di:waypoint x="1840" y="505" /><di:waypoint x="1890" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W478_Assoc15_di" bpmnElement="W478_Assoc15"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W590" name="W590. Monthly Tax Provision &amp; Compliance Review" isExecutable="false">
+      <bpmn:documentation>Trigger: Month-end close process initiation (day 1 of following month), feeds into W9 financial close
+Frequency: Monthly (by day 3 of following month, to meet 5-day month-end close target)
+Volume: 5 legal entities; monthly tax provisions covering: VAT (12% on ~PHP 5.19B monthly revenue), EWT (1–10% on ~PHP 2.5B monthly AP), CWT collection (~PHP 300M/month in customer CWT), percentage tax (3% on VAT-exempt revenue streams), corporate income tax (RCIT 25% / FCIT 20% per CREATE law per PAS 12), local taxes (LGU business tax quarterly); BIR eFPS filing deadlines per tax type
+Owner: Tax Accountant
+Participants: Tax Accountant, Chief Accountant, Controller (A for provision approval), AP Supervisor (C for EWT data), AR Supervisor (C for CWT data), Treasury Analyst (C for tax payment funding), External Tax Advisor (C for complex positions)
+Source: workflow W590 — Monthly Tax Provision &amp; Compliance Review</bpmn:documentation>
+      <bpmn:laneSet id="W590_LaneSet3">
+        <bpmn:lane id="W590_Lane1" name="System">
+        <bpmn:flowNodeRef>W590_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W590_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W590_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W590_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W590_Start4" name="Month-end close process initiation (day 1 of following month), feeds into W9 financial…">
+        <bpmn:outgoing>W590_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W590_Task5" name="Revenue-based tax provision computation">
+        <bpmn:documentation>Step 1: Revenue-based tax provision computation: System auto-computes tax provisions based on month&#x27;s posted revenue per entity — (a) Output VAT (12%): gross revenue per entity from POS (Depot Inc.), ecommerce (Digital Commerce Inc.), services (Logistics Inc., Property Mgmt Inc.), and management fees (Holdings Inc.); separately identify VAT-exempt sales (senior citizen/PWD per W217, agricultural products, residential lease below threshold) which are subject to percentage tax (3%) instead; (b) Percentage tax (3%): computed on VAT-exempt revenue streams per W499; (c) Gross receipts tax: applicable to financial income and certain service revenues per entity; (d) LGU business tax accrual: quarterly LGU payments accrued monthly based on prior year&#x27;s assessed business tax per LGU per entity
+Responsible (R): System / Tax Accountant
+Accountable (A): Chief Accountant
+Duration: 30 min (review automated computation)</bpmn:documentation>
+        <bpmn:incoming>W590_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W590_Task6" name="VAT input/output reconciliation">
+        <bpmn:documentation>Step 2: VAT input/output reconciliation: Tax Accountant reconciles VAT position per entity — (a) Output VAT: total output VAT from sales invoices and official receipts per BIR EIS transmission log (W473); include output VAT on deemed sales (IC transfers between VAT-registered entities per W14); verify output VAT on importations (customs-assessed VAT per W239); (b) Input VAT: total input VAT from purchase invoices (domestic), import customs declarations, and other creditable input VAT; verify input VAT claims are supported by valid VAT invoices/official receipts per BIR requirements; identify deferred input VAT (purchases recorded but VAT invoice not yet received from vendor); (c) Net VAT payable/receivable: output VAT minus input VAT per entity; if net payable, this is the amount due for BIR 2550M filing; if net receivable (excess input VAT from imports or capital goods), determine whether to claim refund (BIR processing time 12–24 months) or carry forward to next month per W90; (d) VAT reconciliation exceptions: unmatched input VAT claims (vendor VAT invoice received but purchase not yet posted), missing VAT invoices from vendors, VAT rate discrepancies (10% vs. 12% transition period issues for older invoices)
+Responsible (R): Tax Accountant
+Accountable (A): Chief Accountant
+Duration: 60 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task7" name="EWT remittance reconciliation">
+        <bpmn:documentation>Step 3: EWT remittance reconciliation: Tax Accountant reconciles EWT per entity — (a) pull EWT amounts withheld from AP module: EWT rates applied per vendor/payee type — 1% (corporate suppliers of goods per RR 2-98 as amended), 2% (corporate suppliers of services), 5–10% (individual payees per tax table), 10% (professionals); (b) compare to EWT amounts remitted via BIR eFPS per BIR Form 1601-EQ; (c) identify discrepancies: under-remittance (withholding deducted from vendor but not remitted to BIR = company liability), over-remittance (remitted more than withheld = requires reconciliation with vendor); (d) verify EWT certificate (BIR 2306/2307) generation per W475 — certificates must be issued to vendors within 20 days of quarter close per BIR requirement (RR 11-2018)
+Responsible (R): Tax Accountant
+Accountable (A): Chief Accountant
+Duration: 45 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task8" name="CWT certificate collection status review">
+        <bpmn:documentation>Step 4: CWT certificate collection status review: Tax Accountant reviews CWT certificates collected from customers — (a) pull list of customers who withheld tax on payments to BuildRight during the month (primarily B2B corporate customers and government entities); (b) verify BIR Form 2307 certificates received from customers — required to credit CWT against quarterly income tax per BIR 1702Q; (c) follow up on missing certificates with AR Supervisor — customer contact per W8 for certificate collection; (d) compute total CWT available as tax credit for current quarter; (e) flag material uncollected CWT (&gt;PHP 1M per customer) for escalation to Credit Manager
+Responsible (R): Tax Accountant / AR Supervisor
+Accountable (A): Chief Accountant
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task9" name="Deferred tax movement computation">
+        <bpmn:documentation>Step 5: Deferred tax movement computation: Tax Accountant computes deferred tax movements per PAS 12 per entity — (a) Temporary differences: depreciation timing (tax vs. book per W407 — accelerated depreciation for tax vs. straight-line for book), accrued expenses not yet deductible (provisions requiring cash basis recognition per BIR), unrealized FX gains/losses; (b) Deferred tax liability (DTL): taxable temporary differences × applicable rate (25% RCIT for domestic corporations per CREATE Law; ROHCs are also at 25% under CREATE); (c) Deferred tax asset (DTA): deductible temporary differences × applicable rate, including net operating loss carryover (NOLCO) per CREATE — NOLCO carryforward period is 3 consecutive years, extended to 5 years for FY2020–2021 losses of non-large taxpayers per CREATE (RR 25-2020); (d) DTL/DTA movement: current month movement = ending balance minus beginning balance; movement posted to deferred tax provision journal entry
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 45 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task10" name="Tax provision journal entry preparation and posting">
+        <bpmn:documentation>Step 6: Tax provision journal entry preparation and posting: Tax Accountant prepares composite tax provision journal entry per entity — (a) Output VAT provision: debit VAT output (liability), credit VAT payable; (b) Input VAT claim: debit VAT input (asset), credit VAT expense/VAT payable; (c) EWT payable: debit EWT expense (embedded in purchase cost), credit EWT payable; (d) CWT receivable: debit CWT receivable (asset), credit income tax provision; (e) Current income tax provision: debit income tax expense, credit current income tax payable (estimated based on quarterly-to-date taxable income); (f) Deferred tax provision: debit/credit deferred tax expense, credit/debit DTL/DTA per step 5; (g) Percentage tax payable: debit percentage tax expense, credit percentage tax payable; (h) LGU business tax accrual: debit LGU tax expense, credit LGU tax payable (accrual); Tax Accountant posts journal entries in ERP; Chief Accountant reviews and approves before close completion
+Responsible (R): Tax Accountant
+Accountable (A): Chief Accountant
+Duration: 45 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task11" name="Tax compliance calendar review">
+        <bpmn:documentation>Step 7: Tax compliance calendar review: Tax Accountant reviews 30-day forward compliance calendar — (a) BIR 2550M (Monthly VAT Return): due 20th of following month or 25th via eFPS per W90; (b) BIR 1601-EQ (Quarterly EWT Remittance Return): due last day of the month following quarter close via eFPS per W260; (c) BIR 1601-C (Monthly CWT Remittance Return): due 10th of following month via eFPS; (d) BIR 1702Q (Quarterly Income Tax Return): due 60 days after quarter-end (if current month is quarter-end); (e) BIR 1604-E/1604-C (Annual Information Returns): due January 31 of following year (if applicable); (f) LGU business tax: quarterly payments per LGU schedule (varies by city/municipality where 5 entities are registered); (g) BIR EIS transmission: daily sales invoice transmission per W473 — verify no gaps in transmission log; (h) Tax Accountant confirms all deadlines are tracked in compliance calendar with responsible person assigned and preparation start date flagged
+Responsible (R): Tax Accountant
+Accountable (A): Chief Accountant
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task12" name="BIR filing preparation">
+        <bpmn:documentation>Step 8: BIR filing preparation: Tax Accountant prepares upcoming month BIR filings — (a) pre-populate BIR 2550M from system VAT reconciliation (step 2); (b) pre-populate BIR 1601-EQ from system EWT reconciliation (step 3); (c) pre-populate BIR 1601-C from system CWT reconciliation (step 4); (d) verify tax amounts match provision journal entries (step 6); (e) generate draft returns for Chief Accountant review; (f) Chief Accountant reviews and approves draft returns; (g) Tax Accountant submits via BIR eFPS per W260
+Responsible (R): Tax Accountant
+Accountable (A): Chief Accountant
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task13" name="LGU tax payments review">
+        <bpmn:documentation>Step 9: LGU tax payments review: Tax Accountant reviews LGU tax obligations — (a) verify quarterly LGU business tax payments are accrued correctly per entity per LGU jurisdiction; (b) confirm payments to LGUs where entities hold business permits (Quezon City, Manila, Laguna, Clark, Cebu — per entity registration); (c) verify real property tax (RPT) semi-annual payments per W184 for owned properties; (d) confirm LGU tax payments are scheduled in cash flow forecast per W589
+Responsible (R): Tax Accountant
+Accountable (A): Chief Accountant
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W590_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W590_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W590_Task14" name="Quarterly income tax provision review (if quarter-end month)">
+        <bpmn:documentation>Step 10: Quarterly income tax provision review (if quarter-end month): If current month is quarter-end (March, June, September, December), Tax Accountant conducts comprehensive quarterly review — (a) compute cumulative quarterly taxable income per entity per BIR 1702Q; (b) reconcile cumulative tax provision (current + deferred) to estimated annual tax liability; (c) adjust quarterly provision if material variance between estimated annual tax and year-to-date provision; (d) verify NOLCO utilization per CREATE Law provisions; (e) review tax incentives per W472 (BOI/PEZA registered activities if applicable); (f) External Tax Advisor reviews complex positions (cross-border, transfer pricing per W486, related party transactions per PAS 24)
+Responsible (R): Tax Accountant / External Tax Advisor
+Accountable (A): Controller
+Duration: 2–3 hours (quarterly)</bpmn:documentation>
+        <bpmn:incoming>W590_Flow180</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W590_End15" name="Complete">
+        <bpmn:incoming>W590_Flow181</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W590_Annotation16">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Chief Accountant review and approval of the monthly tax provision journal entries and draft BIR returns before close completion
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W590_Assoc17" sourceRef="W590_Annotation16" targetRef="W590_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W590_Flow18" sourceRef="W590_Start4" targetRef="W590_Task5" />
+      <bpmn:sequenceFlow id="W590_Flow19" sourceRef="W590_Task5" targetRef="W590_Task6" />
+      <bpmn:sequenceFlow id="W590_Flow20" sourceRef="W590_Task6" targetRef="W590_Task7" />
+      <bpmn:sequenceFlow id="W590_Flow21" sourceRef="W590_Task7" targetRef="W590_Task8" />
+      <bpmn:sequenceFlow id="W590_Flow22" sourceRef="W590_Task8" targetRef="W590_Task9" />
+      <bpmn:sequenceFlow id="W590_Flow23" sourceRef="W590_Task9" targetRef="W590_Task10" />
+      <bpmn:sequenceFlow id="W590_Flow24" sourceRef="W590_Task10" targetRef="W590_Task11" />
+      <bpmn:sequenceFlow id="W590_Flow25" sourceRef="W590_Task11" targetRef="W590_Task12" />
+      <bpmn:sequenceFlow id="W590_Flow26" sourceRef="W590_Task12" targetRef="W590_Task13" />
+      <bpmn:sequenceFlow id="W590_Flow27" sourceRef="W590_Task13" targetRef="W590_Task14" />
+      <bpmn:sequenceFlow id="W590_Flow28" sourceRef="W590_Task14" targetRef="W590_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W590_diag">
+      <bpmndi:BPMNPlane id="W590_plane" bpmnElement="W_W590">
+        <bpmndi:BPMNShape id="W590_Lane1_di" bpmnElement="W590_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Lane2_di" bpmnElement="W590_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task5_di" bpmnElement="W590_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task6_di" bpmnElement="W590_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task7_di" bpmnElement="W590_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task8_di" bpmnElement="W590_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task9_di" bpmnElement="W590_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task10_di" bpmnElement="W590_Task10"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task11_di" bpmnElement="W590_Task11"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task12_di" bpmnElement="W590_Task12"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task13_di" bpmnElement="W590_Task13"><dc:Bounds x="2080" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Task14_di" bpmnElement="W590_Task14"><dc:Bounds x="2290" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Start4_di" bpmnElement="W590_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_End15_di" bpmnElement="W590_End15"><dc:Bounds x="2520" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W590_Annotation16_di" bpmnElement="W590_Annotation16"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W590_Flow18_di" bpmnElement="W590_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow19_di" bpmnElement="W590_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow20_di" bpmnElement="W590_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow21_di" bpmnElement="W590_Flow21"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow22_di" bpmnElement="W590_Flow22"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow23_di" bpmnElement="W590_Flow23"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow24_di" bpmnElement="W590_Flow24"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow25_di" bpmnElement="W590_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow26_di" bpmnElement="W590_Flow26"><di:waypoint x="2050" y="335" /><di:waypoint x="2080" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow27_di" bpmnElement="W590_Flow27"><di:waypoint x="2260" y="335" /><di:waypoint x="2290" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Flow28_di" bpmnElement="W590_Flow28"><di:waypoint x="2470" y="335" /><di:waypoint x="2520" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W590_Assoc17_di" bpmnElement="W590_Assoc17"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W711" name="W711. BIR Withholding Tax (EWT) Certificate Form 2307 Issuance to Vendors" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarter-end EWT remittance cycle (BIR Form 1601-EQ per W260); or vendor requests BIR Form 2307 for their own tax credit claim (issued immediately upon written request)
+Frequency: Quarterly (batch issuance, due on or before the 20th day of the month following quarter close per RR 11-2018); ad-hoc per vendor request
+Volume: ~800–1,000 vendor EWT certificates per quarter (one per vendor with EWT transactions in the quarter); ~3,200–4,000 per year
+Owner: Tax Accountant
+Participants: AP Clerk, Finance Manager, Vendor, BIR
+Source: workflow W711 — BIR Withholding Tax (EWT) Certificate Form 2307 Issuance to Vendors</bpmn:documentation>
+      <bpmn:laneSet id="W711_LaneSet5">
+        <bpmn:lane id="W711_Lane1" name="System">
+        <bpmn:flowNodeRef>W711_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W711_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W711_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W711_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W711_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W711_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W711_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W711_Lane3" name="Finance Manager">
+        <bpmn:flowNodeRef>W711_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W711_Lane4" name="AP Clerk">
+        <bpmn:flowNodeRef>W711_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W711_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W711_Start6" name="Quarter-end EWT remittance cycle (BIR Form 1601-EQ per W260); or vendor requests BIR Form…">
+        <bpmn:outgoing>W711_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W711_Task7" name="Quarterly EWT extraction">
+        <bpmn:documentation>Step 1: Quarterly EWT extraction: after the quarter&#x27;s AP payment runs per W556, system extracts all EWT transactions for the quarter grouped by vendor: vendor TIN, vendor name, ATC (Alphanumeric Tax Code), gross amount, EWT rate, EWT amount withheld, payment date, PO/invoice reference
+Responsible (R): System
+Accountable (A): Tax Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W711_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W711_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W711_Task8" name="2307 batch generation">
+        <bpmn:documentation>Step 2: 2307 batch generation: system generates BIR Form 2307 for each vendor with EWT transactions during the quarter: (a) Part I — Payor info (BuildRight legal name, TIN, address, registered address per BIR registration); (b) Part II — Payee info (vendor name, TIN, registered address); (c) Part III — Details of income payments and taxes withheld during the quarter: date of payment, ATC, nature of income payment, gross amount, EWT rate, EWT amount; (d) Part IV — total amount withheld; (e) system auto-calculates totals and validates against AP EWT ledger
+Responsible (R): System
+Accountable (A): Tax Accountant
+Duration: Batch: 2-3 hours for ~1,000 forms</bpmn:documentation>
+        <bpmn:incoming>W711_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W711_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W711_Task9" name="Validation and review">
+        <bpmn:documentation>Step 3: Validation and review: Tax Accountant reviews batch: (a) verify vendor TIN format matches BIR registration (XXX-XXX-XXX or XXX-XXX-XXX-XXX); (b) verify ATC codes are correct per income nature (e.g., WC 010 for professional/technical services to corporate vendors at 2%, WI 010 for rentals at 5%, WP 010 for purchases of goods at 1%); (c) verify EWT rates match ATC code requirements; (d) check for duplicate vendor entries or missing vendor data; (e) flag exceptions for manual correction
+Responsible (R): Tax Accountant
+Accountable (A): Finance Manager
+Duration: 2-3 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W711_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W711_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W711_Task10" name="Approval and signing">
+        <bpmn:documentation>Step 4: Approval and signing: Finance Manager reviews summary report: total EWT certificates generated, total EWT amounts per ATC category, reconciliation against BIR Form 1601-EQ quarterly remittance per W260; approves batch for issuance; authorized signatory (Finance Manager or Controller) signs certificates
+Responsible (R): Finance Manager
+Accountable (A): Controller
+Duration: 30-60 min/quarter</bpmn:documentation>
+        <bpmn:incoming>W711_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W711_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W711_Task11" name="Distribution to vendors">
+        <bpmn:documentation>Step 5: Distribution to vendors: system distributes Form 2307 to vendors: (a) primary: email PDF to vendor&#x27;s registered email address from vendor master; (b) secondary: upload to vendor self-service portal per W705 for vendor download; (c) physical mail for vendors without email (rare); (d) system logs distribution date and method per certificate
+Responsible (R): System / AP Clerk
+Accountable (A): Tax Accountant
+Duration: Automated + 1 hour/quarter for physical mail exceptions</bpmn:documentation>
+        <bpmn:incoming>W711_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W711_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W711_Task12" name="Quarterly reconciliation">
+        <bpmn:documentation>Step 6: Quarterly reconciliation: at quarter-end, Tax Accountant reconciles: (a) total EWT certificates issued (quarterly sum of Forms 2307) vs. total EWT remitted to BIR per Form 1601-EQ filing; (b) any unreconciled difference investigated and corrected; (c) vendor-level reconciliation: verify every vendor with EWT deduction received their 2307; (d) BIR Form 1604-E (Annual Information Return of Income Payments Subject to WHT) preparation uses 2307 data as primary source
+Responsible (R): Tax Accountant
+Accountable (A): Finance Manager
+Duration: 4-6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W711_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W711_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W711_Task13" name="Ad-hoc vendor request handling">
+        <bpmn:documentation>Step 7: Ad-hoc vendor request handling: when a vendor requests a copy or re-issuance of their Form 2307: (a) AP Clerk verifies vendor identity (TIN + registered business name); (b) system retrieves historical 2307 from document archive per W255; (c) re-issue via email or portal download; (d) if vendor disputes EWT amount: Tax Accountant investigates against AP transaction history and resolves per W244 (vendor invoice dispute)
+Responsible (R): AP Clerk / Tax Accountant
+Accountable (A): Tax Accountant
+Duration: 15-30 min per request; ~20–30 ad-hoc requests/month</bpmn:documentation>
+        <bpmn:incoming>W711_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W711_End14" name="Complete">
+        <bpmn:incoming>W711_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W711_Annotation15">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Tax Accountant review and approval gate; operational: periodic reconciliation against source documents
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W711_Assoc16" sourceRef="W711_Annotation15" targetRef="W711_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W711_Flow17" sourceRef="W711_Start6" targetRef="W711_Task7" />
+      <bpmn:sequenceFlow id="W711_Flow18" sourceRef="W711_Task7" targetRef="W711_Task8" />
+      <bpmn:sequenceFlow id="W711_Flow19" sourceRef="W711_Task8" targetRef="W711_Task9" />
+      <bpmn:sequenceFlow id="W711_Flow20" sourceRef="W711_Task9" targetRef="W711_Task10" />
+      <bpmn:sequenceFlow id="W711_Flow21" sourceRef="W711_Task10" targetRef="W711_Task11" />
+      <bpmn:sequenceFlow id="W711_Flow22" sourceRef="W711_Task11" targetRef="W711_Task12" />
+      <bpmn:sequenceFlow id="W711_Flow23" sourceRef="W711_Task12" targetRef="W711_Task13" />
+      <bpmn:sequenceFlow id="W711_Flow24" sourceRef="W711_Task13" targetRef="W711_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W711_diag">
+      <bpmndi:BPMNPlane id="W711_plane" bpmnElement="W_W711">
+        <bpmndi:BPMNShape id="W711_Lane1_di" bpmnElement="W711_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Lane2_di" bpmnElement="W711_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Lane3_di" bpmnElement="W711_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Lane4_di" bpmnElement="W711_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Task7_di" bpmnElement="W711_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Task8_di" bpmnElement="W711_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Task9_di" bpmnElement="W711_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Task10_di" bpmnElement="W711_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Task11_di" bpmnElement="W711_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Task12_di" bpmnElement="W711_Task12"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Task13_di" bpmnElement="W711_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Start6_di" bpmnElement="W711_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_End14_di" bpmnElement="W711_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W711_Annotation15_di" bpmnElement="W711_Annotation15"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W711_Flow17_di" bpmnElement="W711_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Flow18_di" bpmnElement="W711_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Flow19_di" bpmnElement="W711_Flow19"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Flow20_di" bpmnElement="W711_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Flow21_di" bpmnElement="W711_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Flow22_di" bpmnElement="W711_Flow22"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Flow23_di" bpmnElement="W711_Flow23"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Flow24_di" bpmnElement="W711_Flow24"><di:waypoint x="1840" y="675" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W711_Assoc16_di" bpmnElement="W711_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W876" name="W876. Product Recall Regulatory Reporting &amp; DTI/BIR/FDA Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: Recall decision approved (W873); mandatory reporting requirements triggered
+Frequency: 3–5 regulatory reporting events per year
+Volume: Each event requires submissions to 1–3 regulatory bodies
+Owner: Quality Manager / Compliance Officer
+Participants: Legal Counsel, Procurement Manager, Corporate Communications, External Regulatory Consultant
+Source: workflow W876 — Product Recall Regulatory Reporting &amp; DTI/BIR/FDA Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W876_LaneSet3">
+        <bpmn:lane id="W876_Lane1" name="Compliance Officer">
+        <bpmn:flowNodeRef>W876_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W876_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W876_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W876_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W876_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W876_Lane2" name="Quality Manager">
+        <bpmn:flowNodeRef>W876_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W876_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W876_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W876_Start4" name="Recall decision approved (W873); mandatory reporting requirements triggered">
+        <bpmn:outgoing>W876_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W876_Task5" name="Identify regulatory reporting requirements — determine which agencies require…">
+        <bpmn:documentation>Step 1: Identify regulatory reporting requirements — determine which agencies require notification: (a) DTI — Consumer Act (RA 7394) mandatory recall reporting for consumer products, (b) FDA — for regulated products (paints, chemicals, electrical), (c) DENR — for hazardous materials, (d) BIR — for inventory write-off documentation, (e) DOH — if public health risk; note reporting deadlines (DTI: within 48 hours of recall decision, per the W1618 convention)
+Responsible (R): Compliance Officer
+Accountable (A): Legal Counsel
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W876_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W876_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W876_Task6" name="Prepare regulatory submission — compile: (a) product identification and…">
+        <bpmn:documentation>Step 2: Prepare regulatory submission — compile: (a) product identification and batch/lot details, (b) defect description and risk assessment, (c) number of affected units in market, (d) recall scope and remedy, (e) customer notification plan, (f) timeline of events, (g) corrective action plan; format per agency requirements
+Responsible (R): Quality Manager
+Accountable (A): Compliance Officer
+Duration: 4–8 hours</bpmn:documentation>
+        <bpmn:incoming>W876_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W876_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W876_Task7" name="Submit regulatory notification — file reports with required agencies within…">
+        <bpmn:documentation>Step 3: Submit regulatory notification — file reports with required agencies within mandated timeframes; DTI typically requires formal letter + supporting documents; FDA may require online portal submission; obtain acknowledgment receipts
+Responsible (R): Compliance Officer
+Accountable (A): Legal Counsel
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W876_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W876_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W876_Task8" name="Respond to regulatory queries — agencies may request additional information…">
+        <bpmn:documentation>Step 4: Respond to regulatory queries — agencies may request additional information, on-site inspection, or product sample submission; coordinate with Quality Manager and Legal for responses
+Responsible (R): Compliance Officer
+Accountable (A): Quality Manager
+Duration: Variable</bpmn:documentation>
+        <bpmn:incoming>W876_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W876_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W876_Task9" name="Submit progress reports — for ongoing recalls: file weekly/monthly progress…">
+        <bpmn:documentation>Step 5: Submit progress reports — for ongoing recalls: file weekly/monthly progress reports to agencies showing: units recovered, customer notification reach, remaining inventory, and estimated completion date
+Responsible (R): Compliance Officer
+Accountable (A): Quality Manager
+Duration: 2 hours per report</bpmn:documentation>
+        <bpmn:incoming>W876_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W876_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W876_Task10" name="File final recall report — upon recall completion: submit comprehensive…">
+        <bpmn:documentation>Step 6: File final recall report — upon recall completion: submit comprehensive close-out report with total units recovered, disposition method, effectiveness assessment, and corrective actions implemented; obtain agency clearance
+Responsible (R): Quality Manager
+Accountable (A): Compliance Officer
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W876_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W876_End11" name="Complete">
+        <bpmn:incoming>W876_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W876_Annotation12">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Quality Manager / Compliance Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W876_Assoc13" sourceRef="W876_Annotation12" targetRef="W876_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W876_Flow14" sourceRef="W876_Start4" targetRef="W876_Task5" />
+      <bpmn:sequenceFlow id="W876_Flow15" sourceRef="W876_Task5" targetRef="W876_Task6" />
+      <bpmn:sequenceFlow id="W876_Flow16" sourceRef="W876_Task6" targetRef="W876_Task7" />
+      <bpmn:sequenceFlow id="W876_Flow17" sourceRef="W876_Task7" targetRef="W876_Task8" />
+      <bpmn:sequenceFlow id="W876_Flow18" sourceRef="W876_Task8" targetRef="W876_Task9" />
+      <bpmn:sequenceFlow id="W876_Flow19" sourceRef="W876_Task9" targetRef="W876_Task10" />
+      <bpmn:sequenceFlow id="W876_Flow20" sourceRef="W876_Task10" targetRef="W876_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W876_diag">
+      <bpmndi:BPMNPlane id="W876_plane" bpmnElement="W_W876">
+        <bpmndi:BPMNShape id="W876_Lane1_di" bpmnElement="W876_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Lane2_di" bpmnElement="W876_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Task5_di" bpmnElement="W876_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Task6_di" bpmnElement="W876_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Task7_di" bpmnElement="W876_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Task8_di" bpmnElement="W876_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Task9_di" bpmnElement="W876_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Task10_di" bpmnElement="W876_Task10"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Start4_di" bpmnElement="W876_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_End11_di" bpmnElement="W876_End11"><dc:Bounds x="1680" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W876_Annotation12_di" bpmnElement="W876_Annotation12"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W876_Flow14_di" bpmnElement="W876_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W876_Flow15_di" bpmnElement="W876_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W876_Flow16_di" bpmnElement="W876_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W876_Flow17_di" bpmnElement="W876_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W876_Flow18_di" bpmnElement="W876_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W876_Flow19_di" bpmnElement="W876_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W876_Flow20_di" bpmnElement="W876_Flow20"><di:waypoint x="1630" y="335" /><di:waypoint x="1680" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W876_Assoc13_di" bpmnElement="W876_Assoc13"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1181" name="W1181. BIR Point-of-Sale (POS) System Registration &amp; CAS Compliance Maintenance" isExecutable="false">
+      <bpmn:documentation>Trigger: New store opening; POS system software update; BIR regulation change; annual CAS permit renewal
+Frequency: Store openings: ~10–15/year; software updates: 2–4/year; regulation changes: ad-hoc; CAS renewal: annual
+Volume: 600 POS terminals across 200 stores (3 per store); each requires BIR registration
+Owner: Tax Accountant / IT Systems Administrator
+Participants: Tax Accountant, IT Systems Administrator, BIR Revenue District Office (RDO), POS Vendor, Store Manager, Finance Controller
+Source: workflow W1181 — BIR Point-of-Sale (POS) System Registration &amp; CAS Compliance Maintenance</bpmn:documentation>
+      <bpmn:laneSet id="W1181_LaneSet3">
+        <bpmn:lane id="W1181_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W1181_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1181_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1181_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1181_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1181_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1181_Lane2" name="IT Systems Admin">
+        <bpmn:flowNodeRef>W1181_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1181_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1181_Start4" name="New store opening; POS system software update; BIR regulation change; annual CAS permit…">
+        <bpmn:outgoing>W1181_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1181_Task5" name="Initial POS registration for new store">
+        <bpmn:documentation>Step 1: Initial POS registration for new store: (a) before new store opening per W623: Tax Accountant prepares BIR registration documents for each POS terminal: Certificate of Registration (COR), BIR Form 1907 (Application for Permit to Use CAS/POS), system description and specification, sample receipts; (b) submit to BIR RDO with jurisdiction over store location; (c) BIR issues Permit to Use POS — valid until revoked; (d) register each terminal&#x27;s serial number; (e) program BIR-required fields into POS terminal configuration: TIN, business name, address, permit number; (f) test receipt printing to verify BIR compliance; (g) store cannot open for sales until all 3 POS terminals are BIR-registered
+Responsible (R): Tax Accountant / IT Systems Admin
+Accountable (A): Finance Controller
+Duration: 2–4 weeks/store</bpmn:documentation>
+        <bpmn:incoming>W1181_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1181_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1181_Task6" name="POS software update compliance">
+        <bpmn:documentation>Step 2: POS software update compliance: When POS software is updated per IT change management: (a) IT Systems Administrator assesses if update changes receipt format, tax calculation logic, or transaction recording — if yes, BIR notification required; (b) for material changes: file BIR Form 1907 amendment with updated system description and sample receipts; (c) for minor changes (UI only, no receipt/tax impact): document in BIR compliance log; (d) after update: test all 600 terminals (or sample per BIR-approved testing protocol) to verify receipt compliance; (e) retain all update documentation for BIR audit
+Responsible (R): IT Systems Admin / Tax Accountant
+Accountable (A): Finance Controller
+Duration: 1–2 weeks/update</bpmn:documentation>
+        <bpmn:incoming>W1181_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1181_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1181_Task7" name="BIR regulation change response">
+        <bpmn:documentation>Step 3: BIR regulation change response: When BIR issues new revenue regulations affecting POS/CAS: (a) Tax Accountant analyzes regulation impact on current POS configuration; (b) coordinate with POS vendor for required software changes; (c) test changes; (d) file BIR notification or re-registration; (e) deploy changes to all 600 terminals within BIR-mandated compliance timeline; (f) example: if BIR requires e-invoicing integration per RR 8-2020 (electronic receipts/invoices under NIRC §237 as amended by TRAIN), plan and execute system-wide implementation
+Responsible (R): Tax Accountant / IT Systems Admin
+Accountable (A): Finance Controller
+Duration: Per regulation</bpmn:documentation>
+        <bpmn:incoming>W1181_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1181_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1181_Task8" name="Ongoing compliance monitoring">
+        <bpmn:documentation>Step 4: Ongoing compliance monitoring: (a) quarterly: Tax Accountant spot-checks receipts from randomly selected stores (5 stores/quarter) for BIR compliance — all required fields present, VAT correctly computed and stated, serial numbers match BIR registration; (b) IT monitors POS terminal uptime and generates transaction logs per BIR retention requirements (10 years); (c) immediately replace or repair any POS terminal that generates non-compliant receipts; (d) maintain master register of all 600 POS terminals: serial number, BIR permit number, RDO, store location, software version, registration date
+Responsible (R): Tax Accountant / IT Systems Admin
+Accountable (A): Finance Controller
+Duration: 4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1181_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1181_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1181_Task9" name="BIR audit preparation">
+        <bpmn:documentation>Step 5: BIR audit preparation: When BIR conducts tax audit per W90: (a) provide POS registration documents for all terminals; (b) provide transaction logs and Z-readings (daily sales summaries) for audit period; (c) demonstrate POS compliance with CAS permit conditions; (d) Tax Accountant coordinates with BIR auditor for any POS-related queries; (e) resolve any compliance findings immediately
+Responsible (R): Tax Accountant
+Accountable (A): Finance Controller
+Duration: Per audit</bpmn:documentation>
+        <bpmn:incoming>W1181_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1181_End10" name="Complete">
+        <bpmn:incoming>W1181_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1181_Annotation11">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Tax Accountant / IT Systems Administrator review and approval gate
+Owner: Tax Accountant / IT Systems Administrator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1181_Assoc12" sourceRef="W1181_Annotation11" targetRef="W1181_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1181_Flow13" sourceRef="W1181_Start4" targetRef="W1181_Task5" />
+      <bpmn:sequenceFlow id="W1181_Flow14" sourceRef="W1181_Task5" targetRef="W1181_Task6" />
+      <bpmn:sequenceFlow id="W1181_Flow15" sourceRef="W1181_Task6" targetRef="W1181_Task7" />
+      <bpmn:sequenceFlow id="W1181_Flow16" sourceRef="W1181_Task7" targetRef="W1181_Task8" />
+      <bpmn:sequenceFlow id="W1181_Flow17" sourceRef="W1181_Task8" targetRef="W1181_Task9" />
+      <bpmn:sequenceFlow id="W1181_Flow18" sourceRef="W1181_Task9" targetRef="W1181_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1181_diag">
+      <bpmndi:BPMNPlane id="W1181_plane" bpmnElement="W_W1181">
+        <bpmndi:BPMNShape id="W1181_Lane1_di" bpmnElement="W1181_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Lane2_di" bpmnElement="W1181_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Task5_di" bpmnElement="W1181_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Task6_di" bpmnElement="W1181_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Task7_di" bpmnElement="W1181_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Task8_di" bpmnElement="W1181_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Task9_di" bpmnElement="W1181_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Start4_di" bpmnElement="W1181_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_End10_di" bpmnElement="W1181_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1181_Annotation11_di" bpmnElement="W1181_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1181_Flow13_di" bpmnElement="W1181_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1181_Flow14_di" bpmnElement="W1181_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1181_Flow15_di" bpmnElement="W1181_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1181_Flow16_di" bpmnElement="W1181_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1181_Flow17_di" bpmnElement="W1181_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1181_Flow18_di" bpmnElement="W1181_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1181_Assoc12_di" bpmnElement="W1181_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1418" name="W1418. Multi-Entity Consolidated VAT Input-Output Reconciliation, Monthly BIR 2550M Filing &amp; Credit Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly VAT filing deadline (20th of the following month per BIR requirement)
+Frequency: Monthly per entity (5 entities × 12 months = 60 filings/year); quarterly consolidated reconciliation
+Volume: ~PHP 62.3B annual revenue × 12% VAT = ~PHP 7.5B output VAT/year; ~PHP 42–45B COGS × 12% VAT = ~PHP 5.0–5.4B input VAT/year; net VAT payable ~PHP 2.1–2.5B/year across 5 entities
+Owner: Tax Accountant
+Participants: Tax Accountant, AP Clerk, AR Clerk, Controller, BIR eFPS Administrator
+Source: workflow W1418 — Multi-Entity Consolidated VAT Input-Output Reconciliation, Monthly BIR 2550M Filing &amp; Credit Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W1418_LaneSet3">
+        <bpmn:lane id="W1418_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W1418_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1418_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1418_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1418_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1418_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1418_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1418_Lane2" name="BIR eFPS Administrator">
+        <bpmn:flowNodeRef>W1418_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1418_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1418_Start4" name="Monthly VAT filing deadline (20th of the following month per BIR requirement)">
+        <bpmn:outgoing>W1418_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1418_Task5" name="Monthly output VAT reconciliation">
+        <bpmn:documentation>Step 1: Monthly output VAT reconciliation: Tax Accountant reconciles output VAT per entity: (a) POS sales VAT: system-generated output VAT from POS transactions (2.8M transactions) × 12%, (b) trade account sales VAT: from AR invoices (~3,500/month) × 12%, (c) ecommerce sales VAT: from online transactions (~42,900/month) × 12%, (d) intercompany sales VAT: IC transactions between entities, (e) exempt sales identified and excluded (if any), (f) total output VAT per entity reconciled to GL VAT payable account
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 4–6 hours/entity/month</bpmn:documentation>
+        <bpmn:incoming>W1418_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1418_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1418_Task6" name="Monthly input VAT reconciliation">
+        <bpmn:documentation>Step 2: Monthly input VAT reconciliation: Tax Accountant reconciles input VAT per entity: (a) merchandise AP invoices: input VAT from vendor invoices with valid BIR-registered VAT receipts, (b) import VAT: from customs import entries (duties and VAT paid at port per W144/W1233), (c) operating expense invoices: input VAT from non-trade vendors (rent, utilities, services), (d) intercompany purchase VAT: IC transactions from other entities, (e) validation: verify all input VAT claims have supporting BIR-registered VAT invoices/invoices with TIN; exclude invalid claims, (f) total input VAT per entity reconciled to GL VAT receivable account
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 4–6 hours/entity/month</bpmn:documentation>
+        <bpmn:incoming>W1418_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1418_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1418_Task7" name="Net VAT computation and 2550M preparation">
+        <bpmn:documentation>Step 3: Net VAT computation and 2550M preparation: (a) per entity: compute net VAT payable = output VAT − input VAT carryforward from prior month − current month input VAT, (b) apply 70% input VAT limitation rule if applicable, (c) compute unutilized input VAT carryforward to next month, (d) prepare BIR Form 2550M per entity: sales/receipts, purchases, output VAT, input VAT, net VAT payable, (e) Controller reviews 5 entity returns before filing
+Responsible (R): Tax Accountant
+Accountable (A): Controller
+Duration: 2–3 hours/entity/month</bpmn:documentation>
+        <bpmn:incoming>W1418_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1418_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1418_Task8" name="BIR eFPS filing and payment">
+        <bpmn:documentation>Step 4: BIR eFPS filing and payment: (a) BIR eFPS Administrator files 5 monthly VAT returns via BIR Electronic Filing and Payment System, (b) generate payment instructions for net VAT payable per entity per bank account, (c) Treasury releases VAT payments via bank channel per W34, (d) file confirmation and payment receipts saved as supporting documentation
+Responsible (R): BIR eFPS Administrator / Treasury
+Accountable (A): Controller
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1418_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1418_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1418_Task9" name="Quarterly consolidated VAT reconciliation">
+        <bpmn:documentation>Step 5: Quarterly consolidated VAT reconciliation: (a) Consolidation Accountant reconciles consolidated VAT: eliminate intercompany input/output VAT (net zero in consolidation), (b) verify consolidated net VAT = sum of entity net VAT payable to BIR, (c) review input VAT utilization rate by entity: identify entities with large input VAT carryforward (potential cash flow inefficiency — cash tied up in VAT credits), (d) report to CFO on quarterly VAT position
+Responsible (R): Tax Accountant / Consolidation Accountant
+Accountable (A): CFO
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1418_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1418_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1418_Task10" name="Annual VAT reconciliation (BIR 2550Q)">
+        <bpmn:documentation>Step 6: Annual VAT reconciliation (BIR 2550Q): (a) quarterly summary of monthly filings per entity, (b) annual true-up: verify full-year input VAT claims vs. audited financial statements, (c) prepare BIR Form 2550Q (Quarterly VAT Return) per entity per quarter, (d) coordinate with external tax advisor for any complex VAT issues (e.g., PEZA transactions, zero-rated sales, VAT-exempt items)
+Responsible (R): Tax Accountant
+Accountable (A): VP Legal &amp; Compliance
+Duration: 8–12 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1418_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1418_End11" name="Complete">
+        <bpmn:incoming>W1418_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1418_Annotation12">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Tax Accountant review and approval gate; operational: periodic reconciliation against source documents
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1418_Assoc13" sourceRef="W1418_Annotation12" targetRef="W1418_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1418_Flow14" sourceRef="W1418_Start4" targetRef="W1418_Task5" />
+      <bpmn:sequenceFlow id="W1418_Flow15" sourceRef="W1418_Task5" targetRef="W1418_Task6" />
+      <bpmn:sequenceFlow id="W1418_Flow16" sourceRef="W1418_Task6" targetRef="W1418_Task7" />
+      <bpmn:sequenceFlow id="W1418_Flow17" sourceRef="W1418_Task7" targetRef="W1418_Task8" />
+      <bpmn:sequenceFlow id="W1418_Flow18" sourceRef="W1418_Task8" targetRef="W1418_Task9" />
+      <bpmn:sequenceFlow id="W1418_Flow19" sourceRef="W1418_Task9" targetRef="W1418_Task10" />
+      <bpmn:sequenceFlow id="W1418_Flow20" sourceRef="W1418_Task10" targetRef="W1418_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1418_diag">
+      <bpmndi:BPMNPlane id="W1418_plane" bpmnElement="W_W1418">
+        <bpmndi:BPMNShape id="W1418_Lane1_di" bpmnElement="W1418_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Lane2_di" bpmnElement="W1418_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Task5_di" bpmnElement="W1418_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Task6_di" bpmnElement="W1418_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Task7_di" bpmnElement="W1418_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Task8_di" bpmnElement="W1418_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Task9_di" bpmnElement="W1418_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Task10_di" bpmnElement="W1418_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Start4_di" bpmnElement="W1418_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_End11_di" bpmnElement="W1418_End11"><dc:Bounds x="1680" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1418_Annotation12_di" bpmnElement="W1418_Annotation12"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1418_Flow14_di" bpmnElement="W1418_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1418_Flow15_di" bpmnElement="W1418_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1418_Flow16_di" bpmnElement="W1418_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1418_Flow17_di" bpmnElement="W1418_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1418_Flow18_di" bpmnElement="W1418_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1418_Flow19_di" bpmnElement="W1418_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1418_Flow20_di" bpmnElement="W1418_Flow20"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1418_Assoc13_di" bpmnElement="W1418_Assoc13"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1503" name="W1503. BIR Percentage Tax vs. VAT Threshold Monitoring, Quarterly Tax Regime Evaluation &amp; Registration Adjustment" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly rolling 12-month gross sales calculation; quarterly tax regime evaluation; BIR registration update required when crossing VAT threshold (PHP 3M annual gross sales)
+Frequency: Monthly monitoring; quarterly evaluation; per-entity registration adjustment as needed
+Volume: 5 legal entities; BuildRight Depot, Inc. and BuildRight Logistics, Inc. are well above threshold; BuildRight Digital Commerce, Inc. and newer entities may fluctuate near threshold
+Owner: Tax Manager
+Participants: Tax Manager, Intercompany Accountant, CFO, BIR RDO (Revenue District Office)
+Source: workflow W1503 — BIR Percentage Tax vs. VAT Threshold Monitoring, Quarterly Tax Regime Evaluation &amp; Registration Adjustment</bpmn:documentation>
+      <bpmn:laneSet id="W1503_LaneSet3">
+        <bpmn:lane id="W1503_Lane1" name="System">
+        <bpmn:flowNodeRef>W1503_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1503_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1503_Lane2" name="Tax Manager">
+        <bpmn:flowNodeRef>W1503_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1503_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1503_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1503_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1503_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1503_Start4" name="Monthly rolling 12-month gross sales calculation; quarterly tax regime evaluation; BIR…">
+        <bpmn:outgoing>W1503_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1503_Task5" name="Monthly rolling 12-month gross sales tracking">
+        <bpmn:documentation>Step 1: Monthly rolling 12-month gross sales tracking: Monthly: (a) system calculates rolling 12-month gross sales per legal entity: (i) BuildRight Holdings, Inc. (investment income only — exempt from VAT on certain investment returns); (ii) BuildRight Depot, Inc. (retail sales — well above threshold); (iii) BuildRight Logistics, Inc. (service fees — above threshold); (iv) BuildRight Digital Commerce, Inc. (ecommerce service fees — may be near threshold); (v) BuildRight Property Management, Inc. (rental income — above threshold); (b) for entities near the PHP 3M threshold (within 20%): (i) system projects forward based on current monthly run rate; (ii) if projected to exceed within 3 months: alert sent to Tax Manager; (c) results reported to CFO monthly as part of tax compliance dashboard
+Responsible (R): System / Intercompany Accountant
+Accountable (A): Tax Manager
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1503_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1503_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1503_Task6" name="Quarterly tax regime evaluation">
+        <bpmn:documentation>Step 2: Quarterly tax regime evaluation: Quarterly: (a) Tax Manager evaluates for each entity near threshold: (i) actual gross sales for the trailing 12 months; (ii) forward 12-month projection based on growth trend; (iii) upcoming large contracts or revenue events that could push the entity over threshold; (iv) whether percentage tax or VAT is more economically advantageous for the entity (for entities below threshold, percentage tax may be cheaper but VAT registration allows input tax claims); (b) recommendation: (i) remain on percentage tax — entity clearly below threshold; (ii) voluntary VAT registration — entity approaching threshold, better to register early and claim input tax credits; (iii) mandatory VAT registration — entity has exceeded or will exceed threshold within the quarter; (c) recommendation presented to CFO for decision
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: 2–3 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1503_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1503_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1503_Task7" name="BIR VAT registration application">
+        <bpmn:documentation>Step 3: BIR VAT registration application: If entity crosses threshold or voluntarily registers for VAT: (a) Tax Manager prepares BIR registration update: (i) BIR Form 1905 (Registration Data Update); (ii) certification of gross sales exceeding PHP 3M (or voluntary registration intent); (iii) updated Articles of Incorporation or proof of business registration; (b) submits to the BIR RDO where the entity is registered; (c) BIR processes update (typically 10–15 business days); (d) entity receives updated Certificate of Registration (COR) reflecting VAT status; (e) Tax Manager updates the entity&#x27;s tax profile in the ERP system: (i) tax classification changed from &quot;Non-VAT&quot; to &quot;VAT&quot;; (ii) sales invoice format updated to include VAT breakdown; (iii) purchasing enabled for VAT input tax tracking; (f) all downstream processes updated: invoicing, purchasing, reporting
+Responsible (R): Tax Manager / BIR RDO
+Accountable (A): CFO
+Duration: 5–10 business days</bpmn:documentation>
+        <bpmn:incoming>W1503_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1503_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1503_Task8" name="Transition period compliance">
+        <bpmn:documentation>Step 4: Transition period compliance: During transition from percentage tax to VAT: (a) Tax Manager ensures: (i) all sales from the VAT registration effective date forward include 12% VAT; (ii) existing inventory at time of transition: input tax credit claim filed for VAT paid on inventory purchased before registration (as allowed under BIR rules); (iii) percentage tax returns filed for the final period before VAT registration; (iv) first VAT return filed for the period starting from registration date; (v) books of accounts updated to reflect VAT accounting; (b) any customer-facing documentation updated: (i) official receipts reprinted with VAT details; (ii) sales invoices reformatted; (iii) POS terminals reconfigured to apply VAT
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: 2–3 weeks</bpmn:documentation>
+        <bpmn:incoming>W1503_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1503_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1503_Task9" name="Continuous monitoring &amp; threshold re-evaluation">
+        <bpmn:documentation>Step 5: Continuous monitoring &amp; threshold re-evaluation: (a) Tax Manager monitors for: (i) entities whose gross sales decline below PHP 3M — under current law, once VAT-registered, the entity remains VAT-registered unless it applies for cancellation (complex process rarely pursued); (ii) new BIR issuances that may change the threshold or rules; (iii) proposed tax reforms (e.g., CREATE MORE Act) that may adjust the threshold; (b) if threshold rules change: impact analysis on all 5 entities within 30 days of new law/issuance
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W1503_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1503_End10" name="Complete">
+        <bpmn:incoming>W1503_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1503_Annotation11">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: reconfiguration — all within a tight compliance timeline
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1503_Assoc12" sourceRef="W1503_Annotation11" targetRef="W1503_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1503_Flow13" sourceRef="W1503_Start4" targetRef="W1503_Task5" />
+      <bpmn:sequenceFlow id="W1503_Flow14" sourceRef="W1503_Task5" targetRef="W1503_Task6" />
+      <bpmn:sequenceFlow id="W1503_Flow15" sourceRef="W1503_Task6" targetRef="W1503_Task7" />
+      <bpmn:sequenceFlow id="W1503_Flow16" sourceRef="W1503_Task7" targetRef="W1503_Task8" />
+      <bpmn:sequenceFlow id="W1503_Flow17" sourceRef="W1503_Task8" targetRef="W1503_Task9" />
+      <bpmn:sequenceFlow id="W1503_Flow18" sourceRef="W1503_Task9" targetRef="W1503_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1503_diag">
+      <bpmndi:BPMNPlane id="W1503_plane" bpmnElement="W_W1503">
+        <bpmndi:BPMNShape id="W1503_Lane1_di" bpmnElement="W1503_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Lane2_di" bpmnElement="W1503_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Task5_di" bpmnElement="W1503_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Task6_di" bpmnElement="W1503_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Task7_di" bpmnElement="W1503_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Task8_di" bpmnElement="W1503_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Task9_di" bpmnElement="W1503_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Start4_di" bpmnElement="W1503_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_End10_di" bpmnElement="W1503_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1503_Annotation11_di" bpmnElement="W1503_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1503_Flow13_di" bpmnElement="W1503_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1503_Flow14_di" bpmnElement="W1503_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1503_Flow15_di" bpmnElement="W1503_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1503_Flow16_di" bpmnElement="W1503_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1503_Flow17_di" bpmnElement="W1503_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1503_Flow18_di" bpmnElement="W1503_Flow18"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1503_Assoc12_di" bpmnElement="W1503_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1525" name="W1525. Philippine BIR Computerized Accounting System (CAS) Registration, Permit Renewal &amp; Annual Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: (a) Initial ERP system implementation requiring BIR CAS registration, (b) annual CAS permit renewal, (c) system upgrade or migration requiring re-registration
+Frequency: Initial registration (one-time per system); annual renewal; ad-hoc for system changes
+Volume: 5 legal entities × CAS registration = 5 registrations; annual renewal for all 5
+Owner: Tax Compliance Manager
+Participants: Tax Compliance Manager, IT ERP Team, Finance Controller, external tax counsel, BIR Revenue District Office (RDO)
+Source: workflow W1525 — Philippine BIR Computerized Accounting System (CAS) Registration, Permit Renewal &amp; Annual Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W1525_LaneSet3">
+        <bpmn:lane id="W1525_Lane1" name="Tax Compliance Manager">
+        <bpmn:flowNodeRef>W1525_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1525_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1525_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1525_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1525_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1525_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1525_Lane2" name="IT ERP Team">
+        <bpmn:flowNodeRef>W1525_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1525_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1525_Start4" name="(a) Initial ERP system implementation requiring BIR CAS registration, (b) annual CAS…">
+        <bpmn:outgoing>W1525_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1525_Task5" name="Initial CAS registration">
+        <bpmn:documentation>Step 1: Initial CAS registration (for new entity or system): (a) Tax Compliance Manager prepares registration documents per BIR RDO requirements: (i) BIR Form 1907 (Application for Registration of CAS/Components), (ii) system description: name, version, developer, modules (GL, AP, AR, inventory, POS), hardware configuration, data security measures, (iii) sample printouts of all books of accounts (cash receipts journal, cash disbursements journal, sales journal, purchases journal, general journal, subsidiary ledgers), (iv) sample official receipts and sales invoices generated by the system, (v) affidavit of responsible officer attesting to system accuracy and integrity, (vi) sworn statement on data retention and backup procedures; (b) Finance Controller and IT ERP Team provide technical specifications; (c) external tax counsel reviews documentation package
+Responsible (R): Tax Compliance Manager / IT ERP Team
+Accountable (A): Finance Controller
+Duration: 2–3 weeks preparation</bpmn:documentation>
+        <bpmn:incoming>W1525_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1525_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1525_Task6" name="BIR submission and demonstration">
+        <bpmn:documentation>Step 2: BIR submission and demonstration: (a) Tax Compliance Officer submits documentation to the BIR Revenue District Office (RDO) where each entity is registered; (b) BIR may require a system demonstration: (i) Tax Compliance Manager and IT ERP Team present system at BIR office, (ii) demonstrate: transaction recording, report generation, books of accounts generation, invoice/receipt generation, data retention and backup; (c) BIR evaluates system against checklist: (i) compliance with Philippine account code structure, (ii) ability to generate required BIR reports, (iii) audit trail integrity (no backdating, no deletion without log), (iv) data retention capability (10 years per NIRC — Sec. 235, as amended by TRAIN RA 10963; BuildRight targets 10 years per A6.5)
+Responsible (R): Tax Compliance Manager / IT ERP Team
+Accountable (A): Finance Controller
+Duration: 1–2 hours demonstration + 2–4 weeks BIR processing</bpmn:documentation>
+        <bpmn:incoming>W1525_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1525_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1525_Task7" name="PTU issuance and implementation">
+        <bpmn:documentation>Step 3: PTU issuance and implementation: (a) BIR issues Permit to Use (PTU) for each entity&#x27;s CAS; (b) Tax Compliance Manager files PTU with entity&#x27;s BIR registration records; (c) PTU number referenced on all BIR filings going forward; (d) system configuration updated: PTU number displayed on system-generated reports per BIR requirement
+Responsible (R): Tax Compliance Manager
+Accountable (A): Finance Controller
+Duration: 1–2 hours filing</bpmn:documentation>
+        <bpmn:incoming>W1525_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1525_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1525_Task8" name="Annual PTU renewal">
+        <bpmn:documentation>Step 4: Annual PTU renewal: (a) Tax Compliance Manager prepares renewal application 60 days before PTU expiry: (i) updated system description (if any changes), (ii) certification that no unauthorized modifications have been made, (iii) updated sample printouts if report formats changed; (b) submits renewal to RDO; (c) if BIR requests system re-demonstration: coordinates with IT ERP Team; (d) renews PTU and updates records
+Responsible (R): Tax Compliance Manager
+Accountable (A): Finance Controller
+Duration: 1–2 weeks/year</bpmn:documentation>
+        <bpmn:incoming>W1525_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1525_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1525_Task9" name="System change notification">
+        <bpmn:documentation>Step 5: System change notification: (a) when IT ERP Team plans system changes that affect CAS: (i) ERP version upgrade, (ii) new module activation (e.g., adding WMS module, POS module replacement), (iii) chart of accounts restructuring, (iv) database migration, (v) change in invoice/receipt format; (b) IT ERP Team notifies Tax Compliance Manager before implementation; (c) Tax Compliance Manager assesses: (i) minor changes (bug fixes, UI updates): no BIR notification needed, (ii) moderate changes (new module, report format change): BIR notification letter within 30 days, (iii) major changes (system replacement, database migration): re-registration per Steps 1–3; (d) external tax counsel advises on classification of change
+Responsible (R): IT ERP Team / Tax Compliance Manager
+Accountable (A): Finance Controller
+Duration: 1–5 days depending on change</bpmn:documentation>
+        <bpmn:incoming>W1525_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1525_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1525_Task10" name="Annual compliance audit">
+        <bpmn:documentation>Step 6: Annual compliance audit: (a) Tax Compliance Manager performs annual CAS compliance self-check: (i) system continues to generate all required BIR books of accounts accurately, (ii) audit trail is intact (no unauthorized modifications), (iii) data retention meets 10-year requirement, (iv) all 5 entity PTUs are current and valid, (v) any system changes during the year were properly notified to BIR; (b) documents compliance status for Finance Controller review; (c) any gaps remediated before BIR audit exposure
+Responsible (R): Tax Compliance Manager
+Accountable (A): Finance Controller
+Duration: 4–6 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1525_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1525_End11" name="Complete">
+        <bpmn:incoming>W1525_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1525_Annotation12">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: Tax Compliance Manager review and approval gate
+Owner: Tax Compliance Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1525_Assoc13" sourceRef="W1525_Annotation12" targetRef="W1525_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1525_Flow14" sourceRef="W1525_Start4" targetRef="W1525_Task5" />
+      <bpmn:sequenceFlow id="W1525_Flow15" sourceRef="W1525_Task5" targetRef="W1525_Task6" />
+      <bpmn:sequenceFlow id="W1525_Flow16" sourceRef="W1525_Task6" targetRef="W1525_Task7" />
+      <bpmn:sequenceFlow id="W1525_Flow17" sourceRef="W1525_Task7" targetRef="W1525_Task8" />
+      <bpmn:sequenceFlow id="W1525_Flow18" sourceRef="W1525_Task8" targetRef="W1525_Task9" />
+      <bpmn:sequenceFlow id="W1525_Flow19" sourceRef="W1525_Task9" targetRef="W1525_Task10" />
+      <bpmn:sequenceFlow id="W1525_Flow20" sourceRef="W1525_Task10" targetRef="W1525_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1525_diag">
+      <bpmndi:BPMNPlane id="W1525_plane" bpmnElement="W_W1525">
+        <bpmndi:BPMNShape id="W1525_Lane1_di" bpmnElement="W1525_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Lane2_di" bpmnElement="W1525_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Task5_di" bpmnElement="W1525_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Task6_di" bpmnElement="W1525_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Task7_di" bpmnElement="W1525_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Task8_di" bpmnElement="W1525_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Task9_di" bpmnElement="W1525_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Task10_di" bpmnElement="W1525_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Start4_di" bpmnElement="W1525_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_End11_di" bpmnElement="W1525_End11"><dc:Bounds x="1680" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1525_Annotation12_di" bpmnElement="W1525_Annotation12"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1525_Flow14_di" bpmnElement="W1525_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1525_Flow15_di" bpmnElement="W1525_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1525_Flow16_di" bpmnElement="W1525_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1525_Flow17_di" bpmnElement="W1525_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1525_Flow18_di" bpmnElement="W1525_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1525_Flow19_di" bpmnElement="W1525_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1525_Flow20_di" bpmnElement="W1525_Flow20"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1525_Assoc13_di" bpmnElement="W1525_Assoc13"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5530" name="W5530. Minimum Corporate Income Tax (MCIT) Computation, Regime Evaluation &amp; 3-Year Excess-Credit Carry-Forward" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly close (W9A) and the annual income-tax-return cycle (W407/W90 calendar); an entity&#x27;s 4th taxable year beginning (MCIT applicability onset per NIRC §27(E)/§28(A)(e)); a loss year or business-reversal event raising the relief question; or an entity entering the 3-year excess-credit window
+Frequency: Quarterly evaluation per entity; annual computation and return integration; event-driven applicability/relief reviews
+Volume: 5 legal entities × 4 quarterly evaluations = 20 quarterly evaluations/year, plus 5 annual computations integrated into the 1702RT/1702Q filings; 1 excess-credit register per credit-carrying entity
+Owner: Tax Manager
+Participants: Tax Accountant, CFO, Controller, External Tax Counsel, External Audit Team (provision audit), BIR (filings via eFPS)
+Source: workflow W5530 — Minimum Corporate Income Tax (MCIT) Computation, Regime Evaluation &amp; 3-Year Excess-Credit Carry-Forward</bpmn:documentation>
+      <bpmn:laneSet id="W5530_LaneSet3">
+        <bpmn:lane id="W5530_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W5530_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5530_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5530_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5530_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5530_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5530_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5530_Lane2" name="Tax Manager">
+        <bpmn:flowNodeRef>W5530_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5530_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5530_Start4" name="Quarterly close (W9A) and the annual income-tax-return cycle (W407/W90 calendar); an…">
+        <bpmn:outgoing>W5530_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5530_Task5" name="Gross-income base preparation">
+        <bpmn:documentation>Step 1: Gross-income base preparation: per entity, compute the MCIT base — gross income (gross receipts less sales returns, allowances and discounts, plus cost of goods sold where applicable) — with documentary support for each deduction assembled at the W9A cut-off
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 1.5 hours per entity per quarter</bpmn:documentation>
+        <bpmn:incoming>W5530_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5530_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5530_Task6" name="Quarterly MCIT vs normal-tax comparison">
+        <bpmn:documentation>Step 2: Quarterly MCIT vs normal-tax comparison: compute 2% MCIT on the base and compare against the normal corporate income tax per entity; pay and accrue the higher amount within the W590 provision and the W407 current-tax computation; file through the W260/eFPS quarterly cycle (1702Q)
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: inside the 1.5-hour quarterly cycle</bpmn:documentation>
+        <bpmn:incoming>W5530_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5530_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5530_Task7" name="Annual computation &amp; return integration">
+        <bpmn:documentation>Step 3: Annual computation &amp; return integration: annual MCIT determination per entity; reconcile to the W407 annual current-tax provision; confirm the final position on the 1702RT/1702Q filings with eFPS confirmations archived
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: ~4 hours per entity per year</bpmn:documentation>
+        <bpmn:incoming>W5530_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5530_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5530_Task8" name="Excess-credit register">
+        <bpmn:documentation>Step 4: Excess-credit register: where MCIT exceeds normal tax, record the excess per entity in the carry-forward register — amount, origin year, and expiry (creditable against normal income tax for the 3 immediately following taxable years); apply credits in order and flag lapsing credits 12 months ahead
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: ~2 hours per credit-carrying entity per year</bpmn:documentation>
+        <bpmn:incoming>W5530_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5530_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5530_Task9" name="Relief evaluation">
+        <bpmn:documentation>Step 5: Relief evaluation: where a loss year or business reversal drives MCIT above normal tax, assess the one-time relief options with External Tax Counsel and document the position taken
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: event-driven; ≈ 8 hours/year budgeted</bpmn:documentation>
+        <bpmn:incoming>W5530_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5530_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5530_Task10" name="Documentation &amp; audit support">
+        <bpmn:documentation>Step 6: Documentation &amp; audit support: maintain the MCIT workpapers (base support, computations, register) in the W256 retention structure; fold the papers into the W351/W95 provision-audit package and the BIR-examination evidence per W77
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: ≈ 12 hours/year</bpmn:documentation>
+        <bpmn:incoming>W5530_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5530_End11" name="Complete">
+        <bpmn:incoming>W5530_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5530_Annotation12">
+        <bpmn:text>Controls: - CTL-291 (ensure controlled execution — Tax &amp; Statutory (PA-17.3).) | - operational: quarterly MCIT-vs-normal-tax comparison signed off by the Tax Manager before the W590 provision posts | - operational: excess-credit register movements require Tax Manager review; lapsed credits require CFO acknowledgment
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5530_Assoc13" sourceRef="W5530_Annotation12" targetRef="W5530_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5530_Flow14" sourceRef="W5530_Start4" targetRef="W5530_Task5" />
+      <bpmn:sequenceFlow id="W5530_Flow15" sourceRef="W5530_Task5" targetRef="W5530_Task6" />
+      <bpmn:sequenceFlow id="W5530_Flow16" sourceRef="W5530_Task6" targetRef="W5530_Task7" />
+      <bpmn:sequenceFlow id="W5530_Flow17" sourceRef="W5530_Task7" targetRef="W5530_Task8" />
+      <bpmn:sequenceFlow id="W5530_Flow18" sourceRef="W5530_Task8" targetRef="W5530_Task9" />
+      <bpmn:sequenceFlow id="W5530_Flow19" sourceRef="W5530_Task9" targetRef="W5530_Task10" />
+      <bpmn:sequenceFlow id="W5530_Flow20" sourceRef="W5530_Task10" targetRef="W5530_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5530_diag">
+      <bpmndi:BPMNPlane id="W5530_plane" bpmnElement="W_W5530">
+        <bpmndi:BPMNShape id="W5530_Lane1_di" bpmnElement="W5530_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Lane2_di" bpmnElement="W5530_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Task5_di" bpmnElement="W5530_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Task6_di" bpmnElement="W5530_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Task7_di" bpmnElement="W5530_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Task8_di" bpmnElement="W5530_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Task9_di" bpmnElement="W5530_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Task10_di" bpmnElement="W5530_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Start4_di" bpmnElement="W5530_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_End11_di" bpmnElement="W5530_End11"><dc:Bounds x="1680" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5530_Annotation12_di" bpmnElement="W5530_Annotation12"><dc:Bounds x="160" y="460" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5530_Flow14_di" bpmnElement="W5530_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5530_Flow15_di" bpmnElement="W5530_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5530_Flow16_di" bpmnElement="W5530_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5530_Flow17_di" bpmnElement="W5530_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5530_Flow18_di" bpmnElement="W5530_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5530_Flow19_di" bpmnElement="W5530_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5530_Flow20_di" bpmnElement="W5530_Flow20"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5530_Assoc13_di" bpmnElement="W5530_Assoc13"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-58.2-coupon-redemption-fraud" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W2246" name="W2246. In-Store Coupon Redemption" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer presents coupon at POS
+Frequency: ~50K–80K/month during campaigns
+Volume: ~50K–80K/month; ~2% of transactions (of 2.8M/month)
+Owner: Cashier
+Participants: Store Manager
+Source: workflow W2246 — In-Store Coupon Redemption</bpmn:documentation>
+      <bpmn:laneSet id="W2246_LaneSet2">
+        <bpmn:lane id="W2246_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W2246_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2246_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2246_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2246_Start3" name="Customer presents coupon at POS">
+        <bpmn:outgoing>W2246_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2246_Task4" name="Cashier scans the coupon barcode or enters the code; system validates (active…">
+        <bpmn:documentation>Step 1: Cashier scans the coupon barcode or enters the code; system validates (active, eligible SKU, min-spend met, not-expired, per-customer-limit); applies the discount; logs the redemption for vendor reconciliation and liability reduction
+Responsible (R): Cashier / System
+Accountable (A): Store Manager
+Duration: 30 sec–1 min</bpmn:documentation>
+        <bpmn:incoming>W2246_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2246_End5" name="Complete">
+        <bpmn:incoming>W2246_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2246_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (ensure controlled execution — Coupon Redemption &amp; Fraud Prevention (PA-58.2).) | - operational: redemption/liability integrity; CTL-196 (coupon &amp; promo-code abuse prevention — fraud patterns monitored per W2249); operational: Store Manager daily-close review
+Owner: Cashier</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2246_Assoc7" sourceRef="W2246_Annotation6" targetRef="W2246_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2246_Flow8" sourceRef="W2246_Start3" targetRef="W2246_Task4" />
+      <bpmn:sequenceFlow id="W2246_Flow9" sourceRef="W2246_Task4" targetRef="W2246_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2246_diag">
+      <bpmndi:BPMNPlane id="W2246_plane" bpmnElement="W_W2246">
+        <bpmndi:BPMNShape id="W2246_Lane1_di" bpmnElement="W2246_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2246_Task4_di" bpmnElement="W2246_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2246_Start3_di" bpmnElement="W2246_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2246_End5_di" bpmnElement="W2246_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2246_Annotation6_di" bpmnElement="W2246_Annotation6"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2246_Flow8_di" bpmnElement="W2246_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2246_Flow9_di" bpmnElement="W2246_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2246_Assoc7_di" bpmnElement="W2246_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2247" name="W2247. Online Coupon &amp; Promo Code Redemption" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer enters promo code at checkout
+Frequency: ~8K–12K/month
+Volume: ~8K–12K/month
+Owner: Ecommerce System
+Participants: Ecom Ops Manager
+Source: workflow W2247 — Online Coupon &amp; Promo Code Redemption</bpmn:documentation>
+      <bpmn:laneSet id="W2247_LaneSet2">
+        <bpmn:lane id="W2247_Lane1" name="Ecommerce System">
+        <bpmn:flowNodeRef>W2247_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2247_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2247_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2247_Start3" name="Customer enters promo code at checkout">
+        <bpmn:outgoing>W2247_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2247_Task4" name="Customer enters the promo code at ecommerce checkout; system validates and…">
+        <bpmn:documentation>Step 1: Customer enters the promo code at ecommerce checkout; system validates and applies; logs the redemption; updates the omnichannel liability in real-time
+Responsible (R): Ecommerce System
+Accountable (A): Ecom Ops Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W2247_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2247_End5" name="Complete">
+        <bpmn:incoming>W2247_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2247_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (ensure controlled execution — Coupon Redemption &amp; Fraud Prevention (PA-58.2).) | - operational: omnichannel liability integrity; CTL-196 (coupon &amp; promo-code abuse prevention — ecommerce redemption fraud monitored alongside VS-125); operational: Ecom Ops Manager monitoring
+Owner: Ecommerce System</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2247_Assoc7" sourceRef="W2247_Annotation6" targetRef="W2247_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2247_Flow8" sourceRef="W2247_Start3" targetRef="W2247_Task4" />
+      <bpmn:sequenceFlow id="W2247_Flow9" sourceRef="W2247_Task4" targetRef="W2247_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2247_diag">
+      <bpmndi:BPMNPlane id="W2247_plane" bpmnElement="W_W2247">
+        <bpmndi:BPMNShape id="W2247_Lane1_di" bpmnElement="W2247_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2247_Task4_di" bpmnElement="W2247_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2247_Start3_di" bpmnElement="W2247_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2247_End5_di" bpmnElement="W2247_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2247_Annotation6_di" bpmnElement="W2247_Annotation6"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2247_Flow8_di" bpmnElement="W2247_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2247_Flow9_di" bpmnElement="W2247_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2247_Assoc7_di" bpmnElement="W2247_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2248" name="W2248. Multi-Coupon Stacking Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer presents multiple coupons
+Frequency: ~5–10% of coupon transactions
+Volume: ~5–10%
+Owner: Cashier / POS System
+Participants: Store Manager
+Source: workflow W2248 — Multi-Coupon Stacking Management</bpmn:documentation>
+      <bpmn:laneSet id="W2248_LaneSet2">
+        <bpmn:lane id="W2248_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W2248_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2248_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2248_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2248_Start3" name="Customer presents multiple coupons">
+        <bpmn:outgoing>W2248_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2248_Task4" name="System evaluates stacking per the rules (stackable types, max-stack-count…">
+        <bpmn:documentation>Step 1: System evaluates stacking per the rules (stackable types, max-stack-count, margin-floor); applies the allowed stack; blocks the disallowed with a clear reason; manager-override on exception
+Responsible (R): Cashier / POS System
+Accountable (A): Store Manager
+Duration: 1–2 min</bpmn:documentation>
+        <bpmn:incoming>W2248_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2248_End5" name="Complete">
+        <bpmn:incoming>W2248_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2248_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (ensure controlled execution — Coupon Redemption &amp; Fraud Prevention (PA-58.2).) | - CTL-404 (stacking/margin guard — links to VS-57); operational: Store Manager override sign-off
+Owner: Cashier / POS System</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2248_Assoc7" sourceRef="W2248_Annotation6" targetRef="W2248_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2248_Flow8" sourceRef="W2248_Start3" targetRef="W2248_Task4" />
+      <bpmn:sequenceFlow id="W2248_Flow9" sourceRef="W2248_Task4" targetRef="W2248_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2248_diag">
+      <bpmndi:BPMNPlane id="W2248_plane" bpmnElement="W_W2248">
+        <bpmndi:BPMNShape id="W2248_Lane1_di" bpmnElement="W2248_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2248_Task4_di" bpmnElement="W2248_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2248_Start3_di" bpmnElement="W2248_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2248_End5_di" bpmnElement="W2248_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2248_Annotation6_di" bpmnElement="W2248_Annotation6"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2248_Flow8_di" bpmnElement="W2248_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2248_Flow9_di" bpmnElement="W2248_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2248_Assoc7_di" bpmnElement="W2248_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2249" name="W2249. Coupon Redemption Fraud Detection" isExecutable="false">
+      <bpmn:documentation>Trigger: Real-time monitoring
+Frequency: Real-time + weekly review
+Volume: ~100–200 flagged/month
+Owner: Loss Prevention Analyst
+Participants: LP Analyst, Loss Prevention Mgr
+Source: workflow W2249 — Coupon Redemption Fraud Detection</bpmn:documentation>
+      <bpmn:laneSet id="W2249_LaneSet2">
+        <bpmn:lane id="W2249_Lane1" name="System">
+        <bpmn:flowNodeRef>W2249_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2249_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2249_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2249_Start3" name="Real-time monitoring">
+        <bpmn:outgoing>W2249_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2249_Task4" name="System applies real-time fraud rules: velocity (rapid redemption from one…">
+        <bpmn:documentation>Step 1: System applies real-time fraud rules: velocity (rapid redemption from one account/IP), unique-code reuse, counterfeit barcode, ineligible-SKU override; LP Analyst reviews flagged queue weekly; tunes rules
+Responsible (R): System / LP Analyst
+Accountable (A): Loss Prevention Mgr
+Duration: Real-time + 4–6 hours/week</bpmn:documentation>
+        <bpmn:incoming>W2249_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2249_End5" name="Complete">
+        <bpmn:incoming>W2249_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2249_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (coupon-fraud — links to VS-125); CTL-44 (redemption integrity); operational: Loss Prevention Manager weekly sign-off
+Owner: Loss Prevention Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2249_Assoc7" sourceRef="W2249_Annotation6" targetRef="W2249_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2249_Flow8" sourceRef="W2249_Start3" targetRef="W2249_Task4" />
+      <bpmn:sequenceFlow id="W2249_Flow9" sourceRef="W2249_Task4" targetRef="W2249_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2249_diag">
+      <bpmndi:BPMNPlane id="W2249_plane" bpmnElement="W_W2249">
+        <bpmndi:BPMNShape id="W2249_Lane1_di" bpmnElement="W2249_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2249_Task4_di" bpmnElement="W2249_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2249_Start3_di" bpmnElement="W2249_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2249_End5_di" bpmnElement="W2249_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2249_Annotation6_di" bpmnElement="W2249_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2249_Flow8_di" bpmnElement="W2249_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2249_Flow9_di" bpmnElement="W2249_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2249_Assoc7_di" bpmnElement="W2249_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2250" name="W2250. Coupon Return &amp; Reversal" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer returns item bought with coupon
+Frequency: ~2K–3K/month
+Volume: ~2K–3K/month
+Owner: Customer Service Rep
+Participants: CSA, Finance, CS Supervisor
+Source: workflow W2250 — Coupon Return &amp; Reversal</bpmn:documentation>
+      <bpmn:laneSet id="W2250_LaneSet2">
+        <bpmn:lane id="W2250_Lane1" name="CSA">
+        <bpmn:flowNodeRef>W2250_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2250_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2250_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2250_Start3" name="Customer returns item bought with coupon">
+        <bpmn:outgoing>W2250_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2250_Task4" name="System processes the return: refunds the post-coupon price (not the full…">
+        <bpmn:documentation>Step 1: System processes the return: refunds the post-coupon price (not the full price), reverses the coupon redemption (restores the coupon if still valid, or reduces the liability if expired), adjusts the vendor reimbursement if vendor-funded
+Responsible (R): CSA / System / Finance
+Accountable (A): CS Supervisor
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W2250_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2250_End5" name="Complete">
+        <bpmn:incoming>W2250_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2250_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (ensure controlled execution — Coupon Redemption &amp; Fraud Prevention (PA-58.2).) | - operational: coupon-reversal integrity; CTL-179 (refunds/credits issued to original tender with exception approval); operational: CS Supervisor sign-off
+Owner: Customer Service Rep</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2250_Assoc7" sourceRef="W2250_Annotation6" targetRef="W2250_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2250_Flow8" sourceRef="W2250_Start3" targetRef="W2250_Task4" />
+      <bpmn:sequenceFlow id="W2250_Flow9" sourceRef="W2250_Task4" targetRef="W2250_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2250_diag">
+      <bpmndi:BPMNPlane id="W2250_plane" bpmnElement="W_W2250">
+        <bpmndi:BPMNShape id="W2250_Lane1_di" bpmnElement="W2250_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2250_Task4_di" bpmnElement="W2250_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2250_Start3_di" bpmnElement="W2250_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2250_End5_di" bpmnElement="W2250_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2250_Annotation6_di" bpmnElement="W2250_Annotation6"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2250_Flow8_di" bpmnElement="W2250_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2250_Flow9_di" bpmnElement="W2250_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2250_Assoc7_di" bpmnElement="W2250_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2251" name="W2251. Expired Coupon Exception Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer presents recently expired coupon
+Frequency: ~500–1K/month
+Volume: ~500–1K/month
+Owner: Store Manager
+Participants: Regional Ops Manager
+Source: workflow W2251 — Expired Coupon Exception Handling</bpmn:documentation>
+      <bpmn:laneSet id="W2251_LaneSet2">
+        <bpmn:lane id="W2251_Lane1" name="Store Manager">
+        <bpmn:flowNodeRef>W2251_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2251_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2251_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2251_Start3" name="Customer presents recently expired coupon">
+        <bpmn:outgoing>W2251_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2251_Task4" name="Cashier flags the expired coupon; Store Manager decides: honor as goodwill…">
+        <bpmn:documentation>Step 1: Cashier flags the expired coupon; Store Manager decides: honor as goodwill (within a defined grace window, e.g., 7 days post-expiry), or decline; system applies if honored
+Responsible (R): Store Manager
+Accountable (A): Regional Ops Mgr
+Duration: 3–5 min</bpmn:documentation>
+        <bpmn:incoming>W2251_Flow8</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2251_End5" name="Complete">
+        <bpmn:incoming>W2251_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2251_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (ensure controlled execution — Coupon Redemption &amp; Fraud Prevention (PA-58.2).) | - CTL-404 (coupon-expiry authorization); operational: Store Manager sign-off on beyond-grace honors
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2251_Assoc7" sourceRef="W2251_Annotation6" targetRef="W2251_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2251_Flow8" sourceRef="W2251_Start3" targetRef="W2251_Task4" />
+      <bpmn:sequenceFlow id="W2251_Flow9" sourceRef="W2251_Task4" targetRef="W2251_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2251_diag">
+      <bpmndi:BPMNPlane id="W2251_plane" bpmnElement="W_W2251">
+        <bpmndi:BPMNShape id="W2251_Lane1_di" bpmnElement="W2251_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2251_Task4_di" bpmnElement="W2251_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2251_Start3_di" bpmnElement="W2251_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2251_End5_di" bpmnElement="W2251_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2251_Annotation6_di" bpmnElement="W2251_Annotation6"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2251_Flow8_di" bpmnElement="W2251_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2251_Flow9_di" bpmnElement="W2251_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2251_Assoc7_di" bpmnElement="W2251_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2252" name="W2252. Digital Coupon Device &amp; Account Binding" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer claims digital coupon
+Frequency: Per campaign
+Volume: ~500K–1M claims/year
+Owner: IT Integration Lead
+Participants: CIO
+Source: workflow W2252 — Digital Coupon Device &amp; Account Binding</bpmn:documentation>
+      <bpmn:laneSet id="W2252_LaneSet2">
+        <bpmn:lane id="W2252_Lane1" name="IT Integration Lead">
+        <bpmn:flowNodeRef>W2252_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2252_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2252_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2252_Start3" name="Customer claims digital coupon">
+        <bpmn:outgoing>W2252_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2252_Task4" name="Customer claims a digital coupon to their loyalty account/app; system binds the…">
+        <bpmn:documentation>Step 1: Customer claims a digital coupon to their loyalty account/app; system binds the coupon to the account (per-customer-limit enforcement); coupon available for redemption at POS (loyalty lookup) or online (account login)
+Responsible (R): IT Integration Lead / System
+Accountable (A): CIO
+Duration: Per campaign + ongoing</bpmn:documentation>
+        <bpmn:incoming>W2252_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2252_End5" name="Complete">
+        <bpmn:incoming>W2252_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2252_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (ensure controlled execution — Coupon Redemption &amp; Fraud Prevention (PA-58.2).) | - CTL-404 (coupon-binding integrity); CTL-196 (multi-account abuse prevention — links to VS-125); operational: IT Integration Lead monitoring
+Owner: IT Integration Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2252_Assoc7" sourceRef="W2252_Annotation6" targetRef="W2252_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2252_Flow8" sourceRef="W2252_Start3" targetRef="W2252_Task4" />
+      <bpmn:sequenceFlow id="W2252_Flow9" sourceRef="W2252_Task4" targetRef="W2252_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2252_diag">
+      <bpmndi:BPMNPlane id="W2252_plane" bpmnElement="W_W2252">
+        <bpmndi:BPMNShape id="W2252_Lane1_di" bpmnElement="W2252_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2252_Task4_di" bpmnElement="W2252_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2252_Start3_di" bpmnElement="W2252_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2252_End5_di" bpmnElement="W2252_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2252_Annotation6_di" bpmnElement="W2252_Annotation6"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2252_Flow8_di" bpmnElement="W2252_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2252_Flow9_di" bpmnElement="W2252_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2252_Assoc7_di" bpmnElement="W2252_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2253" name="W2253. Coupon Vendor Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly vendor settlement
+Frequency: Monthly; ~10–15 vendor campaigns
+Volume: ~10–15 reconciliations/month
+Owner: Finance Analyst
+Participants: Finance Manager
+Source: workflow W2253 — Coupon Vendor Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W2253_LaneSet2">
+        <bpmn:lane id="W2253_Lane1" name="Finance Analyst">
+        <bpmn:flowNodeRef>W2253_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2253_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2253_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2253_Start3" name="Monthly vendor settlement">
+        <bpmn:outgoing>W2253_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2253_Task4" name="Finance Analyst reconciles the vendor-funded coupon redemptions: BuildRight&#x27;s…">
+        <bpmn:documentation>Step 1: Finance Analyst reconciles the vendor-funded coupon redemptions: BuildRight&#x27;s redemption count vs. the vendor&#x27;s record; calculates the reimbursement; submits the claim; vendor validates and credits
+Responsible (R): Finance Analyst
+Accountable (A): Finance Manager
+Duration: 2–3 days/month</bpmn:documentation>
+        <bpmn:incoming>W2253_Flow8</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2253_End5" name="Complete">
+        <bpmn:incoming>W2253_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2253_Annotation6">
+        <bpmn:text>Controls: - CTL-404 (ensure controlled execution — Coupon Redemption &amp; Fraud Prevention (PA-58.2).) | - operational: co-op/reimbursement accuracy; count integrity; operational: Finance Manager monthly sign-off
+Owner: Finance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2253_Assoc7" sourceRef="W2253_Annotation6" targetRef="W2253_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2253_Flow8" sourceRef="W2253_Start3" targetRef="W2253_Task4" />
+      <bpmn:sequenceFlow id="W2253_Flow9" sourceRef="W2253_Task4" targetRef="W2253_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2253_diag">
+      <bpmndi:BPMNPlane id="W2253_plane" bpmnElement="W_W2253">
+        <bpmndi:BPMNShape id="W2253_Lane1_di" bpmnElement="W2253_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2253_Task4_di" bpmnElement="W2253_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2253_Start3_di" bpmnElement="W2253_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2253_End5_di" bpmnElement="W2253_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2253_Annotation6_di" bpmnElement="W2253_Annotation6"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2253_Flow8_di" bpmnElement="W2253_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2253_Flow9_di" bpmnElement="W2253_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2253_Assoc7_di" bpmnElement="W2253_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

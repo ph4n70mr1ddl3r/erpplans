@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-32.3-reverse-logistics-disposition" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1638" name="W1638. Store-to-DC Reverse Logistics Consolidation Program, In-Transit Tracking &amp; DC Hand-Off" isExecutable="false">
+      <bpmn:documentation>Trigger: Accumulated returns at store level reach consolidation threshold (~20 items or the bi-weekly cycle)
+Frequency: Bi-weekly per store, aligned to the canonical store-side consolidation cycle (W176); ~400 reverse-logistics shipments/month across 200 stores
+Volume: ~2 shipments/store/month
+Owner: Store Manager
+Participants: Store Manager, Stock Associate, DC Returns Coordinator, Logistics Coordinator
+Source: workflow W1638 — Store-to-DC Reverse Logistics Consolidation Program, In-Transit Tracking &amp; DC Hand-Off</bpmn:documentation>
+      <bpmn:laneSet id="W1638_LaneSet5">
+        <bpmn:lane id="W1638_Lane1" name="Stock Associate">
+        <bpmn:flowNodeRef>W1638_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1638_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1638_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1638_Lane2" name="Driver">
+        <bpmn:flowNodeRef>W1638_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1638_Lane3" name="DC Receiving Clerk">
+        <bpmn:flowNodeRef>W1638_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1638_Lane4" name="System">
+        <bpmn:flowNodeRef>W1638_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1638_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1638_Start6" name="Accumulated returns at store level reach consolidation threshold (~20 items or the…">
+        <bpmn:outgoing>W1638_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1638_Task7" name="Bi-weekly (per the Frequency, aligned to W176): Stock Associate consolidates…">
+        <bpmn:documentation>Step 1: Bi-weekly (per the Frequency, aligned to W176): Stock Associate consolidates items in store returns staging area: (a) groups by disposition type (RTV, quality hold, damaged/defective, recall), (b) groups RTV items by vendor, (c) packs items securely with packing slip listing each item, disposition type, and original transaction reference
+Responsible (R): Stock Associate
+Accountable (A): Store Manager
+Duration: ~2 hours/event</bpmn:documentation>
+        <bpmn:incoming>W1638_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1638_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1638_Task8" name="Store Manager or Stock Associate creates reverse shipment in system: (a)…">
+        <bpmn:documentation>Step 2: Store Manager or Stock Associate creates reverse shipment in system: (a) selects items from returns staging inventory, (b) system generates reverse shipping order with destination DC, (c) assigns to scheduled outbound delivery truck (driver picks up returns during regular DC-to-store delivery — backhaul optimization)
+Responsible (R): Stock Associate
+Accountable (A): Store Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1638_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1638_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1638_Task9" name="Driver picks up consolidated returns from store during scheduled delivery run…">
+        <bpmn:documentation>Step 3: Driver picks up consolidated returns from store during scheduled delivery run; signs for returned items; items enter in-transit reverse logistics tracking
+Responsible (R): Driver
+Accountable (A): Logistics Coordinator
+Duration: 10 min/store</bpmn:documentation>
+        <bpmn:incoming>W1638_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1638_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1638_Task10" name="DC Receiving Clerk receives reverse shipment: (a) scans shipment barcode, (b)…">
+        <bpmn:documentation>Step 4: DC Receiving Clerk receives reverse shipment: (a) scans shipment barcode, (b) verifies items against packing slip, (c) routes items to DC returns processing area per disposition type
+Responsible (R): DC Receiving Clerk
+Accountable (A): DC Returns Coordinator
+Duration: 20 min/shipment</bpmn:documentation>
+        <bpmn:incoming>W1638_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1638_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1638_Task11" name="System updates inventory location from store to DC; updates reverse logistics…">
+        <bpmn:documentation>Step 5: System updates inventory location from store to DC; updates reverse logistics in-transit status; items remain in their disposition status (RTV, damaged, recall, etc.)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1638_Flow19</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1638_End12" name="Complete">
+        <bpmn:incoming>W1638_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1638_Annotation13">
+        <bpmn:text>Controls: - CTL-339 (ensure controlled execution — Reverse Logistics &amp; Disposition (PA-32.3).) | - operational: standard operating procedures; system-enforced validation rules | ---
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1638_Assoc14" sourceRef="W1638_Annotation13" targetRef="W1638_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1638_Flow15" sourceRef="W1638_Start6" targetRef="W1638_Task7" />
+      <bpmn:sequenceFlow id="W1638_Flow16" sourceRef="W1638_Task7" targetRef="W1638_Task8" />
+      <bpmn:sequenceFlow id="W1638_Flow17" sourceRef="W1638_Task8" targetRef="W1638_Task9" />
+      <bpmn:sequenceFlow id="W1638_Flow18" sourceRef="W1638_Task9" targetRef="W1638_Task10" />
+      <bpmn:sequenceFlow id="W1638_Flow19" sourceRef="W1638_Task10" targetRef="W1638_Task11" />
+      <bpmn:sequenceFlow id="W1638_Flow20" sourceRef="W1638_Task11" targetRef="W1638_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1638_diag">
+      <bpmndi:BPMNPlane id="W1638_plane" bpmnElement="W_W1638">
+        <bpmndi:BPMNShape id="W1638_Lane1_di" bpmnElement="W1638_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Lane2_di" bpmnElement="W1638_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Lane3_di" bpmnElement="W1638_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Lane4_di" bpmnElement="W1638_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Task7_di" bpmnElement="W1638_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Task8_di" bpmnElement="W1638_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Task9_di" bpmnElement="W1638_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Task10_di" bpmnElement="W1638_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Task11_di" bpmnElement="W1638_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Start6_di" bpmnElement="W1638_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_End12_di" bpmnElement="W1638_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1638_Annotation13_di" bpmnElement="W1638_Annotation13"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1638_Flow15_di" bpmnElement="W1638_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1638_Flow16_di" bpmnElement="W1638_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1638_Flow17_di" bpmnElement="W1638_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1638_Flow18_di" bpmnElement="W1638_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1638_Flow19_di" bpmnElement="W1638_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1638_Flow20_di" bpmnElement="W1638_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1638_Assoc14_di" bpmnElement="W1638_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1639" name="W1639. Returns Processing Center Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Reverse logistics shipments received at DC returns processing area
+Frequency: ~800 reverse shipments/month across 4 DCs (~200/DC)
+Volume: ~50 shipments/DC/week
+Owner: DC Returns Coordinator
+Participants: DC Returns Coordinator, DC Quality Inspector, DC Supervisor
+Source: workflow W1639 — Returns Processing Center Operations</bpmn:documentation>
+      <bpmn:laneSet id="W1639_LaneSet3">
+        <bpmn:lane id="W1639_Lane1" name="DC Returns Coordinator">
+        <bpmn:flowNodeRef>W1639_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1639_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1639_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1639_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1639_Lane2" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1639_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1639_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1639_Start4" name="Reverse logistics shipments received at DC returns processing area">
+        <bpmn:outgoing>W1639_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1639_Task5" name="DC Returns Coordinator receives reverse shipments; sorts by disposition type…">
+        <bpmn:documentation>Step 1: DC Returns Coordinator receives reverse shipments; sorts by disposition type: (a) RTV — route to vendor return staging per W1631, (b) Quality Hold — route to quality inspection per W1603, (c) Damaged/Defective — route to damage disposition per W91, (d) Recall — route to recall staging per W1616, (e) Resaleable — route to restock (putaway per W18)
+Responsible (R): DC Returns Coordinator
+Accountable (A): DC Supervisor
+Duration: 20 min/shipment</bpmn:documentation>
+        <bpmn:incoming>W1639_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1639_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1639_Task6" name="For items requiring further assessment: DC Quality Inspector performs secondary…">
+        <bpmn:documentation>Step 2: For items requiring further assessment: DC Quality Inspector performs secondary quality check; determines final disposition per W1626
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Returns Coordinator
+Duration: 10 min/item</bpmn:documentation>
+        <bpmn:incoming>W1639_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1639_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1639_Task7" name="DC Returns Coordinator updates system with final disposition for each item…">
+        <bpmn:documentation>Step 3: DC Returns Coordinator updates system with final disposition for each item; inventory moved from &quot;Returns Processing&quot; to final status
+Responsible (R): DC Returns Coordinator
+Accountable (A): DC Supervisor
+Duration: 5 min/item</bpmn:documentation>
+        <bpmn:incoming>W1639_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1639_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1639_Task8" name="Weekly: DC Returns Coordinator generates returns processing summary: (a) items…">
+        <bpmn:documentation>Step 4: Weekly: DC Returns Coordinator generates returns processing summary: (a) items received, processed, and dispositioned by type, (b) processing cycle time (receipt to final disposition), (c) backlog items (&gt; 5 days unprocessed), (d) DC Supervisor reviews backlog and allocates resources
+Responsible (R): DC Returns Coordinator
+Accountable (A): DC Supervisor
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W1639_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1639_End9" name="Complete">
+        <bpmn:incoming>W1639_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1639_Annotation10">
+        <bpmn:text>Controls: - CTL-339 (ensure controlled execution — Reverse Logistics &amp; Disposition (PA-32.3).) | - operational: DC Returns Coordinator review and approval gate
+Owner: DC Returns Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1639_Assoc11" sourceRef="W1639_Annotation10" targetRef="W1639_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1639_Flow12" sourceRef="W1639_Start4" targetRef="W1639_Task5" />
+      <bpmn:sequenceFlow id="W1639_Flow13" sourceRef="W1639_Task5" targetRef="W1639_Task6" />
+      <bpmn:sequenceFlow id="W1639_Flow14" sourceRef="W1639_Task6" targetRef="W1639_Task7" />
+      <bpmn:sequenceFlow id="W1639_Flow15" sourceRef="W1639_Task7" targetRef="W1639_Task8" />
+      <bpmn:sequenceFlow id="W1639_Flow16" sourceRef="W1639_Task8" targetRef="W1639_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1639_diag">
+      <bpmndi:BPMNPlane id="W1639_plane" bpmnElement="W_W1639">
+        <bpmndi:BPMNShape id="W1639_Lane1_di" bpmnElement="W1639_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_Lane2_di" bpmnElement="W1639_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_Task5_di" bpmnElement="W1639_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_Task6_di" bpmnElement="W1639_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_Task7_di" bpmnElement="W1639_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_Task8_di" bpmnElement="W1639_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_Start4_di" bpmnElement="W1639_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_End9_di" bpmnElement="W1639_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1639_Annotation10_di" bpmnElement="W1639_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1639_Flow12_di" bpmnElement="W1639_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1639_Flow13_di" bpmnElement="W1639_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1639_Flow14_di" bpmnElement="W1639_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1639_Flow15_di" bpmnElement="W1639_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1639_Flow16_di" bpmnElement="W1639_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1639_Assoc11_di" bpmnElement="W1639_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1640" name="W1640. Refurbishment &amp; Repackaging Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Returned item assessed as &quot;Refurbishable&quot; during quality assessment (W1626 or W1639)
+Frequency: ~500–800 items/month eligible for refurbishment
+Volume: ~125–200 per DC/month
+Owner: DC Returns Coordinator
+Participants: DC Returns Coordinator, DC Quality Inspector, Category Manager (pricing)
+Source: workflow W1640 — Refurbishment &amp; Repackaging Operations</bpmn:documentation>
+      <bpmn:laneSet id="W1640_LaneSet4">
+        <bpmn:lane id="W1640_Lane1" name="DC Quality Inspector">
+        <bpmn:flowNodeRef>W1640_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1640_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1640_Lane2" name="DC Returns Coordinator">
+        <bpmn:flowNodeRef>W1640_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1640_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1640_Lane3" name="System">
+        <bpmn:flowNodeRef>W1640_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1640_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1640_Start5" name="Returned item assessed as &quot;Refurbishable&quot; during quality assessment (W1626 or W1639)">
+        <bpmn:outgoing>W1640_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1640_Task6" name="DC Quality Inspector identifies refurbishable items: (a) item is functional but…">
+        <bpmn:documentation>Step 1: DC Quality Inspector identifies refurbishable items: (a) item is functional but packaging damaged, (b) item has minor cosmetic imperfection that doesn&#x27;t affect functionality, (c) item is missing minor accessories that can be replaced (screws, manual), (d) item needs cleaning or re-boxing
+Responsible (R): DC Quality Inspector
+Accountable (A): DC Returns Coordinator
+Duration: 5 min/item</bpmn:documentation>
+        <bpmn:incoming>W1640_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1640_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1640_Task7" name="DC Returns Coordinator performs refurbishment: (a) repack in new box or rewrap…">
+        <bpmn:documentation>Step 2: DC Returns Coordinator performs refurbishment: (a) repack in new box or rewrap, (b) replace missing accessories from spare parts inventory, (c) clean and polish, (d) apply &quot;Refurbished&quot; or &quot;Open Box&quot; label per Category Manager pricing policy
+Responsible (R): DC Returns Coordinator
+Accountable (A): DC Supervisor
+Duration: 15 min/item</bpmn:documentation>
+        <bpmn:incoming>W1640_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1640_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1640_Task8" name="System creates refurbishment record: (a) original item linked to refurbished…">
+        <bpmn:documentation>Step 3: System creates refurbishment record: (a) original item linked to refurbished item, (b) refurbished item priced at discount (typically 10–20% below retail), (c) sold through specific channels: in-store clearance section, ecommerce &quot;Open Box&quot; category, or designated outlet store
+Responsible (R): System / Category Manager
+Accountable (A): VP Merchandising
+Duration: 5 min/item</bpmn:documentation>
+        <bpmn:incoming>W1640_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1640_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1640_Task9" name="Monthly: DC Returns Coordinator reports refurbishment metrics: (a) items…">
+        <bpmn:documentation>Step 4: Monthly: DC Returns Coordinator reports refurbishment metrics: (a) items refurbished vs. scrapped, (b) recovery value (refurbished sale price minus refurbishment cost), (c) recovery rate as % of original product cost
+Responsible (R): DC Returns Coordinator
+Accountable (A): VP Supply Chain
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1640_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1640_End10" name="Complete">
+        <bpmn:incoming>W1640_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1640_Annotation11">
+        <bpmn:text>Controls: - CTL-339 (ensure controlled execution — Reverse Logistics &amp; Disposition (PA-32.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Returns Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1640_Assoc12" sourceRef="W1640_Annotation11" targetRef="W1640_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1640_Flow13" sourceRef="W1640_Start5" targetRef="W1640_Task6" />
+      <bpmn:sequenceFlow id="W1640_Flow14" sourceRef="W1640_Task6" targetRef="W1640_Task7" />
+      <bpmn:sequenceFlow id="W1640_Flow15" sourceRef="W1640_Task7" targetRef="W1640_Task8" />
+      <bpmn:sequenceFlow id="W1640_Flow16" sourceRef="W1640_Task8" targetRef="W1640_Task9" />
+      <bpmn:sequenceFlow id="W1640_Flow17" sourceRef="W1640_Task9" targetRef="W1640_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1640_diag">
+      <bpmndi:BPMNPlane id="W1640_plane" bpmnElement="W_W1640">
+        <bpmndi:BPMNShape id="W1640_Lane1_di" bpmnElement="W1640_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Lane2_di" bpmnElement="W1640_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Lane3_di" bpmnElement="W1640_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Task6_di" bpmnElement="W1640_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Task7_di" bpmnElement="W1640_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Task8_di" bpmnElement="W1640_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Task9_di" bpmnElement="W1640_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Start5_di" bpmnElement="W1640_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_End10_di" bpmnElement="W1640_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1640_Annotation11_di" bpmnElement="W1640_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1640_Flow13_di" bpmnElement="W1640_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1640_Flow14_di" bpmnElement="W1640_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1640_Flow15_di" bpmnElement="W1640_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1640_Flow16_di" bpmnElement="W1640_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1640_Flow17_di" bpmnElement="W1640_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1640_Assoc12_di" bpmnElement="W1640_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1641" name="W1641. Returns Disposition Decision Engine &amp; Automation" isExecutable="false">
+      <bpmn:documentation>Trigger: Return processed through quality assessment (W1626, W1639)
+Frequency: ~56,000 return dispositions/month
+Volume: Automated disposition for ~70% of returns; manual review for ~30%
+Owner: Quality Manager
+Participants: Quality Manager, DC Returns Coordinator, Category Managers
+Source: workflow W1641 — Returns Disposition Decision Engine &amp; Automation</bpmn:documentation>
+      <bpmn:laneSet id="W1641_LaneSet4">
+        <bpmn:lane id="W1641_Lane1" name="System">
+        <bpmn:flowNodeRef>W1641_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1641_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1641_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1641_Lane2" name="DC Returns Coordinator">
+        <bpmn:flowNodeRef>W1641_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1641_Lane3" name="Quality Manager">
+        <bpmn:flowNodeRef>W1641_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1641_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1641_Start5" name="Return processed through quality assessment (W1626, W1639)">
+        <bpmn:outgoing>W1641_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1641_Task6" name="System applies automated disposition rules based on: (a) return reason code…">
+        <bpmn:documentation>Step 1: System applies automated disposition rules based on: (a) return reason code, (b) item category, (c) item condition assessment, (d) item value, (e) vendor RTV eligibility, (f) resale potential, (g) holding cost vs. recovery value
+Responsible (R): System
+Accountable (A): Quality Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1641_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1641_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1641_Task7" name="Unwanted/wrong size + good condition → Restock">
+        <bpmn:documentation>Step 2: Automated disposition matrix: (a) Unwanted/wrong size + good condition → Restock: immediate return to available inventory, (b) Defective + vendor warranty → RTV: route to vendor return per W1631, (c) Damaged packaging + functional → Refurbish: route to refurbishment per W1640, (d) Damaged packaging + high value → Markdown: route to markdown per W93, (e) Safety issue → Recall hold: route to recall process per W1615, (f) Low value + damaged → Scrap: route to disposal per W91, (g) Seasonal + end of season → Liquidation: route to liquidation per W1642
+Responsible (R): System
+Accountable (A): Quality Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1641_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1641_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1641_Task8" name="Items falling outside automated rules (exceptions) routed to DC Returns…">
+        <bpmn:documentation>Step 3: Items falling outside automated rules (exceptions) routed to DC Returns Coordinator for manual disposition with Quality Manager guidance
+Responsible (R): DC Returns Coordinator
+Accountable (A): Quality Manager
+Duration: 10 min/item</bpmn:documentation>
+        <bpmn:incoming>W1641_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1641_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1641_Task9" name="Quarterly: Quality Manager reviews disposition decision accuracy: (a) automated…">
+        <bpmn:documentation>Step 4: Quarterly: Quality Manager reviews disposition decision accuracy: (a) automated disposition vs. actual outcome (did restocked items sell? were RTV credits recovered?), (b) tune rules for improved accuracy, (c) identify new disposition categories needed
+Responsible (R): Quality Manager
+Accountable (A): VP Supply Chain
+Duration: 4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1641_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1641_End10" name="Complete">
+        <bpmn:incoming>W1641_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1641_Annotation11">
+        <bpmn:text>Controls: - CTL-339 (ensure controlled execution — Reverse Logistics &amp; Disposition (PA-32.3).) | - operational: Quality Manager review and approval gate
+Owner: Quality Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1641_Assoc12" sourceRef="W1641_Annotation11" targetRef="W1641_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1641_Flow13" sourceRef="W1641_Start5" targetRef="W1641_Task6" />
+      <bpmn:sequenceFlow id="W1641_Flow14" sourceRef="W1641_Task6" targetRef="W1641_Task7" />
+      <bpmn:sequenceFlow id="W1641_Flow15" sourceRef="W1641_Task7" targetRef="W1641_Task8" />
+      <bpmn:sequenceFlow id="W1641_Flow16" sourceRef="W1641_Task8" targetRef="W1641_Task9" />
+      <bpmn:sequenceFlow id="W1641_Flow17" sourceRef="W1641_Task9" targetRef="W1641_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1641_diag">
+      <bpmndi:BPMNPlane id="W1641_plane" bpmnElement="W_W1641">
+        <bpmndi:BPMNShape id="W1641_Lane1_di" bpmnElement="W1641_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Lane2_di" bpmnElement="W1641_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Lane3_di" bpmnElement="W1641_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Task6_di" bpmnElement="W1641_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Task7_di" bpmnElement="W1641_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Task8_di" bpmnElement="W1641_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Task9_di" bpmnElement="W1641_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Start5_di" bpmnElement="W1641_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_End10_di" bpmnElement="W1641_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1641_Annotation11_di" bpmnElement="W1641_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1641_Flow13_di" bpmnElement="W1641_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1641_Flow14_di" bpmnElement="W1641_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1641_Flow15_di" bpmnElement="W1641_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1641_Flow16_di" bpmnElement="W1641_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1641_Flow17_di" bpmnElement="W1641_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1641_Assoc12_di" bpmnElement="W1641_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1642" name="W1642. Returned Product Liquidation &amp; Channel Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Accumulated returned/dispositioned inventory designated for liquidation
+Frequency: Monthly liquidation cycle
+Volume: ~500–1,000 items/month across all locations
+Owner: Category Manager
+Participants: Category Manager, Marketing, Store Operations, DC Returns Coordinator
+Source: workflow W1642 — Returned Product Liquidation &amp; Channel Management</bpmn:documentation>
+      <bpmn:laneSet id="W1642_LaneSet3">
+        <bpmn:lane id="W1642_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1642_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1642_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1642_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1642_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1642_Lane2" name="System">
+        <bpmn:flowNodeRef>W1642_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1642_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1642_Start4" name="Accumulated returned/dispositioned inventory designated for liquidation">
+        <bpmn:outgoing>W1642_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1642_Task5" name="Category Manager reviews liquidation-eligible inventory monthly: (a) returned…">
+        <bpmn:documentation>Step 1: Category Manager reviews liquidation-eligible inventory monthly: (a) returned items not resaleable at full price, (b) refurbished items (W1640), (c) damaged packaging items, (d) end-of-season clearance items
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1642_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1642_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1642_Task6" name="In-store clearance section">
+        <bpmn:documentation>Step 2: Category Manager assigns liquidation channel: (a) In-store clearance section — dedicated markdown area per store; priced at 30–50% discount, (b) Ecommerce clearance — online &quot;Deals&quot; section with clearance pricing, (c) Bulk liquidation to jobbers — sell in bulk to discount retailers or scrap buyers at 10–20% of cost, (d) Employee sale — periodic employee-only clearance events at deep discount, (e) Donation — functional items donated to community organizations (BuildRight CSR program)
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1642_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1642_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1642_Task7" name="System updates pricing for liquidation channel; inventory moved to clearance…">
+        <bpmn:documentation>Step 3: System updates pricing for liquidation channel; inventory moved to clearance SKU or liquidation batch; markdown recorded in GL (inventory write-down + markdown expense)
+Responsible (R): System
+Accountable (A): Controller
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1642_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1642_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1642_Task8" name="Track liquidation sell-through: weekly monitoring of clearance inventory…">
+        <bpmn:documentation>Step 4: Track liquidation sell-through: weekly monitoring of clearance inventory velocity; remaining items after 60 days moved to next liquidation tier (deeper discount or bulk sale)
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1642_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1642_End9" name="Complete">
+        <bpmn:incoming>W1642_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1642_Annotation10">
+        <bpmn:text>Controls: - CTL-339 (ensure controlled execution — Reverse Logistics &amp; Disposition (PA-32.3).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1642_Assoc11" sourceRef="W1642_Annotation10" targetRef="W1642_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1642_Flow12" sourceRef="W1642_Start4" targetRef="W1642_Task5" />
+      <bpmn:sequenceFlow id="W1642_Flow13" sourceRef="W1642_Task5" targetRef="W1642_Task6" />
+      <bpmn:sequenceFlow id="W1642_Flow14" sourceRef="W1642_Task6" targetRef="W1642_Task7" />
+      <bpmn:sequenceFlow id="W1642_Flow15" sourceRef="W1642_Task7" targetRef="W1642_Task8" />
+      <bpmn:sequenceFlow id="W1642_Flow16" sourceRef="W1642_Task8" targetRef="W1642_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1642_diag">
+      <bpmndi:BPMNPlane id="W1642_plane" bpmnElement="W_W1642">
+        <bpmndi:BPMNShape id="W1642_Lane1_di" bpmnElement="W1642_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_Lane2_di" bpmnElement="W1642_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_Task5_di" bpmnElement="W1642_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_Task6_di" bpmnElement="W1642_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_Task7_di" bpmnElement="W1642_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_Task8_di" bpmnElement="W1642_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_Start4_di" bpmnElement="W1642_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_End9_di" bpmnElement="W1642_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1642_Annotation10_di" bpmnElement="W1642_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1642_Flow12_di" bpmnElement="W1642_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1642_Flow13_di" bpmnElement="W1642_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1642_Flow14_di" bpmnElement="W1642_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1642_Flow15_di" bpmnElement="W1642_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1642_Flow16_di" bpmnElement="W1642_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1642_Assoc11_di" bpmnElement="W1642_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1643" name="W1643. Reverse Logistics Carrier &amp; Cost Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Reverse logistics shipment created (store-to-DC, DC-to-vendor, DC-to-customer)
+Frequency: ~1,000–1,500 reverse logistics shipments/month
+Volume: ~250–375 per DC/month
+Owner: Logistics Coordinator
+Participants: Logistics Coordinator, DC Returns Coordinator, Finance
+Source: workflow W1643 — Reverse Logistics Carrier &amp; Cost Management</bpmn:documentation>
+      <bpmn:laneSet id="W1643_LaneSet3">
+        <bpmn:lane id="W1643_Lane1" name="Logistics Coordinator">
+        <bpmn:flowNodeRef>W1643_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1643_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1643_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1643_Lane2" name="System">
+        <bpmn:flowNodeRef>W1643_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1643_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1643_Start4" name="Reverse logistics shipment created (store-to-DC, DC-to-vendor, DC-to-customer)">
+        <bpmn:outgoing>W1643_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1643_Task5" name="Logistics Coordinator manages reverse logistics carriers: (a) store-to-DC…">
+        <bpmn:documentation>Step 1: Logistics Coordinator manages reverse logistics carriers: (a) store-to-DC: primarily backhaul on outbound delivery trucks (lowest cost), (b) DC-to-vendor: vendor-arranged pickup (vendor cost) or BuildRight carrier (negotiate vendor reimbursement), (c) DC-to-customer (ecommerce returns): 3PL carrier (Lalamove, Transportify)
+Responsible (R): Logistics Coordinator
+Accountable (A): VP Supply Chain
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1643_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1643_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1643_Task6" name="Cost allocation: system tracks reverse logistics cost per type: (a) carrier…">
+        <bpmn:documentation>Step 2: Cost allocation: system tracks reverse logistics cost per type: (a) carrier cost for RTV shipments (chargeable to vendor where possible), (b) backhaul cost (marginal — loaded on existing route), (c) 3PL cost for ecommerce returns (BuildRight cost — factored into ecommerce cost-to-serve), (d) internal handling cost (DC Returns Coordinator labor)
+Responsible (R): System
+Accountable (A): Controller
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1643_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1643_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1643_Task7" name="Monthly: Logistics Coordinator and Controller review reverse logistics cost…">
+        <bpmn:documentation>Step 3: Monthly: Logistics Coordinator and Controller review reverse logistics cost: (a) total cost by type, (b) cost as % of returns value, (c) carrier performance (damage rate, transit time), (d) vendor reimbursement recovery rate
+Responsible (R): Logistics Coordinator / Controller
+Accountable (A): VP Supply Chain / CFO
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1643_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1643_End8" name="Complete">
+        <bpmn:incoming>W1643_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1643_Annotation9">
+        <bpmn:text>Controls: - CTL-339 (ensure controlled execution — Reverse Logistics &amp; Disposition (PA-32.3).) | - operational: Logistics Coordinator review and approval gate
+Owner: Logistics Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1643_Assoc10" sourceRef="W1643_Annotation9" targetRef="W1643_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1643_Flow11" sourceRef="W1643_Start4" targetRef="W1643_Task5" />
+      <bpmn:sequenceFlow id="W1643_Flow12" sourceRef="W1643_Task5" targetRef="W1643_Task6" />
+      <bpmn:sequenceFlow id="W1643_Flow13" sourceRef="W1643_Task6" targetRef="W1643_Task7" />
+      <bpmn:sequenceFlow id="W1643_Flow14" sourceRef="W1643_Task7" targetRef="W1643_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1643_diag">
+      <bpmndi:BPMNPlane id="W1643_plane" bpmnElement="W_W1643">
+        <bpmndi:BPMNShape id="W1643_Lane1_di" bpmnElement="W1643_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1643_Lane2_di" bpmnElement="W1643_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1643_Task5_di" bpmnElement="W1643_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1643_Task6_di" bpmnElement="W1643_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1643_Task7_di" bpmnElement="W1643_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1643_Start4_di" bpmnElement="W1643_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1643_End8_di" bpmnElement="W1643_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1643_Annotation9_di" bpmnElement="W1643_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1643_Flow11_di" bpmnElement="W1643_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1643_Flow12_di" bpmnElement="W1643_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1643_Flow13_di" bpmnElement="W1643_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1643_Flow14_di" bpmnElement="W1643_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1643_Assoc10_di" bpmnElement="W1643_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1644" name="W1644. Returns Financial Analytics &amp; Cost-to-Serve Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly financial close cycle
+Frequency: Monthly reporting; quarterly executive review
+Volume: Chain-wide aggregation of returns data
+Owner: Controller
+Participants: Controller, Quality Manager, VP Merchandising, VP Supply Chain, CFO
+Source: workflow W1644 — Returns Financial Analytics &amp; Cost-to-Serve Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W1644_LaneSet4">
+        <bpmn:lane id="W1644_Lane1" name="System">
+        <bpmn:flowNodeRef>W1644_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1644_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1644_Lane2" name="Controller">
+        <bpmn:flowNodeRef>W1644_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1644_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1644_Lane3" name="VP Merchandising">
+        <bpmn:flowNodeRef>W1644_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1644_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1644_Start5" name="Monthly financial close cycle">
+        <bpmn:outgoing>W1644_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1644_Task6" name="System aggregates monthly returns financial data: (a) total returns value by…">
+        <bpmn:documentation>Step 1: System aggregates monthly returns financial data: (a) total returns value by category, store, and channel, (b) return rate (% of sales by category), (c) recovery value (restock + refurbish + RTV credit + liquidation), (d) unrecoverable cost (scrap + markdown loss + handling cost), (e) reverse logistics cost (carrier + handling + refurbishment), (f) cost-to-serve per return (total returns cost ÷ number of returns)
+Responsible (R): System
+Accountable (A): Controller
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1644_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1644_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1644_Task7" name="Controller reviews returns financial report: (a) net return cost as % of gross…">
+        <bpmn:documentation>Step 2: Controller reviews returns financial report: (a) net return cost as % of gross revenue (target: &lt; 1.5%), (b) trend analysis (monthly, quarterly, YoY), (c) top 10 SKUs by return cost, (d) top 10 stores by return rate, (e) recovery rate by disposition type
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1644_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1644_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1644_Task8" name="Quarterly: Controller presents returns financial analytics to executive team…">
+        <bpmn:documentation>Step 3: Quarterly: Controller presents returns financial analytics to executive team: (a) total returns cost impact on margin, (b) root cause analysis linking return reasons to quality/vendor/category issues, (c) recommendations: vendor quality improvement, product specification changes, packaging improvements, policy changes
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1644_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1644_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1644_Task9" name="Cross-functional action planning: VP Merchandising, VP Supply Chain, and…">
+        <bpmn:documentation>Step 4: Cross-functional action planning: VP Merchandising, VP Supply Chain, and Quality Manager review top return drivers and implement corrective actions: (a) vendor quality improvement (W1610), (b) product specification or packaging changes, (c) customer education (improved product information, how-to guides), (d) return policy adjustments for specific categories
+Responsible (R): VP Merchandising / VP Supply Chain
+Accountable (A): CEO
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1644_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1644_End10" name="Complete">
+        <bpmn:incoming>W1644_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1644_Annotation11">
+        <bpmn:text>Controls: - CTL-339 (ensure controlled execution — Reverse Logistics &amp; Disposition (PA-32.3).) | - operational: Controller review and approval gate
+Owner: Controller</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1644_Assoc12" sourceRef="W1644_Annotation11" targetRef="W1644_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1644_Flow13" sourceRef="W1644_Start5" targetRef="W1644_Task6" />
+      <bpmn:sequenceFlow id="W1644_Flow14" sourceRef="W1644_Task6" targetRef="W1644_Task7" />
+      <bpmn:sequenceFlow id="W1644_Flow15" sourceRef="W1644_Task7" targetRef="W1644_Task8" />
+      <bpmn:sequenceFlow id="W1644_Flow16" sourceRef="W1644_Task8" targetRef="W1644_Task9" />
+      <bpmn:sequenceFlow id="W1644_Flow17" sourceRef="W1644_Task9" targetRef="W1644_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1644_diag">
+      <bpmndi:BPMNPlane id="W1644_plane" bpmnElement="W_W1644">
+        <bpmndi:BPMNShape id="W1644_Lane1_di" bpmnElement="W1644_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Lane2_di" bpmnElement="W1644_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Lane3_di" bpmnElement="W1644_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Task6_di" bpmnElement="W1644_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Task7_di" bpmnElement="W1644_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Task8_di" bpmnElement="W1644_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Task9_di" bpmnElement="W1644_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Start5_di" bpmnElement="W1644_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_End10_di" bpmnElement="W1644_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1644_Annotation11_di" bpmnElement="W1644_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1644_Flow13_di" bpmnElement="W1644_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1644_Flow14_di" bpmnElement="W1644_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1644_Flow15_di" bpmnElement="W1644_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1644_Flow16_di" bpmnElement="W1644_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1644_Flow17_di" bpmnElement="W1644_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1644_Assoc12_di" bpmnElement="W1644_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

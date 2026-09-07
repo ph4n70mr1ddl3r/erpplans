@@ -1,0 +1,1154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-16.2-ar-and-collections" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W889" name="W889. Customer AR Aging Analysis &amp; Collection Prioritization" isExecutable="false">
+      <bpmn:documentation>Trigger: Weekly collection cycle; daily for high-risk accounts
+Frequency: Weekly (comprehensive); daily (exception monitoring)
+Volume: ~5,200 trade accounts + ~200 corporate accounts; ~3,500 AR invoices/month
+Owner: AR Supervisor
+Participants: AR Clerk, Sales Rep, Finance Manager
+Source: workflow W889 — Customer AR Aging Analysis &amp; Collection Prioritization</bpmn:documentation>
+      <bpmn:laneSet id="W889_LaneSet4">
+        <bpmn:lane id="W889_Lane1" name="System">
+        <bpmn:flowNodeRef>W889_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W889_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W889_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W889_Lane2" name="AR Clerk">
+        <bpmn:flowNodeRef>W889_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W889_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W889_Lane3" name="AR Supervisor">
+        <bpmn:flowNodeRef>W889_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W889_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W889_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W889_Start5" name="Weekly collection cycle; daily for high-risk accounts">
+        <bpmn:outgoing>W889_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W889_Task6" name="System generates AR aging report by bucket (current, 1–30, 31–60, 61–90…">
+        <bpmn:documentation>Step 1: System generates AR aging report by bucket (current, 1–30, 31–60, 61–90, 91–120, &gt; 120 days) segmented by entity, customer tier, and collection officer
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W889_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W889_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W889_Task7" name="AR Clerk reviews aging and flags accounts requiring action: (a) accounts…">
+        <bpmn:documentation>Step 2: AR Clerk reviews aging and flags accounts requiring action: (a) accounts crossing 30-day threshold for first reminder, (b) accounts in 61–90 day bucket for escalation, (c) accounts &gt; 90 days for write-off assessment per W81
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W889_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W889_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W889_Task8" name="AR Clerk prioritizes collection queue by: (a) amount at risk (largest balances…">
+        <bpmn:documentation>Step 3: AR Clerk prioritizes collection queue by: (a) amount at risk (largest balances first), (b) aging severity, (c) customer tier (corporate &gt; trade), (d) payment history score, (e) sales rep input on customer situation
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W889_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W889_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W889_Task9" name="AR Supervisor assigns collection accounts to AR Clerks balanced by load and…">
+        <bpmn:documentation>Step 4: AR Supervisor assigns collection accounts to AR Clerks balanced by load and territory
+Responsible (R): AR Supervisor
+Accountable (A): —
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W889_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W889_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W889_Task10" name="Weekly collection review meeting: AR Supervisor, AR Clerks, and Sales Reps…">
+        <bpmn:documentation>Step 5: Weekly collection review meeting: AR Supervisor, AR Clerks, and Sales Reps review top 20 overdue accounts, agree on action plan per account (call, visit, demand letter, legal referral)
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W889_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W889_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W889_Task11" name="System generates DSO (Days Sales Outstanding) and collection effectiveness…">
+        <bpmn:documentation>Step 6: System generates DSO (Days Sales Outstanding) and collection effectiveness index (CEI) metrics for management reporting per W35
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W889_Flow20</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W889_End12" name="Complete">
+        <bpmn:incoming>W889_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W889_Annotation13">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Supervisor review and approval gate
+Owner: AR Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W889_Assoc14" sourceRef="W889_Annotation13" targetRef="W889_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W889_Flow15" sourceRef="W889_Start5" targetRef="W889_Task6" />
+      <bpmn:sequenceFlow id="W889_Flow16" sourceRef="W889_Task6" targetRef="W889_Task7" />
+      <bpmn:sequenceFlow id="W889_Flow17" sourceRef="W889_Task7" targetRef="W889_Task8" />
+      <bpmn:sequenceFlow id="W889_Flow18" sourceRef="W889_Task8" targetRef="W889_Task9" />
+      <bpmn:sequenceFlow id="W889_Flow19" sourceRef="W889_Task9" targetRef="W889_Task10" />
+      <bpmn:sequenceFlow id="W889_Flow20" sourceRef="W889_Task10" targetRef="W889_Task11" />
+      <bpmn:sequenceFlow id="W889_Flow21" sourceRef="W889_Task11" targetRef="W889_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W889_diag">
+      <bpmndi:BPMNPlane id="W889_plane" bpmnElement="W_W889">
+        <bpmndi:BPMNShape id="W889_Lane1_di" bpmnElement="W889_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Lane2_di" bpmnElement="W889_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Lane3_di" bpmnElement="W889_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Task6_di" bpmnElement="W889_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Task7_di" bpmnElement="W889_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Task8_di" bpmnElement="W889_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Task9_di" bpmnElement="W889_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Task10_di" bpmnElement="W889_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Task11_di" bpmnElement="W889_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Start5_di" bpmnElement="W889_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_End12_di" bpmnElement="W889_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W889_Annotation13_di" bpmnElement="W889_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W889_Flow15_di" bpmnElement="W889_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W889_Flow16_di" bpmnElement="W889_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W889_Flow17_di" bpmnElement="W889_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W889_Flow18_di" bpmnElement="W889_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W889_Flow19_di" bpmnElement="W889_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W889_Flow20_di" bpmnElement="W889_Flow20"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W889_Flow21_di" bpmnElement="W889_Flow21"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W889_Assoc14_di" bpmnElement="W889_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W890" name="W890. Customer Collection Call Execution &amp; Promise Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Accounts identified in weekly aging review (W889)
+Frequency: Daily (ongoing collection activity)
+Volume: ~150–200 collection calls/week; ~30–40 promise-to-pay tracking entries/week
+Owner: AR Clerk
+Participants: AR Clerk, Sales Rep, AR Supervisor
+Source: workflow W890 — Customer Collection Call Execution &amp; Promise Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W890_LaneSet4">
+        <bpmn:lane id="W890_Lane1" name="AR Clerk">
+        <bpmn:flowNodeRef>W890_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W890_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W890_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W890_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W890_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W890_Lane2" name="System">
+        <bpmn:flowNodeRef>W890_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W890_Lane3" name="AR Supervisor">
+        <bpmn:flowNodeRef>W890_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W890_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W890_Start5" name="Accounts identified in weekly aging review (W889)">
+        <bpmn:outgoing>W890_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W890_Task6" name="AR Clerk reviews assigned collection queue with customer aging detail…">
+        <bpmn:documentation>Step 1: AR Clerk reviews assigned collection queue with customer aging detail, outstanding invoices, and prior collection history
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 5 min/account</bpmn:documentation>
+        <bpmn:incoming>W890_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W890_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W890_Task7" name="AR Clerk executes collection call: (a) confirms identity and authorized…">
+        <bpmn:documentation>Step 2: AR Clerk executes collection call: (a) confirms identity and authorized contact, (b) states outstanding amount and invoice references, (c) inquires on payment status and reason for delay, (d) negotiates payment commitment date
+Responsible (R): AR Clerk
+Accountable (A): —
+Duration: 10–15 min/call</bpmn:documentation>
+        <bpmn:incoming>W890_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W890_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W890_Task8" name="Promise to Pay">
+        <bpmn:documentation>Step 3: AR Clerk logs call outcome in system: (a) Promise to Pay — customer commits to specific date and amount, (b) Dispute — customer disputes invoice (route to W2746), (c) Partial Payment — customer offers partial settlement, (d) No Response — customer unreachable after 3 attempts, (e) Broken Promise — previously committed date missed
+Responsible (R): AR Clerk
+Accountable (A): —
+Duration: 5 min/call</bpmn:documentation>
+        <bpmn:incoming>W890_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W890_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W890_Task9" name="For promises: system creates promise-to-pay record with committed date, amount…">
+        <bpmn:documentation>Step 4: For promises: system creates promise-to-pay record with committed date, amount, and AR Clerk notes; system auto-flags broken promises on the committed date + 1 business day
+Responsible (R): System / AR Clerk
+Accountable (A): —
+Duration: 2 min/promise</bpmn:documentation>
+        <bpmn:incoming>W890_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W890_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W890_Task10" name="Follow-up cadence: (a) 1–30 days overdue — call or email every 7 days, (b)…">
+        <bpmn:documentation>Step 5: Follow-up cadence: (a) 1–30 days overdue — call or email every 7 days, (b) 31–60 days — call every 3–5 business days, (c) 61–90 days — call every 2–3 business days + Sales Rep involvement, (d) &gt; 90 days — demand letter + legal escalation per W812
+Responsible (R): AR Clerk / Sales Rep
+Accountable (A): AR Supervisor
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W890_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W890_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W890_Task11" name="Weekly: AR Supervisor reviews broken promise report and escalates chronic…">
+        <bpmn:documentation>Step 6: Weekly: AR Supervisor reviews broken promise report and escalates chronic non-payers to Finance Manager for demand letter or legal referral
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W890_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W890_End12" name="Complete">
+        <bpmn:incoming>W890_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W890_Annotation13">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Clerk review and approval gate
+Owner: AR Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W890_Assoc14" sourceRef="W890_Annotation13" targetRef="W890_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W890_Flow15" sourceRef="W890_Start5" targetRef="W890_Task6" />
+      <bpmn:sequenceFlow id="W890_Flow16" sourceRef="W890_Task6" targetRef="W890_Task7" />
+      <bpmn:sequenceFlow id="W890_Flow17" sourceRef="W890_Task7" targetRef="W890_Task8" />
+      <bpmn:sequenceFlow id="W890_Flow18" sourceRef="W890_Task8" targetRef="W890_Task9" />
+      <bpmn:sequenceFlow id="W890_Flow19" sourceRef="W890_Task9" targetRef="W890_Task10" />
+      <bpmn:sequenceFlow id="W890_Flow20" sourceRef="W890_Task10" targetRef="W890_Task11" />
+      <bpmn:sequenceFlow id="W890_Flow21" sourceRef="W890_Task11" targetRef="W890_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W890_diag">
+      <bpmndi:BPMNPlane id="W890_plane" bpmnElement="W_W890">
+        <bpmndi:BPMNShape id="W890_Lane1_di" bpmnElement="W890_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Lane2_di" bpmnElement="W890_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Lane3_di" bpmnElement="W890_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Task6_di" bpmnElement="W890_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Task7_di" bpmnElement="W890_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Task8_di" bpmnElement="W890_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Task9_di" bpmnElement="W890_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Task10_di" bpmnElement="W890_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Task11_di" bpmnElement="W890_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Start5_di" bpmnElement="W890_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_End12_di" bpmnElement="W890_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W890_Annotation13_di" bpmnElement="W890_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W890_Flow15_di" bpmnElement="W890_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W890_Flow16_di" bpmnElement="W890_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W890_Flow17_di" bpmnElement="W890_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W890_Flow18_di" bpmnElement="W890_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W890_Flow19_di" bpmnElement="W890_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W890_Flow20_di" bpmnElement="W890_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W890_Flow21_di" bpmnElement="W890_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W890_Assoc14_di" bpmnElement="W890_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W892" name="W892. Customer Statement Generation &amp; Distribution" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly statement cycle (1st business day of month); ad-hoc on customer request
+Frequency: Monthly (all active accounts); ad-hoc as needed
+Volume: ~5,200 trade + ~200 corporate statements/month
+Owner: AR Clerk
+Participants: AR Clerk, AR Supervisor
+Source: workflow W892 — Customer Statement Generation &amp; Distribution</bpmn:documentation>
+      <bpmn:laneSet id="W892_LaneSet3">
+        <bpmn:lane id="W892_Lane1" name="System">
+        <bpmn:flowNodeRef>W892_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W892_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W892_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W892_Lane2" name="AR Clerk">
+        <bpmn:flowNodeRef>W892_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W892_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W892_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W892_Start4" name="Monthly statement cycle (1st business day of month); ad-hoc on customer request">
+        <bpmn:outgoing>W892_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W892_Task5" name="System generates monthly customer statements for all active AR accounts with…">
+        <bpmn:documentation>Step 1: System generates monthly customer statements for all active AR accounts with open balances: opening balance, invoice details (date, number, amount), payments applied, adjustments (credit notes, debit notes), closing balance, and aging summary
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W892_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W892_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W892_Task6" name="AR Clerk reviews statements for accuracy: correct entity, proper contact…">
+        <bpmn:documentation>Step 2: AR Clerk reviews statements for accuracy: correct entity, proper contact details, aging buckets match GL subledger
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W892_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W892_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W892_Task7" name="System distributes statements via configured channel: (a) email (default for…">
+        <bpmn:documentation>Step 3: System distributes statements via configured channel: (a) email (default for ~80% of accounts), (b) customer portal self-service download, (c) printed and mailed for accounts without email (~20%)
+Responsible (R): System / AR Clerk
+Accountable (A): —
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W892_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W892_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W892_Task8" name="Ad-hoc statement requests from customers or Sales Reps processed within 1…">
+        <bpmn:documentation>Step 4: Ad-hoc statement requests from customers or Sales Reps processed within 1 business day
+Responsible (R): AR Clerk
+Accountable (A): —
+Duration: 10 min/request</bpmn:documentation>
+        <bpmn:incoming>W892_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W892_End9" name="Complete">
+        <bpmn:incoming>W892_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W892_Annotation10">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Clerk review and approval gate
+Owner: AR Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W892_Assoc11" sourceRef="W892_Annotation10" targetRef="W892_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W892_Flow12" sourceRef="W892_Start4" targetRef="W892_Task5" />
+      <bpmn:sequenceFlow id="W892_Flow13" sourceRef="W892_Task5" targetRef="W892_Task6" />
+      <bpmn:sequenceFlow id="W892_Flow14" sourceRef="W892_Task6" targetRef="W892_Task7" />
+      <bpmn:sequenceFlow id="W892_Flow15" sourceRef="W892_Task7" targetRef="W892_Task8" />
+      <bpmn:sequenceFlow id="W892_Flow16" sourceRef="W892_Task8" targetRef="W892_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W892_diag">
+      <bpmndi:BPMNPlane id="W892_plane" bpmnElement="W_W892">
+        <bpmndi:BPMNShape id="W892_Lane1_di" bpmnElement="W892_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_Lane2_di" bpmnElement="W892_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_Task5_di" bpmnElement="W892_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_Task6_di" bpmnElement="W892_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_Task7_di" bpmnElement="W892_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_Task8_di" bpmnElement="W892_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_Start4_di" bpmnElement="W892_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_End9_di" bpmnElement="W892_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W892_Annotation10_di" bpmnElement="W892_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W892_Flow12_di" bpmnElement="W892_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W892_Flow13_di" bpmnElement="W892_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W892_Flow14_di" bpmnElement="W892_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W892_Flow15_di" bpmnElement="W892_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W892_Flow16_di" bpmnElement="W892_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W892_Assoc11_di" bpmnElement="W892_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W812" name="W812. Customer Credit Field Collection Operations &amp; Legal Escalation" isExecutable="false">
+      <bpmn:documentation>Trigger: Account &gt; 90 days overdue and all standard collection efforts exhausted per W890
+Frequency: ~5–10 escalation events/month
+Volume: ~50–100 accounts/year reaching legal escalation stage
+Owner: AR Supervisor
+Participants: AR Supervisor, Finance Manager, Legal Counsel, Collection Agency, Sales Rep
+Source: workflow W812 — Customer Credit Field Collection Operations &amp; Legal Escalation</bpmn:documentation>
+      <bpmn:laneSet id="W812_LaneSet3">
+        <bpmn:lane id="W812_Lane1" name="AR Supervisor">
+        <bpmn:flowNodeRef>W812_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W812_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W812_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W812_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W812_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W812_Lane2" name="Finance Manager">
+        <bpmn:flowNodeRef>W812_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W812_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W812_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W812_Start4" name="Account &gt; 90 days overdue and all standard collection efforts exhausted per W890">
+        <bpmn:outgoing>W812_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W812_Task5" name="AR Supervisor identifies accounts &gt; 90 days overdue where: (a) 3+ collection…">
+        <bpmn:documentation>Step 1: AR Supervisor identifies accounts &gt; 90 days overdue where: (a) 3+ collection calls attempted with no payment, OR (b) 2+ broken payment promises, OR (c) customer disputing without engaging in resolution
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W812_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W812_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W812_Task6" name="AR Supervisor prepares demand letter on company letterhead: outstanding amount…">
+        <bpmn:documentation>Step 2: AR Supervisor prepares demand letter on company letterhead: outstanding amount, invoice references, payment deadline (10 business days), and statement of legal action if unresolved
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 30 min/account</bpmn:documentation>
+        <bpmn:incoming>W812_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W812_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W812_Task7" name="Finance Manager approves and signs demand letter; sent via registered mail with…">
+        <bpmn:documentation>Step 3: Finance Manager approves and signs demand letter; sent via registered mail with return card and email
+Responsible (R): Finance Manager
+Accountable (A): —
+Duration: 15 min/account</bpmn:documentation>
+        <bpmn:incoming>W812_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W812_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W812_Task8" name="If no response within deadline: AR Supervisor engages external collection…">
+        <bpmn:documentation>Step 4: If no response within deadline: AR Supervisor engages external collection agency for field visit; system logs agency referral with expected recovery timeline
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 30 min/account</bpmn:documentation>
+        <bpmn:incoming>W812_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W812_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W812_Task9" name="If collection agency unsuccessful: Finance Manager and Legal Counsel evaluate…">
+        <bpmn:documentation>Step 5: If collection agency unsuccessful: Finance Manager and Legal Counsel evaluate legal action — (a) file small claims case (≤ PHP 400K) in Municipal Trial Court, (b) file regular civil case for collection in Regional Trial Court, (c) assess cost-benefit of litigation vs. write-off per W81
+Responsible (R): Finance Manager / Legal
+Accountable (A): CFO
+Duration: 1 hour/account</bpmn:documentation>
+        <bpmn:incoming>W812_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W812_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W812_Task10" name="All escalation actions and legal proceedings documented in customer account for…">
+        <bpmn:documentation>Step 6: All escalation actions and legal proceedings documented in customer account for audit trail and potential BIR write-off substantiation per W81
+Responsible (R): AR Supervisor / Legal
+Accountable (A): Finance Manager
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W812_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W812_End11" name="Complete">
+        <bpmn:incoming>W812_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W812_Annotation12">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Supervisor review and approval gate
+Owner: AR Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W812_Assoc13" sourceRef="W812_Annotation12" targetRef="W812_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W812_Flow14" sourceRef="W812_Start4" targetRef="W812_Task5" />
+      <bpmn:sequenceFlow id="W812_Flow15" sourceRef="W812_Task5" targetRef="W812_Task6" />
+      <bpmn:sequenceFlow id="W812_Flow16" sourceRef="W812_Task6" targetRef="W812_Task7" />
+      <bpmn:sequenceFlow id="W812_Flow17" sourceRef="W812_Task7" targetRef="W812_Task8" />
+      <bpmn:sequenceFlow id="W812_Flow18" sourceRef="W812_Task8" targetRef="W812_Task9" />
+      <bpmn:sequenceFlow id="W812_Flow19" sourceRef="W812_Task9" targetRef="W812_Task10" />
+      <bpmn:sequenceFlow id="W812_Flow20" sourceRef="W812_Task10" targetRef="W812_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W812_diag">
+      <bpmndi:BPMNPlane id="W812_plane" bpmnElement="W_W812">
+        <bpmndi:BPMNShape id="W812_Lane1_di" bpmnElement="W812_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Lane2_di" bpmnElement="W812_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Task5_di" bpmnElement="W812_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Task6_di" bpmnElement="W812_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Task7_di" bpmnElement="W812_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Task8_di" bpmnElement="W812_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Task9_di" bpmnElement="W812_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Task10_di" bpmnElement="W812_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Start4_di" bpmnElement="W812_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_End11_di" bpmnElement="W812_End11"><dc:Bounds x="1680" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W812_Annotation12_di" bpmnElement="W812_Annotation12"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W812_Flow14_di" bpmnElement="W812_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W812_Flow15_di" bpmnElement="W812_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W812_Flow16_di" bpmnElement="W812_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W812_Flow17_di" bpmnElement="W812_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W812_Flow18_di" bpmnElement="W812_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W812_Flow19_di" bpmnElement="W812_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W812_Flow20_di" bpmnElement="W812_Flow20"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W812_Assoc13_di" bpmnElement="W812_Assoc13"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2745" name="W2745. Customer AR Payment Application &amp; Unapplied Cash Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer payment received (bank transfer, check, cash deposit, e-wallet)
+Frequency: Daily
+Volume: ~3,500 AR invoices/month; ~1,500–2,000 customer payments/month
+Owner: AR Clerk
+Participants: AR Clerk, AR Supervisor, Treasury Analyst
+Source: workflow W2745 — Customer AR Payment Application &amp; Unapplied Cash Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W2745_LaneSet3">
+        <bpmn:lane id="W2745_Lane1" name="AR Clerk">
+        <bpmn:flowNodeRef>W2745_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2745_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2745_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2745_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2745_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2745_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2745_Lane2" name="AR Supervisor">
+        <bpmn:flowNodeRef>W2745_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2745_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2745_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2745_Start4" name="Customer payment received (bank transfer, check, cash deposit, e-wallet)">
+        <bpmn:outgoing>W2745_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2745_Task5" name="AR Clerk receives payment notification: bank statement auto-import, check…">
+        <bpmn:documentation>Step 1: AR Clerk receives payment notification: bank statement auto-import, check deposit slip, or manual notification from store/DC
+Responsible (R): AR Clerk
+Accountable (A): —
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W2745_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W2745_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2745_Task6" name="AR Clerk applies payment to customer account: (a) match payment to specific…">
+        <bpmn:documentation>Step 2: AR Clerk applies payment to customer account: (a) match payment to specific invoice(s) by reference number, (b) if no reference: match by amount, date, and customer name, (c) system posts: Dr. Cash/Bank / Cr. Accounts Receivable
+Responsible (R): AR Clerk
+Accountable (A): —
+Duration: 5 min/payment</bpmn:documentation>
+        <bpmn:incoming>W2745_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W2745_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2745_Task7" name="Partial payment">
+        <bpmn:documentation>Step 3: Partial payment: system applies proportionally across open invoices unless customer specifies allocation; remaining balance stays in AR aging
+Responsible (R): AR Clerk
+Accountable (A): —
+Duration: 5 min/payment</bpmn:documentation>
+        <bpmn:incoming>W2745_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W2745_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2745_Task8" name="Overpayment">
+        <bpmn:documentation>Step 4: Overpayment: system creates on-account credit; AR Clerk contacts customer for disposition (apply to future invoice, refund, or offset against other open items)
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 10 min/event</bpmn:documentation>
+        <bpmn:incoming>W2745_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W2745_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2745_Task9" name="Unapplied cash">
+        <bpmn:documentation>Step 5: Unapplied cash: payments received that cannot be matched to a customer or invoice are posted to unapplied cash suspense account; AR Clerk investigates within 5 business days using bank reference, customer communication, and Sales Rep confirmation
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 15 min/item</bpmn:documentation>
+        <bpmn:incoming>W2745_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W2745_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2745_Task10" name="Weekly: AR Supervisor reviews unapplied cash aging; items &gt; 10 days escalated…">
+        <bpmn:documentation>Step 6: Weekly: AR Supervisor reviews unapplied cash aging; items &gt; 10 days escalated; items &gt; 30 days reported to Finance Manager
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W2745_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W2745_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2745_Task11" name="Monthly: unapplied cash balance must reconcile to GL suspense account; variance…">
+        <bpmn:documentation>Step 7: Monthly: unapplied cash balance must reconcile to GL suspense account; variance investigated
+Responsible (R): AR Supervisor
+Accountable (A): Controller
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W2745_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2745_End12" name="Complete">
+        <bpmn:incoming>W2745_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2745_Annotation13">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Clerk review and approval gate; periodic reconciliation against source documents
+Owner: AR Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2745_Assoc14" sourceRef="W2745_Annotation13" targetRef="W2745_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2745_Flow15" sourceRef="W2745_Start4" targetRef="W2745_Task5" />
+      <bpmn:sequenceFlow id="W2745_Flow16" sourceRef="W2745_Task5" targetRef="W2745_Task6" />
+      <bpmn:sequenceFlow id="W2745_Flow17" sourceRef="W2745_Task6" targetRef="W2745_Task7" />
+      <bpmn:sequenceFlow id="W2745_Flow18" sourceRef="W2745_Task7" targetRef="W2745_Task8" />
+      <bpmn:sequenceFlow id="W2745_Flow19" sourceRef="W2745_Task8" targetRef="W2745_Task9" />
+      <bpmn:sequenceFlow id="W2745_Flow20" sourceRef="W2745_Task9" targetRef="W2745_Task10" />
+      <bpmn:sequenceFlow id="W2745_Flow21" sourceRef="W2745_Task10" targetRef="W2745_Task11" />
+      <bpmn:sequenceFlow id="W2745_Flow22" sourceRef="W2745_Task11" targetRef="W2745_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2745_diag">
+      <bpmndi:BPMNPlane id="W2745_plane" bpmnElement="W_W2745">
+        <bpmndi:BPMNShape id="W2745_Lane1_di" bpmnElement="W2745_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Lane2_di" bpmnElement="W2745_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Task5_di" bpmnElement="W2745_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Task6_di" bpmnElement="W2745_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Task7_di" bpmnElement="W2745_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Task8_di" bpmnElement="W2745_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Task9_di" bpmnElement="W2745_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Task10_di" bpmnElement="W2745_Task10"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Task11_di" bpmnElement="W2745_Task11"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Start4_di" bpmnElement="W2745_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_End12_di" bpmnElement="W2745_End12"><dc:Bounds x="1890" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2745_Annotation13_di" bpmnElement="W2745_Annotation13"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2745_Flow15_di" bpmnElement="W2745_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Flow16_di" bpmnElement="W2745_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Flow17_di" bpmnElement="W2745_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Flow18_di" bpmnElement="W2745_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Flow19_di" bpmnElement="W2745_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Flow20_di" bpmnElement="W2745_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Flow21_di" bpmnElement="W2745_Flow21"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Flow22_di" bpmnElement="W2745_Flow22"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2745_Assoc14_di" bpmnElement="W2745_Assoc14"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2746" name="W2746. Customer AR Dispute Resolution &amp; Credit Note Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer disputes invoice amount, quality, quantity, or pricing
+Frequency: ~50–80 disputes/month
+Volume: ~1.5% of AR invoices result in disputes
+Owner: AR Clerk
+Participants: AR Clerk, AR Supervisor, Sales Rep, Category Manager, Warehouse Supervisor
+Source: workflow W2746 — Customer AR Dispute Resolution &amp; Credit Note Processing</bpmn:documentation>
+      <bpmn:laneSet id="W2746_LaneSet4">
+        <bpmn:lane id="W2746_Lane1" name="AR Clerk">
+        <bpmn:flowNodeRef>W2746_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2746_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2746_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2746_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2746_Lane2" name="Investigator">
+        <bpmn:flowNodeRef>W2746_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2746_Lane3" name="AR Supervisor">
+        <bpmn:flowNodeRef>W2746_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2746_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2746_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2746_Start5" name="Customer disputes invoice amount, quality, quantity, or pricing">
+        <bpmn:outgoing>W2746_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2746_Task6" name="Customer raises dispute via Sales Rep, email, or phone; AR Clerk logs dispute…">
+        <bpmn:documentation>Step 1: Customer raises dispute via Sales Rep, email, or phone; AR Clerk logs dispute in system with: invoice reference, disputed amount, reason code (pricing, quantity, quality, delivery, duplicate, other), and customer documentation
+Responsible (R): AR Clerk
+Accountable (A): —
+Duration: 10 min/dispute</bpmn:documentation>
+        <bpmn:incoming>W2746_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W2746_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2746_Task7" name="pricing">
+        <bpmn:documentation>Step 2: AR Clerk classifies dispute type and routes for investigation: (a) pricing — route to Category Manager, (b) quantity/delivery — route to Warehouse Supervisor or DC, (c) quality — route to Quality per W110, (d) duplicate invoice — verify in system
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 5 min/dispute</bpmn:documentation>
+        <bpmn:incoming>W2746_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W2746_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2746_Task8" name="Investigating party responds within 5 business days with findings: dispute…">
+        <bpmn:documentation>Step 3: Investigating party responds within 5 business days with findings: dispute valid, partially valid, or not valid
+Responsible (R): Investigator
+Accountable (A): AR Supervisor
+Duration: Varies</bpmn:documentation>
+        <bpmn:incoming>W2746_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W2746_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2746_Task9" name="If dispute valid: AR Supervisor approves credit note issuance — system…">
+        <bpmn:documentation>Step 4: If dispute valid: AR Supervisor approves credit note issuance — system generates BIR-compliant credit note referencing original sales invoice, with VAT adjustment; GL posts: Dr. Sales Returns / Cr. AR; Dr. Output VAT (reversal)
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 10 min/dispute</bpmn:documentation>
+        <bpmn:incoming>W2746_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W2746_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2746_Task10" name="If dispute not valid: AR Clerk communicates decision to customer with…">
+        <bpmn:documentation>Step 5: If dispute not valid: AR Clerk communicates decision to customer with supporting evidence; payment expected per original terms
+Responsible (R): AR Clerk
+Accountable (A): AR Supervisor
+Duration: 10 min/dispute</bpmn:documentation>
+        <bpmn:incoming>W2746_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W2746_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2746_Task11" name="Monthly: AR Supervisor reviews dispute analytics — top reasons, resolution…">
+        <bpmn:documentation>Step 6: Monthly: AR Supervisor reviews dispute analytics — top reasons, resolution time, disputed amount as % of AR, repeat customers
+Responsible (R): AR Supervisor
+Accountable (A): Finance Manager
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W2746_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2746_End12" name="Complete">
+        <bpmn:incoming>W2746_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2746_Annotation13">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Clerk review and approval gate
+Owner: AR Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2746_Assoc14" sourceRef="W2746_Annotation13" targetRef="W2746_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2746_Flow15" sourceRef="W2746_Start5" targetRef="W2746_Task6" />
+      <bpmn:sequenceFlow id="W2746_Flow16" sourceRef="W2746_Task6" targetRef="W2746_Task7" />
+      <bpmn:sequenceFlow id="W2746_Flow17" sourceRef="W2746_Task7" targetRef="W2746_Task8" />
+      <bpmn:sequenceFlow id="W2746_Flow18" sourceRef="W2746_Task8" targetRef="W2746_Task9" />
+      <bpmn:sequenceFlow id="W2746_Flow19" sourceRef="W2746_Task9" targetRef="W2746_Task10" />
+      <bpmn:sequenceFlow id="W2746_Flow20" sourceRef="W2746_Task10" targetRef="W2746_Task11" />
+      <bpmn:sequenceFlow id="W2746_Flow21" sourceRef="W2746_Task11" targetRef="W2746_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2746_diag">
+      <bpmndi:BPMNPlane id="W2746_plane" bpmnElement="W_W2746">
+        <bpmndi:BPMNShape id="W2746_Lane1_di" bpmnElement="W2746_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Lane2_di" bpmnElement="W2746_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Lane3_di" bpmnElement="W2746_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Task6_di" bpmnElement="W2746_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Task7_di" bpmnElement="W2746_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Task8_di" bpmnElement="W2746_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Task9_di" bpmnElement="W2746_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Task10_di" bpmnElement="W2746_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Task11_di" bpmnElement="W2746_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Start5_di" bpmnElement="W2746_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_End12_di" bpmnElement="W2746_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2746_Annotation13_di" bpmnElement="W2746_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2746_Flow15_di" bpmnElement="W2746_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2746_Flow16_di" bpmnElement="W2746_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2746_Flow17_di" bpmnElement="W2746_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2746_Flow18_di" bpmnElement="W2746_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2746_Flow19_di" bpmnElement="W2746_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2746_Flow20_di" bpmnElement="W2746_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2746_Flow21_di" bpmnElement="W2746_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2746_Assoc14_di" bpmnElement="W2746_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1200" name="W1200. Trade Account Monthly Statement Review, Credit Limit Recalibration &amp; Churn Prevention" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly trade account review cycle (first week of month)
+Frequency: Monthly comprehensive review; weekly for high-risk accounts
+Volume: ~5,200 active trade accounts; ~200 corporate accounts
+Owner: AR Supervisor
+Participants: AR Supervisor, Credit Analyst, Trade Sales Manager, Store Manager, Controller
+Source: workflow W1200 — Trade Account Monthly Statement Review, Credit Limit Recalibration &amp; Churn Prevention</bpmn:documentation>
+      <bpmn:laneSet id="W1200_LaneSet7">
+        <bpmn:lane id="W1200_Lane1" name="System">
+        <bpmn:flowNodeRef>W1200_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1200_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1200_Lane2" name="AR Supervisor">
+        <bpmn:flowNodeRef>W1200_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1200_Lane3" name="Credit Analyst">
+        <bpmn:flowNodeRef>W1200_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1200_Lane4" name="Trade Sales Manager">
+        <bpmn:flowNodeRef>W1200_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1200_Lane5" name="Store Manager">
+        <bpmn:flowNodeRef>W1200_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1200_Lane6" name="Controller">
+        <bpmn:flowNodeRef>W1200_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1200_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1200_Start8" name="Monthly trade account review cycle (first week of month)">
+        <bpmn:outgoing>W1200_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1200_Task9" name="Monthly trade account health report">
+        <bpmn:documentation>Step 1: Monthly trade account health report: System generates &quot;Trade Account Health Report&quot; for all active trade and corporate accounts: (a) current balance and aging (30/60/90/120+ days), (b) credit utilization (outstanding ÷ credit limit), (c) payment behavior score (on-time % over trailing 6 months), (d) purchase volume trend (current month vs. trailing 3-month average), (e) days sales outstanding (DSO), (f) accounts flagged for: (i) credit utilization &gt; 80%, (ii) payment score &lt; 70%, (iii) purchase volume decline &gt; 30%, (iv) new account &lt; 6 months with first late payment
+Responsible (R): System
+Accountable (A): AR Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1200_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1200_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1200_Task10" name="Account segmentation and prioritization">
+        <bpmn:documentation>Step 2: Account segmentation and prioritization: AR Supervisor categorizes accounts into four segments: (a) Healthy (green): utilization &lt; 60%, payment score &gt; 90%, stable or growing purchases → standard monitoring, (b) Watch (yellow): utilization 60–80% or payment score 70–90% or purchase decline 15–30% → proactive outreach and possible credit limit review, (c) At Risk (orange): utilization &gt; 80% or payment score &lt; 70% or purchase decline &gt; 30% → immediate credit limit review and collection escalation per W889, (d) Churn Risk (blue): previously healthy account with sudden purchase volume decline &gt; 40% over 2 months → sales outreach for retention
+Responsible (R): AR Supervisor
+Accountable (A): Controller
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1200_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1200_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1200_Task11" name="Credit limit recalibration">
+        <bpmn:documentation>Step 3: Credit limit recalibration: For Watch and At Risk accounts: Credit Analyst reviews account profile: (a) updates financial standing based on recent payment behavior and trade references, (b) recalculates appropriate credit limit based on: (i) trailing 6-month average monthly purchases, (ii) payment history, (iii) years of relationship, (iv) external credit data if available, (c) recommends: (i) credit limit increase (for healthy growing accounts), (ii) credit limit decrease (for deteriorating accounts), (iii) credit hold (for accounts with 120+ day overdue per W229), (d) Controller approves changes &gt; 20% or &gt; PHP 500K
+Responsible (R): Credit Analyst
+Accountable (A): Controller
+Duration: 15 min/account</bpmn:documentation>
+        <bpmn:incoming>W1200_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1200_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1200_Task12" name="Churn prevention outreach">
+        <bpmn:documentation>Step 4: Churn prevention outreach: For Churn Risk accounts: Trade Sales Manager contacts customer within 5 business days: (a) determines reason for volume decline (project completed, competitor switch, financial difficulty, seasonal slowdown), (b) for competitor switch: offers competitive re-engagement package (discount, extended terms, or loyalty bonus points), (c) for financial difficulty: explores restructured payment plan or reduced credit limit, (d) for project completion: discusses upcoming project pipeline and material needs; documents outcome in CRM
+Responsible (R): Trade Sales Manager
+Accountable (A): VP Store Operations
+Duration: 20 min/account</bpmn:documentation>
+        <bpmn:incoming>W1200_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1200_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1200_Task13" name="Store-level account relationship review">
+        <bpmn:documentation>Step 5: Store-level account relationship review: For trade accounts serviced primarily through specific stores: Store Manager reviews top 10 trade accounts at their store monthly: (a) discusses account health with Sales Associates who interact with the customer, (b) identifies opportunities for cross-sell or upsell based on purchase history, (c) escalates any relationship concerns (complaints, competitor interest) to Trade Sales Manager
+Responsible (R): Store Manager
+Accountable (A): Trade Sales Manager
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1200_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1200_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1200_Task14" name="Executive review">
+        <bpmn:documentation>Step 6: Executive review: Quarterly: Controller presents trade portfolio summary to CFO: (a) total trade receivable balance and aging distribution, (b) bad debt expense trend and allowance adequacy, (c) portfolio quality distribution (Healthy/Watch/At Risk/Default), (d) credit limit changes summary, (e) churn rate and recovery rate, (f) recommended reserve adjustments and write-off proposals
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1200_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1200_End15" name="Complete">
+        <bpmn:incoming>W1200_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1200_Annotation16">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: conservative initial credit limits (W160), regular recalibration, and credit insurance for limits &gt; PHP 1M; operational: system-driven segmentation in Step 2 and Controller approval requirement in Step 3; operational: comparing to same-month prior year rather than trailing 3-month average
+Owner: AR Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1200_Assoc17" sourceRef="W1200_Annotation16" targetRef="W1200_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1200_Flow18" sourceRef="W1200_Start8" targetRef="W1200_Task9" />
+      <bpmn:sequenceFlow id="W1200_Flow19" sourceRef="W1200_Task9" targetRef="W1200_Task10" />
+      <bpmn:sequenceFlow id="W1200_Flow20" sourceRef="W1200_Task10" targetRef="W1200_Task11" />
+      <bpmn:sequenceFlow id="W1200_Flow21" sourceRef="W1200_Task11" targetRef="W1200_Task12" />
+      <bpmn:sequenceFlow id="W1200_Flow22" sourceRef="W1200_Task12" targetRef="W1200_Task13" />
+      <bpmn:sequenceFlow id="W1200_Flow23" sourceRef="W1200_Task13" targetRef="W1200_Task14" />
+      <bpmn:sequenceFlow id="W1200_Flow24" sourceRef="W1200_Task14" targetRef="W1200_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1200_diag">
+      <bpmndi:BPMNPlane id="W1200_plane" bpmnElement="W_W1200">
+        <bpmndi:BPMNShape id="W1200_Lane1_di" bpmnElement="W1200_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Lane2_di" bpmnElement="W1200_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Lane3_di" bpmnElement="W1200_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Lane4_di" bpmnElement="W1200_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Lane5_di" bpmnElement="W1200_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Lane6_di" bpmnElement="W1200_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Task9_di" bpmnElement="W1200_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Task10_di" bpmnElement="W1200_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Task11_di" bpmnElement="W1200_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Task12_di" bpmnElement="W1200_Task12"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Task13_di" bpmnElement="W1200_Task13"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Task14_di" bpmnElement="W1200_Task14"><dc:Bounds x="1450" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Start8_di" bpmnElement="W1200_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_End15_di" bpmnElement="W1200_End15"><dc:Bounds x="1680" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1200_Annotation16_di" bpmnElement="W1200_Annotation16"><dc:Bounds x="160" y="1140" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1200_Flow18_di" bpmnElement="W1200_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1200_Flow19_di" bpmnElement="W1200_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1200_Flow20_di" bpmnElement="W1200_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1200_Flow21_di" bpmnElement="W1200_Flow21"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1200_Flow22_di" bpmnElement="W1200_Flow22"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1200_Flow23_di" bpmnElement="W1200_Flow23"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1200_Flow24_di" bpmnElement="W1200_Flow24"><di:waypoint x="1630" y="1015" /><di:waypoint x="1680" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1200_Assoc17_di" bpmnElement="W1200_Assoc17"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1414" name="W1414. Customer Trade Account Credit Insurance Premium Review, Claims Filing &amp; Recovery Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual policy renewal; quarterly premium review; or trade account write-off event (W81) triggering insurance claim
+Frequency: Annual policy renewal; quarterly premium reconciliation; claims as needed (estimated 5–10 claims/year for accounts written off &gt; PHP 500,000)
+Volume: ~5,200 trade accounts insured under group credit insurance policy; ~5–10 claims/year for significant bad debts
+Owner: AR Supervisor
+Participants: AR Supervisor, Controller, CFO, Credit Insurance Underwriter, Insurance Broker, VP Legal
+Source: workflow W1414 — Customer Trade Account Credit Insurance Premium Review, Claims Filing &amp; Recovery Management</bpmn:documentation>
+      <bpmn:laneSet id="W1414_LaneSet3">
+        <bpmn:lane id="W1414_Lane1" name="AR Supervisor">
+        <bpmn:flowNodeRef>W1414_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1414_Lane2" name="Underwriter">
+        <bpmn:flowNodeRef>W1414_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1414_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1414_Start4" name="Annual policy renewal; quarterly premium review; or trade account write-off event (W81)…">
+        <bpmn:outgoing>W1414_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1414_Task5" name="Policy selection and renewal">
+        <bpmn:documentation>Step 1: Policy selection and renewal: annually, AR Supervisor and Controller evaluate credit insurance options: (a) review current policy coverage (% of receivable insured, maximum tenor, country/customer exclusions), (b) obtain competitive quotes from 2–3 underwriters, (c) negotiate premium rate (typically 0.15–0.40% of insured receivable volume), (d) CFO approves policy selection and premium budget; policy covers 80% of approved receivable balances up to a portfolio limit
+Responsible (R): AR Supervisor / Controller
+Accountable (A): CFO
+Duration: 2 days/year</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task6" name="Customer coverage submission">
+        <bpmn:documentation>Step 2: Customer coverage submission: AR Supervisor submits the complete trade account portfolio to the underwriter for coverage assessment: (a) each customer&#x27;s credit limit request (aligned with BuildRight&#x27;s internal credit limits per W24), (b) customer financial statements (for corporate accounts &gt; PHP 5M credit limit), (c) payment history (aging and days sales outstanding per customer), (d) industry risk classification; underwriter approves, reduces, or declines coverage per customer
+Responsible (R): AR Supervisor
+Accountable (A): Underwriter
+Duration: 1 week/annual cycle</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task7" name="Quarterly premium reconciliation">
+        <bpmn:documentation>Step 3: Quarterly premium reconciliation: AR Supervisor reconciles quarterly premium invoice from underwriter: (a) premium = insured receivable balance at quarter-end × premium rate, (b) verify insured receivable balance matches AR sub-ledger, (c) verify no premium charged for cash/advance-payment customers, (d) submit premium invoice for payment per W7; typical annual premium at 0.25% rate on ~PHP 500M average insured AR = ~PHP 1.25M/year
+Responsible (R): AR Supervisor
+Accountable (A): Controller
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task8" name="New customer coverage request">
+        <bpmn:documentation>Step 4: New customer coverage request: when a new trade account is onboarded (W460) or an existing account&#x27;s credit limit is increased (W1300), AR Supervisor submits a coverage request to the underwriter: (a) customer name and TIN, (b) requested credit limit, (c) customer trade references, (d) payment terms; underwriter responds within 5–10 business days with approved coverage limit
+Responsible (R): AR Supervisor
+Accountable (A): —
+Duration: 30 min/request</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task9" name="Claim filing — protracted default">
+        <bpmn:documentation>Step 5: Claim filing — protracted default: when a trade account is identified for write-off (W81) after exhaustion of collection efforts (W108, W812): (a) AR Supervisor gathers claim documentation: original invoice copies, delivery receipts, proof of demand letters, statement of account, collection history log, customer TIN and registration, (b) submits claim to underwriter within policy notification period (typically 60–90 days from due date or 180 days from invoice date), (c) AR Supervisor certifies that BuildRight has complied with all policy conditions (collection efforts, notice of overdue, retention of title if applicable)
+Responsible (R): AR Supervisor
+Accountable (A): Controller
+Duration: 4–8 hours/claim</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task10" name="Claim filing — insolvency/bankruptcy">
+        <bpmn:documentation>Step 6: Claim filing — insolvency/bankruptcy: if a trade account customer files for bankruptcy or is placed under receivership: (a) VP Legal provides court filing documentation, (b) AR Supervisor submits claim with proof of insolvency (court order, SEC petition, published notice), (c) claim must be filed within 30 days of knowledge of insolvency event per most policy terms
+Responsible (R): AR Supervisor / VP Legal
+Accountable (A): CFO
+Duration: 4–8 hours/claim</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task11" name="Underwriter reviews claim: (a) verifies customer was covered under policy at…">
+        <bpmn:documentation>Step 7: Underwriter reviews claim: (a) verifies customer was covered under policy at time of sale, (b) verifies credit limit was not exceeded, (c) verifies BuildRight complied with notification requirements, (d) may request additional documentation or conduct independent investigation; claim processing time: 30–90 days
+Responsible (R): Underwriter
+Accountable (A): —
+Duration: External</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task12" name="Claim settlement">
+        <bpmn:documentation>Step 8: Claim settlement: underwriter approves claim and pays indemnity: 80% of approved receivable (per policy terms); AR Supervisor receives payment, posts to GL: Dr. Cash / Cr. Credit Insurance Recovery (other income); remaining 20% uninsured portion remains as BuildRight&#x27;s loss per W81
+Responsible (R): AR Supervisor / Treasury
+Accountable (A): Controller
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task13" name="Subrogation">
+        <bpmn:documentation>Step 9: Subrogation: if the customer later pays (full or partial), BuildRight must remit the proportional recovery to the underwriter per subrogation clause; AR Supervisor tracks subrogation obligations in system
+Responsible (R): AR Supervisor
+Accountable (A): —
+Duration: 15 min/recovery</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1414_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1414_Task14" name="Annual policy performance review">
+        <bpmn:documentation>Step 10: Annual policy performance review: AR Supervisor prepares credit insurance scorecard for CFO: (a) total premiums paid, (b) total claims filed, (c) total claims recovered, (d) net cost/benefit of insurance, (e) policy loss ratio (claims/premiums), (f) underwriter service quality (claim processing time, communication), (g) recommendation for renewal, modification, or cancellation
+Responsible (R): AR Supervisor
+Accountable (A): CFO
+Duration: 4 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1414_Flow180</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1414_End15" name="Complete">
+        <bpmn:incoming>W1414_Flow181</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1414_Annotation16">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Supervisor review and approval gate; operational: periodic reconciliation against source documents
+Owner: AR Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1414_Assoc17" sourceRef="W1414_Annotation16" targetRef="W1414_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1414_Flow18" sourceRef="W1414_Start4" targetRef="W1414_Task5" />
+      <bpmn:sequenceFlow id="W1414_Flow19" sourceRef="W1414_Task5" targetRef="W1414_Task6" />
+      <bpmn:sequenceFlow id="W1414_Flow20" sourceRef="W1414_Task6" targetRef="W1414_Task7" />
+      <bpmn:sequenceFlow id="W1414_Flow21" sourceRef="W1414_Task7" targetRef="W1414_Task8" />
+      <bpmn:sequenceFlow id="W1414_Flow22" sourceRef="W1414_Task8" targetRef="W1414_Task9" />
+      <bpmn:sequenceFlow id="W1414_Flow23" sourceRef="W1414_Task9" targetRef="W1414_Task10" />
+      <bpmn:sequenceFlow id="W1414_Flow24" sourceRef="W1414_Task10" targetRef="W1414_Task11" />
+      <bpmn:sequenceFlow id="W1414_Flow25" sourceRef="W1414_Task11" targetRef="W1414_Task12" />
+      <bpmn:sequenceFlow id="W1414_Flow26" sourceRef="W1414_Task12" targetRef="W1414_Task13" />
+      <bpmn:sequenceFlow id="W1414_Flow27" sourceRef="W1414_Task13" targetRef="W1414_Task14" />
+      <bpmn:sequenceFlow id="W1414_Flow28" sourceRef="W1414_Task14" targetRef="W1414_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1414_diag">
+      <bpmndi:BPMNPlane id="W1414_plane" bpmnElement="W_W1414">
+        <bpmndi:BPMNShape id="W1414_Lane1_di" bpmnElement="W1414_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Lane2_di" bpmnElement="W1414_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task5_di" bpmnElement="W1414_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task6_di" bpmnElement="W1414_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task7_di" bpmnElement="W1414_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task8_di" bpmnElement="W1414_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task9_di" bpmnElement="W1414_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task10_di" bpmnElement="W1414_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task11_di" bpmnElement="W1414_Task11"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task12_di" bpmnElement="W1414_Task12"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task13_di" bpmnElement="W1414_Task13"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Task14_di" bpmnElement="W1414_Task14"><dc:Bounds x="2290" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Start4_di" bpmnElement="W1414_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_End15_di" bpmnElement="W1414_End15"><dc:Bounds x="2520" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1414_Annotation16_di" bpmnElement="W1414_Annotation16"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1414_Flow18_di" bpmnElement="W1414_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow19_di" bpmnElement="W1414_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow20_di" bpmnElement="W1414_Flow20"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow21_di" bpmnElement="W1414_Flow21"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow22_di" bpmnElement="W1414_Flow22"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow23_di" bpmnElement="W1414_Flow23"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow24_di" bpmnElement="W1414_Flow24"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow25_di" bpmnElement="W1414_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow26_di" bpmnElement="W1414_Flow26"><di:waypoint x="2050" y="165" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow27_di" bpmnElement="W1414_Flow27"><di:waypoint x="2260" y="165" /><di:waypoint x="2290" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Flow28_di" bpmnElement="W1414_Flow28"><di:waypoint x="2470" y="165" /><di:waypoint x="2520" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1414_Assoc17_di" bpmnElement="W1414_Assoc17"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1420" name="W1420. Trade Account Monthly Statement Generation, Aging Analysis &amp; Field Collection Route Planning" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly AR cycle (1st business day of the month); or weekly for high-risk accounts
+Frequency: Monthly statement generation (all 5,200 trade accounts); weekly aging review (Watch and At-Risk accounts per W1200 segmentation); daily field collection visits for overdue accounts
+Volume: ~5,200 trade accounts generating ~3,500 AR invoices/month; ~500–800 accounts in active collection at any time; ~30–50 field collection visits per week across all regions
+Owner: AR Supervisor
+Participants: AR Supervisor, Collection Officer, Trade Sales Manager, Regional Sales Coordinator, Controller
+Source: workflow W1420 — Trade Account Monthly Statement Generation, Aging Analysis &amp; Field Collection Route Planning</bpmn:documentation>
+      <bpmn:laneSet id="W1420_LaneSet4">
+        <bpmn:lane id="W1420_Lane1" name="System">
+        <bpmn:flowNodeRef>W1420_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1420_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1420_Lane2" name="AR Supervisor">
+        <bpmn:flowNodeRef>W1420_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1420_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1420_Lane3" name="Collection Officer">
+        <bpmn:flowNodeRef>W1420_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1420_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1420_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1420_Start5" name="Monthly AR cycle (1st business day of the month); or weekly for high-risk accounts">
+        <bpmn:outgoing>W1420_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1420_Task6" name="Monthly statement generation">
+        <bpmn:documentation>Step 1: Monthly statement generation (1st business day): System generates monthly statements for all 5,200 trade accounts: (a) opening balance, (b) invoices raised during month (with invoice number, date, amount, PO reference), (c) payments received during month, (d) closing balance, (e) payment due date per terms (Net 30 or Net 60), (f) statements emailed automatically to customer contact on file; hard copy mailed to customers without email (estimated ~10% of trade accounts)
+Responsible (R): System / AR Clerk
+Accountable (A): AR Supervisor
+Duration: 2–3 hours (review + exception handling)</bpmn:documentation>
+        <bpmn:incoming>W1420_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1420_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1420_Task7" name="Weekly aging analysis">
+        <bpmn:documentation>Step 2: Weekly aging analysis: AR Supervisor reviews weekly aging report: (a) current (0–30 days), (b) 31–60 days, (c) 61–90 days, (d) 90+ days, (e) identify accounts moving to next aging bucket — these are prioritized for collection, (f) compare to prior week: is overall AR health improving or deteriorating?
+Responsible (R): AR Supervisor
+Accountable (A): Controller
+Duration: 1–2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1420_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1420_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1420_Task8" name="Collection prioritization and route planning">
+        <bpmn:documentation>Step 3: Collection prioritization and route planning: Collection Officer plans weekly field collection route: (a) prioritize by: (i) accounts 90+ days overdue (highest priority), (ii) accounts moving from 60→90 days, (iii) accounts with broken payment promises, (iv) high-value accounts (&gt; PHP 500K overdue), (b) group visits by geographic area to minimize travel time (cluster customers by city/municipality), (c) schedule 6–8 visits per day per collection officer, (d) Trade Sales Manager provides customer relationship context (personal issues, project delays affecting payment)
+Responsible (R): Collection Officer / Trade Sales Manager
+Accountable (A): AR Supervisor
+Duration: 2–3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1420_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1420_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1420_Task9" name="Field collection execution">
+        <bpmn:documentation>Step 4: Field collection execution: Collection Officer visits trade account customer: (a) present statement and discuss outstanding invoices, (b) obtain commitment: (i) specific payment date, (ii) partial payment collected on-site (cash or check), (iii) payment plan for large overdue amounts, (c) update collection notes in system: visit date, customer contact, commitment details, payment collected, (d) if customer refuses or is unreachable: escalate to W812 (field collection — formal demand)
+Responsible (R): Collection Officer
+Accountable (A): AR Supervisor
+Duration: 6–8 visits/day</bpmn:documentation>
+        <bpmn:incoming>W1420_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1420_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1420_Task10" name="Collection performance tracking">
+        <bpmn:documentation>Step 5: Collection performance tracking: (a) AR Supervisor tracks weekly collection metrics: (i) total collections vs. target, (ii) DSO (days sales outstanding) trend, (iii) collection effectiveness index (CEI), (iv) field visit conversion rate (visits resulting in payment commitment), (b) Controller reviews monthly: are we on track to keep bad debt below 0.5% of trade revenue? (c) escalate to CFO if DSO exceeds 45 days for 2+ consecutive months
+Responsible (R): AR Supervisor
+Accountable (A): Controller
+Duration: 2–3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1420_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1420_End11" name="Complete">
+        <bpmn:incoming>W1420_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1420_Annotation12">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: Trade Sales Manager involvement in collection visits
+Owner: AR Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1420_Assoc13" sourceRef="W1420_Annotation12" targetRef="W1420_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1420_Flow14" sourceRef="W1420_Start5" targetRef="W1420_Task6" />
+      <bpmn:sequenceFlow id="W1420_Flow15" sourceRef="W1420_Task6" targetRef="W1420_Task7" />
+      <bpmn:sequenceFlow id="W1420_Flow16" sourceRef="W1420_Task7" targetRef="W1420_Task8" />
+      <bpmn:sequenceFlow id="W1420_Flow17" sourceRef="W1420_Task8" targetRef="W1420_Task9" />
+      <bpmn:sequenceFlow id="W1420_Flow18" sourceRef="W1420_Task9" targetRef="W1420_Task10" />
+      <bpmn:sequenceFlow id="W1420_Flow19" sourceRef="W1420_Task10" targetRef="W1420_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1420_diag">
+      <bpmndi:BPMNPlane id="W1420_plane" bpmnElement="W_W1420">
+        <bpmndi:BPMNShape id="W1420_Lane1_di" bpmnElement="W1420_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Lane2_di" bpmnElement="W1420_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Lane3_di" bpmnElement="W1420_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Task6_di" bpmnElement="W1420_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Task7_di" bpmnElement="W1420_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Task8_di" bpmnElement="W1420_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Task9_di" bpmnElement="W1420_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Task10_di" bpmnElement="W1420_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Start5_di" bpmnElement="W1420_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_End11_di" bpmnElement="W1420_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1420_Annotation12_di" bpmnElement="W1420_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1420_Flow14_di" bpmnElement="W1420_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1420_Flow15_di" bpmnElement="W1420_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1420_Flow16_di" bpmnElement="W1420_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1420_Flow17_di" bpmnElement="W1420_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1420_Flow18_di" bpmnElement="W1420_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1420_Flow19_di" bpmnElement="W1420_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1420_Assoc13_di" bpmnElement="W1420_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1540" name="W1540. Trade Account Monthly Statement Generation, Aging Analysis &amp; Collection Priority Scoring" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly statement cycle (1st business day of month); or ad-hoc request from Trade Account Manager
+Frequency: Monthly statements for ~5,200 trade accounts; aging analysis weekly
+Volume: ~3,500 AR invoices/month generating ~5,200 statements
+Owner: AR Supervisor
+Participants: AR Supervisor, AR Clerk, Collection Agent, Trade Account Manager, Credit Manager
+Source: workflow W1540 — Trade Account Monthly Statement Generation, Aging Analysis &amp; Collection Priority Scoring</bpmn:documentation>
+      <bpmn:laneSet id="W1540_LaneSet4">
+        <bpmn:lane id="W1540_Lane1" name="System">
+        <bpmn:flowNodeRef>W1540_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1540_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1540_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1540_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1540_Lane2" name="AR Supervisor">
+        <bpmn:flowNodeRef>W1540_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1540_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1540_Lane3" name="Collection Agents">
+        <bpmn:flowNodeRef>W1540_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1540_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1540_Start5" name="Monthly statement cycle (1st business day of month); or ad-hoc request from Trade Account…">
+        <bpmn:outgoing>W1540_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1540_Task6" name="Monthly statement generation">
+        <bpmn:documentation>Step 1: Monthly statement generation: System generates statements for all active trade accounts — opening balance, all invoices and credit memos for the month, payments received, closing balance, current amount due, overdue amount by aging bucket (Current, 1–30 days, 31–60 days, 61–90 days, &gt; 90 days); statements formatted per BIR requirements with BuildRight TIN, customer TIN, and invoice references
+Responsible (R): System
+Accountable (A): AR Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1540_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1540_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1540_Task7" name="Statement distribution">
+        <bpmn:documentation>Step 2: Statement distribution: System distributes statements via email (PDF attachment with digital signature); for customers requesting physical statements, AR Clerk prints and mails; high-value Platinum/Gold accounts receive personal statement delivery through Trade Account Manager
+Responsible (R): System / AR Clerk
+Accountable (A): AR Supervisor
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1540_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1540_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1540_Task8" name="Aging analysis">
+        <bpmn:documentation>Step 3: Aging analysis: AR Supervisor reviews weekly AR aging report — total receivables by aging bucket, aging trend vs. prior week, top 50 accounts by outstanding balance, accounts newly entering 60+ day aging, bad debt exposure estimate; system auto-calculates DSO (Days Sales Outstanding) and CEI (Collection Effectiveness Index)
+Responsible (R): AR Supervisor
+Accountable (A): Credit Manager
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1540_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1540_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1540_Task9" name="Collection priority scoring">
+        <bpmn:documentation>Step 4: Collection priority scoring: System assigns collection priority score to each overdue account based on: (a) aging days (longer overdue = higher priority), (b) outstanding amount (higher amount = higher priority), (c) payment history score (chronic late payer = higher priority), (d) customer tier (Platinum/Gold accounts get dedicated attention), (e) recent order activity (active accounts prioritized over dormant); generates prioritized collection queue for Collection Agents
+Responsible (R): System
+Accountable (A): AR Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1540_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1540_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1540_Task10" name="Collection activity execution">
+        <bpmn:documentation>Step 5: Collection activity execution: Collection Agents work the prioritized queue — (a) send automated reminder for 1–30 day aging (email + SMS), (b) phone call for 31–60 day aging with promise-to-pay tracking, (c) formal demand letter for 61–90 day aging, (d) credit hold and escalation to Credit Manager for &gt; 90 day aging; all activities logged in collection system with timestamps and outcomes
+Responsible (R): Collection Agents
+Accountable (A): AR Supervisor
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W1540_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1540_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1540_Task11" name="Trade Account Manager coordination">
+        <bpmn:documentation>Step 6: Trade Account Manager coordination: For high-priority accounts (top 50 by exposure) and Platinum/Gold accounts in aging, AR Supervisor coordinates with Trade Account Manager — leverages relationship for collection while maintaining commercial relationship; joint call strategy for disputed accounts
+Responsible (R): AR Supervisor / Trade Account Manager
+Accountable (A): CFO
+Duration: 4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1540_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1540_End12" name="Complete">
+        <bpmn:incoming>W1540_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1540_Annotation13">
+        <bpmn:text>Controls: - CTL-287 (ensure controlled execution — AR &amp; Collections (PA-16.2).) | - operational: AR Supervisor review and approval gate
+Owner: AR Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1540_Assoc14" sourceRef="W1540_Annotation13" targetRef="W1540_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1540_Flow15" sourceRef="W1540_Start5" targetRef="W1540_Task6" />
+      <bpmn:sequenceFlow id="W1540_Flow16" sourceRef="W1540_Task6" targetRef="W1540_Task7" />
+      <bpmn:sequenceFlow id="W1540_Flow17" sourceRef="W1540_Task7" targetRef="W1540_Task8" />
+      <bpmn:sequenceFlow id="W1540_Flow18" sourceRef="W1540_Task8" targetRef="W1540_Task9" />
+      <bpmn:sequenceFlow id="W1540_Flow19" sourceRef="W1540_Task9" targetRef="W1540_Task10" />
+      <bpmn:sequenceFlow id="W1540_Flow20" sourceRef="W1540_Task10" targetRef="W1540_Task11" />
+      <bpmn:sequenceFlow id="W1540_Flow21" sourceRef="W1540_Task11" targetRef="W1540_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1540_diag">
+      <bpmndi:BPMNPlane id="W1540_plane" bpmnElement="W_W1540">
+        <bpmndi:BPMNShape id="W1540_Lane1_di" bpmnElement="W1540_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Lane2_di" bpmnElement="W1540_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Lane3_di" bpmnElement="W1540_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Task6_di" bpmnElement="W1540_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Task7_di" bpmnElement="W1540_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Task8_di" bpmnElement="W1540_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Task9_di" bpmnElement="W1540_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Task10_di" bpmnElement="W1540_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Task11_di" bpmnElement="W1540_Task11"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Start5_di" bpmnElement="W1540_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_End12_di" bpmnElement="W1540_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1540_Annotation13_di" bpmnElement="W1540_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1540_Flow15_di" bpmnElement="W1540_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1540_Flow16_di" bpmnElement="W1540_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1540_Flow17_di" bpmnElement="W1540_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1540_Flow18_di" bpmnElement="W1540_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1540_Flow19_di" bpmnElement="W1540_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1540_Flow20_di" bpmnElement="W1540_Flow20"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1540_Flow21_di" bpmnElement="W1540_Flow21"><di:waypoint x="1630" y="335" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1540_Assoc14_di" bpmnElement="W1540_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

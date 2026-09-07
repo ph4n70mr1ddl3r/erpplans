@@ -1,0 +1,1275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-03.3-vendor-performance-and-contracts" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W959" name="W959. Vendor Rebate Volume Tier Compliance Reconciliation &amp; Shortfall Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly/quarterly vendor rebate period closes; system reconciles actual purchase volume against rebate agreement tier thresholds
+Frequency: ~200–300 reconciliations/quarter (for vendors with tiered rebate agreements)
+Volume: 1 vendor per reconciliation; multi-tier agreements (e.g., 3% at PHP 1M, 5% at PHP 3M, 7% at PHP 5M quarterly)
+Owner: Category Manager
+Participants: Buyer, Finance Analyst, Vendor Account Manager, VP Merchandising, AP Manager
+Source: workflow W959 — Vendor Rebate Volume Tier Compliance Reconciliation &amp; Shortfall Processing</bpmn:documentation>
+      <bpmn:laneSet id="W959_LaneSet5">
+        <bpmn:lane id="W959_Lane1" name="System">
+        <bpmn:flowNodeRef>W959_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W959_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W959_Lane2" name="Finance Analyst">
+        <bpmn:flowNodeRef>W959_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W959_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W959_Lane3" name="Buyer">
+        <bpmn:flowNodeRef>W959_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W959_Lane4" name="Category Manager">
+        <bpmn:flowNodeRef>W959_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W959_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W959_Start6" name="Monthly/quarterly vendor rebate period closes; system reconciles actual purchase volume…">
+        <bpmn:outgoing>W959_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W959_Task7" name="Period-End Volume Calculation">
+        <bpmn:documentation>Step 1: Period-End Volume Calculation: At rebate period close (monthly or quarterly per agreement): (a) system extracts all purchase volume (PO value at cost) per vendor from AP module per W7; (b) matches against vendor rebate agreement terms: (i) agreement period start/end; (ii) tier thresholds (e.g., PHP 1M/3M/5M); (iii) rebate rate per tier (e.g., 3%/5%/7%); (iv) eligible product categories (some agreements exclude clearance or consignment); (v) exclusion rules (returns, credits, sample items); (c) system calculates: actual qualifying volume, applicable tier, earned rebate amount, and variance to next tier (up or down)
+Responsible (R): System / Finance Analyst
+Accountable (A): Category Manager
+Duration: 10–15 min/vendor (automated calculation + manual review)</bpmn:documentation>
+        <bpmn:incoming>W959_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W959_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W959_Task8" name="Tier Achievement Assessment">
+        <bpmn:documentation>Step 2: Tier Achievement Assessment: Finance Analyst reviews each vendor&#x27;s tier status: (a) tier maintained (e.g., qualified for 5% tier, same as last period) → routine processing; (b) tier upgraded (e.g., qualified for 7% tier, up from 5%) → calculate incremental rebate income; (c) tier downgraded (e.g., qualified for 3% tier, down from 5%) → calculate lost rebate income and investigate volume decline; (d) near-miss analysis: vendor fell short of next tier by ≤ 10% — flag for Buyer review: could accelerated purchasing have pushed volume into next tier?; (e) system generates tier achievement report per vendor with variance analysis
+Responsible (R): Finance Analyst
+Accountable (A): Category Manager
+Duration: 5–10 min/vendor</bpmn:documentation>
+        <bpmn:incoming>W959_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W959_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W959_Task9" name="Shortfall Investigation &amp; Vendor Negotiation">
+        <bpmn:documentation>Step 3: Shortfall Investigation &amp; Vendor Negotiation: For tier downgrades and significant near-misses: (a) Buyer investigates volume decline: (i) SKU discontinuations per W68 reducing purchases; (ii) competitive vendor gains (purchases shifted to alternative vendor); (iii) store-level stock balancing reducing replenishment orders; (iv) seasonal demand decline; (b) for tier downgrades: Buyer contacts vendor to negotiate: (i) retroactive tier maintenance with purchase commitment for next period; (ii) extended transition period (vendor grants old tier for one more period); (iii) revised tier thresholds reflecting current market conditions; (c) negotiation outcome documented in vendor rebate agreement with updated terms per W62; (d) for near-misses: Buyer reviews upcoming purchase requirements — if sufficient volume expected early next period, may negotiate &quot;rollover&quot; credit
+Responsible (R): Buyer / Category Manager
+Accountable (A): VP Merchandising
+Duration: 1–2 hours/vendor (for downgrade/near-miss)</bpmn:documentation>
+        <bpmn:incoming>W959_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W959_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W959_Task10" name="Rebate Accrual Adjustment &amp; Financial Processing">
+        <bpmn:documentation>Step 4: Rebate Accrual Adjustment &amp; Financial Processing: (a) Finance adjusts rebate accrual per W27: (i) for tier upgrade — increase accrual rate to new tier for current and forward periods; (ii) for tier downgrade — decrease accrual rate; true-up prior period accrual at old rate to actual earned rebate; (iii) true-up amount posted to P&amp;L as rebate income adjustment; (b) AP Manager processes vendor rebate settlement per W767: system generates rebate claim with calculated amount based on actual tier achievement; vendor verifies and pays rebate per agreed timeline (30–60 days); (c) Finance reconciles: rebate claimed vs. rebate received vs. rebate accrued; variance investigated per W100 vendor statement reconciliation
+Responsible (R): Finance Analyst / AP Manager
+Accountable (A): CFO
+Duration: 15–30 min/vendor</bpmn:documentation>
+        <bpmn:incoming>W959_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W959_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W959_Task11" name="Quarterly Rebate Portfolio Optimization">
+        <bpmn:documentation>Step 5: Quarterly Rebate Portfolio Optimization: (a) Category Manager reviews rebate portfolio: (i) total rebate income vs. target; (ii) tier achievement rate across all vendors (target: ≥ 80% at committed tier or above); (iii) top 10 vendors by rebate income; (iv) vendors with declining purchase volumes trending toward downgrade; (v) vendors where BuildRight is purchasing below tier potential; (b) VP Merchandising reviews: (i) opportunities to consolidate purchases with fewer vendors to achieve higher tiers (volume concentration vs. vendor diversification trade-off per W763); (ii) renegotiation schedule for agreements approaching expiry; (iii) proactive purchase acceleration at period-end for near-miss vendors (weighing carrying cost per W220 vs. incremental rebate income); (c) annual: Finance includes vendor rebate income in category P&amp;L analysis per W102
+Responsible (R): Category Manager / VP Merchandising / Finance
+Accountable (A): VP Merchandising / CFO
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W959_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W959_End12" name="Complete">
+        <bpmn:incoming>W959_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W959_Annotation13">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Category Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W959_Assoc14" sourceRef="W959_Annotation13" targetRef="W959_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W959_Flow15" sourceRef="W959_Start6" targetRef="W959_Task7" />
+      <bpmn:sequenceFlow id="W959_Flow16" sourceRef="W959_Task7" targetRef="W959_Task8" />
+      <bpmn:sequenceFlow id="W959_Flow17" sourceRef="W959_Task8" targetRef="W959_Task9" />
+      <bpmn:sequenceFlow id="W959_Flow18" sourceRef="W959_Task9" targetRef="W959_Task10" />
+      <bpmn:sequenceFlow id="W959_Flow19" sourceRef="W959_Task10" targetRef="W959_Task11" />
+      <bpmn:sequenceFlow id="W959_Flow20" sourceRef="W959_Task11" targetRef="W959_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W959_diag">
+      <bpmndi:BPMNPlane id="W959_plane" bpmnElement="W_W959">
+        <bpmndi:BPMNShape id="W959_Lane1_di" bpmnElement="W959_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Lane2_di" bpmnElement="W959_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Lane3_di" bpmnElement="W959_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Lane4_di" bpmnElement="W959_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Task7_di" bpmnElement="W959_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Task8_di" bpmnElement="W959_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Task9_di" bpmnElement="W959_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Task10_di" bpmnElement="W959_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Task11_di" bpmnElement="W959_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Start6_di" bpmnElement="W959_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_End12_di" bpmnElement="W959_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W959_Annotation13_di" bpmnElement="W959_Annotation13"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W959_Flow15_di" bpmnElement="W959_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W959_Flow16_di" bpmnElement="W959_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W959_Flow17_di" bpmnElement="W959_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W959_Flow18_di" bpmnElement="W959_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W959_Flow19_di" bpmnElement="W959_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W959_Flow20_di" bpmnElement="W959_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W959_Assoc14_di" bpmnElement="W959_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W962" name="W962. Vendor-Sponsored In-Store Display Compliance Audit &amp; Chargeback" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly display compliance audit cycle; or vendor reports display not meeting contractual requirements
+Frequency: ~400–600 display audits/month (covering ~200 vendor-sponsored displays across 200 stores)
+Volume: 1–5 displays audited per store per month
+Owner: Category Manager
+Participants: Department Supervisor (store), Category Manager, Visual Merchandising Coordinator, Vendor Account Manager, Finance (chargeback processing)
+Source: workflow W962 — Vendor-Sponsored In-Store Display Compliance Audit &amp; Chargeback</bpmn:documentation>
+      <bpmn:laneSet id="W962_LaneSet3">
+        <bpmn:lane id="W962_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W962_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W962_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W962_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W962_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W962_Lane2" name="Department Supervisor">
+        <bpmn:flowNodeRef>W962_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W962_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W962_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W962_Start4" name="Monthly display compliance audit cycle; or vendor reports display not meeting contractual…">
+        <bpmn:outgoing>W962_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W962_Task5" name="Monthly Display Audit Schedule">
+        <bpmn:documentation>Step 1: Monthly Display Audit Schedule: Category Manager generates monthly audit schedule: (a) all active vendor-sponsored displays across 200 stores listed by vendor, store, and display type; (b) audit priority: (i) new displays (installed within last 60 days — highest priority); (ii) displays with previous non-compliance findings; (iii) high-value display agreements (≥ PHP 20,000/month); (iv) random sample of remaining displays (30%); (c) audit assignments distributed to Department Supervisors via mobile task management; (d) target: all high-priority displays audited within first 2 weeks of month; random sample completed by month-end
+Responsible (R): Category Manager / System
+Accountable (A): VP Merchandising
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W962_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W962_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W962_Task6" name="In-Store Display Audit Execution">
+        <bpmn:documentation>Step 2: In-Store Display Audit Execution: Department Supervisor conducts physical audit per display: (a) photographs display from 3 angles (front, side, product close-up) using mobile audit app; (b) checks compliance criteria per vendor agreement: (i) location — display in contracted zone per store layout plan; (ii) product assortment — correct SKUs, minimum facing quantities, no competitor products in display area; (iii) signage — current promotional signage, no expired materials, vendor branding intact; (iv) stock level — display adequately stocked (no empty facings); (v) condition — clean, organized, no damaged products or fixtures; (vi) pricing — correct prices displayed per W69 price compliance; (c) records findings in audit app: compliant (pass), minor non-compliance (advisory), major non-compliance (requires corrective action), critical non-compliance (display fee at risk)
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 10–15 min/display</bpmn:documentation>
+        <bpmn:incoming>W962_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W962_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W962_Task7" name="Non-Compliance Resolution">
+        <bpmn:documentation>Step 3: Non-Compliance Resolution: For non-compliant displays: (a) system routes findings to: (i) Visual Merchandising Coordinator — for display setup/condition issues; (ii) Store Manager — for stock replenishment issues; (iii) Category Manager — for product assortment issues; (iv) Vendor — for vendor-provided material/signage issues; (b) corrective action timeline: (i) critical — 48 hours; (ii) major — 7 days; (iii) minor — 14 days (advisory only, no fee impact); (c) Department Supervisor re-audits after corrective action deadline; (d) if non-compliance persists after corrective action deadline: escalates to Category Manager for chargeback processing
+Responsible (R): Department Supervisor / Visual Merchandising Coordinator
+Accountable (A): Category Manager
+Duration: 15–30 min/non-compliance</bpmn:documentation>
+        <bpmn:incoming>W962_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W962_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W962_Task8" name="Chargeback Processing">
+        <bpmn:documentation>Step 4: Chargeback Processing: For persistent non-compliance: (a) Category Manager authorizes chargeback per vendor agreement: (i) partial display fee reduction (e.g., 25% for minor compliance gaps); (ii) full display fee forfeiture for critical non-compliance (e.g., display removed, wrong location, competitor products); (iii) damage assessment for vendor-provided fixtures damaged by BuildRight staff; (b) Finance processes chargeback per W245 vendor chargebacks: (i) debit memo issued to vendor; (ii) display fee reduced by chargeback amount; (iii) vendor notified via W705 vendor portal with audit evidence (photos, compliance checklist); (c) vendor dispute resolution per W869 vendor dispute ticketing — vendor can contest chargeback with evidence; (d) Category Manager adjudicates disputes; VP Merchandising escalates unresolved disputes
+Responsible (R): Category Manager / Finance
+Accountable (A): VP Merchandising
+Duration: 30–60 min/chargeback</bpmn:documentation>
+        <bpmn:incoming>W962_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W962_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W962_Task9" name="Quarterly Vendor Display Performance Review">
+        <bpmn:documentation>Step 5: Quarterly Vendor Display Performance Review: (a) Category Manager reviews display compliance portfolio: (i) compliance rate by vendor (target: ≥ 90% compliant); (ii) repeat offenders — vendors with &lt; 80% compliance for 2+ consecutive months; (iii) BuildRight-side non-compliance — stores failing to maintain agreed display conditions (impacts vendor relationship and renewal); (b) VP Merchandising shares compliance data with vendor at quarterly business review per W155 Joint Business Planning; (c) annual: display agreement renewals incorporate compliance history — vendors with strong compliance may negotiate better display locations; vendors with poor compliance face higher scrutiny or non-renewal
+Responsible (R): Category Manager / VP Merchandising
+Accountable (A): VP Merchandising
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W962_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W962_End10" name="Complete">
+        <bpmn:incoming>W962_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W962_Annotation11">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W962_Assoc12" sourceRef="W962_Annotation11" targetRef="W962_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W962_Flow13" sourceRef="W962_Start4" targetRef="W962_Task5" />
+      <bpmn:sequenceFlow id="W962_Flow14" sourceRef="W962_Task5" targetRef="W962_Task6" />
+      <bpmn:sequenceFlow id="W962_Flow15" sourceRef="W962_Task6" targetRef="W962_Task7" />
+      <bpmn:sequenceFlow id="W962_Flow16" sourceRef="W962_Task7" targetRef="W962_Task8" />
+      <bpmn:sequenceFlow id="W962_Flow17" sourceRef="W962_Task8" targetRef="W962_Task9" />
+      <bpmn:sequenceFlow id="W962_Flow18" sourceRef="W962_Task9" targetRef="W962_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W962_diag">
+      <bpmndi:BPMNPlane id="W962_plane" bpmnElement="W_W962">
+        <bpmndi:BPMNShape id="W962_Lane1_di" bpmnElement="W962_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Lane2_di" bpmnElement="W962_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Task5_di" bpmnElement="W962_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Task6_di" bpmnElement="W962_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Task7_di" bpmnElement="W962_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Task8_di" bpmnElement="W962_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Task9_di" bpmnElement="W962_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Start4_di" bpmnElement="W962_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_End10_di" bpmnElement="W962_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W962_Annotation11_di" bpmnElement="W962_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W962_Flow13_di" bpmnElement="W962_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W962_Flow14_di" bpmnElement="W962_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W962_Flow15_di" bpmnElement="W962_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W962_Flow16_di" bpmnElement="W962_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W962_Flow17_di" bpmnElement="W962_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W962_Flow18_di" bpmnElement="W962_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W962_Assoc12_di" bpmnElement="W962_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W978" name="W978. Vendor Seasonal Product Post-Season Performance Review &amp; Assortment Rationalization" isExecutable="false">
+      <bpmn:documentation>Trigger: End of seasonal selling period (post-Christmas, post-summer, post-rainy season)
+Frequency: 3–4 reviews/year (post each major Philippine season)
+Volume: ~500–800 seasonal SKUs reviewed per season
+Owner: VP Merchandising
+Participants: Category Managers, Buyers, Pricing Analysts, Merchandise Planners, Vendors, Supply Chain Planning, Finance
+Source: workflow W978 — Vendor Seasonal Product Post-Season Performance Review &amp; Assortment Rationalization</bpmn:documentation>
+      <bpmn:laneSet id="W978_LaneSet4">
+        <bpmn:lane id="W978_Lane1" name="Merchandise Planner">
+        <bpmn:flowNodeRef>W978_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W978_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W978_Lane2" name="Category Manager">
+        <bpmn:flowNodeRef>W978_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W978_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W978_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W978_Lane3" name="VP Merchandising">
+        <bpmn:flowNodeRef>W978_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W978_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W978_Start5" name="End of seasonal selling period (post-Christmas, post-summer, post-rainy season)">
+        <bpmn:outgoing>W978_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W978_Task6" name="Season Close-Out Data Compilation">
+        <bpmn:documentation>Step 1: Season Close-Out Data Compilation: Within 2 weeks of season end: (a) Merchandise Planner compiles post-season data pack per category: (i) Sales performance: actual vs. plan sales units, revenue, and margin per SKU; (ii) Sell-through rate: percentage of purchased quantity sold at full price vs. markdown; (iii) Inventory position: remaining units, value, and aging; (iv) Pricing effectiveness: number and depth of markdowns taken per W93; (v) Timeline adherence: first receipt date vs. plan, in-store date vs. plan, markdown initiation date vs. plan; (vi) Vendor performance: fill rate, on-time delivery, quality complaints per W44; (vii) Store-level performance: sales by store cluster (high-performing vs. underperforming stores); (viii) Channel performance: in-store vs. ecommerce seasonal sales mix
+Responsible (R): Merchandise Planner
+Accountable (A): VP Merchandising
+Duration: 8–12 hours/season</bpmn:documentation>
+        <bpmn:incoming>W978_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W978_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W978_Task7" name="SKU-Level Performance Classification">
+        <bpmn:documentation>Step 2: SKU-Level Performance Classification: Category Managers classify each seasonal SKU into performance tiers: (a) Tier 1 — Winners (top 20%): sold ≥90% of plan at full price or minimal markdown; high margin; customer demand exceeded supply; action: increase buy quantity 15–25% for next season, explore line extensions; (b) Tier 2 — Solid Performers (next 30%): sold 70–89% of plan; acceptable markdown depth (≤20%); action: maintain or slightly adjust buy quantity; review pricing and timing; (c) Tier 3 — Underperformers (next 30%): sold 50–69% of plan; significant markdown (20–40%); action: reduce or eliminate from next season&#x27;s assortment; review root cause (wrong product, wrong price, wrong timing, poor display); (d) Tier 4 — Losers (bottom 20%): sold &lt;50% of plan; deep markdown (40–70%+); or total dead stock; action: discontinue; return to vendor per W88 if agreement allows; donate per W444 if unsellable; root cause analysis mandatory
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 4–6 hours/category</bpmn:documentation>
+        <bpmn:incoming>W978_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W978_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W978_Task8" name="Vendor Performance Review &amp; Negotiation">
+        <bpmn:documentation>Step 3: Vendor Performance Review &amp; Negotiation: For each seasonal vendor: (a) Category Manager evaluates: (i) fill rate — did vendor deliver full ordered quantity on time?; (ii) quality — were there customer returns or complaints due to product quality?; (iii) markdown support — did vendor contribute to markdown costs per W161 (vendor price protection)?; (iv) marketing support — did vendor fund promotional activities per W513?; (b) underperforming vendors: Category Manager initiates discussion — performance improvement plan, markdown cost recovery per W245, or vendor replacement; (c) top-performing vendors: Category Manager negotiates improved terms for next season — volume discounts, earlier delivery, markdown protection, exclusive products; (d) new vendor scouting: Category Manager identifies gaps in seasonal assortment and sources new vendors per W36 (vendor onboarding) to fill gaps
+Responsible (R): Category Manager / Buyer
+Accountable (A): VP Merchandising
+Duration: 2–3 hours/vendor</bpmn:documentation>
+        <bpmn:incoming>W978_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W978_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W978_Task9" name="Residual Inventory Disposition">
+        <bpmn:documentation>Step 4: Residual Inventory Disposition: For remaining seasonal inventory: (a) Markdown acceleration (within 30 days of season end): progressive markdown schedule — Week 1: 30% off, Week 2: 50% off, Week 3: 70% off; per W93 markdown pricing execution; (b) Vendor return: negotiate seasonal buy-back per W901 (vendor seasonal buy-back) for vendors with return agreements; (c) Store-to-store redistribution: transfer remaining stock from low-demand stores to stores with continued demand per W204; (d) Ecommerce clearance: list remaining inventory on BuildRight website/app with clearance pricing and on marketplace channels (Lazada/Shopee) per W180; (e) Donation: unsold items after all disposition channels exhausted → donated to community organizations per W444 (community donation) for tax deduction and ESG reporting per W194; (f) Write-off: items with no disposition channel → write-off per W220 (SLOB provisioning) with accounting entry
+Responsible (R): Category Manager / Finance / Store Operations
+Accountable (A): VP Merchandising
+Duration: 1–2 weeks post-season</bpmn:documentation>
+        <bpmn:incoming>W978_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W978_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W978_Task10" name="Season Retrospective &amp; Next Season Planning Input">
+        <bpmn:documentation>Step 5: Season Retrospective &amp; Next Season Planning Input: VP Merchandising conducts seasonal retrospective meeting: (a) cross-functional attendees: Category Managers, Buyers, Supply Chain Planning, Store Operations, Marketing, Finance; (b) review: (i) total seasonal revenue vs. plan; (ii) gross margin performance; (iii) inventory turns; (iv) markdown rate as % of seasonal revenue; (v) top 10 winners and losers with root cause; (vi) vendor performance summary; (vii) store execution — seasonal display setup compliance per W262, promotional execution per W13; (c) capture learnings in seasonal knowledge base — documented insights for next season&#x27;s planning per W32 (seasonal buy planning); (d) initiate next season&#x27;s buy planning with adjusted parameters; (e) Finance incorporates seasonal margin impact into annual budget and forecast per W639 (rolling forecast)
+Responsible (R): VP Merchandising / Cross-functional
+Accountable (A): VP Merchandising
+Duration: Half-day meeting + documentation</bpmn:documentation>
+        <bpmn:incoming>W978_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W978_End11" name="Complete">
+        <bpmn:incoming>W978_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W978_Annotation12">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: enforces data submission deadline within 5 business days of season end
+Owner: VP Merchandising</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W978_Assoc13" sourceRef="W978_Annotation12" targetRef="W978_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W978_Flow14" sourceRef="W978_Start5" targetRef="W978_Task6" />
+      <bpmn:sequenceFlow id="W978_Flow15" sourceRef="W978_Task6" targetRef="W978_Task7" />
+      <bpmn:sequenceFlow id="W978_Flow16" sourceRef="W978_Task7" targetRef="W978_Task8" />
+      <bpmn:sequenceFlow id="W978_Flow17" sourceRef="W978_Task8" targetRef="W978_Task9" />
+      <bpmn:sequenceFlow id="W978_Flow18" sourceRef="W978_Task9" targetRef="W978_Task10" />
+      <bpmn:sequenceFlow id="W978_Flow19" sourceRef="W978_Task10" targetRef="W978_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W978_diag">
+      <bpmndi:BPMNPlane id="W978_plane" bpmnElement="W_W978">
+        <bpmndi:BPMNShape id="W978_Lane1_di" bpmnElement="W978_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Lane2_di" bpmnElement="W978_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Lane3_di" bpmnElement="W978_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Task6_di" bpmnElement="W978_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Task7_di" bpmnElement="W978_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Task8_di" bpmnElement="W978_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Task9_di" bpmnElement="W978_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Task10_di" bpmnElement="W978_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Start5_di" bpmnElement="W978_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_End11_di" bpmnElement="W978_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W978_Annotation12_di" bpmnElement="W978_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W978_Flow14_di" bpmnElement="W978_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W978_Flow15_di" bpmnElement="W978_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W978_Flow16_di" bpmnElement="W978_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W978_Flow17_di" bpmnElement="W978_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W978_Flow18_di" bpmnElement="W978_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W978_Flow19_di" bpmnElement="W978_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W978_Assoc13_di" bpmnElement="W978_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1033" name="W1033. Vendor Lead Time Accuracy Monitoring &amp; Supply Planning Impact Assessment" isExecutable="false">
+      <bpmn:documentation>Trigger: Weekly scheduled analysis; also triggered by significant lead time deviation detected during PO monitoring
+Frequency: Weekly analysis; monthly vendor review; quarterly trend reporting
+Volume: ~800–1,000 active vendors with purchase orders; ~1,200 merchandise POs/month
+Owner: Supply Chain Planner
+Participants: Buyer, Category Manager, DC Receiving Supervisor, Procurement Specialist
+Source: workflow W1033 — Vendor Lead Time Accuracy Monitoring &amp; Supply Planning Impact Assessment</bpmn:documentation>
+      <bpmn:laneSet id="W1033_LaneSet3">
+        <bpmn:lane id="W1033_Lane1" name="System">
+        <bpmn:flowNodeRef>W1033_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1033_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1033_Lane2" name="Supply Chain Planner">
+        <bpmn:flowNodeRef>W1033_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1033_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1033_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1033_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1033_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1033_Start4" name="Weekly scheduled analysis; also triggered by significant lead time deviation detected…">
+        <bpmn:outgoing>W1033_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1033_Task5" name="Weekly Lead Time Deviation Calculation">
+        <bpmn:documentation>Step 1: Weekly Lead Time Deviation Calculation: System automatically calculates for each PO closed in the past week: (a) Stated lead time (from vendor master per W287): days between PO date and expected delivery date; (b) Actual lead time: days between PO date and goods receipt date at DC/store per W3/W109; (c) Deviation = (Actual − Stated) ÷ Stated × 100; (d) system aggregates by vendor: average deviation, standard deviation, on-time delivery rate (% of POs received within stated lead time + 3 day tolerance); (e) weekly vendor lead time scorecard generated: Tier 1 (Accurate): deviation ≤ 10%, on-time ≥ 90%; Tier 2 (Variable): deviation 10–25%, on-time 70–90%; Tier 3 (Unreliable): deviation &gt; 25%, on-time &lt; 70%
+Responsible (R): System
+Accountable (A): Supply Chain Planner
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1033_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1033_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1033_Task6" name="Planning Parameter Adjustment">
+        <bpmn:documentation>Step 2: Planning Parameter Adjustment: For vendors consistently deviating from stated lead time: (a) if vendor has been Tier 2 (Variable) for 2+ consecutive weeks: Supply Chain Planner adjusts the vendor&#x27;s lead time parameter in the replenishment system (W312) to reflect actual average lead time + safety buffer; this immediately adjusts reorder points for all SKUs sourced from this vendor; (b) if vendor has been Tier 3 (Unreliable) for 2+ consecutive weeks: (i) increase safety stock for all affected SKUs by 1–2 weeks of demand to buffer against uncertainty; (ii) evaluate alternative sourcing per W921 (Emergency Alternative Vendor) for critical SKUs; (iii) Buyer escalates to vendor per W44 (Vendor Performance Review); (c) parameter changes logged in system with justification; system generates impact analysis: estimated inventory value change from parameter adjustment (increase in safety stock = additional carrying cost)
+Responsible (R): Supply Chain Planner
+Accountable (A): VP Supply Chain
+Duration: 30–60 min/week</bpmn:documentation>
+        <bpmn:incoming>W1033_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1033_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1033_Task7" name="Stockout Root Cause Analysis (Lead Time Related)">
+        <bpmn:documentation>Step 3: Stockout Root Cause Analysis (Lead Time Related): When a stockout occurs: (a) system checks if the stockout was caused by a late vendor delivery (PO past due with no GR); (b) if yes: flag the stockout as &quot;lead time related&quot; and attribute to the specific vendor and PO; (c) calculate lost sales impact: stockout duration × average daily sales velocity × average margin; (d) weekly stockout report includes lead-time-related stockout attribution by vendor; (e) vendors responsible for &gt; 5% of total chain-wide stockouts in a month are flagged for Buyer review per W44
+Responsible (R): Supply Chain Planner / System
+Accountable (A): Category Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1033_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1033_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1033_Task8" name="Monthly Vendor Lead Time Review Meeting">
+        <bpmn:documentation>Step 4: Monthly Vendor Lead Time Review Meeting: Monthly meeting between Supply Chain Planner, Buyer, and Category Manager: (a) review top 20 vendors by lead time deviation (worst performers); (b) for each: discuss root cause — production delay, shipping issue, customs hold, order processing error, or seasonal pattern; (c) agree on action: (i) renegotiate lead time commitment with vendor (adjust vendor master to realistic lead time), (ii) vendor improvement plan with milestones per W110 (CAPA), (iii) dual-source strategy per W763 (Vendor Diversification), (iv) vendor exit and replacement per W36/W62; (d) review top 20 vendors by volume (regardless of deviation) to ensure lead time parameters are current for high-value POs; (e) decisions documented and tracked in vendor performance module
+Responsible (R): Supply Chain Planner / Buyer / Category Manager
+Accountable (A): VP Supply Chain
+Duration: 60–90 min/month</bpmn:documentation>
+        <bpmn:incoming>W1033_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1033_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1033_Task9" name="Quarterly Trend Analysis &amp; Network Impact Report">
+        <bpmn:documentation>Step 5: Quarterly Trend Analysis &amp; Network Impact Report: Supply Chain Planner compiles quarterly report: (a) chain-wide lead time accuracy trend: average deviation, % of vendors in each tier, improvement/degradation vs. prior quarter; (b) financial impact: estimated carrying cost from inflated safety stock (step 2) vs. lost sales from lead-time-related stockouts (step 3); (c) seasonal patterns: import vendors during Chinese New Year (Feb), typhoon season (Jul–Nov), Christmas peak (Oct–Dec) — lead time degradation patterns; (d) strategic recommendations: nearshoring opportunities (replace China imports with Philippines/ASEAN vendors for shorter lead times), vendor consolidation, or inventory strategy changes (VMI expansion per W20); (e) report presented to VP Supply Chain and COO for strategic planning per W127
+Responsible (R): Supply Chain Planner
+Accountable (A): VP Supply Chain
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1033_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1033_End10" name="Complete">
+        <bpmn:incoming>W1033_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1033_Annotation11">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: should track import PO lead times separately from local POs with wider tolerance bands
+Owner: Supply Chain Planner</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1033_Assoc12" sourceRef="W1033_Annotation11" targetRef="W1033_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1033_Flow13" sourceRef="W1033_Start4" targetRef="W1033_Task5" />
+      <bpmn:sequenceFlow id="W1033_Flow14" sourceRef="W1033_Task5" targetRef="W1033_Task6" />
+      <bpmn:sequenceFlow id="W1033_Flow15" sourceRef="W1033_Task6" targetRef="W1033_Task7" />
+      <bpmn:sequenceFlow id="W1033_Flow16" sourceRef="W1033_Task7" targetRef="W1033_Task8" />
+      <bpmn:sequenceFlow id="W1033_Flow17" sourceRef="W1033_Task8" targetRef="W1033_Task9" />
+      <bpmn:sequenceFlow id="W1033_Flow18" sourceRef="W1033_Task9" targetRef="W1033_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1033_diag">
+      <bpmndi:BPMNPlane id="W1033_plane" bpmnElement="W_W1033">
+        <bpmndi:BPMNShape id="W1033_Lane1_di" bpmnElement="W1033_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Lane2_di" bpmnElement="W1033_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Task5_di" bpmnElement="W1033_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Task6_di" bpmnElement="W1033_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Task7_di" bpmnElement="W1033_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Task8_di" bpmnElement="W1033_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Task9_di" bpmnElement="W1033_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Start4_di" bpmnElement="W1033_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_End10_di" bpmnElement="W1033_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1033_Annotation11_di" bpmnElement="W1033_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1033_Flow13_di" bpmnElement="W1033_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1033_Flow14_di" bpmnElement="W1033_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1033_Flow15_di" bpmnElement="W1033_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1033_Flow16_di" bpmnElement="W1033_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1033_Flow17_di" bpmnElement="W1033_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1033_Flow18_di" bpmnElement="W1033_Flow18"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1033_Assoc12_di" bpmnElement="W1033_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1115" name="W1115. Vendor Performance-Based Shelf Space Allocation Review" isExecutable="false">
+      <bpmn:documentation>Trigger: Semi-annual planogram review cycle, vendor scorecard quarterly publication (W871), or category performance review (W101)
+Frequency: Semi-annual (major review); quarterly (minor adjustments)
+Volume: ~800–1,000 active vendors × ~2.5–3 product categories each (of the 12-category universe) = ~2,000–3,000 vendor-category combinations reviewed per cycle
+Owner: Category Manager
+Participants: Category Manager, Planogram Analyst, Merchandise Planner, VP Merchandising
+Source: workflow W1115 — Vendor Performance-Based Shelf Space Allocation Review</bpmn:documentation>
+      <bpmn:laneSet id="W1115_LaneSet5">
+        <bpmn:lane id="W1115_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1115_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1115_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1115_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1115_Lane2" name="Planogram Analyst">
+        <bpmn:flowNodeRef>W1115_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1115_Lane3" name="Store Operations">
+        <bpmn:flowNodeRef>W1115_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1115_Lane4" name="System">
+        <bpmn:flowNodeRef>W1115_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1115_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1115_Start6" name="Semi-annual planogram review cycle, vendor scorecard quarterly publication (W871), or…">
+        <bpmn:outgoing>W1115_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1115_Task7" name="Vendor Performance Scorecard Compilation">
+        <bpmn:documentation>Step 1: Vendor Performance Scorecard Compilation: (a) Category Manager compiles composite vendor performance score for each vendor in their category: Sales Performance (40% weight): sales velocity (units/week/facing), sales growth YoY, revenue per sqm of allocated shelf space, contribution to category gross margin; Supply Reliability (25% weight): fill rate % (orders fulfilled complete and on-time), lead time accuracy, VMI program compliance (if applicable), ASN accuracy; Marketing Support (20% weight): co-op advertising spend, demo/event participation, new product introduction pipeline, trade fund utilization (W738); Strategic Fit (15% weight): brand strength and consumer demand, sustainability/ESG compliance, innovation (new product development), exclusivity agreements; (b) scores normalized on a 100-point scale per vendor per category; (c) vendors ranked within each category; (d) top 20% = &quot;Premier&quot; vendors, middle 50% = &quot;Core&quot; vendors, bottom 30% = &quot;Review&quot; vendors
+Responsible (R): Category Manager / System
+Accountable (A): Category Manager
+Duration: 4–6 hours/category × 12 categories = 48–72 hours total</bpmn:documentation>
+        <bpmn:incoming>W1115_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1115_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1115_Task8" name="Shelf Space Allocation Modeling">
+        <bpmn:documentation>Step 2: Shelf Space Allocation Modeling: (a) Planogram Analyst uses planogram software to model space allocation scenarios: (i) Current state: existing facings and positions for each vendor; (ii) Performance-based model: shelf space proportional to composite score — Premier vendors get 150% of current space, Core vendors maintain 100%, Review vendors reduced to 50–75%; (iii) Revenue-optimized model: space allocated purely by sales per sqm, ignoring vendor relationship factors; (b) for each model, system calculates: projected category revenue, projected category gross margin, number of SKUs changes (additions/removals), number of planogram resets required per store; (c) Category Manager selects preferred model or hybrid: typically performance-based with strategic exceptions (e.g., a new vendor given minimum display space for trial period, or a high-margin vendor protected despite lower velocity)
+Responsible (R): Planogram Analyst / System
+Accountable (A): Category Manager
+Duration: 8–12 hours/category</bpmn:documentation>
+        <bpmn:incoming>W1115_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1115_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1115_Task9" name="Vendor Communication &amp; Negotiation">
+        <bpmn:documentation>Step 3: Vendor Communication &amp; Negotiation: (a) for &quot;Premier&quot; vendors: Category Manager meets to confirm expanded shelf space and discuss additional support opportunities (larger endcaps, demo events, co-branded promotions); (b) for &quot;Core&quot; vendors: standard communication via vendor portal (W871) with scorecard results and any minor space adjustments; (c) for &quot;Review&quot; vendors: formal meeting to discuss: (i) specific performance gaps and improvement timeline (90 days); (ii) potential shelf space reduction if performance does not improve; (iii) delisting timeline if vendor falls below minimum threshold for two consecutive reviews; (iv) remediation plan: vendor may propose additional marketing support, improved fill rate, or new exclusive products to justify maintaining current space; (d) all agreements documented in vendor business plan addendum
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising (for delisting decisions)
+Duration: 1–2 hours per Review vendor; 30 min per Premier vendor</bpmn:documentation>
+        <bpmn:incoming>W1115_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1115_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1115_Task10" name="Planogram Reset Execution">
+        <bpmn:documentation>Step 4: Planogram Reset Execution: (a) updated planograms distributed to all 200 stores per W573 (planogram execution &amp; shelf compliance check); (b) shelf labels and product positions updated during overnight reset or during designated reset window; (c) Store Compliance: Store Manager confirms planogram compliance within 7 days; (d) Regional Manager audits 10% of stores for compliance within 14 days per W86; (e) system tracks compliance rate: target ≥ 95% of stores compliant within 7 days
+Responsible (R): Store Operations / Planogram Analyst
+Accountable (A): Category Manager
+Duration: 2–3 days per store per reset</bpmn:documentation>
+        <bpmn:incoming>W1115_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1115_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1115_Task11" name="Post-Reset Performance Tracking">
+        <bpmn:documentation>Step 5: Post-Reset Performance Tracking: (a) system monitors category performance for 8 weeks post-reset: (i) sales per sqm vs. pre-reset baseline; (ii) gross margin per sqm; (iii) customer traffic in affected sections; (iv) vendor fill rate changes (did Review vendors improve?); (b) results shared with VP Merchandising for quarterly review; (c) lessons learned inform next semi-annual allocation cycle
+Responsible (R): System / Category Manager
+Accountable (A): VP Merchandising
+Duration: 2–3 hours/cycle for analysis</bpmn:documentation>
+        <bpmn:incoming>W1115_Flow19</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1115_End12" name="Complete">
+        <bpmn:incoming>W1115_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1115_Annotation13">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1115_Assoc14" sourceRef="W1115_Annotation13" targetRef="W1115_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1115_Flow15" sourceRef="W1115_Start6" targetRef="W1115_Task7" />
+      <bpmn:sequenceFlow id="W1115_Flow16" sourceRef="W1115_Task7" targetRef="W1115_Task8" />
+      <bpmn:sequenceFlow id="W1115_Flow17" sourceRef="W1115_Task8" targetRef="W1115_Task9" />
+      <bpmn:sequenceFlow id="W1115_Flow18" sourceRef="W1115_Task9" targetRef="W1115_Task10" />
+      <bpmn:sequenceFlow id="W1115_Flow19" sourceRef="W1115_Task10" targetRef="W1115_Task11" />
+      <bpmn:sequenceFlow id="W1115_Flow20" sourceRef="W1115_Task11" targetRef="W1115_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1115_diag">
+      <bpmndi:BPMNPlane id="W1115_plane" bpmnElement="W_W1115">
+        <bpmndi:BPMNShape id="W1115_Lane1_di" bpmnElement="W1115_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Lane2_di" bpmnElement="W1115_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Lane3_di" bpmnElement="W1115_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Lane4_di" bpmnElement="W1115_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Task7_di" bpmnElement="W1115_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Task8_di" bpmnElement="W1115_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Task9_di" bpmnElement="W1115_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Task10_di" bpmnElement="W1115_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Task11_di" bpmnElement="W1115_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Start6_di" bpmnElement="W1115_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_End12_di" bpmnElement="W1115_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1115_Annotation13_di" bpmnElement="W1115_Annotation13"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1115_Flow15_di" bpmnElement="W1115_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1115_Flow16_di" bpmnElement="W1115_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1115_Flow17_di" bpmnElement="W1115_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1115_Flow18_di" bpmnElement="W1115_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1115_Flow19_di" bpmnElement="W1115_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1115_Flow20_di" bpmnElement="W1115_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1115_Assoc14_di" bpmnElement="W1115_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1132" name="W1132. Vendor Logistics Performance Weekly Scorecard &amp; Carrier Lane Analysis" isExecutable="false">
+      <bpmn:documentation>Trigger: Weekly logistics performance review cycle (every Monday), or carrier SLA breach alert
+Frequency: Weekly review; continuous monitoring
+Volume: ~800–1,000 active vendor-carrier lanes reviewed weekly
+Owner: Logistics Manager (HQ)
+Participants: Logistics Manager, Supply Chain Planners, DC Operations Managers, Vendor Logistics Contacts
+Source: workflow W1132 — Vendor Logistics Performance Weekly Scorecard &amp; Carrier Lane Analysis</bpmn:documentation>
+      <bpmn:laneSet id="W1132_LaneSet3">
+        <bpmn:lane id="W1132_Lane1" name="System">
+        <bpmn:flowNodeRef>W1132_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1132_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1132_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1132_Lane2" name="Logistics Manager">
+        <bpmn:flowNodeRef>W1132_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1132_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1132_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1132_Start4" name="Weekly logistics performance review cycle (every Monday), or carrier SLA breach alert">
+        <bpmn:outgoing>W1132_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1132_Task5" name="Weekly Data Aggregation">
+        <bpmn:documentation>Step 1: Weekly Data Aggregation: (a) system auto-aggregates logistics performance data for the previous week: on-time delivery rate (OTD) per vendor per lane; transit time actual vs. promised; delivery appointment compliance (delivered within scheduled window); damage/shortage rate per carrier; freight cost per unit/km by lane; demurrage/detention charges incurred; container turnaround time (for imports); (b) data sourced from: ERP PO and GR modules, fleet telematics (W199), DC dock scheduling system (W585), carrier invoice data, customs brokerage records
+Responsible (R): System / Logistics Analyst
+Accountable (A): Logistics Manager
+Duration: Automated (30 min review)</bpmn:documentation>
+        <bpmn:incoming>W1132_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1132_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1132_Task6" name="Scorecard Generation &amp; Lane Analysis">
+        <bpmn:documentation>Step 2: Scorecard Generation &amp; Lane Analysis: (a) system generates weekly scorecard: top 20 vendors by PO volume — OTD, lead time accuracy, damage rate; top 10 carrier lanes by volume — cost, transit time, reliability; exception report — any lane with OTD &lt; 90%, damage &gt; 2%, or cost &gt; 10% above benchmark; new carrier options — market rate comparison for underperforming lanes; seasonal lane performance — compare current vs. same period last year; (b) lane heat map: green (OTD &gt; 95%, damage &lt; 1%), yellow (OTD 85–95%, damage 1–2%), red (OTD &lt; 85%, damage &gt; 2%)
+Responsible (R): System / Logistics Analyst
+Accountable (A): Logistics Manager
+Duration: 30–45 min</bpmn:documentation>
+        <bpmn:incoming>W1132_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1132_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1132_Task7" name="Performance Review &amp; Action Items">
+        <bpmn:documentation>Step 3: Performance Review &amp; Action Items: (a) Logistics Manager reviews scorecard with Supply Chain Planners and DC Operations Managers; (b) red lanes: root cause analysis — carrier capacity issue, vendor readiness problem, DC scheduling conflict, or infrastructure constraint (port congestion, road conditions); (c) action items: carrier escalation meeting (within 5 business days), vendor compliance notice per W669, DC scheduling adjustment, alternative carrier activation, or route optimization per W196; (d) yellow lanes: monitor for trend — if declining for 3+ consecutive weeks, escalate to red; (e) green lanes: identify best practices for replication; (f) cost optimization: identify lanes where competitive quoting could save &gt; 5% without service degradation
+Responsible (R): Logistics Manager / Supply Chain Planners
+Accountable (A): VP Supply Chain
+Duration: 60–90 min</bpmn:documentation>
+        <bpmn:incoming>W1132_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1132_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1132_Task8" name="Vendor &amp; Carrier Communication">
+        <bpmn:documentation>Step 4: Vendor &amp; Carrier Communication: (a) weekly performance summary shared with top 20 vendors via vendor portal (W871); (b) SLA breach notifications sent automatically to vendor and carrier contacts; (c) quarterly business review (QBR) invitations sent to strategic vendor-carrier partners; (d) carrier rate negotiation initiated for lanes with consistent overcharges
+Responsible (R): Logistics Manager / Vendor Manager
+Accountable (A): Logistics Manager
+Duration: 30–60 min</bpmn:documentation>
+        <bpmn:incoming>W1132_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1132_End9" name="Complete">
+        <bpmn:incoming>W1132_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1132_Annotation10">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Logistics Manager review and approval gate
+Owner: Logistics Manager (HQ)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1132_Assoc11" sourceRef="W1132_Annotation10" targetRef="W1132_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1132_Flow12" sourceRef="W1132_Start4" targetRef="W1132_Task5" />
+      <bpmn:sequenceFlow id="W1132_Flow13" sourceRef="W1132_Task5" targetRef="W1132_Task6" />
+      <bpmn:sequenceFlow id="W1132_Flow14" sourceRef="W1132_Task6" targetRef="W1132_Task7" />
+      <bpmn:sequenceFlow id="W1132_Flow15" sourceRef="W1132_Task7" targetRef="W1132_Task8" />
+      <bpmn:sequenceFlow id="W1132_Flow16" sourceRef="W1132_Task8" targetRef="W1132_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1132_diag">
+      <bpmndi:BPMNPlane id="W1132_plane" bpmnElement="W_W1132">
+        <bpmndi:BPMNShape id="W1132_Lane1_di" bpmnElement="W1132_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_Lane2_di" bpmnElement="W1132_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_Task5_di" bpmnElement="W1132_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_Task6_di" bpmnElement="W1132_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_Task7_di" bpmnElement="W1132_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_Task8_di" bpmnElement="W1132_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_Start4_di" bpmnElement="W1132_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_End9_di" bpmnElement="W1132_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1132_Annotation10_di" bpmnElement="W1132_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1132_Flow12_di" bpmnElement="W1132_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1132_Flow13_di" bpmnElement="W1132_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1132_Flow14_di" bpmnElement="W1132_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1132_Flow15_di" bpmnElement="W1132_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1132_Flow16_di" bpmnElement="W1132_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1132_Assoc11_di" bpmnElement="W1132_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1141" name="W1141. Vendor Payment Term Annual Renegotiation &amp; Cost Savings Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual vendor contract renewal cycle, or quarterly vendor business review, or significant volume growth with a vendor
+Frequency: ~200–300 renegotiations/year (top vendors reviewed annually; others reviewed every 2–3 years)
+Volume: 1 vendor per negotiation
+Owner: Category Manager
+Participants: Category Manager, Buyer, Finance Manager, VP Merchandising, Vendor Account Manager
+Source: workflow W1141 — Vendor Payment Term Annual Renegotiation &amp; Cost Savings Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W1141_LaneSet3">
+        <bpmn:lane id="W1141_Lane1" name="Finance Manager">
+        <bpmn:flowNodeRef>W1141_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1141_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1141_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1141_Lane2" name="Category Manager">
+        <bpmn:flowNodeRef>W1141_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1141_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1141_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1141_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1141_Start4" name="Annual vendor contract renewal cycle, or quarterly vendor business review, or significant…">
+        <bpmn:outgoing>W1141_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1141_Task5" name="Vendor Portfolio Analysis &amp; Prioritization">
+        <bpmn:documentation>Step 1: Vendor Portfolio Analysis &amp; Prioritization: (a) Finance Manager and Category Manager jointly review vendor portfolio: total annual spend per vendor, current payment terms (Net 30, Net 60, 2/10 Net 30, LC, etc.), payment term benchmark vs. industry standard, vendor concentration risk, vendor strategic importance (exclusive products, VMI, innovation partner); (b) prioritize vendors for renegotiation: Tier 1 (top 20 vendors by spend) — mandatory annual review; Tier 2 (top 21–100) — review every 2 years; Tier 3 (remaining) — review as needed or at contract renewal; (c) set negotiation targets per vendor: payment term extension (e.g., Net 30 → Net 60), early payment discount (e.g., 2/10 Net 30 → 3/10 Net 30), or combination
+Responsible (R): Finance Manager / Category Manager
+Accountable (A): VP Merchandising
+Duration: 4–6 hours (annual)</bpmn:documentation>
+        <bpmn:incoming>W1141_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1141_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1141_Task6" name="Negotiation Preparation">
+        <bpmn:documentation>Step 2: Negotiation Preparation: (a) Category Manager prepares negotiation package for each target vendor: current terms, proposed terms, business rationale (volume growth, expanded assortment, multi-year commitment), competitive benchmarking (what terms do comparable retailers receive), BuildRight&#x27;s value proposition (200-store network, growing ecommerce channel, marketing partnership opportunities); (b) Finance Manager models financial impact: working capital benefit of term extension, COGS savings from discount improvement, impact on vendor relationship if terms are pushed too hard; (c) identify trade-offs: if vendor won&#x27;t extend terms, what else can be negotiated (rebate increase, marketing fund contribution, exclusive product access, VMI expansion)
+Responsible (R): Category Manager / Finance Manager
+Accountable (A): VP Merchandising
+Duration: 2–3 hours per vendor</bpmn:documentation>
+        <bpmn:incoming>W1141_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1141_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1141_Task7" name="Vendor Negotiation">
+        <bpmn:documentation>Step 3: Vendor Negotiation: (a) Category Manager leads negotiation with vendor account manager; (b) present data-driven proposal: &quot;Our volume has grown 15% YoY, and we&#x27;re expanding to 300 stores. We&#x27;d like to move from Net 30 to Net 60, which is standard for our volume tier. In return, we&#x27;re offering a 3-year commitment on your core assortment and priority placement in our ecommerce platform&quot;; (c) negotiation tactics: volume-based leverage, multi-year commitment incentive, competitive vendor comparison (without naming competitors), early payment discount as alternative to term extension; (d) Finance Manager joins for complex negotiations (LC terms, import payment restructuring); (e) target outcome: improved terms with mutual benefit (vendor gets volume commitment, BuildRight gets better cash management)
+Responsible (R): Category Manager / Finance Manager
+Accountable (A): VP Merchandising
+Duration: 1–2 hours per vendor</bpmn:documentation>
+        <bpmn:incoming>W1141_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1141_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1141_Task8" name="Agreement Finalization &amp; ERP Update">
+        <bpmn:documentation>Step 4: Agreement Finalization &amp; ERP Update: (a) negotiated terms documented in updated vendor agreement per W62; (b) legal review per W230 for significant changes; (c) ERP vendor master updated with new payment terms (W287, W295); (d) system validates new terms against existing open POs and invoices; (e) implementation timeline: immediate for new POs, transitional for existing open orders; (f) new terms communicated to AP team for payment run configuration (W556)
+Responsible (R): Category Manager / Finance Manager / AP Team
+Accountable (A): VP Merchandising
+Duration: 30–60 min per vendor</bpmn:documentation>
+        <bpmn:incoming>W1141_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1141_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1141_Task9" name="Cost Savings Tracking &amp; Reporting">
+        <bpmn:documentation>Step 5: Cost Savings Tracking &amp; Reporting: (a) Finance Manager tracks realized savings from renegotiated terms: working capital improvement (days payable outstanding change × daily COGS), early payment discount capture rate improvement, rebate/pricing improvements achieved as part of negotiation; (b) monthly report to VP Merchandising and CFO: total annualized savings from payment term negotiations, savings by vendor and category, working capital impact; (c) savings feed into category P&amp;L reporting (W102) and procurement KPIs (W633 PPV); (d) lessons learned documented for future negotiation cycles
+Responsible (R): Finance Manager / System
+Accountable (A): CFO
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1141_Flow17</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1141_End10" name="Complete">
+        <bpmn:incoming>W1141_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1141_Annotation11">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: controls needed to prevent early or late payments that violate agreements
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1141_Assoc12" sourceRef="W1141_Annotation11" targetRef="W1141_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1141_Flow13" sourceRef="W1141_Start4" targetRef="W1141_Task5" />
+      <bpmn:sequenceFlow id="W1141_Flow14" sourceRef="W1141_Task5" targetRef="W1141_Task6" />
+      <bpmn:sequenceFlow id="W1141_Flow15" sourceRef="W1141_Task6" targetRef="W1141_Task7" />
+      <bpmn:sequenceFlow id="W1141_Flow16" sourceRef="W1141_Task7" targetRef="W1141_Task8" />
+      <bpmn:sequenceFlow id="W1141_Flow17" sourceRef="W1141_Task8" targetRef="W1141_Task9" />
+      <bpmn:sequenceFlow id="W1141_Flow18" sourceRef="W1141_Task9" targetRef="W1141_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1141_diag">
+      <bpmndi:BPMNPlane id="W1141_plane" bpmnElement="W_W1141">
+        <bpmndi:BPMNShape id="W1141_Lane1_di" bpmnElement="W1141_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Lane2_di" bpmnElement="W1141_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Task5_di" bpmnElement="W1141_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Task6_di" bpmnElement="W1141_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Task7_di" bpmnElement="W1141_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Task8_di" bpmnElement="W1141_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Task9_di" bpmnElement="W1141_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Start4_di" bpmnElement="W1141_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_End10_di" bpmnElement="W1141_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1141_Annotation11_di" bpmnElement="W1141_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1141_Flow13_di" bpmnElement="W1141_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1141_Flow14_di" bpmnElement="W1141_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1141_Flow15_di" bpmnElement="W1141_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1141_Flow16_di" bpmnElement="W1141_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1141_Flow17_di" bpmnElement="W1141_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1141_Flow18_di" bpmnElement="W1141_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1141_Assoc12_di" bpmnElement="W1141_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1151" name="W1151. Vendor Product Recall Cost Recovery &amp; Margin Impact Assessment" isExecutable="false">
+      <bpmn:documentation>Trigger: Product recall event (W29, W873–W878), or quarterly recall cost reconciliation, or vendor negotiation session
+Frequency: ~5–15 recall events/year requiring cost recovery; quarterly reconciliation
+Volume: 1–50 affected SKUs per recall event
+Owner: Category Manager (HQ)
+Participants: Category Manager, Finance Analyst, Supply Chain Planner, Vendor Representative, Legal Counsel (if disputed)
+Source: workflow W1151 — Vendor Product Recall Cost Recovery &amp; Margin Impact Assessment</bpmn:documentation>
+      <bpmn:laneSet id="W1151_LaneSet3">
+        <bpmn:lane id="W1151_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1151_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1151_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1151_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1151_Lane2" name="Finance Analyst">
+        <bpmn:flowNodeRef>W1151_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1151_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1151_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1151_Start4" name="Product recall event (W29, W873–W878), or quarterly recall cost reconciliation, or vendor…">
+        <bpmn:outgoing>W1151_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1151_Task5" name="Recall Cost Capture &amp; Documentation">
+        <bpmn:documentation>Step 1: Recall Cost Capture &amp; Documentation: (a) when a recall is initiated (W873), Category Manager opens a recall cost tracker in ERP; (b) system begins automatic cost capture for the recall event: inventory value of quarantined stock (at WAC), return processing labor hours × hourly rate, reverse logistics costs (pickup from stores, DC handling, vendor return shipping), regulatory filing costs (DTI notifications, BIR adjustments), replacement procurement cost differential (if alternative vendor price is higher); (c) Category Manager captures indirect costs: store labor hours spent on recall activities, estimated lost sales during shelf gap, customer complaint handling costs (W41), temporary price reduction on substitute items
+Responsible (R): Category Manager / System
+Accountable (A): VP Merchandising
+Duration: Ongoing during recall</bpmn:documentation>
+        <bpmn:incoming>W1151_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1151_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1151_Task6" name="Margin Impact Assessment">
+        <bpmn:documentation>Step 2: Margin Impact Assessment: (a) finance analyst calculates margin impact: gross margin on recalled items (before recall) vs. gross margin on replacement items (after recall); (b) if replacement sourced from alternative vendor at higher cost but sold at same retail price: margin erosion quantified per unit and projected over expected remaining sales period; (c) if replacement sourced from same vendor at same cost but recall caused shelf gap period: lost sales margin calculated (days off-shelf × average daily units × margin %); (d) total margin impact = direct recall costs + indirect costs + margin erosion on replacements + lost sales during gap; (e) margin impact report generated for executive review and vendor claim preparation
+Responsible (R): Finance Analyst
+Accountable (A): CFO
+Duration: 2–3 hours per recall</bpmn:documentation>
+        <bpmn:incoming>W1151_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1151_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1151_Task7" name="Vendor Cost Recovery Claim">
+        <bpmn:documentation>Step 3: Vendor Cost Recovery Claim: (a) Category Manager prepares vendor cost recovery claim using recall cost tracker data; (b) claim includes: itemized direct costs with supporting documentation (GRNs, shipping invoices, labor logs), margin erosion calculation with market data (alternative vendor quotes), regulatory compliance costs with receipts, total claim amount; (c) claim submitted to vendor per terms of vendor agreement (W62 — contract terms, W244 — dispute resolution); (d) standard recovery expectation: 80–100% of direct costs, 50–75% of indirect costs; vendor agreement terms govern recovery rate; (e) if vendor disputes: escalation per W244 (dispute resolution) and legal review (W230)
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 2–4 hours per claim</bpmn:documentation>
+        <bpmn:incoming>W1151_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1151_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1151_Task8" name="Recovery Settlement &amp; Post-Recall Financial Close">
+        <bpmn:documentation>Step 4: Recovery Settlement &amp; Post-Recall Financial Close: (a) vendor remits cost recovery payment (credit note against future invoices, or direct payment); (b) recovery recorded in AP module against recall cost tracker; (c) net recall cost calculated: total recall costs minus vendor recovery; (d) unrecovered costs allocated: if vendor contract covers full recovery → no P&amp;L impact; if partial recovery → net cost allocated to category margin as one-time charge; (e) recall financial record closed and archived; (f) lessons learned feed into vendor scorecard (W44) recall performance metric and vendor contract renewal negotiations (W704)
+Responsible (R): Finance Analyst / Category Manager
+Accountable (A): CFO
+Duration: 1–2 hours per recall</bpmn:documentation>
+        <bpmn:incoming>W1151_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1151_End9" name="Complete">
+        <bpmn:incoming>W1151_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1151_Annotation10">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Category Manager review and approval gate
+Owner: Category Manager (HQ)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1151_Assoc11" sourceRef="W1151_Annotation10" targetRef="W1151_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1151_Flow12" sourceRef="W1151_Start4" targetRef="W1151_Task5" />
+      <bpmn:sequenceFlow id="W1151_Flow13" sourceRef="W1151_Task5" targetRef="W1151_Task6" />
+      <bpmn:sequenceFlow id="W1151_Flow14" sourceRef="W1151_Task6" targetRef="W1151_Task7" />
+      <bpmn:sequenceFlow id="W1151_Flow15" sourceRef="W1151_Task7" targetRef="W1151_Task8" />
+      <bpmn:sequenceFlow id="W1151_Flow16" sourceRef="W1151_Task8" targetRef="W1151_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1151_diag">
+      <bpmndi:BPMNPlane id="W1151_plane" bpmnElement="W_W1151">
+        <bpmndi:BPMNShape id="W1151_Lane1_di" bpmnElement="W1151_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_Lane2_di" bpmnElement="W1151_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_Task5_di" bpmnElement="W1151_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_Task6_di" bpmnElement="W1151_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_Task7_di" bpmnElement="W1151_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_Task8_di" bpmnElement="W1151_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_Start4_di" bpmnElement="W1151_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_End9_di" bpmnElement="W1151_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1151_Annotation10_di" bpmnElement="W1151_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1151_Flow12_di" bpmnElement="W1151_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1151_Flow13_di" bpmnElement="W1151_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1151_Flow14_di" bpmnElement="W1151_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1151_Flow15_di" bpmnElement="W1151_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1151_Flow16_di" bpmnElement="W1151_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1151_Assoc11_di" bpmnElement="W1151_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1224" name="W1224. Vendor Quarterly Business Review, Scorecard Meeting &amp; Strategic Relationship Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly review calendar; or triggered by vendor relationship milestone (new vendor onboarding first review, vendor escalation from W44, contract renewal approaching)
+Frequency: Quarterly for top 50 vendors (representing ~70% of COGS); semi-annual for next 50 vendors; annual for remaining ~900 vendors
+Volume: ~50 quarterly reviews + ~25 semi-annual reviews + ~900 annual reviews
+Owner: Category Manager
+Participants: Category Manager, Buyer, Supply Planning Analyst, Quality Assurance, Finance Analyst, Vendor Account Manager, VP Merchandising (for top 10 vendors)
+Source: workflow W1224 — Vendor Quarterly Business Review, Scorecard Meeting &amp; Strategic Relationship Management</bpmn:documentation>
+      <bpmn:laneSet id="W1224_LaneSet5">
+        <bpmn:lane id="W1224_Lane1" name="System">
+        <bpmn:flowNodeRef>W1224_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1224_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1224_Lane2" name="Category Manager">
+        <bpmn:flowNodeRef>W1224_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1224_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1224_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1224_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1224_Lane3" name="VP Merchandising">
+        <bpmn:flowNodeRef>W1224_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1224_Lane4" name="Buyer">
+        <bpmn:flowNodeRef>W1224_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1224_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1224_Start6" name="Quarterly review calendar; or triggered by vendor relationship milestone (new vendor…">
+        <bpmn:outgoing>W1224_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1224_Task7" name="Scorecard preparation">
+        <bpmn:documentation>Step 1: Scorecard preparation (2 weeks before QBR): System compiles vendor scorecard for the trailing quarter: (a) OTIF performance: on-time delivery rate (target ≥ 95%), in-full delivery rate, lead time adherence; (b) Quality: defect rate, return rate, customer complaint rate, product recall incidents; (c) Commercial: total spend vs. prior quarter and prior year, pricing competitiveness vs. market, promotional markdown claims per W161, payment term compliance; (d) Responsiveness: PO acknowledgment time, issue resolution time, query response time; (e) Innovation: new product introductions, category growth contribution, exclusive product development; (f) Compliance: BIR accreditation, product certification (PS mark, ICC), insurance currency, ESG compliance per W195
+Responsible (R): System / Supply Planning Analyst
+Accountable (A): Category Manager
+Duration: 2 hours per vendor</bpmn:documentation>
+        <bpmn:incoming>W1224_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1224_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1224_Task8" name="QBR agenda">
+        <bpmn:documentation>Step 2: Category Manager reviews scorecard and prepares QBR agenda: (a) performance highlights and lowlights, (b) open issues from prior QBR — status of agreed actions, (c) upcoming seasonal demand forecast and required capacity, (d) new product opportunities or SKU rationalization discussion, (e) promotional calendar alignment for next quarter, (f) pricing review: any cost increase requests, competitive pricing concerns, (g) relationship health: any disputes, payment issues, or communication gaps
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 1–2 hours per vendor</bpmn:documentation>
+        <bpmn:incoming>W1224_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1224_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1224_Task9" name="QBR meeting">
+        <bpmn:documentation>Step 3: QBR meeting (in-person for top 20 vendors; virtual for others): (a) Category Manager presents BuildRight scorecard; Vendor Account Manager presents their perspective: production capacity, new products, market trends, cost drivers; (b) discuss open action items from prior QBR — verify closure or escalate; (c) align on next quarter&#x27;s demand forecast and promotional calendar; (d) negotiate any pricing changes — Category Manager has authority for ≤ 3% price increase acceptance; larger increases require VP Merchandising approval; (e) agree on new actions and owners with deadlines
+Responsible (R): Category Manager / Vendor Account Manager
+Accountable (A): VP Merchandising (top 10)
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W1224_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1224_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1224_Task10" name="Strategic vendor planning">
+        <bpmn:documentation>Step 4: Strategic vendor planning (top 10 vendors only, annual): VP Merchandising and Category Manager conduct strategic planning session with vendor&#x27;s senior leadership: (a) 3-year category growth plan, (b) exclusive product development roadmap, (c) joint business plan with shared KPIs, (d) technology integration roadmap (EDI, vendor portal enhancements per VS-03.4), (e) sustainability commitments per W195
+Responsible (R): VP Merchandising / Category Manager
+Accountable (A): CEO (for #1 vendor)
+Duration: 2–4 hours</bpmn:documentation>
+        <bpmn:incoming>W1224_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1224_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1224_Task11" name="Post-QBR documentation">
+        <bpmn:documentation>Step 5: Post-QBR documentation: Category Manager documents QBR minutes: (a) scorecard results, (b) agreed actions with owners and deadlines, (c) pricing agreements, (d) demand forecast shared with vendor, (e) any escalations or disputes; distributes to internal stakeholders (Buyer, Supply Planning, Finance, QA) and vendor within 48 hours
+Responsible (R): Category Manager
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1224_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1224_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1224_Task12" name="Action item tracking">
+        <bpmn:documentation>Step 6: Action item tracking: Buyer and Supply Planning Analyst track QBR action items to closure: (a) weekly check on overdue items, (b) escalate non-responsive vendor actions to Category Manager, (c) system sends automated reminders to action owners 3 days before deadline
+Responsible (R): Buyer / Supply Planning Analyst
+Accountable (A): Category Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1224_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1224_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1224_Task13" name="Semi-annual vendor tier classification">
+        <bpmn:documentation>Step 7: Semi-annual vendor tier classification: Category Manager reviews vendor tier classification: (a) Strategic (top 50): QBR + joint business planning + preferred terms, (b) Preferred (next 100): semi-annual review + competitive terms, (c) Transactional (remaining ~850): annual review + standard terms; vendors may be promoted or demoted based on scorecard trajectory
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1224_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1224_End14" name="Complete">
+        <bpmn:incoming>W1224_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1224_Annotation15">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1224_Assoc16" sourceRef="W1224_Annotation15" targetRef="W1224_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1224_Flow17" sourceRef="W1224_Start6" targetRef="W1224_Task7" />
+      <bpmn:sequenceFlow id="W1224_Flow18" sourceRef="W1224_Task7" targetRef="W1224_Task8" />
+      <bpmn:sequenceFlow id="W1224_Flow19" sourceRef="W1224_Task8" targetRef="W1224_Task9" />
+      <bpmn:sequenceFlow id="W1224_Flow20" sourceRef="W1224_Task9" targetRef="W1224_Task10" />
+      <bpmn:sequenceFlow id="W1224_Flow21" sourceRef="W1224_Task10" targetRef="W1224_Task11" />
+      <bpmn:sequenceFlow id="W1224_Flow22" sourceRef="W1224_Task11" targetRef="W1224_Task12" />
+      <bpmn:sequenceFlow id="W1224_Flow23" sourceRef="W1224_Task12" targetRef="W1224_Task13" />
+      <bpmn:sequenceFlow id="W1224_Flow24" sourceRef="W1224_Task13" targetRef="W1224_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1224_diag">
+      <bpmndi:BPMNPlane id="W1224_plane" bpmnElement="W_W1224">
+        <bpmndi:BPMNShape id="W1224_Lane1_di" bpmnElement="W1224_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Lane2_di" bpmnElement="W1224_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Lane3_di" bpmnElement="W1224_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Lane4_di" bpmnElement="W1224_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Task7_di" bpmnElement="W1224_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Task8_di" bpmnElement="W1224_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Task9_di" bpmnElement="W1224_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Task10_di" bpmnElement="W1224_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Task11_di" bpmnElement="W1224_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Task12_di" bpmnElement="W1224_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Task13_di" bpmnElement="W1224_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Start6_di" bpmnElement="W1224_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_End14_di" bpmnElement="W1224_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1224_Annotation15_di" bpmnElement="W1224_Annotation15"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1224_Flow17_di" bpmnElement="W1224_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Flow18_di" bpmnElement="W1224_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Flow19_di" bpmnElement="W1224_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Flow20_di" bpmnElement="W1224_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Flow21_di" bpmnElement="W1224_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Flow22_di" bpmnElement="W1224_Flow22"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Flow23_di" bpmnElement="W1224_Flow23"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Flow24_di" bpmnElement="W1224_Flow24"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1224_Assoc16_di" bpmnElement="W1224_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1230" name="W1230. Vendor Consignment Inventory Monthly Settlement, Revenue Share &amp; Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Month-end close; consignment sell-through report generated
+Frequency: Monthly; per consignment vendor (currently ~12 key vendors, ~300 SKUs)
+Volume: ~12 consignment vendor settlements/month; ~300 SKUs tracked
+Owner: Merchandise Analyst
+Participants: Merchandise Analyst, Category Manager, Finance – AP, Vendor Account Manager
+Source: workflow W1230 — Vendor Consignment Inventory Monthly Settlement, Revenue Share &amp; Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1230_LaneSet5">
+        <bpmn:lane id="W1230_Lane1" name="System">
+        <bpmn:flowNodeRef>W1230_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1230_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1230_Lane2" name="Merchandise Analyst">
+        <bpmn:flowNodeRef>W1230_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1230_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1230_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1230_Lane3" name="Category Manager">
+        <bpmn:flowNodeRef>W1230_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1230_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1230_Lane4" name="Finance – AP">
+        <bpmn:flowNodeRef>W1230_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1230_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1230_Start6" name="Month-end close; consignment sell-through report generated">
+        <bpmn:outgoing>W1230_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1230_Task7" name="Monthly consignment sell-through extraction">
+        <bpmn:documentation>Step 1: Monthly consignment sell-through extraction: System generates consignment sell-through report: (a) all consignment SKU sales for the month by vendor; (b) quantities sold per SKU; (c) selling price per unit; (d) total revenue per SKU; (e) unsold consignment inventory on-hand at month-end by location
+Responsible (R): System / Merchandise Analyst
+Accountable (A): Category Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1230_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1230_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1230_Task8" name="Revenue share calculation">
+        <bpmn:documentation>Step 2: Revenue share calculation: Merchandise Analyst calculates vendor settlement: (a) apply agreed revenue-share percentage per vendor contract (e.g., BuildRight keeps 15–25%, vendor receives 75–85% of selling price); (b) calculate vendor&#x27;s share per SKU per unit; (c) sum total vendor settlement amount; (d) deduct any applicable chargebacks (damaged units, returns per W12A)
+Responsible (R): Merchandise Analyst
+Accountable (A): Category Manager
+Duration: 1–2 hours/vendor</bpmn:documentation>
+        <bpmn:incoming>W1230_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1230_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1230_Task9" name="Inventory reconciliation">
+        <bpmn:documentation>Step 3: Inventory reconciliation: Merchandise Analyst reconciles: (a) beginning consignment inventory + units received during month – units sold = ending consignment inventory; (b) verify ending inventory matches physical count (perpetual system + cycle count per W6); (c) investigate discrepancies; (d) verify unsold items are still in saleable condition
+Responsible (R): Merchandise Analyst
+Accountable (A): Category Manager
+Duration: 1 hour/vendor</bpmn:documentation>
+        <bpmn:incoming>W1230_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1230_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1230_Task10" name="Vendor settlement statement preparation">
+        <bpmn:documentation>Step 4: Vendor settlement statement preparation: (a) generate vendor settlement statement detailing: SKUs sold, quantities, unit price, revenue share split, deductions, net payable; (b) include aging of unsold consignment inventory (flag items &gt;90 days for potential return-to-vendor per W88); (c) prepare AP invoice for vendor settlement
+Responsible (R): Merchandise Analyst
+Accountable (A): Category Manager
+Duration: 1 hour/vendor</bpmn:documentation>
+        <bpmn:incoming>W1230_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1230_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1230_Task11" name="Category Manager approval">
+        <bpmn:documentation>Step 5: Category Manager approval: Category Manager reviews and approves settlement: (a) verify revenue-share calculation matches contract terms; (b) approve unsold inventory aging action (return request, markdown request per W93, or retention); (c) approve AP invoice for payment
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 30 min/vendor</bpmn:documentation>
+        <bpmn:incoming>W1230_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1230_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1230_Task12" name="AP processing &amp; payment">
+        <bpmn:documentation>Step 6: AP processing &amp; payment: Finance – AP processes vendor settlement invoice: (a) create AP voucher against consignment vendor account; (b) schedule payment per agreed terms; (c) post settlement to GL (consignment payable cleared, COGS recognized per W23); (d) issue payment via bank transfer per W7
+Responsible (R): Finance – AP
+Accountable (A): Finance Manager
+Duration: 15 min/vendor</bpmn:documentation>
+        <bpmn:incoming>W1230_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1230_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1230_Task13" name="Quarterly business review">
+        <bpmn:documentation>Step 7: Quarterly business review: Include consignment performance in vendor QBR per W1224: (a) sell-through rate by SKU; (b) revenue share profitability vs. owned inventory; (c) inventory aging trends; (d) recommend assortment changes (add/remove consignment SKUs)
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W1230_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1230_End14" name="Complete">
+        <bpmn:incoming>W1230_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1230_Annotation15">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Merchandise Analyst review and approval gate; operational: periodic reconciliation against source documents
+Owner: Merchandise Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1230_Assoc16" sourceRef="W1230_Annotation15" targetRef="W1230_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1230_Flow17" sourceRef="W1230_Start6" targetRef="W1230_Task7" />
+      <bpmn:sequenceFlow id="W1230_Flow18" sourceRef="W1230_Task7" targetRef="W1230_Task8" />
+      <bpmn:sequenceFlow id="W1230_Flow19" sourceRef="W1230_Task8" targetRef="W1230_Task9" />
+      <bpmn:sequenceFlow id="W1230_Flow20" sourceRef="W1230_Task9" targetRef="W1230_Task10" />
+      <bpmn:sequenceFlow id="W1230_Flow21" sourceRef="W1230_Task10" targetRef="W1230_Task11" />
+      <bpmn:sequenceFlow id="W1230_Flow22" sourceRef="W1230_Task11" targetRef="W1230_Task12" />
+      <bpmn:sequenceFlow id="W1230_Flow23" sourceRef="W1230_Task12" targetRef="W1230_Task13" />
+      <bpmn:sequenceFlow id="W1230_Flow24" sourceRef="W1230_Task13" targetRef="W1230_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1230_diag">
+      <bpmndi:BPMNPlane id="W1230_plane" bpmnElement="W_W1230">
+        <bpmndi:BPMNShape id="W1230_Lane1_di" bpmnElement="W1230_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Lane2_di" bpmnElement="W1230_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Lane3_di" bpmnElement="W1230_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Lane4_di" bpmnElement="W1230_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Task7_di" bpmnElement="W1230_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Task8_di" bpmnElement="W1230_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Task9_di" bpmnElement="W1230_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Task10_di" bpmnElement="W1230_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Task11_di" bpmnElement="W1230_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Task12_di" bpmnElement="W1230_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Task13_di" bpmnElement="W1230_Task13"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Start6_di" bpmnElement="W1230_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_End14_di" bpmnElement="W1230_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1230_Annotation15_di" bpmnElement="W1230_Annotation15"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1230_Flow17_di" bpmnElement="W1230_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Flow18_di" bpmnElement="W1230_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Flow19_di" bpmnElement="W1230_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Flow20_di" bpmnElement="W1230_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Flow21_di" bpmnElement="W1230_Flow21"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Flow22_di" bpmnElement="W1230_Flow22"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Flow23_di" bpmnElement="W1230_Flow23"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Flow24_di" bpmnElement="W1230_Flow24"><di:waypoint x="1840" y="505" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1230_Assoc16_di" bpmnElement="W1230_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1236" name="W1236. Vendor Promotional Funding, Co-Op Advertising &amp; Markdown Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Completion of promotional event (bi-monthly sale or monthly hot deal); vendor funding claim period closes
+Frequency: 6 major bi-monthly promotions + 12 monthly hot deal cycles = ~18 promotional funding reconciliation cycles/year
+Volume: ~100–200 vendor-funded promotional items per event across ~50–80 participating vendors
+Owner: Merchandise Analyst
+Participants: Merchandise Analyst, Category Manager, Marketing Manager, Finance – AP, Vendor Account Manager
+Source: workflow W1236 — Vendor Promotional Funding, Co-Op Advertising &amp; Markdown Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1236_LaneSet5">
+        <bpmn:lane id="W1236_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1236_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1236_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1236_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1236_Lane2" name="Marketing Manager">
+        <bpmn:flowNodeRef>W1236_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1236_Lane3" name="Merchandise Analyst">
+        <bpmn:flowNodeRef>W1236_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1236_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1236_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1236_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1236_Lane4" name="Finance – AP">
+        <bpmn:flowNodeRef>W1236_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1236_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1236_Start6" name="Completion of promotional event (bi-monthly sale or monthly hot deal); vendor funding…">
+        <bpmn:outgoing>W1236_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1236_Task7" name="Pre-promotion funding agreement">
+        <bpmn:documentation>Step 1: Pre-promotion funding agreement: Before event: (a) Category Manager negotiates promotional funding terms with vendor: markdown allowance per unit, co-op advertising contribution, volume bonus thresholds; (b) terms recorded in ERP promotional funding agreement per W300; (c) system links funding terms to promotional price in POS/ecommerce
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: Per vendor negotiation</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1236_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1236_Task8" name="Co-op advertising cost tracking">
+        <bpmn:documentation>Step 2: Co-op advertising cost tracking: Marketing Manager tracks co-op advertising costs: (a) catalog printing cost allocation per vendor (based on page/space); (b) digital advertising spend attributable to vendor products; (c) in-store display material costs (signage, endcap displays); (d) social media campaign costs for vendor-funded items
+Responsible (R): Marketing Manager
+Accountable (A): Category Manager
+Duration: 2–4 hours/event</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1236_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1236_Task9" name="Post-promotion sell-through extraction">
+        <bpmn:documentation>Step 3: Post-promotion sell-through extraction: After event concludes: (a) system extracts promotional SKU sell-through data: units sold per SKU per store/channel; (b) compare actual sales vs. vendor-committed volume; (c) identify items that achieved volume bonus thresholds
+Responsible (R): Merchandise Analyst
+Accountable (A): Category Manager
+Duration: 2–3 hours/event</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1236_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1236_Task10" name="Vendor funding claim calculation">
+        <bpmn:documentation>Step 4: Vendor funding claim calculation: Merchandise Analyst calculates: (a) markdown allowance due: (regular price – promo price) × units sold × vendor share %; (b) co-op advertising reimbursement: per agreed allocation; (c) volume bonus earned: per threshold structure; (d) deductions: vendor-funded items not displayed per W262 compliance, agreed sell-through shortfall penalties; (e) net vendor funding claim
+Responsible (R): Merchandise Analyst
+Accountable (A): Category Manager
+Duration: 3–5 hours/event</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1236_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1236_Task11" name="Category Manager review and approval">
+        <bpmn:documentation>Step 5: Category Manager review and approval: Category Manager reviews claims: (a) verify calculations match agreement terms; (b) validate sell-through data; (c) approve claim for vendor submission; (d) escalate disputed items to VP Merchandising
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 1–2 hours/event</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1236_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1236_Task12" name="Vendor claim submission &amp; dispute resolution">
+        <bpmn:documentation>Step 6: Vendor claim submission &amp; dispute resolution: (a) submit funding claim to vendor with supporting documentation; (b) vendor reviews and may dispute quantities or calculations; (c) Merchandise Analyst resolves disputes with supporting POS/ecommerce transaction data; (d) agree final settlement amount
+Responsible (R): Merchandise Analyst / Vendor
+Accountable (A): Category Manager
+Duration: 1–5 hours/event</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1236_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1236_Task13" name="AP credit memo &amp; settlement">
+        <bpmn:documentation>Step 7: AP credit memo &amp; settlement: (a) upon vendor agreement: create vendor credit memo in AP per W7; (b) credit memo offsets future vendor payments; (c) post to GL: promotional expense reduced by vendor funding recovery; (d) update promotional ROI analytics per W13
+Responsible (R): Finance – AP
+Accountable (A): Finance Manager
+Duration: 30 min/vendor</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1236_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1236_Task14" name="Promotional funding analytics">
+        <bpmn:documentation>Step 8: Promotional funding analytics: Quarterly: (a) vendor funding recovery rate (% of eligible funding actually collected); (b) promotional ROI with and without vendor funding; (c) vendor payment timeliness; (d) funding terms benchmarking across vendors
+Responsible (R): Merchandise Analyst
+Accountable (A): Category Manager
+Duration: 4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1236_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1236_End15" name="Complete">
+        <bpmn:incoming>W1236_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1236_Annotation16">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Merchandise Analyst review and approval gate
+Owner: Merchandise Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1236_Assoc17" sourceRef="W1236_Annotation16" targetRef="W1236_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1236_Flow18" sourceRef="W1236_Start6" targetRef="W1236_Task7" />
+      <bpmn:sequenceFlow id="W1236_Flow19" sourceRef="W1236_Task7" targetRef="W1236_Task8" />
+      <bpmn:sequenceFlow id="W1236_Flow20" sourceRef="W1236_Task8" targetRef="W1236_Task9" />
+      <bpmn:sequenceFlow id="W1236_Flow21" sourceRef="W1236_Task9" targetRef="W1236_Task10" />
+      <bpmn:sequenceFlow id="W1236_Flow22" sourceRef="W1236_Task10" targetRef="W1236_Task11" />
+      <bpmn:sequenceFlow id="W1236_Flow23" sourceRef="W1236_Task11" targetRef="W1236_Task12" />
+      <bpmn:sequenceFlow id="W1236_Flow24" sourceRef="W1236_Task12" targetRef="W1236_Task13" />
+      <bpmn:sequenceFlow id="W1236_Flow25" sourceRef="W1236_Task13" targetRef="W1236_Task14" />
+      <bpmn:sequenceFlow id="W1236_Flow26" sourceRef="W1236_Task14" targetRef="W1236_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1236_diag">
+      <bpmndi:BPMNPlane id="W1236_plane" bpmnElement="W_W1236">
+        <bpmndi:BPMNShape id="W1236_Lane1_di" bpmnElement="W1236_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Lane2_di" bpmnElement="W1236_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Lane3_di" bpmnElement="W1236_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Lane4_di" bpmnElement="W1236_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task7_di" bpmnElement="W1236_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task8_di" bpmnElement="W1236_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task9_di" bpmnElement="W1236_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task10_di" bpmnElement="W1236_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task11_di" bpmnElement="W1236_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task12_di" bpmnElement="W1236_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task13_di" bpmnElement="W1236_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Task14_di" bpmnElement="W1236_Task14"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Start6_di" bpmnElement="W1236_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_End15_di" bpmnElement="W1236_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1236_Annotation16_di" bpmnElement="W1236_Annotation16"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1236_Flow18_di" bpmnElement="W1236_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow19_di" bpmnElement="W1236_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow20_di" bpmnElement="W1236_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow21_di" bpmnElement="W1236_Flow21"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow22_di" bpmnElement="W1236_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow23_di" bpmnElement="W1236_Flow23"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow24_di" bpmnElement="W1236_Flow24"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow25_di" bpmnElement="W1236_Flow25"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Flow26_di" bpmnElement="W1236_Flow26"><di:waypoint x="2050" y="505" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1236_Assoc17_di" bpmnElement="W1236_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1303" name="W1303. Vendor Rebate, Co-Op Advertising Fund &amp; Promotional Incentive Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly rebate calculation cycle; or co-op advertising campaign execution; or promotional incentive claim from vendor
+Frequency: Quarterly rebate settlements; monthly co-op advertising reconciliation; promotional incentives per sale event
+Volume: ~200 vendors with rebate agreements; ~50 vendors with co-op advertising arrangements; ~PHP 800M–1.2B in annual vendor rebates and co-op income
+Owner: Category Manager
+Participants: Category Manager, Finance Analyst, Marketing Manager, Buyer, Vendor Account Manager, AP Clerk
+Source: workflow W1303 — Vendor Rebate, Co-Op Advertising Fund &amp; Promotional Incentive Management</bpmn:documentation>
+      <bpmn:laneSet id="W1303_LaneSet4">
+        <bpmn:lane id="W1303_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1303_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1303_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1303_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1303_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1303_Lane2" name="System">
+        <bpmn:flowNodeRef>W1303_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1303_Lane3" name="Marketing Manager">
+        <bpmn:flowNodeRef>W1303_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1303_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1303_Start5" name="Quarterly rebate calculation cycle; or co-op advertising campaign execution; or…">
+        <bpmn:outgoing>W1303_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1303_Task6" name="Rebate agreement setup &amp; tracking">
+        <bpmn:documentation>Step 1: Rebate agreement setup &amp; tracking: (a) during annual vendor negotiations (W44), Category Manager negotiates rebate terms: (i) volume rebate tiers (e.g., PHP 0–50M = 1%, PHP 50–100M = 2%, &gt; PHP 100M = 3%), (ii) co-op advertising fund percentage (e.g., 3% of annual purchases), (iii) promotional incentive schedule (e.g., PHP 200K per bi-monthly catalog placement); (b) Finance Analyst enters rebate agreement parameters into ERP rebate module: tier thresholds, percentage rates, settlement frequency, eligible product categories, exclusions; (c) system tracks cumulative purchases per vendor against rebate tiers in real-time; (d) system alerts Category Manager when vendor approaches next rebate tier threshold
+Responsible (R): Category Manager / Finance Analyst
+Accountable (A): VP Merchandising
+Duration: 2–4 hours/vendor during annual negotiation</bpmn:documentation>
+        <bpmn:incoming>W1303_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1303_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1303_Task7" name="Quarterly rebate calculation &amp; claim">
+        <bpmn:documentation>Step 2: Quarterly rebate calculation &amp; claim: (a) at quarter-end, system calculates earned rebate per vendor: (i) cumulative purchases for the quarter × applicable rebate rate, (ii) if annual rebate: system calculates projected annual rebate based on YTD purchases × annualized rate; (b) Finance Analyst reviews calculated rebates: (i) verify purchase volume against AP records per W7, (ii) verify eligible products (some agreements exclude consignment, clearance, or imported items), (iii) verify no double-counting across entities (BuildRight Depot purchases vs. Logistics purchases); (c) system generates rebate claim report per vendor with supporting purchase detail; (d) Category Manager reviews and approves claim; (e) claim transmitted to vendor via supplier portal; (f) vendor reviews and confirms or disputes; (g) upon vendor confirmation: system generates AP credit memo or vendor payment per agreement (credit against future invoices or direct payment)
+Responsible (R): System / Finance Analyst / Category Manager
+Accountable (A): Category Manager
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1303_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1303_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1303_Task8" name="Co-op advertising fund reconciliation">
+        <bpmn:documentation>Step 3: Co-op advertising fund reconciliation: Monthly, Marketing Manager and Category Manager reconcile co-op advertising fund: (a) system calculates co-op fund earned: monthly purchases from vendor × co-op fund %; (b) system tracks co-op advertising expenditures by vendor: (i) catalog placement costs (per page, per edition), (ii) social media advertising spend featuring vendor&#x27;s products, (iii) in-store display costs (signage, fixtures, point-of-purchase materials), (iv) digital advertising costs (website banners, search ads); (c) reconcile earned fund vs. spent amount: (i) if earned &gt; spent: BuildRight has surplus co-op fund to spend on vendor&#x27;s advertising, (ii) if spent &gt; earned: BuildRight may owe vendor reimbursement or excess counts against future fund; (d) Marketing Manager plans next month&#x27;s co-op advertising allocation per vendor based on fund balance and promotional calendar
+Responsible (R): Marketing Manager / Category Manager
+Accountable (A): VP Marketing
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1303_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1303_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1303_Task9" name="Promotional incentive claim processing">
+        <bpmn:documentation>Step 4: Promotional incentive claim processing: Per promotional event: (a) before sale event: Category Manager negotiates promotional incentives with vendor: markdown money (vendor subsidizes discount on their products), display allowance (payment for featured placement), bonus stock (vendor provides free product for every X units purchased); (b) promotional incentive terms entered in ERP with promotional event ID; (c) during promotion: system tracks promotional sales by vendor — items sold at promotional price, discount amount, display placement verification; (d) post-promotion: system calculates total promotional incentive earned per vendor: (i) markdown money: total units sold at discount × vendor subsidy per unit, (ii) display allowance: per-placement fee × number of stores displaying, (iii) bonus stock: units earned × cost per unit; (e) Category Manager submits promotional incentive claim to vendor with supporting sales data; (f) vendor confirms and issues credit or payment
+Responsible (R): Category Manager / System
+Accountable (A): VP Merchandising
+Duration: 2–4 hours per promotional event</bpmn:documentation>
+        <bpmn:incoming>W1303_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1303_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1303_Task10" name="Annual vendor program ROI analysis">
+        <bpmn:documentation>Step 5: Annual vendor program ROI analysis: Annual, Category Manager and Finance Analyst evaluate vendor program ROI: (a) total rebates, co-op income, and promotional incentives earned per vendor, (b) as % of purchases from that vendor (benchmark: 2–5% of purchases), (c) vendor compliance rate (claims disputed, payments delayed), (d) comparison: vendors with rebate programs vs. vendors without (are rebate vendors giving BuildRight better net pricing or just inflating gross price to fund rebates?); (e) recommend to VP Merchandising: negotiate higher rebate rates with top vendors, replace underperforming rebate programs with flat net pricing, or expand co-op advertising programs
+Responsible (R): Category Manager / Finance Analyst
+Accountable (A): VP Merchandising
+Duration: 1–2 days/year</bpmn:documentation>
+        <bpmn:incoming>W1303_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1303_End11" name="Complete">
+        <bpmn:incoming>W1303_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1303_Annotation12">
+        <bpmn:text>Controls: - CTL-248 (ensure controlled execution — Vendor Performance &amp; Contracts (PA-03.3).) | - operational: Category Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1303_Assoc13" sourceRef="W1303_Annotation12" targetRef="W1303_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1303_Flow14" sourceRef="W1303_Start5" targetRef="W1303_Task6" />
+      <bpmn:sequenceFlow id="W1303_Flow15" sourceRef="W1303_Task6" targetRef="W1303_Task7" />
+      <bpmn:sequenceFlow id="W1303_Flow16" sourceRef="W1303_Task7" targetRef="W1303_Task8" />
+      <bpmn:sequenceFlow id="W1303_Flow17" sourceRef="W1303_Task8" targetRef="W1303_Task9" />
+      <bpmn:sequenceFlow id="W1303_Flow18" sourceRef="W1303_Task9" targetRef="W1303_Task10" />
+      <bpmn:sequenceFlow id="W1303_Flow19" sourceRef="W1303_Task10" targetRef="W1303_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1303_diag">
+      <bpmndi:BPMNPlane id="W1303_plane" bpmnElement="W_W1303">
+        <bpmndi:BPMNShape id="W1303_Lane1_di" bpmnElement="W1303_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Lane2_di" bpmnElement="W1303_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Lane3_di" bpmnElement="W1303_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Task6_di" bpmnElement="W1303_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Task7_di" bpmnElement="W1303_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Task8_di" bpmnElement="W1303_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Task9_di" bpmnElement="W1303_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Task10_di" bpmnElement="W1303_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Start5_di" bpmnElement="W1303_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_End11_di" bpmnElement="W1303_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1303_Annotation12_di" bpmnElement="W1303_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1303_Flow14_di" bpmnElement="W1303_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1303_Flow15_di" bpmnElement="W1303_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1303_Flow16_di" bpmnElement="W1303_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1303_Flow17_di" bpmnElement="W1303_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1303_Flow18_di" bpmnElement="W1303_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1303_Flow19_di" bpmnElement="W1303_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1303_Assoc13_di" bpmnElement="W1303_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

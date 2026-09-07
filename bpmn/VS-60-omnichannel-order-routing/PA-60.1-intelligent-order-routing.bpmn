@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-60.1-intelligent-order-routing" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W2286" name="W2286. Order Source Selection Engine" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer places order
+Frequency: ~42,900 orders/month (per profile §8.5)
+Volume: ~42,900 routing decisions/month
+Owner: Ecommerce Operations Manager
+Participants: Ecom Ops Manager
+Source: workflow W2286 — Order Source Selection Engine</bpmn:documentation>
+      <bpmn:laneSet id="W2286_LaneSet2">
+        <bpmn:lane id="W2286_Lane1" name="System">
+        <bpmn:flowNodeRef>W2286_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2286_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2286_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2286_Start3" name="Customer places order">
+        <bpmn:outgoing>W2286_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2286_Task4" name="System evaluates per line item: nearest store, DC, vendor drop-ship, dark…">
+        <bpmn:documentation>Step 1: System evaluates per line item: nearest store, DC, vendor drop-ship, dark store; selects by speed, cost, availability, item type; BOPIS → customer-selected store; delivery → fastest+cheapest
+Responsible (R): System
+Accountable (A): Ecom Ops Manager
+Duration: &lt;5 sec automated</bpmn:documentation>
+        <bpmn:incoming>W2286_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2286_End5" name="Complete">
+        <bpmn:incoming>W2286_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2286_Annotation6">
+        <bpmn:text>Controls: - CTL-409: reservation integrity; CTL-197 (ATP accuracy — links to VS-05); operational: Ecom Ops Manager routing-rule sign-off
+Owner: Ecommerce Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2286_Assoc7" sourceRef="W2286_Annotation6" targetRef="W2286_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2286_Flow8" sourceRef="W2286_Start3" targetRef="W2286_Task4" />
+      <bpmn:sequenceFlow id="W2286_Flow9" sourceRef="W2286_Task4" targetRef="W2286_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2286_diag">
+      <bpmndi:BPMNPlane id="W2286_plane" bpmnElement="W_W2286">
+        <bpmndi:BPMNShape id="W2286_Lane1_di" bpmnElement="W2286_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2286_Task4_di" bpmnElement="W2286_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2286_Start3_di" bpmnElement="W2286_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2286_End5_di" bpmnElement="W2286_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2286_Annotation6_di" bpmnElement="W2286_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2286_Flow8_di" bpmnElement="W2286_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2286_Flow9_di" bpmnElement="W2286_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2286_Assoc7_di" bpmnElement="W2286_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2287" name="W2287. Mixed-Basket Order Splitting" isExecutable="false">
+      <bpmn:documentation>Trigger: Order items from multiple sources
+Frequency: ~7–12% of ecommerce orders (the multi-origin share, per W534)
+Volume: ~12K–17K split orders/month
+Owner: Order Management System
+Participants: Ecom Ops Manager
+Source: workflow W2287 — Mixed-Basket Order Splitting</bpmn:documentation>
+      <bpmn:laneSet id="W2287_LaneSet2">
+        <bpmn:lane id="W2287_Lane1" name="System">
+        <bpmn:flowNodeRef>W2287_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2287_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2287_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2287_Start3" name="Order items from multiple sources">
+        <bpmn:outgoing>W2287_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2287_Task4" name="System splits by source: store → BOPIS/ship-from-store, DC → DC fulfillment…">
+        <bpmn:documentation>Step 1: System splits by source: store → BOPIS/ship-from-store, DC → DC fulfillment, vendor → drop-ship, dark store → micro-fulfillment; creates linked sub-orders; communicates split to customer
+Responsible (R): System
+Accountable (A): Ecom Ops Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W2287_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2287_End5" name="Complete">
+        <bpmn:incoming>W2287_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2287_Annotation6">
+        <bpmn:text>Controls: - CTL-409: sub-order integrity; operational: Ecom Ops Manager split-rate monitoring
+Owner: Order Management System</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2287_Assoc7" sourceRef="W2287_Annotation6" targetRef="W2287_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2287_Flow8" sourceRef="W2287_Start3" targetRef="W2287_Task4" />
+      <bpmn:sequenceFlow id="W2287_Flow9" sourceRef="W2287_Task4" targetRef="W2287_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2287_diag">
+      <bpmndi:BPMNPlane id="W2287_plane" bpmnElement="W_W2287">
+        <bpmndi:BPMNShape id="W2287_Lane1_di" bpmnElement="W2287_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2287_Task4_di" bpmnElement="W2287_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2287_Start3_di" bpmnElement="W2287_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2287_End5_di" bpmnElement="W2287_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2287_Annotation6_di" bpmnElement="W2287_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2287_Flow8_di" bpmnElement="W2287_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2287_Flow9_di" bpmnElement="W2287_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2287_Assoc7_di" bpmnElement="W2287_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2288" name="W2288. Ship-from-Store Order Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Order routed to store
+Frequency: ~1,500–2,800/month (the VS-60 SFS register canon)
+Volume: ~1,500–2,800/month (the VS-60 SFS register canon)
+Owner: Store Stock Associate
+Participants: Stock Associate, 3PL, Store Manager
+Source: workflow W2288 — Ship-from-Store Order Processing</bpmn:documentation>
+      <bpmn:laneSet id="W2288_LaneSet2">
+        <bpmn:lane id="W2288_Lane1" name="Stock Associate">
+        <bpmn:flowNodeRef>W2288_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2288_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2288_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2288_Start3" name="Order routed to store">
+        <bpmn:outgoing>W2288_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2288_Task4" name="System generates pick list; Associate picks, packs, generates label; 3PL pickup…">
+        <bpmn:documentation>Step 1: System generates pick list; Associate picks, packs, generates label; 3PL pickup scheduled per VS-56; system updates tracking; customer notified; delivery in 2–3 days
+Responsible (R): Stock Associate / System / 3PL
+Accountable (A): Store Manager
+Duration: 15–30 min + 2–3 days</bpmn:documentation>
+        <bpmn:incoming>W2288_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2288_End5" name="Complete">
+        <bpmn:incoming>W2288_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2288_Annotation6">
+        <bpmn:text>Controls: - CTL-409: pick/ATP integrity; CTL-409 (pick-fraud detection evidence); operational: Store Manager ship-from-store-volume oversight
+Owner: Store Stock Associate</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2288_Assoc7" sourceRef="W2288_Annotation6" targetRef="W2288_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2288_Flow8" sourceRef="W2288_Start3" targetRef="W2288_Task4" />
+      <bpmn:sequenceFlow id="W2288_Flow9" sourceRef="W2288_Task4" targetRef="W2288_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2288_diag">
+      <bpmndi:BPMNPlane id="W2288_plane" bpmnElement="W_W2288">
+        <bpmndi:BPMNShape id="W2288_Lane1_di" bpmnElement="W2288_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2288_Task4_di" bpmnElement="W2288_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2288_Start3_di" bpmnElement="W2288_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2288_End5_di" bpmnElement="W2288_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2288_Annotation6_di" bpmnElement="W2288_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2288_Flow8_di" bpmnElement="W2288_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2288_Flow9_di" bpmnElement="W2288_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2288_Assoc7_di" bpmnElement="W2288_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2289" name="W2289. Vendor Drop-Ship Order Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Order routed to vendor
+Frequency: ~2K–4K/month; bulky/appliances
+Volume: ~2K–4K/month
+Owner: Vendor Management Coordinator
+Participants: Vendor, Vendor Coordinator
+Source: workflow W2289 — Vendor Drop-Ship Order Processing</bpmn:documentation>
+      <bpmn:laneSet id="W2289_LaneSet2">
+        <bpmn:lane id="W2289_Lane1" name="System">
+        <bpmn:flowNodeRef>W2289_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2289_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2289_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2289_Start3" name="Order routed to vendor">
+        <bpmn:outgoing>W2289_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2289_Task4" name="System creates drop-ship PO with customer address; vendor confirms in 24 hours…">
+        <bpmn:documentation>Step 1: System creates drop-ship PO with customer address; vendor confirms in 24 hours; ships with BuildRight packaging; system tracks; vendor confirms delivery; revenue recognized
+Responsible (R): System / Vendor
+Accountable (A): Vendor Coord
+Duration: 1–2 days + 3–7 days</bpmn:documentation>
+        <bpmn:incoming>W2289_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2289_End5" name="Complete">
+        <bpmn:incoming>W2289_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2289_Annotation6">
+        <bpmn:text>Controls: - CTL-409: drop-ship PO &amp; reservation integrity; CTL-114 (revenue-recognition-at-delivery — links to VS-157); operational: Vendor Coordinator monitoring
+Owner: Vendor Management Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2289_Assoc7" sourceRef="W2289_Annotation6" targetRef="W2289_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2289_Flow8" sourceRef="W2289_Start3" targetRef="W2289_Task4" />
+      <bpmn:sequenceFlow id="W2289_Flow9" sourceRef="W2289_Task4" targetRef="W2289_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2289_diag">
+      <bpmndi:BPMNPlane id="W2289_plane" bpmnElement="W_W2289">
+        <bpmndi:BPMNShape id="W2289_Lane1_di" bpmnElement="W2289_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2289_Task4_di" bpmnElement="W2289_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2289_Start3_di" bpmnElement="W2289_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2289_End5_di" bpmnElement="W2289_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2289_Annotation6_di" bpmnElement="W2289_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2289_Flow8_di" bpmnElement="W2289_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2289_Flow9_di" bpmnElement="W2289_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2289_Assoc7_di" bpmnElement="W2289_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2290" name="W2290. Inventory Reservation &amp; Allocation" isExecutable="false">
+      <bpmn:documentation>Trigger: Order placed
+Frequency: ~42,900 orders/month
+Volume: ~42,900 reservations/month
+Owner: Order Management System
+Participants: Inventory Manager
+Source: workflow W2290 — Inventory Reservation &amp; Allocation</bpmn:documentation>
+      <bpmn:laneSet id="W2290_LaneSet2">
+        <bpmn:lane id="W2290_Lane1" name="System">
+        <bpmn:flowNodeRef>W2290_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2290_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2290_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2290_Start3" name="Order placed">
+        <bpmn:outgoing>W2290_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2290_Task4" name="System reserves ATP at source; prevents double-selling; holds for window…">
+        <bpmn:documentation>Step 1: System reserves ATP at source; prevents double-selling; holds for window (BOPIS: 5 days, delivery: 24 hours); expired reservations cancelled, inventory restored, refund processed
+Responsible (R): System
+Accountable (A): Inventory Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W2290_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2290_End5" name="Complete">
+        <bpmn:incoming>W2290_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2290_Annotation6">
+        <bpmn:text>Controls: - CTL-409: reservation integrity; CTL-197 (atomic-ATP — no double-sell); operational: Inventory Manager reservation-expiry review
+Owner: Order Management System</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2290_Assoc7" sourceRef="W2290_Annotation6" targetRef="W2290_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2290_Flow8" sourceRef="W2290_Start3" targetRef="W2290_Task4" />
+      <bpmn:sequenceFlow id="W2290_Flow9" sourceRef="W2290_Task4" targetRef="W2290_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2290_diag">
+      <bpmndi:BPMNPlane id="W2290_plane" bpmnElement="W_W2290">
+        <bpmndi:BPMNShape id="W2290_Lane1_di" bpmnElement="W2290_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2290_Task4_di" bpmnElement="W2290_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2290_Start3_di" bpmnElement="W2290_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2290_End5_di" bpmnElement="W2290_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2290_Annotation6_di" bpmnElement="W2290_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2290_Flow8_di" bpmnElement="W2290_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2290_Flow9_di" bpmnElement="W2290_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2290_Assoc7_di" bpmnElement="W2290_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2291" name="W2291. Order Routing Exception Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Routing failure
+Frequency: ~2K–3K exceptions/month (~5%)
+Volume: ~2K–3K/month
+Owner: Ecommerce Operations Manager
+Participants: Ecom Ops Manager, VP Marketing
+Source: workflow W2291 — Order Routing Exception Management</bpmn:documentation>
+      <bpmn:laneSet id="W2291_LaneSet2">
+        <bpmn:lane id="W2291_Lane1" name="System">
+        <bpmn:flowNodeRef>W2291_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2291_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2291_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2291_Start3" name="Routing failure">
+        <bpmn:outgoing>W2291_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2291_Task4" name="System detects: stock-out after reservation, store unable to fulfill, vendor…">
+        <bpmn:documentation>Step 1: System detects: stock-out after reservation, store unable to fulfill, vendor rejection; Manager re-routes to alternative source; communicates revised timeline; systemic issues to IT
+Responsible (R): System / Ecom Ops Manager
+Accountable (A): VP Marketing
+Duration: 15–30 min/exception</bpmn:documentation>
+        <bpmn:incoming>W2291_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2291_End5" name="Complete">
+        <bpmn:incoming>W2291_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2291_Annotation6">
+        <bpmn:text>Controls: - CTL-409: re-route integrity; operational: Ecom Ops Manager exception-rate review; VP Marketing escalation on &gt;5% rate
+Owner: Ecommerce Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2291_Assoc7" sourceRef="W2291_Annotation6" targetRef="W2291_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2291_Flow8" sourceRef="W2291_Start3" targetRef="W2291_Task4" />
+      <bpmn:sequenceFlow id="W2291_Flow9" sourceRef="W2291_Task4" targetRef="W2291_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2291_diag">
+      <bpmndi:BPMNPlane id="W2291_plane" bpmnElement="W_W2291">
+        <bpmndi:BPMNShape id="W2291_Lane1_di" bpmnElement="W2291_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2291_Task4_di" bpmnElement="W2291_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2291_Start3_di" bpmnElement="W2291_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2291_End5_di" bpmnElement="W2291_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2291_Annotation6_di" bpmnElement="W2291_Annotation6"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2291_Flow8_di" bpmnElement="W2291_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2291_Flow9_di" bpmnElement="W2291_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2291_Assoc7_di" bpmnElement="W2291_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2292" name="W2292. Fulfillment Priority &amp; SLA Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Continuous SLA tracking
+Frequency: Continuous; ~42,900 orders/month
+Volume: ~42,900 SLA-tracked orders/month
+Owner: Ecommerce Operations Manager
+Participants: Ecom Ops Manager, VP Marketing
+Source: workflow W2292 — Fulfillment Priority &amp; SLA Management</bpmn:documentation>
+      <bpmn:laneSet id="W2292_LaneSet2">
+        <bpmn:lane id="W2292_Lane1" name="System">
+        <bpmn:flowNodeRef>W2292_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2292_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2292_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2292_Start3" name="Continuous SLA tracking">
+        <bpmn:outgoing>W2292_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W2292_Task4" name="SLA: BOPIS 4 hours, Metro delivery 2 days, Provincial 5 days, Drop-ship 7 days…">
+        <bpmn:documentation>Step 1: SLA: BOPIS 4 hours, Metro delivery 2 days, Provincial 5 days, Drop-ship 7 days; daily monitoring for at-risk orders; escalation to alternate source or expedited shipping
+Responsible (R): System / Ecom Ops Manager
+Accountable (A): VP Marketing
+Duration: 1–2 hours/day</bpmn:documentation>
+        <bpmn:incoming>W2292_Flow8</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2292_End5" name="Complete">
+        <bpmn:incoming>W2292_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2292_Annotation6">
+        <bpmn:text>Controls: - CTL-409 (ensure controlled execution — Intelligent Order Routing &amp; Source Selection (PA-60.1).) | - CTL-409 (SLA-accuracy — links to VS-56); operational: Ecom Ops Manager daily SLA review; VP Marketing escalation on chronic misses
+Owner: Ecommerce Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2292_Assoc7" sourceRef="W2292_Annotation6" targetRef="W2292_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2292_Flow8" sourceRef="W2292_Start3" targetRef="W2292_Task4" />
+      <bpmn:sequenceFlow id="W2292_Flow9" sourceRef="W2292_Task4" targetRef="W2292_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2292_diag">
+      <bpmndi:BPMNPlane id="W2292_plane" bpmnElement="W_W2292">
+        <bpmndi:BPMNShape id="W2292_Lane1_di" bpmnElement="W2292_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2292_Task4_di" bpmnElement="W2292_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2292_Start3_di" bpmnElement="W2292_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2292_End5_di" bpmnElement="W2292_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2292_Annotation6_di" bpmnElement="W2292_Annotation6"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2292_Flow8_di" bpmnElement="W2292_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2292_Flow9_di" bpmnElement="W2292_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2292_Assoc7_di" bpmnElement="W2292_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2293" name="W2293. Order Routing Cost Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly cost analysis
+Frequency: Monthly
+Volume: ~42,900 routed orders
+Owner: Logistics Finance Analyst
+Participants: Finance Manager
+Source: workflow W2293 — Order Routing Cost Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W2293_LaneSet2">
+        <bpmn:lane id="W2293_Lane1" name="Logistics Finance Analyst">
+        <bpmn:flowNodeRef>W2293_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2293_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2293_End5</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2293_Start3" name="Monthly cost analysis">
+        <bpmn:outgoing>W2293_Flow8</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2293_Task4" name="Calculates fulfillment cost per channel; identifies cost-optimized routing…">
+        <bpmn:documentation>Step 1: Calculates fulfillment cost per channel; identifies cost-optimized routing patterns; recommends rule adjustments; tests in simulation before production
+Responsible (R): Logistics Finance Analyst
+Accountable (A): Finance Manager
+Duration: 4–6 hours/month + 2–3 hours</bpmn:documentation>
+        <bpmn:incoming>W2293_Flow8</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2293_End5" name="Complete">
+        <bpmn:incoming>W2293_Flow9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2293_Annotation6">
+        <bpmn:text>Controls: - CTL-409 (ensure controlled execution — Intelligent Order Routing &amp; Source Selection (PA-60.1).) | - CTL-409 (cost-accuracy — links to VS-158); operational: Finance Manager sign-off on rule changes; Ecom Ops Manager canary-release sign-off
+Owner: Logistics Finance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2293_Assoc7" sourceRef="W2293_Annotation6" targetRef="W2293_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2293_Flow8" sourceRef="W2293_Start3" targetRef="W2293_Task4" />
+      <bpmn:sequenceFlow id="W2293_Flow9" sourceRef="W2293_Task4" targetRef="W2293_End5" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2293_diag">
+      <bpmndi:BPMNPlane id="W2293_plane" bpmnElement="W_W2293">
+        <bpmndi:BPMNShape id="W2293_Lane1_di" bpmnElement="W2293_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="530" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2293_Task4_di" bpmnElement="W2293_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2293_Start3_di" bpmnElement="W2293_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2293_End5_di" bpmnElement="W2293_End5"><dc:Bounds x="630" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2293_Annotation6_di" bpmnElement="W2293_Annotation6"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2293_Flow8_di" bpmnElement="W2293_Flow8"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2293_Flow9_di" bpmnElement="W2293_Flow9"><di:waypoint x="580" y="165" /><di:waypoint x="630" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2293_Assoc7_di" bpmnElement="W2293_Assoc7"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

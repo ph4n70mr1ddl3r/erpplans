@@ -1,0 +1,2225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-04.1-dc-inbound-operations" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W3" name="W3. Warehouse Receiving &amp; Putaway" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor delivery truck arrives at DC (or container from port)
+Frequency: ~6,000 goods receipts/month across all DCs; ~1,500/DC/month; ~50/day per DC
+Volume: ~15 lines per receipt on average
+Owner: DC Receiving Supervisor
+Participants: Receiving Clerk, Quality Checker, Putaway Staff, DC Supervisor, Buyer (if discrepancy)
+Source: workflow W3 — Warehouse Receiving &amp; Putaway</bpmn:documentation>
+      <bpmn:laneSet id="W3_LaneSet7">
+        <bpmn:lane id="W3_Lane1" name="Guard">
+        <bpmn:flowNodeRef>W3_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3_Lane2" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W3_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3_Lane3" name="Unloading Crew">
+        <bpmn:flowNodeRef>W3_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3_Lane4" name="Quality Checker">
+        <bpmn:flowNodeRef>W3_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3_Lane5" name="System">
+        <bpmn:flowNodeRef>W3_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3_Task18</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3_Lane6" name="Putaway Staff">
+        <bpmn:flowNodeRef>W3_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3_End19</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3_Start8" name="Vendor delivery truck arrives at DC (or container from port)">
+        <bpmn:outgoing>W3_Flow22</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3_Task9" name="Truck arrives at DC gate; guard checks delivery schedule vs. appointment log">
+        <bpmn:documentation>Step 1: Truck arrives at DC gate; guard checks delivery schedule vs. appointment log
+Responsible (R): Guard
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3_Task10" name="Receiving Clerk pulls up expected PO or Transfer Order in system">
+        <bpmn:documentation>Step 2: Receiving Clerk pulls up expected PO or Transfer Order in system
+Responsible (R): Receiving Clerk
+Accountable (A): DC Supervisor
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3_Task11" name="Unload truck; stage in receiving area">
+        <bpmn:documentation>Step 3: Unload truck; stage in receiving area
+Responsible (R): Unloading Crew (3–4)
+Accountable (A): Receiving Clerk
+Duration: 30–60 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3_Task12" name="Scan/verify each item against PO: SKU, quantity, lot/batch (if applicable)">
+        <bpmn:documentation>Step 4: Scan/verify each item against PO: SKU, quantity, lot/batch (if applicable)
+Responsible (R): Receiving Clerk
+Accountable (A): DC Supervisor
+Duration: 20–40 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3_Task13" name="Quality check on sampled items (damage, correctness, expiry if applicable) per…">
+        <bpmn:documentation>Step 5: Quality check on sampled items (damage, correctness, expiry if applicable) per category-specific inspection checklist (see Quality Inspection Standards below)
+Responsible (R): Quality Checker
+Accountable (A): DC Supervisor
+Duration: 10–20 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3_Task14" name="If discrepancy (shortage, damage, wrong item): flag in system; notify Buyer">
+        <bpmn:documentation>Step 6: If discrepancy (shortage, damage, wrong item): flag in system; notify Buyer
+Responsible (R): Receiving Clerk
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3_Task15" name="Confirm Goods Receipt in system; inventory increases in real-time">
+        <bpmn:documentation>Step 7: Confirm Goods Receipt in system; inventory increases in real-time
+Responsible (R): Receiving Clerk
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W3_Task16" name="System suggests putaway location based on zone, bin capacity, item velocity">
+        <bpmn:documentation>Step 8: System suggests putaway location based on zone, bin capacity, item velocity
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W3_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow29</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W3_Task17" name="Putaway staff moves goods to assigned bin; scan-confirm in system">
+        <bpmn:documentation>Step 9: Putaway staff moves goods to assigned bin; scan-confirm in system
+Responsible (R): Putaway Staff
+Accountable (A): DC Supervisor
+Duration: 15–30 min</bpmn:documentation>
+        <bpmn:incoming>W3_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W3_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W3_Task18" name="Update PO/TO status; trigger vendor invoice matching (AP)">
+        <bpmn:documentation>Step 10: Update PO/TO status; trigger vendor invoice matching (AP)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W3_Flow220</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W3_End19" name="Complete">
+        <bpmn:incoming>W3_Flow221</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3_Annotation20">
+        <bpmn:text>Controls: - CTL-09 (separate purchasing from receiving.); CTL-56 (ensure barcode/GTIN master consistency.) | - operational: DC Receiving Supervisor review and approval gate
+Owner: DC Receiving Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3_Assoc21" sourceRef="W3_Annotation20" targetRef="W3_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3_Flow22" sourceRef="W3_Start8" targetRef="W3_Task9" />
+      <bpmn:sequenceFlow id="W3_Flow23" sourceRef="W3_Task9" targetRef="W3_Task10" />
+      <bpmn:sequenceFlow id="W3_Flow24" sourceRef="W3_Task10" targetRef="W3_Task11" />
+      <bpmn:sequenceFlow id="W3_Flow25" sourceRef="W3_Task11" targetRef="W3_Task12" />
+      <bpmn:sequenceFlow id="W3_Flow26" sourceRef="W3_Task12" targetRef="W3_Task13" />
+      <bpmn:sequenceFlow id="W3_Flow27" sourceRef="W3_Task13" targetRef="W3_Task14" />
+      <bpmn:sequenceFlow id="W3_Flow28" sourceRef="W3_Task14" targetRef="W3_Task15" />
+      <bpmn:sequenceFlow id="W3_Flow29" sourceRef="W3_Task15" targetRef="W3_Task16" />
+      <bpmn:sequenceFlow id="W3_Flow30" sourceRef="W3_Task16" targetRef="W3_Task17" />
+      <bpmn:sequenceFlow id="W3_Flow31" sourceRef="W3_Task17" targetRef="W3_Task18" />
+      <bpmn:sequenceFlow id="W3_Flow32" sourceRef="W3_Task18" targetRef="W3_End19" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3_diag">
+      <bpmndi:BPMNPlane id="W3_plane" bpmnElement="W_W3">
+        <bpmndi:BPMNShape id="W3_Lane1_di" bpmnElement="W3_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Lane2_di" bpmnElement="W3_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Lane3_di" bpmnElement="W3_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Lane4_di" bpmnElement="W3_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Lane5_di" bpmnElement="W3_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Lane6_di" bpmnElement="W3_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task9_di" bpmnElement="W3_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task10_di" bpmnElement="W3_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task11_di" bpmnElement="W3_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task12_di" bpmnElement="W3_Task12"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task13_di" bpmnElement="W3_Task13"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task14_di" bpmnElement="W3_Task14"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task15_di" bpmnElement="W3_Task15"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task16_di" bpmnElement="W3_Task16"><dc:Bounds x="1870" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task17_di" bpmnElement="W3_Task17"><dc:Bounds x="2080" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Task18_di" bpmnElement="W3_Task18"><dc:Bounds x="2290" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Start8_di" bpmnElement="W3_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_End19_di" bpmnElement="W3_End19"><dc:Bounds x="2520" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3_Annotation20_di" bpmnElement="W3_Annotation20"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3_Flow22_di" bpmnElement="W3_Flow22"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow23_di" bpmnElement="W3_Flow23"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow24_di" bpmnElement="W3_Flow24"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow25_di" bpmnElement="W3_Flow25"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow26_di" bpmnElement="W3_Flow26"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow27_di" bpmnElement="W3_Flow27"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow28_di" bpmnElement="W3_Flow28"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow29_di" bpmnElement="W3_Flow29"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow30_di" bpmnElement="W3_Flow30"><di:waypoint x="2050" y="845" /><di:waypoint x="2080" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow31_di" bpmnElement="W3_Flow31"><di:waypoint x="2260" y="1015" /><di:waypoint x="2290" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Flow32_di" bpmnElement="W3_Flow32"><di:waypoint x="2470" y="845" /><di:waypoint x="2520" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3_Assoc21_di" bpmnElement="W3_Assoc21"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3B" name="W3B. Yard &amp; Outdoor Inventory Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor delivery of lumber, cement, steel/rebar, or other bulky items requiring outdoor yard storage
+Frequency: Daily; ~10–20 yard receipts per DC/day
+Volume: ~30–40% of total DC inventory by volume stored in yard zones across 4 DCs and 200 store yards
+Owner: DC Yard Supervisor (DC); Department Supervisor (Store)
+Participants: Receiving Clerk, Yard Staff, Stock Associate, DC Supervisor / Dept. Supervisor
+Source: workflow W3B — Yard &amp; Outdoor Inventory Management</bpmn:documentation>
+      <bpmn:laneSet id="W3B_LaneSet5">
+        <bpmn:lane id="W3B_Lane1" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W3B_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3B_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3B_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3B_Lane2" name="System">
+        <bpmn:flowNodeRef>W3B_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3B_Lane3" name="Yard Staff">
+        <bpmn:flowNodeRef>W3B_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3B_Lane4" name="Stock Associate">
+        <bpmn:flowNodeRef>W3B_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3B_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3B_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3B_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3B_Start6" name="Vendor delivery of lumber, cement, steel/rebar, or other bulky items requiring outdoor…">
+        <bpmn:outgoing>W3B_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3B_Task7" name="Goods received at yard gate (separate from indoor receiving); Receiving Clerk…">
+        <bpmn:documentation>Step 1: Goods received at yard gate (separate from indoor receiving); Receiving Clerk verifies against PO/TO using handheld
+Responsible (R): Receiving Clerk
+Accountable (A): DC Supervisor / Dept. Supervisor
+Duration: 20–40 min</bpmn:documentation>
+        <bpmn:incoming>W3B_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W3B_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W3B_Task8" name="System records receipt into yard zone (zone-level tracking, not individual…">
+        <bpmn:documentation>Step 2: System records receipt into yard zone (zone-level tracking, not individual bin); inventory tracked by yard zone (e.g., Yard-A: Lumber, Yard-B: Cement/Blocks, Yard-C: Steel/Rebar)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W3B_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W3B_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W3B_Task9" name="For catch-weight items (lumber, rebar): associate measures and records actual…">
+        <bpmn:documentation>Step 3: For catch-weight items (lumber, rebar): associate measures and records actual length/piece count at receipt; system calculates quantity in board feet / linear meters / pieces
+Responsible (R): Receiving Clerk
+Accountable (A): Dept. Supervisor
+Duration: 10–20 min</bpmn:documentation>
+        <bpmn:incoming>W3B_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W3B_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3B_Task10" name="Goods staged in designated yard zone; organized by SKU type and length/size for…">
+        <bpmn:documentation>Step 4: Goods staged in designated yard zone; organized by SKU type and length/size for easy retrieval
+Responsible (R): Yard Staff
+Accountable (A): DC Supervisor
+Duration: 15–30 min</bpmn:documentation>
+        <bpmn:incoming>W3B_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W3B_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3B_Task11" name="Physical counting: yard items counted by zone during cycle counts (W6) and…">
+        <bpmn:documentation>Step 5: Physical counting: yard items counted by zone during cycle counts (W6) and annual physical inventory (W42); counted by piece/bundle rather than individual bin scan
+Responsible (R): Stock Associate
+Accountable (A): Dept. Supervisor
+Duration: Per W6/W42</bpmn:documentation>
+        <bpmn:incoming>W3B_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W3B_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3B_Task12" name="Weather damage discovered during daily yard walkthrough: Stock Associate…">
+        <bpmn:documentation>Step 6: Weather damage discovered during daily yard walkthrough: Stock Associate reports damage (warped lumber, water-damaged cement, rusted rebar); DC Supervisor/Dept. Supervisor approves disposition (markdown, scrap, RTV, insurance claim) per W3.6a process
+Responsible (R): Stock Associate
+Accountable (A): DC Supervisor / Dept. Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W3B_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W3B_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3B_Task13" name="Yard-to-sales-floor movement: when yard stock is needed indoors (e.g., small…">
+        <bpmn:documentation>Step 7: Yard-to-sales-floor movement: when yard stock is needed indoors (e.g., small lumber pieces moved to indoor display), Stock Associate transfers items in system from yard zone to indoor location
+Responsible (R): Stock Associate
+Accountable (A): Dept. Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W3B_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3B_End14" name="Complete">
+        <bpmn:incoming>W3B_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3B_Annotation15">
+        <bpmn:text>Controls: (none recorded)
+Owner: DC Yard Supervisor (DC); Department Supervisor (Store)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3B_Assoc16" sourceRef="W3B_Annotation15" targetRef="W3B_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3B_Flow17" sourceRef="W3B_Start6" targetRef="W3B_Task7" />
+      <bpmn:sequenceFlow id="W3B_Flow18" sourceRef="W3B_Task7" targetRef="W3B_Task8" />
+      <bpmn:sequenceFlow id="W3B_Flow19" sourceRef="W3B_Task8" targetRef="W3B_Task9" />
+      <bpmn:sequenceFlow id="W3B_Flow20" sourceRef="W3B_Task9" targetRef="W3B_Task10" />
+      <bpmn:sequenceFlow id="W3B_Flow21" sourceRef="W3B_Task10" targetRef="W3B_Task11" />
+      <bpmn:sequenceFlow id="W3B_Flow22" sourceRef="W3B_Task11" targetRef="W3B_Task12" />
+      <bpmn:sequenceFlow id="W3B_Flow23" sourceRef="W3B_Task12" targetRef="W3B_Task13" />
+      <bpmn:sequenceFlow id="W3B_Flow24" sourceRef="W3B_Task13" targetRef="W3B_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3B_diag">
+      <bpmndi:BPMNPlane id="W3B_plane" bpmnElement="W_W3B">
+        <bpmndi:BPMNShape id="W3B_Lane1_di" bpmnElement="W3B_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Lane2_di" bpmnElement="W3B_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Lane3_di" bpmnElement="W3B_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Lane4_di" bpmnElement="W3B_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Task7_di" bpmnElement="W3B_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Task8_di" bpmnElement="W3B_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Task9_di" bpmnElement="W3B_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Task10_di" bpmnElement="W3B_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Task11_di" bpmnElement="W3B_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Task12_di" bpmnElement="W3B_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Task13_di" bpmnElement="W3B_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Start6_di" bpmnElement="W3B_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_End14_di" bpmnElement="W3B_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3B_Annotation15_di" bpmnElement="W3B_Annotation15"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3B_Flow17_di" bpmnElement="W3B_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Flow18_di" bpmnElement="W3B_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Flow19_di" bpmnElement="W3B_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Flow20_di" bpmnElement="W3B_Flow20"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Flow21_di" bpmnElement="W3B_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Flow22_di" bpmnElement="W3B_Flow22"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Flow23_di" bpmnElement="W3B_Flow23"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Flow24_di" bpmnElement="W3B_Flow24"><di:waypoint x="1840" y="675" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3B_Assoc16_di" bpmnElement="W3B_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3C" name="W3C. DC Inbound Delivery Scheduling" isExecutable="false">
+      <bpmn:documentation>Trigger: Purchase order confirmed with vendor or import shipment ETA confirmed
+Frequency: Daily; ~50 receipts/day per DC (~200/day chain-wide per the canon)
+Volume: ~1,200 merchandise receipts/month + ~80–240 blanket releases + ~20–30 import containers + ~30–50 non-merchandise receipts per DC per month
+Owner: DC Receiving Supervisor
+Participants: Buyer, Import Coordinator, DC Receiving Supervisor, DC Dispatch, Vendor/Carrier
+Source: workflow W3C — DC Inbound Delivery Scheduling</bpmn:documentation>
+      <bpmn:laneSet id="W3C_LaneSet6">
+        <bpmn:lane id="W3C_Lane1" name="System">
+        <bpmn:flowNodeRef>W3C_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3C_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3C_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3C_Lane2" name="DC Receiving Supervisor">
+        <bpmn:flowNodeRef>W3C_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3C_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3C_Lane3" name="Buyer">
+        <bpmn:flowNodeRef>W3C_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3C_Lane4" name="Import Coordinator">
+        <bpmn:flowNodeRef>W3C_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3C_Lane5" name="Guard">
+        <bpmn:flowNodeRef>W3C_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3C_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3C_Start7" name="Purchase order confirmed with vendor or import shipment ETA confirmed">
+        <bpmn:outgoing>W3C_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W3C_Task8" name="System generates inbound delivery forecast from open POs: PO number, vendor…">
+        <bpmn:documentation>Step 1: System generates inbound delivery forecast from open POs: PO number, vendor, expected delivery date (from PO promised date or import ETA), number of lines, estimated pallet/cube count, and dock door requirements (refrigerated none; hazardous materials for paint/chemicals; standard for general merchandise)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated (nightly)</bpmn:documentation>
+        <bpmn:incoming>W3C_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W3C_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W3C_Task9" name="DC Receiving Supervisor reviews next 3-day inbound forecast each morning…">
+        <bpmn:documentation>Step 2: DC Receiving Supervisor reviews next 3-day inbound forecast each morning; identifies days with high receiving volume (&gt; 50 receipts) or overlapping large deliveries; adjusts dock door assignments and staff scheduling
+Responsible (R): DC Receiving Supervisor
+Accountable (A): DC Manager
+Duration: 15 min/day</bpmn:documentation>
+        <bpmn:incoming>W3C_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W3C_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W3C_Task10" name="For domestic vendor deliveries: Buyer or system transmits delivery appointment…">
+        <bpmn:documentation>Step 3: For domestic vendor deliveries: Buyer or system transmits delivery appointment to vendor with requested delivery date and time window (typically 8:00 AM – 4:00 PM, 2-hour windows); vendor confirms or proposes alternative; system logs appointment confirmation
+Responsible (R): Buyer / System
+Accountable (A): DC Receiving Supervisor
+Duration: 5 min/PO</bpmn:documentation>
+        <bpmn:incoming>W3C_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W3C_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W3C_Task11" name="For import containers: Import Coordinator books delivery appointment with DC…">
+        <bpmn:documentation>Step 4: For import containers: Import Coordinator books delivery appointment with DC once container is released from port; provides container number, commodity, estimated weight, and special handling requirements; DC Receiving Supervisor confirms appointment and assigns dock door
+Responsible (R): Import Coordinator
+Accountable (A): DC Receiving Supervisor
+Duration: 10 min/container</bpmn:documentation>
+        <bpmn:incoming>W3C_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W3C_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3C_Task12" name="If vendor arrives without appointment: guard checks against open PO list; if…">
+        <bpmn:documentation>Step 5: If vendor arrives without appointment: guard checks against open PO list; if valid PO exists, Receiving Supervisor accepts on a space-available basis (may result in extended wait time); if no valid PO, guard turns delivery away with Buyer notification
+Responsible (R): Guard / DC Receiving Supervisor
+Accountable (A): DC Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W3C_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W3C_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W3C_Task13" name="System maintains dock door utilization dashboard per DC: shows scheduled…">
+        <bpmn:documentation>Step 6: System maintains dock door utilization dashboard per DC: shows scheduled appointments, completed receipts, and available capacity by time slot; Receiving Supervisor uses dashboard to optimize dock assignments and avoid congestion
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W3C_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W3C_Flow23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W3C_Task14" name="Monthly: DC Receiving Supervisor reviews appointment compliance report — vendor…">
+        <bpmn:documentation>Step 7: Monthly: DC Receiving Supervisor reviews appointment compliance report — vendor on-time arrival %, no-show rate, unscheduled delivery rate; feeds into vendor scorecard (W44) and carrier performance review (W52)
+Responsible (R): DC Receiving Supervisor
+Accountable (A): DC Manager
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W3C_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3C_End15" name="Complete">
+        <bpmn:incoming>W3C_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3C_Annotation16">
+        <bpmn:text>Controls: (none recorded)
+Owner: DC Receiving Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3C_Assoc17" sourceRef="W3C_Annotation16" targetRef="W3C_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3C_Flow18" sourceRef="W3C_Start7" targetRef="W3C_Task8" />
+      <bpmn:sequenceFlow id="W3C_Flow19" sourceRef="W3C_Task8" targetRef="W3C_Task9" />
+      <bpmn:sequenceFlow id="W3C_Flow20" sourceRef="W3C_Task9" targetRef="W3C_Task10" />
+      <bpmn:sequenceFlow id="W3C_Flow21" sourceRef="W3C_Task10" targetRef="W3C_Task11" />
+      <bpmn:sequenceFlow id="W3C_Flow22" sourceRef="W3C_Task11" targetRef="W3C_Task12" />
+      <bpmn:sequenceFlow id="W3C_Flow23" sourceRef="W3C_Task12" targetRef="W3C_Task13" />
+      <bpmn:sequenceFlow id="W3C_Flow24" sourceRef="W3C_Task13" targetRef="W3C_Task14" />
+      <bpmn:sequenceFlow id="W3C_Flow25" sourceRef="W3C_Task14" targetRef="W3C_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3C_diag">
+      <bpmndi:BPMNPlane id="W3C_plane" bpmnElement="W_W3C">
+        <bpmndi:BPMNShape id="W3C_Lane1_di" bpmnElement="W3C_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Lane2_di" bpmnElement="W3C_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Lane3_di" bpmnElement="W3C_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Lane4_di" bpmnElement="W3C_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Lane5_di" bpmnElement="W3C_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Task8_di" bpmnElement="W3C_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Task9_di" bpmnElement="W3C_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Task10_di" bpmnElement="W3C_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Task11_di" bpmnElement="W3C_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Task12_di" bpmnElement="W3C_Task12"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Task13_di" bpmnElement="W3C_Task13"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Task14_di" bpmnElement="W3C_Task14"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Start7_di" bpmnElement="W3C_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_End15_di" bpmnElement="W3C_End15"><dc:Bounds x="1890" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3C_Annotation16_di" bpmnElement="W3C_Annotation16"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3C_Flow18_di" bpmnElement="W3C_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Flow19_di" bpmnElement="W3C_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Flow20_di" bpmnElement="W3C_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Flow21_di" bpmnElement="W3C_Flow21"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Flow22_di" bpmnElement="W3C_Flow22"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Flow23_di" bpmnElement="W3C_Flow23"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Flow24_di" bpmnElement="W3C_Flow24"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Flow25_di" bpmnElement="W3C_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3C_Assoc17_di" bpmnElement="W3C_Assoc17"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W46" name="W46. Kit / Bundle Assembly &amp; Disassembly" isExecutable="false">
+      <bpmn:documentation>Trigger: Kit demand (auto-assembly) or planned batch assembly schedule
+Frequency: ~200–400 kit assemblies/month across DCs; primarily tool sets, bathroom combo kits, paint starter kits
+Volume: ~50–100 active kit SKUs
+Owner: DC Supervisor
+Participants: Merchandise Planner (BOM setup), DC Assembly Staff, DC Supervisor
+Source: workflow W46 — Kit / Bundle Assembly &amp; Disassembly</bpmn:documentation>
+      <bpmn:laneSet id="W46_LaneSet5">
+        <bpmn:lane id="W46_Lane1" name="Merchandise Planner">
+        <bpmn:flowNodeRef>W46_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W46_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W46_Lane2" name="System">
+        <bpmn:flowNodeRef>W46_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W46_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W46_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W46_Lane3" name="DC Supervisor">
+        <bpmn:flowNodeRef>W46_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W46_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W46_Lane4" name="Assembly Staff">
+        <bpmn:flowNodeRef>W46_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W46_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W46_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W46_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W46_Start6" name="Kit demand (auto-assembly) or planned batch assembly schedule">
+        <bpmn:outgoing>W46_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W46_Task7" name="Merchandise Planner defines kit Bill of Materials (BOM) in item master: kit SKU…">
+        <bpmn:documentation>Step 1: Merchandise Planner defines kit Bill of Materials (BOM) in item master: kit SKU + component SKUs with quantities per unit; kit item type = &#x27;Kit / Bundle&#x27;
+Responsible (R): Merchandise Planner
+Accountable (A): Category Manager
+Duration: 15 min/kit</bpmn:documentation>
+        <bpmn:incoming>W46_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W46_Task8" name="Assembly triggered by: (a) demand-driven — system auto-generates assembly order…">
+        <bpmn:documentation>Step 2: Assembly triggered by: (a) demand-driven — system auto-generates assembly order when kit is ordered (ecommerce) or picked (store replenishment) but insufficient kit stock exists, or (b) planned batch — DC Supervisor schedules weekly assembly of popular kits based on forecast
+Responsible (R): System / DC Supervisor
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W46_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W46_Task9" name="System creates assembly order: lists required component quantities; checks…">
+        <bpmn:documentation>Step 3: System creates assembly order: lists required component quantities; checks component availability at DC; reserves components against assembly order
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W46_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W46_Task10" name="If component shortage: DC Supervisor alerts Buyer for expedited replenishment…">
+        <bpmn:documentation>Step 4: If component shortage: DC Supervisor alerts Buyer for expedited replenishment or suggests substitution (with Merchandise Planner approval)
+Responsible (R): DC Supervisor
+Accountable (A): Supply Planning Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W46_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W46_Task11" name="Assembly Staff picks components from DC bins per assembly order; scan-confirms…">
+        <bpmn:documentation>Step 5: Assembly Staff picks components from DC bins per assembly order; scan-confirms each component
+Responsible (R): Assembly Staff
+Accountable (A): DC Supervisor
+Duration: 10–30 min/kit</bpmn:documentation>
+        <bpmn:incoming>W46_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W46_Task12" name="Assembly Staff assembles kit (physical packaging, labeling, shrink-wrap)…">
+        <bpmn:documentation>Step 6: Assembly Staff assembles kit (physical packaging, labeling, shrink-wrap); applies kit barcode label
+Responsible (R): Assembly Staff
+Accountable (A): DC Supervisor
+Duration: 5–15 min/kit</bpmn:documentation>
+        <bpmn:incoming>W46_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W46_Task13" name="System consumes component inventory (decreases) and creates kit inventory…">
+        <bpmn:documentation>Step 7: System consumes component inventory (decreases) and creates kit inventory (increases); kit cost = sum of component WAC at time of assembly
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W46_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W46_Task14" name="Kit received into finished goods storage location in DC; available for picking…">
+        <bpmn:documentation>Step 8: Kit received into finished goods storage location in DC; available for picking and shipping
+Responsible (R): Assembly Staff
+Accountable (A): DC Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W46_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W46_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W46_Task15" name="Kit disassembly (if components needed individually): DC Supervisor initiates…">
+        <bpmn:documentation>Step 9: Kit disassembly (if components needed individually): DC Supervisor initiates disassembly order; system reverses process — consumes kit inventory, restores component inventory at original component WAC; disassembly labor posted to overhead
+Responsible (R): DC Supervisor
+Accountable (A): DC Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W46_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W46_End16" name="Complete">
+        <bpmn:incoming>W46_Flow190</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W46_Annotation17">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: DC Supervisor review and approval gate
+Owner: DC Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W46_Assoc18" sourceRef="W46_Annotation17" targetRef="W46_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W46_Flow19" sourceRef="W46_Start6" targetRef="W46_Task7" />
+      <bpmn:sequenceFlow id="W46_Flow20" sourceRef="W46_Task7" targetRef="W46_Task8" />
+      <bpmn:sequenceFlow id="W46_Flow21" sourceRef="W46_Task8" targetRef="W46_Task9" />
+      <bpmn:sequenceFlow id="W46_Flow22" sourceRef="W46_Task9" targetRef="W46_Task10" />
+      <bpmn:sequenceFlow id="W46_Flow23" sourceRef="W46_Task10" targetRef="W46_Task11" />
+      <bpmn:sequenceFlow id="W46_Flow24" sourceRef="W46_Task11" targetRef="W46_Task12" />
+      <bpmn:sequenceFlow id="W46_Flow25" sourceRef="W46_Task12" targetRef="W46_Task13" />
+      <bpmn:sequenceFlow id="W46_Flow26" sourceRef="W46_Task13" targetRef="W46_Task14" />
+      <bpmn:sequenceFlow id="W46_Flow27" sourceRef="W46_Task14" targetRef="W46_Task15" />
+      <bpmn:sequenceFlow id="W46_Flow28" sourceRef="W46_Task15" targetRef="W46_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W46_diag">
+      <bpmndi:BPMNPlane id="W46_plane" bpmnElement="W_W46">
+        <bpmndi:BPMNShape id="W46_Lane1_di" bpmnElement="W46_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Lane2_di" bpmnElement="W46_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Lane3_di" bpmnElement="W46_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Lane4_di" bpmnElement="W46_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task7_di" bpmnElement="W46_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task8_di" bpmnElement="W46_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task9_di" bpmnElement="W46_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task10_di" bpmnElement="W46_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task11_di" bpmnElement="W46_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task12_di" bpmnElement="W46_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task13_di" bpmnElement="W46_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task14_di" bpmnElement="W46_Task14"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Task15_di" bpmnElement="W46_Task15"><dc:Bounds x="2080" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Start6_di" bpmnElement="W46_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_End16_di" bpmnElement="W46_End16"><dc:Bounds x="2310" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W46_Annotation17_di" bpmnElement="W46_Annotation17"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W46_Flow19_di" bpmnElement="W46_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow20_di" bpmnElement="W46_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow21_di" bpmnElement="W46_Flow21"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow22_di" bpmnElement="W46_Flow22"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow23_di" bpmnElement="W46_Flow23"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow24_di" bpmnElement="W46_Flow24"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow25_di" bpmnElement="W46_Flow25"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow26_di" bpmnElement="W46_Flow26"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow27_di" bpmnElement="W46_Flow27"><di:waypoint x="2050" y="675" /><di:waypoint x="2080" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Flow28_di" bpmnElement="W46_Flow28"><di:waypoint x="2260" y="505" /><di:waypoint x="2310" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W46_Assoc18_di" bpmnElement="W46_Assoc18"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W52" name="W52. Fleet Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicle registration renewal, scheduled maintenance, fuel purchase, driver assignment, route planning review
+Frequency: Continuous; daily operations + periodic scheduled maintenance
+Volume: ~30–40 owned vehicles (20% of total fleet); remainder 80% third-party (Lalamove, Transportify, contracted carriers)
+Owner: Fleet Manager (within Supply Chain team)
+Participants: Fleet Manager, Drivers, DC Dispatch, Finance, External carriers
+Source: workflow W52 — Fleet Management</bpmn:documentation>
+      <bpmn:laneSet id="W52_LaneSet3">
+        <bpmn:lane id="W52_Lane1" name="Fleet Manager">
+        <bpmn:flowNodeRef>W52_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W52_Lane2" name="Driver">
+        <bpmn:flowNodeRef>W52_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W52_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W52_Start4" name="Vehicle registration renewal, scheduled maintenance, fuel purchase, driver assignment…">
+        <bpmn:outgoing>W52_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W52_Task5" name="Driver assignment">
+        <bpmn:documentation>Step 1: Driver assignment: Fleet Manager assigns drivers to owned vehicles based on route schedule, driver qualifications (LTO license type — professional driver&#x27;s license with restriction codes for heavy vehicles), and duty hour limits
+Responsible (R): Fleet Manager
+Accountable (A): Supply Chain Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W52_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task6" name="Daily pre-trip inspection">
+        <bpmn:documentation>Step 2: Daily pre-trip inspection: Driver conducts vehicle inspection checklist (tires, brakes, lights, fluid levels, cargo area, safety equipment) before departure; records in system via mobile app; vehicle not cleared for dispatch if critical items fail
+Responsible (R): Driver
+Accountable (A): Fleet Manager
+Duration: 15 min/vehicle/day</bpmn:documentation>
+        <bpmn:incoming>W52_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task7" name="Fuel management">
+        <bpmn:documentation>Step 3: Fuel management: Driver refuels at designated fuel stations using company fuel card; system captures fuel volume, odometer reading, and cost per transaction; Fleet Manager reviews fuel consumption per vehicle monthly (km/L benchmark per vehicle type; flags vehicles &gt; 15% below benchmark for maintenance investigation)
+Responsible (R): Driver / Fleet Manager
+Accountable (A): Fleet Manager
+Duration: 5 min/refuel + 1 hour/month review</bpmn:documentation>
+        <bpmn:incoming>W52_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task8" name="Scheduled maintenance">
+        <bpmn:documentation>Step 4: Scheduled maintenance: Fleet Manager maintains maintenance calendar per vehicle based on manufacturer intervals (typically every 5,000–10,000 km or 3–6 months): (a) oil change and basic service, (b) tire rotation and replacement, (c) brake inspection, (d) annual comprehensive service; system alerts Fleet Manager 1 week before service due
+Responsible (R): Fleet Manager
+Accountable (A): DC Manager
+Duration: Per schedule</bpmn:documentation>
+        <bpmn:incoming>W52_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task9" name="Unscheduled repair">
+        <bpmn:documentation>Step 5: Unscheduled repair: Driver reports vehicle issue; Fleet Manager assesses severity: (a) minor — schedule repair at next available slot, substitute 3PL for pending deliveries, (b) major — vehicle taken out of service, substitute vehicle or 3PL arranged
+Responsible (R): Fleet Manager
+Accountable (A): DC Manager
+Duration: 30 min/occurrence</bpmn:documentation>
+        <bpmn:incoming>W52_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task10" name="Maintenance or repair executed at company-approved workshop per region; Fleet…">
+        <bpmn:documentation>Step 6: Maintenance or repair executed at company-approved workshop per region; Fleet Manager approves work order and cost; system tracks maintenance history per vehicle
+Responsible (R): Fleet Manager
+Accountable (A): DC Manager
+Duration: Varies</bpmn:documentation>
+        <bpmn:incoming>W52_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task11" name="Vehicle registration &amp; insurance">
+        <bpmn:documentation>Step 7: Vehicle registration &amp; insurance: Fleet Manager maintains calendar for LTO registration renewal (annual per vehicle), CTPL insurance renewal, and comprehensive insurance; system alerts 60 days before expiry; vehicles with expired registration blocked from dispatch
+Responsible (R): Fleet Manager
+Accountable (A): DC Manager
+Duration: 30 min/vehicle/year</bpmn:documentation>
+        <bpmn:incoming>W52_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task12" name="Route performance review">
+        <bpmn:documentation>Step 8: Route performance review: monthly, Fleet Manager reviews route metrics per vehicle: km driven, fuel efficiency, delivery punctuality (on-time % per W4 SLA), maintenance cost per km; identifies vehicles with declining performance for maintenance escalation or replacement planning
+Responsible (R): Fleet Manager
+Accountable (A): Supply Chain Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W52_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task13" name="3PL carrier performance">
+        <bpmn:documentation>Step 9: 3PL carrier performance: Fleet Manager monitors third-party carrier performance per W19 (on-time delivery, damage rate, cost per delivery) in coordination with DC Dispatch; quarterly carrier review per W44 vendor scorecard methodology
+Responsible (R): Fleet Manager / DC Dispatch
+Accountable (A): Supply Chain Manager
+Duration: Per W19/W44</bpmn:documentation>
+        <bpmn:incoming>W52_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W52_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W52_Task14" name="Vehicle replacement planning">
+        <bpmn:documentation>Step 10: Vehicle replacement planning: annually, Fleet Manager evaluates vehicles &gt; 5 years or &gt; 300,000 km for replacement; submits capex request per W21; considers total cost of ownership (maintenance cost trajectory, fuel efficiency decline, reliability) vs. new vehicle cost plus financing
+Responsible (R): Fleet Manager
+Accountable (A): Supply Chain Manager
+Duration: Annual (4 hours)</bpmn:documentation>
+        <bpmn:incoming>W52_Flow180</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W52_End15" name="Complete">
+        <bpmn:incoming>W52_Flow181</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W52_Annotation16">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: Fleet Manager (within Supply Chain team) review and approval gate
+Owner: Fleet Manager (within Supply Chain team)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W52_Assoc17" sourceRef="W52_Annotation16" targetRef="W52_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W52_Flow18" sourceRef="W52_Start4" targetRef="W52_Task5" />
+      <bpmn:sequenceFlow id="W52_Flow19" sourceRef="W52_Task5" targetRef="W52_Task6" />
+      <bpmn:sequenceFlow id="W52_Flow20" sourceRef="W52_Task6" targetRef="W52_Task7" />
+      <bpmn:sequenceFlow id="W52_Flow21" sourceRef="W52_Task7" targetRef="W52_Task8" />
+      <bpmn:sequenceFlow id="W52_Flow22" sourceRef="W52_Task8" targetRef="W52_Task9" />
+      <bpmn:sequenceFlow id="W52_Flow23" sourceRef="W52_Task9" targetRef="W52_Task10" />
+      <bpmn:sequenceFlow id="W52_Flow24" sourceRef="W52_Task10" targetRef="W52_Task11" />
+      <bpmn:sequenceFlow id="W52_Flow25" sourceRef="W52_Task11" targetRef="W52_Task12" />
+      <bpmn:sequenceFlow id="W52_Flow26" sourceRef="W52_Task12" targetRef="W52_Task13" />
+      <bpmn:sequenceFlow id="W52_Flow27" sourceRef="W52_Task13" targetRef="W52_Task14" />
+      <bpmn:sequenceFlow id="W52_Flow28" sourceRef="W52_Task14" targetRef="W52_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W52_diag">
+      <bpmndi:BPMNPlane id="W52_plane" bpmnElement="W_W52">
+        <bpmndi:BPMNShape id="W52_Lane1_di" bpmnElement="W52_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Lane2_di" bpmnElement="W52_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task5_di" bpmnElement="W52_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task6_di" bpmnElement="W52_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task7_di" bpmnElement="W52_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task8_di" bpmnElement="W52_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task9_di" bpmnElement="W52_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task10_di" bpmnElement="W52_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task11_di" bpmnElement="W52_Task11"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task12_di" bpmnElement="W52_Task12"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task13_di" bpmnElement="W52_Task13"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Task14_di" bpmnElement="W52_Task14"><dc:Bounds x="2290" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Start4_di" bpmnElement="W52_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_End15_di" bpmnElement="W52_End15"><dc:Bounds x="2520" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W52_Annotation16_di" bpmnElement="W52_Annotation16"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W52_Flow18_di" bpmnElement="W52_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow19_di" bpmnElement="W52_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow20_di" bpmnElement="W52_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow21_di" bpmnElement="W52_Flow21"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow22_di" bpmnElement="W52_Flow22"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow23_di" bpmnElement="W52_Flow23"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow24_di" bpmnElement="W52_Flow24"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow25_di" bpmnElement="W52_Flow25"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow26_di" bpmnElement="W52_Flow26"><di:waypoint x="2050" y="165" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow27_di" bpmnElement="W52_Flow27"><di:waypoint x="2260" y="165" /><di:waypoint x="2290" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Flow28_di" bpmnElement="W52_Flow28"><di:waypoint x="2470" y="165" /><di:waypoint x="2520" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W52_Assoc17_di" bpmnElement="W52_Assoc17"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W66" name="W66. Inter-Island Logistics &amp; Freight Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Inter-DC transfer (W22) between islands (e.g., DC3 Luzon → DC2 Visayas, DC1 Mindanao → DC2 Visayas), or direct-to-store delivery to island locations not served by a DC on the same island
+Frequency: ~10–15 inter-island shipments/month (supplementing ~30–40 inter-DC transfers/month in W22); additional ad-hoc shipments during peak season and disaster response (W49)
+Volume: Typically 1–5 TEU containers per shipment; some loose cargo (LCL) for smaller transfers
+Owner: Import Coordinator / Fleet Manager
+Participants: Import Coordinator, Fleet Manager, DC Supervisor, Supply Planner, carrier (ro-ro or cargo vessel), Customs (if applicable)
+Source: workflow W66 — Inter-Island Logistics &amp; Freight Management</bpmn:documentation>
+      <bpmn:laneSet id="W66_LaneSet6">
+        <bpmn:lane id="W66_Lane1" name="Supply Planner">
+        <bpmn:flowNodeRef>W66_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W66_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W66_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W66_Lane2" name="Import Coordinator">
+        <bpmn:flowNodeRef>W66_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W66_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W66_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W66_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W66_Lane3" name="DC Team">
+        <bpmn:flowNodeRef>W66_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W66_Lane4" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W66_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W66_Lane5" name="System">
+        <bpmn:flowNodeRef>W66_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W66_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W66_Start7" name="Inter-DC transfer (W22) between islands (e.g., DC3 Luzon → DC2 Visayas, DC1 Mindanao →…">
+        <bpmn:outgoing>W66_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W66_Task8" name="Supply Planner identifies need for inter-island transfer (W22) when demand at a…">
+        <bpmn:documentation>Step 1: Supply Planner identifies need for inter-island transfer (W22) when demand at a DC cannot be met from same-island supply and vendor PO lead time is too long; or when seasonal inventory rebalancing requires inter-island movement
+Responsible (R): Supply Planner
+Accountable (A): Supply Planning Manager
+Duration: Per W22</bpmn:documentation>
+        <bpmn:incoming>W66_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W66_Task9" name="ro-ro ferry">
+        <bpmn:documentation>Step 2: Import Coordinator or Fleet Manager selects inter-island carrier and route: (a) ro-ro ferry — for truck-loaded cargo; vehicle driven onto ferry; 12–36 hours transit; routes: Manila→Cebu, Cebu→Davao, Manila→Davao (via Matnog); (b) container vessel — for containerized cargo; 3–7 days transit depending on route and vessel schedule; (c) LCL consolidator — for small transfers that don&#x27;t fill a container
+Responsible (R): Import Coordinator / Fleet Manager
+Accountable (A): Supply Chain Manager
+Duration: 1–2 hours/shipment</bpmn:documentation>
+        <bpmn:incoming>W66_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W66_Task10" name="System creates Transfer Order per W22 with &quot;Inter-Island&quot; transport mode flag…">
+        <bpmn:documentation>Step 3: System creates Transfer Order per W22 with &quot;Inter-Island&quot; transport mode flag; extended lead time applied (3–7 days vs. 1–3 days for same-island); in-transit insurance coverage confirmed per W59 (cargo/in-transit policy)
+Responsible (R): Supply Planner
+Accountable (A): Supply Planning Manager
+Duration: Per W22</bpmn:documentation>
+        <bpmn:incoming>W66_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W66_Task11" name="Source DC picks and loads goods; for container shipments: DC packs into…">
+        <bpmn:documentation>Step 4: Source DC picks and loads goods; for container shipments: DC packs into container and seals; for ro-ro: goods loaded on owned or 3PL truck
+Responsible (R): DC Team
+Accountable (A): DC Supervisor
+Duration: Per W3/W4</bpmn:documentation>
+        <bpmn:incoming>W66_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W66_Task12" name="Import Coordinator books shipment with carrier; provides container number or…">
+        <bpmn:documentation>Step 5: Import Coordinator books shipment with carrier; provides container number or truck plate number, commodity description, and destination DC; receives booking confirmation and estimated arrival date
+Responsible (R): Import Coordinator
+Accountable (A): Fleet Manager
+Duration: 30 min/shipment</bpmn:documentation>
+        <bpmn:incoming>W66_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W66_Task13" name="In-transit tracking: Import Coordinator monitors shipment status via carrier…">
+        <bpmn:documentation>Step 6: In-transit tracking: Import Coordinator monitors shipment status via carrier tracking or direct communication; updates system ETA; for ro-ro: monitors ferry schedule (weather delays common during typhoon season — W49)
+Responsible (R): Import Coordinator
+Accountable (A): Supply Chain Manager
+Duration: 15 min/day per shipment</bpmn:documentation>
+        <bpmn:incoming>W66_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W66_Task14" name="Goods arrive at destination port/DC; destination DC receives and processes…">
+        <bpmn:documentation>Step 7: Goods arrive at destination port/DC; destination DC receives and processes Goods Receipt per W22 step 7; system records inter-island freight cost allocation to transferred inventory
+Responsible (R): Receiving Clerk (DC)
+Accountable (A): DC Supervisor
+Duration: Per W22</bpmn:documentation>
+        <bpmn:incoming>W66_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W66_Task15" name="System allocates inter-island freight cost to transferred items: freight cost ÷…">
+        <bpmn:documentation>Step 8: System allocates inter-island freight cost to transferred items: freight cost ÷ total transferred value × per-item value added to destination inventory cost (similar to landed cost allocation in W2B.12 but for domestic inter-island movement)
+Responsible (R): System
+Accountable (A): Finance
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W66_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W66_Flow27</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W66_Task16" name="Monthly: Import Coordinator and Fleet Manager review inter-island logistics…">
+        <bpmn:documentation>Step 9: Monthly: Import Coordinator and Fleet Manager review inter-island logistics cost and performance: cost per TEU by route, on-time delivery %, damage rate, carrier comparison; recommends route or carrier optimization
+Responsible (R): Import Coordinator / Fleet Manager
+Accountable (A): Supply Chain Manager
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W66_Flow28</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W66_End17" name="Complete">
+        <bpmn:incoming>W66_Flow200</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W66_Annotation18">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: Import Coordinator / Fleet Manager review and approval gate
+Owner: Import Coordinator / Fleet Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W66_Assoc19" sourceRef="W66_Annotation18" targetRef="W66_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W66_Flow20" sourceRef="W66_Start7" targetRef="W66_Task8" />
+      <bpmn:sequenceFlow id="W66_Flow21" sourceRef="W66_Task8" targetRef="W66_Task9" />
+      <bpmn:sequenceFlow id="W66_Flow22" sourceRef="W66_Task9" targetRef="W66_Task10" />
+      <bpmn:sequenceFlow id="W66_Flow23" sourceRef="W66_Task10" targetRef="W66_Task11" />
+      <bpmn:sequenceFlow id="W66_Flow24" sourceRef="W66_Task11" targetRef="W66_Task12" />
+      <bpmn:sequenceFlow id="W66_Flow25" sourceRef="W66_Task12" targetRef="W66_Task13" />
+      <bpmn:sequenceFlow id="W66_Flow26" sourceRef="W66_Task13" targetRef="W66_Task14" />
+      <bpmn:sequenceFlow id="W66_Flow27" sourceRef="W66_Task14" targetRef="W66_Task15" />
+      <bpmn:sequenceFlow id="W66_Flow28" sourceRef="W66_Task15" targetRef="W66_Task16" />
+      <bpmn:sequenceFlow id="W66_Flow29" sourceRef="W66_Task16" targetRef="W66_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W66_diag">
+      <bpmndi:BPMNPlane id="W66_plane" bpmnElement="W_W66">
+        <bpmndi:BPMNShape id="W66_Lane1_di" bpmnElement="W66_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Lane2_di" bpmnElement="W66_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Lane3_di" bpmnElement="W66_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Lane4_di" bpmnElement="W66_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Lane5_di" bpmnElement="W66_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task8_di" bpmnElement="W66_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task9_di" bpmnElement="W66_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task10_di" bpmnElement="W66_Task10"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task11_di" bpmnElement="W66_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task12_di" bpmnElement="W66_Task12"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task13_di" bpmnElement="W66_Task13"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task14_di" bpmnElement="W66_Task14"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task15_di" bpmnElement="W66_Task15"><dc:Bounds x="1870" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Task16_di" bpmnElement="W66_Task16"><dc:Bounds x="2080" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Start7_di" bpmnElement="W66_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_End17_di" bpmnElement="W66_End17"><dc:Bounds x="2310" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W66_Annotation18_di" bpmnElement="W66_Annotation18"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W66_Flow20_di" bpmnElement="W66_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow21_di" bpmnElement="W66_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow22_di" bpmnElement="W66_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow23_di" bpmnElement="W66_Flow23"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow24_di" bpmnElement="W66_Flow24"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow25_di" bpmnElement="W66_Flow25"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow26_di" bpmnElement="W66_Flow26"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow27_di" bpmnElement="W66_Flow27"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow28_di" bpmnElement="W66_Flow28"><di:waypoint x="2050" y="845" /><di:waypoint x="2080" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Flow29_di" bpmnElement="W66_Flow29"><di:waypoint x="2260" y="335" /><di:waypoint x="2310" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W66_Assoc19_di" bpmnElement="W66_Assoc19"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W221" name="W221. Cross-Docking Operations for Fast-Moving Bulky Items" isExecutable="false">
+      <bpmn:documentation>Trigger: Advance Shipping Notice (ASN) or incoming import container contains fast-moving bulk items (cement, steel rebar, standard tiles) with active store replenishment demands or backorders
+Frequency: Daily at Distribution Centers
+Volume: ~10–20 container-loads cross-docked per day
+Owner: DC Operations Manager
+Participants: Receiving Clerk, Cross-Dock Coordinator, Forklift Operator, Shipping Clerk
+Source: workflow W221 — Cross-Docking Operations for Fast-Moving Bulky Items</bpmn:documentation>
+      <bpmn:laneSet id="W221_LaneSet5">
+        <bpmn:lane id="W221_Lane1" name="System">
+        <bpmn:flowNodeRef>W221_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W221_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W221_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W221_Lane2" name="Cross-Dock Coord">
+        <bpmn:flowNodeRef>W221_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W221_Lane3" name="Forklift Operator">
+        <bpmn:flowNodeRef>W221_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W221_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W221_Lane4" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W221_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W221_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W221_Start6" name="Advance Shipping Notice (ASN) or incoming import container contains fast-moving bulk…">
+        <bpmn:outgoing>W221_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W221_Task7" name="Pre-Allocation Matching">
+        <bpmn:documentation>Step 1: Pre-Allocation Matching: System evaluates incoming container ASN against active store replenishment orders (W4) and customer backorders (W56); identifies high-matching fast-moving SKUs suitable for cross-docking
+Responsible (R): System
+Accountable (A): DC Operations Mgr
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W221_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W221_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W221_Task8" name="Dock Assignment">
+        <bpmn:documentation>Step 2: Dock Assignment: Cross-Dock Coordinator assigns inbound container to a receiving dock adjacent to outbound store dispatch doors
+Responsible (R): Cross-Dock Coord
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W221_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W221_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W221_Task9" name="Unloading &amp; Direct Scan">
+        <bpmn:documentation>Step 3: Unloading &amp; Direct Scan: Forklift Operator unloads pallets; scan-confirms receipt via WMS terminal; system detects pre-allocation and flags pallet for &quot;Direct Cross-Dock Staging&quot; (bypassing normal bulk putaway racks)
+Responsible (R): Forklift Operator
+Accountable (A): Receiving Supervisor
+Duration: 15 min/pallet</bpmn:documentation>
+        <bpmn:incoming>W221_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W221_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W221_Task10" name="Sorting &amp; Routing">
+        <bpmn:documentation>Step 4: Sorting &amp; Routing: Receiving Clerk scan-confirms pallet; system generates store-specific routing labels and prints destination tags; Forklift Operator moves pallets directly to the designated outbound lane
+Responsible (R): Receiving Clerk
+Accountable (A): —
+Duration: 5 min/pallet</bpmn:documentation>
+        <bpmn:incoming>W221_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W221_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W221_Task11" name="Load Integration">
+        <bpmn:documentation>Step 5: Load Integration: System automatically merges cross-docked pallets into the active outbound DC load planning schedule (W106) for store deliveries
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W221_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W221_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W221_Task12" name="Outbound Loading">
+        <bpmn:documentation>Step 6: Outbound Loading: Forklift Operator loads the pallets directly onto the designated store delivery truck; scan-confirms loading; Shipping Clerk generates Outbound Transfer document
+Responsible (R): Forklift Operator / Shipping Clerk
+Accountable (A): DC Operations Mgr
+Duration: 10 min/pallet</bpmn:documentation>
+        <bpmn:incoming>W221_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W221_End13" name="Complete">
+        <bpmn:incoming>W221_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W221_Annotation14">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W221_Assoc15" sourceRef="W221_Annotation14" targetRef="W221_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W221_Flow16" sourceRef="W221_Start6" targetRef="W221_Task7" />
+      <bpmn:sequenceFlow id="W221_Flow17" sourceRef="W221_Task7" targetRef="W221_Task8" />
+      <bpmn:sequenceFlow id="W221_Flow18" sourceRef="W221_Task8" targetRef="W221_Task9" />
+      <bpmn:sequenceFlow id="W221_Flow19" sourceRef="W221_Task9" targetRef="W221_Task10" />
+      <bpmn:sequenceFlow id="W221_Flow20" sourceRef="W221_Task10" targetRef="W221_Task11" />
+      <bpmn:sequenceFlow id="W221_Flow21" sourceRef="W221_Task11" targetRef="W221_Task12" />
+      <bpmn:sequenceFlow id="W221_Flow22" sourceRef="W221_Task12" targetRef="W221_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W221_diag">
+      <bpmndi:BPMNPlane id="W221_plane" bpmnElement="W_W221">
+        <bpmndi:BPMNShape id="W221_Lane1_di" bpmnElement="W221_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Lane2_di" bpmnElement="W221_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Lane3_di" bpmnElement="W221_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Lane4_di" bpmnElement="W221_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Task7_di" bpmnElement="W221_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Task8_di" bpmnElement="W221_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Task9_di" bpmnElement="W221_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Task10_di" bpmnElement="W221_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Task11_di" bpmnElement="W221_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Task12_di" bpmnElement="W221_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Start6_di" bpmnElement="W221_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_End13_di" bpmnElement="W221_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W221_Annotation14_di" bpmnElement="W221_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W221_Flow16_di" bpmnElement="W221_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W221_Flow17_di" bpmnElement="W221_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W221_Flow18_di" bpmnElement="W221_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W221_Flow19_di" bpmnElement="W221_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W221_Flow20_di" bpmnElement="W221_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W221_Flow21_di" bpmnElement="W221_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W221_Flow22_di" bpmnElement="W221_Flow22"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W221_Assoc15_di" bpmnElement="W221_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W222" name="W222. DC Container Yard &amp; Chassis Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Import container arrives at DC gate, or empty container requires scheduling for port return
+Frequency: 20–50 container movements per day
+Volume: 200-slot yard capacity
+Owner: Yard Superintendent
+Participants: Gate Guard, Yard Coordinator, Reach Stacker Operator, Dispatcher, 3PL Truck Driver
+Source: workflow W222 — DC Container Yard &amp; Chassis Management</bpmn:documentation>
+      <bpmn:laneSet id="W222_LaneSet5">
+        <bpmn:lane id="W222_Lane1" name="Gate Guard">
+        <bpmn:flowNodeRef>W222_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W222_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W222_Lane2" name="System">
+        <bpmn:flowNodeRef>W222_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W222_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W222_Lane3" name="Reach Stacker Operator">
+        <bpmn:flowNodeRef>W222_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W222_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W222_Lane4" name="Yard Coordinator">
+        <bpmn:flowNodeRef>W222_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W222_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W222_Start6" name="Import container arrives at DC gate, or empty container requires scheduling for port…">
+        <bpmn:outgoing>W222_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W222_Task7" name="Gate-In Registration">
+        <bpmn:documentation>Step 1: Gate-In Registration: Gate Guard inspects seal integrity, container physical state, and chassis lease records; scan-registers container number in Yard Management System (YMS); records gate-in timestamp
+Responsible (R): Gate Guard
+Accountable (A): Yard Superintendent
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W222_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W222_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W222_Task8" name="Yard Slot Assignment">
+        <bpmn:documentation>Step 2: Yard Slot Assignment: YMS automatically assigns slot coordinates (grid lane, stack height) based on container status (Full Import, Empty Return, Hazmat quarantine) and priority
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W222_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W222_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W222_Task9" name="Physical Stacking">
+        <bpmn:documentation>Step 3: Physical Stacking: Reach Stacker Operator picks container from truck chassis; places in assigned yard slot; scan-confirms the grid coordinates in YMS to update the real-time yard map
+Responsible (R): Reach Stacker Operator
+Accountable (A): Yard Coordinator
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W222_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W222_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W222_Task10" name="Demurrage &amp; Detention Tracking">
+        <bpmn:documentation>Step 4: Demurrage &amp; Detention Tracking: YMS starts carrier-specific free-time countdown timers (e.g., 4 days yard free time, 7 days container lease); triggers daily priority warnings to Import Logistics team
+Responsible (R): System
+Accountable (A): Yard Superintendent
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W222_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W222_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W222_Task11" name="Stripping Scheduling">
+        <bpmn:documentation>Step 5: Stripping Scheduling: Yard Coordinator assigns yard container to a warehouse dock; Reach Stacker Operator moves container to dock chassis; Receiving Clerk scan-registers goods receipt (W3)
+Responsible (R): Yard Coordinator / Reach Stacker Operator
+Accountable (A): —
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W222_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W222_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W222_Task12" name="Empty Container Gate-Out">
+        <bpmn:documentation>Step 6: Empty Container Gate-Out: System marks container &quot;Empty&quot;; Dispatcher books return logistics; Reach Stacker Operator loads empty container to carrier chassis; Gate Guard records gate-out, verifies empty status, and registers time in YMS
+Responsible (R): Reach Stacker Operator / Gate Guard
+Accountable (A): Yard Superintendent
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W222_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W222_End13" name="Complete">
+        <bpmn:incoming>W222_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W222_Annotation14">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Yard Superintendent</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W222_Assoc15" sourceRef="W222_Annotation14" targetRef="W222_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W222_Flow16" sourceRef="W222_Start6" targetRef="W222_Task7" />
+      <bpmn:sequenceFlow id="W222_Flow17" sourceRef="W222_Task7" targetRef="W222_Task8" />
+      <bpmn:sequenceFlow id="W222_Flow18" sourceRef="W222_Task8" targetRef="W222_Task9" />
+      <bpmn:sequenceFlow id="W222_Flow19" sourceRef="W222_Task9" targetRef="W222_Task10" />
+      <bpmn:sequenceFlow id="W222_Flow20" sourceRef="W222_Task10" targetRef="W222_Task11" />
+      <bpmn:sequenceFlow id="W222_Flow21" sourceRef="W222_Task11" targetRef="W222_Task12" />
+      <bpmn:sequenceFlow id="W222_Flow22" sourceRef="W222_Task12" targetRef="W222_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W222_diag">
+      <bpmndi:BPMNPlane id="W222_plane" bpmnElement="W_W222">
+        <bpmndi:BPMNShape id="W222_Lane1_di" bpmnElement="W222_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Lane2_di" bpmnElement="W222_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Lane3_di" bpmnElement="W222_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Lane4_di" bpmnElement="W222_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Task7_di" bpmnElement="W222_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Task8_di" bpmnElement="W222_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Task9_di" bpmnElement="W222_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Task10_di" bpmnElement="W222_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Task11_di" bpmnElement="W222_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Task12_di" bpmnElement="W222_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Start6_di" bpmnElement="W222_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_End13_di" bpmnElement="W222_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W222_Annotation14_di" bpmnElement="W222_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W222_Flow16_di" bpmnElement="W222_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W222_Flow17_di" bpmnElement="W222_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W222_Flow18_di" bpmnElement="W222_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W222_Flow19_di" bpmnElement="W222_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W222_Flow20_di" bpmnElement="W222_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W222_Flow21_di" bpmnElement="W222_Flow21"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W222_Flow22_di" bpmnElement="W222_Flow22"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W222_Assoc15_di" bpmnElement="W222_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W648" name="W648. DC Cycle Counting &amp; Inventory Accuracy Program" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily per DC zone schedule; triggered by variance alert
+Frequency: Daily zone counting (A-items monthly, B-items quarterly, C-items semi-annually); full annual wall-to-wall per W42
+Volume: ~7,000 SKUs per DC; ~100–150 counts/day per DC on the A/B/C cadence (~400–600 counts/day across 4 DCs)
+Owner: DC Inventory Supervisor
+Participants: Cycle Counter, DC Manager, Inventory Planner, LP Analyst (variance investigation)
+Source: workflow W648 — DC Cycle Counting &amp; Inventory Accuracy Program</bpmn:documentation>
+      <bpmn:laneSet id="W648_LaneSet5">
+        <bpmn:lane id="W648_Lane1" name="System">
+        <bpmn:flowNodeRef>W648_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W648_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W648_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W648_Lane2" name="Cycle Counter">
+        <bpmn:flowNodeRef>W648_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W648_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W648_Lane3" name="DC Inventory Supervisor">
+        <bpmn:flowNodeRef>W648_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W648_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W648_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W648_Lane4" name="DC Manager">
+        <bpmn:flowNodeRef>W648_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W648_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W648_Start6" name="Daily per DC zone schedule; triggered by variance alert">
+        <bpmn:outgoing>W648_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W648_Task7" name="System generates daily cycle count task list by zone based on ABC…">
+        <bpmn:documentation>Step 1: System generates daily cycle count task list by zone based on ABC classification frequency schedule and variance-triggered recounts; assigns to Cycle Counter via RF device
+Responsible (R): System
+Accountable (A): DC Inventory Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W648_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W648_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W648_Task8" name="Cycle Counter performs physical count at system-directed bin locations using RF…">
+        <bpmn:documentation>Step 2: Cycle Counter performs physical count at system-directed bin locations using RF scanner; records count quantity; system flags variance against book quantity
+Responsible (R): Cycle Counter
+Accountable (A): DC Inventory Supervisor
+Duration: 4–6 hours/day</bpmn:documentation>
+        <bpmn:incoming>W648_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W648_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W648_Task9" name="For items within tolerance (A-items: ±0.5%, B-items: ±1%, C-items: ±2%): system…">
+        <bpmn:documentation>Step 3: For items within tolerance (A-items: ±0.5%, B-items: ±1%, C-items: ±2%): system auto-adjusts book quantity; adjustment posted with cycle count reference
+Responsible (R): System
+Accountable (A): DC Inventory Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W648_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W648_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W648_Task10" name="For items outside tolerance: system generates recount task; Cycle Counter…">
+        <bpmn:documentation>Step 4: For items outside tolerance: system generates recount task; Cycle Counter performs blind recount (no prior count visible)
+Responsible (R): Cycle Counter
+Accountable (A): DC Inventory Supervisor
+Duration: 30 min/recount</bpmn:documentation>
+        <bpmn:incoming>W648_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W648_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W648_Task11" name="If recount confirms variance: DC Inventory Supervisor investigates root cause…">
+        <bpmn:documentation>Step 5: If recount confirms variance: DC Inventory Supervisor investigates root cause (receiving error, miscount, misplacement, picking error, system error, theft); classifies root cause in system
+Responsible (R): DC Inventory Supervisor
+Accountable (A): DC Manager
+Duration: 15 min/item</bpmn:documentation>
+        <bpmn:incoming>W648_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W648_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W648_Task12" name="DC Inventory Supervisor submits adjustment for approval per threshold: DC…">
+        <bpmn:documentation>Step 6: DC Inventory Supervisor submits adjustment for approval per threshold: DC Manager for adjustments &lt; PHP 50,000; VP Supply Chain for adjustments PHP 50,000–500,000; CFO for adjustments &gt; PHP 500,000
+Responsible (R): DC Inventory Supervisor
+Accountable (A): DC Manager
+Duration: Varies by threshold</bpmn:documentation>
+        <bpmn:incoming>W648_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W648_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W648_Task13" name="DC Manager reviews daily cycle count accuracy rate; targets ≥ 99.5% accuracy…">
+        <bpmn:documentation>Step 7: DC Manager reviews daily cycle count accuracy rate; targets ≥ 99.5% accuracy for A-items, ≥ 98% for B-items, ≥ 95% for C-items; investigates recurring variance locations
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W648_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W648_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W648_Task14" name="Weekly: DC Inventory Supervisor produces cycle count accuracy report feeding DC…">
+        <bpmn:documentation>Step 8: Weekly: DC Inventory Supervisor produces cycle count accuracy report feeding DC daily KPI dashboard (W586) and variance investigation queue
+Responsible (R): DC Inventory Supervisor
+Accountable (A): DC Manager
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W648_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W648_End15" name="Complete">
+        <bpmn:incoming>W648_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W648_Annotation16">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: DC Inventory Supervisor review and approval gate
+Owner: DC Inventory Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W648_Assoc17" sourceRef="W648_Annotation16" targetRef="W648_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W648_Flow18" sourceRef="W648_Start6" targetRef="W648_Task7" />
+      <bpmn:sequenceFlow id="W648_Flow19" sourceRef="W648_Task7" targetRef="W648_Task8" />
+      <bpmn:sequenceFlow id="W648_Flow20" sourceRef="W648_Task8" targetRef="W648_Task9" />
+      <bpmn:sequenceFlow id="W648_Flow21" sourceRef="W648_Task9" targetRef="W648_Task10" />
+      <bpmn:sequenceFlow id="W648_Flow22" sourceRef="W648_Task10" targetRef="W648_Task11" />
+      <bpmn:sequenceFlow id="W648_Flow23" sourceRef="W648_Task11" targetRef="W648_Task12" />
+      <bpmn:sequenceFlow id="W648_Flow24" sourceRef="W648_Task12" targetRef="W648_Task13" />
+      <bpmn:sequenceFlow id="W648_Flow25" sourceRef="W648_Task13" targetRef="W648_Task14" />
+      <bpmn:sequenceFlow id="W648_Flow26" sourceRef="W648_Task14" targetRef="W648_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W648_diag">
+      <bpmndi:BPMNPlane id="W648_plane" bpmnElement="W_W648">
+        <bpmndi:BPMNShape id="W648_Lane1_di" bpmnElement="W648_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Lane2_di" bpmnElement="W648_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Lane3_di" bpmnElement="W648_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Lane4_di" bpmnElement="W648_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task7_di" bpmnElement="W648_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task8_di" bpmnElement="W648_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task9_di" bpmnElement="W648_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task10_di" bpmnElement="W648_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task11_di" bpmnElement="W648_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task12_di" bpmnElement="W648_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task13_di" bpmnElement="W648_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Task14_di" bpmnElement="W648_Task14"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Start6_di" bpmnElement="W648_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_End15_di" bpmnElement="W648_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W648_Annotation16_di" bpmnElement="W648_Annotation16"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W648_Flow18_di" bpmnElement="W648_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow19_di" bpmnElement="W648_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow20_di" bpmnElement="W648_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow21_di" bpmnElement="W648_Flow21"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow22_di" bpmnElement="W648_Flow22"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow23_di" bpmnElement="W648_Flow23"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow24_di" bpmnElement="W648_Flow24"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow25_di" bpmnElement="W648_Flow25"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Flow26_di" bpmnElement="W648_Flow26"><di:waypoint x="2050" y="505" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W648_Assoc17_di" bpmnElement="W648_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W652" name="W652. Seasonal Warehouse Surge Planning &amp; Execution" isExecutable="false">
+      <bpmn:documentation>Trigger: Seasonal demand forecast (W32); triggered 8–12 weeks before peak season
+Frequency: 4 major seasons/year: Christmas (Sep–Dec), Summer (Mar–May), Back-to-School (May–Jun), Rainy Season (Jun–Aug); plus 6 bi-monthly sale events
+Volume: up to 1.5× normal DC volume at the canonical peak-day sizing (§1.1: 200 receipts/day → 300/day), with surge staffing plans for Christmas; extended-receipt days scheduled rather than single-day 2–3× spikes
+Owner: DC Manager
+Participants: VP Supply Chain, HR Manager (temporary labor), DC Inventory Supervisor, Category Manager
+Source: workflow W652 — Seasonal Warehouse Surge Planning &amp; Execution</bpmn:documentation>
+      <bpmn:laneSet id="W652_LaneSet3">
+        <bpmn:lane id="W652_Lane1" name="DC Manager">
+        <bpmn:flowNodeRef>W652_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W652_Lane2" name="HR Manager">
+        <bpmn:flowNodeRef>W652_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W652_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W652_Start4" name="Seasonal demand forecast (W32); triggered 8–12 weeks before peak season">
+        <bpmn:outgoing>W652_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W652_Task5" name="T-12 weeks: VP Supply Chain provides seasonal volume forecast per DC (units…">
+        <bpmn:documentation>Step 1: T-12 weeks: VP Supply Chain provides seasonal volume forecast per DC (units, lines, orders); DC Manager compares forecast against current DC capacity (receiving docks, putaway zones, pick faces, shipping docks, labor)
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W652_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W652_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W652_Task6" name="T-10 weeks: DC Manager develops surge plan: temporary labor requirement…">
+        <bpmn:documentation>Step 2: T-10 weeks: DC Manager develops surge plan: temporary labor requirement (headcount, duration, shift pattern — extended hours or additional shift), equipment rental plan (forklifts, reach stackers, RF devices), overflow staging area activation plan, seasonal SKU forward-pick zone re-slotting
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 3 days</bpmn:documentation>
+        <bpmn:incoming>W652_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W652_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W652_Task7" name="T-8 weeks: HR Manager initiates seasonal staffing process (W555): temporary…">
+        <bpmn:documentation>Step 3: T-8 weeks: HR Manager initiates seasonal staffing process (W555): temporary worker recruitment, abbreviated onboarding (safety + basic WMS operation), schedule alignment with surge plan
+Responsible (R): HR Manager
+Accountable (A): DC Manager
+Duration: Per W555</bpmn:documentation>
+        <bpmn:incoming>W652_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W652_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W652_Task8" name="T-6 weeks: DC Manager executes seasonal re-slotting: high-velocity seasonal…">
+        <bpmn:documentation>Step 4: T-6 weeks: DC Manager executes seasonal re-slotting: high-velocity seasonal SKUs moved to forward-pick zones; reserve storage consolidated to create overflow receiving space; seasonal promotional displays and bulk staging areas designated
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W652_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W652_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W652_Task9" name="T-4 weeks: Equipment rental delivery and commissioning; temporary worker first…">
+        <bpmn:documentation>Step 5: T-4 weeks: Equipment rental delivery and commissioning; temporary worker first shift with supervised onboarding; extended operating hours commence; overflow area activated and stocked
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W652_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W652_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W652_Task10" name="During peak: DC Manager monitors daily volume vs. forecast; adjusts labor…">
+        <bpmn:documentation>Step 6: During peak: DC Manager monitors daily volume vs. forecast; adjusts labor allocation daily; activates 3rd shift if volume exceeds 2× normal for 3+ consecutive days; daily stand-up meetings with shift supervisors
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W652_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W652_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W652_Task11" name="T+2 weeks post-peak: DC Manager executes wind-down: return rental equipment…">
+        <bpmn:documentation>Step 7: T+2 weeks post-peak: DC Manager executes wind-down: return rental equipment, release temporary workers per W555 offboarding, restore normal slotting, deactivate overflow areas, return to normal operating hours
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W652_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W652_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W652_Task12" name="T+4 weeks post-peak: DC Manager produces seasonal surge performance report…">
+        <bpmn:documentation>Step 8: T+4 weeks post-peak: DC Manager produces seasonal surge performance report: volume vs. forecast, labor productivity, overtime cost, equipment utilization, service level maintained, lessons learned for next surge
+Responsible (R): DC Manager
+Accountable (A): VP Supply Chain
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W652_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W652_End13" name="Complete">
+        <bpmn:incoming>W652_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W652_Annotation14">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W652_Assoc15" sourceRef="W652_Annotation14" targetRef="W652_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W652_Flow16" sourceRef="W652_Start4" targetRef="W652_Task5" />
+      <bpmn:sequenceFlow id="W652_Flow17" sourceRef="W652_Task5" targetRef="W652_Task6" />
+      <bpmn:sequenceFlow id="W652_Flow18" sourceRef="W652_Task6" targetRef="W652_Task7" />
+      <bpmn:sequenceFlow id="W652_Flow19" sourceRef="W652_Task7" targetRef="W652_Task8" />
+      <bpmn:sequenceFlow id="W652_Flow20" sourceRef="W652_Task8" targetRef="W652_Task9" />
+      <bpmn:sequenceFlow id="W652_Flow21" sourceRef="W652_Task9" targetRef="W652_Task10" />
+      <bpmn:sequenceFlow id="W652_Flow22" sourceRef="W652_Task10" targetRef="W652_Task11" />
+      <bpmn:sequenceFlow id="W652_Flow23" sourceRef="W652_Task11" targetRef="W652_Task12" />
+      <bpmn:sequenceFlow id="W652_Flow24" sourceRef="W652_Task12" targetRef="W652_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W652_diag">
+      <bpmndi:BPMNPlane id="W652_plane" bpmnElement="W_W652">
+        <bpmndi:BPMNShape id="W652_Lane1_di" bpmnElement="W652_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Lane2_di" bpmnElement="W652_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task5_di" bpmnElement="W652_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task6_di" bpmnElement="W652_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task7_di" bpmnElement="W652_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task8_di" bpmnElement="W652_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task9_di" bpmnElement="W652_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task10_di" bpmnElement="W652_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task11_di" bpmnElement="W652_Task11"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Task12_di" bpmnElement="W652_Task12"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Start4_di" bpmnElement="W652_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_End13_di" bpmnElement="W652_End13"><dc:Bounds x="2100" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W652_Annotation14_di" bpmnElement="W652_Annotation14"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W652_Flow16_di" bpmnElement="W652_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow17_di" bpmnElement="W652_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow18_di" bpmnElement="W652_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow19_di" bpmnElement="W652_Flow19"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow20_di" bpmnElement="W652_Flow20"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow21_di" bpmnElement="W652_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow22_di" bpmnElement="W652_Flow22"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow23_di" bpmnElement="W652_Flow23"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Flow24_di" bpmnElement="W652_Flow24"><di:waypoint x="2050" y="165" /><di:waypoint x="2100" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W652_Assoc15_di" bpmnElement="W652_Assoc15"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W681" name="W681. DC Quality Control &amp; Vendor Compliance Inspection at Receiving" isExecutable="false">
+      <bpmn:documentation>Trigger: Each inbound delivery at DC receiving dock
+Frequency: Per delivery; ~6,000 inbound deliveries/month across 4 DCs (per the DC goods-receipt canon)
+Volume: ~1,500 deliveries/DC/month; AQL sampling per PUR-016 on designated categories
+Owner: QC Inspector
+Participants: Receiving Supervisor, DC Operations Manager, Procurement Quality Engineer
+Source: workflow W681 — DC Quality Control &amp; Vendor Compliance Inspection at Receiving</bpmn:documentation>
+      <bpmn:laneSet id="W681_LaneSet5">
+        <bpmn:lane id="W681_Lane1" name="Receiving Supervisor">
+        <bpmn:flowNodeRef>W681_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W681_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W681_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W681_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W681_Lane2" name="QC Inspector">
+        <bpmn:flowNodeRef>W681_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W681_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W681_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W681_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W681_Lane3" name="DC Operations Manager">
+        <bpmn:flowNodeRef>W681_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W681_Lane4" name="Procurement Quality Engineer">
+        <bpmn:flowNodeRef>W681_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W681_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W681_Start6" name="Each inbound delivery at DC receiving dock">
+        <bpmn:outgoing>W681_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W681_Task7" name="Delivery arrives at DC; dock assigned per W585 scheduling; Receiving Supervisor…">
+        <bpmn:documentation>Step 1: Delivery arrives at DC; dock assigned per W585 scheduling; Receiving Supervisor verifies carrier appointment and documentation (delivery receipt, packing list, customs clearance for imports per W464)
+Responsible (R): Receiving Supervisor
+Accountable (A): —
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W681_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task8" name="Receiving Supervisor performs unloading with visual inspection: checks for…">
+        <bpmn:documentation>Step 2: Receiving Supervisor performs unloading with visual inspection: checks for transit damage (crushed packaging, wet cartons, broken pallets), temperature indicator for sensitive goods per W492, and seal integrity for import containers; segregates suspect items in quarantine zone per W219
+Responsible (R): Receiving Supervisor
+Accountable (A): QC Inspector
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W681_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task9" name="QC Inspector performs AQL sampling per PUR-016 on designated categories…">
+        <bpmn:documentation>Step 3: QC Inspector performs AQL sampling per PUR-016 on designated categories: selects random sample from lot per sampling plan; inspects for product quality (cosmetic defects, dimensional accuracy, finish quality), labeling compliance (barcode readability, required markings per DTI-BPS ICC/SOC per W447), and shelf-life verification for date-sensitive items (paint, adhesives, chemicals)
+Responsible (R): QC Inspector
+Accountable (A): —
+Duration: 30-60 min</bpmn:documentation>
+        <bpmn:incoming>W681_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task10" name="QC Inspector records inspection results in quality module: pass, conditional…">
+        <bpmn:documentation>Step 4: QC Inspector records inspection results in quality module: pass, conditional pass (minor issues — accepted with notation), fail (rejected per W110); captures photos of defects
+Responsible (R): QC Inspector
+Accountable (A): —
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W681_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task11" name="For failed inspections: QC Inspector creates quality hold per W219; Procurement…">
+        <bpmn:documentation>Step 5: For failed inspections: QC Inspector creates quality hold per W219; Procurement Quality Engineer notified; vendor CAPA per W110 initiated; Receiving Supervisor processes partial receipt for accepted quantity
+Responsible (R): QC Inspector
+Accountable (A): Procurement Quality Engineer
+Duration: 1-2 hours</bpmn:documentation>
+        <bpmn:incoming>W681_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task12" name="For import shipments: QC Inspector verifies customs documentation completeness…">
+        <bpmn:documentation>Step 6: For import shipments: QC Inspector verifies customs documentation completeness per W239, performs landed cost component verification (duty rate applied, freight allocation per FIN-013), and checks product certification compliance per W625 for regulated categories
+Responsible (R): QC Inspector
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W681_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task13" name="Receiving Supervisor completes goods receipt in ERP for accepted items; system…">
+        <bpmn:documentation>Step 7: Receiving Supervisor completes goods receipt in ERP for accepted items; system updates inventory with QC status; vendor scorecard per W44 updated with quality data
+Responsible (R): Receiving Supervisor
+Accountable (A): —
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W681_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task14" name="Monthly: DC Operations Manager produces vendor quality report: defect rate by…">
+        <bpmn:documentation>Step 8: Monthly: DC Operations Manager produces vendor quality report: defect rate by vendor, category, and DC; recurring defect patterns; vendor response time to CAPA
+Responsible (R): DC Operations Manager
+Accountable (A): —
+Duration: 3 hours</bpmn:documentation>
+        <bpmn:incoming>W681_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W681_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W681_Task15" name="Quarterly: Procurement Quality Engineer reviews AQL sampling parameters and…">
+        <bpmn:documentation>Step 9: Quarterly: Procurement Quality Engineer reviews AQL sampling parameters and inspection criteria per PUR-016; adjusts sampling levels based on vendor quality history
+Responsible (R): Procurement Quality Engineer
+Accountable (A): DC Operations Manager
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W681_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W681_End16" name="Complete">
+        <bpmn:incoming>W681_Flow190</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W681_Annotation17">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: QC Inspector review and approval gate
+Owner: QC Inspector</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W681_Assoc18" sourceRef="W681_Annotation17" targetRef="W681_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W681_Flow19" sourceRef="W681_Start6" targetRef="W681_Task7" />
+      <bpmn:sequenceFlow id="W681_Flow20" sourceRef="W681_Task7" targetRef="W681_Task8" />
+      <bpmn:sequenceFlow id="W681_Flow21" sourceRef="W681_Task8" targetRef="W681_Task9" />
+      <bpmn:sequenceFlow id="W681_Flow22" sourceRef="W681_Task9" targetRef="W681_Task10" />
+      <bpmn:sequenceFlow id="W681_Flow23" sourceRef="W681_Task10" targetRef="W681_Task11" />
+      <bpmn:sequenceFlow id="W681_Flow24" sourceRef="W681_Task11" targetRef="W681_Task12" />
+      <bpmn:sequenceFlow id="W681_Flow25" sourceRef="W681_Task12" targetRef="W681_Task13" />
+      <bpmn:sequenceFlow id="W681_Flow26" sourceRef="W681_Task13" targetRef="W681_Task14" />
+      <bpmn:sequenceFlow id="W681_Flow27" sourceRef="W681_Task14" targetRef="W681_Task15" />
+      <bpmn:sequenceFlow id="W681_Flow28" sourceRef="W681_Task15" targetRef="W681_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W681_diag">
+      <bpmndi:BPMNPlane id="W681_plane" bpmnElement="W_W681">
+        <bpmndi:BPMNShape id="W681_Lane1_di" bpmnElement="W681_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Lane2_di" bpmnElement="W681_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Lane3_di" bpmnElement="W681_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Lane4_di" bpmnElement="W681_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task7_di" bpmnElement="W681_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task8_di" bpmnElement="W681_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task9_di" bpmnElement="W681_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task10_di" bpmnElement="W681_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task11_di" bpmnElement="W681_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task12_di" bpmnElement="W681_Task12"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task13_di" bpmnElement="W681_Task13"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task14_di" bpmnElement="W681_Task14"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Task15_di" bpmnElement="W681_Task15"><dc:Bounds x="2080" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Start6_di" bpmnElement="W681_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_End16_di" bpmnElement="W681_End16"><dc:Bounds x="2310" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W681_Annotation17_di" bpmnElement="W681_Annotation17"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W681_Flow19_di" bpmnElement="W681_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow20_di" bpmnElement="W681_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow21_di" bpmnElement="W681_Flow21"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow22_di" bpmnElement="W681_Flow22"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow23_di" bpmnElement="W681_Flow23"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow24_di" bpmnElement="W681_Flow24"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow25_di" bpmnElement="W681_Flow25"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow26_di" bpmnElement="W681_Flow26"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow27_di" bpmnElement="W681_Flow27"><di:waypoint x="2050" y="505" /><di:waypoint x="2080" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Flow28_di" bpmnElement="W681_Flow28"><di:waypoint x="2260" y="675" /><di:waypoint x="2310" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W681_Assoc18_di" bpmnElement="W681_Assoc18"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1271" name="W1271. DC Inbound Import Container Devanning, Staging &amp; Quality Sampling" isExecutable="false">
+      <bpmn:documentation>Trigger: Import container arrives at DC container yard from port; customs clearance completed per W464
+Frequency: ~400–600 TEUs/month across all DCs; ~100–150 containers/DC/month; ~3–5 containers/DC/day
+Volume: ~15–25 pallets per container; ~300–500 units per container depending on product category
+Owner: DC Receiving Supervisor
+Participants: DC Receiving Supervisor, Receiving Clerk, Quality Checker, Putaway Staff, Forklift Operator, Customs Broker (if exception)
+Source: workflow W1271 — DC Inbound Import Container Devanning, Staging &amp; Quality Sampling</bpmn:documentation>
+      <bpmn:laneSet id="W1271_LaneSet7">
+        <bpmn:lane id="W1271_Lane1" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1271_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1271_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1271_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1271_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1271_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1271_Lane2" name="DC Receiving Supervisor">
+        <bpmn:flowNodeRef>W1271_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1271_Lane3" name="Forklift Operator">
+        <bpmn:flowNodeRef>W1271_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1271_Lane4" name="Quality Checker">
+        <bpmn:flowNodeRef>W1271_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1271_Lane5" name="System">
+        <bpmn:flowNodeRef>W1271_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1271_Lane6" name="Putaway Staff">
+        <bpmn:flowNodeRef>W1271_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1271_End18</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1271_Start8" name="Import container arrives at DC container yard from port; customs clearance completed per…">
+        <bpmn:outgoing>W1271_Flow21</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1271_Task9" name="Container arrival and check-in">
+        <bpmn:documentation>Step 1: Container arrival and check-in: container chassis arrives at DC container yard from port drayage (W1169); Receiving Clerk verifies: (a) container number matches purchase order and advance shipping notice (ASN), (b) customs seal number matches customs clearance documents per W464, (c) container condition — no visible damage, holes, or water intrusion, (d) container weight matches documented gross weight; Receiving Clerk logs container arrival in system with timestamp
+Responsible (R): Receiving Clerk
+Accountable (A): DC Receiving Supervisor
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1271_Task10" name="Dock assignment and staging area preparation">
+        <bpmn:documentation>Step 2: Dock assignment and staging area preparation: DC Receiving Supervisor assigns dock door for devanning based on: (a) container contents — heavy items (tiles, cement) require ground-level dock; lighter items (tools, hardware) can use standard dock, (b) putaway zone proximity — if container contains lumber, assign dock near lumber storage area, (c) current dock availability per W585 (dock scheduling); DC Receiving Supervisor ensures staging area cleared and receiving lane marked for import container
+Responsible (R): DC Receiving Supervisor
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1271_Task11" name="Container positioning and seal breaking">
+        <bpmn:documentation>Step 3: Container positioning and seal breaking: Forklift Operator positions container at assigned dock door; Receiving Clerk and DC Receiving Supervisor jointly: (a) photograph customs seal before breaking, (b) verify seal number against documentation one final time, (c) break seal and open container doors, (d) photograph interior condition immediately after opening — note any shifted pallets, damaged goods, water marks, or pest evidence, (e) if seal discrepancy or visible damage: halt devanning, document with photos, notify customs broker per W464 and Buyer
+Responsible (R): Receiving Clerk / DC Receiving Supervisor
+Accountable (A): DC Receiving Supervisor
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1271_Task12" name="Devanning (container unloading)">
+        <bpmn:documentation>Step 4: Devanning (container unloading): Forklift Operator and Putaway Staff unload container: (a) palletized goods — forklift removes pallets from container and places in staging lane, (b) floor-loaded goods — manual unloading onto pallets in staging lane, (c) each pallet scanned with RF gun against ASN — system matches item, quantity, and PO line, (d) system flags any quantity discrepancy between ASN and actual count, (e) hazardous materials (paint, solvents, thinners) segregated to designated hazmat staging area per W1222; devanning continues until container fully emptied; target: 45–90 min per container depending on load type
+Responsible (R): Forklift Operator / Putaway Staff
+Accountable (A): DC Receiving Supervisor
+Duration: 45–90 min</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1271_Task13" name="Import quality sampling">
+        <bpmn:documentation>Step 5: Import quality sampling: Quality Checker performs quality sampling per W681 with import-specific checks: (a) Moisture damage check: inspect for water stains, mold, or rust — especially critical for metal goods (rebar, pipes, hardware) and paper-packaged goods (cement, adhesives), (b) Transit damage check: inspect for crushed boxes, broken items, or shifted loads causing damage, (c) Quantity verification: count check against ASN — sample minimum 10% of cartons; if any discrepancy found, expand to 30% or full count, (d) Vendor compliance check: verify labeling, barcoding, and packaging compliance per vendor agreement, (e) AQL sampling: for new vendors or categories, perform AQL (Acceptable Quality Level) inspection per W110 standards; quality results recorded in system with pass/fail and disposition recommendation
+Responsible (R): Quality Checker
+Accountable (A): DC Receiving Supervisor
+Duration: 30–45 min</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1271_Task14" name="Landed cost capture">
+        <bpmn:documentation>Step 6: Landed cost capture: system automatically calculates landed cost per unit during devanning: (a) product cost (FOB or CIF per PO terms), (b) import duty per customs entry (W464), (c) customs brokerage fees allocated per container, (d) port charges and drayage allocated per container (W1169), (e) marine insurance allocation per W191, (f) DC handling fee estimate; landed cost per unit drives WAC update for inventory valuation — critical for margin accuracy in W102 and W85
+Responsible (R): System / Finance Analyst
+Accountable (A): Controller
+Duration: Automated + 15 min review</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow26</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1271_Task15" name="Discrepancy resolution">
+        <bpmn:documentation>Step 7: Discrepancy resolution: if quality or quantity discrepancies found: (a) Quantity shortage: Receiving Clerk logs shortage in system; system adjusts goods receipt to actual count; Buyer notified for vendor claim per W88 (RTV) or debit note, (b) Quantity overage: Receiving Clerk logs overage; Buyer determines — accept (amend PO quantity) or return excess to vendor, (c) Quality failure: Quality Checker logs defect rate and types; disposition options: (i) accept with vendor debit note for defective units, (ii) reject entire shipment — segregate for return per W88, (iii) accept at discounted cost — negotiate vendor credit, (d) all discrepancies documented with photographs for vendor claim evidence per W110
+Responsible (R): Receiving Clerk / Quality Checker / Buyer
+Accountable (A): DC Receiving Supervisor
+Duration: 30–60 min (if discrepancy)</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1271_Task16" name="Putaway">
+        <bpmn:documentation>Step 8: Putaway: once quality sampling passed and landed cost captured: (a) system generates putaway assignments per W3 — directing each pallet to optimal bin location based on item velocity and storage requirements, (b) hazardous materials routed to hazmat storage zone per W1222, (c) temperature-sensitive items (adhesives, chemicals) routed to climate-controlled area per W1029, (d) Putaway Staff executes putaway with RF-directed scanning; system updates inventory in real-time
+Responsible (R): Putaway Staff
+Accountable (A): DC Receiving Supervisor
+Duration: Per W3</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W1271_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1271_Task17" name="Container release and demurrage tracking">
+        <bpmn:documentation>Step 9: Container release and demurrage tracking: once container fully devanned: (a) Receiving Clerk inspects empty container for any remaining goods or damage, (b) container released to chassis for return to port/container depot, (c) system logs container empty timestamp — tracks total dwell time from arrival to release, (d) if dwell time exceeds free period (typically 5–7 days), system alerts DC Receiving Supervisor and W249 demurrage management workflow activated
+Responsible (R): Receiving Clerk
+Accountable (A): DC Receiving Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1271_Flow29</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1271_End18" name="Complete">
+        <bpmn:incoming>W1271_Flow210</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1271_Annotation19">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Receiving Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1271_Assoc20" sourceRef="W1271_Annotation19" targetRef="W1271_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1271_Flow21" sourceRef="W1271_Start8" targetRef="W1271_Task9" />
+      <bpmn:sequenceFlow id="W1271_Flow22" sourceRef="W1271_Task9" targetRef="W1271_Task10" />
+      <bpmn:sequenceFlow id="W1271_Flow23" sourceRef="W1271_Task10" targetRef="W1271_Task11" />
+      <bpmn:sequenceFlow id="W1271_Flow24" sourceRef="W1271_Task11" targetRef="W1271_Task12" />
+      <bpmn:sequenceFlow id="W1271_Flow25" sourceRef="W1271_Task12" targetRef="W1271_Task13" />
+      <bpmn:sequenceFlow id="W1271_Flow26" sourceRef="W1271_Task13" targetRef="W1271_Task14" />
+      <bpmn:sequenceFlow id="W1271_Flow27" sourceRef="W1271_Task14" targetRef="W1271_Task15" />
+      <bpmn:sequenceFlow id="W1271_Flow28" sourceRef="W1271_Task15" targetRef="W1271_Task16" />
+      <bpmn:sequenceFlow id="W1271_Flow29" sourceRef="W1271_Task16" targetRef="W1271_Task17" />
+      <bpmn:sequenceFlow id="W1271_Flow30" sourceRef="W1271_Task17" targetRef="W1271_End18" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1271_diag">
+      <bpmndi:BPMNPlane id="W1271_plane" bpmnElement="W_W1271">
+        <bpmndi:BPMNShape id="W1271_Lane1_di" bpmnElement="W1271_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Lane2_di" bpmnElement="W1271_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Lane3_di" bpmnElement="W1271_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Lane4_di" bpmnElement="W1271_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Lane5_di" bpmnElement="W1271_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Lane6_di" bpmnElement="W1271_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task9_di" bpmnElement="W1271_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task10_di" bpmnElement="W1271_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task11_di" bpmnElement="W1271_Task11"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task12_di" bpmnElement="W1271_Task12"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task13_di" bpmnElement="W1271_Task13"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task14_di" bpmnElement="W1271_Task14"><dc:Bounds x="1450" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task15_di" bpmnElement="W1271_Task15"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task16_di" bpmnElement="W1271_Task16"><dc:Bounds x="1870" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Task17_di" bpmnElement="W1271_Task17"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Start8_di" bpmnElement="W1271_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_End18_di" bpmnElement="W1271_End18"><dc:Bounds x="2310" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1271_Annotation19_di" bpmnElement="W1271_Annotation19"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1271_Flow21_di" bpmnElement="W1271_Flow21"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow22_di" bpmnElement="W1271_Flow22"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow23_di" bpmnElement="W1271_Flow23"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow24_di" bpmnElement="W1271_Flow24"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow25_di" bpmnElement="W1271_Flow25"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow26_di" bpmnElement="W1271_Flow26"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow27_di" bpmnElement="W1271_Flow27"><di:waypoint x="1630" y="845" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow28_di" bpmnElement="W1271_Flow28"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow29_di" bpmnElement="W1271_Flow29"><di:waypoint x="2050" y="1015" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Flow30_di" bpmnElement="W1271_Flow30"><di:waypoint x="2260" y="165" /><di:waypoint x="2310" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1271_Assoc20_di" bpmnElement="W1271_Assoc20"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1279" name="W1279. DC Cross-Dock Fast-Mover Processing &amp; Direct Putaway to Outbound" isExecutable="false">
+      <bpmn:documentation>Trigger: Inbound shipment of fast-moving A-class items (cement, nails, paint) where DC acts as flow-through rather than storage node
+Frequency: Daily; ~30–40% of inbound volume for A-class SKUs
+Volume: ~1,200–1,600 cross-dock pallet positions/month across 4 DCs
+Owner: DC Operations Supervisor
+Participants: DC Receiving Lead, DC Dispatch, Supply Planner, Transportation Coordinator
+Source: workflow W1279 — DC Cross-Dock Fast-Mover Processing &amp; Direct Putaway to Outbound</bpmn:documentation>
+      <bpmn:laneSet id="W1279_LaneSet6">
+        <bpmn:lane id="W1279_Lane1" name="System">
+        <bpmn:flowNodeRef>W1279_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1279_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1279_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1279_Lane2" name="DC Dispatch">
+        <bpmn:flowNodeRef>W1279_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1279_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1279_Lane3" name="DC Receiving Lead">
+        <bpmn:flowNodeRef>W1279_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1279_Lane4" name="DC Warehouse Crew">
+        <bpmn:flowNodeRef>W1279_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1279_Lane5" name="DC Operations Supervisor">
+        <bpmn:flowNodeRef>W1279_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1279_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1279_Start7" name="Inbound shipment of fast-moving A-class items (cement, nails, paint) where DC acts as…">
+        <bpmn:outgoing>W1279_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1279_Task8" name="Cross-dock eligibility flag">
+        <bpmn:documentation>Step 1: Cross-dock eligibility flag: Supply Planner or system identifies inbound PO lines eligible for cross-dock based on: (a) ABC classification = A, (b) active store replenishment orders exist for the item, (c) inbound quantity ≤ sum of open replenishment quantities (no excess requiring storage), (d) item does not require quality inspection hold per W681
+Responsible (R): System / Supply Planner
+Accountable (A): DC Operations Supervisor
+Duration: Automated + 15 min review</bpmn:documentation>
+        <bpmn:incoming>W1279_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1279_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1279_Task9" name="Inbound-outbound matching">
+        <bpmn:documentation>Step 2: Inbound-outbound matching: System matches cross-dock-eligible inbound lines to pending store replenishment orders; generates cross-dock allocation plan: (a) inbound PO line → outbound delivery assignment, (b) pallet-level allocation to specific stores, (c) outbound truck loading sequence based on delivery route per W196
+Responsible (R): System
+Accountable (A): DC Operations Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1279_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1279_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1279_Task10" name="Pre-staging outbound trucks">
+        <bpmn:documentation>Step 3: Pre-staging outbound trucks: DC Dispatch pre-positions outbound trailers at designated cross-dock doors; confirms truck readiness (clean, no residual cargo, correct vehicle for route); DC Receiving Lead assigns dedicated cross-dock receiving lane with direct sightline to outbound dock
+Responsible (R): DC Dispatch / DC Receiving Lead
+Accountable (A): DC Operations Supervisor
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1279_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1279_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1279_Task11" name="Rapid receiving &amp; quality check">
+        <bpmn:documentation>Step 4: Rapid receiving &amp; quality check: Inbound truck arrives; DC Receiving Lead performs expedited receiving: (a) scan ASN barcode per W1365, (b) visual quality inspection (no visible damage, correct packaging), (c) pallet count verification against ASN; for cross-dock A-items, quality sampling reduced to 5% (vs. the standard 10% sampling per W1600) based on historical vendor quality score per W44
+Responsible (R): DC Receiving Lead
+Accountable (A): DC Operations Supervisor
+Duration: 30–60 min/truck</bpmn:documentation>
+        <bpmn:incoming>W1279_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1279_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1279_Task12" name="Direct transfer to outbound">
+        <bpmn:documentation>Step 5: Direct transfer to outbound: Goods moved directly from inbound dock to outbound dock via forklift or pallet jack; each pallet scanned and system confirms store assignment; pallet labeled with store-specific routing label; system updates inventory in real-time as goods move through DC without putaway
+Responsible (R): DC Warehouse Crew
+Accountable (A): DC Operations Supervisor
+Duration: 15–30 min/truck</bpmn:documentation>
+        <bpmn:incoming>W1279_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1279_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1279_Task13" name="Outbound dispatch">
+        <bpmn:documentation>Step 6: Outbound dispatch: Once all cross-dock pallets loaded onto outbound truck, DC Dispatch completes dispatch per W196; system generates delivery manifest; truck departs for store delivery; inventory records show goods receipt and goods issue in same transaction batch
+Responsible (R): DC Dispatch
+Accountable (A): DC Operations Supervisor
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1279_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1279_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1279_Task14" name="Daily cross-dock performance tracking">
+        <bpmn:documentation>Step 7: Daily cross-dock performance tracking: DC Operations Supervisor reviews daily cross-dock metrics: (a) cross-dock throughput (pallets/hour), (b) dock-to-stock time (target: &lt;4 hours from inbound arrival to outbound dispatch), (c) cross-dock accuracy (correct store allocation), (d) exceptions requiring putaway (inbound qty exceeded replenishment demand)
+Responsible (R): DC Operations Supervisor
+Accountable (A): DC Manager
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1279_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1279_End15" name="Complete">
+        <bpmn:incoming>W1279_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1279_Annotation16">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: restricting cross-dock to high-reliability vendors (quality score &gt;95% per W44)
+Owner: DC Operations Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1279_Assoc17" sourceRef="W1279_Annotation16" targetRef="W1279_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1279_Flow18" sourceRef="W1279_Start7" targetRef="W1279_Task8" />
+      <bpmn:sequenceFlow id="W1279_Flow19" sourceRef="W1279_Task8" targetRef="W1279_Task9" />
+      <bpmn:sequenceFlow id="W1279_Flow20" sourceRef="W1279_Task9" targetRef="W1279_Task10" />
+      <bpmn:sequenceFlow id="W1279_Flow21" sourceRef="W1279_Task10" targetRef="W1279_Task11" />
+      <bpmn:sequenceFlow id="W1279_Flow22" sourceRef="W1279_Task11" targetRef="W1279_Task12" />
+      <bpmn:sequenceFlow id="W1279_Flow23" sourceRef="W1279_Task12" targetRef="W1279_Task13" />
+      <bpmn:sequenceFlow id="W1279_Flow24" sourceRef="W1279_Task13" targetRef="W1279_Task14" />
+      <bpmn:sequenceFlow id="W1279_Flow25" sourceRef="W1279_Task14" targetRef="W1279_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1279_diag">
+      <bpmndi:BPMNPlane id="W1279_plane" bpmnElement="W_W1279">
+        <bpmndi:BPMNShape id="W1279_Lane1_di" bpmnElement="W1279_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Lane2_di" bpmnElement="W1279_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Lane3_di" bpmnElement="W1279_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Lane4_di" bpmnElement="W1279_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Lane5_di" bpmnElement="W1279_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Task8_di" bpmnElement="W1279_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Task9_di" bpmnElement="W1279_Task9"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Task10_di" bpmnElement="W1279_Task10"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Task11_di" bpmnElement="W1279_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Task12_di" bpmnElement="W1279_Task12"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Task13_di" bpmnElement="W1279_Task13"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Task14_di" bpmnElement="W1279_Task14"><dc:Bounds x="1660" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Start7_di" bpmnElement="W1279_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_End15_di" bpmnElement="W1279_End15"><dc:Bounds x="1890" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1279_Annotation16_di" bpmnElement="W1279_Annotation16"><dc:Bounds x="160" y="970" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1279_Flow18_di" bpmnElement="W1279_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Flow19_di" bpmnElement="W1279_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Flow20_di" bpmnElement="W1279_Flow20"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Flow21_di" bpmnElement="W1279_Flow21"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Flow22_di" bpmnElement="W1279_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Flow23_di" bpmnElement="W1279_Flow23"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Flow24_di" bpmnElement="W1279_Flow24"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Flow25_di" bpmnElement="W1279_Flow25"><di:waypoint x="1840" y="845" /><di:waypoint x="1890" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1279_Assoc17_di" bpmnElement="W1279_Assoc17"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1307" name="W1307. DC Cross-Dock Fast-Mover Expedited Receiving, Sortation &amp; Same-Day Dispatch Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Inbound shipment arrives at DC containing pre-identified cross-dock items (fast-movers, promotional stock, urgent replenishment)
+Frequency: Daily at each DC; ~30–40% of inbound volume flows through cross-dock
+Volume: ~10–15 cross-dock pallets/containers per DC per day; ~1,200–1,600 cross-dock pallet positions/month chain-wide (per W1279)
+Owner: DC Operations Manager
+Participants: DC Receiving Lead, Cross-Dock Sortation Team, DC Dispatch Coordinator, Transportation Planner
+Source: workflow W1307 — DC Cross-Dock Fast-Mover Expedited Receiving, Sortation &amp; Same-Day Dispatch Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1307_LaneSet4">
+        <bpmn:lane id="W1307_Lane1" name="System">
+        <bpmn:flowNodeRef>W1307_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1307_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1307_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1307_Lane2" name="DC Receiving Lead">
+        <bpmn:flowNodeRef>W1307_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1307_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1307_Lane3" name="DC Dispatch Coordinator">
+        <bpmn:flowNodeRef>W1307_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1307_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1307_Start5" name="Inbound shipment arrives at DC containing pre-identified cross-dock items (fast-movers…">
+        <bpmn:outgoing>W1307_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1307_Task6" name="Pre-arrival cross-dock planning">
+        <bpmn:documentation>Step 1: Pre-arrival cross-dock planning: (a) before inbound shipment arrival: system identifies cross-dock eligible items from the inbound ASN: (i) items flagged as cross-dock in item master (A-class, fast-mover designation), (ii) items on store replenishment order backorder (urgency flag), (iii) promotional items with upcoming sale event dates; (b) system generates cross-dock sort plan: (i) item × quantity × destination store, (ii) assign to outbound delivery routes departing same day, (iii) allocate dock door for cross-dock staging (separate from standard receiving dock); (c) Cross-Dock Sortation Team receives sort plan on handheld devices before truck arrival
+Responsible (R): System / DC Receiving Lead
+Accountable (A): DC Operations Manager
+Duration: 30–60 min before arrival</bpmn:documentation>
+        <bpmn:incoming>W1307_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1307_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1307_Task7" name="Expedited receiving &amp; sortation">
+        <bpmn:documentation>Step 2: Expedited receiving &amp; sortation: (a) inbound truck arrives at designated cross-dock door; (b) DC Receiving Lead performs rapid receiving: (i) scan ASN barcode on pallet/case — system confirms item is cross-dock eligible, (ii) verify quantity against ASN (tolerance: ± 2% for case count), (iii) quick quality check: packaging intact, no visible damage, correct labeling — full QC deferred for cross-dock (performed on exception basis); (c) Cross-Dock Sortation Team immediately sorts received items: (i) scan item barcode → system displays destination store and outbound route, (ii) place item in store-labeled staging lane on dock (each lane corresponds to a store delivery route), (iii) system tracks sortation progress in real-time; (d) target: from truck arrival to sortation complete = 60–90 minutes for a full truck
+Responsible (R): DC Receiving Lead / Cross-Dock Sortation Team
+Accountable (A): DC Operations Manager
+Duration: 60–90 min per truck</bpmn:documentation>
+        <bpmn:incoming>W1307_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1307_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1307_Task8" name="Same-day dispatch &amp; loadout">
+        <bpmn:documentation>Step 3: Same-day dispatch &amp; loadout: (a) as sortation completes for each outbound route: DC Dispatch Coordinator stages outbound truck: (i) load cross-docked items onto delivery truck in reverse-stop sequence (last store loaded first), (ii) combine cross-docked items with standard warehouse-picked items for the same route, (iii) generate load manifest with all items (cross-dock + standard) per route; (b) cross-dock items received before 10:00 AM dispatched same day on afternoon delivery routes; (c) cross-dock items received after 10:00 AM dispatched next morning; (d) system updates inventory status: cross-dock items move from &quot;In Transit to DC&quot; directly to &quot;In Transit to Store&quot; (bypassing &quot;In DC&quot; status)
+Responsible (R): DC Dispatch Coordinator / Transportation Planner
+Accountable (A): DC Operations Manager
+Duration: 30–60 min per route</bpmn:documentation>
+        <bpmn:incoming>W1307_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1307_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1307_Task9" name="Cross-dock exception handling">
+        <bpmn:documentation>Step 4: Cross-dock exception handling: (a) Overshipment: vendor ships more than ordered → excess received into standard putaway (not cross-docked), vendor notified per W109; (b) Quality failure: quick check reveals damaged or wrong items → failed items pulled from cross-dock, received into standard receiving for QC hold per W1225, replacement sourced from DC stock if available; (c) Missing store allocation: item received but no open replenishment order for any store → received into standard putaway (converts from cross-dock to stock); (d) Sortation error: item placed in wrong store lane → discovered at loadout when scanning item to manifest, corrected to correct lane; if discovered after dispatch: receiving store processes transfer per W219 to correct store
+Responsible (R): DC Receiving Lead
+Accountable (A): DC Operations Manager
+Duration: Per exception: 10–30 min</bpmn:documentation>
+        <bpmn:incoming>W1307_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1307_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1307_Task10" name="Daily cross-dock performance tracking">
+        <bpmn:documentation>Step 5: Daily cross-dock performance tracking: (a) system tracks daily cross-dock KPIs: (i) cross-dock volume as % of total inbound, (ii) average dock-to-dispatch time (target: &lt; 4 hours), (iii) same-day dispatch rate (target: ≥ 80% of cross-dock items dispatched same day), (iv) sortation accuracy (target: ≥ 99.5%), (v) exception rate (target: &lt; 5%); (b) DC Operations Manager reviews daily KPIs and addresses bottlenecks; (c) weekly: compare cross-dock performance across 4 DCs — identify and replicate best practices from top-performing DC
+Responsible (R): System / DC Operations Manager
+Accountable (A): VP Supply Chain
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1307_Flow18</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1307_End11" name="Complete">
+        <bpmn:incoming>W1307_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1307_Annotation12">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: DC Operations Manager review and approval gate
+Owner: DC Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1307_Assoc13" sourceRef="W1307_Annotation12" targetRef="W1307_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1307_Flow14" sourceRef="W1307_Start5" targetRef="W1307_Task6" />
+      <bpmn:sequenceFlow id="W1307_Flow15" sourceRef="W1307_Task6" targetRef="W1307_Task7" />
+      <bpmn:sequenceFlow id="W1307_Flow16" sourceRef="W1307_Task7" targetRef="W1307_Task8" />
+      <bpmn:sequenceFlow id="W1307_Flow17" sourceRef="W1307_Task8" targetRef="W1307_Task9" />
+      <bpmn:sequenceFlow id="W1307_Flow18" sourceRef="W1307_Task9" targetRef="W1307_Task10" />
+      <bpmn:sequenceFlow id="W1307_Flow19" sourceRef="W1307_Task10" targetRef="W1307_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1307_diag">
+      <bpmndi:BPMNPlane id="W1307_plane" bpmnElement="W_W1307">
+        <bpmndi:BPMNShape id="W1307_Lane1_di" bpmnElement="W1307_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Lane2_di" bpmnElement="W1307_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Lane3_di" bpmnElement="W1307_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Task6_di" bpmnElement="W1307_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Task7_di" bpmnElement="W1307_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Task8_di" bpmnElement="W1307_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Task9_di" bpmnElement="W1307_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Task10_di" bpmnElement="W1307_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Start5_di" bpmnElement="W1307_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_End11_di" bpmnElement="W1307_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1307_Annotation12_di" bpmnElement="W1307_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1307_Flow14_di" bpmnElement="W1307_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1307_Flow15_di" bpmnElement="W1307_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1307_Flow16_di" bpmnElement="W1307_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1307_Flow17_di" bpmnElement="W1307_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1307_Flow18_di" bpmnElement="W1307_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1307_Flow19_di" bpmnElement="W1307_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1307_Assoc13_di" bpmnElement="W1307_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1365" name="W1365. DC Inbound Vendor ASN Pre-Receipt Verification &amp; PO Matching Exception Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor submits Advance Shipping Notice (ASN) via vendor portal or EDI for an incoming shipment
+Frequency: ~6,000 DC goods receipts/month across 4 DCs; ~80% of receipt volume comes from portal-enabled vendors submitting ASN before delivery (portal access covers top vendors by volume; ~40% of vendors by count lack access — see pain points)
+Volume: ~4,800 ASN submissions/month; ~15–20% have discrepancies requiring exception handling = ~720–960 exceptions/month
+Owner: DC Inbound Supervisor
+Participants: DC Inbound Supervisor, Receiving Clerk, Buyer, Vendor (via portal), Import Coordinator (for import shipments)
+Source: workflow W1365 — DC Inbound Vendor ASN Pre-Receipt Verification &amp; PO Matching Exception Management</bpmn:documentation>
+      <bpmn:laneSet id="W1365_LaneSet5">
+        <bpmn:lane id="W1365_Lane1" name="Vendor">
+        <bpmn:flowNodeRef>W1365_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1365_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1365_Lane2" name="System">
+        <bpmn:flowNodeRef>W1365_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1365_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1365_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1365_Lane3" name="DC Inbound Supervisor">
+        <bpmn:flowNodeRef>W1365_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1365_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1365_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1365_Lane4" name="Buyer">
+        <bpmn:flowNodeRef>W1365_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1365_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1365_Start6" name="Vendor submits Advance Shipping Notice (ASN) via vendor portal or EDI for an incoming…">
+        <bpmn:outgoing>W1365_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1365_Task7" name="Vendor submits ASN via vendor portal: PO reference, SKU list with quantities…">
+        <bpmn:documentation>Step 1: Vendor submits ASN via vendor portal: PO reference, SKU list with quantities, expected delivery date, carrier, and number of pallets/cases
+Responsible (R): Vendor
+Accountable (A): —
+Duration: Vendor-initiated</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1365_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1365_Task8" name="System auto-matches ASN to open PO: verifies PO number exists, PO status is…">
+        <bpmn:documentation>Step 2: System auto-matches ASN to open PO: verifies PO number exists, PO status is &quot;Open&quot; (not cancelled or closed), SKU numbers match PO lines, quantities are within PO tolerance (+/- 10%)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1365_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1365_Task9" name="If full match: system pre-assigns dock door, generates pre-receipt record with…">
+        <bpmn:documentation>Step 3: If full match: system pre-assigns dock door, generates pre-receipt record with expected items; Receiving Clerk proceeds to rapid scan-based receiving upon truck arrival
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1365_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1365_Task10" name="If partial match or mismatch: system creates exception record with discrepancy…">
+        <bpmn:documentation>Step 4: If partial match or mismatch: system creates exception record with discrepancy details (wrong SKU, quantity overage/shortage, PO not found, PO closed); routes to DC Inbound Supervisor
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1365_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1365_Task11" name="DC Inbound Supervisor reviews exception: determines resolution — (a) accept…">
+        <bpmn:documentation>Step 5: DC Inbound Supervisor reviews exception: determines resolution — (a) accept shipment with PO amendment by Buyer, (b) accept partial shipment (only matched lines), (c) reject entire shipment, or (d) hold shipment pending vendor clarification
+Responsible (R): DC Inbound Supervisor
+Accountable (A): DC Manager
+Duration: 10–20 min/exception</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1365_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1365_Task12" name="For resolution (a): Supervisor contacts Buyer to create PO amendment or new PO…">
+        <bpmn:documentation>Step 6: For resolution (a): Supervisor contacts Buyer to create PO amendment or new PO; Buyer approves or rejects based on current demand
+Responsible (R): Buyer
+Accountable (A): Category Manager
+Duration: 15 min/case</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1365_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1365_Task13" name="For resolution (d): Supervisor contacts vendor via portal messaging; vendor…">
+        <bpmn:documentation>Step 7: For resolution (d): Supervisor contacts vendor via portal messaging; vendor provides corrected ASN or explanation; system matches corrected ASN to PO
+Responsible (R): DC Inbound Supervisor / Vendor
+Accountable (A): —
+Duration: 1–24 hours</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1365_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1365_Task14" name="Weekly: DC Inbound Supervisor produces ASN accuracy report by vendor; vendors…">
+        <bpmn:documentation>Step 8: Weekly: DC Inbound Supervisor produces ASN accuracy report by vendor; vendors with &lt; 70% ASN accuracy are flagged for Vendor Performance review (W26)
+Responsible (R): DC Inbound Supervisor
+Accountable (A): DC Manager
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W1365_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1365_End15" name="Complete">
+        <bpmn:incoming>W1365_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1365_Annotation16">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: DC Inbound Supervisor review and approval gate
+Owner: DC Inbound Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1365_Assoc17" sourceRef="W1365_Annotation16" targetRef="W1365_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1365_Flow18" sourceRef="W1365_Start6" targetRef="W1365_Task7" />
+      <bpmn:sequenceFlow id="W1365_Flow19" sourceRef="W1365_Task7" targetRef="W1365_Task8" />
+      <bpmn:sequenceFlow id="W1365_Flow20" sourceRef="W1365_Task8" targetRef="W1365_Task9" />
+      <bpmn:sequenceFlow id="W1365_Flow21" sourceRef="W1365_Task9" targetRef="W1365_Task10" />
+      <bpmn:sequenceFlow id="W1365_Flow22" sourceRef="W1365_Task10" targetRef="W1365_Task11" />
+      <bpmn:sequenceFlow id="W1365_Flow23" sourceRef="W1365_Task11" targetRef="W1365_Task12" />
+      <bpmn:sequenceFlow id="W1365_Flow24" sourceRef="W1365_Task12" targetRef="W1365_Task13" />
+      <bpmn:sequenceFlow id="W1365_Flow25" sourceRef="W1365_Task13" targetRef="W1365_Task14" />
+      <bpmn:sequenceFlow id="W1365_Flow26" sourceRef="W1365_Task14" targetRef="W1365_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1365_diag">
+      <bpmndi:BPMNPlane id="W1365_plane" bpmnElement="W_W1365">
+        <bpmndi:BPMNShape id="W1365_Lane1_di" bpmnElement="W1365_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Lane2_di" bpmnElement="W1365_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Lane3_di" bpmnElement="W1365_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Lane4_di" bpmnElement="W1365_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task7_di" bpmnElement="W1365_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task8_di" bpmnElement="W1365_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task9_di" bpmnElement="W1365_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task10_di" bpmnElement="W1365_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task11_di" bpmnElement="W1365_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task12_di" bpmnElement="W1365_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task13_di" bpmnElement="W1365_Task13"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Task14_di" bpmnElement="W1365_Task14"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Start6_di" bpmnElement="W1365_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_End15_di" bpmnElement="W1365_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1365_Annotation16_di" bpmnElement="W1365_Annotation16"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1365_Flow18_di" bpmnElement="W1365_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow19_di" bpmnElement="W1365_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow20_di" bpmnElement="W1365_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow21_di" bpmnElement="W1365_Flow21"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow22_di" bpmnElement="W1365_Flow22"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow23_di" bpmnElement="W1365_Flow23"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow24_di" bpmnElement="W1365_Flow24"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow25_di" bpmnElement="W1365_Flow25"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Flow26_di" bpmnElement="W1365_Flow26"><di:waypoint x="2050" y="505" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1365_Assoc17_di" bpmnElement="W1365_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1366" name="W1366. DC Inbound Damage Claim Processing, Vendor Chargeback &amp; Freight Recovery Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Receiving Clerk identifies damaged goods during DC inbound receiving inspection (W3, W681)
+Frequency: ~2–3% of inbound shipments have some damage = ~120–180 damage incidents/month across 4 DCs
+Volume: ~120–180 incidents/month; damage value ranges from PHP 5,000 (minor carton damage) to PHP 500,000+ (full container of shattered tiles)
+Owner: DC Inbound Supervisor
+Participants: DC Inbound Supervisor, Receiving Clerk, Buyer, Finance (AP/AR), Vendor, Freight Carrier/Forwarder, Import Coordinator (for import shipments)
+Source: workflow W1366 — DC Inbound Damage Claim Processing, Vendor Chargeback &amp; Freight Recovery Management</bpmn:documentation>
+      <bpmn:laneSet id="W1366_LaneSet5">
+        <bpmn:lane id="W1366_Lane1" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1366_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1366_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1366_Lane2" name="DC Inbound Supervisor">
+        <bpmn:flowNodeRef>W1366_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1366_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1366_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1366_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1366_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1366_Lane3" name="Import Coordinator">
+        <bpmn:flowNodeRef>W1366_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1366_Lane4" name="Finance (AP">
+        <bpmn:flowNodeRef>W1366_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1366_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1366_Start6" name="Receiving Clerk identifies damaged goods during DC inbound receiving inspection (W3, W681)">
+        <bpmn:outgoing>W1366_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1366_Task7" name="Receiving Clerk identifies damaged goods during receiving inspection…">
+        <bpmn:documentation>Step 1: Receiving Clerk identifies damaged goods during receiving inspection: photographs damage (multiple angles), records damaged SKU, quantity, and damage type (crushed, water-damaged, broken, scratched, missing parts) on receiving exception report
+Responsible (R): Receiving Clerk
+Accountable (A): DC Inbound Supervisor
+Duration: 5–10 min/incident</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1366_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1366_Task8" name="DC Inbound Supervisor assesses damage severity: minor (salvageable at…">
+        <bpmn:documentation>Step 2: DC Inbound Supervisor assesses damage severity: minor (salvageable at discount), moderate (usable with rework), or total loss; determines responsible party based on damage pattern and transit chain
+Responsible (R): DC Inbound Supervisor
+Accountable (A): DC Manager
+Duration: 10–15 min/incident</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1366_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1366_Task9" name="Supervisor segregates damaged goods to designated damage staging area; updates…">
+        <bpmn:documentation>Step 3: Supervisor segregates damaged goods to designated damage staging area; updates inventory status to &quot;damaged/hold&quot; in system to prevent allocation to store orders
+Responsible (R): DC Inbound Supervisor
+Accountable (A): —
+Duration: 5 min/incident</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1366_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1366_Task10" name="For vendor-caused damage (packaging failure, manufacturing defect): Supervisor…">
+        <bpmn:documentation>Step 4: For vendor-caused damage (packaging failure, manufacturing defect): Supervisor creates vendor chargeback in system with photo evidence; chargeback amount deducted from next vendor payment via AP (W7)
+Responsible (R): DC Inbound Supervisor
+Accountable (A): Buyer
+Duration: 15–20 min/incident</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1366_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1366_Task11" name="For carrier-caused damage (transit damage): Supervisor creates carrier claim…">
+        <bpmn:documentation>Step 5: For carrier-caused damage (transit damage): Supervisor creates carrier claim with supporting documentation (delivery receipt noting damage, photos, commercial invoice value); submits claim to carrier within 48 hours per carrier contract terms
+Responsible (R): DC Inbound Supervisor
+Accountable (A): Logistics Manager
+Duration: 20–30 min/incident</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1366_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1366_Task12" name="For import container damage (condensation, shifting): Import Coordinator files…">
+        <bpmn:documentation>Step 6: For import container damage (condensation, shifting): Import Coordinator files claim with marine insurance provider; provides survey report, photos, and cargo manifest
+Responsible (R): Import Coordinator
+Accountable (A): Treasury Manager
+Duration: 1–2 hours/case</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1366_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1366_Task13" name="Finance processes approved chargebacks: vendor chargeback offset against open…">
+        <bpmn:documentation>Step 7: Finance processes approved chargebacks: vendor chargeback offset against open AP; carrier claim recovery recorded as other income; insurance claim recovery recorded upon settlement; unrecoverable damage written off as inventory shrinkage
+Responsible (R): Finance (AP/AR)
+Accountable (A): Controller
+Duration: 15 min/claim</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1366_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1366_Task14" name="Monthly: DC Inbound Supervisor produces damage analysis report: damage rate by…">
+        <bpmn:documentation>Step 8: Monthly: DC Inbound Supervisor produces damage analysis report: damage rate by vendor, by carrier, by product category, and by damage type; high-damage vendors flagged for Vendor Performance review (W26) and packaging improvement requirements
+Responsible (R): DC Inbound Supervisor
+Accountable (A): DC Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1366_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1366_End15" name="Complete">
+        <bpmn:incoming>W1366_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1366_Annotation16">
+        <bpmn:text>Controls: - CTL-250 (ensure controlled execution — DC Inbound Operations (PA-04.1).) | - operational: DC Inbound Supervisor review and approval gate
+Owner: DC Inbound Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1366_Assoc17" sourceRef="W1366_Annotation16" targetRef="W1366_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1366_Flow18" sourceRef="W1366_Start6" targetRef="W1366_Task7" />
+      <bpmn:sequenceFlow id="W1366_Flow19" sourceRef="W1366_Task7" targetRef="W1366_Task8" />
+      <bpmn:sequenceFlow id="W1366_Flow20" sourceRef="W1366_Task8" targetRef="W1366_Task9" />
+      <bpmn:sequenceFlow id="W1366_Flow21" sourceRef="W1366_Task9" targetRef="W1366_Task10" />
+      <bpmn:sequenceFlow id="W1366_Flow22" sourceRef="W1366_Task10" targetRef="W1366_Task11" />
+      <bpmn:sequenceFlow id="W1366_Flow23" sourceRef="W1366_Task11" targetRef="W1366_Task12" />
+      <bpmn:sequenceFlow id="W1366_Flow24" sourceRef="W1366_Task12" targetRef="W1366_Task13" />
+      <bpmn:sequenceFlow id="W1366_Flow25" sourceRef="W1366_Task13" targetRef="W1366_Task14" />
+      <bpmn:sequenceFlow id="W1366_Flow26" sourceRef="W1366_Task14" targetRef="W1366_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1366_diag">
+      <bpmndi:BPMNPlane id="W1366_plane" bpmnElement="W_W1366">
+        <bpmndi:BPMNShape id="W1366_Lane1_di" bpmnElement="W1366_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Lane2_di" bpmnElement="W1366_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Lane3_di" bpmnElement="W1366_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Lane4_di" bpmnElement="W1366_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task7_di" bpmnElement="W1366_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task8_di" bpmnElement="W1366_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task9_di" bpmnElement="W1366_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task10_di" bpmnElement="W1366_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task11_di" bpmnElement="W1366_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task12_di" bpmnElement="W1366_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task13_di" bpmnElement="W1366_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Task14_di" bpmnElement="W1366_Task14"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Start6_di" bpmnElement="W1366_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_End15_di" bpmnElement="W1366_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1366_Annotation16_di" bpmnElement="W1366_Annotation16"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1366_Flow18_di" bpmnElement="W1366_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow19_di" bpmnElement="W1366_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow20_di" bpmnElement="W1366_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow21_di" bpmnElement="W1366_Flow21"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow22_di" bpmnElement="W1366_Flow22"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow23_di" bpmnElement="W1366_Flow23"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow24_di" bpmnElement="W1366_Flow24"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow25_di" bpmnElement="W1366_Flow25"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Flow26_di" bpmnElement="W1366_Flow26"><di:waypoint x="2050" y="335" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1366_Assoc17_di" bpmnElement="W1366_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,1279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-10.3-marketplace-and-social-commerce" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W180" name="W180. E-commerce Marketplace Integration (Lazada/Shopee)" isExecutable="false">
+      <bpmn:documentation>Trigger: Order placed on external marketplace (Lazada/Shopee)
+Frequency: High; ~9,000–13,000 orders/month (one register with W724/W1470&#x27;s ~30% share)
+Volume: Avg 2–3 items per order; avg order value PHP 1,500–3,000
+Owner: Ecommerce Operations Manager
+Participants: System (Middleware), DC Picker, Marketplace Courier
+Source: workflow W180 — E-commerce Marketplace Integration (Lazada/Shopee)</bpmn:documentation>
+      <bpmn:laneSet id="W180_LaneSet6">
+        <bpmn:lane id="W180_Lane1" name="System">
+        <bpmn:flowNodeRef>W180_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W180_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W180_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W180_Lane2" name="DC Picker">
+        <bpmn:flowNodeRef>W180_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W180_Lane3" name="DC Packer">
+        <bpmn:flowNodeRef>W180_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W180_Lane4" name="DC Dispatch">
+        <bpmn:flowNodeRef>W180_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W180_Lane5" name="Finance Clerk">
+        <bpmn:flowNodeRef>W180_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W180_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W180_Start7" name="Order placed on external marketplace (Lazada/Shopee)">
+        <bpmn:outgoing>W180_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W180_Task8" name="Order Sync">
+        <bpmn:documentation>Step 1: Order Sync: Middleware pulls orders from Lazada/Shopee APIs; creates Sales Orders in ERP
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W180_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W180_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W180_Task9" name="ATP Verification">
+        <bpmn:documentation>Step 2: ATP Verification: System checks DC stock; if unavailable, system auto-notifies marketplace to cancel or delay
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W180_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W180_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W180_Task10" name="Picking">
+        <bpmn:documentation>Step 3: Picking: DC Picker receives marketplace pick task; scans each item
+Responsible (R): DC Picker
+Accountable (A): DC Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W180_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W180_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W180_Task11" name="Packaging">
+        <bpmn:documentation>Step 4: Packaging: Items packed in marketplace-specific packaging; marketplace shipping labels printed from middleware
+Responsible (R): DC Packer
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W180_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W180_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W180_Task12" name="Handover">
+        <bpmn:documentation>Step 5: Handover: Marketplace Courier (Lex/Shopee Xpress) picks up from DC; pickup confirmation synced to marketplace
+Responsible (R): DC Dispatch
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W180_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W180_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W180_Task13" name="Settlement">
+        <bpmn:documentation>Step 6: Settlement: Bi-weekly: Marketplace remits payment (net of commission/fees); Finance reconciles with ERP Sales Orders
+Responsible (R): Finance Clerk
+Accountable (A): Controller
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W180_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W180_End14" name="Complete">
+        <bpmn:incoming>W180_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W180_Annotation15">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: periodic reconciliation against source documents
+Owner: Ecommerce Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W180_Assoc16" sourceRef="W180_Annotation15" targetRef="W180_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W180_Flow17" sourceRef="W180_Start7" targetRef="W180_Task8" />
+      <bpmn:sequenceFlow id="W180_Flow18" sourceRef="W180_Task8" targetRef="W180_Task9" />
+      <bpmn:sequenceFlow id="W180_Flow19" sourceRef="W180_Task9" targetRef="W180_Task10" />
+      <bpmn:sequenceFlow id="W180_Flow20" sourceRef="W180_Task10" targetRef="W180_Task11" />
+      <bpmn:sequenceFlow id="W180_Flow21" sourceRef="W180_Task11" targetRef="W180_Task12" />
+      <bpmn:sequenceFlow id="W180_Flow22" sourceRef="W180_Task12" targetRef="W180_Task13" />
+      <bpmn:sequenceFlow id="W180_Flow23" sourceRef="W180_Task13" targetRef="W180_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W180_diag">
+      <bpmndi:BPMNPlane id="W180_plane" bpmnElement="W_W180">
+        <bpmndi:BPMNShape id="W180_Lane1_di" bpmnElement="W180_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Lane2_di" bpmnElement="W180_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Lane3_di" bpmnElement="W180_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Lane4_di" bpmnElement="W180_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Lane5_di" bpmnElement="W180_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Task8_di" bpmnElement="W180_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Task9_di" bpmnElement="W180_Task9"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Task10_di" bpmnElement="W180_Task10"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Task11_di" bpmnElement="W180_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Task12_di" bpmnElement="W180_Task12"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Task13_di" bpmnElement="W180_Task13"><dc:Bounds x="1450" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Start7_di" bpmnElement="W180_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_End14_di" bpmnElement="W180_End14"><dc:Bounds x="1680" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W180_Annotation15_di" bpmnElement="W180_Annotation15"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W180_Flow17_di" bpmnElement="W180_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W180_Flow18_di" bpmnElement="W180_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W180_Flow19_di" bpmnElement="W180_Flow19"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W180_Flow20_di" bpmnElement="W180_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W180_Flow21_di" bpmnElement="W180_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W180_Flow22_di" bpmnElement="W180_Flow22"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W180_Flow23_di" bpmnElement="W180_Flow23"><di:waypoint x="1630" y="845" /><di:waypoint x="1680" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W180_Assoc16_di" bpmnElement="W180_Assoc16"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W724" name="W724. Marketplace Channel Daily Operations &amp; Order Management (Lazada/Shopee)" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily marketplace order processing cycle; or real-time order notification from marketplace platform
+Frequency: Daily; real-time order notifications throughout the day
+Volume: ~300–430 marketplace orders/day (~9,000–13,000/month); ~30% of total ecommerce volume (per W1470)
+Owner: Ecommerce Operations Manager
+Participants: Marketplace Specialist, Warehouse Picker, DC Dispatcher, Finance (reconciliation), Customer Service
+Source: workflow W724 — Marketplace Channel Daily Operations &amp; Order Management (Lazada/Shopee)</bpmn:documentation>
+      <bpmn:laneSet id="W724_LaneSet4">
+        <bpmn:lane id="W724_Lane1" name="Marketplace Specialist">
+        <bpmn:flowNodeRef>W724_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W724_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W724_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W724_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W724_Lane2" name="System">
+        <bpmn:flowNodeRef>W724_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W724_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W724_Lane3" name="DC Picker">
+        <bpmn:flowNodeRef>W724_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W724_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W724_Start5" name="Daily marketplace order processing cycle; or real-time order notification from…">
+        <bpmn:outgoing>W724_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W724_Task6" name="Morning order sync and prioritization">
+        <bpmn:documentation>Step 1: Morning order sync and prioritization: at start of business day: (a) system syncs overnight marketplace orders from Lazada and Shopee via API integration per W180; (b) Marketplace Specialist reviews order queue: (i) orders requiring ship-today (received before cutoff, platform SLA requires same-day ship); (ii) orders pending inventory confirmation (ATP check against ERP); (iii) orders with address issues or customer notes requiring clarification; (iv) promotional orders with special fulfillment requirements; (c) prioritize ship-today orders for immediate DC pick
+Responsible (R): Marketplace Specialist
+Accountable (A): Ecommerce Ops Mgr
+Duration: 30-45 min/day</bpmn:documentation>
+        <bpmn:incoming>W724_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W724_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W724_Task7" name="Inventory and price synchronization">
+        <bpmn:documentation>Step 2: Inventory and price synchronization: throughout the day, system maintains real-time sync: (a) inventory levels: ERP inventory changes (POS sales per W533, DC shipments) pushed to marketplace platforms within 5 minutes to prevent overselling; (b) price sync: promotional pricing per W13 activated simultaneously on marketplace and own channels per W678; (c) listing management: new product listings activated per W569 pushed to marketplace; discontinued items delisted; (d) Marketplace Specialist monitors for sync errors and resolves within 1 hour
+Responsible (R): System / Marketplace Specialist
+Accountable (A): Ecommerce Ops Mgr
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W724_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W724_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W724_Task8" name="Fulfillment routing">
+        <bpmn:documentation>Step 3: Fulfillment routing: for each marketplace order: (a) system determines fulfillment method: (i) DC fulfillment: item picked from nearest DC per W19; (ii) drop-ship: routed to vendor for direct shipment per W246; (iii) ship-from-store: routed to store with inventory per W19B (if marketplace allows); (b) platform-specific logistics: (i) Lazada: choose between BuildRight own logistics or Lazada Logistics (LEX); (ii) Shopee: choose between own logistics or Shopee Xpress (SPX); (c) Marketplace Specialist reviews system routing decisions and adjusts if needed for SLA compliance
+Responsible (R): System / Marketplace Specialist
+Accountable (A): Ecommerce Ops Mgr
+Duration: 15-20 min/day</bpmn:documentation>
+        <bpmn:incoming>W724_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W724_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W724_Task9" name="Order fulfillment and shipment tracking">
+        <bpmn:documentation>Step 4: Order fulfillment and shipment tracking: marketplace orders enter standard fulfillment pipeline: (a) DC pick and pack per W19 (home delivery) or W11 (BOPIS equivalent); (b) marketplace-specific label generation: platform-required shipping labels with tracking barcodes; (c) handoff to carrier: for platform logistics, schedule pickup per carrier SLA; for own logistics, dispatch per W106; (d) upload tracking number to marketplace platform via API; (e) monitor delivery status: system tracks marketplace-specific milestones (Ready to Ship → Shipped → Out for Delivery → Delivered)
+Responsible (R): DC Picker / Dispatcher
+Accountable (A): Ecommerce Ops Mgr
+Duration: Per W19/W246</bpmn:documentation>
+        <bpmn:incoming>W724_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W724_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W724_Task10" name="Customer service coordination">
+        <bpmn:documentation>Step 5: Customer service coordination: for marketplace-specific customer issues: (a) respond to marketplace chat/inquiries within platform SLA (Lazada: 1 hour, Shopee: 30 min); (b) handle order cancellation requests: cancel in marketplace platform and ERP simultaneously; (c) process marketplace-initiated returns per W215 with platform-specific return procedures; (d) manage marketplace seller ratings and dispute resolution; (e) escalate platform account issues (listing takedowns, policy violations) to Ecommerce Operations Manager
+Responsible (R): Marketplace Specialist / Customer Service
+Accountable (A): Ecommerce Ops Mgr
+Duration: 1-2 hours/day</bpmn:documentation>
+        <bpmn:incoming>W724_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W724_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W724_Task11" name="Daily settlement reconciliation">
+        <bpmn:documentation>Step 6: Daily settlement reconciliation: at end of day: (a) reconcile marketplace orders shipped vs. orders in ERP; (b) verify tracking number upload completion for all shipped orders; (c) review platform commission calculations: order value × commission rate per category; (d) flag discrepancies: orders in platform but not in ERP (sync failure) or vice versa; (e) Finance receives daily marketplace settlement summary for monthly reconciliation per W99
+Responsible (R): Marketplace Specialist / Finance
+Accountable (A): Ecommerce Ops Mgr
+Duration: 30-45 min/day</bpmn:documentation>
+        <bpmn:incoming>W724_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W724_End12" name="Complete">
+        <bpmn:incoming>W724_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W724_Annotation13">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: early morning order processing and DC priority for marketplace orders; operational: safety stock buffer dedicated to marketplace channel per W105
+Owner: Ecommerce Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W724_Assoc14" sourceRef="W724_Annotation13" targetRef="W724_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W724_Flow15" sourceRef="W724_Start5" targetRef="W724_Task6" />
+      <bpmn:sequenceFlow id="W724_Flow16" sourceRef="W724_Task6" targetRef="W724_Task7" />
+      <bpmn:sequenceFlow id="W724_Flow17" sourceRef="W724_Task7" targetRef="W724_Task8" />
+      <bpmn:sequenceFlow id="W724_Flow18" sourceRef="W724_Task8" targetRef="W724_Task9" />
+      <bpmn:sequenceFlow id="W724_Flow19" sourceRef="W724_Task9" targetRef="W724_Task10" />
+      <bpmn:sequenceFlow id="W724_Flow20" sourceRef="W724_Task10" targetRef="W724_Task11" />
+      <bpmn:sequenceFlow id="W724_Flow21" sourceRef="W724_Task11" targetRef="W724_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W724_diag">
+      <bpmndi:BPMNPlane id="W724_plane" bpmnElement="W_W724">
+        <bpmndi:BPMNShape id="W724_Lane1_di" bpmnElement="W724_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Lane2_di" bpmnElement="W724_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Lane3_di" bpmnElement="W724_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Task6_di" bpmnElement="W724_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Task7_di" bpmnElement="W724_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Task8_di" bpmnElement="W724_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Task9_di" bpmnElement="W724_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Task10_di" bpmnElement="W724_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Task11_di" bpmnElement="W724_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Start5_di" bpmnElement="W724_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_End12_di" bpmnElement="W724_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W724_Annotation13_di" bpmnElement="W724_Annotation13"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W724_Flow15_di" bpmnElement="W724_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W724_Flow16_di" bpmnElement="W724_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W724_Flow17_di" bpmnElement="W724_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W724_Flow18_di" bpmnElement="W724_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W724_Flow19_di" bpmnElement="W724_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W724_Flow20_di" bpmnElement="W724_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W724_Flow21_di" bpmnElement="W724_Flow21"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W724_Assoc14_di" bpmnElement="W724_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W917" name="W917. Ecommerce Live Commerce &amp; Social Selling Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Scheduled live commerce session on social media platform (Facebook Live, TikTok Live); flash product launch; seasonal campaign event
+Frequency: 4–6 live sessions/week chain-wide (2–3 on Facebook Live, 1–2 on TikTok Live, 1 on buildright.com.ph); ~20–24 sessions/month
+Volume: Average 500–2,000 live viewers per session; ~200–500 orders per session; average order value PHP 2,500–4,000
+Owner: Digital Commerce Manager
+Participants: Marketing Host/Presenter, Category Manager (product expert), Ecommerce Fulfillment Team (W19, W11), Social Media Manager (W142), Customer Service (W258)
+Source: workflow W917 — Ecommerce Live Commerce &amp; Social Selling Operations</bpmn:documentation>
+      <bpmn:laneSet id="W917_LaneSet5">
+        <bpmn:lane id="W917_Lane1" name="Digital Commerce Manager">
+        <bpmn:flowNodeRef>W917_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W917_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W917_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W917_Lane2" name="Social Media Manager">
+        <bpmn:flowNodeRef>W917_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W917_Lane3" name="Marketing Host">
+        <bpmn:flowNodeRef>W917_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W917_Lane4" name="Ecommerce Fulfillment Team">
+        <bpmn:flowNodeRef>W917_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W917_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W917_Start6" name="Scheduled live commerce session on social media platform (Facebook Live, TikTok Live)…">
+        <bpmn:outgoing>W917_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W917_Task7" name="Live Commerce Session Planning">
+        <bpmn:documentation>Step 1: Live Commerce Session Planning: (a) weekly: Digital Commerce Manager and Category Manager select products for upcoming live sessions based on: seasonal calendar per W264 (rainy season = waterproofing products; ber months = holiday décor), trending products from POS data per W522, new product launches per W569, and vendor co-sponsorship availability per W513; (b) session format selection: (i) product demo + Q&amp;A (30–45 min), (ii) flash sale with countdown (15–20 min), (iii) DIY tutorial + product selling (45–60 min), (iv) contractor pro-tips session (30 min, targeting B2B); (c) product selection criteria: visually demonstrable, available ATP at fulfillment DC per W536, live-only promotional pricing approved per W300, and inventory depth sufficient for expected demand (minimum 200 units per featured SKU); (d) promotional pricing: live-only discount (10–20% off SRP) or bundle offer per W910; discount approved by Category Manager per discount authority matrix; (e) session logistics: host/presenter assigned, product samples prepared for studio/staging area, backdrop and lighting set up in ecommerce studio at HQ
+Responsible (R): Digital Commerce Manager / Category Manager
+Accountable (A): VP Marketing
+Duration: 4–6 hours/week</bpmn:documentation>
+        <bpmn:incoming>W917_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W917_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W917_Task8" name="Pre-Live Promotion &amp; Audience Building">
+        <bpmn:documentation>Step 2: Pre-Live Promotion &amp; Audience Building: (a) 48 hours before session: promotional posts on Facebook page, Instagram stories, and TikTok teaser video per W142 announcing date/time, featured products, and live-only discount; (b) email notification to loyalty members in relevant segment per W673 (e.g., DIY enthusiasts for tool demos, contractors for pro-tips sessions); (c) push notification via BuildRight mobile app per W615; (d) session event page created on Facebook with RSVP; (e) product page on buildright.com.ph updated with &quot;Watch Live&quot; badge linking to stream; (f) inventory pre-reservation: system reserves minimum expected quantity for live session orders (released after session if unsold)
+Responsible (R): Social Media Manager / Digital Commerce Manager
+Accountable (A): —
+Duration: 2–3 hours/session</bpmn:documentation>
+        <bpmn:incoming>W917_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W917_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W917_Task9" name="Live Session Execution">
+        <bpmn:documentation>Step 3: Live Session Execution: (a) host goes live on scheduled platform; (b) session flow: introduction and agenda (2 min), product demonstration with close-up camera work (15–20 min), live Q&amp;A from viewer comments (10 min), flash sale announcement with countdown timer (5 min), closing with next session teaser (2 min); (c) purchasing mechanism: (i) TikTok Shop: direct purchase via TikTok Shop integration with real-time inventory check; (ii) Facebook Live: comment-to-order (customer comments &quot;ORDER [product code] [quantity]&quot;) → system captures order from comment feed and creates ecommerce order → customer receives DM with payment link; (iii) buildright.com.ph: embedded live stream with &quot;Buy Now&quot; button synced to ecommerce checkout; (d) Category Manager monitors comments and provides technical answers to host via earpiece; (e) Customer Service team monitors order queue and handles payment failures or customer inquiries in real-time; (f) system enforces live-only pricing with automatic price revert when session ends
+Responsible (R): Marketing Host / Category Manager / Customer Service / System
+Accountable (A): Digital Commerce Manager
+Duration: 30–60 min/session</bpmn:documentation>
+        <bpmn:incoming>W917_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W917_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W917_Task10" name="Post-Session Order Processing &amp; Fulfillment">
+        <bpmn:documentation>Step 4: Post-Session Order Processing &amp; Fulfillment: (a) within 1 hour of session end: all live commerce orders compiled and batch-processed in unified order management per W536; (b) orders routed to fulfillment: DC pick/pack/ship per W19 for home delivery, or BOPIS per W11; (c) fulfillment SLA: live commerce orders shipped within 24 hours (priority flag over standard ecommerce orders); (d) customer notifications: order confirmation (within 1 hour), shipping confirmation with tracking (within 24 hours), delivery notification per W592; (e) payment reconciliation: all live session payments reconciled against order records per W611; (f) unfilled orders (stock-out from higher-than-expected demand): customer notified with apology and offered: (i) backorder with expected ship date, (ii) substitute product per W279, or (iii) refund per W101
+Responsible (R): Ecommerce Fulfillment Team / System / Customer Service
+Accountable (A): Digital Commerce Manager
+Duration: 2–3 hours post-session</bpmn:documentation>
+        <bpmn:incoming>W917_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W917_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W917_Task11" name="Live Commerce Analytics &amp; Optimization">
+        <bpmn:documentation>Step 5: Live Commerce Analytics &amp; Optimization: (a) per session: viewership metrics (peak concurrent viewers, average view duration, total unique viewers), engagement rate (comments, reactions, shares), conversion rate (viewers → orders), average order value, total GMV, top-selling products, cart abandonment rate during session; (b) weekly: session comparison — which format, time slot, and product category performs best; audience growth trend; repeat live-commerce shopper rate; (c) monthly: live commerce as % of total ecommerce revenue, customer acquisition cost via live commerce vs. other channels, return rate for live commerce orders (indicative of product expectation vs. reality), and host/presenter performance rating; (d) quarterly: platform mix optimization (Facebook vs. TikTok vs. own site), vendor co-sponsorship ROI per W513, and live commerce content calendar for next quarter aligned with seasonal calendar per W306; (e) annual: live commerce program ROI, investment in studio equipment and talent, and expansion plan (new platforms, new session formats, regional-language sessions for VisMin markets)
+Responsible (R): Digital Commerce Manager / Social Media Manager / System
+Accountable (A): VP Marketing
+Duration: 4–6 hours/month</bpmn:documentation>
+        <bpmn:incoming>W917_Flow19</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W917_End12" name="Complete">
+        <bpmn:incoming>W917_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W917_Annotation13">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: backup internet (mobile hotspot), backup camera, and platform-specific contingency (switch to alternate platform mid-stream); operational: inventory pre-reservation, real-time inventory display on product overlay during stream, and immediate backorder communication; operational: Category Manager monitoring comments and flagging to host for live response
+Owner: Digital Commerce Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W917_Assoc14" sourceRef="W917_Annotation13" targetRef="W917_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W917_Flow15" sourceRef="W917_Start6" targetRef="W917_Task7" />
+      <bpmn:sequenceFlow id="W917_Flow16" sourceRef="W917_Task7" targetRef="W917_Task8" />
+      <bpmn:sequenceFlow id="W917_Flow17" sourceRef="W917_Task8" targetRef="W917_Task9" />
+      <bpmn:sequenceFlow id="W917_Flow18" sourceRef="W917_Task9" targetRef="W917_Task10" />
+      <bpmn:sequenceFlow id="W917_Flow19" sourceRef="W917_Task10" targetRef="W917_Task11" />
+      <bpmn:sequenceFlow id="W917_Flow20" sourceRef="W917_Task11" targetRef="W917_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W917_diag">
+      <bpmndi:BPMNPlane id="W917_plane" bpmnElement="W_W917">
+        <bpmndi:BPMNShape id="W917_Lane1_di" bpmnElement="W917_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Lane2_di" bpmnElement="W917_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Lane3_di" bpmnElement="W917_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Lane4_di" bpmnElement="W917_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Task7_di" bpmnElement="W917_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Task8_di" bpmnElement="W917_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Task9_di" bpmnElement="W917_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Task10_di" bpmnElement="W917_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Task11_di" bpmnElement="W917_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Start6_di" bpmnElement="W917_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_End12_di" bpmnElement="W917_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W917_Annotation13_di" bpmnElement="W917_Annotation13"><dc:Bounds x="160" y="800" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W917_Flow15_di" bpmnElement="W917_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W917_Flow16_di" bpmnElement="W917_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W917_Flow17_di" bpmnElement="W917_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W917_Flow18_di" bpmnElement="W917_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W917_Flow19_di" bpmnElement="W917_Flow19"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W917_Flow20_di" bpmnElement="W917_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W917_Assoc14_di" bpmnElement="W917_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W947" name="W947. Ecommerce Live Video Shopping &amp; Virtual Store Walkthrough" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer schedules or initiates a live video shopping session via BuildRight mobile app or website
+Frequency: ~2,000–3,000 sessions/month
+Volume: 1 customer per session; average session duration 15–30 min; average order value PHP 4,500 (higher than standard ecommerce AOV of PHP 3,500)
+Owner: Ecommerce Manager
+Participants: Customer, Video Shopping Associate, Category Specialist (on-call), Ecommerce Operations, Payment Gateway
+Source: workflow W947 — Ecommerce Live Video Shopping &amp; Virtual Store Walkthrough</bpmn:documentation>
+      <bpmn:laneSet id="W947_LaneSet3">
+        <bpmn:lane id="W947_Lane1" name="System">
+        <bpmn:flowNodeRef>W947_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W947_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W947_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W947_Lane2" name="Video Shopping Associate">
+        <bpmn:flowNodeRef>W947_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W947_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W947_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W947_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W947_Start4" name="Customer schedules or initiates a live video shopping session via BuildRight mobile app…">
+        <bpmn:outgoing>W947_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W947_Task5" name="Session Scheduling &amp; Preparation">
+        <bpmn:documentation>Step 1: Session Scheduling &amp; Preparation: Customer books live video session via: (a) mobile app — selects date/time slot, product category of interest, and specific items or project description; (b) website — same booking flow; (c) walk-in scheduling at customer service counter (for future session); system confirms availability of Video Shopping Associate and sends calendar invite with video link; for project-specific sessions (e.g., &quot;complete bathroom renovation&quot;): system pre-loads relevant product catalog pages, current promotions, and inventory availability for customer&#x27;s preferred store; customer receives pre-session email with: video link, session agenda, and project checklist to prepare dimensions/requirements
+Responsible (R): System / Ecommerce Ops
+Accountable (A): Ecommerce Manager
+Duration: 5 min (automated)</bpmn:documentation>
+        <bpmn:incoming>W947_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W947_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W947_Task6" name="Session Initiation &amp; Customer Need Assessment">
+        <bpmn:documentation>Step 2: Session Initiation &amp; Customer Need Assessment: Video Shopping Associate joins video call at scheduled time; conducts brief needs assessment: (a) project type (new build, renovation, repair, DIY); (b) budget range; (c) timeline; (d) product categories of interest; (e) store preference for BOPIS pickup or home delivery; associate uses mobile device with gimbal/stabilizer to walk store aisles, showing products in real-time; customer can direct associate to specific departments or products
+Responsible (R): Video Shopping Associate
+Accountable (A): Ecommerce Manager
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W947_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W947_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W947_Task7" name="Live Product Demonstration &amp; Consultation">
+        <bpmn:documentation>Step 3: Live Product Demonstration &amp; Consultation: Associate presents products per customer interest: (a) physical product demonstration — showing dimensions, material quality, color options, weight, packaging; (b) side-by-side product comparison — placing items next to each other for visual comparison; (c) specification explanation — reading labels, showing technical specs, explaining compatibility; (d) project advice — recommending complementary products, suggesting alternatives when preferred item is out of stock, providing installation tips; for technical questions beyond associate&#x27;s expertise, system enables instant escalation to Category Specialist (via 3-way video call or chat relay); associate checks real-time inventory per W533 during session
+Responsible (R): Video Shopping Associate / Category Specialist
+Accountable (A): Ecommerce Manager
+Duration: 10–20 min</bpmn:documentation>
+        <bpmn:incoming>W947_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W947_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W947_Task8" name="Real-Time Order Creation &amp; Payment">
+        <bpmn:documentation>Step 4: Real-Time Order Creation &amp; Payment: Associate adds selected items to shared digital cart visible to customer on screen; customer reviews cart — quantities, prices, product specifications; system applies: (a) current promotional pricing; (b) loyalty member discounts; (c) trade account pricing (if verified per W897); customer confirms order and pays via: (a) in-app payment (credit card, GCash, Maya); (b) payment link sent to customer&#x27;s email/SMS; order created in ERP with &quot;Live Video&quot; channel tag; fulfillment routed per W536 (BOPIS or home delivery)
+Responsible (R): Video Shopping Associate / System / Customer
+Accountable (A): Ecommerce Manager
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W947_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W947_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W947_Task9" name="Post-Session Follow-Up">
+        <bpmn:documentation>Step 5: Post-Session Follow-Up: System sends post-session communication within 2 hours: (a) order confirmation with delivery/pickup details; (b) session recording link (with customer consent per RA 10173) for customer reference; (c) related product recommendations based on items viewed during session; (d) satisfaction survey (3 questions); (e) loyalty points credited for session attendance (50 points); for sessions that did not result in immediate purchase: abandoned cart reminder sent within 24 hours per W557; Video Shopping Associate makes personal follow-up call within 48 hours for high-value sessions (order value &gt; PHP 10,000 or project-based inquiries)
+Responsible (R): System / Video Shopping Associate
+Accountable (A): Ecommerce Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W947_Flow17</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W947_End10" name="Complete">
+        <bpmn:incoming>W947_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W947_Annotation11">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: per store
+Owner: Ecommerce Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W947_Assoc12" sourceRef="W947_Annotation11" targetRef="W947_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W947_Flow13" sourceRef="W947_Start4" targetRef="W947_Task5" />
+      <bpmn:sequenceFlow id="W947_Flow14" sourceRef="W947_Task5" targetRef="W947_Task6" />
+      <bpmn:sequenceFlow id="W947_Flow15" sourceRef="W947_Task6" targetRef="W947_Task7" />
+      <bpmn:sequenceFlow id="W947_Flow16" sourceRef="W947_Task7" targetRef="W947_Task8" />
+      <bpmn:sequenceFlow id="W947_Flow17" sourceRef="W947_Task8" targetRef="W947_Task9" />
+      <bpmn:sequenceFlow id="W947_Flow18" sourceRef="W947_Task9" targetRef="W947_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W947_diag">
+      <bpmndi:BPMNPlane id="W947_plane" bpmnElement="W_W947">
+        <bpmndi:BPMNShape id="W947_Lane1_di" bpmnElement="W947_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Lane2_di" bpmnElement="W947_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Task5_di" bpmnElement="W947_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Task6_di" bpmnElement="W947_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Task7_di" bpmnElement="W947_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Task8_di" bpmnElement="W947_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Task9_di" bpmnElement="W947_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Start4_di" bpmnElement="W947_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_End10_di" bpmnElement="W947_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W947_Annotation11_di" bpmnElement="W947_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W947_Flow13_di" bpmnElement="W947_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W947_Flow14_di" bpmnElement="W947_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W947_Flow15_di" bpmnElement="W947_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W947_Flow16_di" bpmnElement="W947_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W947_Flow17_di" bpmnElement="W947_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W947_Flow18_di" bpmnElement="W947_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W947_Assoc12_di" bpmnElement="W947_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W948" name="W948. Social Commerce Order Processing (Facebook, Instagram, TikTok Shop)" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer places order or expresses purchase intent via social media channel (Facebook Marketplace, Instagram Shopping, TikTok Shop, Facebook page DM, or Instagram DM)
+Frequency: ~8,000–12,000 orders/month (growing 15–20% quarterly)
+Volume: 1–5 items per order; average order value PHP 2,200 (lower than web/app AOV)
+Owner: Ecommerce Manager
+Participants: Social Commerce Associate, Customer, Ecommerce Operations, Payment Gateway, Fulfillment Team, Category Manager
+Source: workflow W948 — Social Commerce Order Processing (Facebook, Instagram, TikTok Shop)</bpmn:documentation>
+      <bpmn:laneSet id="W948_LaneSet5">
+        <bpmn:lane id="W948_Lane1" name="Social Commerce Associate">
+        <bpmn:flowNodeRef>W948_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W948_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W948_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W948_Lane2" name="System">
+        <bpmn:flowNodeRef>W948_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W948_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W948_Lane3" name="Ecommerce Ops">
+        <bpmn:flowNodeRef>W948_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W948_Lane4" name="Ecommerce Manager">
+        <bpmn:flowNodeRef>W948_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W948_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W948_Start6" name="Customer places order or expresses purchase intent via social media channel (Facebook…">
+        <bpmn:outgoing>W948_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W948_Task7" name="Channel Monitoring &amp; Inquiry Capture">
+        <bpmn:documentation>Step 1: Channel Monitoring &amp; Inquiry Capture: Social Commerce Associate monitors all active channels: (a) Facebook page messages and Marketplace inquiries; (b) Instagram DMs and Shopping tags; (c) TikTok Shop orders and comments; (d) automated chatbot captures basic inquiries (product availability, price, store location) 24/7 and escalates complex inquiries to human associate during business hours; (e) system ingests platform order feeds via API integration (TikTok Shop API, Facebook Commerce API, Instagram Shopping API) for direct platform orders
+Responsible (R): Social Commerce Associate / Chatbot
+Accountable (A): Ecommerce Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W948_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W948_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W948_Task8" name="Inquiry-to-Order Conversion">
+        <bpmn:documentation>Step 2: Inquiry-to-Order Conversion: For DM-based inquiries: (a) Social Commerce Associate responds within SLA (30 min during business hours, 2 hours off-hours); (b) identifies product(s) requested — uses product search by name, SKU, photo matching, or description; (c) confirms availability at customer&#x27;s preferred store (real-time inventory per W533) or DC; (d) provides product details, pricing, and fulfillment options (BOPIS, home delivery); (e) for order confirmation: creates order link via BuildRight&#x27;s secure payment page and sends to customer via DM; customer clicks link, reviews order, and pays online; order flows into ERP
+Responsible (R): Social Commerce Associate / System
+Accountable (A): Ecommerce Manager
+Duration: 5–15 min/inquiry</bpmn:documentation>
+        <bpmn:incoming>W948_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W948_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W948_Task9" name="Direct Platform Order Processing">
+        <bpmn:documentation>Step 3: Direct Platform Order Processing: For TikTok Shop and Facebook/Instagram Shopping direct orders: (a) platform API pushes order to ERP in near-real-time; (b) system validates: (i) product availability — if unavailable, auto-responds to customer with alternatives or refund initiation; (ii) price sync — verifies order price matches current BuildRight price; (iii) shipping address validity — Philippine address validation per W310 master; (c) system creates order in ERP with social channel tag (TikTok/Facebook/Instagram), platform order ID, and customer data; (d) if customer is existing loyalty member (matched by mobile number), system links order to loyalty account for points earning
+Responsible (R): System / Ecommerce Ops
+Accountable (A): Ecommerce Manager
+Duration: 2–5 min (mostly automated)</bpmn:documentation>
+        <bpmn:incoming>W948_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W948_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W948_Task10" name="Fulfillment Routing &amp; Execution">
+        <bpmn:documentation>Step 4: Fulfillment Routing &amp; Execution: Order routed to fulfillment per W536: (a) BOPIS → nearest store picks and stages per W11; (b) home delivery → DC or ship-from-store per W19/W19B; platform-specific shipping labels generated (TikTok Shop, FB/IG require platform-specific tracking numbers); fulfillment team packs and ships; tracking number pushed back to platform via API; customer receives platform-native tracking notification
+Responsible (R): System / Fulfillment Team
+Accountable (A): Ecommerce Manager
+Duration: Per W11, W19</bpmn:documentation>
+        <bpmn:incoming>W948_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W948_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W948_Task11" name="Financial Reconciliation &amp; Settlement">
+        <bpmn:documentation>Step 5: Financial Reconciliation &amp; Settlement: (a) platform settlement: each platform has different settlement cycles — TikTok Shop (T+3 to T+7), Facebook/Instagram (varies by payment method); system reconciles platform settlement reports against ERP order records; discrepancies (returns, cancellations, platform fees, shipping subsidies) flagged for review; (b) platform fee tracking: commission rates vary (TikTok Shop 1–5%, Facebook/Instagram Marketplace 5% per item); system records platform fees per order for margin analysis; (c) monthly: Social Commerce Associate reconciles all platform settlements against bank deposits and ERP revenue records per W99
+Responsible (R): Ecommerce Ops / Finance
+Accountable (A): Ecommerce Manager / CFO
+Duration: Monthly (ongoing daily reconciliation automated)</bpmn:documentation>
+        <bpmn:incoming>W948_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W948_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W948_Task12" name="Channel Performance Analytics">
+        <bpmn:documentation>Step 6: Channel Performance Analytics: Weekly: Ecommerce Manager reviews channel performance — (a) orders, revenue, AOV by platform; (b) conversion rate (inquiry → order); (c) customer acquisition cost by channel; (d) return rate by platform; (e) platform fee as % of revenue; (f) top-performing product categories by platform; (g) content performance — which posts, videos, and live sessions generate the most orders; insights feed back to Marketing (W676) for content strategy and Merchandising (W1) for assortment decisions
+Responsible (R): Ecommerce Manager / Social Commerce Associate
+Accountable (A): CMO
+Duration: 2–3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W948_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W948_End13" name="Complete">
+        <bpmn:incoming>W948_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W948_Annotation14">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: (W50) serves as single source of truth
+Owner: Ecommerce Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W948_Assoc15" sourceRef="W948_Annotation14" targetRef="W948_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W948_Flow16" sourceRef="W948_Start6" targetRef="W948_Task7" />
+      <bpmn:sequenceFlow id="W948_Flow17" sourceRef="W948_Task7" targetRef="W948_Task8" />
+      <bpmn:sequenceFlow id="W948_Flow18" sourceRef="W948_Task8" targetRef="W948_Task9" />
+      <bpmn:sequenceFlow id="W948_Flow19" sourceRef="W948_Task9" targetRef="W948_Task10" />
+      <bpmn:sequenceFlow id="W948_Flow20" sourceRef="W948_Task10" targetRef="W948_Task11" />
+      <bpmn:sequenceFlow id="W948_Flow21" sourceRef="W948_Task11" targetRef="W948_Task12" />
+      <bpmn:sequenceFlow id="W948_Flow22" sourceRef="W948_Task12" targetRef="W948_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W948_diag">
+      <bpmndi:BPMNPlane id="W948_plane" bpmnElement="W_W948">
+        <bpmndi:BPMNShape id="W948_Lane1_di" bpmnElement="W948_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Lane2_di" bpmnElement="W948_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Lane3_di" bpmnElement="W948_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Lane4_di" bpmnElement="W948_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Task7_di" bpmnElement="W948_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Task8_di" bpmnElement="W948_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Task9_di" bpmnElement="W948_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Task10_di" bpmnElement="W948_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Task11_di" bpmnElement="W948_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Task12_di" bpmnElement="W948_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Start6_di" bpmnElement="W948_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_End13_di" bpmnElement="W948_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W948_Annotation14_di" bpmnElement="W948_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W948_Flow16_di" bpmnElement="W948_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W948_Flow17_di" bpmnElement="W948_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W948_Flow18_di" bpmnElement="W948_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W948_Flow19_di" bpmnElement="W948_Flow19"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W948_Flow20_di" bpmnElement="W948_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W948_Flow21_di" bpmnElement="W948_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W948_Flow22_di" bpmnElement="W948_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W948_Assoc15_di" bpmnElement="W948_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1209" name="W1209. E-Commerce Mega-Sale Event Preparation &amp; Execution (Lazada/Shopee 9.9, 11.11, 12.12)" isExecutable="false">
+      <bpmn:documentation>Trigger: Marketplace platform announces mega-sale campaign dates (9.9, 10.10, 11.11, 12.12, Payday Sale, Lazada Birthday Sale, Shopee Super Shopping Day); typically 4–6 weeks before event
+Frequency: ~28 sale events per year (24 payday sales on the 15th and 30th + 4 major platform campaigns, per the Background); ~8–10 per year are full-mobilization major events (per the Time Estimate)
+Volume: 3.5–10× normal daily order volume (payday events at the low end, platform mega-sales at the high end, on the ~1,430 orders/day baseline); projected ~7,000–14,000 orders on a major event day
+Owner: Ecommerce Manager
+Participants: Ecommerce Manager, Category Manager, Pricing Analyst, DC Fulfillment Supervisor, Logistics Dispatcher, Customer Service Rep, Finance Manager, Marketing Coordinator
+Source: workflow W1209 — E-Commerce Mega-Sale Event Preparation &amp; Execution (Lazada/Shopee 9.9, 11.11, 12.12)</bpmn:documentation>
+      <bpmn:laneSet id="W1209_LaneSet8">
+        <bpmn:lane id="W1209_Lane1" name="Ecommerce Manager">
+        <bpmn:flowNodeRef>W1209_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1209_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1209_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1209_Start9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1209_Lane2" name="Category Manager">
+        <bpmn:flowNodeRef>W1209_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1209_Lane3" name="Supply Planning Analyst">
+        <bpmn:flowNodeRef>W1209_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1209_Lane4" name="Ecommerce Coordinator">
+        <bpmn:flowNodeRef>W1209_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1209_Lane5" name="DC Fulfillment Supervisor">
+        <bpmn:flowNodeRef>W1209_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1209_Lane6" name="Customer Service Manager">
+        <bpmn:flowNodeRef>W1209_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1209_Lane7" name="All Participants">
+        <bpmn:flowNodeRef>W1209_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1209_End19</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1209_Start9" name="Marketplace platform announces mega-sale campaign dates (9.9, 10.10, 11.11, 12.12, Payday…">
+        <bpmn:outgoing>W1209_Flow22</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1209_Task10" name="Event planning kickoff">
+        <bpmn:documentation>Step 1: Event planning kickoff (4–6 weeks before): Ecommerce Manager receives platform campaign brief from Lazada/Shopee account manager: campaign dates, available marketing tools (flash sale slots, banner placements, brand rewards), platform co-funding opportunities, commission rates, logistics support (free shipping vouchers); Ecommerce Manager convenes cross-functional preparation team
+Responsible (R): Ecommerce Manager
+Accountable (A): CMO
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task11" name="Product selection &amp; pricing">
+        <bpmn:documentation>Step 2: Product selection &amp; pricing: Category Manager selects participating SKUs (typically 500–1,000 items per event): (a) identify items with platform co-funding subsidies, (b) select clearance/seasonal items for flash sale, (c) bundle best-sellers for mega-deal packages, (d) Pricing Analyst calculates margin-acceptable promotional prices considering: platform commission (2–5%), co-funding offset, VAT impact, and target margin floor; (e) verify pricing consistency with own-site and in-store promotions per W523
+Responsible (R): Category Manager / Pricing Analyst
+Accountable (A): VP Merchandising
+Duration: 2–3 days</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task12" name="Inventory pre-positioning">
+        <bpmn:documentation>Step 3: Inventory pre-positioning: Supply Planning Analyst reviews projected mega-sale demand per SKU: (a) estimate event-day demand (5–10× daily average for participating SKUs), (b) verify available stock at DC fulfilling ecommerce orders, (c) initiate emergency replenishment or transfer orders for at-risk SKUs, (d) for top 50 event SKUs: pre-pick and stage in ecommerce fulfillment zone at DC to accelerate Day-of processing
+Responsible (R): Supply Planning Analyst / DC Supervisor
+Accountable (A): VP Supply Chain
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task13" name="System &amp; content preparation">
+        <bpmn:documentation>Step 4: System &amp; content preparation: Ecommerce team: (a) uploads promotional pricing to marketplace seller center portals, (b) creates campaign-specific product listings with enhanced images and descriptions, (c) configures flash sale time slots, (d) sets stock caps per promo tier to prevent overselling, (e) tests voucher codes and promotional mechanics in staging environment, (f) updates own-site banners and landing pages for cross-channel consistency
+Responsible (R): Ecommerce Coordinator
+Accountable (A): Ecommerce Manager
+Duration: 3–5 days</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task14" name="Fulfillment capacity planning">
+        <bpmn:documentation>Step 5: Fulfillment capacity planning: DC Fulfillment Supervisor plans Day-of staffing: (a) schedule additional pickers and packers (seasonal temps or cross-deployed from DC operations), (b) pre-print shipping labels for top 100 predicted SKUs, (c) coordinate with 3PL partners for additional delivery vehicle availability, (d) set up overflow packing stations, (e) brief team on event-day priority and escalation procedures
+Responsible (R): DC Fulfillment Supervisor
+Accountable (A): DC Manager
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task15" name="Customer service readiness">
+        <bpmn:documentation>Step 6: Customer service readiness: Customer Service Manager briefs CS team: (a) prepare FAQ templates for mega-sale-specific inquiries (shipping delays, stock availability, voucher usage), (b) pre-configure auto-reply rules for common queries, (c) schedule additional CS reps for event day and 3 days post-event, (d) prepare return/exchange surge capacity per W12A/W12B
+Responsible (R): Customer Service Manager
+Accountable (A): CX Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task16" name="Event Day execution">
+        <bpmn:documentation>Step 7: Event Day execution: System monitors real-time order flow: (a) Ecommerce Manager monitors seller center dashboards for order volume, stock levels, and flash sale sell-through rates, (b) DC Fulfillment Supervisor monitors pick-pack-ship queue against SLA targets (target: all orders shipped within 24 hours), (c) Logistics Dispatcher manages delivery dispatch for completed orders, (d) Category Manager monitors margin real-time — triggers stock cap reduction if margin floor breached by higher-than-expected volume, (e) Customer Service handles real-time inquiries
+Responsible (R): All Participants
+Accountable (A): Ecommerce Manager
+Duration: Full day</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task17" name="Post-event reconciliation">
+        <bpmn:documentation>Step 8: Post-event reconciliation (within 48 hours): (a) Ecommerce Manager compiles event performance: total GMV, order count, ASP, sell-through rate by SKU, new customer acquisition, platform commission cost, co-funding received, net margin; (b) DC Supervisor reports fulfillment metrics: orders shipped on-time, packing errors, stockout rate; (c) Finance Manager reconciles platform settlement vs. orders (Lazada/Shopee settle T+7 to T+14); (d) Customer Service reports return rate and top complaint categories
+Responsible (R): Ecommerce Manager / Finance Manager
+Accountable (A): CMO
+Duration: 4–6 hours</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W1209_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1209_Task18" name="Post-event lessons learned">
+        <bpmn:documentation>Step 9: Post-event lessons learned (within 1 week): Ecommerce Manager conducts retrospective: (a) what sold well vs. forecast, (b) fulfillment bottlenecks, (c) pricing effectiveness, (d) platform tool utilization, (e) customer feedback themes; documents action items for next mega-sale event
+Responsible (R): Ecommerce Manager
+Accountable (A): CMO
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W1209_Flow30</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1209_End19" name="Complete">
+        <bpmn:incoming>W1209_Flow220</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1209_Annotation20">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: Ecommerce Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Ecommerce Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1209_Assoc21" sourceRef="W1209_Annotation20" targetRef="W1209_Start9" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1209_Flow22" sourceRef="W1209_Start9" targetRef="W1209_Task10" />
+      <bpmn:sequenceFlow id="W1209_Flow23" sourceRef="W1209_Task10" targetRef="W1209_Task11" />
+      <bpmn:sequenceFlow id="W1209_Flow24" sourceRef="W1209_Task11" targetRef="W1209_Task12" />
+      <bpmn:sequenceFlow id="W1209_Flow25" sourceRef="W1209_Task12" targetRef="W1209_Task13" />
+      <bpmn:sequenceFlow id="W1209_Flow26" sourceRef="W1209_Task13" targetRef="W1209_Task14" />
+      <bpmn:sequenceFlow id="W1209_Flow27" sourceRef="W1209_Task14" targetRef="W1209_Task15" />
+      <bpmn:sequenceFlow id="W1209_Flow28" sourceRef="W1209_Task15" targetRef="W1209_Task16" />
+      <bpmn:sequenceFlow id="W1209_Flow29" sourceRef="W1209_Task16" targetRef="W1209_Task17" />
+      <bpmn:sequenceFlow id="W1209_Flow30" sourceRef="W1209_Task17" targetRef="W1209_Task18" />
+      <bpmn:sequenceFlow id="W1209_Flow31" sourceRef="W1209_Task18" targetRef="W1209_End19" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1209_diag">
+      <bpmndi:BPMNPlane id="W1209_plane" bpmnElement="W_W1209">
+        <bpmndi:BPMNShape id="W1209_Lane1_di" bpmnElement="W1209_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Lane2_di" bpmnElement="W1209_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Lane3_di" bpmnElement="W1209_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Lane4_di" bpmnElement="W1209_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Lane5_di" bpmnElement="W1209_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Lane6_di" bpmnElement="W1209_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Lane7_di" bpmnElement="W1209_Lane7" isHorizontal="true"><dc:Bounds x="160" y="1100" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task10_di" bpmnElement="W1209_Task10"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task11_di" bpmnElement="W1209_Task11"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task12_di" bpmnElement="W1209_Task12"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task13_di" bpmnElement="W1209_Task13"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task14_di" bpmnElement="W1209_Task14"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task15_di" bpmnElement="W1209_Task15"><dc:Bounds x="1450" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task16_di" bpmnElement="W1209_Task16"><dc:Bounds x="1660" y="1145" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task17_di" bpmnElement="W1209_Task17"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Task18_di" bpmnElement="W1209_Task18"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Start9_di" bpmnElement="W1209_Start9"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_End19_di" bpmnElement="W1209_End19"><dc:Bounds x="2310" y="1167" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1209_Annotation20_di" bpmnElement="W1209_Annotation20"><dc:Bounds x="160" y="1310" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1209_Flow22_di" bpmnElement="W1209_Flow22"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow23_di" bpmnElement="W1209_Flow23"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow24_di" bpmnElement="W1209_Flow24"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow25_di" bpmnElement="W1209_Flow25"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow26_di" bpmnElement="W1209_Flow26"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow27_di" bpmnElement="W1209_Flow27"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow28_di" bpmnElement="W1209_Flow28"><di:waypoint x="1630" y="1015" /><di:waypoint x="1660" y="1185" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow29_di" bpmnElement="W1209_Flow29"><di:waypoint x="1840" y="1185" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow30_di" bpmnElement="W1209_Flow30"><di:waypoint x="2050" y="165" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Flow31_di" bpmnElement="W1209_Flow31"><di:waypoint x="2260" y="165" /><di:waypoint x="2310" y="1185" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1209_Assoc21_di" bpmnElement="W1209_Assoc21"><di:waypoint x="340" y="1310" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1463" name="W1463. TikTok Shop Integration, Content-to-Commerce &amp; Livestream Selling Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: TikTok Shop order; or scheduled livestream selling event
+Frequency: Daily order management; weekly livestream events (1–2/week)
+Volume: ~3,000–5,000 TikTok Shop orders/month; livestream events generate 200–500 orders each
+Owner: Ecommerce Operations Manager
+Participants: Social Commerce Specialist, Content Creator, DC Picker, TikTok Logistics Partner
+Source: workflow W1463 — TikTok Shop Integration, Content-to-Commerce &amp; Livestream Selling Operations</bpmn:documentation>
+      <bpmn:laneSet id="W1463_LaneSet4">
+        <bpmn:lane id="W1463_Lane1" name="Social Commerce Specialist">
+        <bpmn:flowNodeRef>W1463_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1463_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1463_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1463_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1463_Lane2" name="Content Creator">
+        <bpmn:flowNodeRef>W1463_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1463_Lane3" name="Ecommerce Ops Manager">
+        <bpmn:flowNodeRef>W1463_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1463_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1463_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1463_Start5" name="TikTok Shop order; or scheduled livestream selling event">
+        <bpmn:outgoing>W1463_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1463_Task6" name="Catalog sync">
+        <bpmn:documentation>Step 1: Catalog sync: Syndicate approved listings to TikTok Shop every 4 hours; new listings with category tags (#BuildRightPH #DIY)
+Responsible (R): Social Commerce Specialist
+Accountable (A): Ecommerce Ops Manager
+Duration: 1–2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1463_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1463_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1463_Task7" name="Content creation">
+        <bpmn:documentation>Step 2: Content creation: Create 15–60 sec videos (product demos, quick tips, before/after); tag with shoppable links
+Responsible (R): Social Commerce Specialist
+Accountable (A): Ecommerce Ops Manager
+Duration: 8–10 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1463_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1463_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1463_Task8" name="Livestream preparation">
+        <bpmn:documentation>Step 3: Livestream preparation: Schedule 1–2×/week (Thursday 7–9 PM, Saturday 10 AM–12 PM); select 10–15 products; prepare demos and flash deals
+Responsible (R): Social Commerce Specialist
+Accountable (A): Ecommerce Ops Manager
+Duration: 4 hours/session</bpmn:documentation>
+        <bpmn:incoming>W1463_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1463_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1463_Task9" name="Livestream execution">
+        <bpmn:documentation>Step 4: Livestream execution: Host conducts live demo with Q&amp;A; post shoppable links; activate flash deals; 60–90 min per session
+Responsible (R): Content Creator
+Accountable (A): Ecommerce Ops Manager
+Duration: 90 min/session</bpmn:documentation>
+        <bpmn:incoming>W1463_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1463_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1463_Task10" name="Order fulfillment">
+        <bpmn:documentation>Step 5: Order fulfillment: Orders pushed to ERP via middleware (same as W180); DC pick/pack/ship per W19; tracking pushed to TikTok Shop
+Responsible (R): Ecommerce Ops Manager / DC Picker
+Accountable (A): —
+Duration: Per W19</bpmn:documentation>
+        <bpmn:incoming>W1463_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1463_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1463_Task11" name="Weekly performance review">
+        <bpmn:documentation>Step 6: Weekly performance review: Revenue, orders, AOV, top videos/sessions, return rate (8–12% for impulse purchases), CAC vs. Lazada/Shopee
+Responsible (R): Ecommerce Ops Manager
+Accountable (A): CMO
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W1463_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1463_End12" name="Complete">
+        <bpmn:incoming>W1463_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1463_Annotation13">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: Ecommerce Operations Manager review and approval gate
+Owner: Ecommerce Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1463_Assoc14" sourceRef="W1463_Annotation13" targetRef="W1463_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1463_Flow15" sourceRef="W1463_Start5" targetRef="W1463_Task6" />
+      <bpmn:sequenceFlow id="W1463_Flow16" sourceRef="W1463_Task6" targetRef="W1463_Task7" />
+      <bpmn:sequenceFlow id="W1463_Flow17" sourceRef="W1463_Task7" targetRef="W1463_Task8" />
+      <bpmn:sequenceFlow id="W1463_Flow18" sourceRef="W1463_Task8" targetRef="W1463_Task9" />
+      <bpmn:sequenceFlow id="W1463_Flow19" sourceRef="W1463_Task9" targetRef="W1463_Task10" />
+      <bpmn:sequenceFlow id="W1463_Flow20" sourceRef="W1463_Task10" targetRef="W1463_Task11" />
+      <bpmn:sequenceFlow id="W1463_Flow21" sourceRef="W1463_Task11" targetRef="W1463_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1463_diag">
+      <bpmndi:BPMNPlane id="W1463_plane" bpmnElement="W_W1463">
+        <bpmndi:BPMNShape id="W1463_Lane1_di" bpmnElement="W1463_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Lane2_di" bpmnElement="W1463_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Lane3_di" bpmnElement="W1463_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Task6_di" bpmnElement="W1463_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Task7_di" bpmnElement="W1463_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Task8_di" bpmnElement="W1463_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Task9_di" bpmnElement="W1463_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Task10_di" bpmnElement="W1463_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Task11_di" bpmnElement="W1463_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Start5_di" bpmnElement="W1463_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_End12_di" bpmnElement="W1463_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1463_Annotation13_di" bpmnElement="W1463_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1463_Flow15_di" bpmnElement="W1463_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1463_Flow16_di" bpmnElement="W1463_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1463_Flow17_di" bpmnElement="W1463_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1463_Flow18_di" bpmnElement="W1463_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1463_Flow19_di" bpmnElement="W1463_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1463_Flow20_di" bpmnElement="W1463_Flow20"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1463_Flow21_di" bpmnElement="W1463_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1463_Assoc14_di" bpmnElement="W1463_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1464" name="W1464. Marketplace Product Listing Syndication, Pricing Synchronization &amp; Catalog Governance" isExecutable="false">
+      <bpmn:documentation>Trigger: Product price change in ERP; new product activation; product discontinuation; marketplace promotional event
+Frequency: Price sync: every 4 hours; New listing: as activated; Catalog audit: monthly
+Volume: ~10,000–15,000 active SKUs across Lazada, Shopee, TikTok Shop; ~200–500 price changes/week
+Owner: Ecommerce Catalog Specialist
+Participants: Ecommerce Catalog Specialist, Category Manager, Pricing Analyst, Ecommerce Operations Manager
+Source: workflow W1464 — Marketplace Product Listing Syndication, Pricing Synchronization &amp; Catalog Governance</bpmn:documentation>
+      <bpmn:laneSet id="W1464_LaneSet4">
+        <bpmn:lane id="W1464_Lane1" name="System">
+        <bpmn:flowNodeRef>W1464_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1464_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1464_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1464_Lane2" name="Ecommerce Catalog Specialist">
+        <bpmn:flowNodeRef>W1464_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1464_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1464_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1464_Lane3" name="Pricing Analyst">
+        <bpmn:flowNodeRef>W1464_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1464_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1464_Start5" name="Product price change in ERP; new product activation; product discontinuation; marketplace…">
+        <bpmn:outgoing>W1464_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1464_Task6" name="Automated price sync">
+        <bpmn:documentation>Step 1: Automated price sync: System pushes price changes from ERP to all marketplaces every 4 hours; logs all changes
+Responsible (R): System
+Accountable (A): Ecommerce Catalog Specialist
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1464_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1464_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1464_Task7" name="Price conflict monitoring">
+        <bpmn:documentation>Step 2: Price conflict monitoring: Detect: marketplace price deviates &gt; 2% from ERP; marketplace price below owned ecommerce; price above SRP (RA 7394 risk); alerts for resolution
+Responsible (R): System
+Accountable (A): Ecommerce Ops Manager
+Duration: Automated + 15 min/alert</bpmn:documentation>
+        <bpmn:incoming>W1464_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1464_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1464_Task8" name="New product listing">
+        <bpmn:documentation>Step 3: New product listing: System auto-generates draft; Catalog Specialist enriches per platform; submit for marketplace approval
+Responsible (R): Ecommerce Catalog Specialist
+Accountable (A): Category Manager
+Duration: 20–30 min/SKU</bpmn:documentation>
+        <bpmn:incoming>W1464_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1464_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1464_Task9" name="Product delisting">
+        <bpmn:documentation>Step 4: Product delisting: Discontinued SKUs set to Inactive (preserve history); remaining inventory evaluated for clearance; once depleted, archived
+Responsible (R): Ecommerce Catalog Specialist
+Accountable (A): Category Manager
+Duration: 10 min/SKU</bpmn:documentation>
+        <bpmn:incoming>W1464_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1464_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1464_Task10" name="Monthly catalog audit">
+        <bpmn:documentation>Step 5: Monthly catalog audit: Cross-channel consistency check (titles, descriptions, images, pricing); identify orphan and missing listings; update scorecard
+Responsible (R): Ecommerce Catalog Specialist
+Accountable (A): Ecommerce Ops Manager
+Duration: 4–6 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1464_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1464_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1464_Task11" name="Marketplace margin analysis">
+        <bpmn:documentation>Step 6: Marketplace margin analysis: Monthly: gross margin per SKU per marketplace (price – COGS – commission 8–15% – fulfillment); recommend channel-specific pricing or exclusions
+Responsible (R): Pricing Analyst
+Accountable (A): Category Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1464_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1464_End12" name="Complete">
+        <bpmn:incoming>W1464_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1464_Annotation13">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: Ecommerce Catalog Specialist review and approval gate
+Owner: Ecommerce Catalog Specialist</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1464_Assoc14" sourceRef="W1464_Annotation13" targetRef="W1464_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1464_Flow15" sourceRef="W1464_Start5" targetRef="W1464_Task6" />
+      <bpmn:sequenceFlow id="W1464_Flow16" sourceRef="W1464_Task6" targetRef="W1464_Task7" />
+      <bpmn:sequenceFlow id="W1464_Flow17" sourceRef="W1464_Task7" targetRef="W1464_Task8" />
+      <bpmn:sequenceFlow id="W1464_Flow18" sourceRef="W1464_Task8" targetRef="W1464_Task9" />
+      <bpmn:sequenceFlow id="W1464_Flow19" sourceRef="W1464_Task9" targetRef="W1464_Task10" />
+      <bpmn:sequenceFlow id="W1464_Flow20" sourceRef="W1464_Task10" targetRef="W1464_Task11" />
+      <bpmn:sequenceFlow id="W1464_Flow21" sourceRef="W1464_Task11" targetRef="W1464_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1464_diag">
+      <bpmndi:BPMNPlane id="W1464_plane" bpmnElement="W_W1464">
+        <bpmndi:BPMNShape id="W1464_Lane1_di" bpmnElement="W1464_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Lane2_di" bpmnElement="W1464_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Lane3_di" bpmnElement="W1464_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Task6_di" bpmnElement="W1464_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Task7_di" bpmnElement="W1464_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Task8_di" bpmnElement="W1464_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Task9_di" bpmnElement="W1464_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Task10_di" bpmnElement="W1464_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Task11_di" bpmnElement="W1464_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Start5_di" bpmnElement="W1464_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_End12_di" bpmnElement="W1464_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1464_Annotation13_di" bpmnElement="W1464_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1464_Flow15_di" bpmnElement="W1464_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1464_Flow16_di" bpmnElement="W1464_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1464_Flow17_di" bpmnElement="W1464_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1464_Flow18_di" bpmnElement="W1464_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1464_Flow19_di" bpmnElement="W1464_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1464_Flow20_di" bpmnElement="W1464_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1464_Flow21_di" bpmnElement="W1464_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1464_Assoc14_di" bpmnElement="W1464_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1469" name="W1469. Facebook Marketplace &amp; Community Group Selling Operations, Order Capture &amp; Fulfillment" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer inquiry via Facebook Marketplace listing or community buy/sell group; or scheduled community group flash promotion
+Frequency: ~50–100 inquiries/store/week via Facebook; ~20–30 converted orders/store/week
+Volume: ~200 stores × ~20–30 Facebook-sourced orders/week = ~4,000–6,000 orders/week chain-wide (~17,000–26,000/month; per the Frequency and Time Estimate)
+Owner: Sales Associate (Social Commerce)
+Participants: Sales Associate, Customer, CSR (order processing), Stock Associate (fulfillment), Marketing (content), Store Manager
+Source: workflow W1469 — Facebook Marketplace &amp; Community Group Selling Operations, Order Capture &amp; Fulfillment</bpmn:documentation>
+      <bpmn:laneSet id="W1469_LaneSet4">
+        <bpmn:lane id="W1469_Lane1" name="Sales Associate">
+        <bpmn:flowNodeRef>W1469_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1469_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1469_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1469_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1469_Lane2" name="CSR">
+        <bpmn:flowNodeRef>W1469_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1469_Lane3" name="System">
+        <bpmn:flowNodeRef>W1469_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1469_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1469_Start5" name="Customer inquiry via Facebook Marketplace listing or community buy/sell group; or…">
+        <bpmn:outgoing>W1469_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1469_Task6" name="Facebook Marketplace listing management">
+        <bpmn:documentation>Step 1: Facebook Marketplace listing management: (a) Marketing provides weekly listing templates per store: featured products, promotional pricing, lifestyle images, and product descriptions in Filipino per W1346; (b) Sales Associate posts listings on the store&#x27;s Facebook page and Marketplace: 10–20 product listings per week, rotated based on inventory availability and promotions per W13; (c) Sales Associate monitors and responds to comments and inquiries within 1 hour during business hours; (d) listings include: product photo, price, store location, availability (&quot;Message for stock&quot;), and link to BuildRight ecommerce page for detailed specs
+Responsible (R): Sales Associate
+Accountable (A): Store Manager
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1469_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1469_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1469_Task7" name="Community group engagement">
+        <bpmn:documentation>Step 2: Community group engagement: (a) Sales Associate participates in 3–5 local community buy/sell groups relevant to home improvement: answers product questions, shares BuildRight promotions, posts project tips; (b) when community members post &quot;looking for&quot; requests (e.g., &quot;Where can I find affordable tiles in Cagayan de Oro?&quot;), Sales Associate responds with product availability and pricing; (c) Marketing monitors community group trends and seasonal demand signals (e.g., spike in waterproofing inquiries signals rainy season preparation demand)
+Responsible (R): Sales Associate
+Accountable (A): Marketing
+Duration: 20 min/day</bpmn:documentation>
+        <bpmn:incoming>W1469_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1469_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1469_Task8" name="Messenger order capture">
+        <bpmn:documentation>Step 3: Messenger order capture: (a) when customer confirms purchase intent via Messenger: Sales Associate creates order in ERP via store operations app &quot;Social Order&quot; function: (i) customer name, phone, delivery preference (BOPIS or delivery), item list, quantity, agreed price; (b) system checks real-time inventory availability at store; (c) system generates order confirmation with order number; (d) Sales Associate sends order confirmation to customer via Messenger with: pickup/delivery instructions, payment options (GCash, cash on pickup, bank transfer); (e) order recorded in sales channel = &quot;Facebook Social&quot; for analytics tracking
+Responsible (R): Sales Associate / System
+Accountable (A): Store Manager
+Duration: 10 min/order</bpmn:documentation>
+        <bpmn:incoming>W1469_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1469_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1469_Task9" name="Payment &amp; fulfillment">
+        <bpmn:documentation>Step 4: Payment &amp; fulfillment: (a) BOPIS: customer arrives at store, presents order number, CSR processes payment at POS per standard W5B, Stock Associate hands over items; (b) Delivery: customer pays via GCash/bank transfer (Sales Associate sends payment link from system), Stock Associate prepares items for delivery per W668 delivery scheduling; (c) for cash-on-delivery: delivery partner collects payment per W668.3 and remits to store; (d) all payment types recorded in POS/ERP for proper revenue recognition and inventory deduction
+Responsible (R): CSR / Stock Associate / Sales Associate
+Accountable (A): Store Manager
+Duration: Per W5B/W668</bpmn:documentation>
+        <bpmn:incoming>W1469_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1469_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1469_Task10" name="Weekly social selling analytics">
+        <bpmn:documentation>Step 5: Weekly social selling analytics: (a) system compiles weekly social selling report per store: inquiries received, conversion rate (inquiries → orders), average order value, top products, customer feedback; (b) Store Manager reviews with Sales Associate: optimize listing strategy, adjust product selection for Facebook audience; (c) Marketing aggregates chain-wide social selling data to measure Facebook channel ROI vs. other channels (Shopee, Lazada, organic ecommerce)
+Responsible (R): System / Sales Associate / Marketing
+Accountable (A): VP Marketing
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W1469_Flow18</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1469_End11" name="Complete">
+        <bpmn:incoming>W1469_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1469_Annotation12">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: social order module and Store Manager oversight; operational: listing templates from Marketing with current pricing; operational: real-time inventory check at order creation
+Owner: Sales Associate (Social Commerce)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1469_Assoc13" sourceRef="W1469_Annotation12" targetRef="W1469_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1469_Flow14" sourceRef="W1469_Start5" targetRef="W1469_Task6" />
+      <bpmn:sequenceFlow id="W1469_Flow15" sourceRef="W1469_Task6" targetRef="W1469_Task7" />
+      <bpmn:sequenceFlow id="W1469_Flow16" sourceRef="W1469_Task7" targetRef="W1469_Task8" />
+      <bpmn:sequenceFlow id="W1469_Flow17" sourceRef="W1469_Task8" targetRef="W1469_Task9" />
+      <bpmn:sequenceFlow id="W1469_Flow18" sourceRef="W1469_Task9" targetRef="W1469_Task10" />
+      <bpmn:sequenceFlow id="W1469_Flow19" sourceRef="W1469_Task10" targetRef="W1469_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1469_diag">
+      <bpmndi:BPMNPlane id="W1469_plane" bpmnElement="W_W1469">
+        <bpmndi:BPMNShape id="W1469_Lane1_di" bpmnElement="W1469_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Lane2_di" bpmnElement="W1469_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Lane3_di" bpmnElement="W1469_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Task6_di" bpmnElement="W1469_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Task7_di" bpmnElement="W1469_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Task8_di" bpmnElement="W1469_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Task9_di" bpmnElement="W1469_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Task10_di" bpmnElement="W1469_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Start5_di" bpmnElement="W1469_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_End11_di" bpmnElement="W1469_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1469_Annotation12_di" bpmnElement="W1469_Annotation12"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1469_Flow14_di" bpmnElement="W1469_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1469_Flow15_di" bpmnElement="W1469_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1469_Flow16_di" bpmnElement="W1469_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1469_Flow17_di" bpmnElement="W1469_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1469_Flow18_di" bpmnElement="W1469_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1469_Flow19_di" bpmnElement="W1469_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1469_Assoc13_di" bpmnElement="W1469_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1470" name="W1470. Marketplace Customer Review Management, Seller Rating Optimization &amp; Dispute Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer posts product review on Shopee/Lazada/TikTok Shop; or BuildRight&#x27;s seller rating drops below 4.5 stars; or marketplace dispute/return request received
+Frequency: ~500–800 new reviews/month across all marketplace channels; ~50–80 marketplace disputes/month
+Volume: ~42,900 ecommerce orders/month (per model company profile), of which ~30% fulfilled via marketplace = ~12,800 marketplace orders/month generating reviews
+Owner: Ecommerce Manager
+Participants: Ecommerce Associate, Customer Service Representative, Store Manager (for fulfillment issues), Category Manager (for product quality issues), Vendor (for product defects)
+Source: workflow W1470 — Marketplace Customer Review Management, Seller Rating Optimization &amp; Dispute Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W1470_LaneSet4">
+        <bpmn:lane id="W1470_Lane1" name="System">
+        <bpmn:flowNodeRef>W1470_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1470_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1470_Lane2" name="Ecommerce Associate">
+        <bpmn:flowNodeRef>W1470_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1470_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1470_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1470_Lane3" name="Ecommerce Manager">
+        <bpmn:flowNodeRef>W1470_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1470_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1470_Start5" name="Customer posts product review on Shopee/Lazada/TikTok Shop; or BuildRight&#x27;s seller rating…">
+        <bpmn:outgoing>W1470_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1470_Task6" name="Review monitoring &amp; triage">
+        <bpmn:documentation>Step 1: Review monitoring &amp; triage: (a) system aggregates customer reviews from all marketplace channels (Shopee, Lazada, TikTok Shop) via API integration; (b) Ecommerce Associate reviews incoming reviews daily: (i) Positive (4–5 stars): auto-thank response with loyalty program invitation per W17; (ii) Neutral (3 stars): personalized response acknowledging feedback, offering assistance; (iii) Negative (1–2 stars): escalation to resolution workflow — prioritize by severity (product safety &gt; fulfillment failure &gt; late delivery &gt; minor complaint); (c) weekly: Ecommerce Manager reviews rating trend across all platforms; if any platform rating drops below 4.5 stars, initiate root cause analysis
+Responsible (R): System / Ecommerce Associate
+Accountable (A): Ecommerce Manager
+Duration: 1 hour/day</bpmn:documentation>
+        <bpmn:incoming>W1470_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1470_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1470_Task7" name="Negative review response &amp; resolution">
+        <bpmn:documentation>Step 2: Negative review response &amp; resolution: For each negative review: (a) Ecommerce Associate investigates: (i) order lookup in ERP — what was ordered, what was shipped, delivery timeline; (ii) root cause categorization: fulfillment error (wrong item, missing parts), product quality (defective, not as described), delivery issue (late, damaged in transit), customer service issue (slow response, unhelpful); (b) Ecommerce Associate responds to customer via marketplace chat within 24 hours: (i) acknowledge the issue, apologize, offer resolution (replacement, refund, store credit), (ii) request customer to update review if issue resolved; (c) for product quality issues: notify Category Manager — if defective product from specific batch, trigger W1347 recall assessment
+Responsible (R): Ecommerce Associate / Category Manager
+Accountable (A): Ecommerce Manager
+Duration: 15 min/review</bpmn:documentation>
+        <bpmn:incoming>W1470_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1470_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1470_Task8" name="Marketplace dispute &amp; return management">
+        <bpmn:documentation>Step 3: Marketplace dispute &amp; return management: (a) when customer initiates marketplace return/dispute: system receives dispute notification via API; (b) Ecommerce Associate reviews: (i) is the return valid (product genuinely defective/wrong)? (ii) is the customer a serial returner? (iii) what is the marketplace platform&#x27;s dispute resolution timeline? (c) process return per marketplace rules: (i) approve return and issue refund via marketplace, (ii) customer ships item back or drops at BuildRight store, (iii) Stock Associate inspects returned item and records disposition per W12; (d) dispute resolution within platform SLA (typically 3–5 days) to avoid automatic refund in customer&#x27;s favor
+Responsible (R): Ecommerce Associate / CSR
+Accountable (A): Ecommerce Manager
+Duration: 20 min/dispute</bpmn:documentation>
+        <bpmn:incoming>W1470_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1470_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1470_Task9" name="Rating optimization actions">
+        <bpmn:documentation>Step 4: Rating optimization actions: (a) Ecommerce Manager identifies systemic issues from review patterns: (i) specific store with high fulfillment error rate → Store Manager coaching per W67, (ii) specific product category with quality complaints → Category Manager review vendor quality per W688, (iii) delivery partner with high damage rate → renegotiate or switch partner per W668, (iv) listing accuracy issues (product not as described) → Content Manager update per W50; (b) monthly: Ecommerce Manager compiles marketplace performance report: rating by platform, review response rate and time, dispute resolution rate, NPS by channel
+Responsible (R): Ecommerce Manager
+Accountable (A): VP Marketing
+Duration: 4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1470_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1470_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1470_Task10" name="Seller metrics compliance">
+        <bpmn:documentation>Step 5: Seller metrics compliance: (a) each marketplace platform has seller performance metrics: response rate (&gt; 90%), ship-on-time rate (&gt; 95%), order cancellation rate (&lt; 5%), dispute rate (&lt; 2%); (b) Ecommerce Associate monitors daily: any metric approaching threshold triggers preventive action; (c) if metric breaches threshold: Ecommerce Manager escalates to VP Marketing for corrective action plan to avoid platform penalties
+Responsible (R): Ecommerce Associate / Ecommerce Manager
+Accountable (A): VP Marketing
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1470_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1470_End11" name="Complete">
+        <bpmn:incoming>W1470_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1470_Annotation12">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - operational: Ecommerce Manager review and approval gate
+Owner: Ecommerce Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1470_Assoc13" sourceRef="W1470_Annotation12" targetRef="W1470_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1470_Flow14" sourceRef="W1470_Start5" targetRef="W1470_Task6" />
+      <bpmn:sequenceFlow id="W1470_Flow15" sourceRef="W1470_Task6" targetRef="W1470_Task7" />
+      <bpmn:sequenceFlow id="W1470_Flow16" sourceRef="W1470_Task7" targetRef="W1470_Task8" />
+      <bpmn:sequenceFlow id="W1470_Flow17" sourceRef="W1470_Task8" targetRef="W1470_Task9" />
+      <bpmn:sequenceFlow id="W1470_Flow18" sourceRef="W1470_Task9" targetRef="W1470_Task10" />
+      <bpmn:sequenceFlow id="W1470_Flow19" sourceRef="W1470_Task10" targetRef="W1470_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1470_diag">
+      <bpmndi:BPMNPlane id="W1470_plane" bpmnElement="W_W1470">
+        <bpmndi:BPMNShape id="W1470_Lane1_di" bpmnElement="W1470_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Lane2_di" bpmnElement="W1470_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Lane3_di" bpmnElement="W1470_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Task6_di" bpmnElement="W1470_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Task7_di" bpmnElement="W1470_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Task8_di" bpmnElement="W1470_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Task9_di" bpmnElement="W1470_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Task10_di" bpmnElement="W1470_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Start5_di" bpmnElement="W1470_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_End11_di" bpmnElement="W1470_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1470_Annotation12_di" bpmnElement="W1470_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1470_Flow14_di" bpmnElement="W1470_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1470_Flow15_di" bpmnElement="W1470_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1470_Flow16_di" bpmnElement="W1470_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1470_Flow17_di" bpmnElement="W1470_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1470_Flow18_di" bpmnElement="W1470_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1470_Flow19_di" bpmnElement="W1470_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1470_Assoc13_di" bpmnElement="W1470_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5550" name="W5550. Marketplace Account Suspension, Enforcement Freeze &amp; Appeal Recovery Protocol" isExecutable="false">
+      <bpmn:documentation>Trigger: A marketplace platform (Shopee/Lazada/TikTok Shop) issues an account-level enforcement action against BuildRight&#x27;s seller account: seller-metric failure or penalty-point breach, listing-violation strike, IP/counterfeit complaint takedown, fraud-suspicion payout freeze, or full selling-privilege suspension/account deactivation
+Frequency: Full or partial suspensions: rare, ~1–2 events/year across all platforms; lower-tier enforcement (mass listing takedowns, campaign exclusion, settlement holds): ~10–20 events/year
+Volume: 1 event × the affected platform&#x27;s share of ~12,800 marketplace orders/month (≈30% of ~42,900 ecommerce orders/month per W1470) — a full Shopee-class suspension removes ~40–50% of marketplace demand overnight; settlement freezes hold PHP 15–40M of platform receivables
+Owner: Ecommerce Manager (event commander); GM, Digital Commerce Inc. (posture decisions)
+Participants: Ecommerce Associate, Content Manager, Category Manager (IP authorization letters), Finance Controller (settlement recovery), Customer Service Representative (order comms), VP Legal (IP/policy appeals), VP Marketing, IT (channel integration flags)
+Source: workflow W5550 — Marketplace Account Suspension, Enforcement Freeze &amp; Appeal Recovery Protocol</bpmn:documentation>
+      <bpmn:laneSet id="W5550_LaneSet4">
+        <bpmn:lane id="W5550_Lane1" name="Ecommerce Associate">
+        <bpmn:flowNodeRef>W5550_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5550_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5550_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5550_Lane2" name="Ecommerce Manager">
+        <bpmn:flowNodeRef>W5550_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5550_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5550_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5550_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5550_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5550_Lane3" name="Finance Controller">
+        <bpmn:flowNodeRef>W5550_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5550_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5550_Start5" name="A marketplace platform (Shopee/Lazada/TikTok Shop) issues an account-level enforcement…">
+        <bpmn:outgoing>W5550_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5550_Task6" name="Detection &amp; classification">
+        <bpmn:documentation>Step 1: Detection &amp; classification: Seller Center / Seller Console notice, account-health dashboard alert, or platform partner-manager call; classify severity: (a) listing-level takedown (SKU strikes), (b) feature suspension (campaign exclusion), (c) settlement/payout freeze, (d) selling-privilege suspension, (e) account deactivation; capture the cited policy clause, evidence links, and the appeal window (typically 3–14 days); open the event record
+Responsible (R): Ecommerce Associate / Ecommerce Manager
+Accountable (A): GM, Digital Commerce Inc.
+Duration: &lt; 4 h</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5550_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5550_Task7" name="Freeze-scope containment">
+        <bpmn:documentation>Step 2: Freeze-scope containment: pause marketplace ad spend; stop new listing pushes (W1464) and scheduled campaign participation (W1209); decide the order-acceptance posture (auto-pause storefront vs. honor in-flight orders); flag the channel integration so inventory allocation stops honoring the suspended storefront (W2412)
+Responsible (R): Ecommerce Manager / IT
+Accountable (A): GM, Digital Commerce Inc.
+Duration: &lt; 8 h</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5550_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5550_Task8" name="Demand &amp; inventory re-routing">
+        <bpmn:documentation>Step 3: Demand &amp; inventory re-routing: redirect demand to the own webstore/app (W569-class own-channel listing) for marketplace-fulfillable SKUs; release stranded allocation; customer comms for in-flight orders, cancellation handling per W98 where needed
+Responsible (R): Ecommerce Manager / Supply Planning
+Accountable (A): VP Marketing
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W5550_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5550_Task9" name="Evidence assembly &amp; appeal">
+        <bpmn:documentation>Step 4: Evidence assembly &amp; appeal: build the appeal pack — order logs and fulfillment proof (POD, chat records), brand-authorization letters from the Category Manager for IP complaints, the corrective-action statement citing the W1470 metric-remediation plan; file within the platform deadline; engage the platform partner manager at severity (c)+; track appeal status daily
+Responsible (R): Ecommerce Manager / VP Legal / Category Manager
+Accountable (A): GM, Digital Commerce Inc.
+Duration: 1–3 days (+ appeal window)</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W5550_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5550_Task10" name="Settlement-freeze accounting">
+        <bpmn:documentation>Step 5: Settlement-freeze accounting: recognize frozen platform receivables; reconcile platform settlement statements against ERP records per the W2414-class settlement chain; dispute improperly deducted penalties; re-forecast cash timing with Treasury when a freeze exceeds 30 days
+Responsible (R): Finance Controller / Ecommerce Associate
+Accountable (A): CFO
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W5550_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5550_Task11" name="Root-cause remediation">
+        <bpmn:documentation>Step 6: Root-cause remediation: fix the underlying defect before re-enablement — seller-metric corrective plan (W1470), listing/catalog corrections (W1464/W2408), the IP-takedown chain for counterfeit complaints (W3268), or the account-takeover chain where the enforcement stems from a compromised seller account (W3871)
+Responsible (R): Ecommerce Manager / Content Manager
+Accountable (A): VP Marketing
+Duration: 1–4 weeks</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W5550_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5550_Task12" name="Reinstatement &amp; verification">
+        <bpmn:documentation>Step 7: Reinstatement &amp; verification: selling privileges restored (appeal won, penalty points expired, or suspension lifted); verify listing integrity, search placement, order flow and settlement resumption; re-enable ad spend only after seller metrics re-cross thresholds; confirm in the event record
+Responsible (R): Ecommerce Associate / Ecommerce Manager
+Accountable (A): GM, Digital Commerce Inc.
+Duration: 1–3 days</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W5550_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5550_Task13" name="Post-event register &amp; prevention">
+        <bpmn:documentation>Step 8: Post-event register &amp; prevention: log the event (platform, clause, appeal outcome, financial impact, days-down) in the channel-risk register feeding the platform-dependency review; add the violated policy clause to the listing-governance checklist (W1464) and the quarterly platform-rule watch (W1470)
+Responsible (R): Ecommerce Manager
+Accountable (A): GM, Digital Commerce Inc.
+Duration: 4 h</bpmn:documentation>
+        <bpmn:incoming>W5550_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5550_End14" name="Complete">
+        <bpmn:incoming>W5550_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5550_Annotation15">
+        <bpmn:text>Controls: - CTL-271 (ensure controlled execution — Marketplace &amp; Social Commerce (PA-10.3).) | - CTL-200 (ensure marketplace order &amp; settlement reconciliation.) | - operational: no appeal is filed without the corrective-action statement attached; ad spend is not re-enabled until seller metrics re-cross platform thresholds
+Owner: Ecommerce Manager (event commander); GM, Digital Commerce Inc. (posture decisions)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5550_Assoc16" sourceRef="W5550_Annotation15" targetRef="W5550_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5550_Flow17" sourceRef="W5550_Start5" targetRef="W5550_Task6" />
+      <bpmn:sequenceFlow id="W5550_Flow18" sourceRef="W5550_Task6" targetRef="W5550_Task7" />
+      <bpmn:sequenceFlow id="W5550_Flow19" sourceRef="W5550_Task7" targetRef="W5550_Task8" />
+      <bpmn:sequenceFlow id="W5550_Flow20" sourceRef="W5550_Task8" targetRef="W5550_Task9" />
+      <bpmn:sequenceFlow id="W5550_Flow21" sourceRef="W5550_Task9" targetRef="W5550_Task10" />
+      <bpmn:sequenceFlow id="W5550_Flow22" sourceRef="W5550_Task10" targetRef="W5550_Task11" />
+      <bpmn:sequenceFlow id="W5550_Flow23" sourceRef="W5550_Task11" targetRef="W5550_Task12" />
+      <bpmn:sequenceFlow id="W5550_Flow24" sourceRef="W5550_Task12" targetRef="W5550_Task13" />
+      <bpmn:sequenceFlow id="W5550_Flow25" sourceRef="W5550_Task13" targetRef="W5550_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5550_diag">
+      <bpmndi:BPMNPlane id="W5550_plane" bpmnElement="W_W5550">
+        <bpmndi:BPMNShape id="W5550_Lane1_di" bpmnElement="W5550_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Lane2_di" bpmnElement="W5550_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Lane3_di" bpmnElement="W5550_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task6_di" bpmnElement="W5550_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task7_di" bpmnElement="W5550_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task8_di" bpmnElement="W5550_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task9_di" bpmnElement="W5550_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task10_di" bpmnElement="W5550_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task11_di" bpmnElement="W5550_Task11"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task12_di" bpmnElement="W5550_Task12"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Task13_di" bpmnElement="W5550_Task13"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Start5_di" bpmnElement="W5550_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_End14_di" bpmnElement="W5550_End14"><dc:Bounds x="2100" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5550_Annotation15_di" bpmnElement="W5550_Annotation15"><dc:Bounds x="160" y="630" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5550_Flow17_di" bpmnElement="W5550_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow18_di" bpmnElement="W5550_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow19_di" bpmnElement="W5550_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow20_di" bpmnElement="W5550_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow21_di" bpmnElement="W5550_Flow21"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow22_di" bpmnElement="W5550_Flow22"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow23_di" bpmnElement="W5550_Flow23"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow24_di" bpmnElement="W5550_Flow24"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Flow25_di" bpmnElement="W5550_Flow25"><di:waypoint x="2050" y="335" /><di:waypoint x="2100" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5550_Assoc16_di" bpmnElement="W5550_Assoc16"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

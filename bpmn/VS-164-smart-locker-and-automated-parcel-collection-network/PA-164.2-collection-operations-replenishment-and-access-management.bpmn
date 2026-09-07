@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-164.2-collection-operations-replenishment-and-access-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W4801" name="W4801. BOPIS-to-Locker Staging, Compartment Assignment &amp; Replenishment" isExecutable="false">
+      <bpmn:documentation>Trigger: BOPIS order ready (VS-10); locker compartment available
+Frequency: Per order (continuous)
+Volume: ~BOPIS-to-locker orders scaling with adoption (subset of ~25,700 BOPIS orders/month profile §8.2)
+Owner: Locker Program Manager / Store Ops (VS-07)
+Participants: Ecommerce/OMS (VS-10), Stock Associate (VS-07), Store Ops (VS-07)
+Source: workflow W4801 — BOPIS-to-Locker Staging, Compartment Assignment &amp; Replenishment</bpmn:documentation>
+      <bpmn:laneSet id="W4801_LaneSet4">
+        <bpmn:lane id="W4801_Lane1" name="OMS">
+        <bpmn:flowNodeRef>W4801_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4801_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4801_Lane2" name="Stock Associate">
+        <bpmn:flowNodeRef>W4801_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4801_Lane3" name="Store Ops">
+        <bpmn:flowNodeRef>W4801_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4801_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4801_Start5" name="BOPIS order ready (VS-10); locker compartment available">
+        <bpmn:outgoing>W4801_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4801_Task6" name="On BOPIS order ready (VS-10), route eligible orders to the locker channel (vs…">
+        <bpmn:documentation>Step 1: On BOPIS order ready (VS-10), route eligible orders to the locker channel (vs counter pickup): select the right compartment size from the order&#x27;s item dimensions (W4796 mix), auto-assign an available compartment via the locker/OMS integration (W4807), and generate the pick task for the stock associate
+Responsible (R): OMS / Locker Platform / Stock Associate
+Accountable (A): Locker Program Manager
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W4801_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4801_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4801_Task7" name="Pick &amp; stage the order into the assigned compartment: scan items into the…">
+        <bpmn:documentation>Step 2: Pick &amp; stage the order into the assigned compartment: scan items into the compartment, lock it, trigger the access-code/QR delivery to the customer (W4802) and the pickup-ready notification (W4805); manage the SLA (profile §8.2 BOPIS pick SLA 4 hrs)
+Responsible (R): Stock Associate / OMS
+Accountable (A): Store Manager
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W4801_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W4801_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4801_Task8" name="Replenish &amp; rebalance compartments continuously: free compartments on pickup…">
+        <bpmn:documentation>Step 3: Replenish &amp; rebalance compartments continuously: free compartments on pickup (W4805), re-assign overflow (W4804), and maintain availability for peak BOPIS windows; coordinate with the counter-pickup fallback when lockers are full
+Responsible (R): Store Ops / Locker Platform
+Accountable (A): Store Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4801_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4801_End9" name="Complete">
+        <bpmn:incoming>W4801_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4801_Annotation10">
+        <bpmn:text>Controls: - CTL-723 (ensure controlled execution — Collection Operations, Replenishment &amp; Access Management (PA-164.2).) | - CTL-723: compartment assigned by item dimensions; staging within BOPIS SLA; availability rebalanced
+Owner: Locker Program Manager / Store Ops (VS-07)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4801_Assoc11" sourceRef="W4801_Annotation10" targetRef="W4801_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4801_Flow12" sourceRef="W4801_Start5" targetRef="W4801_Task6" />
+      <bpmn:sequenceFlow id="W4801_Flow13" sourceRef="W4801_Task6" targetRef="W4801_Task7" />
+      <bpmn:sequenceFlow id="W4801_Flow14" sourceRef="W4801_Task7" targetRef="W4801_Task8" />
+      <bpmn:sequenceFlow id="W4801_Flow15" sourceRef="W4801_Task8" targetRef="W4801_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4801_diag">
+      <bpmndi:BPMNPlane id="W4801_plane" bpmnElement="W_W4801">
+        <bpmndi:BPMNShape id="W4801_Lane1_di" bpmnElement="W4801_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_Lane2_di" bpmnElement="W4801_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_Lane3_di" bpmnElement="W4801_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_Task6_di" bpmnElement="W4801_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_Task7_di" bpmnElement="W4801_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_Task8_di" bpmnElement="W4801_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_Start5_di" bpmnElement="W4801_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_End9_di" bpmnElement="W4801_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4801_Annotation10_di" bpmnElement="W4801_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4801_Flow12_di" bpmnElement="W4801_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4801_Flow13_di" bpmnElement="W4801_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4801_Flow14_di" bpmnElement="W4801_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4801_Flow15_di" bpmnElement="W4801_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4801_Assoc11_di" bpmnElement="W4801_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4802" name="W4802. Access-Code/QR Generation, Delivery &amp; Pickup Authentication" isExecutable="false">
+      <bpmn:documentation>Trigger: Order staged in a compartment (W4801); returns drop-off (W4803); 3P parcel (W4799)
+Frequency: Per compartment event
+Volume: ~every locker pickup/drop-off
+Owner: Locker Program Manager / IT (VS-27) / Cyber (VS-27.3)
+Participants: IT (VS-27), App (VS-75), Privacy (VS-91), Customer
+Source: workflow W4802 — Access-Code/QR Generation, Delivery &amp; Pickup Authentication</bpmn:documentation>
+      <bpmn:laneSet id="W4802_LaneSet2">
+        <bpmn:lane id="W4802_Lane1" name="IT">
+        <bpmn:flowNodeRef>W4802_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4802_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4802_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4802_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4802_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4802_Start3" name="Order staged in a compartment (W4801); returns drop-off (W4803); 3P parcel (W4799)">
+        <bpmn:outgoing>W4802_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4802_Task4" name="Generate the secure access credential (time-limited PIN/QR via app VS-75, or…">
+        <bpmn:documentation>Step 1: Generate the secure access credential (time-limited PIN/QR via app VS-75, or RFID/loyalty-card tap VS-13) tied to the specific compartment + order + customer; deliver via the app/SMS/email; ensure one-time/time-bound use and the customer-authentication binding (links VS-13/VS-126 single-customer-view)
+Responsible (R): IT / App team / Locker Platform
+Accountable (A): Locker Program Manager / CIO
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W4802_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4802_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4802_Task5" name="Authenticate the pickup: customer scans/taps/PINs at the locker, the locker…">
+        <bpmn:documentation>Step 2: Authenticate the pickup: customer scans/taps/PINs at the locker, the locker validates against the platform, opens the compartment, and confirms pickup → updates the OMS/inventory (VS-10/VS-05) and triggers the fulfillment-complete event; manage multi-method fallback if the primary method fails
+Responsible (R): IT / Locker Platform / OMS
+Accountable (A): Locker Program Manager
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W4802_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4802_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4802_Task6" name="Govern the security/privacy: prevent credential sharing/fraud (the wrong person…">
+        <bpmn:documentation>Step 3: Govern the security/privacy: prevent credential sharing/fraud (the wrong person opening a compartment — links VS-125), secure the access data (VS-27.3), and the consent/data for the recipient (VS-91); handle lost/failed access via customer-service override (W4805) with authentication
+Responsible (R): IT / Cyber / Privacy / CX
+Accountable (A): Locker Program Manager / DPO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4802_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4802_End7" name="Complete">
+        <bpmn:incoming>W4802_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4802_Annotation8">
+        <bpmn:text>Controls: - CTL-723 (ensure controlled execution — Collection Operations, Replenishment &amp; Access Management (PA-164.2).) | - CTL-723: one-time/time-bound authenticated credentials; multi-method fallback; access data secured (VS-27.3/VS-91); override authenticated
+Owner: Locker Program Manager / IT (VS-27) / Cyber (VS-27.3)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4802_Assoc9" sourceRef="W4802_Annotation8" targetRef="W4802_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4802_Flow10" sourceRef="W4802_Start3" targetRef="W4802_Task4" />
+      <bpmn:sequenceFlow id="W4802_Flow11" sourceRef="W4802_Task4" targetRef="W4802_Task5" />
+      <bpmn:sequenceFlow id="W4802_Flow12" sourceRef="W4802_Task5" targetRef="W4802_Task6" />
+      <bpmn:sequenceFlow id="W4802_Flow13" sourceRef="W4802_Task6" targetRef="W4802_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4802_diag">
+      <bpmndi:BPMNPlane id="W4802_plane" bpmnElement="W_W4802">
+        <bpmndi:BPMNShape id="W4802_Lane1_di" bpmnElement="W4802_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4802_Task4_di" bpmnElement="W4802_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4802_Task5_di" bpmnElement="W4802_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4802_Task6_di" bpmnElement="W4802_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4802_Start3_di" bpmnElement="W4802_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4802_End7_di" bpmnElement="W4802_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4802_Annotation8_di" bpmnElement="W4802_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4802_Flow10_di" bpmnElement="W4802_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4802_Flow11_di" bpmnElement="W4802_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4802_Flow12_di" bpmnElement="W4802_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4802_Flow13_di" bpmnElement="W4802_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4802_Assoc9_di" bpmnElement="W4802_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4803" name="W4803. Returns Drop-Off via Locker &amp; Reverse-Logistics Handoff" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer initiates a locker return (VS-32); return-eligible item
+Frequency: Per return
+Volume: ~1,500–3,000 locker returns/month at maturity (subset of returns volume VS-32)
+Owner: Locker Program Manager / Returns (VS-32)
+Participants: Returns/Reverse-Logistics (VS-32), Store Ops (VS-07), CX (VS-13)
+Source: workflow W4803 — Returns Drop-Off via Locker &amp; Reverse-Logistics Handoff</bpmn:documentation>
+      <bpmn:laneSet id="W4803_LaneSet3">
+        <bpmn:lane id="W4803_Lane1" name="Returns">
+        <bpmn:flowNodeRef>W4803_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4803_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4803_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4803_Lane2" name="Stock Associate">
+        <bpmn:flowNodeRef>W4803_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4803_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4803_Start4" name="Customer initiates a locker return (VS-32); return-eligible item">
+        <bpmn:outgoing>W4803_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4803_Task5" name="On a customer-initiated locker return (online/app per VS-32), validate return…">
+        <bpmn:documentation>Step 1: On a customer-initiated locker return (online/app per VS-32), validate return eligibility (item, condition, policy), assign a compartment, and generate the drop-off access credential (W4802) + return label/instructions; communicate the return window
+Responsible (R): Returns / OMS / Locker Platform
+Accountable (A): Locker Program Manager / Returns Lead
+Duration: Per return</bpmn:documentation>
+        <bpmn:incoming>W4803_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4803_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4803_Task6" name="Customer drops the item into the compartment; the locker confirms drop-off →…">
+        <bpmn:documentation>Step 2: Customer drops the item into the compartment; the locker confirms drop-off → updates the return/OMS (VS-32), triggers refund/credit per policy, and creates the reverse-logistics pick task; manage the condition/contents verification when the item is retrieved
+Responsible (R): Returns / Stock Associate / OMS
+Accountable (A): Returns Lead
+Duration: Per return</bpmn:documentation>
+        <bpmn:incoming>W4803_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4803_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4803_Task7" name="Retrieve the returned item from the locker, verify contents/condition (vs the…">
+        <bpmn:documentation>Step 3: Retrieve the returned item from the locker, verify contents/condition (vs the claimed return), and hand off to reverse-logistics (VS-32) for restock/RTV/refurbish/disposal; manage mismatch/fraud (empty box, wrong item — links VS-125)
+Responsible (R): Stock Associate / Returns / LP
+Accountable (A): Returns Lead / LP
+Duration: Per return</bpmn:documentation>
+        <bpmn:incoming>W4803_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4803_End8" name="Complete">
+        <bpmn:incoming>W4803_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4803_Annotation9">
+        <bpmn:text>Controls: - CTL-723 (ensure controlled execution — Collection Operations, Replenishment &amp; Access Management (PA-164.2).) | - CTL-723: eligibility validated; retrieve-then-verify sequencing; refund per policy after verification; mismatch investigated (VS-125)
+Owner: Locker Program Manager / Returns (VS-32)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4803_Assoc10" sourceRef="W4803_Annotation9" targetRef="W4803_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4803_Flow11" sourceRef="W4803_Start4" targetRef="W4803_Task5" />
+      <bpmn:sequenceFlow id="W4803_Flow12" sourceRef="W4803_Task5" targetRef="W4803_Task6" />
+      <bpmn:sequenceFlow id="W4803_Flow13" sourceRef="W4803_Task6" targetRef="W4803_Task7" />
+      <bpmn:sequenceFlow id="W4803_Flow14" sourceRef="W4803_Task7" targetRef="W4803_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4803_diag">
+      <bpmndi:BPMNPlane id="W4803_plane" bpmnElement="W_W4803">
+        <bpmndi:BPMNShape id="W4803_Lane1_di" bpmnElement="W4803_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4803_Lane2_di" bpmnElement="W4803_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4803_Task5_di" bpmnElement="W4803_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4803_Task6_di" bpmnElement="W4803_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4803_Task7_di" bpmnElement="W4803_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4803_Start4_di" bpmnElement="W4803_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4803_End8_di" bpmnElement="W4803_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4803_Annotation9_di" bpmnElement="W4803_Annotation9"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4803_Flow11_di" bpmnElement="W4803_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4803_Flow12_di" bpmnElement="W4803_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4803_Flow13_di" bpmnElement="W4803_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4803_Flow14_di" bpmnElement="W4803_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4803_Assoc10_di" bpmnElement="W4803_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4804" name="W4804. Overflow Management, Abandonment &amp; Compartment Reclaim" isExecutable="false">
+      <bpmn:documentation>Trigger: Compartment hold-period expiry (profile §8.2 BOPIS hold 5 days); locker at capacity
+Frequency: Per expiry + continuous capacity management
+Volume: ~300–800 overflow/abandonment events/month at maturity (hold-expiry driven)
+Owner: Locker Program Manager / Store Ops (VS-07)
+Participants: Store Ops (VS-07), CX (VS-13), Returns (VS-32)
+Source: workflow W4804 — Overflow Management, Abandonment &amp; Compartment Reclaim</bpmn:documentation>
+      <bpmn:laneSet id="W4804_LaneSet4">
+        <bpmn:lane id="W4804_Lane1" name="Locker Platform">
+        <bpmn:flowNodeRef>W4804_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4804_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4804_Lane2" name="Stock Associate">
+        <bpmn:flowNodeRef>W4804_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4804_Lane3" name="Locker Program">
+        <bpmn:flowNodeRef>W4804_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4804_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4804_Start5" name="Compartment hold-period expiry (profile §8.2 BOPIS hold 5 days); locker at capacity">
+        <bpmn:outgoing>W4804_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4804_Task6" name="Monitor compartment occupancy and the hold-period countdown; send reminders to…">
+        <bpmn:documentation>Step 1: Monitor compartment occupancy and the hold-period countdown; send reminders to customers as the hold approaches expiry (profile §8.2 5-day hold → auto-cancel &amp; refund after); manage capacity alerts when a locker bank nears full
+Responsible (R): Locker Platform / Store Ops / CX
+Accountable (A): Locker Program Manager / Store Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4804_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4804_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4804_Task7" name="On expiry, reclaim the compartment: remove the uncollected order, process the…">
+        <bpmn:documentation>Step 2: On expiry, reclaim the compartment: remove the uncollected order, process the auto-cancel &amp; refund per BOPIS policy (VS-10), and return the item to sellable stock or to the returns/disposition chain (VS-05.3/VS-32); free the compartment for new orders
+Responsible (R): Stock Associate / OMS / Returns
+Accountable (A): Store Manager
+Duration: Per expiry</bpmn:documentation>
+        <bpmn:incoming>W4804_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W4804_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4804_Task8" name="Manage overflow: when a bank is at capacity, route new BOPIS to the counter…">
+        <bpmn:documentation>Step 3: Manage overflow: when a bank is at capacity, route new BOPIS to the counter (VS-10) or an adjacent locker, manage 3P-parcel compartment priority (W4799), and tune compartment mix (W4795) to reduce future overflow; track abandonment rate as a KPI (W4815)
+Responsible (R): Locker Program / Store Ops / OMS
+Accountable (A): Locker Program Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4804_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4804_End9" name="Complete">
+        <bpmn:incoming>W4804_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4804_Annotation10">
+        <bpmn:text>Controls: - CTL-723 (ensure controlled execution — Collection Operations, Replenishment &amp; Access Management (PA-164.2).) | - CTL-723: hold-period enforced; reminders before expiry; reclaim-then-refund/restock; abandonment rate tracked
+Owner: Locker Program Manager / Store Ops (VS-07)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4804_Assoc11" sourceRef="W4804_Annotation10" targetRef="W4804_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4804_Flow12" sourceRef="W4804_Start5" targetRef="W4804_Task6" />
+      <bpmn:sequenceFlow id="W4804_Flow13" sourceRef="W4804_Task6" targetRef="W4804_Task7" />
+      <bpmn:sequenceFlow id="W4804_Flow14" sourceRef="W4804_Task7" targetRef="W4804_Task8" />
+      <bpmn:sequenceFlow id="W4804_Flow15" sourceRef="W4804_Task8" targetRef="W4804_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4804_diag">
+      <bpmndi:BPMNPlane id="W4804_plane" bpmnElement="W_W4804">
+        <bpmndi:BPMNShape id="W4804_Lane1_di" bpmnElement="W4804_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_Lane2_di" bpmnElement="W4804_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_Lane3_di" bpmnElement="W4804_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_Task6_di" bpmnElement="W4804_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_Task7_di" bpmnElement="W4804_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_Task8_di" bpmnElement="W4804_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_Start5_di" bpmnElement="W4804_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_End9_di" bpmnElement="W4804_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4804_Annotation10_di" bpmnElement="W4804_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4804_Flow12_di" bpmnElement="W4804_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4804_Flow13_di" bpmnElement="W4804_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4804_Flow14_di" bpmnElement="W4804_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4804_Flow15_di" bpmnElement="W4804_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4804_Assoc11_di" bpmnElement="W4804_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4805" name="W4805. Customer Pickup Journey, Notifications &amp; Support Escalation" isExecutable="false">
+      <bpmn:documentation>Trigger: Order ready (W4801); pickup event; customer needs help
+Frequency: Per pickup + per support event
+Volume: ~every locker pickup + ~support tickets
+Owner: Locker Program Manager / CX (VS-13)
+Participants: CX (VS-13), App (VS-75), Store Ops (VS-07), Customer
+Source: workflow W4805 — Customer Pickup Journey, Notifications &amp; Support Escalation</bpmn:documentation>
+      <bpmn:laneSet id="W4805_LaneSet2">
+        <bpmn:lane id="W4805_Lane1" name="CX">
+        <bpmn:flowNodeRef>W4805_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4805_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4805_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4805_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4805_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4805_Start3" name="Order ready (W4801); pickup event; customer needs help">
+        <bpmn:outgoing>W4805_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4805_Task4" name="Manage the customer pickup journey: ready-notification (app/SMS/email per…">
+        <bpmn:documentation>Step 1: Manage the customer pickup journey: ready-notification (app/SMS/email per VS-75), access-code/QR delivery (W4802), in-app locker location/wayfinding (VS-14 signage), the pickup (open compartment → confirm), and the thank-you/cross-sell; track pickup-success and time-to-pickup
+Responsible (R): CX / App team / Locker Platform
+Accountable (A): Locker Program Manager / CX Lead
+Duration: Per pickup</bpmn:documentation>
+        <bpmn:incoming>W4805_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4805_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4805_Task5" name="Provide support for pickup friction: code-not-working, compartment-won&#x27;t-open…">
+        <bpmn:documentation>Step 2: Provide support for pickup friction: code-not-working, compartment-won&#x27;t-open, wrong-item, item-damaged, lost-code — via app chat/call-center (VS-13.1 W258/W259) or an on-site help button → store-team assist or authenticated override (W4802); resolve within SLA (VS-13.1 W597)
+Responsible (R): CX / Store Ops / IT
+Accountable (A): Locker Program Manager / Store Manager
+Duration: Per support event</bpmn:documentation>
+        <bpmn:incoming>W4805_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4805_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4805_Task6" name="Capture the locker-channel CX feedback/NPS (VS-13), drive cross-sell during…">
+        <bpmn:documentation>Step 3: Capture the locker-channel CX feedback/NPS (VS-13), drive cross-sell during pickup (basket link W4793), and feed recurring issues to improvement (VS-133) and analytics (W4815)
+Responsible (R): CX / Analytics / Marketing
+Accountable (A): Locker Program Manager / CX Lead
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4805_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4805_End7" name="Complete">
+        <bpmn:incoming>W4805_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4805_Annotation8">
+        <bpmn:text>Controls: - CTL-723 (ensure controlled execution — Collection Operations, Replenishment &amp; Access Management (PA-164.2).) | - CTL-723: pickup journey with notifications + wayfinding; support SLA (VS-13.1); overrides authenticated; CX feedback captured
+Owner: Locker Program Manager / CX (VS-13)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4805_Assoc9" sourceRef="W4805_Annotation8" targetRef="W4805_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4805_Flow10" sourceRef="W4805_Start3" targetRef="W4805_Task4" />
+      <bpmn:sequenceFlow id="W4805_Flow11" sourceRef="W4805_Task4" targetRef="W4805_Task5" />
+      <bpmn:sequenceFlow id="W4805_Flow12" sourceRef="W4805_Task5" targetRef="W4805_Task6" />
+      <bpmn:sequenceFlow id="W4805_Flow13" sourceRef="W4805_Task6" targetRef="W4805_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4805_diag">
+      <bpmndi:BPMNPlane id="W4805_plane" bpmnElement="W_W4805">
+        <bpmndi:BPMNShape id="W4805_Lane1_di" bpmnElement="W4805_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4805_Task4_di" bpmnElement="W4805_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4805_Task5_di" bpmnElement="W4805_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4805_Task6_di" bpmnElement="W4805_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4805_Start3_di" bpmnElement="W4805_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4805_End7_di" bpmnElement="W4805_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4805_Annotation8_di" bpmnElement="W4805_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4805_Flow10_di" bpmnElement="W4805_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4805_Flow11_di" bpmnElement="W4805_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4805_Flow12_di" bpmnElement="W4805_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4805_Flow13_di" bpmnElement="W4805_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4805_Assoc9_di" bpmnElement="W4805_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4806" name="W4806. Oversize / Bulky &amp; Refrigerated Locker Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Bulky BOPIS order (lumber/tile/appliance per profile §6.2); refrigerated/sensitive item
+Frequency: Per oversize/refrigerated order
+Volume: ~20–30% of BOPIS orders (bulky items dominate BuildRight&#x27;s basket)
+Owner: Locker Program Manager / Store Ops (VS-07)
+Participants: Store Ops (VS-07), Facilities (VS-138), CX (VS-13)
+Source: workflow W4806 — Oversize / Bulky &amp; Refrigerated Locker Handling</bpmn:documentation>
+      <bpmn:laneSet id="W4806_LaneSet4">
+        <bpmn:lane id="W4806_Lane1" name="OMS">
+        <bpmn:flowNodeRef>W4806_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4806_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4806_Lane2" name="Store Ops">
+        <bpmn:flowNodeRef>W4806_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4806_Lane3" name="CX">
+        <bpmn:flowNodeRef>W4806_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4806_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4806_Start5" name="Bulky BOPIS order (lumber/tile/appliance per profile §6.2); refrigerated/sensitive item">
+        <bpmn:outgoing>W4806_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4806_Task6" name="For oversize/bulky orders (lumber packs, cement/tile, appliances, furniture)…">
+        <bpmn:documentation>Step 1: For oversize/bulky orders (lumber packs, cement/tile, appliances, furniture), determine locker-eligibility vs counter/curbside (W4758-style) fallback: only assign if an oversize compartment fits and is safe to self-collect; otherwise route to counter/curbside pickup (VS-10) or delivery (VS-06.3)
+Responsible (R): OMS / Store Ops / Locker Platform
+Accountable (A): Locker Program Manager
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W4806_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4806_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4806_Task7" name="For refrigerated/temperature-sensitive items (if offered — e.g., certain…">
+        <bpmn:documentation>Step 2: For refrigerated/temperature-sensitive items (if offered — e.g., certain garden/live-adjacent or specialty), use refrigerated locker compartments, manage the temperature monitoring (VS-138 BMS, VS-145 live-goods pattern), the shorter hold-period, and the spoilage/disposition if uncollected (VS-05.3)
+Responsible (R): Store Ops / Facilities / Locker Program
+Accountable (A): Locker Program Manager / Store Manager
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W4806_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W4806_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4806_Task8" name="Communicate clearly to the customer: oversize handling (e.g., forklift/assist…">
+        <bpmn:documentation>Step 3: Communicate clearly to the customer: oversize handling (e.g., forklift/assist at pickup vs self-service), refrigerated-item urgency, and any safety/weight notes; manage the customer-experience distinct from standard locker pickup (W4805)
+Responsible (R): CX / Store Ops
+Accountable (A): Locker Program Manager / Store Manager
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W4806_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4806_End9" name="Complete">
+        <bpmn:incoming>W4806_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4806_Annotation10">
+        <bpmn:text>Controls: - CTL-723 (ensure controlled execution — Collection Operations, Replenishment &amp; Access Management (PA-164.2).) | - CTL-723: oversize eligibility rules + assist; refrigerated compartments monitored with shorter hold; spoilage dispositioned (VS-05.3)
+Owner: Locker Program Manager / Store Ops (VS-07)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4806_Assoc11" sourceRef="W4806_Annotation10" targetRef="W4806_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4806_Flow12" sourceRef="W4806_Start5" targetRef="W4806_Task6" />
+      <bpmn:sequenceFlow id="W4806_Flow13" sourceRef="W4806_Task6" targetRef="W4806_Task7" />
+      <bpmn:sequenceFlow id="W4806_Flow14" sourceRef="W4806_Task7" targetRef="W4806_Task8" />
+      <bpmn:sequenceFlow id="W4806_Flow15" sourceRef="W4806_Task8" targetRef="W4806_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4806_diag">
+      <bpmndi:BPMNPlane id="W4806_plane" bpmnElement="W_W4806">
+        <bpmndi:BPMNShape id="W4806_Lane1_di" bpmnElement="W4806_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_Lane2_di" bpmnElement="W4806_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_Lane3_di" bpmnElement="W4806_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_Task6_di" bpmnElement="W4806_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_Task7_di" bpmnElement="W4806_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_Task8_di" bpmnElement="W4806_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_Start5_di" bpmnElement="W4806_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_End9_di" bpmnElement="W4806_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4806_Annotation10_di" bpmnElement="W4806_Annotation10"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4806_Flow12_di" bpmnElement="W4806_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4806_Flow13_di" bpmnElement="W4806_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4806_Flow14_di" bpmnElement="W4806_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4806_Flow15_di" bpmnElement="W4806_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4806_Assoc11_di" bpmnElement="W4806_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4807" name="W4807. ERP / Ecommerce / OMS / Loyalty Real-Time Integration Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Network operations (continuous); integration commissioning (W4797); incident
+Frequency: Continuous platform ops
+Volume: ~all locker transactions across the network
+Owner: Locker Program Manager / IT (VS-27) / Cyber (VS-27.3)
+Participants: IT (VS-27), Ecommerce (VS-10), Loyalty/CRM (VS-13), Inventory (VS-05)
+Source: workflow W4807 — ERP / Ecommerce / OMS / Loyalty Real-Time Integration Operations</bpmn:documentation>
+      <bpmn:laneSet id="W4807_LaneSet3">
+        <bpmn:lane id="W4807_Lane1" name="IT">
+        <bpmn:flowNodeRef>W4807_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4807_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4807_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4807_Lane2" name="Cyber">
+        <bpmn:flowNodeRef>W4807_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4807_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4807_Start4" name="Network operations (continuous); integration commissioning (W4797); incident">
+        <bpmn:outgoing>W4807_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4807_Task5" name="Operate the real-time integration: locker ↔ OMS (order/compartment/pickup…">
+        <bpmn:documentation>Step 1: Operate the real-time integration: locker ↔ OMS (order/compartment/pickup status VS-10), ↔ inventory (VS-05 — pickup decrements stock, returns increments/reverse), ↔ loyalty/CRM (VS-13/VS-126 — customer identity, points, NPS), ↔ app/notifications (VS-75), and ↔ 3P-carrier APIs (W4799); manage event-streaming reliability (&lt;30s latency per POS-013 pattern)
+Responsible (R): IT / Ecommerce / Locker Platform
+Accountable (A): Locker Program Manager / CIO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4807_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4807_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4807_Task6" name="Manage cybersecurity &amp; data (VS-27.3/VS-91): the locker platform is an…">
+        <bpmn:documentation>Step 2: Manage cybersecurity &amp; data (VS-27.3/VS-91): the locker platform is an IoT/customer-data system — network segmentation, API security, access-data protection, the recipient/customer PII classification, retention (VS-88), and breach readiness; manage the vendor as TPRM/IoT risk (VS-161)
+Responsible (R): Cyber / Privacy / IT / TPRM
+Accountable (A): CIO / DPO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4807_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4807_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4807_Task7" name="Monitor integration health, handle exceptions (desync between locker and OMS…">
+        <bpmn:documentation>Step 3: Monitor integration health, handle exceptions (desync between locker and OMS, failed status updates, duplicate events), and feed integration-quality metrics to analytics (W4815) and improvement (VS-133); manage change/releases per VS-27.1
+Responsible (R): IT / Ecommerce
+Accountable (A): Locker Program Manager / CIO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4807_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4807_End8" name="Complete">
+        <bpmn:incoming>W4807_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4807_Annotation9">
+        <bpmn:text>Controls: - CTL-723 (ensure controlled execution — Collection Operations, Replenishment &amp; Access Management (PA-164.2).) | - CTL-723: real-time integration with &lt;30s latency; locker/IoT segmented &amp; secured (VS-27.3); customer data classified (VS-91); vendor under TPRM (VS-161)
+Owner: Locker Program Manager / IT (VS-27) / Cyber (VS-27.3)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4807_Assoc10" sourceRef="W4807_Annotation9" targetRef="W4807_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4807_Flow11" sourceRef="W4807_Start4" targetRef="W4807_Task5" />
+      <bpmn:sequenceFlow id="W4807_Flow12" sourceRef="W4807_Task5" targetRef="W4807_Task6" />
+      <bpmn:sequenceFlow id="W4807_Flow13" sourceRef="W4807_Task6" targetRef="W4807_Task7" />
+      <bpmn:sequenceFlow id="W4807_Flow14" sourceRef="W4807_Task7" targetRef="W4807_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4807_diag">
+      <bpmndi:BPMNPlane id="W4807_plane" bpmnElement="W_W4807">
+        <bpmndi:BPMNShape id="W4807_Lane1_di" bpmnElement="W4807_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4807_Lane2_di" bpmnElement="W4807_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4807_Task5_di" bpmnElement="W4807_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4807_Task6_di" bpmnElement="W4807_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4807_Task7_di" bpmnElement="W4807_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4807_Start4_di" bpmnElement="W4807_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4807_End8_di" bpmnElement="W4807_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4807_Annotation9_di" bpmnElement="W4807_Annotation9"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4807_Flow11_di" bpmnElement="W4807_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4807_Flow12_di" bpmnElement="W4807_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4807_Flow13_di" bpmnElement="W4807_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4807_Flow14_di" bpmnElement="W4807_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4807_Assoc10_di" bpmnElement="W4807_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4808" name="W4808. Daily Locker Reconciliation, Inventory Accuracy &amp; Exception Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily close (VS-07); inventory cycle (VS-05); exception alert
+Frequency: Daily + per exception
+Volume: ~daily recon across all locker banks
+Owner: Locker Program Manager / Store Ops (VS-07) / Finance
+Participants: Store Ops (VS-07), Inventory (VS-05), IT (VS-27), LP (VS-23)
+Source: workflow W4808 — Daily Locker Reconciliation, Inventory Accuracy &amp; Exception Handling</bpmn:documentation>
+      <bpmn:laneSet id="W4808_LaneSet3">
+        <bpmn:lane id="W4808_Lane1" name="Store Ops">
+        <bpmn:flowNodeRef>W4808_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4808_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4808_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4808_Lane2" name="Analytics">
+        <bpmn:flowNodeRef>W4808_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4808_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4808_Start4" name="Daily close (VS-07); inventory cycle (VS-05); exception alert">
+        <bpmn:outgoing>W4808_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4808_Task5" name="Reconcile daily: physical compartment state (occupied/empty) vs locker-platform…">
+        <bpmn:documentation>Step 1: Reconcile daily: physical compartment state (occupied/empty) vs locker-platform state vs OMS/inventory state (VS-10/VS-05); investigate variances (phantom-occupied, phantom-empty, missing item) and resolve to maintain ≥97% inventory-accuracy target (profile §6.3)
+Responsible (R): Store Ops / Inventory / IT
+Accountable (A): Store Manager / Locker Program Manager
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4808_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4808_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4808_Task6" name="Handle exceptions: stuck-locked compartment, failed-open, sensor fault…">
+        <bpmn:documentation>Step 2: Handle exceptions: stuck-locked compartment, failed-open, sensor fault, mis-pick, item-not-found, suspected theft (VS-23) — with documented triage and resolution; manage the customer impact (refund/replacement per VS-101/VS-32) for any loss
+Responsible (R): Store Ops / IT / LP / CX
+Accountable (A): Store Manager / LP
+Duration: Per exception</bpmn:documentation>
+        <bpmn:incoming>W4808_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4808_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4808_Task7" name="Feed variance/exception data to analytics (W4815), inventory accuracy (VS-05)…">
+        <bpmn:documentation>Step 3: Feed variance/exception data to analytics (W4815), inventory accuracy (VS-05), and LP/theft investigation (VS-23); drive root-cause improvement (VS-133) on recurring exceptions
+Responsible (R): Analytics / Inventory / LP / Locker Program
+Accountable (A): Locker Program Manager
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4808_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4808_End8" name="Complete">
+        <bpmn:incoming>W4808_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4808_Annotation9">
+        <bpmn:text>Controls: - CTL-95 (ensure locker network custody &amp; uptime.) | - CTL-723: daily recon to ≥97% accuracy; exceptions triaged &amp; resolved; variances investigated (LP VS-23); root-cause fed to improvement
+Owner: Locker Program Manager / Store Ops (VS-07) / Finance</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4808_Assoc10" sourceRef="W4808_Annotation9" targetRef="W4808_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4808_Flow11" sourceRef="W4808_Start4" targetRef="W4808_Task5" />
+      <bpmn:sequenceFlow id="W4808_Flow12" sourceRef="W4808_Task5" targetRef="W4808_Task6" />
+      <bpmn:sequenceFlow id="W4808_Flow13" sourceRef="W4808_Task6" targetRef="W4808_Task7" />
+      <bpmn:sequenceFlow id="W4808_Flow14" sourceRef="W4808_Task7" targetRef="W4808_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4808_diag">
+      <bpmndi:BPMNPlane id="W4808_plane" bpmnElement="W_W4808">
+        <bpmndi:BPMNShape id="W4808_Lane1_di" bpmnElement="W4808_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4808_Lane2_di" bpmnElement="W4808_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4808_Task5_di" bpmnElement="W4808_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4808_Task6_di" bpmnElement="W4808_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4808_Task7_di" bpmnElement="W4808_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4808_Start4_di" bpmnElement="W4808_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4808_End8_di" bpmnElement="W4808_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4808_Annotation9_di" bpmnElement="W4808_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4808_Flow11_di" bpmnElement="W4808_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4808_Flow12_di" bpmnElement="W4808_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4808_Flow13_di" bpmnElement="W4808_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4808_Flow14_di" bpmnElement="W4808_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4808_Assoc10_di" bpmnElement="W4808_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

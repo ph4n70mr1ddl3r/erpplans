@@ -235,6 +235,7 @@ erpplans/
 │   ├── internal-controls-matrix.md     808 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
 │   └── data-migration-mapping.md       Data migration field mapping templates
+├── bpmn/                        ← Generated BPMN 2.0 models (5,449 processes; mirrors the workflows/ tree; regenerates via 07-methodology/generate-bpmn.py)
 ├── CHANGELOG.md                 ← Revision history
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
@@ -243,6 +244,7 @@ erpplans/
     ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds + AI agent platform), roles, RACI, governance, sizing (50 → 122 FTE)
     ├── ai-first-operating-guide.md   The AI-first operating guide — ERP-agnostic doctrine (ten laws, six layers, capability contracts), sourcing neutrality, autonomy ladder, agent factory, the EKB as persistent memory + consistency engine, the no-confusion decision system, and the seven-phase adoption path (v1.0)
     ├── validate-repo.sh              Cross-reference validation (70 checks)
+    ├── generate-bpmn.py             BPMN 2.0 generator — converts every workflow block in 01-model-company/workflows into validated .bpmn files under bpmn/ (5,449 processes, lanes, DI)
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)
     ├── confirm-postcatalog-14.py     One-time post-catalog confirmation pass (W5497–W5510: 14 → 0 unclassified, 2026-09-02)

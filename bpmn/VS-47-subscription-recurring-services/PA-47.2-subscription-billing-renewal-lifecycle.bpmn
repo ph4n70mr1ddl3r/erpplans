@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-47.2-subscription-billing-renewal-lifecycle" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1982" name="W1982. Subscription Monthly Billing &amp; Payment Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly billing cycle for monthly-payment subscribers
+Frequency: Monthly
+Volume: ~2,000–5,000 monthly subscribers (projected Year 1)
+Owner: AR Clerk
+Participants: AR Clerk, System, Customer
+Source: workflow W1982 — Subscription Monthly Billing &amp; Payment Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1982_LaneSet3">
+        <bpmn:lane id="W1982_Lane1" name="System">
+        <bpmn:flowNodeRef>W1982_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1982_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1982_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1982_Lane2" name="AR Clerk">
+        <bpmn:flowNodeRef>W1982_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1982_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1982_Start4" name="Monthly billing cycle for monthly-payment subscribers">
+        <bpmn:outgoing>W1982_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1982_Task5" name="System generates monthly subscription charges: (a) for monthly-payment…">
+        <bpmn:documentation>Step 1: System generates monthly subscription charges: (a) for monthly-payment subscribers: auto-charge credit card or e-wallet on file, (b) billing date: 1st of month (or enrollment anniversary date), (c) amount: monthly subscription fee (annual fee ÷ 12), (d) GL posting: debit accounts receivable, credit deferred revenue
+Responsible (R): System
+Accountable (A): AR Clerk
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1982_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1982_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1982_Task6" name="Payment processing: (a) credit card: auto-charge via payment gateway, (b)…">
+        <bpmn:documentation>Step 2: Payment processing: (a) credit card: auto-charge via payment gateway, (b) GCash/Maya: auto-debit via partner API, (c) success: post cash receipt — debit cash, credit AR, (d) failure: trigger dunning per W1986
+Responsible (R): System
+Accountable (A): AR Clerk
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1982_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1982_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1982_Task7" name="Monthly reconciliation: (a) AR Clerk reconciles subscription billing vs…">
+        <bpmn:documentation>Step 3: Monthly reconciliation: (a) AR Clerk reconciles subscription billing vs. payments received, (b) failed payments: total failed charges and follow-up actions, (c) deferred revenue: new enrollments added, revenue recognized from completed visits, net deferred revenue balance
+Responsible (R): AR Clerk
+Accountable (A): Accounting Manager
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1982_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1982_End8" name="Complete">
+        <bpmn:incoming>W1982_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1982_Annotation9">
+        <bpmn:text>Controls: - CTL-192 (ensure subscription billing &amp; dunning integrity.) | - operational: periodic reconciliation against source documents
+Owner: AR Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1982_Assoc10" sourceRef="W1982_Annotation9" targetRef="W1982_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1982_Flow11" sourceRef="W1982_Start4" targetRef="W1982_Task5" />
+      <bpmn:sequenceFlow id="W1982_Flow12" sourceRef="W1982_Task5" targetRef="W1982_Task6" />
+      <bpmn:sequenceFlow id="W1982_Flow13" sourceRef="W1982_Task6" targetRef="W1982_Task7" />
+      <bpmn:sequenceFlow id="W1982_Flow14" sourceRef="W1982_Task7" targetRef="W1982_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1982_diag">
+      <bpmndi:BPMNPlane id="W1982_plane" bpmnElement="W_W1982">
+        <bpmndi:BPMNShape id="W1982_Lane1_di" bpmnElement="W1982_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1982_Lane2_di" bpmnElement="W1982_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1982_Task5_di" bpmnElement="W1982_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1982_Task6_di" bpmnElement="W1982_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1982_Task7_di" bpmnElement="W1982_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1982_Start4_di" bpmnElement="W1982_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1982_End8_di" bpmnElement="W1982_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1982_Annotation9_di" bpmnElement="W1982_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1982_Flow11_di" bpmnElement="W1982_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1982_Flow12_di" bpmnElement="W1982_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1982_Flow13_di" bpmnElement="W1982_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1982_Flow14_di" bpmnElement="W1982_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1982_Assoc10_di" bpmnElement="W1982_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1983" name="W1983. Subscription Annual Renewal &amp; Upsell Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Subscription approaching renewal date (30 days before)
+Frequency: ~5,000–10,000 renewals/year (projected)
+Volume: Target renewal rate: ≥ 70%
+Owner: Trade Account Manager
+Participants: Trade Account Manager, Sales Associate, Customer
+Source: workflow W1983 — Subscription Annual Renewal &amp; Upsell Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1983_LaneSet3">
+        <bpmn:lane id="W1983_Lane1" name="System">
+        <bpmn:flowNodeRef>W1983_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1983_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1983_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1983_Lane2" name="Trade Account Manager">
+        <bpmn:flowNodeRef>W1983_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1983_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1983_Start4" name="Subscription approaching renewal date (30 days before)">
+        <bpmn:outgoing>W1983_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1983_Task5" name="System sends renewal notice 30 days before expiry: (a) email + SMS to…">
+        <bpmn:documentation>Step 1: System sends renewal notice 30 days before expiry: (a) email + SMS to subscriber, (b) include: service summary (visits completed, remaining), renewal price, renewal options (same tier, upgrade, downgrade), easy-renew link for online payment
+Responsible (R): System
+Accountable (A): Trade Account Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1983_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1983_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1983_Task6" name="Follow-up sequence: (a) 30 days before: renewal notice, (b) 14 days before…">
+        <bpmn:documentation>Step 2: Follow-up sequence: (a) 30 days before: renewal notice, (b) 14 days before: second reminder with incentive (bonus loyalty points for early renewal), (c) 7 days before: final reminder, (d) expiry date: &quot;Your subscription has expired — renew now to avoid service interruption&quot;
+Responsible (R): System
+Accountable (A): Trade Account Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1983_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1983_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1983_Task7" name="Upsell during renewal: (a) if customer on basic tier: offer upgrade to standard…">
+        <bpmn:documentation>Step 3: Upsell during renewal: (a) if customer on basic tier: offer upgrade to standard (additional 15% discount on renewal for upgrade), (b) if customer has single service: offer bundle with second service at 20% discount, (c) Sales Associate in-store can also process renewal with upsell at POS
+Responsible (R): Trade Account Manager / Sales Associate
+Accountable (A): VP Store Operations
+Duration: Per renewal</bpmn:documentation>
+        <bpmn:incoming>W1983_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1983_End8" name="Complete">
+        <bpmn:incoming>W1983_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1983_Annotation9">
+        <bpmn:text>Controls: - CTL-192 (ensure subscription billing &amp; dunning integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Trade Account Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1983_Assoc10" sourceRef="W1983_Annotation9" targetRef="W1983_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1983_Flow11" sourceRef="W1983_Start4" targetRef="W1983_Task5" />
+      <bpmn:sequenceFlow id="W1983_Flow12" sourceRef="W1983_Task5" targetRef="W1983_Task6" />
+      <bpmn:sequenceFlow id="W1983_Flow13" sourceRef="W1983_Task6" targetRef="W1983_Task7" />
+      <bpmn:sequenceFlow id="W1983_Flow14" sourceRef="W1983_Task7" targetRef="W1983_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1983_diag">
+      <bpmndi:BPMNPlane id="W1983_plane" bpmnElement="W_W1983">
+        <bpmndi:BPMNShape id="W1983_Lane1_di" bpmnElement="W1983_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1983_Lane2_di" bpmnElement="W1983_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1983_Task5_di" bpmnElement="W1983_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1983_Task6_di" bpmnElement="W1983_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1983_Task7_di" bpmnElement="W1983_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1983_Start4_di" bpmnElement="W1983_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1983_End8_di" bpmnElement="W1983_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1983_Annotation9_di" bpmnElement="W1983_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1983_Flow11_di" bpmnElement="W1983_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1983_Flow12_di" bpmnElement="W1983_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1983_Flow13_di" bpmnElement="W1983_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1983_Flow14_di" bpmnElement="W1983_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1983_Assoc10_di" bpmnElement="W1983_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1984" name="W1984. Subscription Cancellation &amp; Pro-Rata Refund Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer requests subscription cancellation
+Frequency: ~30–50 cancellations/month (projected)
+Volume: Target churn rate: &lt; 30% annually
+Owner: Customer Service Rep
+Participants: Customer Service Rep, AR Clerk, Accounting Manager
+Source: workflow W1984 — Subscription Cancellation &amp; Pro-Rata Refund Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1984_LaneSet4">
+        <bpmn:lane id="W1984_Lane1" name="Customer Service Rep">
+        <bpmn:flowNodeRef>W1984_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1984_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1984_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1984_Lane2" name="System">
+        <bpmn:flowNodeRef>W1984_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1984_Lane3" name="AR Clerk">
+        <bpmn:flowNodeRef>W1984_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1984_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1984_Start5" name="Customer requests subscription cancellation">
+        <bpmn:outgoing>W1984_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1984_Task6" name="Customer requests cancellation: (a) channel: in-store, phone, email, online…">
+        <bpmn:documentation>Step 1: Customer requests cancellation: (a) channel: in-store, phone, email, online, (b) Customer Service Rep verifies identity and subscription details, (c) cancellation reason captured (mandatory): (i) service quality, (ii) price, (iii) no longer needed, (iv) moving, (v) competitor switch, (vi) other
+Responsible (R): Customer Service Rep
+Accountable (A): VP Store Operations
+Duration: 10–15 min</bpmn:documentation>
+        <bpmn:incoming>W1984_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1984_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1984_Task7" name="Pro-rata refund calculation: (a) annual subscription: refund = (remaining…">
+        <bpmn:documentation>Step 2: Pro-rata refund calculation: (a) annual subscription: refund = (remaining unused months ÷ 12) × annual fee, less: (i) visits already completed at a-la-carte rate (if a-la-carte rate &gt; subscription pro-rata rate), (ii) cancellation fee per subscription agreement (if applicable), (iii) promotional discount clawback (if customer received enrollment discount), (b) monthly subscription: cancel next billing cycle; no mid-month refund
+Responsible (R): System / AR Clerk
+Accountable (A): Accounting Manager
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W1984_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1984_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1984_Task8" name="Refund processing: (a) AR Clerk processes refund per W101 (customer refund &amp;…">
+        <bpmn:documentation>Step 3: Refund processing: (a) AR Clerk processes refund per W101 (customer refund &amp; credit processing), (b) refund method: same as original payment (credit card → credit card refund; GCash → GCash refund; cash at POS → cash refund), (c) reverse deferred revenue for unused portion, (d) cancellation confirmation sent to customer via email
+Responsible (R): AR Clerk
+Accountable (A): Accounting Manager
+Duration: 10–15 min</bpmn:documentation>
+        <bpmn:incoming>W1984_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1984_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1984_Task9" name="Retention attempt: (a) before processing cancellation, Customer Service Rep…">
+        <bpmn:documentation>Step 4: Retention attempt: (a) before processing cancellation, Customer Service Rep offers retention options: (i) service credit for next visit, (ii) temporary pause instead of cancellation, (iii) downgrade to lower tier, (b) track retention attempt outcome
+Responsible (R): Customer Service Rep
+Accountable (A): VP Store Operations
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W1984_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1984_End10" name="Complete">
+        <bpmn:incoming>W1984_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1984_Annotation11">
+        <bpmn:text>Controls: - CTL-192 (ensure subscription billing &amp; dunning integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Customer Service Rep</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1984_Assoc12" sourceRef="W1984_Annotation11" targetRef="W1984_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1984_Flow13" sourceRef="W1984_Start5" targetRef="W1984_Task6" />
+      <bpmn:sequenceFlow id="W1984_Flow14" sourceRef="W1984_Task6" targetRef="W1984_Task7" />
+      <bpmn:sequenceFlow id="W1984_Flow15" sourceRef="W1984_Task7" targetRef="W1984_Task8" />
+      <bpmn:sequenceFlow id="W1984_Flow16" sourceRef="W1984_Task8" targetRef="W1984_Task9" />
+      <bpmn:sequenceFlow id="W1984_Flow17" sourceRef="W1984_Task9" targetRef="W1984_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1984_diag">
+      <bpmndi:BPMNPlane id="W1984_plane" bpmnElement="W_W1984">
+        <bpmndi:BPMNShape id="W1984_Lane1_di" bpmnElement="W1984_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Lane2_di" bpmnElement="W1984_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Lane3_di" bpmnElement="W1984_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Task6_di" bpmnElement="W1984_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Task7_di" bpmnElement="W1984_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Task8_di" bpmnElement="W1984_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Task9_di" bpmnElement="W1984_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Start5_di" bpmnElement="W1984_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_End10_di" bpmnElement="W1984_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1984_Annotation11_di" bpmnElement="W1984_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1984_Flow13_di" bpmnElement="W1984_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1984_Flow14_di" bpmnElement="W1984_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1984_Flow15_di" bpmnElement="W1984_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1984_Flow16_di" bpmnElement="W1984_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1984_Flow17_di" bpmnElement="W1984_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1984_Assoc12_di" bpmnElement="W1984_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1985" name="W1985. Subscription Upgrade &amp; Tier Change Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer requests upgrade; system suggests upgrade based on usage
+Frequency: ~50–100 tier changes/month
+Volume: ~20–30% of subscribers on premium tier (target)
+Owner: Customer Service Rep
+Participants: Customer Service Rep, AR Clerk, Customer
+Source: workflow W1985 — Subscription Upgrade &amp; Tier Change Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1985_LaneSet3">
+        <bpmn:lane id="W1985_Lane1" name="Customer Service Rep">
+        <bpmn:flowNodeRef>W1985_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1985_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1985_Lane2" name="System">
+        <bpmn:flowNodeRef>W1985_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1985_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1985_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1985_Start4" name="Customer requests upgrade; system suggests upgrade based on usage">
+        <bpmn:outgoing>W1985_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1985_Task5" name="Customer requests upgrade: (a) from basic to standard or premium, (b) or from…">
+        <bpmn:documentation>Step 1: Customer requests upgrade: (a) from basic to standard or premium, (b) or from single service to bundle, (c) process via customer service, in-store POS, or online self-service
+Responsible (R): Customer Service Rep
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1985_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1985_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1985_Task6" name="System calculates price adjustment: (a) upgrade fee = (new tier annual price −…">
+        <bpmn:documentation>Step 2: System calculates price adjustment: (a) upgrade fee = (new tier annual price − remaining credit from current tier), (b) prorated: based on months remaining in current subscription, (c) collect upgrade fee as additional payment, (d) adjust deferred revenue: increase by upgrade fee amount
+Responsible (R): System
+Accountable (A): AR Clerk
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1985_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1985_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1985_Task7" name="Service partner notified of tier change: (a) higher tier includes more…">
+        <bpmn:documentation>Step 3: Service partner notified of tier change: (a) higher tier includes more comprehensive service, (b) updated service checklist provided to partner, (c) next visit uses new tier scope
+Responsible (R): System
+Accountable (A): VP Store Operations
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1985_Flow13</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1985_End8" name="Complete">
+        <bpmn:incoming>W1985_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1985_Annotation9">
+        <bpmn:text>Controls: - CTL-383 (ensure controlled execution — Subscription Billing, Renewal &amp; Lifecycle (PA-47.2).) | - operational: must handle edge cases
+Owner: Customer Service Rep</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1985_Assoc10" sourceRef="W1985_Annotation9" targetRef="W1985_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1985_Flow11" sourceRef="W1985_Start4" targetRef="W1985_Task5" />
+      <bpmn:sequenceFlow id="W1985_Flow12" sourceRef="W1985_Task5" targetRef="W1985_Task6" />
+      <bpmn:sequenceFlow id="W1985_Flow13" sourceRef="W1985_Task6" targetRef="W1985_Task7" />
+      <bpmn:sequenceFlow id="W1985_Flow14" sourceRef="W1985_Task7" targetRef="W1985_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1985_diag">
+      <bpmndi:BPMNPlane id="W1985_plane" bpmnElement="W_W1985">
+        <bpmndi:BPMNShape id="W1985_Lane1_di" bpmnElement="W1985_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1985_Lane2_di" bpmnElement="W1985_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1985_Task5_di" bpmnElement="W1985_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1985_Task6_di" bpmnElement="W1985_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1985_Task7_di" bpmnElement="W1985_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1985_Start4_di" bpmnElement="W1985_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1985_End8_di" bpmnElement="W1985_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1985_Annotation9_di" bpmnElement="W1985_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1985_Flow11_di" bpmnElement="W1985_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1985_Flow12_di" bpmnElement="W1985_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1985_Flow13_di" bpmnElement="W1985_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1985_Flow14_di" bpmnElement="W1985_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1985_Assoc10_di" bpmnElement="W1985_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1986" name="W1986. Subscription Payment Failure &amp; Dunning Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly auto-charge payment failure
+Frequency: ~200–500 failed payments/month (5–10% failure rate projected)
+Volume: ~2,000–5,000 monthly-billed subscribers
+Owner: AR Clerk
+Participants: AR Clerk, Customer Service Rep, Customer
+Source: workflow W1986 — Subscription Payment Failure &amp; Dunning Management</bpmn:documentation>
+      <bpmn:laneSet id="W1986_LaneSet3">
+        <bpmn:lane id="W1986_Lane1" name="System">
+        <bpmn:flowNodeRef>W1986_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1986_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1986_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1986_Lane2" name="AR Clerk">
+        <bpmn:flowNodeRef>W1986_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1986_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1986_Start4" name="Monthly auto-charge payment failure">
+        <bpmn:outgoing>W1986_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1986_Task5" name="System detects payment failure: (a) credit card declined, (b) e-wallet…">
+        <bpmn:documentation>Step 1: System detects payment failure: (a) credit card declined, (b) e-wallet insufficient balance, (c) bank account issue, (d) system tags subscription as &quot;payment due&quot;
+Responsible (R): System
+Accountable (A): AR Clerk
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1986_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1986_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1986_Task6" name="Dunning sequence: (a) Day 1: SMS notification — &quot;Your payment didn&#x27;t go…">
+        <bpmn:documentation>Step 2: Dunning sequence: (a) Day 1: SMS notification — &quot;Your payment didn&#x27;t go through. Please update your payment method.&quot;, (b) Day 3: email with payment update link, (c) Day 7: customer service call, (d) Day 14: second call + final notice, (e) Day 30: subscription suspended (service visits paused)
+Responsible (R): System / Customer Service Rep
+Accountable (A): AR Clerk
+Duration: Automated + manual calls</bpmn:documentation>
+        <bpmn:incoming>W1986_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1986_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1986_Task7" name="Payment recovery: (a) customer updates payment method (online or in-store), (b)…">
+        <bpmn:documentation>Step 3: Payment recovery: (a) customer updates payment method (online or in-store), (b) system retries charge, (c) if successful: reactivate subscription, clear overdue status, (d) if customer unresponsive after 60 days: auto-cancel subscription per W1984 (no refund — subscription was partially used)
+Responsible (R): AR Clerk / System
+Accountable (A): Accounting Manager
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W1986_Flow13</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1986_End8" name="Complete">
+        <bpmn:incoming>W1986_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1986_Annotation9">
+        <bpmn:text>Controls: - CTL-192 (ensure subscription billing &amp; dunning integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: AR Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1986_Assoc10" sourceRef="W1986_Annotation9" targetRef="W1986_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1986_Flow11" sourceRef="W1986_Start4" targetRef="W1986_Task5" />
+      <bpmn:sequenceFlow id="W1986_Flow12" sourceRef="W1986_Task5" targetRef="W1986_Task6" />
+      <bpmn:sequenceFlow id="W1986_Flow13" sourceRef="W1986_Task6" targetRef="W1986_Task7" />
+      <bpmn:sequenceFlow id="W1986_Flow14" sourceRef="W1986_Task7" targetRef="W1986_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1986_diag">
+      <bpmndi:BPMNPlane id="W1986_plane" bpmnElement="W_W1986">
+        <bpmndi:BPMNShape id="W1986_Lane1_di" bpmnElement="W1986_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1986_Lane2_di" bpmnElement="W1986_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1986_Task5_di" bpmnElement="W1986_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1986_Task6_di" bpmnElement="W1986_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1986_Task7_di" bpmnElement="W1986_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1986_Start4_di" bpmnElement="W1986_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1986_End8_di" bpmnElement="W1986_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1986_Annotation9_di" bpmnElement="W1986_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1986_Flow11_di" bpmnElement="W1986_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1986_Flow12_di" bpmnElement="W1986_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1986_Flow13_di" bpmnElement="W1986_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1986_Flow14_di" bpmnElement="W1986_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1986_Assoc10_di" bpmnElement="W1986_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1987" name="W1987. Subscription Pause &amp; Reactivation Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer requests temporary pause (moving, travel, financial difficulty)
+Frequency: ~20–50 pause requests/month
+Volume: ~5–10% of subscribers may pause per year
+Owner: Customer Service Rep
+Participants: Customer Service Rep, AR Clerk, Customer
+Source: workflow W1987 — Subscription Pause &amp; Reactivation Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1987_LaneSet3">
+        <bpmn:lane id="W1987_Lane1" name="Customer Service Rep">
+        <bpmn:flowNodeRef>W1987_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1987_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1987_Lane2" name="System">
+        <bpmn:flowNodeRef>W1987_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1987_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1987_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1987_Start4" name="Customer requests temporary pause (moving, travel, financial difficulty)">
+        <bpmn:outgoing>W1987_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1987_Task5" name="Customer requests pause: (a) reason: travel, renovation, temporary move…">
+        <bpmn:documentation>Step 1: Customer requests pause: (a) reason: travel, renovation, temporary move, financial difficulty, (b) pause duration: 1–6 months maximum, (c) Customer Service Rep verifies subscription is in good standing
+Responsible (R): Customer Service Rep
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1987_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1987_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1987_Task6" name="System processes pause: (a) pause start date and end date recorded, (b) monthly…">
+        <bpmn:documentation>Step 2: System processes pause: (a) pause start date and end date recorded, (b) monthly billing suspended during pause period, (c) annual subscription: pause extends subscription expiry by pause duration, (d) service visits cancelled during pause, (e) customer notified of pause confirmation with reactivation date
+Responsible (R): System
+Accountable (A): AR Clerk
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1987_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1987_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1987_Task7" name="Reactivation: (a) system sends reactivation reminder 7 days before pause end…">
+        <bpmn:documentation>Step 3: Reactivation: (a) system sends reactivation reminder 7 days before pause end date, (b) customer confirms reactivation (or requests extension), (c) billing resumes, (d) next service visit scheduled, (e) if customer does not respond: auto-reactivate after 14 days grace period
+Responsible (R): System / Customer Service Rep
+Accountable (A): AR Clerk
+Duration: Automated + 10 min manual</bpmn:documentation>
+        <bpmn:incoming>W1987_Flow13</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1987_End8" name="Complete">
+        <bpmn:incoming>W1987_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1987_Annotation9">
+        <bpmn:text>Controls: - CTL-383 (ensure controlled execution — Subscription Billing, Renewal &amp; Lifecycle (PA-47.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Customer Service Rep</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1987_Assoc10" sourceRef="W1987_Annotation9" targetRef="W1987_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1987_Flow11" sourceRef="W1987_Start4" targetRef="W1987_Task5" />
+      <bpmn:sequenceFlow id="W1987_Flow12" sourceRef="W1987_Task5" targetRef="W1987_Task6" />
+      <bpmn:sequenceFlow id="W1987_Flow13" sourceRef="W1987_Task6" targetRef="W1987_Task7" />
+      <bpmn:sequenceFlow id="W1987_Flow14" sourceRef="W1987_Task7" targetRef="W1987_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1987_diag">
+      <bpmndi:BPMNPlane id="W1987_plane" bpmnElement="W_W1987">
+        <bpmndi:BPMNShape id="W1987_Lane1_di" bpmnElement="W1987_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1987_Lane2_di" bpmnElement="W1987_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1987_Task5_di" bpmnElement="W1987_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1987_Task6_di" bpmnElement="W1987_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1987_Task7_di" bpmnElement="W1987_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1987_Start4_di" bpmnElement="W1987_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1987_End8_di" bpmnElement="W1987_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1987_Annotation9_di" bpmnElement="W1987_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1987_Flow11_di" bpmnElement="W1987_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1987_Flow12_di" bpmnElement="W1987_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1987_Flow13_di" bpmnElement="W1987_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1987_Flow14_di" bpmnElement="W1987_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1987_Assoc10_di" bpmnElement="W1987_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1988" name="W1988. Subscription Gift &amp; Transfer Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer purchases subscription as gift; customer moves and transfers service
+Frequency: ~20–50 gift/transfer requests/month
+Volume: Gift purchases: ~5% of enrollment; Transfers: ~2%
+Owner: Customer Service Rep
+Participants: Customer Service Rep, AR Clerk, Customer
+Source: workflow W1988 — Subscription Gift &amp; Transfer Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1988_LaneSet3">
+        <bpmn:lane id="W1988_Lane1" name="Customer Service Rep">
+        <bpmn:flowNodeRef>W1988_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1988_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1988_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1988_Lane2" name="AR Clerk">
+        <bpmn:flowNodeRef>W1988_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1988_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1988_Start4" name="Customer purchases subscription as gift; customer moves and transfers service">
+        <bpmn:outgoing>W1988_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1988_Task5" name="Gift subscription purchase: (a) customer purchases subscription at POS or…">
+        <bpmn:documentation>Step 1: Gift subscription purchase: (a) customer purchases subscription at POS or online as gift, (b) recipient details collected: name, address, phone, email, (c) gift notification sent to recipient with activation instructions, (d) recipient activates by confirming address and scheduling first visit
+Responsible (R): Customer Service Rep / System
+Accountable (A): —
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1988_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1988_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1988_Task6" name="Subscription transfer (customer moving): (a) customer requests transfer to new…">
+        <bpmn:documentation>Step 2: Subscription transfer (customer moving): (a) customer requests transfer to new address, (b) system validates new address against service territory, (c) if covered: update service address and assign new service partner, (d) if not covered: offer cancellation with pro-rata refund or pause until coverage expands
+Responsible (R): Customer Service Rep
+Accountable (A): VP Store Operations
+Duration: 10–15 min</bpmn:documentation>
+        <bpmn:incoming>W1988_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1988_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1988_Task7" name="Financial processing: (a) no fee for gift activation or address transfer, (b)…">
+        <bpmn:documentation>Step 3: Financial processing: (a) no fee for gift activation or address transfer, (b) service territory change may affect partner cost: internal cost reallocation, no customer price change
+Responsible (R): AR Clerk
+Accountable (A): Accounting Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1988_Flow13</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1988_End8" name="Complete">
+        <bpmn:incoming>W1988_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1988_Annotation9">
+        <bpmn:text>Controls: - CTL-383 (ensure controlled execution — Subscription Billing, Renewal &amp; Lifecycle (PA-47.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Customer Service Rep</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1988_Assoc10" sourceRef="W1988_Annotation9" targetRef="W1988_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1988_Flow11" sourceRef="W1988_Start4" targetRef="W1988_Task5" />
+      <bpmn:sequenceFlow id="W1988_Flow12" sourceRef="W1988_Task5" targetRef="W1988_Task6" />
+      <bpmn:sequenceFlow id="W1988_Flow13" sourceRef="W1988_Task6" targetRef="W1988_Task7" />
+      <bpmn:sequenceFlow id="W1988_Flow14" sourceRef="W1988_Task7" targetRef="W1988_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1988_diag">
+      <bpmndi:BPMNPlane id="W1988_plane" bpmnElement="W_W1988">
+        <bpmndi:BPMNShape id="W1988_Lane1_di" bpmnElement="W1988_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1988_Lane2_di" bpmnElement="W1988_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1988_Task5_di" bpmnElement="W1988_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1988_Task6_di" bpmnElement="W1988_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1988_Task7_di" bpmnElement="W1988_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1988_Start4_di" bpmnElement="W1988_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1988_End8_di" bpmnElement="W1988_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1988_Annotation9_di" bpmnElement="W1988_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1988_Flow11_di" bpmnElement="W1988_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1988_Flow12_di" bpmnElement="W1988_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1988_Flow13_di" bpmnElement="W1988_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1988_Flow14_di" bpmnElement="W1988_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1988_Assoc10_di" bpmnElement="W1988_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1989" name="W1989. Subscription Customer Communication &amp; Notification Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Various subscription lifecycle events
+Frequency: Continuous
+Volume: ~5,000–10,000 subscribers receiving communications
+Owner: CMO
+Participants: CMO, System, Customer Service Rep
+Source: workflow W1989 — Subscription Customer Communication &amp; Notification Management</bpmn:documentation>
+      <bpmn:laneSet id="W1989_LaneSet3">
+        <bpmn:lane id="W1989_Lane1" name="System">
+        <bpmn:flowNodeRef>W1989_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1989_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1989_Lane2" name="CMO">
+        <bpmn:flowNodeRef>W1989_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1989_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1989_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1989_Start4" name="Various subscription lifecycle events">
+        <bpmn:outgoing>W1989_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1989_Task5" name="System sends automated communications at lifecycle events: (a) enrollment…">
+        <bpmn:documentation>Step 1: System sends automated communications at lifecycle events: (a) enrollment confirmation with welcome guide, (b) service visit reminder: 48 hours and 2 hours before scheduled visit, (c) service completion confirmation with satisfaction survey, (d) renewal notice: 30/14/7 days before expiry, (e) payment confirmation (or failure notice), (f) subscription anniversary: thank you + loyalty points bonus
+Responsible (R): System
+Accountable (A): CMO
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1989_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1989_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1989_Task6" name="CMO designs communication templates: (a) consistent BuildRight branding, (b)…">
+        <bpmn:documentation>Step 2: CMO designs communication templates: (a) consistent BuildRight branding, (b) SMS: concise (160 char), actionable, (c) email: branded template with service details and self-service links, (d) app push notification: quick-action buttons, (e) all communications comply with RA 10173 (consent-based)
+Responsible (R): CMO
+Accountable (A): COO
+Duration: Per template design</bpmn:documentation>
+        <bpmn:incoming>W1989_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1989_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1989_Task7" name="Quarterly: CMO reviews communication effectiveness: (a) open rate, click rate…">
+        <bpmn:documentation>Step 3: Quarterly: CMO reviews communication effectiveness: (a) open rate, click rate, action rate per communication type, (b) A/B test subject lines and timing, (c) adjust communication frequency: reduce if opt-out rate &gt; 2%/month
+Responsible (R): CMO
+Accountable (A): COO
+Duration: 1 day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1989_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1989_End8" name="Complete">
+        <bpmn:incoming>W1989_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1989_Annotation9">
+        <bpmn:text>Controls: - CTL-383 (ensure controlled execution — Subscription Billing, Renewal &amp; Lifecycle (PA-47.2).) | - operational: CMO review and approval gate
+Owner: CMO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1989_Assoc10" sourceRef="W1989_Annotation9" targetRef="W1989_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1989_Flow11" sourceRef="W1989_Start4" targetRef="W1989_Task5" />
+      <bpmn:sequenceFlow id="W1989_Flow12" sourceRef="W1989_Task5" targetRef="W1989_Task6" />
+      <bpmn:sequenceFlow id="W1989_Flow13" sourceRef="W1989_Task6" targetRef="W1989_Task7" />
+      <bpmn:sequenceFlow id="W1989_Flow14" sourceRef="W1989_Task7" targetRef="W1989_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1989_diag">
+      <bpmndi:BPMNPlane id="W1989_plane" bpmnElement="W_W1989">
+        <bpmndi:BPMNShape id="W1989_Lane1_di" bpmnElement="W1989_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1989_Lane2_di" bpmnElement="W1989_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1989_Task5_di" bpmnElement="W1989_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1989_Task6_di" bpmnElement="W1989_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1989_Task7_di" bpmnElement="W1989_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1989_Start4_di" bpmnElement="W1989_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1989_End8_di" bpmnElement="W1989_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1989_Annotation9_di" bpmnElement="W1989_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1989_Flow11_di" bpmnElement="W1989_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1989_Flow12_di" bpmnElement="W1989_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1989_Flow13_di" bpmnElement="W1989_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1989_Flow14_di" bpmnElement="W1989_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1989_Assoc10_di" bpmnElement="W1989_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

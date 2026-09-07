@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-190.1-ot-asset-inventory-architecture-and-it-ot-segmentation-governance" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W5417" name="W5417. OT/ICS Asset Discovery, Inventory &amp; Cyber Risk Taxonomy" isExecutable="false">
+      <bpmn:documentation>Trigger: Program stand-up; new site/store/DC commissioning (VS-37); new connected-device channel go-live (VS-163/VS-164/VS-149)
+Frequency: Continuous discovery; full re-inventory quarterly
+Volume: 1 OT estate across ~205 sites + 4 DCs + HQ — ~25,000–40,000 OT endpoints (600 POS, ~3–5 BMS/fire panels/site, access-control controllers, ~200+ generators, SCADA on solar plants, EV/locker/SCO controllers, weighbridges, IoT sensors)
+Owner: OT Security Lead (IT Security, VS-27.3)
+Participants: Facilities/IFM (VS-138), DC Ops (VS-04), Store Ops (VS-07), Energy/Solar Ops (VS-108), EV/Locker Ops (VS-163/VS-164), IT Asset Mgmt (VS-99)
+Source: workflow W5417 — OT/ICS Asset Discovery, Inventory &amp; Cyber Risk Taxonomy</bpmn:documentation>
+      <bpmn:laneSet id="W5417_LaneSet3">
+        <bpmn:lane id="W5417_Lane1" name="OT Security Analyst">
+        <bpmn:flowNodeRef>W5417_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5417_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5417_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5417_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5417_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5417_Lane2" name="OT Security Lead">
+        <bpmn:flowNodeRef>W5417_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5417_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5417_Start4" name="Program stand-up; new site/store/DC commissioning (VS-37); new connected-device channel…">
+        <bpmn:outgoing>W5417_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5417_Task5" name="Passive/active-discover OT endpoints per site (ARP/LLDP sweeps, asset tags…">
+        <bpmn:documentation>Step 1: Passive/active-discover OT endpoints per site (ARP/LLDP sweeps, asset tags, vendor manifests from IFM/DC) — never active-scan a safety PLC without ops sign-off.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: per site</bpmn:documentation>
+        <bpmn:incoming>W5417_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5417_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5417_Task6" name="Classify each asset into the OT taxonomy: BMS/HVAC, fire/life-safety, access…">
+        <bpmn:documentation>Step 2: Classify each asset into the OT taxonomy: BMS/HVAC, fire/life-safety, access control, CCTV/EAS (VS-23), generator/ATS, fuel monitoring, paint/cutting PLC, lumber-yard automation, SCADA solar, EV controller, locker/SCO controller, POS, RF/WMS infra, weighbridge, IoT sensor.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: per asset</bpmn:documentation>
+        <bpmn:incoming>W5417_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5417_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5417_Task7" name="Capture the cyber attributes IT CMDBs miss: firmware/PLC revision…">
+        <bpmn:documentation>Step 3: Capture the cyber attributes IT CMDBs miss: firmware/PLC revision, engineering-workstation exposure, default-credential status, serial/fieldbus (Modbus/BACnet/OPC-UA), vendor, safety impact level.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: per asset</bpmn:documentation>
+        <bpmn:incoming>W5417_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5417_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5417_Task8" name="Assign OT criticality tier (Safety-of-life / Store-closing / Revenue /…">
+        <bpmn:documentation>Step 4: Assign OT criticality tier (Safety-of-life / Store-closing / Revenue / Operational) driving segmentation and monitoring priority.
+Responsible (R): OT Security Lead
+Accountable (A): OT Security Lead
+Duration: per asset</bpmn:documentation>
+        <bpmn:incoming>W5417_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5417_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5417_Task9" name="Load into the OT asset register (separate view from IT CMDB per VS-99) and…">
+        <bpmn:documentation>Step 5: Load into the OT asset register (separate view from IT CMDB per VS-99) and reconcile against IFM/DC/EV/locker asset lists.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5417_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5417_End10" name="Complete">
+        <bpmn:incoming>W5417_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5417_Annotation11">
+        <bpmn:text>Controls: - CTL-800 (ensure controlled execution — OT Asset Inventory, Architecture &amp; IT/OT Segmentation Governance (PA-190.1).) | - operational: asset-inventory completeness extended to OT; segregation of duties on OT criticality assignment; no active scan of a safety PLC without facilities/ops sign-off.
+Owner: OT Security Lead (IT Security, VS-27.3)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5417_Assoc12" sourceRef="W5417_Annotation11" targetRef="W5417_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5417_Flow13" sourceRef="W5417_Start4" targetRef="W5417_Task5" />
+      <bpmn:sequenceFlow id="W5417_Flow14" sourceRef="W5417_Task5" targetRef="W5417_Task6" />
+      <bpmn:sequenceFlow id="W5417_Flow15" sourceRef="W5417_Task6" targetRef="W5417_Task7" />
+      <bpmn:sequenceFlow id="W5417_Flow16" sourceRef="W5417_Task7" targetRef="W5417_Task8" />
+      <bpmn:sequenceFlow id="W5417_Flow17" sourceRef="W5417_Task8" targetRef="W5417_Task9" />
+      <bpmn:sequenceFlow id="W5417_Flow18" sourceRef="W5417_Task9" targetRef="W5417_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5417_diag">
+      <bpmndi:BPMNPlane id="W5417_plane" bpmnElement="W_W5417">
+        <bpmndi:BPMNShape id="W5417_Lane1_di" bpmnElement="W5417_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Lane2_di" bpmnElement="W5417_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Task5_di" bpmnElement="W5417_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Task6_di" bpmnElement="W5417_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Task7_di" bpmnElement="W5417_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Task8_di" bpmnElement="W5417_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Task9_di" bpmnElement="W5417_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Start4_di" bpmnElement="W5417_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_End10_di" bpmnElement="W5417_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5417_Annotation11_di" bpmnElement="W5417_Annotation11"><dc:Bounds x="160" y="460" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5417_Flow13_di" bpmnElement="W5417_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5417_Flow14_di" bpmnElement="W5417_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5417_Flow15_di" bpmnElement="W5417_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5417_Flow16_di" bpmnElement="W5417_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5417_Flow17_di" bpmnElement="W5417_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5417_Flow18_di" bpmnElement="W5417_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5417_Assoc12_di" bpmnElement="W5417_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5418" name="W5418. OT Security Architecture, Purdue-Model Zone Design &amp; IT/OT Segmentation" isExecutable="false">
+      <bpmn:documentation>Trigger: Program stand-up; new site/remodel network design (VS-109); new connected-device channel; recurring architecture review
+Frequency: Architecture refresh annual; per major site project
+Volume: 1 reference OT architecture + per-site zone design across ~205 sites
+Owner: OT Security Architect (Enterprise Architecture, VS-113)
+Participants: Network Engineering (VS-27.2), IFM (VS-138), DC Ops (VS-04), HSE (VS-24)
+Source: workflow W5418 — OT Security Architecture, Purdue-Model Zone Design &amp; IT/OT Segmentation</bpmn:documentation>
+      <bpmn:laneSet id="W5418_LaneSet3">
+        <bpmn:lane id="W5418_Lane1" name="OT Security Architect">
+        <bpmn:flowNodeRef>W5418_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5418_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5418_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5418_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5418_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5418_Lane2" name="Network Engineer">
+        <bpmn:flowNodeRef>W5418_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5418_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5418_Start4" name="Program stand-up; new site/remodel network design (VS-109); new connected-device channel…">
+        <bpmn:outgoing>W5418_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5418_Task5" name="Adopt a Purdue Enterprise Reference Architecture / IEC 62443 zone-and-conduit…">
+        <bpmn:documentation>Step 1: Adopt a Purdue Enterprise Reference Architecture / IEC 62443 zone-and-conduit model adapted for retail: Level 0–3 OT (safety/field/control/operations) vs Level 4–5 IT (corporate/internet), with a demilitarized zone (DMZ) between.
+Responsible (R): OT Security Architect
+Accountable (A): OT Security Lead
+Duration: setup</bpmn:documentation>
+        <bpmn:incoming>W5418_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5418_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5418_Task6" name="Define zone groupings by safety/operational impact: a fire/life-safety zone, a…">
+        <bpmn:documentation>Step 2: Define zone groupings by safety/operational impact: a fire/life-safety zone, a BMS/HVAC zone, a payment zone (POS/SCO/lockers), an energy zone (solar SCADA/EV), a logistics zone (WMS/RF/weighbridge).
+Responsible (R): OT Security Architect
+Accountable (A): OT Security Lead
+Duration: setup</bpmn:documentation>
+        <bpmn:incoming>W5418_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5418_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5418_Task7" name="Specify the IT/OT boundary controls: one-way data diodes or read-only…">
+        <bpmn:documentation>Step 3: Specify the IT/OT boundary controls: one-way data diodes or read-only historians where feasible, application-layer proxies in the DMZ, deny-by-default firewall policy between zones.
+Responsible (R): Network Engineer
+Accountable (A): OT Security Lead
+Duration: setup</bpmn:documentation>
+        <bpmn:incoming>W5418_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5418_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5418_Task8" name="Document allowed conduits (which OT system legitimately talks to which IT/cloud…">
+        <bpmn:documentation>Step 4: Document allowed conduits (which OT system legitimately talks to which IT/cloud system — e.g. BMS→IFM cloud, SCADA→utility) and forbid everything else.
+Responsible (R): OT Security Architect
+Accountable (A): OT Security Lead
+Duration: setup</bpmn:documentation>
+        <bpmn:incoming>W5418_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5418_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5418_Task9" name="Review at the enterprise-architecture forum (VS-113) and align to the…">
+        <bpmn:documentation>Step 5: Review at the enterprise-architecture forum (VS-113) and align to the cloud/integration perimeter.
+Responsible (R): OT Security Architect
+Accountable (A): CIO
+Duration: annual</bpmn:documentation>
+        <bpmn:incoming>W5418_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5418_End10" name="Complete">
+        <bpmn:incoming>W5418_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5418_Annotation11">
+        <bpmn:text>Controls: - CTL-800 (ensure controlled execution — OT Asset Inventory, Architecture &amp; IT/OT Segmentation Governance (PA-190.1).) | - operational: IT/OT segregation; architecture documentation; deny-by-default firewall policy with documented exception conduits.
+Owner: OT Security Architect (Enterprise Architecture, VS-113)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5418_Assoc12" sourceRef="W5418_Annotation11" targetRef="W5418_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5418_Flow13" sourceRef="W5418_Start4" targetRef="W5418_Task5" />
+      <bpmn:sequenceFlow id="W5418_Flow14" sourceRef="W5418_Task5" targetRef="W5418_Task6" />
+      <bpmn:sequenceFlow id="W5418_Flow15" sourceRef="W5418_Task6" targetRef="W5418_Task7" />
+      <bpmn:sequenceFlow id="W5418_Flow16" sourceRef="W5418_Task7" targetRef="W5418_Task8" />
+      <bpmn:sequenceFlow id="W5418_Flow17" sourceRef="W5418_Task8" targetRef="W5418_Task9" />
+      <bpmn:sequenceFlow id="W5418_Flow18" sourceRef="W5418_Task9" targetRef="W5418_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5418_diag">
+      <bpmndi:BPMNPlane id="W5418_plane" bpmnElement="W_W5418">
+        <bpmndi:BPMNShape id="W5418_Lane1_di" bpmnElement="W5418_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Lane2_di" bpmnElement="W5418_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Task5_di" bpmnElement="W5418_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Task6_di" bpmnElement="W5418_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Task7_di" bpmnElement="W5418_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Task8_di" bpmnElement="W5418_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Task9_di" bpmnElement="W5418_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Start4_di" bpmnElement="W5418_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_End10_di" bpmnElement="W5418_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5418_Annotation11_di" bpmnElement="W5418_Annotation11"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5418_Flow13_di" bpmnElement="W5418_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5418_Flow14_di" bpmnElement="W5418_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5418_Flow15_di" bpmnElement="W5418_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5418_Flow16_di" bpmnElement="W5418_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5418_Flow17_di" bpmnElement="W5418_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5418_Flow18_di" bpmnElement="W5418_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5418_Assoc12_di" bpmnElement="W5418_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5419" name="W5419. OT Identity, Credential &amp; Role-Based Access Control Governance" isExecutable="false">
+      <bpmn:documentation>Trigger: Program stand-up; device onboarding (W5421); vendor/staff access provisioning
+Frequency: Setup; periodic access recertification quarterly
+Volume: ~25,000–40,000 OT endpoints + ~300–500 engineering/vendor accounts
+Owner: OT Identity Lead (IT Security, VS-27.3)
+Participants: IFM (VS-138), vendor service teams, DC/Store ops, HSE (VS-24)
+Source: workflow W5419 — OT Identity, Credential &amp; Role-Based Access Control Governance</bpmn:documentation>
+      <bpmn:laneSet id="W5419_LaneSet3">
+        <bpmn:lane id="W5419_Lane1" name="OT Identity Lead">
+        <bpmn:flowNodeRef>W5419_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5419_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5419_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5419_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5419_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5419_Lane2" name="OT Security Analyst">
+        <bpmn:flowNodeRef>W5419_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5419_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5419_Start4" name="Program stand-up; device onboarding (W5421); vendor/staff access provisioning">
+        <bpmn:outgoing>W5419_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5419_Task5" name="Eliminate shared/default credentials on OT devices — per-device unique creds, a…">
+        <bpmn:documentation>Step 1: Eliminate shared/default credentials on OT devices — per-device unique creds, a privileged-access-management (PAM) vault for the engineering-workstation and admin accounts.
+Responsible (R): OT Identity Lead
+Accountable (A): OT Security Lead
+Duration: setup</bpmn:documentation>
+        <bpmn:incoming>W5419_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5419_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5419_Task6" name="Define OT RBAC roles (read-only operator, maintenance, engineering…">
+        <bpmn:documentation>Step 2: Define OT RBAC roles (read-only operator, maintenance, engineering, vendor-remote) mapped to the zone model (W5418).
+Responsible (R): OT Identity Lead
+Accountable (A): OT Security Lead
+Duration: setup</bpmn:documentation>
+        <bpmn:incoming>W5419_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5419_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5419_Task7" name="Enforce MFA on all interactive OT/admin access; require jump-host (bastion) for…">
+        <bpmn:documentation>Step 3: Enforce MFA on all interactive OT/admin access; require jump-host (bastion) for any vendor/remote OT session (W5433).
+Responsible (R): OT Identity Lead
+Accountable (A): OT Security Lead
+Duration: setup</bpmn:documentation>
+        <bpmn:incoming>W5419_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5419_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5419_Task8" name="Quarterly recertify OT access — confirm each engineering/vendor account still…">
+        <bpmn:documentation>Step 4: Quarterly recertify OT access — confirm each engineering/vendor account still has a live business need (links to VS-167 vetting and VS-161 TPRM).
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5419_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5419_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5419_Task9" name="Rotate credentials on vendor/contractor offboarding and on role change; revoke…">
+        <bpmn:documentation>Step 5: Rotate credentials on vendor/contractor offboarding and on role change; revoke standing access in favor of just-in-time.
+Responsible (R): OT Identity Lead
+Accountable (A): OT Security Lead
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5419_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5419_End10" name="Complete">
+        <bpmn:incoming>W5419_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5419_Annotation11">
+        <bpmn:text>Controls: - CTL-800 (ensure controlled execution — OT Asset Inventory, Architecture &amp; IT/OT Segmentation Governance (PA-190.1).) | - operational: access control / least privilege extended to OT; privileged-account management; no default credentials on any commissioned OT device.
+Owner: OT Identity Lead (IT Security, VS-27.3)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5419_Assoc12" sourceRef="W5419_Annotation11" targetRef="W5419_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5419_Flow13" sourceRef="W5419_Start4" targetRef="W5419_Task5" />
+      <bpmn:sequenceFlow id="W5419_Flow14" sourceRef="W5419_Task5" targetRef="W5419_Task6" />
+      <bpmn:sequenceFlow id="W5419_Flow15" sourceRef="W5419_Task6" targetRef="W5419_Task7" />
+      <bpmn:sequenceFlow id="W5419_Flow16" sourceRef="W5419_Task7" targetRef="W5419_Task8" />
+      <bpmn:sequenceFlow id="W5419_Flow17" sourceRef="W5419_Task8" targetRef="W5419_Task9" />
+      <bpmn:sequenceFlow id="W5419_Flow18" sourceRef="W5419_Task9" targetRef="W5419_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5419_diag">
+      <bpmndi:BPMNPlane id="W5419_plane" bpmnElement="W_W5419">
+        <bpmndi:BPMNShape id="W5419_Lane1_di" bpmnElement="W5419_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Lane2_di" bpmnElement="W5419_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Task5_di" bpmnElement="W5419_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Task6_di" bpmnElement="W5419_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Task7_di" bpmnElement="W5419_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Task8_di" bpmnElement="W5419_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Task9_di" bpmnElement="W5419_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Start4_di" bpmnElement="W5419_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_End10_di" bpmnElement="W5419_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5419_Annotation11_di" bpmnElement="W5419_Annotation11"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5419_Flow13_di" bpmnElement="W5419_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5419_Flow14_di" bpmnElement="W5419_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5419_Flow15_di" bpmnElement="W5419_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5419_Flow16_di" bpmnElement="W5419_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5419_Flow17_di" bpmnElement="W5419_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5419_Flow18_di" bpmnElement="W5419_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5419_Assoc12_di" bpmnElement="W5419_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5420" name="W5420. OT Device Hardening, Secure Configuration Baseline &amp; Change Control" isExecutable="false">
+      <bpmn:documentation>Trigger: Program stand-up; device onboarding (W5421); vulnerability/findings remediation
+Frequency: Baseline refresh annual; per-device hardening at onboarding
+Volume: 1 baseline per OT device class (BMS, fire, PLC, SCADA, POS, SCO, locker, EV, RF, weighbridge)
+Owner: OT Security Engineer
+Participants: IFM (VS-138), DC Ops (VS-04), vendor service, HSE (VS-24), Change Advisory (VS-27.1)
+Source: workflow W5420 — OT Device Hardening, Secure Configuration Baseline &amp; Change Control</bpmn:documentation>
+      <bpmn:laneSet id="W5420_LaneSet3">
+        <bpmn:lane id="W5420_Lane1" name="OT Security Engineer">
+        <bpmn:flowNodeRef>W5420_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5420_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5420_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5420_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5420_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5420_Lane2" name="OT Security Analyst">
+        <bpmn:flowNodeRef>W5420_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5420_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5420_Start4" name="Program stand-up; device onboarding (W5421); vulnerability/findings remediation">
+        <bpmn:outgoing>W5420_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5420_Task5" name="Author a secure-configuration baseline per OT device class (disable unused…">
+        <bpmn:documentation>Step 1: Author a secure-configuration baseline per OT device class (disable unused services/ports, enforce logging, disable vendor cloud links unless approved, lock engineering-mode).
+Responsible (R): OT Security Engineer
+Accountable (A): OT Security Lead
+Duration: per class</bpmn:documentation>
+        <bpmn:incoming>W5420_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5420_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5420_Task6" name="Validate each baseline against a non-production instance before deployment…">
+        <bpmn:documentation>Step 2: Validate each baseline against a non-production instance before deployment (never harden a live safety system untested).
+Responsible (R): OT Security Engineer
+Accountable (A): OT Security Lead
+Duration: per class</bpmn:documentation>
+        <bpmn:incoming>W5420_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5420_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5420_Task7" name="Submit hardening changes through the OT-aware change-control process (VS-27.1)…">
+        <bpmn:documentation>Step 3: Submit hardening changes through the OT-aware change-control process (VS-27.1) with explicit safety/ops impact assessment and rollback.
+Responsible (R): OT Security Engineer
+Accountable (A): Change Advisory Board
+Duration: per change</bpmn:documentation>
+        <bpmn:incoming>W5420_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5420_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5420_Task8" name="Apply the baseline at onboarding (W5421) and on a remediation sweep for in-life…">
+        <bpmn:documentation>Step 4: Apply the baseline at onboarding (W5421) and on a remediation sweep for in-life devices, in a maintenance window with ops standby.
+Responsible (R): OT Security Engineer / Vendor
+Accountable (A): OT Security Lead
+Duration: per device</bpmn:documentation>
+        <bpmn:incoming>W5420_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5420_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5420_Task9" name="Re-baseline when a vendor firmware/PLC revision changes; track config drift…">
+        <bpmn:documentation>Step 5: Re-baseline when a vendor firmware/PLC revision changes; track config drift between audits.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5420_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5420_End10" name="Complete">
+        <bpmn:incoming>W5420_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5420_Annotation11">
+        <bpmn:text>Controls: - CTL-800 (ensure controlled execution — OT Asset Inventory, Architecture &amp; IT/OT Segmentation Governance (PA-190.1).) | - operational: least privilege / hardening; change management; secure configuration; non-prod validation before any live safety-system hardening.
+Owner: OT Security Engineer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5420_Assoc12" sourceRef="W5420_Annotation11" targetRef="W5420_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5420_Flow13" sourceRef="W5420_Start4" targetRef="W5420_Task5" />
+      <bpmn:sequenceFlow id="W5420_Flow14" sourceRef="W5420_Task5" targetRef="W5420_Task6" />
+      <bpmn:sequenceFlow id="W5420_Flow15" sourceRef="W5420_Task6" targetRef="W5420_Task7" />
+      <bpmn:sequenceFlow id="W5420_Flow16" sourceRef="W5420_Task7" targetRef="W5420_Task8" />
+      <bpmn:sequenceFlow id="W5420_Flow17" sourceRef="W5420_Task8" targetRef="W5420_Task9" />
+      <bpmn:sequenceFlow id="W5420_Flow18" sourceRef="W5420_Task9" targetRef="W5420_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5420_diag">
+      <bpmndi:BPMNPlane id="W5420_plane" bpmnElement="W_W5420">
+        <bpmndi:BPMNShape id="W5420_Lane1_di" bpmnElement="W5420_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Lane2_di" bpmnElement="W5420_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Task5_di" bpmnElement="W5420_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Task6_di" bpmnElement="W5420_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Task7_di" bpmnElement="W5420_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Task8_di" bpmnElement="W5420_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Task9_di" bpmnElement="W5420_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Start4_di" bpmnElement="W5420_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_End10_di" bpmnElement="W5420_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5420_Annotation11_di" bpmnElement="W5420_Annotation11"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5420_Flow13_di" bpmnElement="W5420_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5420_Flow14_di" bpmnElement="W5420_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5420_Flow15_di" bpmnElement="W5420_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5420_Flow16_di" bpmnElement="W5420_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5420_Flow17_di" bpmnElement="W5420_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5420_Flow18_di" bpmnElement="W5420_Flow18"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5420_Assoc12_di" bpmnElement="W5420_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5421" name="W5421. Connected-Retail-Device Onboarding Security Gate (POS, SCO, RF, Locker, EV, BMS)" isExecutable="false">
+      <bpmn:documentation>Trigger: New connected-device procurement/deployment (new POS model, SCO rollout VS-149, smart-locker VS-164, EV host VS-163, BMS upgrade VS-138, solar SCADA VS-108, IoT sensor VS-69)
+Frequency: Per new device/channel/model — ~10–30 onboarding events/yr across channels + new-store/DC commissioning
+Volume: ~600 POS + ~per-store SCO/locker/EV/BMS at ~10–15 new stores/yr + refresh cycles
+Owner: OT Security Lead
+Participants: Procurement (VS-34), IT Asset Mgmt (VS-99), Store Opening (VS-37), IFM (VS-138), VS-163/VS-164/VS-149 channel owners, VS-161 TPRM
+Source: workflow W5421 — Connected-Retail-Device Onboarding Security Gate (POS, SCO, RF, Locker, EV, BMS)</bpmn:documentation>
+      <bpmn:laneSet id="W5421_LaneSet4">
+        <bpmn:lane id="W5421_Lane1" name="OT Security Analyst">
+        <bpmn:flowNodeRef>W5421_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5421_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5421_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5421_Lane2" name="OT Security Engineer">
+        <bpmn:flowNodeRef>W5421_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5421_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5421_Lane3" name="OT Security Lead">
+        <bpmn:flowNodeRef>W5421_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5421_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5421_Start5" name="New connected-device procurement/deployment (new POS model, SCO rollout VS-149…">
+        <bpmn:outgoing>W5421_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5421_Task6" name="Require a pre-procurement OT security review of any new connected device —…">
+        <bpmn:documentation>Step 1: Require a pre-procurement OT security review of any new connected device — vendor SBOM, firmware update model, cloud-dependency, default-credential posture, disclosed vulnerabilities/CVE history.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: per model</bpmn:documentation>
+        <bpmn:incoming>W5421_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5421_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5421_Task7" name="Verify the device passes its class secure-configuration baseline (W5420) and…">
+        <bpmn:documentation>Step 2: Verify the device passes its class secure-configuration baseline (W5420) and IT/OT segmentation placement (W5418) before PO release.
+Responsible (R): OT Security Engineer
+Accountable (A): OT Security Lead
+Duration: per model</bpmn:documentation>
+        <bpmn:incoming>W5421_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5421_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5421_Task8" name="Confirm default credentials replaced, vendor cloud links explicitly approved or…">
+        <bpmn:documentation>Step 3: Confirm default credentials replaced, vendor cloud links explicitly approved or disabled, and logging/monitoring onboarded (W5425) at install.
+Responsible (R): OT Security Engineer
+Accountable (A): OT Security Lead
+Duration: per site</bpmn:documentation>
+        <bpmn:incoming>W5421_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5421_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5421_Task9" name="Register the device in the OT asset register (W5417) with criticality tier and…">
+        <bpmn:documentation>Step 4: Register the device in the OT asset register (W5417) with criticality tier and onboarding evidence; block go-live until registered.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: per device</bpmn:documentation>
+        <bpmn:incoming>W5421_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5421_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5421_Task10" name="Feed device vendor risk into the TPRM tiering (VS-161) and contractual security…">
+        <bpmn:documentation>Step 5: Feed device vendor risk into the TPRM tiering (VS-161) and contractual security requirements (SBOM, vuln disclosure, support lifecycle).
+Responsible (R): OT Security Lead
+Accountable (A): VP Legal &amp; Compliance
+Duration: per model</bpmn:documentation>
+        <bpmn:incoming>W5421_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5421_End11" name="Complete">
+        <bpmn:incoming>W5421_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5421_Annotation12">
+        <bpmn:text>Controls: - CTL-800 (ensure controlled execution — OT Asset Inventory, Architecture &amp; IT/OT Segmentation Governance (PA-190.1).) | - operational: asset inventory/onboarding gate; secure configuration; TPRM/vendor security; operational: no connected retail device commissioned without a recorded OT security review.
+Owner: OT Security Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5421_Assoc13" sourceRef="W5421_Annotation12" targetRef="W5421_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5421_Flow14" sourceRef="W5421_Start5" targetRef="W5421_Task6" />
+      <bpmn:sequenceFlow id="W5421_Flow15" sourceRef="W5421_Task6" targetRef="W5421_Task7" />
+      <bpmn:sequenceFlow id="W5421_Flow16" sourceRef="W5421_Task7" targetRef="W5421_Task8" />
+      <bpmn:sequenceFlow id="W5421_Flow17" sourceRef="W5421_Task8" targetRef="W5421_Task9" />
+      <bpmn:sequenceFlow id="W5421_Flow18" sourceRef="W5421_Task9" targetRef="W5421_Task10" />
+      <bpmn:sequenceFlow id="W5421_Flow19" sourceRef="W5421_Task10" targetRef="W5421_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5421_diag">
+      <bpmndi:BPMNPlane id="W5421_plane" bpmnElement="W_W5421">
+        <bpmndi:BPMNShape id="W5421_Lane1_di" bpmnElement="W5421_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Lane2_di" bpmnElement="W5421_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Lane3_di" bpmnElement="W5421_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Task6_di" bpmnElement="W5421_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Task7_di" bpmnElement="W5421_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Task8_di" bpmnElement="W5421_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Task9_di" bpmnElement="W5421_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Task10_di" bpmnElement="W5421_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Start5_di" bpmnElement="W5421_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_End11_di" bpmnElement="W5421_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5421_Annotation12_di" bpmnElement="W5421_Annotation12"><dc:Bounds x="160" y="630" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5421_Flow14_di" bpmnElement="W5421_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5421_Flow15_di" bpmnElement="W5421_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5421_Flow16_di" bpmnElement="W5421_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5421_Flow17_di" bpmnElement="W5421_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5421_Flow18_di" bpmnElement="W5421_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5421_Flow19_di" bpmnElement="W5421_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5421_Assoc13_di" bpmnElement="W5421_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5422" name="W5422. OT Network Architecture Review, Firewall Rule &amp; Zone-Boundary Lifecycle" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly lifecycle review; post-incident (W5430); major change (new channel/site)
+Frequency: Quarterly rule/boundary review; per change
+Volume: 1 OT firewall/segmentation rulebase per site × ~205 locations (200 stores + 4 DCs + HQ)
+Owner: OT Network Security Engineer
+Participants: Network Engineering (VS-27.2), IFM (VS-138), DC Ops (VS-04), Internal Audit (VS-21.3)
+Source: workflow W5422 — OT Network Architecture Review, Firewall Rule &amp; Zone-Boundary Lifecycle</bpmn:documentation>
+      <bpmn:laneSet id="W5422_LaneSet4">
+        <bpmn:lane id="W5422_Lane1" name="OT Network Security Engineer">
+        <bpmn:flowNodeRef>W5422_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5422_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5422_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5422_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5422_Lane2" name="OT Security Analyst">
+        <bpmn:flowNodeRef>W5422_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5422_Lane3" name="OT Security Lead">
+        <bpmn:flowNodeRef>W5422_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5422_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5422_Start5" name="Quarterly lifecycle review; post-incident (W5430); major change (new channel/site)">
+        <bpmn:outgoing>W5422_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5422_Task6" name="Pull the current OT/zone-boundary firewall and ACL rulebase per site and…">
+        <bpmn:documentation>Step 1: Pull the current OT/zone-boundary firewall and ACL rulebase per site and reconcile to the documented allowed-conduit list (W5418).
+Responsible (R): OT Network Security Engineer
+Accountable (A): OT Security Lead
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5422_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5422_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5422_Task7" name="Flag &quot;any-any&quot; / overly-broad / stale / unused rules and orphaned conduits for…">
+        <bpmn:documentation>Step 2: Flag &quot;any-any&quot; / overly-broad / stale / unused rules and orphaned conduits for cleanup.
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5422_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5422_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5422_Task8" name="Validate segmentation effectiveness with controlled reachability testing…">
+        <bpmn:documentation>Step 3: Validate segmentation effectiveness with controlled reachability testing (IT→OT, internet→OT, zone→zone).
+Responsible (R): OT Network Security Engineer
+Accountable (A): OT Security Lead
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5422_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5422_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5422_Task9" name="Approve and apply rule changes through change control (VS-27.1) with documented…">
+        <bpmn:documentation>Step 4: Approve and apply rule changes through change control (VS-27.1) with documented business justification.
+Responsible (R): OT Network Security Engineer
+Accountable (A): Change Advisory Board
+Duration: per change</bpmn:documentation>
+        <bpmn:incoming>W5422_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5422_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5422_Task10" name="Report zone-boundary hygiene metrics to the architecture forum (VS-113) and…">
+        <bpmn:documentation>Step 5: Report zone-boundary hygiene metrics to the architecture forum (VS-113) and audit (VS-21.3).
+Responsible (R): OT Security Lead
+Accountable (A): CIO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5422_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5422_End11" name="Complete">
+        <bpmn:incoming>W5422_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5422_Annotation12">
+        <bpmn:text>Controls: - CTL-800: IT/OT zone-segmentation enforcement evidence; CTL-800 (OT asset/segmentation rulebase change control); CTL-800 (rulebase documentation retained for audit); operational: every exception rule carries an expiry date and business owner.
+Owner: OT Network Security Engineer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5422_Assoc13" sourceRef="W5422_Annotation12" targetRef="W5422_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5422_Flow14" sourceRef="W5422_Start5" targetRef="W5422_Task6" />
+      <bpmn:sequenceFlow id="W5422_Flow15" sourceRef="W5422_Task6" targetRef="W5422_Task7" />
+      <bpmn:sequenceFlow id="W5422_Flow16" sourceRef="W5422_Task7" targetRef="W5422_Task8" />
+      <bpmn:sequenceFlow id="W5422_Flow17" sourceRef="W5422_Task8" targetRef="W5422_Task9" />
+      <bpmn:sequenceFlow id="W5422_Flow18" sourceRef="W5422_Task9" targetRef="W5422_Task10" />
+      <bpmn:sequenceFlow id="W5422_Flow19" sourceRef="W5422_Task10" targetRef="W5422_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5422_diag">
+      <bpmndi:BPMNPlane id="W5422_plane" bpmnElement="W_W5422">
+        <bpmndi:BPMNShape id="W5422_Lane1_di" bpmnElement="W5422_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Lane2_di" bpmnElement="W5422_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Lane3_di" bpmnElement="W5422_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Task6_di" bpmnElement="W5422_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Task7_di" bpmnElement="W5422_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Task8_di" bpmnElement="W5422_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Task9_di" bpmnElement="W5422_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Task10_di" bpmnElement="W5422_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Start5_di" bpmnElement="W5422_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_End11_di" bpmnElement="W5422_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5422_Annotation12_di" bpmnElement="W5422_Annotation12"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5422_Flow14_di" bpmnElement="W5422_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5422_Flow15_di" bpmnElement="W5422_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5422_Flow16_di" bpmnElement="W5422_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5422_Flow17_di" bpmnElement="W5422_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5422_Flow18_di" bpmnElement="W5422_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5422_Flow19_di" bpmnElement="W5422_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5422_Assoc13_di" bpmnElement="W5422_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5423" name="W5423. OT Asset End-of-Life Security, Secure Decommissioning &amp; Cryptographic Erase" isExecutable="false">
+      <bpmn:documentation>Trigger: Device refresh/replacement (VS-99 lifecycle), store closure (VS-59), remodel (VS-109), vendor swap
+Frequency: Per device retirement — ~1,000–3,000 OT device retirements/yr across refresh cycles
+Volume: POS (600 on a refresh), BMS/fire/access panels, SCADA/PLC, SCO/locker/EV controllers, RF/weighbridge
+Owner: OT Security Lead
+Participants: IT Asset Mgmt (VS-99), IFM (VS-138), Store Ops (VS-07), records/retention (VS-88)
+Source: workflow W5423 — OT Asset End-of-Life Security, Secure Decommissioning &amp; Cryptographic Erase</bpmn:documentation>
+      <bpmn:laneSet id="W5423_LaneSet4">
+        <bpmn:lane id="W5423_Lane1" name="OT Security Engineer">
+        <bpmn:flowNodeRef>W5423_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5423_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5423_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5423_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5423_Lane2" name="OT Security Analyst">
+        <bpmn:flowNodeRef>W5423_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5423_Lane3" name="IT Asset Mgmt">
+        <bpmn:flowNodeRef>W5423_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5423_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5423_Start5" name="Device refresh/replacement (VS-99 lifecycle), store closure (VS-59), remodel (VS-109)…">
+        <bpmn:outgoing>W5423_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5423_Task6" name="Before physical removal: revoke credentials, close vendor remote access…">
+        <bpmn:documentation>Step 1: Before physical removal: revoke credentials, close vendor remote access (W5433), and disconnect from the network/zone.
+Responsible (R): OT Security Engineer
+Accountable (A): OT Security Lead
+Duration: per device</bpmn:documentation>
+        <bpmn:incoming>W5423_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5423_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5423_Task7" name="For devices holding data (POS, SCO, BMS historian, SCADA logger, access-control…">
+        <bpmn:documentation>Step 2: For devices holding data (POS, SCO, BMS historian, SCADA logger, access-control DB): perform cryptographic/logical erase per VS-99 W3254 and verify.
+Responsible (R): OT Security Engineer
+Accountable (A): OT Security Lead
+Duration: per device</bpmn:documentation>
+        <bpmn:incoming>W5423_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5423_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5423_Task8" name="For controller/PLC devices: reset to factory, remove engineering programs, and…">
+        <bpmn:documentation>Step 3: For controller/PLC devices: reset to factory, remove engineering programs, and confirm no residual site-specific logic/config.
+Responsible (R): OT Security Engineer / Vendor
+Accountable (A): OT Security Lead
+Duration: per device</bpmn:documentation>
+        <bpmn:incoming>W5423_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5423_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5423_Task9" name="Update the OT asset register (W5417) to retired; retain decommissioning…">
+        <bpmn:documentation>Step 4: Update the OT asset register (W5417) to retired; retain decommissioning evidence per records retention (VS-88, BIR 10-yr).
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: per device</bpmn:documentation>
+        <bpmn:incoming>W5423_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5423_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5423_Task10" name="Coordinate secure disposal/recycling (VS-73/VS-99 W3254 e-waste) so no…">
+        <bpmn:documentation>Step 5: Coordinate secure disposal/recycling (VS-73/VS-99 W3254 e-waste) so no controller with site logic or credentials is resold or landfilled.
+Responsible (R): IT Asset Mgmt
+Accountable (A): OT Security Lead
+Duration: per device</bpmn:documentation>
+        <bpmn:incoming>W5423_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5423_End11" name="Complete">
+        <bpmn:incoming>W5423_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5423_Annotation12">
+        <bpmn:text>Controls: - CTL-800 (ensure controlled execution — OT Asset Inventory, Architecture &amp; IT/OT Segmentation Governance (PA-190.1).) | - operational: asset register retirement; secure disposal/erase; data retention — extended to OT; operational: verified erase evidence before any device leaves BuildRight control.
+Owner: OT Security Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5423_Assoc13" sourceRef="W5423_Annotation12" targetRef="W5423_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5423_Flow14" sourceRef="W5423_Start5" targetRef="W5423_Task6" />
+      <bpmn:sequenceFlow id="W5423_Flow15" sourceRef="W5423_Task6" targetRef="W5423_Task7" />
+      <bpmn:sequenceFlow id="W5423_Flow16" sourceRef="W5423_Task7" targetRef="W5423_Task8" />
+      <bpmn:sequenceFlow id="W5423_Flow17" sourceRef="W5423_Task8" targetRef="W5423_Task9" />
+      <bpmn:sequenceFlow id="W5423_Flow18" sourceRef="W5423_Task9" targetRef="W5423_Task10" />
+      <bpmn:sequenceFlow id="W5423_Flow19" sourceRef="W5423_Task10" targetRef="W5423_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5423_diag">
+      <bpmndi:BPMNPlane id="W5423_plane" bpmnElement="W_W5423">
+        <bpmndi:BPMNShape id="W5423_Lane1_di" bpmnElement="W5423_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Lane2_di" bpmnElement="W5423_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Lane3_di" bpmnElement="W5423_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Task6_di" bpmnElement="W5423_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Task7_di" bpmnElement="W5423_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Task8_di" bpmnElement="W5423_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Task9_di" bpmnElement="W5423_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Task10_di" bpmnElement="W5423_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Start5_di" bpmnElement="W5423_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_End11_di" bpmnElement="W5423_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5423_Annotation12_di" bpmnElement="W5423_Annotation12"><dc:Bounds x="160" y="630" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5423_Flow14_di" bpmnElement="W5423_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5423_Flow15_di" bpmnElement="W5423_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5423_Flow16_di" bpmnElement="W5423_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5423_Flow17_di" bpmnElement="W5423_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5423_Flow18_di" bpmnElement="W5423_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5423_Flow19_di" bpmnElement="W5423_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5423_Assoc13_di" bpmnElement="W5423_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5424" name="W5424. OT Security Posture Dashboard, Criticality Tiering &amp; Risk Acceptance Register" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly governance cycle; board/audit risk reporting (VS-21.2/VS-36); new finding
+Frequency: Monthly dashboard; quarterly tiering/risk-acceptance review
+Volume: 1 OT security posture dashboard + ~1 risk register
+Owner: OT Security Lead
+Participants: CIO, IT Security Manager/IT Security (VS-27.3), Internal Audit (VS-21), ERM (VS-21.2), HSE (VS-24), Insurance (VS-26)
+Source: workflow W5424 — OT Security Posture Dashboard, Criticality Tiering &amp; Risk Acceptance Register</bpmn:documentation>
+      <bpmn:laneSet id="W5424_LaneSet3">
+        <bpmn:lane id="W5424_Lane1" name="OT Security Analyst">
+        <bpmn:flowNodeRef>W5424_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5424_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5424_Lane2" name="OT Security Lead">
+        <bpmn:flowNodeRef>W5424_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5424_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5424_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5424_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5424_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5424_Start4" name="Monthly governance cycle; board/audit risk reporting (VS-21.2/VS-36); new finding">
+        <bpmn:outgoing>W5424_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5424_Task5" name="Aggregate OT posture: asset coverage (W5417), segmentation hygiene (W5422)…">
+        <bpmn:documentation>Step 1: Aggregate OT posture: asset coverage (W5417), segmentation hygiene (W5422), default-cred/baseline compliance (W5419/W5420), open vulnerabilities (W5427), incidents (W5430), third-party access (W5433).
+Responsible (R): OT Security Analyst
+Accountable (A): OT Security Lead
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5424_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5424_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5424_Task6" name="Maintain the OT criticality tiering (Safety-of-life / Store-closing / Revenue /…">
+        <bpmn:documentation>Step 2: Maintain the OT criticality tiering (Safety-of-life / Store-closing / Revenue / Operational) driving prioritization.
+Responsible (R): OT Security Lead
+Accountable (A): OT Security Lead
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5424_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5424_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5424_Task7" name="Log accepted OT risks (where remediation is deferred for ops/safety/cost…">
+        <bpmn:documentation>Step 3: Log accepted OT risks (where remediation is deferred for ops/safety/cost reasons) with owner, expiry, and compensating control.
+Responsible (R): OT Security Lead
+Accountable (A): CIO
+Duration: per risk</bpmn:documentation>
+        <bpmn:incoming>W5424_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5424_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5424_Task8" name="Feed OT cyber risk into enterprise risk management (VS-21.2), cyber-insurance…">
+        <bpmn:documentation>Step 4: Feed OT cyber risk into enterprise risk management (VS-21.2), cyber-insurance underwriting (VS-26), and board reporting (VS-36).
+Responsible (R): OT Security Lead
+Accountable (A): CIO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5424_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5424_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5424_Task9" name="Review risk-acceptance expiries and escalate overdue remediation to the…">
+        <bpmn:documentation>Step 5: Review risk-acceptance expiries and escalate overdue remediation to the architecture/exec forum.
+Responsible (R): OT Security Lead
+Accountable (A): CIO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5424_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5424_End10" name="Complete">
+        <bpmn:incoming>W5424_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5424_Annotation11">
+        <bpmn:text>Controls: - CTL-800: ensure controlled execution — OT Asset Inventory, Architecture &amp; IT/OT Segmentation Governance (PA-190.1).) — risk acceptance governance; CTL-46 (posture/coverage evidence; CTL-37 (insurance/underwriter disclosure); operational: every accepted OT cyber risk has a named owner and expiry.
+Owner: OT Security Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5424_Assoc12" sourceRef="W5424_Annotation11" targetRef="W5424_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5424_Flow13" sourceRef="W5424_Start4" targetRef="W5424_Task5" />
+      <bpmn:sequenceFlow id="W5424_Flow14" sourceRef="W5424_Task5" targetRef="W5424_Task6" />
+      <bpmn:sequenceFlow id="W5424_Flow15" sourceRef="W5424_Task6" targetRef="W5424_Task7" />
+      <bpmn:sequenceFlow id="W5424_Flow16" sourceRef="W5424_Task7" targetRef="W5424_Task8" />
+      <bpmn:sequenceFlow id="W5424_Flow17" sourceRef="W5424_Task8" targetRef="W5424_Task9" />
+      <bpmn:sequenceFlow id="W5424_Flow18" sourceRef="W5424_Task9" targetRef="W5424_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5424_diag">
+      <bpmndi:BPMNPlane id="W5424_plane" bpmnElement="W_W5424">
+        <bpmndi:BPMNShape id="W5424_Lane1_di" bpmnElement="W5424_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Lane2_di" bpmnElement="W5424_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Task5_di" bpmnElement="W5424_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Task6_di" bpmnElement="W5424_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Task7_di" bpmnElement="W5424_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Task8_di" bpmnElement="W5424_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Task9_di" bpmnElement="W5424_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Start4_di" bpmnElement="W5424_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_End10_di" bpmnElement="W5424_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5424_Annotation11_di" bpmnElement="W5424_Annotation11"><dc:Bounds x="160" y="460" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5424_Flow13_di" bpmnElement="W5424_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5424_Flow14_di" bpmnElement="W5424_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5424_Flow15_di" bpmnElement="W5424_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5424_Flow16_di" bpmnElement="W5424_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5424_Flow17_di" bpmnElement="W5424_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5424_Flow18_di" bpmnElement="W5424_Flow18"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5424_Assoc12_di" bpmnElement="W5424_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-148.2-rou-asset-and-lease-liability-measurement-modification-and-reporting" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W4417" name="W4417. Subsequent Measurement — Depreciation, Interest &amp; Payment Unwind" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly close cycle
+Frequency: Monthly per lease
+Volume: ~205+ on-balance-sheet leases × 12 months
+Owner: Lease Accounting / Controller
+Participants: Controller, Finance (VS-17.4), Treasury (VS-18), IT (VS-27), Audit (VS-21)
+Source: workflow W4417 — Subsequent Measurement — Depreciation, Interest &amp; Payment Unwind</bpmn:documentation>
+      <bpmn:laneSet id="W4417_LaneSet3">
+        <bpmn:lane id="W4417_Lane1" name="Lease Accounting">
+        <bpmn:flowNodeRef>W4417_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4417_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4417_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4417_Lane2" name="Controller">
+        <bpmn:flowNodeRef>W4417_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4417_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4417_Start4" name="Monthly close cycle">
+        <bpmn:outgoing>W4417_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W4417_Task5" name="Lease Accounting run the monthly engine — depreciation of ROU asset on…">
+        <bpmn:documentation>Step 1: Lease Accounting run the monthly engine — depreciation of ROU asset on straight-line over lease term; interest on lease liability (effective-interest method at discount rate W4412); reduction of liability for lease payment
+Responsible (R): Lease Accounting / System
+Accountable (A): Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4417_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4417_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W4417_Task6" name="Lease Accounting post journals (DR depreciation / CR ROU; DR interest / CR…">
+        <bpmn:documentation>Step 2: Lease Accounting post journals (DR depreciation / CR ROU; DR interest / CR liability; DR liability / CR cash/AP) to GL (VS-17) and reconcile to lease-accounting system &amp; AP/cash (VS-15/VS-18)
+Responsible (R): Lease Accounting / Controller
+Accountable (A): Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4417_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4417_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4417_Task7" name="Controller/Audit review the monthly P&amp;L split (depreciation + interest…">
+        <bpmn:documentation>Step 3: Controller/Audit review the monthly P&amp;L split (depreciation + interest, replacing former straight-line rent expense — a key PFRS 16 EBITDA effect), and investigate variances
+Responsible (R): Controller / Finance / Audit
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4417_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4417_End8" name="Complete">
+        <bpmn:incoming>W4417_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4417_Annotation9">
+        <bpmn:text>Controls: - CTL-675 (ensure controlled execution — ROU Asset &amp; Lease Liability Measurement, Modification &amp; Reporting (PA-148.2).) | - CTL-675: system-calculated depreciation/interest; reconciled to GL/AP/cash (W4425); variances investigated; reviewed monthly
+Owner: Lease Accounting / Controller</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4417_Assoc10" sourceRef="W4417_Annotation9" targetRef="W4417_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4417_Flow11" sourceRef="W4417_Start4" targetRef="W4417_Task5" />
+      <bpmn:sequenceFlow id="W4417_Flow12" sourceRef="W4417_Task5" targetRef="W4417_Task6" />
+      <bpmn:sequenceFlow id="W4417_Flow13" sourceRef="W4417_Task6" targetRef="W4417_Task7" />
+      <bpmn:sequenceFlow id="W4417_Flow14" sourceRef="W4417_Task7" targetRef="W4417_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4417_diag">
+      <bpmndi:BPMNPlane id="W4417_plane" bpmnElement="W_W4417">
+        <bpmndi:BPMNShape id="W4417_Lane1_di" bpmnElement="W4417_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4417_Lane2_di" bpmnElement="W4417_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4417_Task5_di" bpmnElement="W4417_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4417_Task6_di" bpmnElement="W4417_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4417_Task7_di" bpmnElement="W4417_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4417_Start4_di" bpmnElement="W4417_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4417_End8_di" bpmnElement="W4417_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4417_Annotation9_di" bpmnElement="W4417_Annotation9"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4417_Flow11_di" bpmnElement="W4417_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4417_Flow12_di" bpmnElement="W4417_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4417_Flow13_di" bpmnElement="W4417_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4417_Flow14_di" bpmnElement="W4417_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4417_Assoc10_di" bpmnElement="W4417_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4418" name="W4418. Lease Modification, Reassessment &amp; Remeasurement" isExecutable="false">
+      <bpmn:documentation>Trigger: Lease change (scope/payment/term); judgment change
+Frequency: Per modification (~tens–hundreds/yr)
+Volume: Modifications across the ~205+ lease portfolio
+Owner: Lease Accounting / Lease Admin (VS-42) / Controller
+Participants: Lease Admin (VS-42), Legal (VS-100), Treasury (VS-18), Real Estate (VS-97/VS-20), Audit (VS-21)
+Source: workflow W4418 — Lease Modification, Reassessment &amp; Remeasurement</bpmn:documentation>
+      <bpmn:laneSet id="W4418_LaneSet3">
+        <bpmn:lane id="W4418_Lane1" name="Lease Admin">
+        <bpmn:flowNodeRef>W4418_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4418_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4418_Lane2" name="Lease Accounting">
+        <bpmn:flowNodeRef>W4418_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4418_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4418_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4418_Start4" name="Lease change (scope/payment/term); judgment change">
+        <bpmn:outgoing>W4418_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4418_Task5" name="Lease Admin/Legal identify &amp; classify the modification — *separate* lease…">
+        <bpmn:documentation>Step 1: Lease Admin/Legal identify &amp; classify the modification — *separate* lease (additional ROU for added scope/rights) vs *modification/remasurement* of the existing lease (payment/term/Scope change)
+Responsible (R): Lease Admin / Legal / Lease Accounting
+Accountable (A): Controller
+Duration: Per change</bpmn:documentation>
+        <bpmn:incoming>W4418_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4418_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4418_Task6" name="Lease Accounting remeasure the lease liability (revised payments at revised…">
+        <bpmn:documentation>Step 2: Lease Accounting remeasure the lease liability (revised payments at revised discount rate) and adjust the ROU asset correspondingly (or P&amp;L for certain decreases), per PFRS 16
+Responsible (R): Lease Accounting
+Accountable (A): Controller
+Duration: Per change</bpmn:documentation>
+        <bpmn:incoming>W4418_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4418_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4418_Task7" name="Lease Accounting post the remeasurement journal, update the abstract (W4411) &amp;…">
+        <bpmn:documentation>Step 3: Lease Accounting post the remeasurement journal, update the abstract (W4411) &amp; repository (W4426), and disclose material modifications (W4425)
+Responsible (R): Lease Accounting
+Accountable (A): Controller
+Duration: Per change</bpmn:documentation>
+        <bpmn:incoming>W4418_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4418_End8" name="Complete">
+        <bpmn:incoming>W4418_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4418_Annotation9">
+        <bpmn:text>Controls: - CTL-675 (ensure controlled execution — ROU Asset &amp; Lease Liability Measurement, Modification &amp; Reporting (PA-148.2).) | - CTL-675: modifications identified &amp; classified; liability remeasured at revised discount rate; ROU adjusted per PFRS 16; abstract/repository updated; reviewed (W4428)
+Owner: Lease Accounting / Lease Admin (VS-42) / Controller</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4418_Assoc10" sourceRef="W4418_Annotation9" targetRef="W4418_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4418_Flow11" sourceRef="W4418_Start4" targetRef="W4418_Task5" />
+      <bpmn:sequenceFlow id="W4418_Flow12" sourceRef="W4418_Task5" targetRef="W4418_Task6" />
+      <bpmn:sequenceFlow id="W4418_Flow13" sourceRef="W4418_Task6" targetRef="W4418_Task7" />
+      <bpmn:sequenceFlow id="W4418_Flow14" sourceRef="W4418_Task7" targetRef="W4418_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4418_diag">
+      <bpmndi:BPMNPlane id="W4418_plane" bpmnElement="W_W4418">
+        <bpmndi:BPMNShape id="W4418_Lane1_di" bpmnElement="W4418_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4418_Lane2_di" bpmnElement="W4418_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4418_Task5_di" bpmnElement="W4418_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4418_Task6_di" bpmnElement="W4418_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4418_Task7_di" bpmnElement="W4418_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4418_Start4_di" bpmnElement="W4418_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4418_End8_di" bpmnElement="W4418_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4418_Annotation9_di" bpmnElement="W4418_Annotation9"><dc:Bounds x="160" y="460" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4418_Flow11_di" bpmnElement="W4418_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4418_Flow12_di" bpmnElement="W4418_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4418_Flow13_di" bpmnElement="W4418_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4418_Flow14_di" bpmnElement="W4418_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4418_Assoc10_di" bpmnElement="W4418_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4419" name="W4419. Lease Renewal, Termination &amp; Early-Exit Accounting" isExecutable="false">
+      <bpmn:documentation>Trigger: Renewal exercised; termination; early exit; store closure (VS-59)
+Frequency: Per event (~10–15 store openings + closures/yr + renewals)
+Volume: Renewals/terminations across the portfolio
+Owner: Lease Accounting / Lease Admin (VS-42) / Real Estate (VS-97)
+Participants: Lease Admin (VS-42), Real Estate (VS-97/VS-20), Store Ops (VS-07), Closure (VS-59), Legal (VS-100), Controller
+Source: workflow W4419 — Lease Renewal, Termination &amp; Early-Exit Accounting</bpmn:documentation>
+      <bpmn:laneSet id="W4419_LaneSet2">
+        <bpmn:lane id="W4419_Lane1" name="Lease Accounting">
+        <bpmn:flowNodeRef>W4419_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4419_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4419_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4419_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4419_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4419_Start3" name="Renewal exercised; termination; early exit; store closure (VS-59)">
+        <bpmn:outgoing>W4419_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4419_Task4" name="renewal">
+        <bpmn:documentation>Step 1: Lease Accounting/Lease Admin account for renewal — reassess term/options (W4412), remeasure liability/ROU (W4418) if reasonably-certain determination changes
+Responsible (R): Lease Accounting
+Accountable (A): Controller
+Duration: Per renewal</bpmn:documentation>
+        <bpmn:incoming>W4419_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4419_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4419_Task5" name="termination/early-exit">
+        <bpmn:documentation>Step 2: Lease Accounting/Real Estate account for termination/early-exit — derecognize ROU/liability (W4423), recognize termination penalty/early-exit payment, and handle MAKE-GOOD/restoration provision
+Responsible (R): Lease Accounting / Real Estate / Legal
+Accountable (A): Controller / COO
+Duration: Per termination</bpmn:documentation>
+        <bpmn:incoming>W4419_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4419_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4419_Task6" name="Lease Accounting coordinate with store closure (VS-59), trigger fixed-asset/ROU…">
+        <bpmn:documentation>Step 3: Lease Accounting coordinate with store closure (VS-59), trigger fixed-asset/ROU disposal (VS-35/W4423), and update repository (W4426)
+Responsible (R): Lease Accounting / Store Ops / Controller
+Accountable (A): Controller
+Duration: Per closure</bpmn:documentation>
+        <bpmn:incoming>W4419_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4419_End7" name="Complete">
+        <bpmn:incoming>W4419_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4419_Annotation8">
+        <bpmn:text>Controls: - CTL-111 (ensure PFRS 16 lease-accounting completeness.) | - CTL-675: renewals reassessed; terminations derecognized with penalty/MAKE-GOOD provisioned; disposal coordinated (VS-35/VS-59); reviewed
+Owner: Lease Accounting / Lease Admin (VS-42) / Real Estate (VS-97)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4419_Assoc9" sourceRef="W4419_Annotation8" targetRef="W4419_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4419_Flow10" sourceRef="W4419_Start3" targetRef="W4419_Task4" />
+      <bpmn:sequenceFlow id="W4419_Flow11" sourceRef="W4419_Task4" targetRef="W4419_Task5" />
+      <bpmn:sequenceFlow id="W4419_Flow12" sourceRef="W4419_Task5" targetRef="W4419_Task6" />
+      <bpmn:sequenceFlow id="W4419_Flow13" sourceRef="W4419_Task6" targetRef="W4419_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4419_diag">
+      <bpmndi:BPMNPlane id="W4419_plane" bpmnElement="W_W4419">
+        <bpmndi:BPMNShape id="W4419_Lane1_di" bpmnElement="W4419_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4419_Task4_di" bpmnElement="W4419_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4419_Task5_di" bpmnElement="W4419_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4419_Task6_di" bpmnElement="W4419_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4419_Start3_di" bpmnElement="W4419_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4419_End7_di" bpmnElement="W4419_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4419_Annotation8_di" bpmnElement="W4419_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4419_Flow10_di" bpmnElement="W4419_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4419_Flow11_di" bpmnElement="W4419_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4419_Flow12_di" bpmnElement="W4419_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4419_Flow13_di" bpmnElement="W4419_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4419_Assoc9_di" bpmnElement="W4419_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4420" name="W4420. Variable &amp; Index-Based Lease Payment Reassessment" isExecutable="false">
+      <bpmn:documentation>Trigger: Index/CPI revision; turnover/usage variable; rent review
+Frequency: Per index revision / rent review (often annual)
+Volume: Leases with index-linked/escalation clauses (~170–190 of the ~205 leases; the majority carry CPI or fixed-step escalators)
+Owner: Lease Accounting / Lease Admin (VS-42) / Treasury (VS-18)
+Participants: Lease Admin (VS-42), Treasury (VS-18), Finance (VS-17.4), Audit (VS-21), Real Estate (VS-97)
+Source: workflow W4420 — Variable &amp; Index-Based Lease Payment Reassessment</bpmn:documentation>
+      <bpmn:laneSet id="W4420_LaneSet2">
+        <bpmn:lane id="W4420_Lane1" name="Lease Accounting">
+        <bpmn:flowNodeRef>W4420_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4420_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4420_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4420_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4420_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4420_Start3" name="Index/CPI revision; turnover/usage variable; rent review">
+        <bpmn:outgoing>W4420_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4420_Task4" name="Lease Accounting/Lease Admin identify index-linked/escalation triggers (CPI…">
+        <bpmn:documentation>Step 1: Lease Accounting/Lease Admin identify index-linked/escalation triggers (CPI, fixed escalation ladder) and variable payments based on index/rate — remeasure when the future payment adjusts
+Responsible (R): Lease Accounting / Lease Admin
+Accountable (A): Controller
+Duration: Per trigger</bpmn:documentation>
+        <bpmn:incoming>W4420_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4420_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4420_Task5" name="Lease Accounting distinguish variable-based-on-index/rate (remeasure liability)…">
+        <bpmn:documentation>Step 2: Lease Accounting distinguish variable-based-on-index/rate (remeasure liability) from variable-based-on-performance/usage (expense as incurred, e.g. turnover rent) per PFRS 16
+Responsible (R): Lease Accounting / Audit
+Accountable (A): Controller
+Duration: Per lease</bpmn:documentation>
+        <bpmn:incoming>W4420_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4420_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4420_Task6" name="Lease Accounting post remeasurement (W4418), accrue variable performance/usage…">
+        <bpmn:documentation>Step 3: Lease Accounting post remeasurement (W4418), accrue variable performance/usage payments to P&amp;L, and reconcile to AP (VS-15)
+Responsible (R): Lease Accounting
+Accountable (A): Controller
+Duration: Per period</bpmn:documentation>
+        <bpmn:incoming>W4420_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4420_End7" name="Complete">
+        <bpmn:incoming>W4420_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4420_Annotation8">
+        <bpmn:text>Controls: - CTL-675 (ensure controlled execution — ROU Asset &amp; Lease Liability Measurement, Modification &amp; Reporting (PA-148.2).) | - CTL-675: index-linked payments remeasured on revision; variable performance/usage expensed; distinction documented; reconciled to AP
+Owner: Lease Accounting / Lease Admin (VS-42) / Treasury (VS-18)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4420_Assoc9" sourceRef="W4420_Annotation8" targetRef="W4420_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4420_Flow10" sourceRef="W4420_Start3" targetRef="W4420_Task4" />
+      <bpmn:sequenceFlow id="W4420_Flow11" sourceRef="W4420_Task4" targetRef="W4420_Task5" />
+      <bpmn:sequenceFlow id="W4420_Flow12" sourceRef="W4420_Task5" targetRef="W4420_Task6" />
+      <bpmn:sequenceFlow id="W4420_Flow13" sourceRef="W4420_Task6" targetRef="W4420_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4420_diag">
+      <bpmndi:BPMNPlane id="W4420_plane" bpmnElement="W_W4420">
+        <bpmndi:BPMNShape id="W4420_Lane1_di" bpmnElement="W4420_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4420_Task4_di" bpmnElement="W4420_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4420_Task5_di" bpmnElement="W4420_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4420_Task6_di" bpmnElement="W4420_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4420_Start3_di" bpmnElement="W4420_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4420_End7_di" bpmnElement="W4420_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4420_Annotation8_di" bpmnElement="W4420_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4420_Flow10_di" bpmnElement="W4420_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4420_Flow11_di" bpmnElement="W4420_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4420_Flow12_di" bpmnElement="W4420_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4420_Flow13_di" bpmnElement="W4420_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4420_Assoc9_di" bpmnElement="W4420_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4421" name="W4421. Sublease &amp; Sale-and-Leaseback (Lessor-Side) Accounting" isExecutable="false">
+      <bpmn:documentation>Trigger: Sublease executed; sale-and-leaseback (SLB) transaction
+Frequency: Per transaction (~few/yr)
+Volume: Subleases (e.g. BuildRight subletting surplus space) + occasional SLB
+Owner: Lease Accounting / Controller / Real Estate (VS-97)
+Participants: Real Estate (VS-97), Legal (VS-100), Finance (VS-17.4), Treasury (VS-18), Audit (VS-21), Tax (VS-79)
+Source: workflow W4421 — Sublease &amp; Sale-and-Leaseback (Lessor-Side) Accounting</bpmn:documentation>
+      <bpmn:laneSet id="W4421_LaneSet2">
+        <bpmn:lane id="W4421_Lane1" name="Lease Accounting">
+        <bpmn:flowNodeRef>W4421_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4421_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4421_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4421_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4421_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4421_Start3" name="Sublease executed; sale-and-leaseback (SLB) transaction">
+        <bpmn:outgoing>W4421_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4421_Task4" name="intermediate lessor">
+        <bpmn:documentation>Step 1: Lease Accounting classify the sublease — BuildRight as intermediate lessor: retain lessee ROU/liability (scaled for right subleased) and recognize sublease income (finance or operating per IFRS 16 lessor model)
+Responsible (R): Lease Accounting / Real Estate
+Accountable (A): Controller / COO
+Duration: Per sublease</bpmn:documentation>
+        <bpmn:incoming>W4421_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4421_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4421_Task5" name="sale">
+        <bpmn:documentation>Step 2: For SLB, Lease Accounting/Legal determine if the transfer qualifies as a sale under PFRS 15 — if sale: seller-lessee recognizes only proportionate ROU, buyer-lessor recognizes the asset; if not-sale: accounted as a financing
+Responsible (R): Lease Accounting / Legal / Finance
+Accountable (A): Controller / CFO / VP Legal
+Duration: Per SLB</bpmn:documentation>
+        <bpmn:incoming>W4421_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4421_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4421_Task6" name="Lease Accounting post lessor-side/sublease journals, disclose (W4425), and…">
+        <bpmn:documentation>Step 3: Lease Accounting post lessor-side/sublease journals, disclose (W4425), and coordinate with Property Mgmt (VS-97) for the lessor operating model
+Responsible (R): Lease Accounting / Real Estate
+Accountable (A): Controller
+Duration: Per transaction</bpmn:documentation>
+        <bpmn:incoming>W4421_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4421_End7" name="Complete">
+        <bpmn:incoming>W4421_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4421_Annotation8">
+        <bpmn:text>Controls: - CTL-675 (ensure controlled execution — ROU Asset &amp; Lease Liability Measurement, Modification &amp; Reporting (PA-148.2).) | - CTL-675: sublease accounted as intermediate lessor; SLB sale-assessment per PFRS 15; lessor classification documented; disclosed &amp; reviewed
+Owner: Lease Accounting / Controller / Real Estate (VS-97)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4421_Assoc9" sourceRef="W4421_Annotation8" targetRef="W4421_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4421_Flow10" sourceRef="W4421_Start3" targetRef="W4421_Task4" />
+      <bpmn:sequenceFlow id="W4421_Flow11" sourceRef="W4421_Task4" targetRef="W4421_Task5" />
+      <bpmn:sequenceFlow id="W4421_Flow12" sourceRef="W4421_Task5" targetRef="W4421_Task6" />
+      <bpmn:sequenceFlow id="W4421_Flow13" sourceRef="W4421_Task6" targetRef="W4421_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4421_diag">
+      <bpmndi:BPMNPlane id="W4421_plane" bpmnElement="W_W4421">
+        <bpmndi:BPMNShape id="W4421_Lane1_di" bpmnElement="W4421_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4421_Task4_di" bpmnElement="W4421_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4421_Task5_di" bpmnElement="W4421_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4421_Task6_di" bpmnElement="W4421_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4421_Start3_di" bpmnElement="W4421_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4421_End7_di" bpmnElement="W4421_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4421_Annotation8_di" bpmnElement="W4421_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4421_Flow10_di" bpmnElement="W4421_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4421_Flow11_di" bpmnElement="W4421_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4421_Flow12_di" bpmnElement="W4421_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4421_Flow13_di" bpmnElement="W4421_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4421_Assoc9_di" bpmnElement="W4421_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4422" name="W4422. Short-Term &amp; Low-Value Lease Exemption Management" isExecutable="false">
+      <bpmn:documentation>Trigger: New lease (W4413); policy threshold change
+Frequency: Per lease + periodic review
+Volume: Short-term &amp; low-value leases (small equipment, IT, short tenancies) across portfolio
+Owner: Lease Accounting / Controller / Procurement (VS-34)
+Participants: Procurement (VS-34), ITAM (VS-99), Lease Admin (VS-42), Finance (VS-17.4), Audit (VS-21)
+Source: workflow W4422 — Short-Term &amp; Low-Value Lease Exemption Management</bpmn:documentation>
+      <bpmn:laneSet id="W4422_LaneSet2">
+        <bpmn:lane id="W4422_Lane1" name="Lease Accounting">
+        <bpmn:flowNodeRef>W4422_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4422_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4422_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4422_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4422_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4422_Start3" name="New lease (W4413); policy threshold change">
+        <bpmn:outgoing>W4422_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4422_Task4" name="Lease Accounting/Procurement identify leases qualifying for short-term (≤12 mo…">
+        <bpmn:documentation>Step 1: Lease Accounting/Procurement identify leases qualifying for short-term (≤12 mo, no purchase option) or low-value (below threshold, e.g. &lt;USD 5,000 standalone) exemption per policy (W4409)
+Responsible (R): Lease Accounting / Procurement / ITAM
+Accountable (A): Controller
+Duration: Per lease</bpmn:documentation>
+        <bpmn:incoming>W4422_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4422_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4422_Task5" name="straight-line expense">
+        <bpmn:documentation>Step 2: Lease Accounting account for exempt leases on a straight-line expense basis (no ROU/liability), disclose the expense (W4425), and monitor for changes (extension beyond 12 mo) that remove the exemption
+Responsible (R): Lease Accounting
+Accountable (A): Controller
+Duration: Per period</bpmn:documentation>
+        <bpmn:incoming>W4422_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4422_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4422_Task6" name="Lease Accounting/Audit periodically test the low-value threshold &amp; short-term…">
+        <bpmn:documentation>Step 3: Lease Accounting/Audit periodically test the low-value threshold &amp; short-term assessment, and reclassify if a lease no longer qualifies
+Responsible (R): Lease Accounting / Audit
+Accountable (A): Controller
+Duration: Periodic</bpmn:documentation>
+        <bpmn:incoming>W4422_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4422_End7" name="Complete">
+        <bpmn:incoming>W4422_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4422_Annotation8">
+        <bpmn:text>Controls: - CTL-675 (ensure controlled execution — ROU Asset &amp; Lease Liability Measurement, Modification &amp; Reporting (PA-148.2).) | - CTL-675: exemptions applied per policy threshold; expensed straight-line; disclosed; monitored for extension; tested periodically (W4428)
+Owner: Lease Accounting / Controller / Procurement (VS-34)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4422_Assoc9" sourceRef="W4422_Annotation8" targetRef="W4422_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4422_Flow10" sourceRef="W4422_Start3" targetRef="W4422_Task4" />
+      <bpmn:sequenceFlow id="W4422_Flow11" sourceRef="W4422_Task4" targetRef="W4422_Task5" />
+      <bpmn:sequenceFlow id="W4422_Flow12" sourceRef="W4422_Task5" targetRef="W4422_Task6" />
+      <bpmn:sequenceFlow id="W4422_Flow13" sourceRef="W4422_Task6" targetRef="W4422_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4422_diag">
+      <bpmndi:BPMNPlane id="W4422_plane" bpmnElement="W_W4422">
+        <bpmndi:BPMNShape id="W4422_Lane1_di" bpmnElement="W4422_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4422_Task4_di" bpmnElement="W4422_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4422_Task5_di" bpmnElement="W4422_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4422_Task6_di" bpmnElement="W4422_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4422_Start3_di" bpmnElement="W4422_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4422_End7_di" bpmnElement="W4422_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4422_Annotation8_di" bpmnElement="W4422_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4422_Flow10_di" bpmnElement="W4422_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4422_Flow11_di" bpmnElement="W4422_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4422_Flow12_di" bpmnElement="W4422_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4422_Flow13_di" bpmnElement="W4422_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4422_Assoc9_di" bpmnElement="W4422_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4423" name="W4423. Lease Impairment, Derecognition &amp; Disposal" isExecutable="false">
+      <bpmn:documentation>Trigger: Closure (VS-59); abandonment; impairment indicator; lease end
+Frequency: Per event
+Volume: Derecognition/impairment events across portfolio (~10–15 closures/yr + lease ends)
+Owner: Lease Accounting / Controller / Fixed Assets (VS-35)
+Participants: Controller, Fixed Assets (VS-35), Store Ops (VS-07), Closure (VS-59), Real Estate (VS-97), Audit (VS-21)
+Source: workflow W4423 — Lease Impairment, Derecognition &amp; Disposal</bpmn:documentation>
+      <bpmn:laneSet id="W4423_LaneSet2">
+        <bpmn:lane id="W4423_Lane1" name="Lease Accounting">
+        <bpmn:flowNodeRef>W4423_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4423_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4423_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4423_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4423_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4423_Start3" name="Closure (VS-59); abandonment; impairment indicator; lease end">
+        <bpmn:outgoing>W4423_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4423_Task4" name="Lease Accounting test ROU assets for impairment when indicators exist (closure…">
+        <bpmn:documentation>Step 1: Lease Accounting test ROU assets for impairment when indicators exist (closure, abandonment, under-performance), per IAS 36, and recognize impairment to P&amp;L
+Responsible (R): Lease Accounting / Fixed Assets
+Accountable (A): Controller / CFO
+Duration: Per indicator</bpmn:documentation>
+        <bpmn:incoming>W4423_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4423_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4423_Task5" name="Lease Accounting derecognize ROU/liability at lease end/termination (W4419)…">
+        <bpmn:documentation>Step 2: Lease Accounting derecognize ROU/liability at lease end/termination (W4419), account for residual/MAKE-GOOD settlement, and dispose via fixed-asset register (VS-35)
+Responsible (R): Lease Accounting / Fixed Assets
+Accountable (A): Controller
+Duration: Per end/termination</bpmn:documentation>
+        <bpmn:incoming>W4423_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4423_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4423_Task6" name="Lease Accounting coordinate disposal with closure program (VS-59), update…">
+        <bpmn:documentation>Step 3: Lease Accounting coordinate disposal with closure program (VS-59), update repository (W4426), and disclose material impairments (W4425)
+Responsible (R): Lease Accounting / Store Ops
+Accountable (A): Controller
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W4423_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4423_End7" name="Complete">
+        <bpmn:incoming>W4423_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4423_Annotation8">
+        <bpmn:text>Controls: - CTL-675 (ensure controlled execution — ROU Asset &amp; Lease Liability Measurement, Modification &amp; Reporting (PA-148.2).) | - CTL-675: ROU impairment tested at indicators; derecognized at end/termination; MAKE-GOOD settled; disposed via FA register; disclosed &amp; reviewed
+Owner: Lease Accounting / Controller / Fixed Assets (VS-35)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4423_Assoc9" sourceRef="W4423_Annotation8" targetRef="W4423_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4423_Flow10" sourceRef="W4423_Start3" targetRef="W4423_Task4" />
+      <bpmn:sequenceFlow id="W4423_Flow11" sourceRef="W4423_Task4" targetRef="W4423_Task5" />
+      <bpmn:sequenceFlow id="W4423_Flow12" sourceRef="W4423_Task5" targetRef="W4423_Task6" />
+      <bpmn:sequenceFlow id="W4423_Flow13" sourceRef="W4423_Task6" targetRef="W4423_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4423_diag">
+      <bpmndi:BPMNPlane id="W4423_plane" bpmnElement="W_W4423">
+        <bpmndi:BPMNShape id="W4423_Lane1_di" bpmnElement="W4423_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4423_Task4_di" bpmnElement="W4423_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4423_Task5_di" bpmnElement="W4423_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4423_Task6_di" bpmnElement="W4423_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4423_Start3_di" bpmnElement="W4423_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4423_End7_di" bpmnElement="W4423_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4423_Annotation8_di" bpmnElement="W4423_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4423_Flow10_di" bpmnElement="W4423_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4423_Flow11_di" bpmnElement="W4423_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4423_Flow12_di" bpmnElement="W4423_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4423_Flow13_di" bpmnElement="W4423_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4423_Assoc9_di" bpmnElement="W4423_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4424" name="W4424. Intercompany Lease Elimination &amp; Consolidation Entries" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly consolidation; intercompany lease change
+Frequency: Monthly per consolidation cycle
+Volume: Intercompany leases across 5 entities (e.g. Property Mgmt → Depot)
+Owner: Consolidation (VS-17) / Lease Accounting / Intercompany (VS-72)
+Participants: Consolidation (VS-17), Intercompany (VS-72), Lease Accounting, Treasury (VS-18), Audit (VS-21), Controller
+Source: workflow W4424 — Intercompany Lease Elimination &amp; Consolidation Entries</bpmn:documentation>
+      <bpmn:laneSet id="W4424_LaneSet2">
+        <bpmn:lane id="W4424_Lane1" name="Consolidation">
+        <bpmn:flowNodeRef>W4424_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4424_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4424_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4424_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4424_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4424_Start3" name="Monthly consolidation; intercompany lease change">
+        <bpmn:outgoing>W4424_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4424_Task4" name="Consolidation/Intercompany identify intercompany leases (lessor &amp; lessee within…">
+        <bpmn:documentation>Step 1: Consolidation/Intercompany identify intercompany leases (lessor &amp; lessee within the 5-entity group — primarily Property Mgmt as lessor), and match lessee-ROU/liability to lessor-asset/income
+Responsible (R): Consolidation / Intercompany / Lease Accounting
+Accountable (A): Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4424_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4424_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4424_Task5" name="Consolidation post elimination entries — eliminate intercompany lease…">
+        <bpmn:documentation>Step 2: Consolidation post elimination entries — eliminate intercompany lease income/expense, eliminate intercompany ROU/lease-liability vs lessor-asset, eliminate unrealized profit, and eliminate intercompany receivable/payable
+Responsible (R): Consolidation / Lease Accounting
+Accountable (A): Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4424_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4424_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4424_Task6" name="Consolidation validate the consolidated ROU/liability, reconcile to group FS…">
+        <bpmn:documentation>Step 3: Consolidation validate the consolidated ROU/liability, reconcile to group FS (VS-17), and resolve any unmatched intercompany lease
+Responsible (R): Consolidation / Audit
+Accountable (A): Controller / CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4424_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4424_End7" name="Complete">
+        <bpmn:incoming>W4424_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4424_Annotation8">
+        <bpmn:text>Controls: - CTL-675 (ensure controlled execution — ROU Asset &amp; Lease Liability Measurement, Modification &amp; Reporting (PA-148.2).) | - CTL-675: intercompany leases identified &amp; matched; eliminations posted; consolidated ROU/liability validated; reconciled to group FS; reviewed (W4428)
+Owner: Consolidation (VS-17) / Lease Accounting / Intercompany (VS-72)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4424_Assoc9" sourceRef="W4424_Annotation8" targetRef="W4424_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4424_Flow10" sourceRef="W4424_Start3" targetRef="W4424_Task4" />
+      <bpmn:sequenceFlow id="W4424_Flow11" sourceRef="W4424_Task4" targetRef="W4424_Task5" />
+      <bpmn:sequenceFlow id="W4424_Flow12" sourceRef="W4424_Task5" targetRef="W4424_Task6" />
+      <bpmn:sequenceFlow id="W4424_Flow13" sourceRef="W4424_Task6" targetRef="W4424_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4424_diag">
+      <bpmndi:BPMNPlane id="W4424_plane" bpmnElement="W_W4424">
+        <bpmndi:BPMNShape id="W4424_Lane1_di" bpmnElement="W4424_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4424_Task4_di" bpmnElement="W4424_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4424_Task5_di" bpmnElement="W4424_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4424_Task6_di" bpmnElement="W4424_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4424_Start3_di" bpmnElement="W4424_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4424_End7_di" bpmnElement="W4424_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4424_Annotation8_di" bpmnElement="W4424_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4424_Flow10_di" bpmnElement="W4424_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4424_Flow11_di" bpmnElement="W4424_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4424_Flow12_di" bpmnElement="W4424_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4424_Flow13_di" bpmnElement="W4424_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4424_Assoc9_di" bpmnElement="W4424_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

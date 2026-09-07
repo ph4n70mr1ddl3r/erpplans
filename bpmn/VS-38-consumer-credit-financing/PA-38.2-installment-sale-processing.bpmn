@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-38.2-installment-sale-processing" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1771" name="W1771. Installment Sale Transaction Recording &amp; Revenue Recognition" isExecutable="false">
+      <bpmn:documentation>Trigger: Consumer installment transaction completed at POS or ecommerce
+Frequency: ~90,000–120,000 installment transactions/month (~3–5% of POS, per the canon; consumer card/BNPL stream — settled by the financing partner T+1–T+3, never collected by BuildRight; the in-house trade stream collected by BuildRight is the separate ~200–300-collections/month basis of W1773)
+Volume: ~3–5% of all sales transactions
+Owner: Fixed Asset Accountant → Revenue Accountant
+Participants: Revenue Accountant, Cashier (in-store), System (ecommerce)
+Source: workflow W1771 — Installment Sale Transaction Recording &amp; Revenue Recognition</bpmn:documentation>
+      <bpmn:laneSet id="W1771_LaneSet3">
+        <bpmn:lane id="W1771_Lane1" name="System">
+        <bpmn:flowNodeRef>W1771_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1771_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1771_Lane2" name="Revenue Accountant">
+        <bpmn:flowNodeRef>W1771_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1771_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1771_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1771_Start4" name="Consumer installment transaction completed at POS or ecommerce">
+        <bpmn:outgoing>W1771_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1771_Task5" name="POS records installment sale transaction: (a) revenue recognized at full…">
+        <bpmn:documentation>Step 1: POS records installment sale transaction: (a) revenue recognized at full selling price at point of sale (BuildRight sells to customer; financing partner pays BuildRight), (b) VAT output recorded at 12% on selling price, (c) cost of goods sold recorded (standard margin), (d) MDR (merchant discount rate) recorded as selling expense, (e) for third-party financing: BuildRight receives full amount from partner (net of MDR) within T+1 to T+3, (f) for in-house trade account installments: AR recognized per W1772
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1771_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1771_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1771_Task6" name="Revenue recognition per PFRS 15: (a) control transfers to customer at point of…">
+        <bpmn:documentation>Step 2: Revenue recognition per PFRS 15: (a) control transfers to customer at point of sale (or delivery for ecommerce), (b) revenue = gross transaction amount, (c) MDR = transaction cost (selling expense), (d) no financing component in revenue (third-party financing), (e) for in-house deferred payment: assess if significant financing component exists (if payment term &gt; 12 months, may need to discount revenue to present value)
+Responsible (R): Revenue Accountant
+Accountable (A): Accounting Manager
+Duration: Monthly review</bpmn:documentation>
+        <bpmn:incoming>W1771_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1771_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1771_Task7" name="Daily reconciliation: installment transactions in POS vs. settlement expected…">
+        <bpmn:documentation>Step 3: Daily reconciliation: installment transactions in POS vs. settlement expected from financing partners; discrepancies investigated within 24 hours
+Responsible (R): Revenue Accountant
+Accountable (A): Accounting Manager
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1771_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1771_End8" name="Complete">
+        <bpmn:incoming>W1771_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1771_Annotation9">
+        <bpmn:text>Controls: - CTL-356 (ensure controlled execution — Installment Sale Processing &amp; Monitoring (PA-38.2).) | - operational: periodic reconciliation against source documents
+Owner: Fixed Asset Accountant → Revenue Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1771_Assoc10" sourceRef="W1771_Annotation9" targetRef="W1771_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1771_Flow11" sourceRef="W1771_Start4" targetRef="W1771_Task5" />
+      <bpmn:sequenceFlow id="W1771_Flow12" sourceRef="W1771_Task5" targetRef="W1771_Task6" />
+      <bpmn:sequenceFlow id="W1771_Flow13" sourceRef="W1771_Task6" targetRef="W1771_Task7" />
+      <bpmn:sequenceFlow id="W1771_Flow14" sourceRef="W1771_Task7" targetRef="W1771_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1771_diag">
+      <bpmndi:BPMNPlane id="W1771_plane" bpmnElement="W_W1771">
+        <bpmndi:BPMNShape id="W1771_Lane1_di" bpmnElement="W1771_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1771_Lane2_di" bpmnElement="W1771_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1771_Task5_di" bpmnElement="W1771_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1771_Task6_di" bpmnElement="W1771_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1771_Task7_di" bpmnElement="W1771_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1771_Start4_di" bpmnElement="W1771_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1771_End8_di" bpmnElement="W1771_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1771_Annotation9_di" bpmnElement="W1771_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1771_Flow11_di" bpmnElement="W1771_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1771_Flow12_di" bpmnElement="W1771_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1771_Flow13_di" bpmnElement="W1771_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1771_Flow14_di" bpmnElement="W1771_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1771_Assoc10_di" bpmnElement="W1771_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1772" name="W1772. In-House Installment Receivable Management (Trade Accounts)" isExecutable="false">
+      <bpmn:documentation>Trigger: Trade or corporate account customer requests installment payment terms for project purchase
+Frequency: ~200–300 in-house installment arrangements active at any time
+Volume: ~50–100 new arrangements/month
+Owner: Credit Manager
+Participants: Credit Manager, Sales Team, Customer, Accounting Manager
+Source: workflow W1772 — In-House Installment Receivable Management (Trade Accounts)</bpmn:documentation>
+      <bpmn:laneSet id="W1772_LaneSet4">
+        <bpmn:lane id="W1772_Lane1" name="Sales Team">
+        <bpmn:flowNodeRef>W1772_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1772_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1772_Lane2" name="Credit Manager">
+        <bpmn:flowNodeRef>W1772_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1772_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1772_Lane3" name="AR Accountant">
+        <bpmn:flowNodeRef>W1772_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1772_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1772_Start5" name="Trade or corporate account customer requests installment payment terms for project…">
+        <bpmn:outgoing>W1772_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1772_Task6" name="Trade/B2B customer requests installment terms for large project: (a) contractor…">
+        <bpmn:documentation>Step 1: Trade/B2B customer requests installment terms for large project: (a) contractor building a residential project: PHP 200K materials, requests 3-month payment, (b) developer outfitting 50 units: PHP 5M, requests 6-month payment, (c) government project: PHP 10M, requests payment upon project milestone
+Responsible (R): Sales Team
+Accountable (A): Credit Manager
+Duration: During sales</bpmn:documentation>
+        <bpmn:incoming>W1772_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1772_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1772_Task7" name="Credit Manager evaluates request: (a) customer credit score and payment history…">
+        <bpmn:documentation>Step 2: Credit Manager evaluates request: (a) customer credit score and payment history per W16.1, (b) project viability assessment, (c) determines terms: down payment % (typically 20–30%), installment period (3–12 months), interest rate (if applicable per credit policy), (d) for amounts &gt; PHP 500K: CFO approval required
+Responsible (R): Credit Manager
+Accountable (A): CFO (large amounts)
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1772_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1772_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1772_Task8" name="Installment agreement executed: (a) signed agreement with payment schedule, (b)…">
+        <bpmn:documentation>Step 3: Installment agreement executed: (a) signed agreement with payment schedule, (b) post-dated checks (PDCs) collected from customer per Philippine practice, (c) AR invoice created in system with installment schedule, (d) system auto-generates AR entries as each installment due date arrives
+Responsible (R): Credit Manager / Customer
+Accountable (A): Accounting Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1772_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1772_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1772_Task9" name="In-house installment receivable tracked in AR aging with separate…">
+        <bpmn:documentation>Step 4: In-house installment receivable tracked in AR aging with separate classification from standard trade AR; collection monitored per W1773–1774
+Responsible (R): AR Accountant
+Accountable (A): Credit Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W1772_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1772_End10" name="Complete">
+        <bpmn:incoming>W1772_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1772_Annotation11">
+        <bpmn:text>Controls: - CTL-356 (ensure controlled execution — Installment Sale Processing &amp; Monitoring (PA-38.2).) | - operational: Credit Manager review and approval gate
+Owner: Credit Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1772_Assoc12" sourceRef="W1772_Annotation11" targetRef="W1772_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1772_Flow13" sourceRef="W1772_Start5" targetRef="W1772_Task6" />
+      <bpmn:sequenceFlow id="W1772_Flow14" sourceRef="W1772_Task6" targetRef="W1772_Task7" />
+      <bpmn:sequenceFlow id="W1772_Flow15" sourceRef="W1772_Task7" targetRef="W1772_Task8" />
+      <bpmn:sequenceFlow id="W1772_Flow16" sourceRef="W1772_Task8" targetRef="W1772_Task9" />
+      <bpmn:sequenceFlow id="W1772_Flow17" sourceRef="W1772_Task9" targetRef="W1772_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1772_diag">
+      <bpmndi:BPMNPlane id="W1772_plane" bpmnElement="W_W1772">
+        <bpmndi:BPMNShape id="W1772_Lane1_di" bpmnElement="W1772_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Lane2_di" bpmnElement="W1772_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Lane3_di" bpmnElement="W1772_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Task6_di" bpmnElement="W1772_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Task7_di" bpmnElement="W1772_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Task8_di" bpmnElement="W1772_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Task9_di" bpmnElement="W1772_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Start5_di" bpmnElement="W1772_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_End10_di" bpmnElement="W1772_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1772_Annotation11_di" bpmnElement="W1772_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1772_Flow13_di" bpmnElement="W1772_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1772_Flow14_di" bpmnElement="W1772_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1772_Flow15_di" bpmnElement="W1772_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1772_Flow16_di" bpmnElement="W1772_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1772_Flow17_di" bpmnElement="W1772_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1772_Assoc12_di" bpmnElement="W1772_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1773" name="W1773. Installment Payment Collection &amp; Monitoring" isExecutable="false">
+      <bpmn:documentation>Trigger: Installment due date (monthly for in-house installments)
+Frequency: ~200–300 collections/month
+Volume: ~PHP 50–100M in monthly in-house installment collections (the ~200–300 active trade arrangements of W1772, avg. arrangement PHP 1M–3M amortizing over 3–12 months; consumer card/BNPL installments are partner-settled per W1771 and are not collected by BuildRight)
+Owner: AR Collector
+Participants: AR Collector, Customer, Treasury
+Source: workflow W1773 — Installment Payment Collection &amp; Monitoring</bpmn:documentation>
+      <bpmn:laneSet id="W1773_LaneSet4">
+        <bpmn:lane id="W1773_Lane1" name="System">
+        <bpmn:flowNodeRef>W1773_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1773_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1773_Lane2" name="Treasury">
+        <bpmn:flowNodeRef>W1773_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1773_Lane3" name="AR Collector">
+        <bpmn:flowNodeRef>W1773_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1773_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1773_Start5" name="Installment due date (monthly for in-house installments)">
+        <bpmn:outgoing>W1773_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1773_Task6" name="System generates installment due reminders: (a) 5 days before due date…">
+        <bpmn:documentation>Step 1: System generates installment due reminders: (a) 5 days before due date: SMS/email reminder to customer, (b) due date: payment expected (PDC deposited or customer pays online), (c) 1 day past due: follow-up call from AR Collector
+Responsible (R): System / AR Collector
+Accountable (A): Credit Manager
+Duration: Automated + manual</bpmn:documentation>
+        <bpmn:incoming>W1773_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1773_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1773_Task7" name="Payment received: (a) PDC deposited on due date; cleared in bank → system…">
+        <bpmn:documentation>Step 2: Payment received: (a) PDC deposited on due date; cleared in bank → system auto-applies to AR, (b) online payment (bank transfer, GCash) → Treasury applies to AR, (c) walk-in payment at store → cashier processes → system applies to AR, (d) system updates AR balance and generates receipt
+Responsible (R): Treasury / Cashier / System
+Accountable (A): AR Collector
+Duration: Per payment</bpmn:documentation>
+        <bpmn:incoming>W1773_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1773_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1773_Task8" name="Monthly: AR Collector reviews installment portfolio: (a) payment adherence rate…">
+        <bpmn:documentation>Step 3: Monthly: AR Collector reviews installment portfolio: (a) payment adherence rate (% of installments paid on time), (b) upcoming large payments (flag for proactive follow-up), (c) customers with history of late payments (tighten terms on future purchases)
+Responsible (R): AR Collector
+Accountable (A): Credit Manager
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1773_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1773_End9" name="Complete">
+        <bpmn:incoming>W1773_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1773_Annotation10">
+        <bpmn:text>Controls: - CTL-356 (ensure controlled execution — Installment Sale Processing &amp; Monitoring (PA-38.2).) | - operational: AR Collector review and approval gate
+Owner: AR Collector</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1773_Assoc11" sourceRef="W1773_Annotation10" targetRef="W1773_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1773_Flow12" sourceRef="W1773_Start5" targetRef="W1773_Task6" />
+      <bpmn:sequenceFlow id="W1773_Flow13" sourceRef="W1773_Task6" targetRef="W1773_Task7" />
+      <bpmn:sequenceFlow id="W1773_Flow14" sourceRef="W1773_Task7" targetRef="W1773_Task8" />
+      <bpmn:sequenceFlow id="W1773_Flow15" sourceRef="W1773_Task8" targetRef="W1773_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1773_diag">
+      <bpmndi:BPMNPlane id="W1773_plane" bpmnElement="W_W1773">
+        <bpmndi:BPMNShape id="W1773_Lane1_di" bpmnElement="W1773_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_Lane2_di" bpmnElement="W1773_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_Lane3_di" bpmnElement="W1773_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_Task6_di" bpmnElement="W1773_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_Task7_di" bpmnElement="W1773_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_Task8_di" bpmnElement="W1773_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_Start5_di" bpmnElement="W1773_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_End9_di" bpmnElement="W1773_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1773_Annotation10_di" bpmnElement="W1773_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1773_Flow12_di" bpmnElement="W1773_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1773_Flow13_di" bpmnElement="W1773_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1773_Flow14_di" bpmnElement="W1773_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1773_Flow15_di" bpmnElement="W1773_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1773_Assoc11_di" bpmnElement="W1773_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1774" name="W1774. Installment Delinquency Tracking &amp; Collection Action" isExecutable="false">
+      <bpmn:documentation>Trigger: Installment payment &gt; 30 days past due
+Frequency: ~20–50 delinquent accounts/month
+Volume: Target: &lt; 5% delinquency rate
+Owner: Credit Manager
+Participants: Credit Manager, AR Collector, Legal Counsel, Customer
+Source: workflow W1774 — Installment Delinquency Tracking &amp; Collection Action</bpmn:documentation>
+      <bpmn:laneSet id="W1774_LaneSet3">
+        <bpmn:lane id="W1774_Lane1" name="AR Collector">
+        <bpmn:flowNodeRef>W1774_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1774_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1774_Lane2" name="Credit Manager">
+        <bpmn:flowNodeRef>W1774_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1774_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1774_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1774_Start4" name="Installment payment &gt; 30 days past due">
+        <bpmn:outgoing>W1774_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1774_Task5" name="Delinquency tiers and actions: (a) 1–30 days past due: reminder calls and SMS…">
+        <bpmn:documentation>Step 1: Delinquency tiers and actions: (a) 1–30 days past due: reminder calls and SMS; friendly follow-up; understand reason for delay (common: customer waiting for own project payment), (b) 31–60 days: formal demand letter; hold on new orders; Credit Manager calls customer; negotiate restructuring if customer has genuine difficulty, (c) 61–90 days: legal demand letter; restrict account; engage collection agency or Legal Counsel for legal action, (d) &gt; 90 days: write-off consideration per policy; legal action; report to credit bureaus (if BuildRight participates)
+Responsible (R): AR Collector / Credit Manager
+Accountable (A): CFO
+Duration: Per account</bpmn:documentation>
+        <bpmn:incoming>W1774_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1774_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1774_Task6" name="Restructuring: for customers with good history but temporary difficulty: (a)…">
+        <bpmn:documentation>Step 2: Restructuring: for customers with good history but temporary difficulty: (a) extend payment period, (b) reduce monthly amount, (c) waive late fees (if prompt payment resumes), (d) document restructured terms
+Responsible (R): Credit Manager
+Accountable (A): CFO
+Duration: Per account</bpmn:documentation>
+        <bpmn:incoming>W1774_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1774_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1774_Task7" name="Write-off: accounts &gt; 180 days delinquent and all collection efforts exhausted…">
+        <bpmn:documentation>Step 3: Write-off: accounts &gt; 180 days delinquent and all collection efforts exhausted: (a) Credit Manager recommends write-off, (b) CFO approves (&lt; PHP 500K) or CEO approves (&gt; PHP 500K), (c) bad debt expense recorded, (d) account sent to external collection agency on contingency basis
+Responsible (R): Credit Manager
+Accountable (A): CFO
+Duration: Per account</bpmn:documentation>
+        <bpmn:incoming>W1774_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1774_End8" name="Complete">
+        <bpmn:incoming>W1774_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1774_Annotation9">
+        <bpmn:text>Controls: - CTL-356 (ensure controlled execution — Installment Sale Processing &amp; Monitoring (PA-38.2).) | - operational: Credit Manager review and approval gate
+Owner: Credit Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1774_Assoc10" sourceRef="W1774_Annotation9" targetRef="W1774_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1774_Flow11" sourceRef="W1774_Start4" targetRef="W1774_Task5" />
+      <bpmn:sequenceFlow id="W1774_Flow12" sourceRef="W1774_Task5" targetRef="W1774_Task6" />
+      <bpmn:sequenceFlow id="W1774_Flow13" sourceRef="W1774_Task6" targetRef="W1774_Task7" />
+      <bpmn:sequenceFlow id="W1774_Flow14" sourceRef="W1774_Task7" targetRef="W1774_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1774_diag">
+      <bpmndi:BPMNPlane id="W1774_plane" bpmnElement="W_W1774">
+        <bpmndi:BPMNShape id="W1774_Lane1_di" bpmnElement="W1774_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1774_Lane2_di" bpmnElement="W1774_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1774_Task5_di" bpmnElement="W1774_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1774_Task6_di" bpmnElement="W1774_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1774_Task7_di" bpmnElement="W1774_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1774_Start4_di" bpmnElement="W1774_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1774_End8_di" bpmnElement="W1774_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1774_Annotation9_di" bpmnElement="W1774_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1774_Flow11_di" bpmnElement="W1774_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1774_Flow12_di" bpmnElement="W1774_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1774_Flow13_di" bpmnElement="W1774_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1774_Flow14_di" bpmnElement="W1774_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1774_Assoc10_di" bpmnElement="W1774_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1775" name="W1775. Installment Sale Returns &amp; Cancellation Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer returns merchandise purchased on installment; or cancels order before delivery
+Frequency: ~2–3% of installment transactions (~200–350 returns/month)
+Volume: ~2–3% of installment transactions
+Owner: Store Manager
+Participants: Store Manager, Cashier, Credit Manager, Financing Partner, Customer
+Source: workflow W1775 — Installment Sale Returns &amp; Cancellation Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1775_LaneSet5">
+        <bpmn:lane id="W1775_Lane1" name="Store Manager">
+        <bpmn:flowNodeRef>W1775_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1775_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1775_Lane2" name="Cashier">
+        <bpmn:flowNodeRef>W1775_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1775_Lane3" name="Credit Manager">
+        <bpmn:flowNodeRef>W1775_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1775_Lane4" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1775_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1775_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1775_Start6" name="Customer returns merchandise purchased on installment; or cancels order before delivery">
+        <bpmn:outgoing>W1775_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1775_Task7" name="Customer requests return of item purchased on installment: (a) standard return…">
+        <bpmn:documentation>Step 1: Customer requests return of item purchased on installment: (a) standard return policy applies (7-day return for non-defective items; longer for defective), (b) Store Manager verifies return eligibility per W1622
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1775_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1775_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1775_Task8" name="For third-party financed purchases: (a) return processed in POS; system sends…">
+        <bpmn:documentation>Step 2: For third-party financed purchases: (a) return processed in POS; system sends refund instruction to financing partner, (b) financing partner reverses installment plan (or adjusts remaining balance), (c) MDR charged on original transaction may not be refundable — absorbed as cost, (d) if customer has already made installment payments: financing partner handles refund to customer
+Responsible (R): Cashier / System
+Accountable (A): Store Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1775_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1775_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1775_Task9" name="For in-house installment (trade accounts): (a) Credit Manager reviews return…">
+        <bpmn:documentation>Step 3: For in-house installment (trade accounts): (a) Credit Manager reviews return; if legitimate: credit note issued to reduce AR balance, (b) if return is partial: AR reduced by returned amount; remaining installments continue, (c) if return is full and customer made payments: credit note for payments received; any balance refunded
+Responsible (R): Credit Manager / Store Manager
+Accountable (A): Accounting Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1775_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1775_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1775_Task10" name="Inventory returned to stock per W1626 (disposition); cost of goods sold reversed">
+        <bpmn:documentation>Step 4: Inventory returned to stock per W1626 (disposition); cost of goods sold reversed
+Responsible (R): Receiving Clerk / System
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1775_Flow17</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1775_End11" name="Complete">
+        <bpmn:incoming>W1775_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1775_Annotation12">
+        <bpmn:text>Controls: - CTL-356 (ensure controlled execution — Installment Sale Processing &amp; Monitoring (PA-38.2).) | - operational: Store Manager review and approval gate
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1775_Assoc13" sourceRef="W1775_Annotation12" targetRef="W1775_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1775_Flow14" sourceRef="W1775_Start6" targetRef="W1775_Task7" />
+      <bpmn:sequenceFlow id="W1775_Flow15" sourceRef="W1775_Task7" targetRef="W1775_Task8" />
+      <bpmn:sequenceFlow id="W1775_Flow16" sourceRef="W1775_Task8" targetRef="W1775_Task9" />
+      <bpmn:sequenceFlow id="W1775_Flow17" sourceRef="W1775_Task9" targetRef="W1775_Task10" />
+      <bpmn:sequenceFlow id="W1775_Flow18" sourceRef="W1775_Task10" targetRef="W1775_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1775_diag">
+      <bpmndi:BPMNPlane id="W1775_plane" bpmnElement="W_W1775">
+        <bpmndi:BPMNShape id="W1775_Lane1_di" bpmnElement="W1775_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Lane2_di" bpmnElement="W1775_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Lane3_di" bpmnElement="W1775_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Lane4_di" bpmnElement="W1775_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Task7_di" bpmnElement="W1775_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Task8_di" bpmnElement="W1775_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Task9_di" bpmnElement="W1775_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Task10_di" bpmnElement="W1775_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Start6_di" bpmnElement="W1775_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_End11_di" bpmnElement="W1775_End11"><dc:Bounds x="1260" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1775_Annotation12_di" bpmnElement="W1775_Annotation12"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1775_Flow14_di" bpmnElement="W1775_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1775_Flow15_di" bpmnElement="W1775_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1775_Flow16_di" bpmnElement="W1775_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1775_Flow17_di" bpmnElement="W1775_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1775_Flow18_di" bpmnElement="W1775_Flow18"><di:waypoint x="1210" y="675" /><di:waypoint x="1260" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1775_Assoc13_di" bpmnElement="W1775_Assoc13"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1776" name="W1776. Promotional Installment Subsidy Accounting" isExecutable="false">
+      <bpmn:documentation>Trigger: 0% interest promotion active; BuildRight subsidizes interest cost to financing partner
+Frequency: ~6–10 promotional periods/year
+Volume: ~PHP 5–15M in annual installment subsidies
+Owner: FP&amp;A
+Participants: FP&amp;A, Accounting Manager, VP Merchandising, Category Managers
+Source: workflow W1776 — Promotional Installment Subsidy Accounting</bpmn:documentation>
+      <bpmn:laneSet id="W1776_LaneSet4">
+        <bpmn:lane id="W1776_Lane1" name="System">
+        <bpmn:flowNodeRef>W1776_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1776_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1776_Lane2" name="FP&amp;A">
+        <bpmn:flowNodeRef>W1776_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1776_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1776_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1776_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1776_Start5" name="0% interest promotion active; BuildRight subsidizes interest cost to financing partner">
+        <bpmn:outgoing>W1776_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1776_Task6" name="During promotional period: (a) system records each 0% installment transaction…">
+        <bpmn:documentation>Step 1: During promotional period: (a) system records each 0% installment transaction at full selling price, (b) financing partner charges BuildRight a subsidy fee (higher MDR or explicit subsidy amount) to compensate for interest they forego, (c) subsidy cost recorded as promotional selling expense (allocated to the promoting category)
+Responsible (R): System
+Accountable (A): Accounting Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1776_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1776_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1776_Task7" name="Monthly: FP&amp;A tracks promotional subsidy cost: (a) total subsidy amount by…">
+        <bpmn:documentation>Step 2: Monthly: FP&amp;A tracks promotional subsidy cost: (a) total subsidy amount by promotion and category, (b) incremental sales generated by promotion vs. non-promotional period, (c) subsidy cost as % of incremental gross margin, (d) ROI: incremental margin ÷ subsidy cost (target: &gt; 3x)
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day/month during promos</bpmn:documentation>
+        <bpmn:incoming>W1776_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1776_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1776_Task8" name="Post-promotion: Accounting Manager reconciles subsidy charges from financing…">
+        <bpmn:documentation>Step 3: Post-promotion: Accounting Manager reconciles subsidy charges from financing partner against system records; discrepancies resolved; final promotional P&amp;L prepared for category review
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 1 week post-promo</bpmn:documentation>
+        <bpmn:incoming>W1776_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1776_End9" name="Complete">
+        <bpmn:incoming>W1776_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1776_Annotation10">
+        <bpmn:text>Controls: - CTL-356 (ensure controlled execution — Installment Sale Processing &amp; Monitoring (PA-38.2).) | - operational: FP&amp;A review and approval gate; periodic reconciliation against source documents
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1776_Assoc11" sourceRef="W1776_Annotation10" targetRef="W1776_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1776_Flow12" sourceRef="W1776_Start5" targetRef="W1776_Task6" />
+      <bpmn:sequenceFlow id="W1776_Flow13" sourceRef="W1776_Task6" targetRef="W1776_Task7" />
+      <bpmn:sequenceFlow id="W1776_Flow14" sourceRef="W1776_Task7" targetRef="W1776_Task8" />
+      <bpmn:sequenceFlow id="W1776_Flow15" sourceRef="W1776_Task8" targetRef="W1776_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1776_diag">
+      <bpmndi:BPMNPlane id="W1776_plane" bpmnElement="W_W1776">
+        <bpmndi:BPMNShape id="W1776_Lane1_di" bpmnElement="W1776_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_Lane2_di" bpmnElement="W1776_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_Lane3_di" bpmnElement="W1776_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_Task6_di" bpmnElement="W1776_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_Task7_di" bpmnElement="W1776_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_Task8_di" bpmnElement="W1776_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_Start5_di" bpmnElement="W1776_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_End9_di" bpmnElement="W1776_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1776_Annotation10_di" bpmnElement="W1776_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1776_Flow12_di" bpmnElement="W1776_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1776_Flow13_di" bpmnElement="W1776_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1776_Flow14_di" bpmnElement="W1776_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1776_Flow15_di" bpmnElement="W1776_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1776_Assoc11_di" bpmnElement="W1776_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1777" name="W1777. Installment Sale Tax Compliance (VAT, WHT)" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly tax filing
+Frequency: Monthly
+Volume: Part of regular tax filing
+Owner: Tax Accountant
+Participants: Tax Accountant, Revenue Accountant, CFO
+Source: workflow W1777 — Installment Sale Tax Compliance (VAT, WHT)</bpmn:documentation>
+      <bpmn:laneSet id="W1777_LaneSet2">
+        <bpmn:lane id="W1777_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W1777_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1777_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1777_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1777_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1777_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1777_Start3" name="Monthly tax filing">
+        <bpmn:outgoing>W1777_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1777_Task4" name="VAT on installment sales: (a) output VAT recognized at point of sale (full…">
+        <bpmn:documentation>Step 1: VAT on installment sales: (a) output VAT recognized at point of sale (full selling price × 12%), not over the installment period — per Philippine VAT rules (gross receipt is taxable upon sale, not upon collection), (b) for third-party financed sales: BuildRight receives net amount (gross minus MDR) but remits VAT on gross selling price, (c) input VAT on cost of goods sold claimed normally
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1777_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W1777_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1777_Task5" name="MDR VAT treatment: (a) MDR paid to financing partner includes 12% VAT, (b)…">
+        <bpmn:documentation>Step 2: MDR VAT treatment: (a) MDR paid to financing partner includes 12% VAT, (b) BuildRight can claim input VAT on MDR as the service was used in the course of business, (c) financing partner issues VAT invoice for MDR charged
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1777_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1777_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1777_Task6" name="In-house installment interest income (if applicable): (a) interest earned on…">
+        <bpmn:documentation>Step 3: In-house installment interest income (if applicable): (a) interest earned on in-house installment plans forms part of the gross selling price and is subject to VAT (12%), (b) interest income reported in monthly VAT return (BIR Form 2550M)
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1777_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1777_End7" name="Complete">
+        <bpmn:incoming>W1777_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1777_Annotation8">
+        <bpmn:text>Controls: - CTL-208 (ensure consumer-financing settlement &amp; compliance.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1777_Assoc9" sourceRef="W1777_Annotation8" targetRef="W1777_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1777_Flow10" sourceRef="W1777_Start3" targetRef="W1777_Task4" />
+      <bpmn:sequenceFlow id="W1777_Flow11" sourceRef="W1777_Task4" targetRef="W1777_Task5" />
+      <bpmn:sequenceFlow id="W1777_Flow12" sourceRef="W1777_Task5" targetRef="W1777_Task6" />
+      <bpmn:sequenceFlow id="W1777_Flow13" sourceRef="W1777_Task6" targetRef="W1777_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1777_diag">
+      <bpmndi:BPMNPlane id="W1777_plane" bpmnElement="W_W1777">
+        <bpmndi:BPMNShape id="W1777_Lane1_di" bpmnElement="W1777_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1777_Task4_di" bpmnElement="W1777_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1777_Task5_di" bpmnElement="W1777_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1777_Task6_di" bpmnElement="W1777_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1777_Start3_di" bpmnElement="W1777_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1777_End7_di" bpmnElement="W1777_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1777_Annotation8_di" bpmnElement="W1777_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1777_Flow10_di" bpmnElement="W1777_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1777_Flow11_di" bpmnElement="W1777_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1777_Flow12_di" bpmnElement="W1777_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1777_Flow13_di" bpmnElement="W1777_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1777_Assoc9_di" bpmnElement="W1777_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1778" name="W1778. Installment Portfolio Reporting &amp; Aging Analysis" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly management reporting
+Frequency: Monthly
+Volume: 1 report covering all in-house installment receivables
+Owner: Credit Manager
+Participants: Credit Manager, FP&amp;A, CFO
+Source: workflow W1778 — Installment Portfolio Reporting &amp; Aging Analysis</bpmn:documentation>
+      <bpmn:laneSet id="W1778_LaneSet3">
+        <bpmn:lane id="W1778_Lane1" name="Credit Manager">
+        <bpmn:flowNodeRef>W1778_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1778_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1778_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W1778_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1778_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1778_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1778_Start4" name="Monthly management reporting">
+        <bpmn:outgoing>W1778_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1778_Task5" name="Monthly installment portfolio report: (a) total installment receivable…">
+        <bpmn:documentation>Step 1: Monthly installment portfolio report: (a) total installment receivable outstanding, (b) aging: current, 1–30 days, 31–60 days, 61–90 days, &gt; 90 days, (c) aging as % of total portfolio, (d) provision for bad debts: current provision rate × aging buckets (e.g., 1% current, 5% for 31–60, 25% for 61–90, 50% for &gt; 90), (e) top 20 largest installment accounts with status, (f) write-offs for the month, (g) new installment arrangements for the month
+Responsible (R): Credit Manager / AR Collector
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1778_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1778_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1778_Task6" name="CFO reviews portfolio health: (a) target: &gt; 95% of portfolio current (not past…">
+        <bpmn:documentation>Step 2: CFO reviews portfolio health: (a) target: &gt; 95% of portfolio current (not past due), (b) if delinquency rate increasing: tighten credit approval criteria, (c) if portfolio growing rapidly: assess concentration risk (single customer or project &gt; 10% of portfolio)
+Responsible (R): CFO
+Accountable (A): CEO
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1778_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1778_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1778_Task7" name="Quarterly: CFO presents installment portfolio summary to Board as part of…">
+        <bpmn:documentation>Step 3: Quarterly: CFO presents installment portfolio summary to Board as part of financial review
+Responsible (R): CFO
+Accountable (A): Board
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W1778_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1778_End8" name="Complete">
+        <bpmn:incoming>W1778_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1778_Annotation9">
+        <bpmn:text>Controls: - CTL-356 (ensure controlled execution — Installment Sale Processing &amp; Monitoring (PA-38.2).) | - operational: Credit Manager review and approval gate
+Owner: Credit Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1778_Assoc10" sourceRef="W1778_Annotation9" targetRef="W1778_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1778_Flow11" sourceRef="W1778_Start4" targetRef="W1778_Task5" />
+      <bpmn:sequenceFlow id="W1778_Flow12" sourceRef="W1778_Task5" targetRef="W1778_Task6" />
+      <bpmn:sequenceFlow id="W1778_Flow13" sourceRef="W1778_Task6" targetRef="W1778_Task7" />
+      <bpmn:sequenceFlow id="W1778_Flow14" sourceRef="W1778_Task7" targetRef="W1778_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1778_diag">
+      <bpmndi:BPMNPlane id="W1778_plane" bpmnElement="W_W1778">
+        <bpmndi:BPMNShape id="W1778_Lane1_di" bpmnElement="W1778_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1778_Lane2_di" bpmnElement="W1778_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1778_Task5_di" bpmnElement="W1778_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1778_Task6_di" bpmnElement="W1778_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1778_Task7_di" bpmnElement="W1778_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1778_Start4_di" bpmnElement="W1778_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1778_End8_di" bpmnElement="W1778_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1778_Annotation9_di" bpmnElement="W1778_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1778_Flow11_di" bpmnElement="W1778_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1778_Flow12_di" bpmnElement="W1778_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1778_Flow13_di" bpmnElement="W1778_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1778_Flow14_di" bpmnElement="W1778_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1778_Assoc10_di" bpmnElement="W1778_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

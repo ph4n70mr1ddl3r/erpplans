@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-87.3-trade-compliance-audit-broker-governance" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W239" name="W239. Customs Duty &amp; Tax Reconciliation (BOC)" isExecutable="false">
+      <bpmn:documentation>Trigger: Release of import shipment from Bureau of Customs (BOC)
+Frequency: Per import shipment (~20–30/month)
+Volume: Significant tax payments (VAT, Duties, Excise)
+Owner: Import Coordinator
+Participants: Finance (Tax), Customs Broker
+Source: workflow W239 — Customs Duty &amp; Tax Reconciliation (BOC)</bpmn:documentation>
+      <bpmn:laneSet id="W239_LaneSet4">
+        <bpmn:lane id="W239_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W239_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W239_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W239_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W239_Lane2" name="Import Coord">
+        <bpmn:flowNodeRef>W239_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W239_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W239_Lane3" name="Tax Manager">
+        <bpmn:flowNodeRef>W239_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W239_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W239_Start5" name="Release of import shipment from Bureau of Customs (BOC)">
+        <bpmn:outgoing>W239_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W239_Task6" name="Payment">
+        <bpmn:documentation>Step 1: Payment: Pay duties and taxes via bank (IPAY/Pass5 system) based on BOC assessment
+Responsible (R): Finance
+Accountable (A): —
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W239_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W239_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W239_Task7" name="Receipt Aggregation">
+        <bpmn:documentation>Step 2: Receipt Aggregation: Collect Official Receipts (BCOR) and Statement of Settlement of Duties and Taxes (SSDT)
+Responsible (R): Import Coord
+Accountable (A): —
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W239_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W239_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W239_Task8" name="Reconciliation">
+        <bpmn:documentation>Step 3: Reconciliation: Compare BOC assessed values vs. ERP estimated landed cost (W2B.12)
+Responsible (R): Finance
+Accountable (A): Controller
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W239_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W239_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W239_Task9" name="VAT Input Capture">
+        <bpmn:documentation>Step 4: VAT Input Capture: Ensure 12% Import VAT is correctly recorded for BIR credit (W90)
+Responsible (R): Tax Manager
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W239_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W239_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W239_Task10" name="Variance Analysis">
+        <bpmn:documentation>Step 5: Variance Analysis: Investigate significant variances in tariff classification or valuation
+Responsible (R): Import Coord
+Accountable (A): Tax Manager
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W239_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W239_End11" name="Complete">
+        <bpmn:incoming>W239_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W239_Annotation12">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: periodic reconciliation against source documents
+Owner: Import Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W239_Assoc13" sourceRef="W239_Annotation12" targetRef="W239_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W239_Flow14" sourceRef="W239_Start5" targetRef="W239_Task6" />
+      <bpmn:sequenceFlow id="W239_Flow15" sourceRef="W239_Task6" targetRef="W239_Task7" />
+      <bpmn:sequenceFlow id="W239_Flow16" sourceRef="W239_Task7" targetRef="W239_Task8" />
+      <bpmn:sequenceFlow id="W239_Flow17" sourceRef="W239_Task8" targetRef="W239_Task9" />
+      <bpmn:sequenceFlow id="W239_Flow18" sourceRef="W239_Task9" targetRef="W239_Task10" />
+      <bpmn:sequenceFlow id="W239_Flow19" sourceRef="W239_Task10" targetRef="W239_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W239_diag">
+      <bpmndi:BPMNPlane id="W239_plane" bpmnElement="W_W239">
+        <bpmndi:BPMNShape id="W239_Lane1_di" bpmnElement="W239_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Lane2_di" bpmnElement="W239_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Lane3_di" bpmnElement="W239_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Task6_di" bpmnElement="W239_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Task7_di" bpmnElement="W239_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Task8_di" bpmnElement="W239_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Task9_di" bpmnElement="W239_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Task10_di" bpmnElement="W239_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Start5_di" bpmnElement="W239_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_End11_di" bpmnElement="W239_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W239_Annotation12_di" bpmnElement="W239_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W239_Flow14_di" bpmnElement="W239_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W239_Flow15_di" bpmnElement="W239_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W239_Flow16_di" bpmnElement="W239_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W239_Flow17_di" bpmnElement="W239_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W239_Flow18_di" bpmnElement="W239_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W239_Flow19_di" bpmnElement="W239_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W239_Assoc13_di" bpmnElement="W239_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2961" name="W2961. Customs Broker Selection, Accreditation &amp; Performance Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Broker onboarding or renewal
+Frequency: Annual + event-driven
+Volume: ~3–5 customs brokers
+Owner: Trade Compliance Manager
+Participants: Trade Compliance, Procurement, Logistics
+Source: workflow W2961 — Customs Broker Selection, Accreditation &amp; Performance Management</bpmn:documentation>
+      <bpmn:laneSet id="W2961_LaneSet3">
+        <bpmn:lane id="W2961_Lane1" name="Procurement">
+        <bpmn:flowNodeRef>W2961_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2961_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2961_Lane2" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2961_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2961_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2961_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2961_Start4" name="Broker onboarding or renewal">
+        <bpmn:outgoing>W2961_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2961_Task5" name="Procurement vets customs broker: BOC AMO broker accreditation (CMO 04-2014…">
+        <bpmn:documentation>Step 1: Procurement vets customs broker: BOC AMO broker accreditation (CMO 04-2014, 3-year validity; PRC license per RA 9280), PRC license, experience, references, insurance
+Responsible (R): Procurement
+Accountable (A): Trade Compliance Manager
+Duration: Per onboarding</bpmn:documentation>
+        <bpmn:incoming>W2961_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2961_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2961_Task6" name="Trade Compliance/Logistics contracts broker; defines SLA (clearance time, error…">
+        <bpmn:documentation>Step 2: Trade Compliance/Logistics contracts broker; defines SLA (clearance time, error rate, availability) and KPIs
+Responsible (R): Trade Compliance / Logistics
+Accountable (A): Trade Compliance Manager
+Duration: Per contract</bpmn:documentation>
+        <bpmn:incoming>W2961_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2961_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2961_Task7" name="Trade Compliance monitors broker performance quarterly; reviews errors, delays…">
+        <bpmn:documentation>Step 3: Trade Compliance monitors broker performance quarterly; reviews errors, delays, and complaints; manages renewal/termination
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2961_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2961_End8" name="Complete">
+        <bpmn:incoming>W2961_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2961_Annotation9">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: SLA and quarterly review
+Owner: Trade Compliance Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2961_Assoc10" sourceRef="W2961_Annotation9" targetRef="W2961_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2961_Flow11" sourceRef="W2961_Start4" targetRef="W2961_Task5" />
+      <bpmn:sequenceFlow id="W2961_Flow12" sourceRef="W2961_Task5" targetRef="W2961_Task6" />
+      <bpmn:sequenceFlow id="W2961_Flow13" sourceRef="W2961_Task6" targetRef="W2961_Task7" />
+      <bpmn:sequenceFlow id="W2961_Flow14" sourceRef="W2961_Task7" targetRef="W2961_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2961_diag">
+      <bpmndi:BPMNPlane id="W2961_plane" bpmnElement="W_W2961">
+        <bpmndi:BPMNShape id="W2961_Lane1_di" bpmnElement="W2961_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2961_Lane2_di" bpmnElement="W2961_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2961_Task5_di" bpmnElement="W2961_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2961_Task6_di" bpmnElement="W2961_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2961_Task7_di" bpmnElement="W2961_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2961_Start4_di" bpmnElement="W2961_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2961_End8_di" bpmnElement="W2961_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2961_Annotation9_di" bpmnElement="W2961_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2961_Flow11_di" bpmnElement="W2961_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2961_Flow12_di" bpmnElement="W2961_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2961_Flow13_di" bpmnElement="W2961_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2961_Flow14_di" bpmnElement="W2961_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2961_Assoc10_di" bpmnElement="W2961_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2962" name="W2962. BOC Post-Entry Audit (PEA) Readiness &amp; Response" isExecutable="false">
+      <bpmn:documentation>Trigger: BOC Notice of Audit (NOA) or readiness review
+Frequency: Event-driven + annual readiness
+Volume: Multi-year audit scope
+Owner: Trade Compliance Manager
+Participants: Trade Compliance, Finance, Legal, External Advisor
+Source: workflow W2962 — BOC Post-Entry Audit (PEA) Readiness &amp; Response</bpmn:documentation>
+      <bpmn:laneSet id="W2962_LaneSet3">
+        <bpmn:lane id="W2962_Lane1" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2962_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2962_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2962_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2962_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W2962_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2962_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2962_Start4" name="BOC Notice of Audit (NOA) or readiness review">
+        <bpmn:outgoing>W2962_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2962_Task5" name="Trade Compliance maintains audit-ready repository: import entries…">
+        <bpmn:documentation>Step 1: Trade Compliance maintains audit-ready repository: import entries, classifications, valuations, COs, payments for the 3-year post-entry-audit look-back (records retained 5 years per CMTA)
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W2962_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2962_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2962_Task6" name="Trade Compliance/Legal responds to BOC NOA; provides documents; negotiates…">
+        <bpmn:documentation>Step 2: Trade Compliance/Legal responds to BOC NOA; provides documents; negotiates findings; files protest where warranted
+Responsible (R): Trade Compliance / Legal
+Accountable (A): VP Legal &amp; Compliance
+Duration: Per audit</bpmn:documentation>
+        <bpmn:incoming>W2962_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2962_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2962_Task7" name="Finance settles any assessed deficiency + surcharge/interest; books liability…">
+        <bpmn:documentation>Step 3: Finance settles any assessed deficiency + surcharge/interest; books liability; updates controls
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: Per audit</bpmn:documentation>
+        <bpmn:incoming>W2962_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2962_End8" name="Complete">
+        <bpmn:incoming>W2962_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2962_Annotation9">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: audit readiness and proactive remediation
+Owner: Trade Compliance Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2962_Assoc10" sourceRef="W2962_Annotation9" targetRef="W2962_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2962_Flow11" sourceRef="W2962_Start4" targetRef="W2962_Task5" />
+      <bpmn:sequenceFlow id="W2962_Flow12" sourceRef="W2962_Task5" targetRef="W2962_Task6" />
+      <bpmn:sequenceFlow id="W2962_Flow13" sourceRef="W2962_Task6" targetRef="W2962_Task7" />
+      <bpmn:sequenceFlow id="W2962_Flow14" sourceRef="W2962_Task7" targetRef="W2962_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2962_diag">
+      <bpmndi:BPMNPlane id="W2962_plane" bpmnElement="W_W2962">
+        <bpmndi:BPMNShape id="W2962_Lane1_di" bpmnElement="W2962_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2962_Lane2_di" bpmnElement="W2962_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2962_Task5_di" bpmnElement="W2962_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2962_Task6_di" bpmnElement="W2962_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2962_Task7_di" bpmnElement="W2962_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2962_Start4_di" bpmnElement="W2962_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2962_End8_di" bpmnElement="W2962_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2962_Annotation9_di" bpmnElement="W2962_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2962_Flow11_di" bpmnElement="W2962_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2962_Flow12_di" bpmnElement="W2962_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2962_Flow13_di" bpmnElement="W2962_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2962_Flow14_di" bpmnElement="W2962_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2962_Assoc10_di" bpmnElement="W2962_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2963" name="W2963. BOC Alert Order, Hold &amp; Detention Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: BOC alert order or hold on shipment
+Frequency: Event-driven; ~10–30 events/year
+Volume: Subset of imports
+Owner: Trade Compliance Specialist
+Participants: Trade Compliance, Customs Broker, Legal, DC Operations
+Source: workflow W2963 — BOC Alert Order, Hold &amp; Detention Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W2963_LaneSet4">
+        <bpmn:lane id="W2963_Lane1" name="Customs Broker">
+        <bpmn:flowNodeRef>W2963_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2963_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2963_Lane2" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2963_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2963_Lane3" name="DC Operations">
+        <bpmn:flowNodeRef>W2963_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2963_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2963_Start5" name="BOC alert order or hold on shipment">
+        <bpmn:outgoing>W2963_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2963_Task6" name="Customs Broker/Trade Compliance receives alert/hold notice; coordinates with…">
+        <bpmn:documentation>Step 1: Customs Broker/Trade Compliance receives alert/hold notice; coordinates with BOC to understand grounds
+Responsible (R): Customs Broker / Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W2963_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2963_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2963_Task7" name="Trade Compliance provides documentation/evidence to lift hold; addresses…">
+        <bpmn:documentation>Step 2: Trade Compliance provides documentation/evidence to lift hold; addresses mis-classification, valuation, or compliance concern
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W2963_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2963_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2963_Task8" name="DC Operations/Logistics manages demurrage exposure during hold; Trade…">
+        <bpmn:documentation>Step 3: DC Operations/Logistics manages demurrage exposure during hold; Trade Compliance pursues recovery from responsible party
+Responsible (R): DC Operations / Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W2963_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2963_End9" name="Complete">
+        <bpmn:incoming>W2963_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2963_Annotation10">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: rapid BOC coordination
+Owner: Trade Compliance Specialist</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2963_Assoc11" sourceRef="W2963_Annotation10" targetRef="W2963_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2963_Flow12" sourceRef="W2963_Start5" targetRef="W2963_Task6" />
+      <bpmn:sequenceFlow id="W2963_Flow13" sourceRef="W2963_Task6" targetRef="W2963_Task7" />
+      <bpmn:sequenceFlow id="W2963_Flow14" sourceRef="W2963_Task7" targetRef="W2963_Task8" />
+      <bpmn:sequenceFlow id="W2963_Flow15" sourceRef="W2963_Task8" targetRef="W2963_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2963_diag">
+      <bpmndi:BPMNPlane id="W2963_plane" bpmnElement="W_W2963">
+        <bpmndi:BPMNShape id="W2963_Lane1_di" bpmnElement="W2963_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_Lane2_di" bpmnElement="W2963_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_Lane3_di" bpmnElement="W2963_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_Task6_di" bpmnElement="W2963_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_Task7_di" bpmnElement="W2963_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_Task8_di" bpmnElement="W2963_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_Start5_di" bpmnElement="W2963_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_End9_di" bpmnElement="W2963_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2963_Annotation10_di" bpmnElement="W2963_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2963_Flow12_di" bpmnElement="W2963_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2963_Flow13_di" bpmnElement="W2963_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2963_Flow14_di" bpmnElement="W2963_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2963_Flow15_di" bpmnElement="W2963_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2963_Assoc11_di" bpmnElement="W2963_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2964" name="W2964. Anti-Dumping &amp; Countervailing Duty (ADC/CVD) Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: ADC/CVD imposition on sourced goods
+Frequency: Event-driven
+Volume: Affected SKUs (e.g., ceramic tiles, steel)
+Owner: Trade Compliance Specialist
+Participants: Trade Compliance, Procurement, Category Manager
+Source: workflow W2964 — Anti-Dumping &amp; Countervailing Duty (ADC/CVD) Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W2964_LaneSet3">
+        <bpmn:lane id="W2964_Lane1" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2964_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2964_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2964_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2964_Lane2" name="Procurement">
+        <bpmn:flowNodeRef>W2964_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2964_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2964_Start4" name="ADC/CVD imposition on sourced goods">
+        <bpmn:outgoing>W2964_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2964_Task5" name="Trade Compliance monitors DTI/BOC ADC/CVD orders on imported goods (e.g…">
+        <bpmn:documentation>Step 1: Trade Compliance monitors DTI/BOC ADC/CVD orders on imported goods (e.g., ceramic tiles from specific countries)
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W2964_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2964_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2964_Task6" name="Procurement/Category Manager adjusts sourcing from affected countries…">
+        <bpmn:documentation>Step 2: Procurement/Category Manager adjusts sourcing from affected countries; identifies alternative origin to avoid duty
+Responsible (R): Procurement / Category Manager
+Accountable (A): VP Merchandising
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W2964_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2964_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2964_Task7" name="Trade Compliance applies ADC/CVD at import entry for affected shipments…">
+        <bpmn:documentation>Step 3: Trade Compliance applies ADC/CVD at import entry for affected shipments; documents calculation and basis
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Per import</bpmn:documentation>
+        <bpmn:incoming>W2964_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2964_End8" name="Complete">
+        <bpmn:incoming>W2964_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2964_Annotation9">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: monitoring and sourcing alternatives
+Owner: Trade Compliance Specialist</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2964_Assoc10" sourceRef="W2964_Annotation9" targetRef="W2964_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2964_Flow11" sourceRef="W2964_Start4" targetRef="W2964_Task5" />
+      <bpmn:sequenceFlow id="W2964_Flow12" sourceRef="W2964_Task5" targetRef="W2964_Task6" />
+      <bpmn:sequenceFlow id="W2964_Flow13" sourceRef="W2964_Task6" targetRef="W2964_Task7" />
+      <bpmn:sequenceFlow id="W2964_Flow14" sourceRef="W2964_Task7" targetRef="W2964_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2964_diag">
+      <bpmndi:BPMNPlane id="W2964_plane" bpmnElement="W_W2964">
+        <bpmndi:BPMNShape id="W2964_Lane1_di" bpmnElement="W2964_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2964_Lane2_di" bpmnElement="W2964_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2964_Task5_di" bpmnElement="W2964_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2964_Task6_di" bpmnElement="W2964_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2964_Task7_di" bpmnElement="W2964_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2964_Start4_di" bpmnElement="W2964_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2964_End8_di" bpmnElement="W2964_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2964_Annotation9_di" bpmnElement="W2964_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2964_Flow11_di" bpmnElement="W2964_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2964_Flow12_di" bpmnElement="W2964_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2964_Flow13_di" bpmnElement="W2964_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2964_Flow14_di" bpmnElement="W2964_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2964_Assoc10_di" bpmnElement="W2964_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2965" name="W2965. Data Privacy Act (RA 10173) Compliance for Customs Data Sharing" isExecutable="false">
+      <bpmn:documentation>Trigger: Data sharing with BOC/customs broker or annual review
+Frequency: Event-driven + annual
+Volume: All import transactions
+Owner: Compliance Officer
+Participants: Compliance, Trade Compliance, DPO, Legal
+Source: workflow W2965 — Data Privacy Act (RA 10173) Compliance for Customs Data Sharing</bpmn:documentation>
+      <bpmn:laneSet id="W2965_LaneSet4">
+        <bpmn:lane id="W2965_Lane1" name="Compliance">
+        <bpmn:flowNodeRef>W2965_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2965_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2965_Lane2" name="Legal">
+        <bpmn:flowNodeRef>W2965_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2965_Lane3" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2965_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2965_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2965_Start5" name="Data sharing with BOC/customs broker or annual review">
+        <bpmn:outgoing>W2965_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2965_Task6" name="Compliance/DPO ensures customs data sharing (with BOC, broker, freight…">
+        <bpmn:documentation>Step 1: Compliance/DPO ensures customs data sharing (with BOC, broker, freight forwarder) complies with Data Privacy Act; captures consent/basis
+Responsible (R): Compliance / DPO
+Accountable (A): Compliance Officer
+Duration: Per data flow</bpmn:documentation>
+        <bpmn:incoming>W2965_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2965_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2965_Task7" name="Legal structures data-sharing agreements with brokers/forwarders; includes…">
+        <bpmn:documentation>Step 2: Legal structures data-sharing agreements with brokers/forwarders; includes confidentiality and security clauses
+Responsible (R): Legal
+Accountable (A): VP Legal &amp; Compliance
+Duration: Per agreement</bpmn:documentation>
+        <bpmn:incoming>W2965_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2965_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2965_Task8" name="Trade Compliance/DPO supports NPC inquiry on customs data; reports any data…">
+        <bpmn:documentation>Step 3: Trade Compliance/DPO supports NPC inquiry on customs data; reports any data incident
+Responsible (R): Trade Compliance / DPO
+Accountable (A): Compliance Officer
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W2965_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2965_End9" name="Complete">
+        <bpmn:incoming>W2965_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2965_Annotation10">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: agreement and basis documentation
+Owner: Compliance Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2965_Assoc11" sourceRef="W2965_Annotation10" targetRef="W2965_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2965_Flow12" sourceRef="W2965_Start5" targetRef="W2965_Task6" />
+      <bpmn:sequenceFlow id="W2965_Flow13" sourceRef="W2965_Task6" targetRef="W2965_Task7" />
+      <bpmn:sequenceFlow id="W2965_Flow14" sourceRef="W2965_Task7" targetRef="W2965_Task8" />
+      <bpmn:sequenceFlow id="W2965_Flow15" sourceRef="W2965_Task8" targetRef="W2965_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2965_diag">
+      <bpmndi:BPMNPlane id="W2965_plane" bpmnElement="W_W2965">
+        <bpmndi:BPMNShape id="W2965_Lane1_di" bpmnElement="W2965_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_Lane2_di" bpmnElement="W2965_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_Lane3_di" bpmnElement="W2965_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_Task6_di" bpmnElement="W2965_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_Task7_di" bpmnElement="W2965_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_Task8_di" bpmnElement="W2965_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_Start5_di" bpmnElement="W2965_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_End9_di" bpmnElement="W2965_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2965_Annotation10_di" bpmnElement="W2965_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2965_Flow12_di" bpmnElement="W2965_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2965_Flow13_di" bpmnElement="W2965_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2965_Flow14_di" bpmnElement="W2965_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2965_Flow15_di" bpmnElement="W2965_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2965_Assoc11_di" bpmnElement="W2965_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2966" name="W2966. Trade Compliance Risk Register &amp; Control Self-Assessment" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly review + annual CSA
+Frequency: Quarterly + annual
+Volume: Enterprise import operations
+Owner: Trade Compliance Manager
+Participants: Trade Compliance, Internal Audit
+Source: workflow W2966 — Trade Compliance Risk Register &amp; Control Self-Assessment</bpmn:documentation>
+      <bpmn:laneSet id="W2966_LaneSet3">
+        <bpmn:lane id="W2966_Lane1" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2966_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2966_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2966_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2966_Lane2" name="Internal Audit">
+        <bpmn:flowNodeRef>W2966_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2966_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2966_Start4" name="Quarterly review + annual CSA">
+        <bpmn:outgoing>W2966_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2966_Task5" name="Trade Compliance maintains trade-compliance risk register: classification…">
+        <bpmn:documentation>Step 1: Trade Compliance maintains trade-compliance risk register: classification, valuation, origin, broker, BOC relationship exposures
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2966_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2966_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2966_Task6" name="Trade Compliance performs control self-assessment; validates control design and…">
+        <bpmn:documentation>Step 2: Trade Compliance performs control self-assessment; validates control design and operating effectiveness
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W2966_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2966_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2966_Task7" name="Internal Audit reviews trade-compliance controls; reports findings to Audit…">
+        <bpmn:documentation>Step 3: Internal Audit reviews trade-compliance controls; reports findings to Audit Committee
+Responsible (R): Internal Audit
+Accountable (A): Audit Committee
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W2966_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2966_End8" name="Complete">
+        <bpmn:incoming>W2966_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2966_Annotation9">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: risk register and CSA
+Owner: Trade Compliance Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2966_Assoc10" sourceRef="W2966_Annotation9" targetRef="W2966_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2966_Flow11" sourceRef="W2966_Start4" targetRef="W2966_Task5" />
+      <bpmn:sequenceFlow id="W2966_Flow12" sourceRef="W2966_Task5" targetRef="W2966_Task6" />
+      <bpmn:sequenceFlow id="W2966_Flow13" sourceRef="W2966_Task6" targetRef="W2966_Task7" />
+      <bpmn:sequenceFlow id="W2966_Flow14" sourceRef="W2966_Task7" targetRef="W2966_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2966_diag">
+      <bpmndi:BPMNPlane id="W2966_plane" bpmnElement="W_W2966">
+        <bpmndi:BPMNShape id="W2966_Lane1_di" bpmnElement="W2966_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2966_Lane2_di" bpmnElement="W2966_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2966_Task5_di" bpmnElement="W2966_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2966_Task6_di" bpmnElement="W2966_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2966_Task7_di" bpmnElement="W2966_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2966_Start4_di" bpmnElement="W2966_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2966_End8_di" bpmnElement="W2966_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2966_Annotation9_di" bpmnElement="W2966_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2966_Flow11_di" bpmnElement="W2966_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2966_Flow12_di" bpmnElement="W2966_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2966_Flow13_di" bpmnElement="W2966_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2966_Flow14_di" bpmnElement="W2966_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2966_Assoc10_di" bpmnElement="W2966_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2967" name="W2967. BIR-to-BOC Reconciliation (Import VAT, Duties, BCOR/SSDT on Imports)" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly close cycle — BIR-to-BOC reconciliation (import VAT, duties, BOC Official Receipts/SSDT credit documents on imports)
+Frequency: Monthly
+Volume: All import entries
+Owner: Tax Accountant
+Participants: Tax Accountant, Trade Compliance, Finance
+Source: workflow W2967 — BIR-to-BOC Reconciliation (Import VAT, Duties, BCOR/SSDT on Imports)</bpmn:documentation>
+      <bpmn:laneSet id="W2967_LaneSet4">
+        <bpmn:lane id="W2967_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2967_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2967_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2967_Lane2" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2967_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2967_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W2967_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2967_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2967_Start5" name="Monthly close cycle — BIR-to-BOC reconciliation (import VAT, duties, BOC Official…">
+        <bpmn:outgoing>W2967_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2967_Task6" name="Tax Accountant reconciles import VAT and duty per BOC entries to AP and GL each…">
+        <bpmn:documentation>Step 1: Tax Accountant reconciles import VAT and duty per BOC entries to AP and GL each month
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2967_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2967_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2967_Task7" name="Trade Compliance validates duty/VAT per import entry matches classification and…">
+        <bpmn:documentation>Step 2: Trade Compliance validates duty/VAT per import entry matches classification and valuation in master
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2967_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2967_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2967_Task8" name="Finance resolves discrepancies (currency, timing, classification); books…">
+        <bpmn:documentation>Step 3: Finance resolves discrepancies (currency, timing, classification); books adjustments; reports variance trend
+Responsible (R): Finance
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2967_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2967_End9" name="Complete">
+        <bpmn:incoming>W2967_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2967_Annotation10">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: monthly reconciliation
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2967_Assoc11" sourceRef="W2967_Annotation10" targetRef="W2967_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2967_Flow12" sourceRef="W2967_Start5" targetRef="W2967_Task6" />
+      <bpmn:sequenceFlow id="W2967_Flow13" sourceRef="W2967_Task6" targetRef="W2967_Task7" />
+      <bpmn:sequenceFlow id="W2967_Flow14" sourceRef="W2967_Task7" targetRef="W2967_Task8" />
+      <bpmn:sequenceFlow id="W2967_Flow15" sourceRef="W2967_Task8" targetRef="W2967_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2967_diag">
+      <bpmndi:BPMNPlane id="W2967_plane" bpmnElement="W_W2967">
+        <bpmndi:BPMNShape id="W2967_Lane1_di" bpmnElement="W2967_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_Lane2_di" bpmnElement="W2967_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_Lane3_di" bpmnElement="W2967_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_Task6_di" bpmnElement="W2967_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_Task7_di" bpmnElement="W2967_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_Task8_di" bpmnElement="W2967_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_Start5_di" bpmnElement="W2967_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_End9_di" bpmnElement="W2967_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2967_Annotation10_di" bpmnElement="W2967_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2967_Flow12_di" bpmnElement="W2967_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2967_Flow13_di" bpmnElement="W2967_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2967_Flow14_di" bpmnElement="W2967_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2967_Flow15_di" bpmnElement="W2967_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2967_Assoc11_di" bpmnElement="W2967_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2968" name="W2968. Trade Compliance KPI, Duty Cost &amp; Savings Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly management review
+Frequency: Quarterly
+Volume: All imports
+Owner: Trade Compliance Manager
+Participants: Trade Compliance, Finance, Procurement
+Source: workflow W2968 — Trade Compliance KPI, Duty Cost &amp; Savings Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W2968_LaneSet3">
+        <bpmn:lane id="W2968_Lane1" name="Trade Compliance">
+        <bpmn:flowNodeRef>W2968_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2968_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2968_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2968_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W2968_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2968_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2968_Start4" name="Quarterly management review">
+        <bpmn:outgoing>W2968_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2968_Task5" name="Trade Compliance compiles KPIs: clearance time, duty cost %, FTA preference…">
+        <bpmn:documentation>Step 1: Trade Compliance compiles KPIs: clearance time, duty cost %, FTA preference utilization, broker performance, audit status
+Responsible (R): Trade Compliance
+Accountable (A): Trade Compliance Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2968_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2968_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2968_Task6" name="Finance quantifies duty savings vs. baseline; benchmarks landed cost by origin…">
+        <bpmn:documentation>Step 2: Finance quantifies duty savings vs. baseline; benchmarks landed cost by origin; reports duty-cost trend
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2968_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2968_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2968_Task7" name="Trade Compliance reports program effectiveness to Executive Committee…">
+        <bpmn:documentation>Step 3: Trade Compliance reports program effectiveness to Executive Committee; recommends sourcing/compliance enhancements
+Responsible (R): Trade Compliance
+Accountable (A): CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2968_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2968_End8" name="Complete">
+        <bpmn:incoming>W2968_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2968_Annotation9">
+        <bpmn:text>Controls: - CTL-492 (ensure controlled execution — Trade Compliance Audit, Broker Governance &amp; ADC (PA-87.3).) | - operational: quarterly KPI reporting
+Owner: Trade Compliance Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2968_Assoc10" sourceRef="W2968_Annotation9" targetRef="W2968_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2968_Flow11" sourceRef="W2968_Start4" targetRef="W2968_Task5" />
+      <bpmn:sequenceFlow id="W2968_Flow12" sourceRef="W2968_Task5" targetRef="W2968_Task6" />
+      <bpmn:sequenceFlow id="W2968_Flow13" sourceRef="W2968_Task6" targetRef="W2968_Task7" />
+      <bpmn:sequenceFlow id="W2968_Flow14" sourceRef="W2968_Task7" targetRef="W2968_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2968_diag">
+      <bpmndi:BPMNPlane id="W2968_plane" bpmnElement="W_W2968">
+        <bpmndi:BPMNShape id="W2968_Lane1_di" bpmnElement="W2968_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2968_Lane2_di" bpmnElement="W2968_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2968_Task5_di" bpmnElement="W2968_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2968_Task6_di" bpmnElement="W2968_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2968_Task7_di" bpmnElement="W2968_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2968_Start4_di" bpmnElement="W2968_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2968_End8_di" bpmnElement="W2968_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2968_Annotation9_di" bpmnElement="W2968_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2968_Flow11_di" bpmnElement="W2968_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2968_Flow12_di" bpmnElement="W2968_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2968_Flow13_di" bpmnElement="W2968_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2968_Flow14_di" bpmnElement="W2968_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2968_Assoc10_di" bpmnElement="W2968_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

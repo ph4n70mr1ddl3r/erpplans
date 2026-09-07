@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-191.3-diversion-disposal-settlement-and-site-cleanup-analytics" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W5457" name="W5457. Job Settlement, Container Demurrage &amp; Scrap/Rebate Recovery Billing" isExecutable="false">
+      <bpmn:documentation>Trigger: Job completion + customer sign-off (W5455); monthly billing cycle
+Frequency: Per job settlement; monthly batch
+Volume: ~thousands of settlements/yr
+Owner: Services Finance Analyst
+Participants: Finance (VS-15/VS-17), Site Cleanup Coordinator, Hauler/Disposer (W5447), Revenue Assurance (VS-118)
+Source: workflow W5457 — Job Settlement, Container Demurrage &amp; Scrap/Rebate Recovery Billing</bpmn:documentation>
+      <bpmn:laneSet id="W5457_LaneSet4">
+        <bpmn:lane id="W5457_Lane1" name="Services Finance Analyst">
+        <bpmn:flowNodeRef>W5457_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5457_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5457_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5457_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5457_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W5457_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5457_Lane3" name="AP">
+        <bpmn:flowNodeRef>W5457_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5457_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5457_Start5" name="Job completion + customer sign-off (W5455); monthly billing cycle">
+        <bpmn:outgoing>W5457_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5457_Task6" name="Reconcile the actual job: volume/weight hauled (W5451), streams routed (W5453)…">
+        <bpmn:documentation>Step 1: Reconcile the actual job: volume/weight hauled (W5451), streams routed (W5453), crew-hours, container dwell, and any change orders (W5454) vs the booked estimate (W5448).
+Responsible (R): Services Finance Analyst
+Accountable (A): Finance Manager
+Duration: per job</bpmn:documentation>
+        <bpmn:incoming>W5457_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5457_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5457_Task7" name="Compute the final price (base service + per-cu.m/per-tonne hauling + container…">
+        <bpmn:documentation>Step 2: Compute the final price (base service + per-cu.m/per-tonne hauling + container demurrage if over-dwell − scrap/rebate recovery credits).
+Responsible (R): Services Finance Analyst
+Accountable (A): Finance Manager
+Duration: per job</bpmn:documentation>
+        <bpmn:incoming>W5457_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5457_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5457_Task8" name="Recognize revenue per PFRS 15 at completion (VS-157/W5448); book recovery/scrap…">
+        <bpmn:documentation>Step 3: Recognize revenue per PFRS 15 at completion (VS-157/W5448); book recovery/scrap credits against cost of service.
+Responsible (R): Finance
+Accountable (A): Finance Controller
+Duration: per job</bpmn:documentation>
+        <bpmn:incoming>W5457_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5457_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5457_Task9" name="Settle vendor invoices (hauler/disposer) with 3-way match against…">
+        <bpmn:documentation>Step 4: Settle vendor invoices (hauler/disposer) with 3-way match against manifests/weight tickets (VS-15 W7); capture demurrage/rebates accurately.
+Responsible (R): AP
+Accountable (A): Finance Manager
+Duration: per invoice</bpmn:documentation>
+        <bpmn:incoming>W5457_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5457_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5457_Task10" name="Resolve exceptions (overruns, disputed weights, vendor overcharge) and feed…">
+        <bpmn:documentation>Step 5: Resolve exceptions (overruns, disputed weights, vendor overcharge) and feed into revenue assurance (VS-118) and pricing health (W5464).
+Responsible (R): Services Finance Analyst
+Accountable (A): Finance Manager
+Duration: per exception</bpmn:documentation>
+        <bpmn:incoming>W5457_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5457_End11" name="Complete">
+        <bpmn:incoming>W5457_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5457_Annotation12">
+        <bpmn:text>Controls: - CTL-805 (ensure controlled execution — Diversion, Disposal, Settlement &amp; Site Cleanup Analytics (PA-191.3).); CTL-114 (ensure PFRS 15 recognition &amp; cut-off control); CTL-14 (ensure AP invoices match PO and GR); operational: scrap/rebate credits captured against cost of service.
+Owner: Services Finance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5457_Assoc13" sourceRef="W5457_Annotation12" targetRef="W5457_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5457_Flow14" sourceRef="W5457_Start5" targetRef="W5457_Task6" />
+      <bpmn:sequenceFlow id="W5457_Flow15" sourceRef="W5457_Task6" targetRef="W5457_Task7" />
+      <bpmn:sequenceFlow id="W5457_Flow16" sourceRef="W5457_Task7" targetRef="W5457_Task8" />
+      <bpmn:sequenceFlow id="W5457_Flow17" sourceRef="W5457_Task8" targetRef="W5457_Task9" />
+      <bpmn:sequenceFlow id="W5457_Flow18" sourceRef="W5457_Task9" targetRef="W5457_Task10" />
+      <bpmn:sequenceFlow id="W5457_Flow19" sourceRef="W5457_Task10" targetRef="W5457_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5457_diag">
+      <bpmndi:BPMNPlane id="W5457_plane" bpmnElement="W_W5457">
+        <bpmndi:BPMNShape id="W5457_Lane1_di" bpmnElement="W5457_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Lane2_di" bpmnElement="W5457_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Lane3_di" bpmnElement="W5457_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Task6_di" bpmnElement="W5457_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Task7_di" bpmnElement="W5457_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Task8_di" bpmnElement="W5457_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Task9_di" bpmnElement="W5457_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Task10_di" bpmnElement="W5457_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Start5_di" bpmnElement="W5457_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_End11_di" bpmnElement="W5457_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5457_Annotation12_di" bpmnElement="W5457_Annotation12"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5457_Flow14_di" bpmnElement="W5457_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5457_Flow15_di" bpmnElement="W5457_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5457_Flow16_di" bpmnElement="W5457_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5457_Flow17_di" bpmnElement="W5457_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5457_Flow18_di" bpmnElement="W5457_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5457_Flow19_di" bpmnElement="W5457_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5457_Assoc13_di" bpmnElement="W5457_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5458" name="W5458. Customer Invoicing, Dispute Resolution &amp; Collections" isExecutable="false">
+      <bpmn:documentation>Trigger: Settlement (W5457); billing cycle; customer dispute; aging
+Frequency: Per job invoice; weekly aging review
+Volume: ~thousands of invoices/yr (B2C + B2B)
+Owner: AR Analyst (VS-16)
+Participants: Finance (VS-15/VS-16), Customer Service (VS-13), Site Cleanup Coordinator, customer
+Source: workflow W5458 — Customer Invoicing, Dispute Resolution &amp; Collections</bpmn:documentation>
+      <bpmn:laneSet id="W5458_LaneSet3">
+        <bpmn:lane id="W5458_Lane1" name="AR Analyst">
+        <bpmn:flowNodeRef>W5458_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5458_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5458_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5458_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5458_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5458_Lane2" name="Services Finance Analyst">
+        <bpmn:flowNodeRef>W5458_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5458_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5458_Start4" name="Settlement (W5457); billing cycle; customer dispute; aging">
+        <bpmn:outgoing>W5458_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5458_Task5" name="Generate and deliver the customer invoice with the manifest/weight evidence and…">
+        <bpmn:documentation>Step 1: Generate and deliver the customer invoice with the manifest/weight evidence and before/after photos attached for transparency.
+Responsible (R): AR Analyst
+Accountable (A): Finance Manager
+Duration: per invoice</bpmn:documentation>
+        <bpmn:incoming>W5458_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5458_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5458_Task6" name="For B2B projects, integrate with progress billing (VS-11 W165/W1288) and…">
+        <bpmn:documentation>Step 2: For B2B projects, integrate with progress billing (VS-11 W165/W1288) and project terms (W5446).
+Responsible (R): AR Analyst / Project Mgr
+Accountable (A): Finance Manager
+Duration: per project</bpmn:documentation>
+        <bpmn:incoming>W5458_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5458_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5458_Task7" name="Resolve disputes using the captured evidence (weight tickets, sign-off W5455…">
+        <bpmn:documentation>Step 3: Resolve disputes using the captured evidence (weight tickets, sign-off W5455, photos); issue credit notes per policy (VS-16 W287).
+Responsible (R): AR Analyst / Customer Service
+Accountable (A): Finance Manager
+Duration: per dispute</bpmn:documentation>
+        <bpmn:incoming>W5458_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5458_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5458_Task8" name="Monitor AR aging; pursue collections per the standard VS-16 process; coordinate…">
+        <bpmn:documentation>Step 4: Monitor AR aging; pursue collections per the standard VS-16 process; coordinate credit risk (VS-68) for B2B.
+Responsible (R): AR Analyst
+Accountable (A): Finance Manager
+Duration: weekly</bpmn:documentation>
+        <bpmn:incoming>W5458_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5458_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5458_Task9" name="Feed dispute root-causes into pricing/service improvement (W5464) and revenue…">
+        <bpmn:documentation>Step 5: Feed dispute root-causes into pricing/service improvement (W5464) and revenue assurance (VS-118).
+Responsible (R): Services Finance Analyst
+Accountable (A): Finance Manager
+Duration: periodic</bpmn:documentation>
+        <bpmn:incoming>W5458_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5458_End10" name="Complete">
+        <bpmn:incoming>W5458_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5458_Annotation11">
+        <bpmn:text>Controls: - CTL-21: invoicing accuracy/evidence; CTL-31 (credit-note control); CTL-23 (dispute/fraud guard); operational: every cleanup invoice carries manifest + sign-off evidence.
+Owner: AR Analyst (VS-16)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5458_Assoc12" sourceRef="W5458_Annotation11" targetRef="W5458_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5458_Flow13" sourceRef="W5458_Start4" targetRef="W5458_Task5" />
+      <bpmn:sequenceFlow id="W5458_Flow14" sourceRef="W5458_Task5" targetRef="W5458_Task6" />
+      <bpmn:sequenceFlow id="W5458_Flow15" sourceRef="W5458_Task6" targetRef="W5458_Task7" />
+      <bpmn:sequenceFlow id="W5458_Flow16" sourceRef="W5458_Task7" targetRef="W5458_Task8" />
+      <bpmn:sequenceFlow id="W5458_Flow17" sourceRef="W5458_Task8" targetRef="W5458_Task9" />
+      <bpmn:sequenceFlow id="W5458_Flow18" sourceRef="W5458_Task9" targetRef="W5458_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5458_diag">
+      <bpmndi:BPMNPlane id="W5458_plane" bpmnElement="W_W5458">
+        <bpmndi:BPMNShape id="W5458_Lane1_di" bpmnElement="W5458_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Lane2_di" bpmnElement="W5458_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Task5_di" bpmnElement="W5458_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Task6_di" bpmnElement="W5458_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Task7_di" bpmnElement="W5458_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Task8_di" bpmnElement="W5458_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Task9_di" bpmnElement="W5458_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Start4_di" bpmnElement="W5458_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_End10_di" bpmnElement="W5458_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5458_Annotation11_di" bpmnElement="W5458_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5458_Flow13_di" bpmnElement="W5458_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5458_Flow14_di" bpmnElement="W5458_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5458_Flow15_di" bpmnElement="W5458_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5458_Flow16_di" bpmnElement="W5458_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5458_Flow17_di" bpmnElement="W5458_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5458_Flow18_di" bpmnElement="W5458_Flow18"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5458_Assoc12_di" bpmnElement="W5458_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5459" name="W5459. Diversion Rate, Stream Composition &amp; Circular-Economy Analytics" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly/quarterly analytics cycle; ESG reporting (VS-25); B2B customer KPI (W5446)
+Frequency: Monthly diversion analytics; quarterly review
+Volume: 1 diversion/composition analytics view across the program
+Owner: Services Analytics Lead
+Participants: ESG (VS-25), Sustainability (VS-78/VS-179), Compliance (VS-22), Services Manager
+Source: workflow W5459 — Diversion Rate, Stream Composition &amp; Circular-Economy Analytics</bpmn:documentation>
+      <bpmn:laneSet id="W5459_LaneSet2">
+        <bpmn:lane id="W5459_Lane1" name="Services Analytics Lead">
+        <bpmn:flowNodeRef>W5459_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5459_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5459_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5459_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5459_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5459_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5459_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5459_Start3" name="Monthly/quarterly analytics cycle; ESG reporting (VS-25); B2B customer KPI (W5446)">
+        <bpmn:outgoing>W5459_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5459_Task4" name="Compute diversion rate (diverted-to-recovery ÷ total C&amp;D generated) by job…">
+        <bpmn:documentation>Step 1: Compute diversion rate (diverted-to-recovery ÷ total C&amp;D generated) by job, region, channel, and customer; track against target.
+Responsible (R): Services Analytics Lead
+Accountable (A): COO
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5459_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W5459_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5459_Task5" name="Analyze stream composition (wood/drywall/masonry/metals/packaging/residuals) to…">
+        <bpmn:documentation>Step 2: Analyze stream composition (wood/drywall/masonry/metals/packaging/residuals) to identify high-volume streams for new diversion partnerships.
+Responsible (R): Services Analytics Lead
+Accountable (A): COO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5459_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5459_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5459_Task6" name="Quantify circular-economy value: scrap-metal recovery, reprocessor credits…">
+        <bpmn:documentation>Step 3: Quantify circular-economy value: scrap-metal recovery, reprocessor credits, biomass/aggregate reuse — vs landfill tip-fee avoided.
+Responsible (R): Services Analytics Lead
+Accountable (A): Sustainability/ESG Manager
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5459_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5459_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5459_Task7" name="Benchmark diversion rate vs. industry/ESG expectations and B2B customer…">
+        <bpmn:documentation>Step 4: Benchmark diversion rate vs. industry/ESG expectations and B2B customer commitments (W5446).
+Responsible (R): Services Analytics Lead
+Accountable (A): Sustainability/ESG Manager
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5459_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5459_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5459_Task8" name="Recommend improvements (new recycler partnership, on-site crushing…">
+        <bpmn:documentation>Step 5: Recommend improvements (new recycler partnership, on-site crushing, source-reduction) feeding W5453 routing and W5464 strategy.
+Responsible (R): Services Analytics Lead
+Accountable (A): COO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5459_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5459_End9" name="Complete">
+        <bpmn:incoming>W5459_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5459_Annotation10">
+        <bpmn:text>Controls: - CTL-805 (ensure controlled execution — Diversion, Disposal, Settlement &amp; Site Cleanup Analytics (PA-191.3).) | - operational: diversion rate reported monthly with manifest-backed evidence.
+Owner: Services Analytics Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5459_Assoc11" sourceRef="W5459_Annotation10" targetRef="W5459_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5459_Flow12" sourceRef="W5459_Start3" targetRef="W5459_Task4" />
+      <bpmn:sequenceFlow id="W5459_Flow13" sourceRef="W5459_Task4" targetRef="W5459_Task5" />
+      <bpmn:sequenceFlow id="W5459_Flow14" sourceRef="W5459_Task5" targetRef="W5459_Task6" />
+      <bpmn:sequenceFlow id="W5459_Flow15" sourceRef="W5459_Task6" targetRef="W5459_Task7" />
+      <bpmn:sequenceFlow id="W5459_Flow16" sourceRef="W5459_Task7" targetRef="W5459_Task8" />
+      <bpmn:sequenceFlow id="W5459_Flow17" sourceRef="W5459_Task8" targetRef="W5459_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5459_diag">
+      <bpmndi:BPMNPlane id="W5459_plane" bpmnElement="W_W5459">
+        <bpmndi:BPMNShape id="W5459_Lane1_di" bpmnElement="W5459_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_Task4_di" bpmnElement="W5459_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_Task5_di" bpmnElement="W5459_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_Task6_di" bpmnElement="W5459_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_Task7_di" bpmnElement="W5459_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_Task8_di" bpmnElement="W5459_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_Start3_di" bpmnElement="W5459_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_End9_di" bpmnElement="W5459_End9"><dc:Bounds x="1470" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5459_Annotation10_di" bpmnElement="W5459_Annotation10"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5459_Flow12_di" bpmnElement="W5459_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5459_Flow13_di" bpmnElement="W5459_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5459_Flow14_di" bpmnElement="W5459_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5459_Flow15_di" bpmnElement="W5459_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5459_Flow16_di" bpmnElement="W5459_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5459_Flow17_di" bpmnElement="W5459_Flow17"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5459_Assoc11_di" bpmnElement="W5459_Assoc11"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5460" name="W5460. ESG, GRI/IRIS+ &amp; Decarbonization Reporting Feed" isExecutable="false">
+      <bpmn:documentation>Trigger: ESG reporting cycle (VS-25); B2B customer sustainability disclosure; investor/ESG-rater request (VS-173)
+Frequency: Annual ESG report; periodic rater requests
+Volume: 1 ESG/diversion/decarbonization data feed from the program
+Owner: Sustainability Analyst (VS-25)
+Participants: Services Analytics (W5459), Compliance (VS-22), ESG/IR (VS-173), Services Manager
+Source: workflow W5460 — ESG, GRI/IRIS+ &amp; Decarbonization Reporting Feed</bpmn:documentation>
+      <bpmn:laneSet id="W5460_LaneSet2">
+        <bpmn:lane id="W5460_Lane1" name="Sustainability Analyst">
+        <bpmn:flowNodeRef>W5460_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5460_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5460_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5460_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5460_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5460_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5460_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5460_Start3" name="ESG reporting cycle (VS-25); B2B customer sustainability disclosure; investor/ESG-rater…">
+        <bpmn:outgoing>W5460_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5460_Task4" name="Translate program diversion/recovery data (W5459) into ESG metrics: tons…">
+        <bpmn:documentation>Step 1: Translate program diversion/recovery data (W5459) into ESG metrics: tons diverted, % diversion, materials recovered, landfill-avoided, scope-3 circularity.
+Responsible (R): Sustainability Analyst
+Accountable (A): Sustainability/ESG Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5460_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W5460_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5460_Task5" name="Map to reporting frameworks (GRI 306 Waste, IRIS+ waste metrics, SASB…">
+        <bpmn:documentation>Step 2: Map to reporting frameworks (GRI 306 Waste, IRIS+ waste metrics, SASB, potential ISSB S2) and BuildRight&#x27;s ESG report structure (VS-25).
+Responsible (R): Sustainability Analyst
+Accountable (A): Sustainability/ESG Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5460_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5460_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5460_Task6" name="Compute avoided emissions (landfill methane avoidance, material-recovery…">
+        <bpmn:documentation>Step 3: Compute avoided emissions (landfill methane avoidance, material-recovery credits) feeding decarbonization accounting (VS-25 W192/W3466).
+Responsible (R): Sustainability Analyst
+Accountable (A): Sustainability/ESG Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5460_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5460_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5460_Task7" name="Support B2B customer sustainability disclosure requests (W5446 SLA) and…">
+        <bpmn:documentation>Step 4: Support B2B customer sustainability disclosure requests (W5446 SLA) and ESG-rater/investor queries (VS-173) with audited data.
+Responsible (R): Sustainability Analyst / IR
+Accountable (A): Sustainability/ESG Manager
+Duration: per request</bpmn:documentation>
+        <bpmn:incoming>W5460_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5460_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5460_Task8" name="Retain evidence for ESG assurance/audit (VS-21.3) and ensure data ties back to…">
+        <bpmn:documentation>Step 5: Retain evidence for ESG assurance/audit (VS-21.3) and ensure data ties back to manifests/weights (W5451/W5452).
+Responsible (R): Sustainability Analyst
+Accountable (A): Sustainability/ESG Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5460_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5460_End9" name="Complete">
+        <bpmn:incoming>W5460_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5460_Annotation10">
+        <bpmn:text>Controls: - CTL-805 (ensure controlled execution — Diversion, Disposal, Settlement &amp; Site Cleanup Analytics (PA-191.3).) | - operational: every diversion/emission claim ties to manifest evidence.
+Owner: Sustainability Analyst (VS-25)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5460_Assoc11" sourceRef="W5460_Annotation10" targetRef="W5460_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5460_Flow12" sourceRef="W5460_Start3" targetRef="W5460_Task4" />
+      <bpmn:sequenceFlow id="W5460_Flow13" sourceRef="W5460_Task4" targetRef="W5460_Task5" />
+      <bpmn:sequenceFlow id="W5460_Flow14" sourceRef="W5460_Task5" targetRef="W5460_Task6" />
+      <bpmn:sequenceFlow id="W5460_Flow15" sourceRef="W5460_Task6" targetRef="W5460_Task7" />
+      <bpmn:sequenceFlow id="W5460_Flow16" sourceRef="W5460_Task7" targetRef="W5460_Task8" />
+      <bpmn:sequenceFlow id="W5460_Flow17" sourceRef="W5460_Task8" targetRef="W5460_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5460_diag">
+      <bpmndi:BPMNPlane id="W5460_plane" bpmnElement="W_W5460">
+        <bpmndi:BPMNShape id="W5460_Lane1_di" bpmnElement="W5460_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_Task4_di" bpmnElement="W5460_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_Task5_di" bpmnElement="W5460_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_Task6_di" bpmnElement="W5460_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_Task7_di" bpmnElement="W5460_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_Task8_di" bpmnElement="W5460_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_Start3_di" bpmnElement="W5460_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_End9_di" bpmnElement="W5460_End9"><dc:Bounds x="1470" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5460_Annotation10_di" bpmnElement="W5460_Annotation10"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5460_Flow12_di" bpmnElement="W5460_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5460_Flow13_di" bpmnElement="W5460_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5460_Flow14_di" bpmnElement="W5460_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5460_Flow15_di" bpmnElement="W5460_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5460_Flow16_di" bpmnElement="W5460_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5460_Flow17_di" bpmnElement="W5460_Flow17"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5460_Assoc11_di" bpmnElement="W5460_Assoc11"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5461" name="W5461. Service Performance, SLA &amp; Customer Satisfaction Analytics" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly performance cycle; service-quality assurance (VS-146); SLA review (W5446)
+Frequency: Monthly performance; quarterly B2B SLA review
+Volume: 1 performance/satisfaction analytics view
+Owner: Services Manager
+Participants: VS-146 service QA, VS-13 CX, Dispatch (W5444), Regional/Field (VS-177)
+Source: workflow W5461 — Service Performance, SLA &amp; Customer Satisfaction Analytics</bpmn:documentation>
+      <bpmn:laneSet id="W5461_LaneSet3">
+        <bpmn:lane id="W5461_Lane1" name="Services Analytics Lead">
+        <bpmn:flowNodeRef>W5461_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5461_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5461_Lane2" name="Services Manager">
+        <bpmn:flowNodeRef>W5461_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5461_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5461_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5461_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5461_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5461_Start4" name="Monthly performance cycle; service-quality assurance (VS-146); SLA review (W5446)">
+        <bpmn:outgoing>W5461_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5461_Task5" name="Track operational KPIs: on-time arrival, job cycle time, estimate-to-actuals…">
+        <bpmn:documentation>Step 1: Track operational KPIs: on-time arrival, job cycle time, estimate-to-actuals variance, first-time-completion, punch-list rate, and safety incidents (VS-24).
+Responsible (R): Services Analytics Lead
+Accountable (A): Services Manager
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5461_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5461_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5461_Task6" name="Track customer satisfaction (post-service survey W5455, complaint rate VS-13…">
+        <bpmn:documentation>Step 2: Track customer satisfaction (post-service survey W5455, complaint rate VS-13, NPS) and feed VS-146 service-quality assurance.
+Responsible (R): Services Manager
+Accountable (A): Services Manager
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5461_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5461_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5461_Task7" name="Review B2B project SLA compliance (W5446) — hauling cycle, diversion target…">
+        <bpmn:documentation>Step 3: Review B2B project SLA compliance (W5446) — hauling cycle, diversion target, response time — with the account team (VS-107).
+Responsible (R): Services Manager / Account Mgr
+Accountable (A): Services Manager
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5461_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5461_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5461_Task8" name="Diagnose underperformers (region/crew/channel) and feed field coaching (VS-177)…">
+        <bpmn:documentation>Step 4: Diagnose underperformers (region/crew/channel) and feed field coaching (VS-177) and crew training (VS-124/VS-19.4).
+Responsible (R): Services Manager
+Accountable (A): COO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5461_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5461_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5461_Task9" name="Report performance into the services P&amp;L (VS-17/VS-33) and program strategy…">
+        <bpmn:documentation>Step 5: Report performance into the services P&amp;L (VS-17/VS-33) and program strategy (W5464).
+Responsible (R): Services Manager
+Accountable (A): COO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5461_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5461_End10" name="Complete">
+        <bpmn:incoming>W5461_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5461_Annotation11">
+        <bpmn:text>Controls: - CTL-805 (ensure controlled execution — Diversion, Disposal, Settlement &amp; Site Cleanup Analytics (PA-191.3).) | - operational: estimate-to-actuals variance monitored monthly.
+Owner: Services Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5461_Assoc12" sourceRef="W5461_Annotation11" targetRef="W5461_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5461_Flow13" sourceRef="W5461_Start4" targetRef="W5461_Task5" />
+      <bpmn:sequenceFlow id="W5461_Flow14" sourceRef="W5461_Task5" targetRef="W5461_Task6" />
+      <bpmn:sequenceFlow id="W5461_Flow15" sourceRef="W5461_Task6" targetRef="W5461_Task7" />
+      <bpmn:sequenceFlow id="W5461_Flow16" sourceRef="W5461_Task7" targetRef="W5461_Task8" />
+      <bpmn:sequenceFlow id="W5461_Flow17" sourceRef="W5461_Task8" targetRef="W5461_Task9" />
+      <bpmn:sequenceFlow id="W5461_Flow18" sourceRef="W5461_Task9" targetRef="W5461_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5461_diag">
+      <bpmndi:BPMNPlane id="W5461_plane" bpmnElement="W_W5461">
+        <bpmndi:BPMNShape id="W5461_Lane1_di" bpmnElement="W5461_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Lane2_di" bpmnElement="W5461_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Task5_di" bpmnElement="W5461_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Task6_di" bpmnElement="W5461_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Task7_di" bpmnElement="W5461_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Task8_di" bpmnElement="W5461_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Task9_di" bpmnElement="W5461_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Start4_di" bpmnElement="W5461_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_End10_di" bpmnElement="W5461_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5461_Annotation11_di" bpmnElement="W5461_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5461_Flow13_di" bpmnElement="W5461_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5461_Flow14_di" bpmnElement="W5461_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5461_Flow15_di" bpmnElement="W5461_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5461_Flow16_di" bpmnElement="W5461_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5461_Flow17_di" bpmnElement="W5461_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5461_Flow18_di" bpmnElement="W5461_Flow18"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5461_Assoc12_di" bpmnElement="W5461_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5462" name="W5462. Vendor Scorecard, Cost-to-Serve &amp; Hauling Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly vendor review; capacity expansion; cost-reduction initiative
+Frequency: Quarterly scorecard; periodic optimization
+Volume: ~10–40 haulers/disposers/recyclers (W5447)
+Owner: Procurement/Services Manager (VS-110)
+Participants: VS-67 vendor scorecard, TPRM (VS-161), Dispatch (W5444), Finance (VS-15)
+Source: workflow W5462 — Vendor Scorecard, Cost-to-Serve &amp; Hauling Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W5462_LaneSet4">
+        <bpmn:lane id="W5462_Lane1" name="Procurement Manager">
+        <bpmn:flowNodeRef>W5462_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5462_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5462_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5462_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5462_Lane2" name="Services Finance Analyst">
+        <bpmn:flowNodeRef>W5462_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5462_Lane3" name="Services Asset Manager">
+        <bpmn:flowNodeRef>W5462_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5462_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5462_Start5" name="Quarterly vendor review; capacity expansion; cost-reduction initiative">
+        <bpmn:outgoing>W5462_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5462_Task6" name="Maintain a vendor scorecard (haulers/disposers/recyclers): on-time pickup…">
+        <bpmn:documentation>Step 1: Maintain a vendor scorecard (haulers/disposers/recyclers): on-time pickup, manifest accuracy, accreditation currency, contamination-rejection rate, cost/cu.m., recovery-credit delivery.
+Responsible (R): Procurement Manager
+Accountable (A): VP Supply Chain
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5462_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5462_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5462_Task7" name="Compute cost-to-serve by region/channel/stream (crew + container + haul +…">
+        <bpmn:documentation>Step 2: Compute cost-to-serve by region/channel/stream (crew + container + haul + disposal − recovery) and identify cost-reduction levers.
+Responsible (R): Services Finance Analyst
+Accountable (A): Finance Manager
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5462_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5462_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5462_Task8" name="Optimize hauling: route clustering (W5444), backhaul opportunities…">
+        <bpmn:documentation>Step 3: Optimize hauling: route clustering (W5444), backhaul opportunities, container-fleet utilization, and capacity-balancing across vendors.
+Responsible (R): Services Asset Manager / Dispatch
+Accountable (A): COO
+Duration: periodic</bpmn:documentation>
+        <bpmn:incoming>W5462_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5462_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5462_Task9" name="Manage vendor performance/issues/exit via VS-110 freight and VS-161 TPRM…">
+        <bpmn:documentation>Step 4: Manage vendor performance/issues/exit via VS-110 freight and VS-161 TPRM; consolidate spend for better rates where scale allows.
+Responsible (R): Procurement Manager
+Accountable (A): VP Supply Chain
+Duration: periodic</bpmn:documentation>
+        <bpmn:incoming>W5462_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5462_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5462_Task10" name="Feed cost-to-serve into pricing health (W5464) and the vendor-strategy/TPRM…">
+        <bpmn:documentation>Step 5: Feed cost-to-serve into pricing health (W5464) and the vendor-strategy/TPRM governance.
+Responsible (R): Procurement Manager
+Accountable (A): VP Supply Chain
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5462_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5462_End11" name="Complete">
+        <bpmn:incoming>W5462_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5462_Annotation12">
+        <bpmn:text>Controls: - CTL-21: scorecard/cost accuracy; CTL-09 (vendor concentration monitoring); CTL-37 (TPRM); operational: total-cost-to-serve (not headline rate) drives vendor decisions.
+Owner: Procurement/Services Manager (VS-110)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5462_Assoc13" sourceRef="W5462_Annotation12" targetRef="W5462_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5462_Flow14" sourceRef="W5462_Start5" targetRef="W5462_Task6" />
+      <bpmn:sequenceFlow id="W5462_Flow15" sourceRef="W5462_Task6" targetRef="W5462_Task7" />
+      <bpmn:sequenceFlow id="W5462_Flow16" sourceRef="W5462_Task7" targetRef="W5462_Task8" />
+      <bpmn:sequenceFlow id="W5462_Flow17" sourceRef="W5462_Task8" targetRef="W5462_Task9" />
+      <bpmn:sequenceFlow id="W5462_Flow18" sourceRef="W5462_Task9" targetRef="W5462_Task10" />
+      <bpmn:sequenceFlow id="W5462_Flow19" sourceRef="W5462_Task10" targetRef="W5462_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5462_diag">
+      <bpmndi:BPMNPlane id="W5462_plane" bpmnElement="W_W5462">
+        <bpmndi:BPMNShape id="W5462_Lane1_di" bpmnElement="W5462_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Lane2_di" bpmnElement="W5462_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Lane3_di" bpmnElement="W5462_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Task6_di" bpmnElement="W5462_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Task7_di" bpmnElement="W5462_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Task8_di" bpmnElement="W5462_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Task9_di" bpmnElement="W5462_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Task10_di" bpmnElement="W5462_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Start5_di" bpmnElement="W5462_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_End11_di" bpmnElement="W5462_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5462_Annotation12_di" bpmnElement="W5462_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5462_Flow14_di" bpmnElement="W5462_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5462_Flow15_di" bpmnElement="W5462_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5462_Flow16_di" bpmnElement="W5462_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5462_Flow17_di" bpmnElement="W5462_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5462_Flow18_di" bpmnElement="W5462_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5462_Flow19_di" bpmnElement="W5462_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5462_Assoc13_di" bpmnElement="W5462_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5463" name="W5463. DENR/LGU Periodic Waste Reporting &amp; Permit Evidence" isExecutable="false">
+      <bpmn:documentation>Trigger: DENR/LGU periodic reporting cycle; permit renewal (VS-166); audit (VS-21.3)
+Frequency: Periodic (semi-annual/annual per regulator); per permit renewal
+Volume: 1 regulatory reporting program across LGUs/DENR regions
+Owner: Compliance Specialist (VS-22)
+Participants: Sustainability (VS-25), Legal (VS-100), Records (VS-88), Services Manager
+Source: workflow W5463 — DENR/LGU Periodic Waste Reporting &amp; Permit Evidence</bpmn:documentation>
+      <bpmn:laneSet id="W5463_LaneSet2">
+        <bpmn:lane id="W5463_Lane1" name="Compliance Specialist">
+        <bpmn:flowNodeRef>W5463_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5463_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5463_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5463_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5463_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5463_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5463_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5463_Start3" name="DENR/LGU periodic reporting cycle; permit renewal (VS-166); audit (VS-21.3)">
+        <bpmn:outgoing>W5463_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5463_Task4" name="Aggregate manifest/disposal/ diversion data (W5452/W5453/W5459) into the…">
+        <bpmn:documentation>Step 1: Aggregate manifest/disposal/ diversion data (W5452/W5453/W5459) into the DENR/LGU periodic waste-reporting format (RA 9003/RA 6969 where applicable).
+Responsible (R): Compliance Specialist
+Accountable (A): VP Legal &amp; Compliance
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5463_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W5463_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5463_Task5" name="Submit to DENR-EMB / LGU-ENRO per schedule and retain acknowledgement.">
+        <bpmn:documentation>Step 2: Submit to DENR-EMB / LGU-ENRO per schedule and retain acknowledgement.
+Responsible (R): Compliance Specialist
+Accountable (A): VP Legal &amp; Compliance
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5463_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5463_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5463_Task6" name="Maintain transporter/disposer accreditation evidence (W5447) and the LGU…">
+        <bpmn:documentation>Step 3: Maintain transporter/disposer accreditation evidence (W5447) and the LGU placement-permit register (W5445) in the VS-166 license portfolio.
+Responsible (R): Compliance Specialist
+Accountable (A): VP Legal &amp; Compliance
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5463_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5463_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5463_Task7" name="Support audit (VS-21.3) with manifest/permit/weight-ticket evidence; retain per…">
+        <bpmn:documentation>Step 4: Support audit (VS-21.3) with manifest/permit/weight-ticket evidence; retain per BIR/DENR record-retention (VS-88).
+Responsible (R): Compliance Specialist
+Accountable (A): Head of Internal Audit
+Duration: per audit</bpmn:documentation>
+        <bpmn:incoming>W5463_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5463_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5463_Task8" name="Monitor regulatory change (new C&amp;D diversion mandates, LGU ordinances) and…">
+        <bpmn:documentation>Step 5: Monitor regulatory change (new C&amp;D diversion mandates, LGU ordinances) and update the program (W5464) accordingly.
+Responsible (R): Compliance Specialist / Legal
+Accountable (A): VP Legal &amp; Compliance
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5463_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5463_End9" name="Complete">
+        <bpmn:incoming>W5463_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5463_Annotation10">
+        <bpmn:text>Controls: - CTL-805 (ensure controlled execution — Diversion, Disposal, Settlement &amp; Site Cleanup Analytics (PA-191.3).) | - operational: compliance calendar drives all periodic submissions.
+Owner: Compliance Specialist (VS-22)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5463_Assoc11" sourceRef="W5463_Annotation10" targetRef="W5463_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5463_Flow12" sourceRef="W5463_Start3" targetRef="W5463_Task4" />
+      <bpmn:sequenceFlow id="W5463_Flow13" sourceRef="W5463_Task4" targetRef="W5463_Task5" />
+      <bpmn:sequenceFlow id="W5463_Flow14" sourceRef="W5463_Task5" targetRef="W5463_Task6" />
+      <bpmn:sequenceFlow id="W5463_Flow15" sourceRef="W5463_Task6" targetRef="W5463_Task7" />
+      <bpmn:sequenceFlow id="W5463_Flow16" sourceRef="W5463_Task7" targetRef="W5463_Task8" />
+      <bpmn:sequenceFlow id="W5463_Flow17" sourceRef="W5463_Task8" targetRef="W5463_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5463_diag">
+      <bpmndi:BPMNPlane id="W5463_plane" bpmnElement="W_W5463">
+        <bpmndi:BPMNShape id="W5463_Lane1_di" bpmnElement="W5463_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_Task4_di" bpmnElement="W5463_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_Task5_di" bpmnElement="W5463_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_Task6_di" bpmnElement="W5463_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_Task7_di" bpmnElement="W5463_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_Task8_di" bpmnElement="W5463_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_Start3_di" bpmnElement="W5463_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_End9_di" bpmnElement="W5463_End9"><dc:Bounds x="1470" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5463_Annotation10_di" bpmnElement="W5463_Annotation10"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5463_Flow12_di" bpmnElement="W5463_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5463_Flow13_di" bpmnElement="W5463_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5463_Flow14_di" bpmnElement="W5463_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5463_Flow15_di" bpmnElement="W5463_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5463_Flow16_di" bpmnElement="W5463_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5463_Flow17_di" bpmnElement="W5463_Flow17"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5463_Assoc11_di" bpmnElement="W5463_Assoc11"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5464" name="W5464. Program Strategy, Pricing Health &amp; Capacity Planning" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual strategy cycle; new channel/market entry; capacity/demand imbalance; pricing-margin review
+Frequency: Annual strategy; quarterly pricing/capacity review
+Volume: 1 program strategy + pricing + capacity plan
+Owner: COO
+Participants: Services Manager, Pricing (VS-01.2), Merchandising (VS-01), Finance (VS-17/VS-33), Strategy (VS-33)
+Source: workflow W5464 — Program Strategy, Pricing Health &amp; Capacity Planning</bpmn:documentation>
+      <bpmn:laneSet id="W5464_LaneSet4">
+        <bpmn:lane id="W5464_Lane1" name="COO">
+        <bpmn:flowNodeRef>W5464_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5464_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5464_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5464_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5464_Lane2" name="Pricing Analyst">
+        <bpmn:flowNodeRef>W5464_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5464_Lane3" name="Services Asset Manager">
+        <bpmn:flowNodeRef>W5464_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5464_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5464_Start5" name="Annual strategy cycle; new channel/market entry; capacity/demand imbalance…">
+        <bpmn:outgoing>W5464_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5464_Task6" name="Review the program&#x27;s strategic role: attach lever for install/build sales, B2B…">
+        <bpmn:documentation>Step 1: Review the program&#x27;s strategic role: attach lever for install/build sales, B2B differentiation (VS-107), ESG/circular positioning (VS-25/VS-179), and contribution to services P&amp;L.
+Responsible (R): COO
+Accountable (A): COO
+Duration: annual</bpmn:documentation>
+        <bpmn:incoming>W5464_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5464_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5464_Task7" name="Assess pricing health: realized margin per service/region, estimate-to-actuals…">
+        <bpmn:documentation>Step 2: Assess pricing health: realized margin per service/region, estimate-to-actuals variance (W5461), cost-to-serve trends (W5462), and recovery-credit contribution; adjust the catalog (W5441).
+Responsible (R): Pricing Analyst / COO
+Accountable (A): COO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5464_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5464_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5464_Task8" name="Plan capacity: crew/container/haul-vendor capacity vs. forecast demand from…">
+        <bpmn:documentation>Step 3: Plan capacity: crew/container/haul-vendor capacity vs. forecast demand from install/build volume and B2B project pipeline (VS-11/VS-66); identify gaps.
+Responsible (R): Services Asset Manager / COO
+Accountable (A): COO
+Duration: quarterly</bpmn:documentation>
+        <bpmn:incoming>W5464_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5464_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5464_Task9" name="Identify growth/reduction: extend to new channels/regions, add value (on-site…">
+        <bpmn:documentation>Step 4: Identify growth/reduction: extend to new channels/regions, add value (on-site crushing, source-reduction consulting), or scale back unprofitable segments.
+Responsible (R): COO / Strategy
+Accountable (A): COO
+Duration: annual</bpmn:documentation>
+        <bpmn:incoming>W5464_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5464_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5464_Task10" name="Approve investment/changes through the services/PMO governance (VS-112) and…">
+        <bpmn:documentation>Step 5: Approve investment/changes through the services/PMO governance (VS-112) and corporate planning (VS-33); brief leadership.
+Responsible (R): COO
+Accountable (A): COO
+Duration: annual</bpmn:documentation>
+        <bpmn:incoming>W5464_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5464_End11" name="Complete">
+        <bpmn:incoming>W5464_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5464_Annotation12">
+        <bpmn:text>Controls: - CTL-805: ensure controlled execution — Diversion, Disposal, Settlement &amp; Site Cleanup Analytics (PA-191.3).) — strategy/investment approval; CTL-21 (pricing/capacity analysis; CTL-37 (ESG/strategic alignment); operational: program strategy reviewed annually against install/build and ESG goals.
+Owner: COO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5464_Assoc13" sourceRef="W5464_Annotation12" targetRef="W5464_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5464_Flow14" sourceRef="W5464_Start5" targetRef="W5464_Task6" />
+      <bpmn:sequenceFlow id="W5464_Flow15" sourceRef="W5464_Task6" targetRef="W5464_Task7" />
+      <bpmn:sequenceFlow id="W5464_Flow16" sourceRef="W5464_Task7" targetRef="W5464_Task8" />
+      <bpmn:sequenceFlow id="W5464_Flow17" sourceRef="W5464_Task8" targetRef="W5464_Task9" />
+      <bpmn:sequenceFlow id="W5464_Flow18" sourceRef="W5464_Task9" targetRef="W5464_Task10" />
+      <bpmn:sequenceFlow id="W5464_Flow19" sourceRef="W5464_Task10" targetRef="W5464_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5464_diag">
+      <bpmndi:BPMNPlane id="W5464_plane" bpmnElement="W_W5464">
+        <bpmndi:BPMNShape id="W5464_Lane1_di" bpmnElement="W5464_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Lane2_di" bpmnElement="W5464_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Lane3_di" bpmnElement="W5464_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Task6_di" bpmnElement="W5464_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Task7_di" bpmnElement="W5464_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Task8_di" bpmnElement="W5464_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Task9_di" bpmnElement="W5464_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Task10_di" bpmnElement="W5464_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Start5_di" bpmnElement="W5464_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_End11_di" bpmnElement="W5464_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5464_Annotation12_di" bpmnElement="W5464_Annotation12"><dc:Bounds x="160" y="630" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5464_Flow14_di" bpmnElement="W5464_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5464_Flow15_di" bpmnElement="W5464_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5464_Flow16_di" bpmnElement="W5464_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5464_Flow17_di" bpmnElement="W5464_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5464_Flow18_di" bpmnElement="W5464_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5464_Flow19_di" bpmnElement="W5464_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5464_Assoc13_di" bpmnElement="W5464_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

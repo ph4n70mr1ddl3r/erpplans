@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-93.3-dark-store-inventory-capacity-analytics" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W3105" name="W3105. Dark Store Inventory Positioning, Safety Stock &amp; Replenishment" isExecutable="false">
+      <bpmn:documentation>Trigger: Weekly cycle + daily min/max triggers
+Frequency: Daily/weekly
+Volume: ~2,000–8,000 active SKUs per dark store (curated for catchment)
+Owner: Dark Store Operations Manager
+Participants: Dark Store Ops Mgr, Inventory Planning, DC Ops (links to VS-04), Category (links to VS-01)
+Source: workflow W3105 — Dark Store Inventory Positioning, Safety Stock &amp; Replenishment</bpmn:documentation>
+      <bpmn:laneSet id="W3105_LaneSet4">
+        <bpmn:lane id="W3105_Lane1" name="Inventory Planner">
+        <bpmn:flowNodeRef>W3105_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3105_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3105_Lane2" name="WMS">
+        <bpmn:flowNodeRef>W3105_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3105_Lane3" name="Dark Store Operations Manager">
+        <bpmn:flowNodeRef>W3105_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3105_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3105_Start5" name="Weekly cycle + daily min/max triggers">
+        <bpmn:outgoing>W3105_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3105_Task6" name="Inventory Planning sets per-SKU safety stock and reorder point for the dark…">
+        <bpmn:documentation>Step 1: Inventory Planning sets per-SKU safety stock and reorder point for the dark store based on catchment velocity, lead time from feeder DC (links to VS-04), and target service level (98%+); distinguishes A/B/C velocity
+Responsible (R): Inventory Planner
+Accountable (A): Dark Store Operations Manager
+Duration: Weekly</bpmn:documentation>
+        <bpmn:incoming>W3105_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3105_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3105_Task7" name="System auto-generates replenishment transfer requests to feeder DC when min…">
+        <bpmn:documentation>Step 2: System auto-generates replenishment transfer requests to feeder DC when min breached; DC schedules transfer (links to VS-05/VS-04); inbound received and putaway to forward pick faces
+Responsible (R): WMS / DC Ops
+Accountable (A): Dark Store Operations Manager
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W3105_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3105_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3105_Task8" name="Dark Store Ops Mgr reviews slow-movers (links to VS-05 aging) and obsolete…">
+        <bpmn:documentation>Step 3: Dark Store Ops Mgr reviews slow-movers (links to VS-05 aging) and obsolete candidates; returns to DC or removes from dark-store range (links to W3110); confirms physical-to-book accuracy via cycle count
+Responsible (R): Dark Store Operations Manager / Inventory
+Accountable (A): VP Supply Chain
+Duration: Weekly</bpmn:documentation>
+        <bpmn:incoming>W3105_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3105_End9" name="Complete">
+        <bpmn:incoming>W3105_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3105_Annotation10">
+        <bpmn:text>Controls: - CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity &amp; Performance Analytics (PA-93.3).) | - operational: velocity-based safety stock and same-day DC replenishment
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3105_Assoc11" sourceRef="W3105_Annotation10" targetRef="W3105_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3105_Flow12" sourceRef="W3105_Start5" targetRef="W3105_Task6" />
+      <bpmn:sequenceFlow id="W3105_Flow13" sourceRef="W3105_Task6" targetRef="W3105_Task7" />
+      <bpmn:sequenceFlow id="W3105_Flow14" sourceRef="W3105_Task7" targetRef="W3105_Task8" />
+      <bpmn:sequenceFlow id="W3105_Flow15" sourceRef="W3105_Task8" targetRef="W3105_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3105_diag">
+      <bpmndi:BPMNPlane id="W3105_plane" bpmnElement="W_W3105">
+        <bpmndi:BPMNShape id="W3105_Lane1_di" bpmnElement="W3105_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_Lane2_di" bpmnElement="W3105_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_Lane3_di" bpmnElement="W3105_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_Task6_di" bpmnElement="W3105_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_Task7_di" bpmnElement="W3105_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_Task8_di" bpmnElement="W3105_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_Start5_di" bpmnElement="W3105_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_End9_di" bpmnElement="W3105_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3105_Annotation10_di" bpmnElement="W3105_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3105_Flow12_di" bpmnElement="W3105_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3105_Flow13_di" bpmnElement="W3105_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3105_Flow14_di" bpmnElement="W3105_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3105_Flow15_di" bpmnElement="W3105_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3105_Assoc11_di" bpmnElement="W3105_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3106" name="W3106. Dark Store Slotting, Velocity Analysis &amp; Re-Slotting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly slotting review; seasonal/sale velocity shift
+Frequency: Monthly + event-driven
+Volume: All pick faces
+Owner: Dark Store Operations Manager
+Participants: Dark Store Ops Mgr, Industrial Engineer, Pickers
+Source: workflow W3106 — Dark Store Slotting, Velocity Analysis &amp; Re-Slotting</bpmn:documentation>
+      <bpmn:laneSet id="W3106_LaneSet3">
+        <bpmn:lane id="W3106_Lane1" name="Industrial Engineer">
+        <bpmn:flowNodeRef>W3106_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3106_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3106_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3106_Lane2" name="Picker">
+        <bpmn:flowNodeRef>W3106_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3106_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3106_Start4" name="Monthly slotting review; seasonal/sale velocity shift">
+        <bpmn:outgoing>W3106_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3106_Task5" name="Industrial Engineer computes SKU velocity (lines/day, picks/day) and current…">
+        <bpmn:documentation>Step 1: Industrial Engineer computes SKU velocity (lines/day, picks/day) and current slot location; identifies A-velocity SKUs in non-golden-zone slots and C-velocity SKUs consuming golden-zone space
+Responsible (R): Industrial Engineer
+Accountable (A): Dark Store Operations Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3106_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3106_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3106_Task6" name="Engineer proposes re-slot plan: A-velocity → eye-level/golden zone nearest pack…">
+        <bpmn:documentation>Step 2: Engineer proposes re-slot plan: A-velocity → eye-level/golden zone nearest pack stations; C-velocity → reserve/upper; bundle/kit components co-located; automation (MFC) bins re-balanced
+Responsible (R): Industrial Engineer
+Accountable (A): Dark Store Operations Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3106_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3106_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3106_Task7" name="Picker execute re-slot during low-volume window (overnight/early AM); WMS…">
+        <bpmn:documentation>Step 3: Picker execute re-slot during low-volume window (overnight/early AM); WMS updates bin assignments; productivity uplift measured post-implementation vs. baseline lines/picker-hour (links to W3107)
+Responsible (R): Picker / WMS
+Accountable (A): Dark Store Operations Manager
+Duration: Per re-slot event</bpmn:documentation>
+        <bpmn:incoming>W3106_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3106_End8" name="Complete">
+        <bpmn:incoming>W3106_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3106_Annotation9">
+        <bpmn:text>Controls: - CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity &amp; Performance Analytics (PA-93.3).) | - operational: overnight execution and phased moves
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3106_Assoc10" sourceRef="W3106_Annotation9" targetRef="W3106_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3106_Flow11" sourceRef="W3106_Start4" targetRef="W3106_Task5" />
+      <bpmn:sequenceFlow id="W3106_Flow12" sourceRef="W3106_Task5" targetRef="W3106_Task6" />
+      <bpmn:sequenceFlow id="W3106_Flow13" sourceRef="W3106_Task6" targetRef="W3106_Task7" />
+      <bpmn:sequenceFlow id="W3106_Flow14" sourceRef="W3106_Task7" targetRef="W3106_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3106_diag">
+      <bpmndi:BPMNPlane id="W3106_plane" bpmnElement="W_W3106">
+        <bpmndi:BPMNShape id="W3106_Lane1_di" bpmnElement="W3106_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3106_Lane2_di" bpmnElement="W3106_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3106_Task5_di" bpmnElement="W3106_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3106_Task6_di" bpmnElement="W3106_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3106_Task7_di" bpmnElement="W3106_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3106_Start4_di" bpmnElement="W3106_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3106_End8_di" bpmnElement="W3106_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3106_Annotation9_di" bpmnElement="W3106_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3106_Flow11_di" bpmnElement="W3106_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3106_Flow12_di" bpmnElement="W3106_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3106_Flow13_di" bpmnElement="W3106_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3106_Flow14_di" bpmnElement="W3106_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3106_Assoc10_di" bpmnElement="W3106_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3107" name="W3107. Dark Store Throughput, Utilization &amp; Labor Productivity Analytics" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily/weekly KPI cycle
+Frequency: Daily + weekly deep-dive
+Volume: Per dark store and network-wide
+Owner: Dark Store Operations Manager
+Participants: Dark Store Ops Mgr, Network Planning, Finance, HR, BI (links to VS-28)
+Source: workflow W3107 — Dark Store Throughput, Utilization &amp; Labor Productivity Analytics</bpmn:documentation>
+      <bpmn:laneSet id="W3107_LaneSet4">
+        <bpmn:lane id="W3107_Lane1" name="BI Analyst">
+        <bpmn:flowNodeRef>W3107_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3107_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3107_Lane2" name="Dark Store Operations Manager">
+        <bpmn:flowNodeRef>W3107_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3107_Lane3" name="HR">
+        <bpmn:flowNodeRef>W3107_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3107_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3107_Start5" name="Daily/weekly KPI cycle">
+        <bpmn:outgoing>W3107_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3107_Task6" name="BI (links to VS-28) computes dark-store throughput KPIs: orders/hour…">
+        <bpmn:documentation>Step 1: BI (links to VS-28) computes dark-store throughput KPIs: orders/hour, lines/picker-hour, orders/pack-station-hour, dispatch on-time %, automation utilization %, labor utilization vs. plan
+Responsible (R): BI Analyst
+Accountable (A): Dark Store Operations Manager
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W3107_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3107_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3107_Task7" name="Dark Store Ops Mgr benchmarks dark stores vs. each other and vs. external…">
+        <bpmn:documentation>Step 2: Dark Store Ops Mgr benchmarks dark stores vs. each other and vs. external benchmark; identifies laggards; investigates root causes (staffing, layout, automation downtime, demand mix)
+Responsible (R): Dark Store Operations Manager
+Accountable (A): VP Supply Chain
+Duration: Weekly</bpmn:documentation>
+        <bpmn:incoming>W3107_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3107_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3107_Task8" name="HR/Finance model productivity-linked incentive, shift design, and overtime to…">
+        <bpmn:documentation>Step 3: HR/Finance model productivity-linked incentive, shift design, and overtime to lift utilization; validate against labor-cost-per-order target
+Responsible (R): HR / Finance
+Accountable (A): VP Supply Chain
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3107_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3107_End9" name="Complete">
+        <bpmn:incoming>W3107_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3107_Annotation10">
+        <bpmn:text>Controls: - CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity &amp; Performance Analytics (PA-93.3).) | - operational: accuracy-weighted incentive and quality audit (links to W3099)
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3107_Assoc11" sourceRef="W3107_Annotation10" targetRef="W3107_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3107_Flow12" sourceRef="W3107_Start5" targetRef="W3107_Task6" />
+      <bpmn:sequenceFlow id="W3107_Flow13" sourceRef="W3107_Task6" targetRef="W3107_Task7" />
+      <bpmn:sequenceFlow id="W3107_Flow14" sourceRef="W3107_Task7" targetRef="W3107_Task8" />
+      <bpmn:sequenceFlow id="W3107_Flow15" sourceRef="W3107_Task8" targetRef="W3107_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3107_diag">
+      <bpmndi:BPMNPlane id="W3107_plane" bpmnElement="W_W3107">
+        <bpmndi:BPMNShape id="W3107_Lane1_di" bpmnElement="W3107_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_Lane2_di" bpmnElement="W3107_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_Lane3_di" bpmnElement="W3107_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_Task6_di" bpmnElement="W3107_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_Task7_di" bpmnElement="W3107_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_Task8_di" bpmnElement="W3107_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_Start5_di" bpmnElement="W3107_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_End9_di" bpmnElement="W3107_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3107_Annotation10_di" bpmnElement="W3107_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3107_Flow12_di" bpmnElement="W3107_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3107_Flow13_di" bpmnElement="W3107_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3107_Flow14_di" bpmnElement="W3107_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3107_Flow15_di" bpmnElement="W3107_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3107_Assoc11_di" bpmnElement="W3107_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3108" name="W3108. Dark Store Order Cycle Time, Cut-Off Adherence &amp; SLA Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily SLA cycle; SLA breach
+Frequency: Daily
+Volume: All orders
+Owner: Dark Store Operations Manager
+Participants: Dark Store Ops Mgr, Ecommerce Ops (links to VS-60), CS (links to VS-13), BI
+Source: workflow W3108 — Dark Store Order Cycle Time, Cut-Off Adherence &amp; SLA Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W3108_LaneSet4">
+        <bpmn:lane id="W3108_Lane1" name="WMS">
+        <bpmn:flowNodeRef>W3108_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3108_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3108_Lane2" name="Dark Store Operations Manager">
+        <bpmn:flowNodeRef>W3108_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3108_Lane3" name="Ecommerce Ops">
+        <bpmn:flowNodeRef>W3108_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3108_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3108_Start5" name="Daily SLA cycle; SLA breach">
+        <bpmn:outgoing>W3108_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3108_Task6" name="System tracks end-to-end order cycle time: order received → wave release → pick…">
+        <bpmn:documentation>Step 1: System tracks end-to-end order cycle time: order received → wave release → pick complete → pack complete → dispatch → delivery/handover; segments by promise tier (same-day, next-day, BOPIS)
+Responsible (R): WMS / BI
+Accountable (A): Dark Store Operations Manager
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W3108_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3108_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3108_Task7" name="Dark Store Ops Mgr reports cut-off adherence (orders accepted before cut-off…">
+        <bpmn:documentation>Step 2: Dark Store Ops Mgr reports cut-off adherence (orders accepted before cut-off delivered same-day %), promise-breach rate, and breach root-cause (pick delay, pack delay, dispatch delay, carrier delay)
+Responsible (R): Dark Store Operations Manager
+Accountable (A): VP Supply Chain
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W3108_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3108_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3108_Task8" name="Ecommerce Ops/CS (links to VS-13/VS-60) consolidate customer-facing SLA report…">
+        <bpmn:documentation>Step 3: Ecommerce Ops/CS (links to VS-13/VS-60) consolidate customer-facing SLA report; feed into dark-store scorecard and capex/expansion trigger (links to W3095)
+Responsible (R): Ecommerce Ops / CS
+Accountable (A): GM, Digital Commerce Inc.
+Duration: Weekly</bpmn:documentation>
+        <bpmn:incoming>W3108_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3108_End9" name="Complete">
+        <bpmn:incoming>W3108_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3108_Annotation10">
+        <bpmn:text>Controls: - CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity &amp; Performance Analytics (PA-93.3).) | - operational: segmenting internal vs
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3108_Assoc11" sourceRef="W3108_Annotation10" targetRef="W3108_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3108_Flow12" sourceRef="W3108_Start5" targetRef="W3108_Task6" />
+      <bpmn:sequenceFlow id="W3108_Flow13" sourceRef="W3108_Task6" targetRef="W3108_Task7" />
+      <bpmn:sequenceFlow id="W3108_Flow14" sourceRef="W3108_Task7" targetRef="W3108_Task8" />
+      <bpmn:sequenceFlow id="W3108_Flow15" sourceRef="W3108_Task8" targetRef="W3108_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3108_diag">
+      <bpmndi:BPMNPlane id="W3108_plane" bpmnElement="W_W3108">
+        <bpmndi:BPMNShape id="W3108_Lane1_di" bpmnElement="W3108_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_Lane2_di" bpmnElement="W3108_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_Lane3_di" bpmnElement="W3108_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_Task6_di" bpmnElement="W3108_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_Task7_di" bpmnElement="W3108_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_Task8_di" bpmnElement="W3108_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_Start5_di" bpmnElement="W3108_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_End9_di" bpmnElement="W3108_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3108_Annotation10_di" bpmnElement="W3108_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3108_Flow12_di" bpmnElement="W3108_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3108_Flow13_di" bpmnElement="W3108_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3108_Flow14_di" bpmnElement="W3108_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3108_Flow15_di" bpmnElement="W3108_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3108_Assoc11_di" bpmnElement="W3108_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3109" name="W3109. Dark Store Pick/Pack Accuracy, Damages &amp; Cost-per-Order" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily/weekly quality + finance cycle
+Frequency: Daily + weekly
+Volume: All orders + audit samples
+Owner: Dark Store Operations Manager
+Participants: Quality, Finance, CS (links to VS-13), Loss Prevention (links to VS-23)
+Source: workflow W3109 — Dark Store Pick/Pack Accuracy, Damages &amp; Cost-per-Order</bpmn:documentation>
+      <bpmn:laneSet id="W3109_LaneSet4">
+        <bpmn:lane id="W3109_Lane1" name="Quality">
+        <bpmn:flowNodeRef>W3109_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3109_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3109_Lane2" name="Finance Analyst">
+        <bpmn:flowNodeRef>W3109_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3109_Lane3" name="Dark Store Ops Mgr">
+        <bpmn:flowNodeRef>W3109_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3109_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3109_Start5" name="Daily/weekly quality + finance cycle">
+        <bpmn:outgoing>W3109_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3109_Task6" name="Quality compiles pick accuracy (mis-picks per 10,000), pack accuracy…">
+        <bpmn:documentation>Step 1: Quality compiles pick accuracy (mis-picks per 10,000), pack accuracy (wrong-item/quantity per 10,000), damage-in-transit %, and customer-reported error rate; correlates to picker/packer IDs
+Responsible (R): Quality
+Accountable (A): Dark Store Operations Manager
+Duration: Weekly</bpmn:documentation>
+        <bpmn:incoming>W3109_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3109_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3109_Task7" name="Finance computes fully-loaded cost-per-order: labor + consumables + automation…">
+        <bpmn:documentation>Step 2: Finance computes fully-loaded cost-per-order: labor + consumables + automation depreciation + real estate + utilities + last-mile cost + returns cost; benchmarks vs. ship-from-store (links to VS-10) and DC (links to VS-04) baselines
+Responsible (R): Finance Analyst
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3109_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3109_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3109_Task8" name="Dark Store Ops Mgr/LP (links to VS-23) investigate accuracy outliers and…">
+        <bpmn:documentation>Step 3: Dark Store Ops Mgr/LP (links to VS-23) investigate accuracy outliers and shrink; implement corrective action (training, re-slot, scanner calibration, fraud-control) and track to closure
+Responsible (R): Dark Store Ops Mgr / LP
+Accountable (A): VP Supply Chain
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W3109_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3109_End9" name="Complete">
+        <bpmn:incoming>W3109_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3109_Annotation10">
+        <bpmn:text>Controls: - CTL-77 (ensure dark-store order accuracy &amp; dispatch control.) | - operational: automation bolt-on (links to W3095) and productivity program
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3109_Assoc11" sourceRef="W3109_Annotation10" targetRef="W3109_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3109_Flow12" sourceRef="W3109_Start5" targetRef="W3109_Task6" />
+      <bpmn:sequenceFlow id="W3109_Flow13" sourceRef="W3109_Task6" targetRef="W3109_Task7" />
+      <bpmn:sequenceFlow id="W3109_Flow14" sourceRef="W3109_Task7" targetRef="W3109_Task8" />
+      <bpmn:sequenceFlow id="W3109_Flow15" sourceRef="W3109_Task8" targetRef="W3109_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3109_diag">
+      <bpmndi:BPMNPlane id="W3109_plane" bpmnElement="W_W3109">
+        <bpmndi:BPMNShape id="W3109_Lane1_di" bpmnElement="W3109_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_Lane2_di" bpmnElement="W3109_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_Lane3_di" bpmnElement="W3109_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_Task6_di" bpmnElement="W3109_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_Task7_di" bpmnElement="W3109_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_Task8_di" bpmnElement="W3109_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_Start5_di" bpmnElement="W3109_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_End9_di" bpmnElement="W3109_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3109_Annotation10_di" bpmnElement="W3109_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3109_Flow12_di" bpmnElement="W3109_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3109_Flow13_di" bpmnElement="W3109_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3109_Flow14_di" bpmnElement="W3109_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3109_Flow15_di" bpmnElement="W3109_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3109_Assoc11_di" bpmnElement="W3109_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3110" name="W3110. Dark Store Demand Sensing &amp; Dynamic SKU Ranging" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly ranging review; new-product introduction; slow-mover purge
+Frequency: Monthly + event-driven
+Volume: All active dark-store SKUs
+Owner: Dark Store Operations Manager
+Participants: Dark Store Ops Mgr, Category Mgmt (links to VS-01), Ecommerce (links to VS-10), BI
+Source: workflow W3110 — Dark Store Demand Sensing &amp; Dynamic SKU Ranging</bpmn:documentation>
+      <bpmn:laneSet id="W3110_LaneSet4">
+        <bpmn:lane id="W3110_Lane1" name="BI Analyst">
+        <bpmn:flowNodeRef>W3110_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3110_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3110_Lane2" name="Category Manager">
+        <bpmn:flowNodeRef>W3110_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3110_Lane3" name="Dark Store Operations Manager">
+        <bpmn:flowNodeRef>W3110_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3110_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3110_Start5" name="Monthly ranging review; new-product introduction; slow-mover purge">
+        <bpmn:outgoing>W3110_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3110_Task6" name="BI/Category (links to VS-28/VS-01) sense demand signals: trending SKUs…">
+        <bpmn:documentation>Step 1: BI/Category (links to VS-28/VS-01) sense demand signals: trending SKUs (search/add-to-cart without order), local events (construction projects, typhoon rebuild — links to VS-69), seasonality, and competitor gaps
+Responsible (R): BI Analyst / Category
+Accountable (A): Dark Store Operations Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3110_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3110_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3110_Task7" name="Category (links to VS-01) proposes range adds (high-signal new SKUs) and range…">
+        <bpmn:documentation>Step 2: Category (links to VS-01) proposes range adds (high-signal new SKUs) and range drops (slow-movers with &lt; N lines/month); validate vs. dark-store pick-face capacity and feeder-DC availability
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3110_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3110_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3110_Task8" name="Dark Store Ops Mgr executes range change: inbound new SKUs from DC, slot to…">
+        <bpmn:documentation>Step 3: Dark Store Ops Mgr executes range change: inbound new SKUs from DC, slot to golden zone (links to W3106), update ecommerce availability flag (links to VS-10); remove slow-movers via W3105
+Responsible (R): Dark Store Operations Manager / Inventory
+Accountable (A): VP Supply Chain
+Duration: Per change</bpmn:documentation>
+        <bpmn:incoming>W3110_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3110_End9" name="Complete">
+        <bpmn:incoming>W3110_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3110_Annotation10">
+        <bpmn:text>Controls: - CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity &amp; Performance Analytics (PA-93.3).) | - operational: one-in-one-out rule and monthly purge
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3110_Assoc11" sourceRef="W3110_Annotation10" targetRef="W3110_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3110_Flow12" sourceRef="W3110_Start5" targetRef="W3110_Task6" />
+      <bpmn:sequenceFlow id="W3110_Flow13" sourceRef="W3110_Task6" targetRef="W3110_Task7" />
+      <bpmn:sequenceFlow id="W3110_Flow14" sourceRef="W3110_Task7" targetRef="W3110_Task8" />
+      <bpmn:sequenceFlow id="W3110_Flow15" sourceRef="W3110_Task8" targetRef="W3110_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3110_diag">
+      <bpmndi:BPMNPlane id="W3110_plane" bpmnElement="W_W3110">
+        <bpmndi:BPMNShape id="W3110_Lane1_di" bpmnElement="W3110_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_Lane2_di" bpmnElement="W3110_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_Lane3_di" bpmnElement="W3110_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_Task6_di" bpmnElement="W3110_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_Task7_di" bpmnElement="W3110_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_Task8_di" bpmnElement="W3110_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_Start5_di" bpmnElement="W3110_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_End9_di" bpmnElement="W3110_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3110_Annotation10_di" bpmnElement="W3110_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3110_Flow12_di" bpmnElement="W3110_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3110_Flow13_di" bpmnElement="W3110_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3110_Flow14_di" bpmnElement="W3110_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3110_Flow15_di" bpmnElement="W3110_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3110_Assoc11_di" bpmnElement="W3110_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3111" name="W3111. Dark Store Service Level &amp; Customer Experience Analytics" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly CX cycle; CS complaint spike
+Frequency: Monthly + event-driven
+Volume: All dark-store-served customers
+Owner: Dark Store Operations Manager
+Participants: Dark Store Ops Mgr, CS (links to VS-13), CX/Insights (links to VS-44), BI
+Source: workflow W3111 — Dark Store Service Level &amp; Customer Experience Analytics</bpmn:documentation>
+      <bpmn:laneSet id="W3111_LaneSet4">
+        <bpmn:lane id="W3111_Lane1" name="CX Analyst">
+        <bpmn:flowNodeRef>W3111_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3111_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3111_Lane2" name="Dark Store Operations Manager">
+        <bpmn:flowNodeRef>W3111_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3111_Lane3" name="CX">
+        <bpmn:flowNodeRef>W3111_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3111_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3111_Start5" name="Monthly CX cycle; CS complaint spike">
+        <bpmn:outgoing>W3111_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3111_Task6" name="CX/CS (links to VS-44/VS-13) measure dark-store-served customer satisfaction…">
+        <bpmn:documentation>Step 1: CX/CS (links to VS-44/VS-13) measure dark-store-served customer satisfaction: on-time delivery %, order accuracy %, CSAT/NPS, complaint themes (late, wrong item, damaged, missing), refund rate
+Responsible (R): CX Analyst
+Accountable (A): Dark Store Operations Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3111_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3111_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3111_Task7" name="Dark Store Ops Mgr prioritizes top complaint themes; root-causes to specific…">
+        <bpmn:documentation>Step 2: Dark Store Ops Mgr prioritizes top complaint themes; root-causes to specific dark store / picker / packer / carrier; corrective action tracked to closure
+Responsible (R): Dark Store Operations Manager
+Accountable (A): VP Supply Chain
+Duration: Per theme</bpmn:documentation>
+        <bpmn:incoming>W3111_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3111_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3111_Task8" name="Ecommerce/CX publish dark-store CX scorecard vs. ship-from-store (links to…">
+        <bpmn:documentation>Step 3: Ecommerce/CX publish dark-store CX scorecard vs. ship-from-store (links to VS-10); informs OMS routing preference (links to VS-60) and capex/expansion (links to W3095)
+Responsible (R): CX / Ecommerce Ops
+Accountable (A): GM, Digital Commerce Inc.
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3111_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3111_End9" name="Complete">
+        <bpmn:incoming>W3111_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3111_Annotation10">
+        <bpmn:text>Controls: - CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity &amp; Performance Analytics (PA-93.3).) | - operational: segmented scorecard
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3111_Assoc11" sourceRef="W3111_Annotation10" targetRef="W3111_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3111_Flow12" sourceRef="W3111_Start5" targetRef="W3111_Task6" />
+      <bpmn:sequenceFlow id="W3111_Flow13" sourceRef="W3111_Task6" targetRef="W3111_Task7" />
+      <bpmn:sequenceFlow id="W3111_Flow14" sourceRef="W3111_Task7" targetRef="W3111_Task8" />
+      <bpmn:sequenceFlow id="W3111_Flow15" sourceRef="W3111_Task8" targetRef="W3111_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3111_diag">
+      <bpmndi:BPMNPlane id="W3111_plane" bpmnElement="W_W3111">
+        <bpmndi:BPMNShape id="W3111_Lane1_di" bpmnElement="W3111_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_Lane2_di" bpmnElement="W3111_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_Lane3_di" bpmnElement="W3111_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_Task6_di" bpmnElement="W3111_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_Task7_di" bpmnElement="W3111_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_Task8_di" bpmnElement="W3111_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_Start5_di" bpmnElement="W3111_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_End9_di" bpmnElement="W3111_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3111_Annotation10_di" bpmnElement="W3111_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3111_Flow12_di" bpmnElement="W3111_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3111_Flow13_di" bpmnElement="W3111_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3111_Flow14_di" bpmnElement="W3111_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3111_Flow15_di" bpmnElement="W3111_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3111_Assoc11_di" bpmnElement="W3111_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3112" name="W3112. Dark Store Sustainability, Energy &amp; Waste Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual sustainability review; ESG reporting cycle (links to VS-25)
+Frequency: Quarterly + annual
+Volume: Per dark store and network
+Owner: Dark Store Operations Manager
+Participants: Dark Store Ops Mgr, Sustainability Lead (links to VS-25), Facilities, Procurement (links to VS-34)
+Source: workflow W3112 — Dark Store Sustainability, Energy &amp; Waste Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W3112_LaneSet3">
+        <bpmn:lane id="W3112_Lane1" name="Sustainability Lead">
+        <bpmn:flowNodeRef>W3112_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3112_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3112_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3112_Lane2" name="Dark Store Ops Mgr">
+        <bpmn:flowNodeRef>W3112_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3112_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3112_Start4" name="Annual sustainability review; ESG reporting cycle (links to VS-25)">
+        <bpmn:outgoing>W3112_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3112_Task5" name="Sustainability Lead (links to VS-25) measures dark-store footprint: energy…">
+        <bpmn:documentation>Step 1: Sustainability Lead (links to VS-25) measures dark-store footprint: energy (kWh/order — automation, lighting, HVAC), packaging waste (carton, void-fill, tape per order), and last-mile CO₂; benchmarks vs. ship-from-store
+Responsible (R): Sustainability Lead
+Accountable (A): Dark Store Operations Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W3112_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3112_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3112_Task6" name="Dark Store Ops Mgr/Procurement execute reduction initiatives: right-box…">
+        <bpmn:documentation>Step 2: Dark Store Ops Mgr/Procurement execute reduction initiatives: right-box cartonization (reduces void-fill), recyclable/compostable packaging, motion-sensor LED, automation energy saver, route consolidation (links to VS-06/VS-56)
+Responsible (R): Dark Store Ops Mgr / Procurement
+Accountable (A): VP Supply Chain
+Duration: Per initiative</bpmn:documentation>
+        <bpmn:incoming>W3112_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3112_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3112_Task7" name="Sustainability Lead reports dark-store emissions and waste into Scope 1/2/3…">
+        <bpmn:documentation>Step 3: Sustainability Lead reports dark-store emissions and waste into Scope 1/2/3 inventory (links to VS-25 W192); supports retailer ESG disclosure and any packaging-extended-producer-responsibility (EPR) obligation
+Responsible (R): Sustainability Lead
+Accountable (A): Sustainability/ESG Manager
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W3112_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3112_End8" name="Complete">
+        <bpmn:incoming>W3112_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3112_Annotation9">
+        <bpmn:text>Controls: - CTL-510 (ensure controlled execution — Dark Store Inventory, Capacity &amp; Performance Analytics (PA-93.3).) | - operational: recyclable-first procurement and waste tracking (links to VS-73)
+Owner: Dark Store Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3112_Assoc10" sourceRef="W3112_Annotation9" targetRef="W3112_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3112_Flow11" sourceRef="W3112_Start4" targetRef="W3112_Task5" />
+      <bpmn:sequenceFlow id="W3112_Flow12" sourceRef="W3112_Task5" targetRef="W3112_Task6" />
+      <bpmn:sequenceFlow id="W3112_Flow13" sourceRef="W3112_Task6" targetRef="W3112_Task7" />
+      <bpmn:sequenceFlow id="W3112_Flow14" sourceRef="W3112_Task7" targetRef="W3112_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3112_diag">
+      <bpmndi:BPMNPlane id="W3112_plane" bpmnElement="W_W3112">
+        <bpmndi:BPMNShape id="W3112_Lane1_di" bpmnElement="W3112_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3112_Lane2_di" bpmnElement="W3112_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3112_Task5_di" bpmnElement="W3112_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3112_Task6_di" bpmnElement="W3112_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3112_Task7_di" bpmnElement="W3112_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3112_Start4_di" bpmnElement="W3112_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3112_End8_di" bpmnElement="W3112_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3112_Annotation9_di" bpmnElement="W3112_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3112_Flow11_di" bpmnElement="W3112_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3112_Flow12_di" bpmnElement="W3112_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3112_Flow13_di" bpmnElement="W3112_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3112_Flow14_di" bpmnElement="W3112_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3112_Assoc10_di" bpmnElement="W3112_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

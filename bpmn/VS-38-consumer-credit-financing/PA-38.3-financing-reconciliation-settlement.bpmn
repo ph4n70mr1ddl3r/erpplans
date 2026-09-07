@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-38.3-financing-reconciliation-settlement" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1779" name="W1779. Financing Partner Daily Settlement Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily settlement received from financing partners (T+1 to T+3)
+Frequency: Daily (~5–8 partners × 365 days = ~2,000 settlements/year)
+Volume: ~4,000 installment transactions/day across all stores (per W747; ~120,000/month)
+Owner: Treasury
+Participants: Treasury, Revenue Accountant, Accounting Manager
+Source: workflow W1779 — Financing Partner Daily Settlement Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1779_LaneSet4">
+        <bpmn:lane id="W1779_Lane1" name="Financing Partner → System">
+        <bpmn:flowNodeRef>W1779_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1779_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1779_Lane2" name="System">
+        <bpmn:flowNodeRef>W1779_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1779_Lane3" name="Treasury">
+        <bpmn:flowNodeRef>W1779_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1779_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1779_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1779_Start5" name="Daily settlement received from financing partners (T+1 to T+3)">
+        <bpmn:outgoing>W1779_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1779_Task6" name="Financing partner settles daily transactions: (a) bank installment: acquiring…">
+        <bpmn:documentation>Step 1: Financing partner settles daily transactions: (a) bank installment: acquiring bank remits net amount (gross − MDR) to BuildRight bank account, (b) non-card financing: partner remits approved transaction amounts, (c) BNPL provider: remits via designated settlement account, (d) settlement file received electronically (per partner: CSV, API, or bank statement)
+Responsible (R): Financing Partner → System
+Accountable (A): Treasury
+Duration: Automated (T+1 to T+3)</bpmn:documentation>
+        <bpmn:incoming>W1779_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1779_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1779_Task7" name="System auto-matches settlement records to POS transactions: (a) match on…">
+        <bpmn:documentation>Step 2: System auto-matches settlement records to POS transactions: (a) match on: transaction reference, date, amount, terminal ID, (b) matched transactions: system posts receipt to GL (debit cash, credit AR-financing partner), (c) unmatched transactions: flagged for investigation (unreconciled items queue)
+Responsible (R): System
+Accountable (A): Treasury
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1779_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1779_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1779_Task8" name="Treasury investigates unmatched items: (a) timing differences (settlement…">
+        <bpmn:documentation>Step 3: Treasury investigates unmatched items: (a) timing differences (settlement covers different date range than POS), (b) amount discrepancies (MDR calculation differences, promotional rate misapplication), (c) missing transactions (POS transaction not received by partner), (d) resolves within 5 business days; escalates to partner for unresolved items
+Responsible (R): Treasury
+Accountable (A): Accounting Manager
+Duration: 1–2 hours/day</bpmn:documentation>
+        <bpmn:incoming>W1779_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1779_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1779_Task9" name="Daily reconciliation report: matched count/amount, unmatched count/amount…">
+        <bpmn:documentation>Step 4: Daily reconciliation report: matched count/amount, unmatched count/amount, aging of unreconciled items; Accounting Manager reviews material discrepancies
+Responsible (R): Treasury
+Accountable (A): Accounting Manager
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1779_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1779_End10" name="Complete">
+        <bpmn:incoming>W1779_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1779_Annotation11">
+        <bpmn:text>Controls: - CTL-357 (ensure controlled execution — Financing Reconciliation &amp; Partner Settlement (PA-38.3).) | - operational: Treasury review and approval gate; periodic reconciliation against source documents
+Owner: Treasury</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1779_Assoc12" sourceRef="W1779_Annotation11" targetRef="W1779_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1779_Flow13" sourceRef="W1779_Start5" targetRef="W1779_Task6" />
+      <bpmn:sequenceFlow id="W1779_Flow14" sourceRef="W1779_Task6" targetRef="W1779_Task7" />
+      <bpmn:sequenceFlow id="W1779_Flow15" sourceRef="W1779_Task7" targetRef="W1779_Task8" />
+      <bpmn:sequenceFlow id="W1779_Flow16" sourceRef="W1779_Task8" targetRef="W1779_Task9" />
+      <bpmn:sequenceFlow id="W1779_Flow17" sourceRef="W1779_Task9" targetRef="W1779_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1779_diag">
+      <bpmndi:BPMNPlane id="W1779_plane" bpmnElement="W_W1779">
+        <bpmndi:BPMNShape id="W1779_Lane1_di" bpmnElement="W1779_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Lane2_di" bpmnElement="W1779_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Lane3_di" bpmnElement="W1779_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Task6_di" bpmnElement="W1779_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Task7_di" bpmnElement="W1779_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Task8_di" bpmnElement="W1779_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Task9_di" bpmnElement="W1779_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Start5_di" bpmnElement="W1779_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_End10_di" bpmnElement="W1779_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1779_Annotation11_di" bpmnElement="W1779_Annotation11"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1779_Flow13_di" bpmnElement="W1779_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1779_Flow14_di" bpmnElement="W1779_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1779_Flow15_di" bpmnElement="W1779_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1779_Flow16_di" bpmnElement="W1779_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1779_Flow17_di" bpmnElement="W1779_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1779_Assoc12_di" bpmnElement="W1779_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1780" name="W1780. Monthly Financing Partner Statement Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly statement received from financing partner
+Frequency: Monthly (~5–8 partner statements)
+Volume: ~5–8 reconciliations/month
+Owner: Treasury
+Participants: Treasury, Revenue Accountant, Accounting Manager
+Source: workflow W1780 — Monthly Financing Partner Statement Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1780_LaneSet4">
+        <bpmn:lane id="W1780_Lane1" name="Financing Partner">
+        <bpmn:flowNodeRef>W1780_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1780_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1780_Lane2" name="Treasury">
+        <bpmn:flowNodeRef>W1780_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1780_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1780_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1780_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1780_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1780_Start5" name="Monthly statement received from financing partner">
+        <bpmn:outgoing>W1780_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1780_Task6" name="Financing partner provides monthly statement: (a) total transactions processed…">
+        <bpmn:documentation>Step 1: Financing partner provides monthly statement: (a) total transactions processed, (b) total settlement amount remitted, (c) total MDR/fees charged, (d) chargebacks and reversals, (e) promotional subsidy adjustments
+Responsible (R): Financing Partner
+Accountable (A): Treasury
+Duration: By 10th of following month</bpmn:documentation>
+        <bpmn:incoming>W1780_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1780_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1780_Task7" name="Treasury reconciles monthly statement to internal records: (a) total…">
+        <bpmn:documentation>Step 2: Treasury reconciles monthly statement to internal records: (a) total transaction amount: partner total vs. POS total for installment transactions, (b) total settlement received: partner total vs. bank deposits, (c) MDR charged: partner calculation vs. contracted rate × transaction volume, (d) promotional adjustments: verify against approved promotional campaigns, (e) net settlement: partner total vs. GL clearing account balance
+Responsible (R): Treasury
+Accountable (A): Accounting Manager
+Duration: 1 day/partner</bpmn:documentation>
+        <bpmn:incoming>W1780_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1780_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1780_Task8" name="Discrepancies investigated and resolved: (a) MDR rate misapplication: compare…">
+        <bpmn:documentation>Step 3: Discrepancies investigated and resolved: (a) MDR rate misapplication: compare contracted rate to actual rate charged per transaction, (b) promotional rate discrepancies: verify correct promotional MDR applied during campaign periods, (c) settlement timing: adjust for T+2 or T+3 settlements crossing month-end, (d) adjustments: partner issues credit note or debit memo for confirmed discrepancies
+Responsible (R): Treasury / Financing Partner
+Accountable (A): Accounting Manager
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1780_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1780_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1780_Task9" name="Accounting Manager reviews and approves monthly reconciliation; adjusts GL…">
+        <bpmn:documentation>Step 4: Accounting Manager reviews and approves monthly reconciliation; adjusts GL entries for any reconciling items; reconciliation filed for audit trail
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1780_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1780_End10" name="Complete">
+        <bpmn:incoming>W1780_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1780_Annotation11">
+        <bpmn:text>Controls: - CTL-357 (ensure controlled execution — Financing Reconciliation &amp; Partner Settlement (PA-38.3).) | - operational: Treasury review and approval gate; periodic reconciliation against source documents
+Owner: Treasury</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1780_Assoc12" sourceRef="W1780_Annotation11" targetRef="W1780_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1780_Flow13" sourceRef="W1780_Start5" targetRef="W1780_Task6" />
+      <bpmn:sequenceFlow id="W1780_Flow14" sourceRef="W1780_Task6" targetRef="W1780_Task7" />
+      <bpmn:sequenceFlow id="W1780_Flow15" sourceRef="W1780_Task7" targetRef="W1780_Task8" />
+      <bpmn:sequenceFlow id="W1780_Flow16" sourceRef="W1780_Task8" targetRef="W1780_Task9" />
+      <bpmn:sequenceFlow id="W1780_Flow17" sourceRef="W1780_Task9" targetRef="W1780_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1780_diag">
+      <bpmndi:BPMNPlane id="W1780_plane" bpmnElement="W_W1780">
+        <bpmndi:BPMNShape id="W1780_Lane1_di" bpmnElement="W1780_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Lane2_di" bpmnElement="W1780_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Lane3_di" bpmnElement="W1780_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Task6_di" bpmnElement="W1780_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Task7_di" bpmnElement="W1780_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Task8_di" bpmnElement="W1780_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Task9_di" bpmnElement="W1780_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Start5_di" bpmnElement="W1780_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_End10_di" bpmnElement="W1780_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1780_Annotation11_di" bpmnElement="W1780_Annotation11"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1780_Flow13_di" bpmnElement="W1780_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1780_Flow14_di" bpmnElement="W1780_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1780_Flow15_di" bpmnElement="W1780_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1780_Flow16_di" bpmnElement="W1780_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1780_Flow17_di" bpmnElement="W1780_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1780_Assoc12_di" bpmnElement="W1780_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1781" name="W1781. Financing Chargeback &amp; Dispute Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Chargeback received from financing partner (customer disputes transaction)
+Frequency: ~50–100 chargebacks/year
+Volume: ~0.005% of installment transactions (~50–100 chargebacks/year)
+Owner: Store Manager
+Participants: Store Manager, Treasury, Legal Counsel, Financing Partner, Customer
+Source: workflow W1781 — Financing Chargeback &amp; Dispute Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W1781_LaneSet4">
+        <bpmn:lane id="W1781_Lane1" name="Financing Partner → Treasury">
+        <bpmn:flowNodeRef>W1781_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1781_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1781_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W1781_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1781_Lane3" name="Treasury">
+        <bpmn:flowNodeRef>W1781_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1781_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1781_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1781_Start5" name="Chargeback received from financing partner (customer disputes transaction)">
+        <bpmn:outgoing>W1781_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1781_Task6" name="Financing partner notifies BuildRight of chargeback: (a) customer claims…">
+        <bpmn:documentation>Step 1: Financing partner notifies BuildRight of chargeback: (a) customer claims: merchandise not received, defective, or not as described, (b) fraud claim: customer denies making the purchase, (c) processing error: duplicate charge, incorrect amount
+Responsible (R): Financing Partner → Treasury
+Accountable (A): —
+Duration: Event-driven</bpmn:documentation>
+        <bpmn:incoming>W1781_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1781_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1781_Task7" name="Treasury alerts Store Manager for investigation: (a) pull transaction details…">
+        <bpmn:documentation>Step 2: Treasury alerts Store Manager for investigation: (a) pull transaction details (receipt, POS log, sales associate), (b) check delivery status (for ecommerce), (c) review CCTV footage if fraud claim, (d) check return history for the transaction
+Responsible (R): Store Manager / Treasury
+Accountable (A): —
+Duration: 1–3 days</bpmn:documentation>
+        <bpmn:incoming>W1781_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1781_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1781_Task8" name="BuildRight responds to financing partner: (a) provide evidence supporting the…">
+        <bpmn:documentation>Step 3: BuildRight responds to financing partner: (a) provide evidence supporting the transaction (signed receipt, delivery confirmation, product description match), (b) if BuildRight accepts chargeback (legitimate dispute): accept loss, process return, reverse transaction, (c) if BuildRight contests: submit representment with evidence to partner, (d) partner makes final determination
+Responsible (R): Treasury / Store Manager
+Accountable (A): Accounting Manager
+Duration: 5–10 days</bpmn:documentation>
+        <bpmn:incoming>W1781_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1781_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1781_Task9" name="If chargeback upheld: (a) revenue reversed, (b) inventory recovered (if…">
+        <bpmn:documentation>Step 4: If chargeback upheld: (a) revenue reversed, (b) inventory recovered (if merchandise returned), (c) chargeback fee (typically PHP 500–1,500) charged as expense, (d) if chargeback overturned: transaction reinstated, funds returned to BuildRight
+Responsible (R): Treasury / System
+Accountable (A): Accounting Manager
+Duration: Per resolution</bpmn:documentation>
+        <bpmn:incoming>W1781_Flow16</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1781_End10" name="Complete">
+        <bpmn:incoming>W1781_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1781_Annotation11">
+        <bpmn:text>Controls: - CTL-357 (ensure controlled execution — Financing Reconciliation &amp; Partner Settlement (PA-38.3).) | - operational: Store Manager review and approval gate
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1781_Assoc12" sourceRef="W1781_Annotation11" targetRef="W1781_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1781_Flow13" sourceRef="W1781_Start5" targetRef="W1781_Task6" />
+      <bpmn:sequenceFlow id="W1781_Flow14" sourceRef="W1781_Task6" targetRef="W1781_Task7" />
+      <bpmn:sequenceFlow id="W1781_Flow15" sourceRef="W1781_Task7" targetRef="W1781_Task8" />
+      <bpmn:sequenceFlow id="W1781_Flow16" sourceRef="W1781_Task8" targetRef="W1781_Task9" />
+      <bpmn:sequenceFlow id="W1781_Flow17" sourceRef="W1781_Task9" targetRef="W1781_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1781_diag">
+      <bpmndi:BPMNPlane id="W1781_plane" bpmnElement="W_W1781">
+        <bpmndi:BPMNShape id="W1781_Lane1_di" bpmnElement="W1781_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Lane2_di" bpmnElement="W1781_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Lane3_di" bpmnElement="W1781_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Task6_di" bpmnElement="W1781_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Task7_di" bpmnElement="W1781_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Task8_di" bpmnElement="W1781_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Task9_di" bpmnElement="W1781_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Start5_di" bpmnElement="W1781_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_End10_di" bpmnElement="W1781_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1781_Annotation11_di" bpmnElement="W1781_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1781_Flow13_di" bpmnElement="W1781_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1781_Flow14_di" bpmnElement="W1781_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1781_Flow15_di" bpmnElement="W1781_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1781_Flow16_di" bpmnElement="W1781_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1781_Flow17_di" bpmnElement="W1781_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1781_Assoc12_di" bpmnElement="W1781_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1782" name="W1782. MDR Fee Tracking &amp; Expense Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly management reporting
+Frequency: Monthly
+Volume: ~5–8 partners × monthly reports
+Owner: FP&amp;A
+Participants: FP&amp;A, Treasury, CFO
+Source: workflow W1782 — MDR Fee Tracking &amp; Expense Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W1782_LaneSet4">
+        <bpmn:lane id="W1782_Lane1" name="System">
+        <bpmn:flowNodeRef>W1782_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1782_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1782_Lane2" name="FP&amp;A">
+        <bpmn:flowNodeRef>W1782_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1782_Lane3" name="CFO">
+        <bpmn:flowNodeRef>W1782_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1782_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1782_Start5" name="Monthly management reporting">
+        <bpmn:outgoing>W1782_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1782_Task6" name="System tracks MDR fees per transaction: (a) standard credit card MDR: 1.5–2.0%…">
+        <bpmn:documentation>Step 1: System tracks MDR fees per transaction: (a) standard credit card MDR: 1.5–2.0%, (b) installment MDR: 2.5–4.0% (higher for longer terms and 0% promotions), (c) BNPL fee: 2–4%, (d) non-card financing fee: 3–5%, (e) fees recorded as selling expense per transaction, allocated to store cost center
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1782_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1782_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1782_Task7" name="Monthly MDR expense report: (a) total MDR expense by partner, (b) MDR as % of…">
+        <bpmn:documentation>Step 2: Monthly MDR expense report: (a) total MDR expense by partner, (b) MDR as % of financed sales, (c) MDR rate comparison vs. contracted rates (identify overcharging), (d) MDR by store (identify stores with higher installment usage and higher MDR cost), (e) trend analysis: is MDR cost increasing as % of sales?
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1782_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1782_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1782_Task8" name="CFO uses MDR data for partner renegotiation: (a) aggregate volume provides…">
+        <bpmn:documentation>Step 3: CFO uses MDR data for partner renegotiation: (a) aggregate volume provides leverage for better rates, (b) identify partners with highest MDR for targeted negotiation, (c) assess if MDR cost is justified by incremental sales generated by financing
+Responsible (R): CFO
+Accountable (A): CEO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W1782_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1782_End9" name="Complete">
+        <bpmn:incoming>W1782_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1782_Annotation10">
+        <bpmn:text>Controls: - CTL-208 (ensure consumer-financing settlement &amp; compliance.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1782_Assoc11" sourceRef="W1782_Annotation10" targetRef="W1782_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1782_Flow12" sourceRef="W1782_Start5" targetRef="W1782_Task6" />
+      <bpmn:sequenceFlow id="W1782_Flow13" sourceRef="W1782_Task6" targetRef="W1782_Task7" />
+      <bpmn:sequenceFlow id="W1782_Flow14" sourceRef="W1782_Task7" targetRef="W1782_Task8" />
+      <bpmn:sequenceFlow id="W1782_Flow15" sourceRef="W1782_Task8" targetRef="W1782_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1782_diag">
+      <bpmndi:BPMNPlane id="W1782_plane" bpmnElement="W_W1782">
+        <bpmndi:BPMNShape id="W1782_Lane1_di" bpmnElement="W1782_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_Lane2_di" bpmnElement="W1782_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_Lane3_di" bpmnElement="W1782_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_Task6_di" bpmnElement="W1782_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_Task7_di" bpmnElement="W1782_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_Task8_di" bpmnElement="W1782_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_Start5_di" bpmnElement="W1782_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_End9_di" bpmnElement="W1782_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1782_Annotation10_di" bpmnElement="W1782_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1782_Flow12_di" bpmnElement="W1782_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1782_Flow13_di" bpmnElement="W1782_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1782_Flow14_di" bpmnElement="W1782_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1782_Flow15_di" bpmnElement="W1782_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1782_Assoc11_di" bpmnElement="W1782_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1783" name="W1783. Multi-Tender Transaction Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer uses multiple payment methods (e.g., partial installment + partial cash)
+Frequency: ~10–15% of installment transactions involve multi-tender (≈12,000–18,000/month at the W747 base)
+Volume: ~12,000–18,000 multi-tender transactions/month (per the Frequency&#x27;s 10–15% at the W747 base)
+Owner: Revenue Accountant
+Participants: Revenue Accountant, Cashier, Treasury
+Source: workflow W1783 — Multi-Tender Transaction Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1783_LaneSet4">
+        <bpmn:lane id="W1783_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W1783_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1783_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1783_Lane2" name="System">
+        <bpmn:flowNodeRef>W1783_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1783_Lane3" name="Revenue Accountant">
+        <bpmn:flowNodeRef>W1783_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1783_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1783_Start5" name="Customer uses multiple payment methods (e.g., partial installment + partial cash)">
+        <bpmn:outgoing>W1783_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1783_Task6" name="Multi-tender scenarios: (a) customer purchases PHP 20K appliance: pays PHP 5K…">
+        <bpmn:documentation>Step 1: Multi-tender scenarios: (a) customer purchases PHP 20K appliance: pays PHP 5K cash, PHP 15K on 12-month installment, (b) customer uses loyalty points + credit card installment, (c) customer uses GCash + BNPL for remaining balance
+Responsible (R): Cashier
+Accountable (A): —
+Duration: Per transaction</bpmn:documentation>
+        <bpmn:incoming>W1783_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1783_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1783_Task7" name="System records each tender separately: (a) cash portion: deposited daily, (b)…">
+        <bpmn:documentation>Step 2: System records each tender separately: (a) cash portion: deposited daily, (b) installment portion: settled by financing partner at T+1 to T+3, (c) loyalty points: liability reduction, (d) e-wallet: settled per e-wallet provider terms
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1783_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1783_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1783_Task8" name="Reconciliation: Revenue Accountant ensures total transaction amount equals sum…">
+        <bpmn:documentation>Step 3: Reconciliation: Revenue Accountant ensures total transaction amount equals sum of all tenders; each tender component reconciled to its respective settlement channel
+Responsible (R): Revenue Accountant
+Accountable (A): Accounting Manager
+Duration: Part of daily reconciliation</bpmn:documentation>
+        <bpmn:incoming>W1783_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1783_End9" name="Complete">
+        <bpmn:incoming>W1783_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1783_Annotation10">
+        <bpmn:text>Controls: - CTL-208 (ensure consumer-financing settlement &amp; compliance.) | - operational: periodic reconciliation against source documents
+Owner: Revenue Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1783_Assoc11" sourceRef="W1783_Annotation10" targetRef="W1783_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1783_Flow12" sourceRef="W1783_Start5" targetRef="W1783_Task6" />
+      <bpmn:sequenceFlow id="W1783_Flow13" sourceRef="W1783_Task6" targetRef="W1783_Task7" />
+      <bpmn:sequenceFlow id="W1783_Flow14" sourceRef="W1783_Task7" targetRef="W1783_Task8" />
+      <bpmn:sequenceFlow id="W1783_Flow15" sourceRef="W1783_Task8" targetRef="W1783_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1783_diag">
+      <bpmndi:BPMNPlane id="W1783_plane" bpmnElement="W_W1783">
+        <bpmndi:BPMNShape id="W1783_Lane1_di" bpmnElement="W1783_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_Lane2_di" bpmnElement="W1783_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_Lane3_di" bpmnElement="W1783_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_Task6_di" bpmnElement="W1783_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_Task7_di" bpmnElement="W1783_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_Task8_di" bpmnElement="W1783_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_Start5_di" bpmnElement="W1783_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_End9_di" bpmnElement="W1783_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1783_Annotation10_di" bpmnElement="W1783_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1783_Flow12_di" bpmnElement="W1783_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1783_Flow13_di" bpmnElement="W1783_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1783_Flow14_di" bpmnElement="W1783_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1783_Flow15_di" bpmnElement="W1783_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1783_Assoc11_di" bpmnElement="W1783_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1784" name="W1784. Financing Partner Payment Exception Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Settlement delay, partial settlement, or settlement error from financing partner
+Frequency: ~10–20 exceptions/month
+Volume: Low volume but requires timely resolution
+Owner: Treasury
+Participants: Treasury, Financing Partner, Accounting Manager
+Source: workflow W1784 — Financing Partner Payment Exception Handling</bpmn:documentation>
+      <bpmn:laneSet id="W1784_LaneSet4">
+        <bpmn:lane id="W1784_Lane1" name="Treasury">
+        <bpmn:flowNodeRef>W1784_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1784_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1784_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1784_Lane2" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1784_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1784_Lane3" name="CFO">
+        <bpmn:flowNodeRef>W1784_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1784_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1784_Start5" name="Settlement delay, partial settlement, or settlement error from financing partner">
+        <bpmn:outgoing>W1784_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1784_Task6" name="Exception types: (a) settlement not received by expected date (T+2 or T+3), (b)…">
+        <bpmn:documentation>Step 1: Exception types: (a) settlement not received by expected date (T+2 or T+3), (b) settlement amount differs from expected (short settlement), (c) duplicate settlement (partner pays twice), (d) settlement for wrong merchant (BuildRight receives another merchant&#x27;s settlement), (e) partner system outage (no settlement file)
+Responsible (R): Treasury
+Accountable (A): —
+Duration: Event-driven</bpmn:documentation>
+        <bpmn:incoming>W1784_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1784_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1784_Task7" name="Treasury contacts partner for resolution: (a) escalates to partner&#x27;s merchant…">
+        <bpmn:documentation>Step 2: Treasury contacts partner for resolution: (a) escalates to partner&#x27;s merchant support, (b) documents communication, (c) tracks exception in reconciliation log, (d) target resolution: 5 business days
+Responsible (R): Treasury
+Accountable (A): Accounting Manager
+Duration: 1–3 days</bpmn:documentation>
+        <bpmn:incoming>W1784_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1784_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1784_Task8" name="GL adjustment if needed: (a) if settlement permanently short: record loss or…">
+        <bpmn:documentation>Step 3: GL adjustment if needed: (a) if settlement permanently short: record loss or adjust MDR, (b) if settlement delayed but expected: no adjustment (accrue), (c) if duplicate: return excess to partner
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: Per exception</bpmn:documentation>
+        <bpmn:incoming>W1784_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1784_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1784_Task9" name="Chronic issues (&gt; 3 exceptions in 30 days from same partner): CFO escalates to…">
+        <bpmn:documentation>Step 4: Chronic issues (&gt; 3 exceptions in 30 days from same partner): CFO escalates to partner management; considers partner termination if systemic
+Responsible (R): CFO
+Accountable (A): —
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W1784_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1784_End10" name="Complete">
+        <bpmn:incoming>W1784_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1784_Annotation11">
+        <bpmn:text>Controls: - CTL-208 (ensure consumer-financing settlement &amp; compliance.) | - operational: periodic reconciliation against source documents
+Owner: Treasury</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1784_Assoc12" sourceRef="W1784_Annotation11" targetRef="W1784_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1784_Flow13" sourceRef="W1784_Start5" targetRef="W1784_Task6" />
+      <bpmn:sequenceFlow id="W1784_Flow14" sourceRef="W1784_Task6" targetRef="W1784_Task7" />
+      <bpmn:sequenceFlow id="W1784_Flow15" sourceRef="W1784_Task7" targetRef="W1784_Task8" />
+      <bpmn:sequenceFlow id="W1784_Flow16" sourceRef="W1784_Task8" targetRef="W1784_Task9" />
+      <bpmn:sequenceFlow id="W1784_Flow17" sourceRef="W1784_Task9" targetRef="W1784_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1784_diag">
+      <bpmndi:BPMNPlane id="W1784_plane" bpmnElement="W_W1784">
+        <bpmndi:BPMNShape id="W1784_Lane1_di" bpmnElement="W1784_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Lane2_di" bpmnElement="W1784_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Lane3_di" bpmnElement="W1784_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Task6_di" bpmnElement="W1784_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Task7_di" bpmnElement="W1784_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Task8_di" bpmnElement="W1784_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Task9_di" bpmnElement="W1784_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Start5_di" bpmnElement="W1784_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_End10_di" bpmnElement="W1784_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1784_Annotation11_di" bpmnElement="W1784_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1784_Flow13_di" bpmnElement="W1784_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1784_Flow14_di" bpmnElement="W1784_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1784_Flow15_di" bpmnElement="W1784_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1784_Flow16_di" bpmnElement="W1784_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1784_Flow17_di" bpmnElement="W1784_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1784_Assoc12_di" bpmnElement="W1784_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1785" name="W1785. Ecommerce Financing Settlement Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Ecommerce financing transactions settled via BuildRight Digital Commerce Inc.
+Frequency: Daily
+Volume: ~500–1,000 ecommerce financing transactions/month
+Owner: Treasury
+Participants: Treasury, Ecommerce Operations, Digital Commerce Inc.
+Source: workflow W1785 — Ecommerce Financing Settlement Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1785_LaneSet3">
+        <bpmn:lane id="W1785_Lane1" name="System">
+        <bpmn:flowNodeRef>W1785_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1785_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1785_Lane2" name="Treasury">
+        <bpmn:flowNodeRef>W1785_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1785_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1785_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1785_Start4" name="Ecommerce financing transactions settled via BuildRight Digital Commerce Inc.">
+        <bpmn:outgoing>W1785_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1785_Task5" name="Ecommerce financing flow: (a) customer selects installment/BNPL on…">
+        <bpmn:documentation>Step 1: Ecommerce financing flow: (a) customer selects installment/BNPL on buildright.com.ph, (b) payment gateway (PayMongo/Dragonpay) processes installment with financing partner, (c) BuildRight Digital Commerce Inc. collects payment from gateway, (d) Digital Commerce Inc. remits to BuildRight Depot Inc. per intercompany agreement (daily or weekly), (e) Depot Inc. recognizes revenue at fulfillment (per intercompany arrangement)
+Responsible (R): System
+Accountable (A): Treasury
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1785_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1785_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1785_Task6" name="Reconciliation layers: (a) ecommerce platform orders → payment gateway records…">
+        <bpmn:documentation>Step 2: Reconciliation layers: (a) ecommerce platform orders → payment gateway records → financing partner settlements → Digital Commerce Inc. receipts → Depot Inc. intercompany remittances, (b) each layer reconciled separately, (c) discrepancies between layers investigated and resolved
+Responsible (R): Treasury / Ecommerce Operations
+Accountable (A): CFO
+Duration: 1–2 hours/day</bpmn:documentation>
+        <bpmn:incoming>W1785_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1785_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1785_Task7" name="Monthly: comprehensive ecommerce financing reconciliation report including all…">
+        <bpmn:documentation>Step 3: Monthly: comprehensive ecommerce financing reconciliation report including all layers, intercompany settlement confirmation, and MDR analysis
+Responsible (R): Treasury
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1785_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1785_End8" name="Complete">
+        <bpmn:incoming>W1785_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1785_Annotation9">
+        <bpmn:text>Controls: - CTL-208 (ensure consumer-financing settlement &amp; compliance.) | - operational: periodic reconciliation against source documents
+Owner: Treasury</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1785_Assoc10" sourceRef="W1785_Annotation9" targetRef="W1785_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1785_Flow11" sourceRef="W1785_Start4" targetRef="W1785_Task5" />
+      <bpmn:sequenceFlow id="W1785_Flow12" sourceRef="W1785_Task5" targetRef="W1785_Task6" />
+      <bpmn:sequenceFlow id="W1785_Flow13" sourceRef="W1785_Task6" targetRef="W1785_Task7" />
+      <bpmn:sequenceFlow id="W1785_Flow14" sourceRef="W1785_Task7" targetRef="W1785_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1785_diag">
+      <bpmndi:BPMNPlane id="W1785_plane" bpmnElement="W_W1785">
+        <bpmndi:BPMNShape id="W1785_Lane1_di" bpmnElement="W1785_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1785_Lane2_di" bpmnElement="W1785_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1785_Task5_di" bpmnElement="W1785_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1785_Task6_di" bpmnElement="W1785_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1785_Task7_di" bpmnElement="W1785_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1785_Start4_di" bpmnElement="W1785_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1785_End8_di" bpmnElement="W1785_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1785_Annotation9_di" bpmnElement="W1785_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1785_Flow11_di" bpmnElement="W1785_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1785_Flow12_di" bpmnElement="W1785_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1785_Flow13_di" bpmnElement="W1785_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1785_Flow14_di" bpmnElement="W1785_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1785_Assoc10_di" bpmnElement="W1785_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1786" name="W1786. Annual Financing Program Financial Close &amp; Audit" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual financial close and external audit
+Frequency: Annual
+Volume: 1 comprehensive review/year
+Owner: CFO
+Participants: CFO, Treasury, Accounting Manager, External Auditor
+Source: workflow W1786 — Annual Financing Program Financial Close &amp; Audit</bpmn:documentation>
+      <bpmn:laneSet id="W1786_LaneSet4">
+        <bpmn:lane id="W1786_Lane1" name="Treasury">
+        <bpmn:flowNodeRef>W1786_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1786_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1786_Lane2" name="External Auditor">
+        <bpmn:flowNodeRef>W1786_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1786_Lane3" name="CFO">
+        <bpmn:flowNodeRef>W1786_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1786_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1786_Start5" name="Annual financial close and external audit">
+        <bpmn:outgoing>W1786_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1786_Task6" name="Year-end financing reconciliation: (a) all partner statements reconciled…">
+        <bpmn:documentation>Step 1: Year-end financing reconciliation: (a) all partner statements reconciled through December 31, (b) all unreconciled items resolved or accrued, (c) MDR expense accrued for transactions settled in January but related to December sales, (d) in-house installment AR aged and provisioned per W1778, (e) promotional subsidy accrual for active promotions straddling year-end
+Responsible (R): Treasury / Accounting Manager
+Accountable (A): CFO
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W1786_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1786_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1786_Task7" name="External auditor review: (a) select sample of installment transactions and…">
+        <bpmn:documentation>Step 2: External auditor review: (a) select sample of installment transactions and trace to settlement records, (b) verify revenue recognition per PFRS 15, (c) confirm MDR expense accuracy, (d) review AR aging and bad debt provision adequacy for in-house installment portfolio, (e) verify partner reconciliation completeness, (f) confirm intercompany elimination for Digital Commerce Inc. financing settlements
+Responsible (R): External Auditor
+Accountable (A): CFO
+Duration: During annual audit</bpmn:documentation>
+        <bpmn:incoming>W1786_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1786_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1786_Task8" name="CFO responds to audit findings; adjusts if needed; includes financing program…">
+        <bpmn:documentation>Step 3: CFO responds to audit findings; adjusts if needed; includes financing program disclosures in financial statement notes (related party — if Digital Commerce Inc. settlement terms are non-standard)
+Responsible (R): CFO
+Accountable (A): External Auditor
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W1786_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1786_End9" name="Complete">
+        <bpmn:incoming>W1786_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1786_Annotation10">
+        <bpmn:text>Controls: - CTL-357 (ensure controlled execution — Financing Reconciliation &amp; Partner Settlement (PA-38.3).) | - operational: CFO review and approval gate; periodic reconciliation against source documents
+Owner: CFO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1786_Assoc11" sourceRef="W1786_Annotation10" targetRef="W1786_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1786_Flow12" sourceRef="W1786_Start5" targetRef="W1786_Task6" />
+      <bpmn:sequenceFlow id="W1786_Flow13" sourceRef="W1786_Task6" targetRef="W1786_Task7" />
+      <bpmn:sequenceFlow id="W1786_Flow14" sourceRef="W1786_Task7" targetRef="W1786_Task8" />
+      <bpmn:sequenceFlow id="W1786_Flow15" sourceRef="W1786_Task8" targetRef="W1786_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1786_diag">
+      <bpmndi:BPMNPlane id="W1786_plane" bpmnElement="W_W1786">
+        <bpmndi:BPMNShape id="W1786_Lane1_di" bpmnElement="W1786_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_Lane2_di" bpmnElement="W1786_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_Lane3_di" bpmnElement="W1786_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_Task6_di" bpmnElement="W1786_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_Task7_di" bpmnElement="W1786_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_Task8_di" bpmnElement="W1786_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_Start5_di" bpmnElement="W1786_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_End9_di" bpmnElement="W1786_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1786_Annotation10_di" bpmnElement="W1786_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1786_Flow12_di" bpmnElement="W1786_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1786_Flow13_di" bpmnElement="W1786_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1786_Flow14_di" bpmnElement="W1786_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1786_Flow15_di" bpmnElement="W1786_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1786_Assoc11_di" bpmnElement="W1786_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

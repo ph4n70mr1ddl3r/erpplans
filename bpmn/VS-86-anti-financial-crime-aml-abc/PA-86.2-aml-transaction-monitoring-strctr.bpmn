@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-86.2-aml-transaction-monitoring-strctr" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W2929" name="W2929. Cash Transaction Monitoring &amp; Covered Transaction (PHP 500K Single-Day) Detection" isExecutable="false">
+      <bpmn:documentation>Trigger: Cash transaction in single business day
+Frequency: Continuous
+Volume: ~2.8M POS transactions/month; cash-heavy retail
+Owner: Compliance Analyst
+Participants: Compliance, Treasury, AR
+Source: workflow W2929 — Cash Transaction Monitoring &amp; Covered Transaction (PHP 500K Single-Day) Detection</bpmn:documentation>
+      <bpmn:laneSet id="W2929_LaneSet4">
+        <bpmn:lane id="W2929_Lane1" name="ERP automation">
+        <bpmn:flowNodeRef>W2929_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2929_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2929_Lane2" name="Compliance Analyst">
+        <bpmn:flowNodeRef>W2929_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2929_Lane3" name="Compliance">
+        <bpmn:flowNodeRef>W2929_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2929_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2929_Start5" name="Cash transaction in single business day">
+        <bpmn:outgoing>W2929_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2929_Task6" name="ERP monitors aggregate single-day cash transactions per customer; flags covered…">
+        <bpmn:documentation>Step 1: ERP monitors aggregate single-day cash transactions per customer; flags covered transactions exceeding PHP 500K (single or series) per AMLA
+Responsible (R): ERP automation
+Accountable (A): Compliance Analyst
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W2929_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2929_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2929_Task7" name="Compliance validates customer identity and transaction legitimacy; determines…">
+        <bpmn:documentation>Step 2: Compliance validates customer identity and transaction legitimacy; determines covered-transaction reportability
+Responsible (R): Compliance Analyst
+Accountable (A): Compliance Officer
+Duration: Per alert</bpmn:documentation>
+        <bpmn:incoming>W2929_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2929_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2929_Task8" name="Compliance files Covered Transaction Report (CTR) with AMLC within 5 working…">
+        <bpmn:documentation>Step 3: Compliance files Covered Transaction Report (CTR) with AMLC within 5 working days; archives filing
+Responsible (R): Compliance
+Accountable (A): Compliance Officer
+Duration: Per covered txn</bpmn:documentation>
+        <bpmn:incoming>W2929_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2929_End9" name="Complete">
+        <bpmn:incoming>W2929_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2929_Annotation10">
+        <bpmn:text>Controls: - CTL-237 (ensure AML/KYC &amp; sanctions compliance.) | - operational: automated monitoring
+Owner: Compliance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2929_Assoc11" sourceRef="W2929_Annotation10" targetRef="W2929_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2929_Flow12" sourceRef="W2929_Start5" targetRef="W2929_Task6" />
+      <bpmn:sequenceFlow id="W2929_Flow13" sourceRef="W2929_Task6" targetRef="W2929_Task7" />
+      <bpmn:sequenceFlow id="W2929_Flow14" sourceRef="W2929_Task7" targetRef="W2929_Task8" />
+      <bpmn:sequenceFlow id="W2929_Flow15" sourceRef="W2929_Task8" targetRef="W2929_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2929_diag">
+      <bpmndi:BPMNPlane id="W2929_plane" bpmnElement="W_W2929">
+        <bpmndi:BPMNShape id="W2929_Lane1_di" bpmnElement="W2929_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_Lane2_di" bpmnElement="W2929_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_Lane3_di" bpmnElement="W2929_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_Task6_di" bpmnElement="W2929_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_Task7_di" bpmnElement="W2929_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_Task8_di" bpmnElement="W2929_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_Start5_di" bpmnElement="W2929_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_End9_di" bpmnElement="W2929_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2929_Annotation10_di" bpmnElement="W2929_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2929_Flow12_di" bpmnElement="W2929_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2929_Flow13_di" bpmnElement="W2929_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2929_Flow14_di" bpmnElement="W2929_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2929_Flow15_di" bpmnElement="W2929_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2929_Assoc11_di" bpmnElement="W2929_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2930" name="W2930. Suspicious Transaction Detection, Alert Triage &amp; Escalation" isExecutable="false">
+      <bpmn:documentation>Trigger: Monitoring rule alert or analyst referral
+Frequency: Continuous
+Volume: ~50–200 alerts/month
+Owner: Compliance Analyst
+Participants: Compliance, LP, Trade Sales
+Source: workflow W2930 — Suspicious Transaction Detection, Alert Triage &amp; Escalation</bpmn:documentation>
+      <bpmn:laneSet id="W2930_LaneSet4">
+        <bpmn:lane id="W2930_Lane1" name="ERP automation">
+        <bpmn:flowNodeRef>W2930_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2930_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2930_Lane2" name="Compliance Analyst">
+        <bpmn:flowNodeRef>W2930_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2930_Lane3" name="Compliance">
+        <bpmn:flowNodeRef>W2930_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2930_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2930_Start5" name="Monitoring rule alert or analyst referral">
+        <bpmn:outgoing>W2930_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2930_Task6" name="ERP generates suspicious-activity alerts based on rules (unusual size…">
+        <bpmn:documentation>Step 1: ERP generates suspicious-activity alerts based on rules (unusual size, velocity, structure, customer profile mismatch)
+Responsible (R): ERP automation
+Accountable (A): Compliance Analyst
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W2930_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2930_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2930_Task7" name="Compliance triages alerts: reviews customer KYC, transaction pattern, business…">
+        <bpmn:documentation>Step 2: Compliance triages alerts: reviews customer KYC, transaction pattern, business rationale; dismisses false positives
+Responsible (R): Compliance Analyst
+Accountable (A): Compliance Officer
+Duration: Per alert</bpmn:documentation>
+        <bpmn:incoming>W2930_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2930_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2930_Task8" name="Compliance escalates true positives for STR filing and possible relationship…">
+        <bpmn:documentation>Step 3: Compliance escalates true positives for STR filing and possible relationship exit; documents decision rationale
+Responsible (R): Compliance
+Accountable (A): Compliance Officer
+Duration: Per escalation</bpmn:documentation>
+        <bpmn:incoming>W2930_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2930_End9" name="Complete">
+        <bpmn:incoming>W2930_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2930_Annotation10">
+        <bpmn:text>Controls: - CTL-488 (ensure controlled execution — AML Transaction Monitoring &amp; STR/CTR Reporting (AMLC) (PA-86.2).) | - operational: tuned rules and analyst training
+Owner: Compliance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2930_Assoc11" sourceRef="W2930_Annotation10" targetRef="W2930_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2930_Flow12" sourceRef="W2930_Start5" targetRef="W2930_Task6" />
+      <bpmn:sequenceFlow id="W2930_Flow13" sourceRef="W2930_Task6" targetRef="W2930_Task7" />
+      <bpmn:sequenceFlow id="W2930_Flow14" sourceRef="W2930_Task7" targetRef="W2930_Task8" />
+      <bpmn:sequenceFlow id="W2930_Flow15" sourceRef="W2930_Task8" targetRef="W2930_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2930_diag">
+      <bpmndi:BPMNPlane id="W2930_plane" bpmnElement="W_W2930">
+        <bpmndi:BPMNShape id="W2930_Lane1_di" bpmnElement="W2930_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_Lane2_di" bpmnElement="W2930_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_Lane3_di" bpmnElement="W2930_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_Task6_di" bpmnElement="W2930_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_Task7_di" bpmnElement="W2930_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_Task8_di" bpmnElement="W2930_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_Start5_di" bpmnElement="W2930_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_End9_di" bpmnElement="W2930_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2930_Annotation10_di" bpmnElement="W2930_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2930_Flow12_di" bpmnElement="W2930_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2930_Flow13_di" bpmnElement="W2930_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2930_Flow14_di" bpmnElement="W2930_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2930_Flow15_di" bpmnElement="W2930_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2930_Assoc11_di" bpmnElement="W2930_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2931" name="W2931. Suspicious Transaction Report (STR) Filing with AMLC" isExecutable="false">
+      <bpmn:documentation>Trigger: Confirmed suspicious transaction
+Frequency: Event-driven
+Volume: ~10–30 STRs/year
+Owner: Compliance Officer
+Participants: Compliance Officer, MLRO, Legal
+Source: workflow W2931 — Suspicious Transaction Report (STR) Filing with AMLC</bpmn:documentation>
+      <bpmn:laneSet id="W2931_LaneSet4">
+        <bpmn:lane id="W2931_Lane1" name="Compliance Officer">
+        <bpmn:flowNodeRef>W2931_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2931_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2931_Lane2" name="MLRO">
+        <bpmn:flowNodeRef>W2931_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2931_Lane3" name="Compliance">
+        <bpmn:flowNodeRef>W2931_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2931_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2931_Start5" name="Confirmed suspicious transaction">
+        <bpmn:outgoing>W2931_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2931_Task6" name="Compliance prepares STR with required details: subject identity, transaction…">
+        <bpmn:documentation>Step 1: Compliance prepares STR with required details: subject identity, transaction details, grounds for suspicion, supporting evidence
+Responsible (R): Compliance Officer
+Accountable (A): MLRO
+Duration: Per STR</bpmn:documentation>
+        <bpmn:incoming>W2931_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2931_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2931_Task7" name="MLRO reviews and approves STR; files via AMLC portal within 5 days of…">
+        <bpmn:documentation>Step 2: MLRO reviews and approves STR; files via AMLC portal within 5 days of determination; maintains confidentiality (no tipping-off)
+Responsible (R): MLRO
+Accountable (A): Compliance Officer
+Duration: Per STR</bpmn:documentation>
+        <bpmn:incoming>W2931_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2931_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2931_Task8" name="Compliance/Legal supports any AMLC follow-up investigation; preserves records…">
+        <bpmn:documentation>Step 3: Compliance/Legal supports any AMLC follow-up investigation; preserves records per AMLA retention; manages customer relationship outcome
+Responsible (R): Compliance / Legal
+Accountable (A): VP Legal &amp; Compliance
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W2931_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2931_End9" name="Complete">
+        <bpmn:incoming>W2931_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2931_Annotation10">
+        <bpmn:text>Controls: - CTL-237 (ensure AML/KYC &amp; sanctions compliance.) | - operational: MLRO process and confidentiality controls
+Owner: Compliance Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2931_Assoc11" sourceRef="W2931_Annotation10" targetRef="W2931_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2931_Flow12" sourceRef="W2931_Start5" targetRef="W2931_Task6" />
+      <bpmn:sequenceFlow id="W2931_Flow13" sourceRef="W2931_Task6" targetRef="W2931_Task7" />
+      <bpmn:sequenceFlow id="W2931_Flow14" sourceRef="W2931_Task7" targetRef="W2931_Task8" />
+      <bpmn:sequenceFlow id="W2931_Flow15" sourceRef="W2931_Task8" targetRef="W2931_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2931_diag">
+      <bpmndi:BPMNPlane id="W2931_plane" bpmnElement="W_W2931">
+        <bpmndi:BPMNShape id="W2931_Lane1_di" bpmnElement="W2931_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_Lane2_di" bpmnElement="W2931_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_Lane3_di" bpmnElement="W2931_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_Task6_di" bpmnElement="W2931_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_Task7_di" bpmnElement="W2931_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_Task8_di" bpmnElement="W2931_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_Start5_di" bpmnElement="W2931_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_End9_di" bpmnElement="W2931_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2931_Annotation10_di" bpmnElement="W2931_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2931_Flow12_di" bpmnElement="W2931_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2931_Flow13_di" bpmnElement="W2931_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2931_Flow14_di" bpmnElement="W2931_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2931_Flow15_di" bpmnElement="W2931_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2931_Assoc11_di" bpmnElement="W2931_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2932" name="W2932. Covered Transaction Report (CTR) Filing &amp; AMLC Portal Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Covered transaction batch
+Frequency: Daily/weekly batch
+Volume: ~10–50 CTRs/year
+Owner: Compliance Analyst
+Participants: Compliance, MLRO
+Source: workflow W2932 — Covered Transaction Report (CTR) Filing &amp; AMLC Portal Management</bpmn:documentation>
+      <bpmn:laneSet id="W2932_LaneSet4">
+        <bpmn:lane id="W2932_Lane1" name="Compliance Analyst">
+        <bpmn:flowNodeRef>W2932_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2932_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2932_Lane2" name="MLRO">
+        <bpmn:flowNodeRef>W2932_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2932_Lane3" name="Compliance">
+        <bpmn:flowNodeRef>W2932_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2932_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2932_Start5" name="Covered transaction batch">
+        <bpmn:outgoing>W2932_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2932_Task6" name="Compliance compiles CTR data: subject identity, transaction type, amount, date…">
+        <bpmn:documentation>Step 1: Compliance compiles CTR data: subject identity, transaction type, amount, date, account/reference
+Responsible (R): Compliance Analyst
+Accountable (A): MLRO
+Duration: Per batch</bpmn:documentation>
+        <bpmn:incoming>W2932_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2932_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2932_Task7" name="MLRO reviews and files CTR via AMLC portal within prescribed period; maintains…">
+        <bpmn:documentation>Step 2: MLRO reviews and files CTR via AMLC portal within prescribed period; maintains filing acknowledgment
+Responsible (R): MLRO
+Accountable (A): Compliance Officer
+Duration: Per batch</bpmn:documentation>
+        <bpmn:incoming>W2932_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2932_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2932_Task8" name="Compliance archives CTR records; tracks filing timeliness for audit">
+        <bpmn:documentation>Step 3: Compliance archives CTR records; tracks filing timeliness for audit
+Responsible (R): Compliance
+Accountable (A): Compliance Officer
+Duration: Per batch</bpmn:documentation>
+        <bpmn:incoming>W2932_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2932_End9" name="Complete">
+        <bpmn:incoming>W2932_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2932_Annotation10">
+        <bpmn:text>Controls: - CTL-237 (ensure AML/KYC &amp; sanctions compliance.) | - operational: batch process and timeliness tracking
+Owner: Compliance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2932_Assoc11" sourceRef="W2932_Annotation10" targetRef="W2932_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2932_Flow12" sourceRef="W2932_Start5" targetRef="W2932_Task6" />
+      <bpmn:sequenceFlow id="W2932_Flow13" sourceRef="W2932_Task6" targetRef="W2932_Task7" />
+      <bpmn:sequenceFlow id="W2932_Flow14" sourceRef="W2932_Task7" targetRef="W2932_Task8" />
+      <bpmn:sequenceFlow id="W2932_Flow15" sourceRef="W2932_Task8" targetRef="W2932_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2932_diag">
+      <bpmndi:BPMNPlane id="W2932_plane" bpmnElement="W_W2932">
+        <bpmndi:BPMNShape id="W2932_Lane1_di" bpmnElement="W2932_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_Lane2_di" bpmnElement="W2932_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_Lane3_di" bpmnElement="W2932_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_Task6_di" bpmnElement="W2932_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_Task7_di" bpmnElement="W2932_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_Task8_di" bpmnElement="W2932_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_Start5_di" bpmnElement="W2932_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_End9_di" bpmnElement="W2932_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2932_Annotation10_di" bpmnElement="W2932_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2932_Flow12_di" bpmnElement="W2932_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2932_Flow13_di" bpmnElement="W2932_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2932_Flow14_di" bpmnElement="W2932_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2932_Flow15_di" bpmnElement="W2932_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2932_Assoc11_di" bpmnElement="W2932_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2933" name="W2933. Structuring / Smurfing Pattern Detection &amp; Investigation" isExecutable="false">
+      <bpmn:documentation>Trigger: Pattern-based alert
+Frequency: Event-driven
+Volume: ~5–20 investigations/year
+Owner: Compliance Analyst
+Participants: Compliance, LP, IT
+Source: workflow W2933 — Structuring / Smurfing Pattern Detection &amp; Investigation</bpmn:documentation>
+      <bpmn:laneSet id="W2933_LaneSet4">
+        <bpmn:lane id="W2933_Lane1" name="ERP automation">
+        <bpmn:flowNodeRef>W2933_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2933_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2933_Lane2" name="Compliance Analyst">
+        <bpmn:flowNodeRef>W2933_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2933_Lane3" name="Compliance">
+        <bpmn:flowNodeRef>W2933_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2933_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2933_Start5" name="Pattern-based alert">
+        <bpmn:outgoing>W2933_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2933_Task6" name="ERP detects structuring patterns: multiple sub-threshold cash transactions by…">
+        <bpmn:documentation>Step 1: ERP detects structuring patterns: multiple sub-threshold cash transactions by same customer/related parties within short period
+Responsible (R): ERP automation
+Accountable (A): Compliance Analyst
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W2933_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2933_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2933_Task7" name="Compliance investigates: identifies related customers/accounts, reviews intent…">
+        <bpmn:documentation>Step 2: Compliance investigates: identifies related customers/accounts, reviews intent, business rationale
+Responsible (R): Compliance Analyst
+Accountable (A): Compliance Officer
+Duration: Per alert</bpmn:documentation>
+        <bpmn:incoming>W2933_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2933_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2933_Task8" name="Compliance files STR if structuring confirmed; restricts/blocks customer…">
+        <bpmn:documentation>Step 3: Compliance files STR if structuring confirmed; restricts/blocks customer; coordinates with LP for any in-store angle
+Responsible (R): Compliance / LP
+Accountable (A): Compliance Officer
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W2933_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2933_End9" name="Complete">
+        <bpmn:incoming>W2933_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2933_Annotation10">
+        <bpmn:text>Controls: - CTL-488 (ensure controlled execution — AML Transaction Monitoring &amp; STR/CTR Reporting (AMLC) (PA-86.2).) | - operational: pattern analytics
+Owner: Compliance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2933_Assoc11" sourceRef="W2933_Annotation10" targetRef="W2933_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2933_Flow12" sourceRef="W2933_Start5" targetRef="W2933_Task6" />
+      <bpmn:sequenceFlow id="W2933_Flow13" sourceRef="W2933_Task6" targetRef="W2933_Task7" />
+      <bpmn:sequenceFlow id="W2933_Flow14" sourceRef="W2933_Task7" targetRef="W2933_Task8" />
+      <bpmn:sequenceFlow id="W2933_Flow15" sourceRef="W2933_Task8" targetRef="W2933_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2933_diag">
+      <bpmndi:BPMNPlane id="W2933_plane" bpmnElement="W_W2933">
+        <bpmndi:BPMNShape id="W2933_Lane1_di" bpmnElement="W2933_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_Lane2_di" bpmnElement="W2933_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_Lane3_di" bpmnElement="W2933_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_Task6_di" bpmnElement="W2933_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_Task7_di" bpmnElement="W2933_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_Task8_di" bpmnElement="W2933_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_Start5_di" bpmnElement="W2933_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_End9_di" bpmnElement="W2933_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2933_Annotation10_di" bpmnElement="W2933_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2933_Flow12_di" bpmnElement="W2933_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2933_Flow13_di" bpmnElement="W2933_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2933_Flow14_di" bpmnElement="W2933_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2933_Flow15_di" bpmnElement="W2933_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2933_Assoc11_di" bpmnElement="W2933_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2934" name="W2934. Trade-Based Money Laundering (TBML) Monitoring for Import/Export" isExecutable="false">
+      <bpmn:documentation>Trigger: Import/export transaction or vendor red flag
+Frequency: Continuous
+Volume: ~400–600 TEUs/month imports; trade accounts
+Owner: Compliance Analyst
+Participants: Compliance, Procurement, Trade Sales, Logistics
+Source: workflow W2934 — Trade-Based Money Laundering (TBML) Monitoring for Import/Export</bpmn:documentation>
+      <bpmn:laneSet id="W2934_LaneSet3">
+        <bpmn:lane id="W2934_Lane1" name="Compliance Analyst">
+        <bpmn:flowNodeRef>W2934_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2934_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2934_Lane2" name="Compliance">
+        <bpmn:flowNodeRef>W2934_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2934_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2934_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2934_Start4" name="Import/export transaction or vendor red flag">
+        <bpmn:outgoing>W2934_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2934_Task5" name="Compliance monitors import/export for TBML indicators: invoice…">
+        <bpmn:documentation>Step 1: Compliance monitors import/export for TBML indicators: invoice over/under-valuation, phantom shipments, third-party payment, rapid movement of goods
+Responsible (R): Compliance Analyst
+Accountable (A): Compliance Officer
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W2934_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2934_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2934_Task6" name="Compliance cross-references invoice value vs. market price, shipping docs vs…">
+        <bpmn:documentation>Step 2: Compliance cross-references invoice value vs. market price, shipping docs vs. actual goods, payment source vs. customer
+Responsible (R): Compliance / Procurement
+Accountable (A): Compliance Officer
+Duration: Per alert</bpmn:documentation>
+        <bpmn:incoming>W2934_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2934_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2934_Task7" name="Compliance files STR if TBML suspected; coordinates with BOC and AMLC; exits…">
+        <bpmn:documentation>Step 3: Compliance files STR if TBML suspected; coordinates with BOC and AMLC; exits vendor relationship if warranted
+Responsible (R): Compliance / Legal
+Accountable (A): Compliance Officer
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W2934_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2934_End8" name="Complete">
+        <bpmn:incoming>W2934_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2934_Annotation9">
+        <bpmn:text>Controls: - CTL-488 (ensure controlled execution — AML Transaction Monitoring &amp; STR/CTR Reporting (AMLC) (PA-86.2).) | - operational: red-flag indicators and cross-reference
+Owner: Compliance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2934_Assoc10" sourceRef="W2934_Annotation9" targetRef="W2934_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2934_Flow11" sourceRef="W2934_Start4" targetRef="W2934_Task5" />
+      <bpmn:sequenceFlow id="W2934_Flow12" sourceRef="W2934_Task5" targetRef="W2934_Task6" />
+      <bpmn:sequenceFlow id="W2934_Flow13" sourceRef="W2934_Task6" targetRef="W2934_Task7" />
+      <bpmn:sequenceFlow id="W2934_Flow14" sourceRef="W2934_Task7" targetRef="W2934_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2934_diag">
+      <bpmndi:BPMNPlane id="W2934_plane" bpmnElement="W_W2934">
+        <bpmndi:BPMNShape id="W2934_Lane1_di" bpmnElement="W2934_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2934_Lane2_di" bpmnElement="W2934_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2934_Task5_di" bpmnElement="W2934_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2934_Task6_di" bpmnElement="W2934_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2934_Task7_di" bpmnElement="W2934_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2934_Start4_di" bpmnElement="W2934_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2934_End8_di" bpmnElement="W2934_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2934_Annotation9_di" bpmnElement="W2934_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2934_Flow11_di" bpmnElement="W2934_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2934_Flow12_di" bpmnElement="W2934_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2934_Flow13_di" bpmnElement="W2934_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2934_Flow14_di" bpmnElement="W2934_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2934_Assoc10_di" bpmnElement="W2934_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2935" name="W2935. AML Case Management, Investigation &amp; Law Enforcement Cooperation" isExecutable="false">
+      <bpmn:documentation>Trigger: AMLC request, court order, or internal escalation
+Frequency: Event-driven
+Volume: ~1–5 major cases/year
+Owner: Compliance Officer
+Participants: Compliance, Legal, MLRO, AMLC, PNP, NBI
+Source: workflow W2935 — AML Case Management, Investigation &amp; Law Enforcement Cooperation</bpmn:documentation>
+      <bpmn:laneSet id="W2935_LaneSet3">
+        <bpmn:lane id="W2935_Lane1" name="Compliance">
+        <bpmn:flowNodeRef>W2935_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2935_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2935_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2935_Lane2" name="Legal">
+        <bpmn:flowNodeRef>W2935_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2935_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2935_Start4" name="AMLC request, court order, or internal escalation">
+        <bpmn:outgoing>W2935_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2935_Task5" name="Compliance/Legal responds to AMLC request for information or freeze order…">
+        <bpmn:documentation>Step 1: Compliance/Legal responds to AMLC request for information or freeze order; preserves records; maintains confidentiality
+Responsible (R): Compliance / Legal
+Accountable (A): MLRO
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W2935_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2935_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2935_Task6" name="Legal cooperates with PNP/NBI investigation per lawful order; provides evidence…">
+        <bpmn:documentation>Step 2: Legal cooperates with PNP/NBI investigation per lawful order; provides evidence under court supervision
+Responsible (R): Legal
+Accountable (A): VP Legal &amp; Compliance
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W2935_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2935_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2935_Task7" name="Compliance executes account freeze, asset preservation, or relationship exit…">
+        <bpmn:documentation>Step 3: Compliance executes account freeze, asset preservation, or relationship exit per order; tracks resolution
+Responsible (R): Compliance
+Accountable (A): Compliance Officer
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W2935_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2935_End8" name="Complete">
+        <bpmn:incoming>W2935_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2935_Annotation9">
+        <bpmn:text>Controls: - CTL-488 (ensure controlled execution — AML Transaction Monitoring &amp; STR/CTR Reporting (AMLC) (PA-86.2).) | - operational: legal-led process
+Owner: Compliance Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2935_Assoc10" sourceRef="W2935_Annotation9" targetRef="W2935_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2935_Flow11" sourceRef="W2935_Start4" targetRef="W2935_Task5" />
+      <bpmn:sequenceFlow id="W2935_Flow12" sourceRef="W2935_Task5" targetRef="W2935_Task6" />
+      <bpmn:sequenceFlow id="W2935_Flow13" sourceRef="W2935_Task6" targetRef="W2935_Task7" />
+      <bpmn:sequenceFlow id="W2935_Flow14" sourceRef="W2935_Task7" targetRef="W2935_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2935_diag">
+      <bpmndi:BPMNPlane id="W2935_plane" bpmnElement="W_W2935">
+        <bpmndi:BPMNShape id="W2935_Lane1_di" bpmnElement="W2935_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2935_Lane2_di" bpmnElement="W2935_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2935_Task5_di" bpmnElement="W2935_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2935_Task6_di" bpmnElement="W2935_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2935_Task7_di" bpmnElement="W2935_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2935_Start4_di" bpmnElement="W2935_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2935_End8_di" bpmnElement="W2935_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2935_Annotation9_di" bpmnElement="W2935_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2935_Flow11_di" bpmnElement="W2935_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2935_Flow12_di" bpmnElement="W2935_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2935_Flow13_di" bpmnElement="W2935_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2935_Flow14_di" bpmnElement="W2935_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2935_Assoc10_di" bpmnElement="W2935_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2936" name="W2936. AML Rule Tuning, Threshold Governance &amp; False-Positive Reduction" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly review or model-performance issue
+Frequency: Quarterly
+Volume: ~30–50 monitoring rules
+Owner: Compliance Officer
+Participants: Compliance, IT, Internal Audit
+Source: workflow W2936 — AML Rule Tuning, Threshold Governance &amp; False-Positive Reduction</bpmn:documentation>
+      <bpmn:laneSet id="W2936_LaneSet4">
+        <bpmn:lane id="W2936_Lane1" name="Compliance Officer">
+        <bpmn:flowNodeRef>W2936_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2936_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2936_Lane2" name="IT">
+        <bpmn:flowNodeRef>W2936_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2936_Lane3" name="Internal Audit">
+        <bpmn:flowNodeRef>W2936_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2936_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2936_Start5" name="Quarterly review or model-performance issue">
+        <bpmn:outgoing>W2936_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2936_Task6" name="Compliance analyzes rule performance: alert volume, false-positive rate…">
+        <bpmn:documentation>Step 1: Compliance analyzes rule performance: alert volume, false-positive rate, true-positive yield, coverage gaps
+Responsible (R): Compliance Officer
+Accountable (A): Compliance Officer
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2936_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2936_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2936_Task7" name="IT tunes thresholds and scenario logic; validates in shadow mode before…">
+        <bpmn:documentation>Step 2: IT tunes thresholds and scenario logic; validates in shadow mode before production; documents change
+Responsible (R): IT
+Accountable (A): Compliance Officer
+Duration: Per change</bpmn:documentation>
+        <bpmn:incoming>W2936_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2936_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2936_Task8" name="Internal Audit reviews rule-tuning governance annually; validates detection…">
+        <bpmn:documentation>Step 3: Internal Audit reviews rule-tuning governance annually; validates detection effectiveness
+Responsible (R): Internal Audit
+Accountable (A): Audit Committee
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W2936_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2936_End9" name="Complete">
+        <bpmn:incoming>W2936_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2936_Annotation10">
+        <bpmn:text>Controls: - CTL-488 (ensure controlled execution — AML Transaction Monitoring &amp; STR/CTR Reporting (AMLC) (PA-86.2).) | - operational: shadow validation and audit
+Owner: Compliance Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2936_Assoc11" sourceRef="W2936_Annotation10" targetRef="W2936_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2936_Flow12" sourceRef="W2936_Start5" targetRef="W2936_Task6" />
+      <bpmn:sequenceFlow id="W2936_Flow13" sourceRef="W2936_Task6" targetRef="W2936_Task7" />
+      <bpmn:sequenceFlow id="W2936_Flow14" sourceRef="W2936_Task7" targetRef="W2936_Task8" />
+      <bpmn:sequenceFlow id="W2936_Flow15" sourceRef="W2936_Task8" targetRef="W2936_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2936_diag">
+      <bpmndi:BPMNPlane id="W2936_plane" bpmnElement="W_W2936">
+        <bpmndi:BPMNShape id="W2936_Lane1_di" bpmnElement="W2936_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_Lane2_di" bpmnElement="W2936_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_Lane3_di" bpmnElement="W2936_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_Task6_di" bpmnElement="W2936_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_Task7_di" bpmnElement="W2936_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_Task8_di" bpmnElement="W2936_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_Start5_di" bpmnElement="W2936_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_End9_di" bpmnElement="W2936_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2936_Annotation10_di" bpmnElement="W2936_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2936_Flow12_di" bpmnElement="W2936_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2936_Flow13_di" bpmnElement="W2936_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2936_Flow14_di" bpmnElement="W2936_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2936_Flow15_di" bpmnElement="W2936_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2936_Assoc11_di" bpmnElement="W2936_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

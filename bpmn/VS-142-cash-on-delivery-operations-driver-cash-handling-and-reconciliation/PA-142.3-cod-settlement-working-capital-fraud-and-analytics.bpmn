@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-142.3-cod-settlement-working-capital-fraud-and-analytics" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W4281" name="W4281. COD Settlement Cycle, Clearing &amp; Inter-Entity Settlement" isExecutable="false">
+      <bpmn:documentation>Trigger: Settlement cycle; monthly close (VS-17.1); intercompany (VS-72)
+Frequency: Daily clearing + monthly settlement
+Volume: COD settlement across 5 entities (Digital Commerce Inc. collects, Depot Inc. recognizes revenue)
+Owner: Finance / GL (VS-17.1) / Intercompany (VS-72)
+Participants: Treasury (VS-18), GL (VS-17.1), Intercompany (VS-72), Digital Commerce (VS-10), Payment Ops
+Source: workflow W4281 — COD Settlement Cycle, Clearing &amp; Inter-Entity Settlement</bpmn:documentation>
+      <bpmn:laneSet id="W4281_LaneSet3">
+        <bpmn:lane id="W4281_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W4281_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4281_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4281_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4281_Lane2" name="Intercompany">
+        <bpmn:flowNodeRef>W4281_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4281_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4281_Start4" name="Settlement cycle; monthly close (VS-17.1); intercompany (VS-72)">
+        <bpmn:outgoing>W4281_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4281_Task5" name="Finance/GL run the COD settlement cycle: clear the COD cash-collected against…">
+        <bpmn:documentation>Step 1: Finance/GL run the COD settlement cycle: clear the COD cash-collected against the order receivable/float, recognize revenue at the right entity (Depot Inc. per profile §2), and post the Digital Commerce fulfillment fee (per profile §2)
+Responsible (R): Finance / GL
+Accountable (A): Finance Controller
+Duration: Daily/Monthly</bpmn:documentation>
+        <bpmn:incoming>W4281_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4281_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4281_Task6" name="Intercompany/Finance settle inter-entity (Digital Commerce Inc. collected cash…">
+        <bpmn:documentation>Step 2: Intercompany/Finance settle inter-entity (Digital Commerce Inc. collected cash → remit to Depot Inc. per the per-order fee model), at arm&#x27;s-length transfer pricing (VS-72)
+Responsible (R): Intercompany / Finance
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4281_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4281_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4281_Task7" name="Finance reconcile settlement to bank (VS-18) and GL (VS-17.1), eliminate…">
+        <bpmn:documentation>Step 3: Finance reconcile settlement to bank (VS-18) and GL (VS-17.1), eliminate intercompany on consolidation (VS-17), and report (W4287)
+Responsible (R): Finance / GL
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4281_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4281_End8" name="Complete">
+        <bpmn:incoming>W4281_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4281_Annotation9">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: revenue recognized at correct entity (profile §2); intercompany arm&#x27;s-length (VS-72); settlement reconciled to bank/GL
+Owner: Finance / GL (VS-17.1) / Intercompany (VS-72)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4281_Assoc10" sourceRef="W4281_Annotation9" targetRef="W4281_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4281_Flow11" sourceRef="W4281_Start4" targetRef="W4281_Task5" />
+      <bpmn:sequenceFlow id="W4281_Flow12" sourceRef="W4281_Task5" targetRef="W4281_Task6" />
+      <bpmn:sequenceFlow id="W4281_Flow13" sourceRef="W4281_Task6" targetRef="W4281_Task7" />
+      <bpmn:sequenceFlow id="W4281_Flow14" sourceRef="W4281_Task7" targetRef="W4281_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4281_diag">
+      <bpmndi:BPMNPlane id="W4281_plane" bpmnElement="W_W4281">
+        <bpmndi:BPMNShape id="W4281_Lane1_di" bpmnElement="W4281_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4281_Lane2_di" bpmnElement="W4281_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4281_Task5_di" bpmnElement="W4281_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4281_Task6_di" bpmnElement="W4281_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4281_Task7_di" bpmnElement="W4281_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4281_Start4_di" bpmnElement="W4281_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4281_End8_di" bpmnElement="W4281_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4281_Annotation9_di" bpmnElement="W4281_Annotation9"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4281_Flow11_di" bpmnElement="W4281_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4281_Flow12_di" bpmnElement="W4281_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4281_Flow13_di" bpmnElement="W4281_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4281_Flow14_di" bpmnElement="W4281_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4281_Assoc10_di" bpmnElement="W4281_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4282" name="W4282. COD Float, Working-Capital &amp; Cash-Conversion-Cycle Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Treasury cycle; float-aging (W4275); working-capital review
+Frequency: Daily monitoring + monthly review
+Volume: COD cash-in-motion (~PHP 150M/month GMV × COD share × float days)
+Owner: Treasury (VS-18) / Finance (VS-17.4) / Payment Ops
+Participants: Treasury (VS-18), FP&amp;A (VS-17.4), SCF (VS-105), Last-Mile (VS-06.3)
+Source: workflow W4282 — COD Float, Working-Capital &amp; Cash-Conversion-Cycle Management</bpmn:documentation>
+      <bpmn:laneSet id="W4282_LaneSet3">
+        <bpmn:lane id="W4282_Lane1" name="Treasury">
+        <bpmn:flowNodeRef>W4282_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4282_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4282_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4282_Lane2" name="FP&amp;A">
+        <bpmn:flowNodeRef>W4282_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4282_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4282_Start4" name="Treasury cycle; float-aging (W4275); working-capital review">
+        <bpmn:outgoing>W4282_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4282_Task5" name="Treasury/Finance measure COD float (cash-in-motion from delivery to bank…">
+        <bpmn:documentation>Step 1: Treasury/Finance measure COD float (cash-in-motion from delivery to bank deposit, unremitted aging W4275), the cost-of-capital, and the COD contribution to the cash-conversion-cycle (links VS-105)
+Responsible (R): Treasury / FP&amp;A
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4282_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4282_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4282_Task6" name="Treasury/Payment Ops manage the float (remittance SLA acceleration, deposit…">
+        <bpmn:documentation>Step 2: Treasury/Payment Ops manage the float (remittance SLA acceleration, deposit frequency, sweep), and quantify the working-capital released by faster COD cash
+Responsible (R): Treasury / Payment Ops / Last-Mile
+Accountable (A): CFO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4282_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4282_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4282_Task7" name="FP&amp;A incorporate COD float into working-capital planning/cash forecast…">
+        <bpmn:documentation>Step 3: FP&amp;A incorporate COD float into working-capital planning/cash forecast (VS-17.4/VS-33.1), and feed SCF/CCC governance (VS-105)
+Responsible (R): FP&amp;A / Treasury
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4282_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4282_End8" name="Complete">
+        <bpmn:incoming>W4282_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4282_Annotation9">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: COD float measured &amp; aged; remittance SLA; float in cash forecast &amp; CCC (VS-105)
+Owner: Treasury (VS-18) / Finance (VS-17.4) / Payment Ops</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4282_Assoc10" sourceRef="W4282_Annotation9" targetRef="W4282_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4282_Flow11" sourceRef="W4282_Start4" targetRef="W4282_Task5" />
+      <bpmn:sequenceFlow id="W4282_Flow12" sourceRef="W4282_Task5" targetRef="W4282_Task6" />
+      <bpmn:sequenceFlow id="W4282_Flow13" sourceRef="W4282_Task6" targetRef="W4282_Task7" />
+      <bpmn:sequenceFlow id="W4282_Flow14" sourceRef="W4282_Task7" targetRef="W4282_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4282_diag">
+      <bpmndi:BPMNPlane id="W4282_plane" bpmnElement="W_W4282">
+        <bpmndi:BPMNShape id="W4282_Lane1_di" bpmnElement="W4282_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4282_Lane2_di" bpmnElement="W4282_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4282_Task5_di" bpmnElement="W4282_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4282_Task6_di" bpmnElement="W4282_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4282_Task7_di" bpmnElement="W4282_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4282_Start4_di" bpmnElement="W4282_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4282_End8_di" bpmnElement="W4282_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4282_Annotation9_di" bpmnElement="W4282_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4282_Flow11_di" bpmnElement="W4282_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4282_Flow12_di" bpmnElement="W4282_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4282_Flow13_di" bpmnElement="W4282_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4282_Flow14_di" bpmnElement="W4282_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4282_Assoc10_di" bpmnElement="W4282_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4283" name="W4283. COD Fraud Detection, Investigation &amp; Loss Recovery" isExecutable="false">
+      <bpmn:documentation>Trigger: Fraud signal; pattern alert; loss spike
+Frequency: Continuous monitoring + per investigation
+Volume: COD fraud cases (phantom orders, driver theft, refund/short-pay abuse, account misuse)
+Owner: Fraud (VS-125) / Payment Ops / Security (VS-23)
+Participants: Fraud (VS-125), Security (VS-23), Customer Support (VS-13), Legal (VS-100), 3PL (VS-56)
+Source: workflow W4283 — COD Fraud Detection, Investigation &amp; Loss Recovery</bpmn:documentation>
+      <bpmn:laneSet id="W4283_LaneSet2">
+        <bpmn:lane id="W4283_Lane1" name="Fraud">
+        <bpmn:flowNodeRef>W4283_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4283_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4283_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4283_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4283_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4283_Start3" name="Fraud signal; pattern alert; loss spike">
+        <bpmn:outgoing>W4283_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4283_Task4" name="Fraud/Payment Ops run detection rules/ML on COD data (refusal patterns…">
+        <bpmn:documentation>Step 1: Fraud/Payment Ops run detection rules/ML on COD data (refusal patterns, short-pay clusters, address/account anomalies, driver-cash discrepancies, velocity) integrated with VS-125
+Responsible (R): Fraud / Payment Ops
+Accountable (A): Head of Payment Ops / Head of Internal Audit &amp; Risk
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4283_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4283_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4283_Task5" name="Fraud investigate flagged cases (driver theft, customer scam, collusion)…">
+        <bpmn:documentation>Step 2: Fraud investigate flagged cases (driver theft, customer scam, collusion), gather evidence (POD W4274, cash records, analytics), and case-manage per VS-125
+Responsible (R): Fraud / Security
+Accountable (A): Head of Internal Audit &amp; Risk
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W4283_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4283_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4283_Task6" name="Fraud/Legal/Security pursue recovery (3PL bond W4268, fidelity insurance VS-26…">
+        <bpmn:documentation>Step 3: Fraud/Legal/Security pursue recovery (3PL bond W4268, fidelity insurance VS-26, charge the offender, blacklist W4266, police/legal VS-100), and feed findings to detection tuning
+Responsible (R): Fraud / Legal / Insurance
+Accountable (A): Head of Internal Audit &amp; Risk / CFO
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W4283_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4283_End7" name="Complete">
+        <bpmn:incoming>W4283_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4283_Annotation8">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: COD fraud detected &amp; case-managed (VS-125); recovery pursued (bond/insurance VS-26); blacklist maintained (W4266)
+Owner: Fraud (VS-125) / Payment Ops / Security (VS-23)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4283_Assoc9" sourceRef="W4283_Annotation8" targetRef="W4283_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4283_Flow10" sourceRef="W4283_Start3" targetRef="W4283_Task4" />
+      <bpmn:sequenceFlow id="W4283_Flow11" sourceRef="W4283_Task4" targetRef="W4283_Task5" />
+      <bpmn:sequenceFlow id="W4283_Flow12" sourceRef="W4283_Task5" targetRef="W4283_Task6" />
+      <bpmn:sequenceFlow id="W4283_Flow13" sourceRef="W4283_Task6" targetRef="W4283_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4283_diag">
+      <bpmndi:BPMNPlane id="W4283_plane" bpmnElement="W_W4283">
+        <bpmndi:BPMNShape id="W4283_Lane1_di" bpmnElement="W4283_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4283_Task4_di" bpmnElement="W4283_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4283_Task5_di" bpmnElement="W4283_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4283_Task6_di" bpmnElement="W4283_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4283_Start3_di" bpmnElement="W4283_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4283_End7_di" bpmnElement="W4283_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4283_Annotation8_di" bpmnElement="W4283_Annotation8"><dc:Bounds x="160" y="290" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4283_Flow10_di" bpmnElement="W4283_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4283_Flow11_di" bpmnElement="W4283_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4283_Flow12_di" bpmnElement="W4283_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4283_Flow13_di" bpmnElement="W4283_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4283_Assoc9_di" bpmnElement="W4283_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4284" name="W4284. COD Driver/3PL Performance, Scorecard &amp; Deduction Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly cycle; reconciliation (W4277); discrepancy (W4278)
+Frequency: Monthly + continuous
+Volume: Driver/3PL COD performance across the network
+Owner: Payment Ops / Last-Mile (VS-06.3) / Procurement (VS-34)
+Participants: Last-Mile (VS-06.3/VS-56), Finance (VS-17.4), Fraud (VS-125), Vendor Mgmt (VS-67)
+Source: workflow W4284 — COD Driver/3PL Performance, Scorecard &amp; Deduction Management</bpmn:documentation>
+      <bpmn:laneSet id="W4284_LaneSet2">
+        <bpmn:lane id="W4284_Lane1" name="Payment Ops">
+        <bpmn:flowNodeRef>W4284_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4284_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4284_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4284_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4284_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4284_Start3" name="Monthly cycle; reconciliation (W4277); discrepancy (W4278)">
+        <bpmn:outgoing>W4284_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4284_Task4" name="Payment Ops/Last-Mile build the COD driver/3PL scorecard (cash-remittance…">
+        <bpmn:documentation>Step 1: Payment Ops/Last-Mile build the COD driver/3PL scorecard (cash-remittance timeliness, reconciliation accuracy, discrepancy rate, refusal rate, fraud/loss, POD compliance) from reconciliation (W4277/W4278)
+Responsible (R): Payment Ops / Analytics
+Accountable (A): Head of Payment Ops
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4284_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4284_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4284_Task5" name="Payment Ops/Procurement manage deductions/holdback against 3PL payables for…">
+        <bpmn:documentation>Step 2: Payment Ops/Procurement manage deductions/holdback against 3PL payables for discrepancies/loss (W4268 contract), resolve disputes, and feed the vendor scorecard (VS-67)
+Responsible (R): Payment Ops / Procurement / Finance
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4284_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4284_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4284_Task6" name="Payment Ops/Last-Mile run QBR with 3PLs, develop underperformers, and…">
+        <bpmn:documentation>Step 3: Payment Ops/Last-Mile run QBR with 3PLs, develop underperformers, and exit/replace on sustained issues (VS-56/VS-34)
+Responsible (R): Payment Ops / Last-Mile / Procurement
+Accountable (A): COO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W4284_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4284_End7" name="Complete">
+        <bpmn:incoming>W4284_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4284_Annotation8">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: discrepancies deducted per contract (W4268); scorecard tracked (VS-67); underperformance acted on
+Owner: Payment Ops / Last-Mile (VS-06.3) / Procurement (VS-34)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4284_Assoc9" sourceRef="W4284_Annotation8" targetRef="W4284_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4284_Flow10" sourceRef="W4284_Start3" targetRef="W4284_Task4" />
+      <bpmn:sequenceFlow id="W4284_Flow11" sourceRef="W4284_Task4" targetRef="W4284_Task5" />
+      <bpmn:sequenceFlow id="W4284_Flow12" sourceRef="W4284_Task5" targetRef="W4284_Task6" />
+      <bpmn:sequenceFlow id="W4284_Flow13" sourceRef="W4284_Task6" targetRef="W4284_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4284_diag">
+      <bpmndi:BPMNPlane id="W4284_plane" bpmnElement="W_W4284">
+        <bpmndi:BPMNShape id="W4284_Lane1_di" bpmnElement="W4284_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4284_Task4_di" bpmnElement="W4284_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4284_Task5_di" bpmnElement="W4284_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4284_Task6_di" bpmnElement="W4284_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4284_Start3_di" bpmnElement="W4284_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4284_End7_di" bpmnElement="W4284_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4284_Annotation8_di" bpmnElement="W4284_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4284_Flow10_di" bpmnElement="W4284_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4284_Flow11_di" bpmnElement="W4284_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4284_Flow12_di" bpmnElement="W4284_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4284_Flow13_di" bpmnElement="W4284_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4284_Assoc9_di" bpmnElement="W4284_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4285" name="W4285. COD Chargeback-Equivalent, Deduction &amp; Refund Integrity" isExecutable="false">
+      <bpmn:documentation>Trigger: Refund/deduction event; revenue-assurance cycle (VS-118)
+Frequency: Daily + monthly RA review
+Volume: COD refunds, deductions, and adjustments
+Owner: Revenue Assurance (VS-118) / Payment Ops / Finance
+Participants: RA (VS-118), AR (VS-16), Customer Support (VS-13), Fraud (VS-125)
+Source: workflow W4285 — COD Chargeback-Equivalent, Deduction &amp; Refund Integrity</bpmn:documentation>
+      <bpmn:laneSet id="W4285_LaneSet2">
+        <bpmn:lane id="W4285_Lane1" name="RA">
+        <bpmn:flowNodeRef>W4285_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4285_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4285_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4285_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4285_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4285_Start3" name="Refund/deduction event; revenue-assurance cycle (VS-118)">
+        <bpmn:outgoing>W4285_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4285_Task4" name="RA/Payment Ops monitor COD &quot;chargeback-equivalents&quot; (refunds, manual…">
+        <bpmn:documentation>Step 1: RA/Payment Ops monitor COD &quot;chargeback-equivalents&quot; (refunds, manual adjustments, waivers, short-pays, re-delivery costs) for leakage and policy adherence, integrated with VS-118
+Responsible (R): RA / Payment Ops
+Accountable (A): Head of Payment Ops / CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4285_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4285_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4285_Task5" name="RA/AR validate each deduction/refund (authorization, evidence, SoD per W4270)…">
+        <bpmn:documentation>Step 2: RA/AR validate each deduction/refund (authorization, evidence, SoD per W4270), prevent unauthorized waivers, and ensure correct GL/reversal posting (VS-17.1)
+Responsible (R): RA / AR / Finance
+Accountable (A): Finance Controller
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W4285_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4285_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4285_Task6" name="RA/Fraud analyze deduction/refund patterns (abuse, internal override) and tune…">
+        <bpmn:documentation>Step 3: RA/Fraud analyze deduction/refund patterns (abuse, internal override) and tune controls/eligibility (W4266/VS-125)
+Responsible (R): RA / Fraud
+Accountable (A): CFO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4285_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4285_End7" name="Complete">
+        <bpmn:incoming>W4285_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4285_Annotation8">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: refunds/deductions authorized &amp; evidenced; SoD (W4270); RA-monitored (VS-118); correctly posted
+Owner: Revenue Assurance (VS-118) / Payment Ops / Finance</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4285_Assoc9" sourceRef="W4285_Annotation8" targetRef="W4285_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4285_Flow10" sourceRef="W4285_Start3" targetRef="W4285_Task4" />
+      <bpmn:sequenceFlow id="W4285_Flow11" sourceRef="W4285_Task4" targetRef="W4285_Task5" />
+      <bpmn:sequenceFlow id="W4285_Flow12" sourceRef="W4285_Task5" targetRef="W4285_Task6" />
+      <bpmn:sequenceFlow id="W4285_Flow13" sourceRef="W4285_Task6" targetRef="W4285_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4285_diag">
+      <bpmndi:BPMNPlane id="W4285_plane" bpmnElement="W_W4285">
+        <bpmndi:BPMNShape id="W4285_Lane1_di" bpmnElement="W4285_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4285_Task4_di" bpmnElement="W4285_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4285_Task5_di" bpmnElement="W4285_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4285_Task6_di" bpmnElement="W4285_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4285_Start3_di" bpmnElement="W4285_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4285_End7_di" bpmnElement="W4285_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4285_Annotation8_di" bpmnElement="W4285_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4285_Flow10_di" bpmnElement="W4285_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4285_Flow11_di" bpmnElement="W4285_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4285_Flow12_di" bpmnElement="W4285_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4285_Flow13_di" bpmnElement="W4285_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4285_Assoc9_di" bpmnElement="W4285_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4286" name="W4286. COD Customer Experience, Success Rate &amp; Conversion Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: EX/conversion review; refusal-rate analysis (W4276)
+Frequency: Monthly + continuous
+Volume: COD success-rate &amp; customer-experience across COD orders
+Owner: Ecommerce (VS-10) / Customer Experience (VS-13) / Payment Ops
+Participants: Ecommerce (VS-10), CX (VS-13), Marketing (VS-14), Last-Mile (VS-06.3)
+Source: workflow W4286 — COD Customer Experience, Success Rate &amp; Conversion Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W4286_LaneSet2">
+        <bpmn:lane id="W4286_Lane1" name="Ecommerce">
+        <bpmn:flowNodeRef>W4286_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4286_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4286_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4286_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4286_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4286_Start3" name="EX/conversion review; refusal-rate analysis (W4276)">
+        <bpmn:outgoing>W4286_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4286_Task4" name="Ecommerce/CX measure COD success-rate (delivered-and-collected vs attempted)…">
+        <bpmn:documentation>Step 1: Ecommerce/CX measure COD success-rate (delivered-and-collected vs attempted), refusal rate (W4276), delivery/POD quality, and customer NPS for COD orders
+Responsible (R): Ecommerce / CX / Analytics
+Accountable (A): Head of Payment Ops / CMO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4286_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4286_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4286_Task5" name="Ecommerce/CX identify COD friction (exact-cash hassle, long windows, poor…">
+        <bpmn:documentation>Step 2: Ecommerce/CX identify COD friction (exact-cash hassle, long windows, poor comms) and improve (delivery-window accuracy, pre-call/SMS, digital amount-confirmation), aligned to VS-10/VS-14
+Responsible (R): Ecommerce / CX / Last-Mile
+Accountable (A): Head of Payment Ops / CMO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4286_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4286_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4286_Task6" name="Ecommerce/Marketing run pre-pay/BNPL nudges (W4288) to improve economics while…">
+        <bpmn:documentation>Step 3: Ecommerce/Marketing run pre-pay/BNPL nudges (W4288) to improve economics while preserving COD availability/conversion, A/B tested
+Responsible (R): Ecommerce / Marketing
+Accountable (A): CMO / CFO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4286_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4286_End7" name="Complete">
+        <bpmn:incoming>W4286_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4286_Annotation8">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: COD success-rate &amp; NPS measured; friction addressed; nudges A/B-tested (conversion-preserved)
+Owner: Ecommerce (VS-10) / Customer Experience (VS-13) / Payment Ops</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4286_Assoc9" sourceRef="W4286_Annotation8" targetRef="W4286_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4286_Flow10" sourceRef="W4286_Start3" targetRef="W4286_Task4" />
+      <bpmn:sequenceFlow id="W4286_Flow11" sourceRef="W4286_Task4" targetRef="W4286_Task5" />
+      <bpmn:sequenceFlow id="W4286_Flow12" sourceRef="W4286_Task5" targetRef="W4286_Task6" />
+      <bpmn:sequenceFlow id="W4286_Flow13" sourceRef="W4286_Task6" targetRef="W4286_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4286_diag">
+      <bpmndi:BPMNPlane id="W4286_plane" bpmnElement="W_W4286">
+        <bpmndi:BPMNShape id="W4286_Lane1_di" bpmnElement="W4286_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4286_Task4_di" bpmnElement="W4286_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4286_Task5_di" bpmnElement="W4286_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4286_Task6_di" bpmnElement="W4286_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4286_Start3_di" bpmnElement="W4286_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4286_End7_di" bpmnElement="W4286_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4286_Annotation8_di" bpmnElement="W4286_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4286_Flow10_di" bpmnElement="W4286_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4286_Flow11_di" bpmnElement="W4286_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4286_Flow12_di" bpmnElement="W4286_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4286_Flow13_di" bpmnElement="W4286_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4286_Assoc9_di" bpmnElement="W4286_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4287" name="W4287. COD Program Analytics, Leakage &amp; KPI Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly reporting cycle; executive review
+Frequency: Monthly + annual
+Volume: One COD program scorecard for leadership
+Owner: Payment Ops / Analytics (VS-28) / Finance (VS-17.4)
+Participants: Analytics (VS-28), RA (VS-118), Fraud (VS-125), Audit (VS-21), FP&amp;A (VS-17.4)
+Source: workflow W4287 — COD Program Analytics, Leakage &amp; KPI Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W4287_LaneSet3">
+        <bpmn:lane id="W4287_Lane1" name="Analytics">
+        <bpmn:flowNodeRef>W4287_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4287_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4287_Lane2" name="Payment Ops">
+        <bpmn:flowNodeRef>W4287_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4287_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4287_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4287_Start4" name="Monthly reporting cycle; executive review">
+        <bpmn:outgoing>W4287_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4287_Task5" name="Analytics/Payment Ops assemble the COD KPI scorecard (COD share, cost-to-serve…">
+        <bpmn:documentation>Step 1: Analytics/Payment Ops assemble the COD KPI scorecard (COD share, cost-to-serve W4267, reconciliation accuracy W4277, float/CCC W4282, refusal rate W4276, fraud loss W4283, leakage W4285, success-rate/NPS W4286)
+Responsible (R): Analytics / Payment Ops
+Accountable (A): Head of Payment Ops / CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4287_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4287_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4287_Task6" name="Payment Ops/RA quantify COD leakage vs benchmark (0.3–1.0% of COD GMV)…">
+        <bpmn:documentation>Step 2: Payment Ops/RA quantify COD leakage vs benchmark (0.3–1.0% of COD GMV), identify drivers, and prioritize cost-out/loss-reduction actions
+Responsible (R): Payment Ops / RA
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W4287_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4287_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4287_Task7" name="Payment Ops/Internal Audit verify COD controls (reconciliation, SoD, 3PL…">
+        <bpmn:documentation>Step 3: Payment Ops/Internal Audit verify COD controls (reconciliation, SoD, 3PL deductions), report assurance (VS-21), and feed strategy/budget (W4265/VS-33)
+Responsible (R): Payment Ops / Audit
+Accountable (A): CFO / COO
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W4287_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4287_End8" name="Complete">
+        <bpmn:incoming>W4287_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4287_Annotation9">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: balanced scorecard; leakage quantified; controls audit-assured (VS-21); feeds strategy/budget (VS-33)
+Owner: Payment Ops / Analytics (VS-28) / Finance (VS-17.4)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4287_Assoc10" sourceRef="W4287_Annotation9" targetRef="W4287_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4287_Flow11" sourceRef="W4287_Start4" targetRef="W4287_Task5" />
+      <bpmn:sequenceFlow id="W4287_Flow12" sourceRef="W4287_Task5" targetRef="W4287_Task6" />
+      <bpmn:sequenceFlow id="W4287_Flow13" sourceRef="W4287_Task6" targetRef="W4287_Task7" />
+      <bpmn:sequenceFlow id="W4287_Flow14" sourceRef="W4287_Task7" targetRef="W4287_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4287_diag">
+      <bpmndi:BPMNPlane id="W4287_plane" bpmnElement="W_W4287">
+        <bpmndi:BPMNShape id="W4287_Lane1_di" bpmnElement="W4287_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4287_Lane2_di" bpmnElement="W4287_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4287_Task5_di" bpmnElement="W4287_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4287_Task6_di" bpmnElement="W4287_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4287_Task7_di" bpmnElement="W4287_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4287_Start4_di" bpmnElement="W4287_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4287_End8_di" bpmnElement="W4287_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4287_Annotation9_di" bpmnElement="W4287_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4287_Flow11_di" bpmnElement="W4287_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4287_Flow12_di" bpmnElement="W4287_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4287_Flow13_di" bpmnElement="W4287_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4287_Flow14_di" bpmnElement="W4287_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4287_Assoc10_di" bpmnElement="W4287_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4288" name="W4288. COD Program Continuous Improvement &amp; Future-State (BNPL/Digital Shift)" isExecutable="false">
+      <bpmn:documentation>Trigger: Analytics (W4287); payment-mix shift; new payment tech
+Frequency: Periodic + on opportunity
+Volume: COD program improvement &amp; future-state roadmap
+Owner: Payment Ops / Ecommerce (VS-10) / Innovation (VS-30)
+Participants: Ecommerce (VS-10), Innovation (VS-30), Treasury (VS-18), Marketing (VS-14), Finance (VS-17.4)
+Source: workflow W4288 — COD Program Continuous Improvement &amp; Future-State (BNPL/Digital Shift)</bpmn:documentation>
+      <bpmn:laneSet id="W4288_LaneSet2">
+        <bpmn:lane id="W4288_Lane1" name="Payment Ops">
+        <bpmn:flowNodeRef>W4288_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4288_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4288_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4288_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4288_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4288_Start3" name="Analytics (W4287); payment-mix shift; new payment tech">
+        <bpmn:outgoing>W4288_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4288_Task4" name="Payment Ops/Innovation scan future-state options to reduce COD cost/fraud while…">
+        <bpmn:documentation>Step 1: Payment Ops/Innovation scan future-state options to reduce COD cost/fraud while preserving access: BNPL/e-wallet credit (links VS-38), digital cash-collection (e-money at doorstep), cash-voucher/7-Eleven/Palawan pay-at-counter, and pre-pay incentives
+Responsible (R): Payment Ops / Innovation / Ecommerce
+Accountable (A): CFO / CIO / CMO
+Duration: Periodic</bpmn:documentation>
+        <bpmn:incoming>W4288_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4288_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4288_Task5" name="Payment Ops/Finance pilot and business-case alternatives (cost-to-serve, fraud…">
+        <bpmn:documentation>Step 2: Payment Ops/Finance pilot and business-case alternatives (cost-to-serve, fraud, conversion, capital), assess risk/privacy (VS-91/VS-125), and sequence rollout (VS-30 POC → scale)
+Responsible (R): Payment Ops / Finance / Innovation
+Accountable (A): CFO / CIO
+Duration: Per initiative</bpmn:documentation>
+        <bpmn:incoming>W4288_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4288_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4288_Task6" name="Payment Ops/OpEx run CI on the COD program (process mining VS-133, automation…">
+        <bpmn:documentation>Step 3: Payment Ops/OpEx run CI on the COD program (process mining VS-133, automation, control tightening), track benefit realization, and re-baseline the COD strategy (W4265)
+Responsible (R): Payment Ops / OpEx
+Accountable (A): Head of Payment Ops
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4288_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4288_End7" name="Complete">
+        <bpmn:incoming>W4288_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4288_Annotation8">
+        <bpmn:text>Controls: - CTL-658 (ensure controlled execution — COD Settlement, Working-Capital, Fraud &amp; Analytics (PA-142.3).) | - CTL-658: alternatives business-cased; privacy assessed (VS-91); pilots governed (VS-30); benefit realized &amp; tracked
+Owner: Payment Ops / Ecommerce (VS-10) / Innovation (VS-30)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4288_Assoc9" sourceRef="W4288_Annotation8" targetRef="W4288_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4288_Flow10" sourceRef="W4288_Start3" targetRef="W4288_Task4" />
+      <bpmn:sequenceFlow id="W4288_Flow11" sourceRef="W4288_Task4" targetRef="W4288_Task5" />
+      <bpmn:sequenceFlow id="W4288_Flow12" sourceRef="W4288_Task5" targetRef="W4288_Task6" />
+      <bpmn:sequenceFlow id="W4288_Flow13" sourceRef="W4288_Task6" targetRef="W4288_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4288_diag">
+      <bpmndi:BPMNPlane id="W4288_plane" bpmnElement="W_W4288">
+        <bpmndi:BPMNShape id="W4288_Lane1_di" bpmnElement="W4288_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4288_Task4_di" bpmnElement="W4288_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4288_Task5_di" bpmnElement="W4288_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4288_Task6_di" bpmnElement="W4288_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4288_Start3_di" bpmnElement="W4288_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4288_End7_di" bpmnElement="W4288_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4288_Annotation8_di" bpmnElement="W4288_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4288_Flow10_di" bpmnElement="W4288_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4288_Flow11_di" bpmnElement="W4288_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4288_Flow12_di" bpmnElement="W4288_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4288_Flow13_di" bpmnElement="W4288_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4288_Assoc9_di" bpmnElement="W4288_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

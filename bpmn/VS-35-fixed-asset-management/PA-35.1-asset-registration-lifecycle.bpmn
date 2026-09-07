@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-35.1-asset-registration-lifecycle" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1690" name="W1690. New Fixed Asset Registration &amp; Capitalization" isExecutable="false">
+      <bpmn:documentation>Trigger: Purchase order receipt for capital asset or construction project completion per W40.3
+Frequency: ~200–300 new assets/month (store fixtures, IT equipment, vehicles, renovation components)
+Volume: ~2,500–3,500 new fixed assets/year
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Receiving Clerk, Department Head, CFO (for assets &gt; threshold)
+Source: workflow W1690 — New Fixed Asset Registration &amp; Capitalization</bpmn:documentation>
+      <bpmn:laneSet id="W1690_LaneSet5">
+        <bpmn:lane id="W1690_Lane1" name="System">
+        <bpmn:flowNodeRef>W1690_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1690_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1690_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1690_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1690_Lane2" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1690_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1690_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1690_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1690_Lane4" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1690_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1690_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1690_Start6" name="Purchase order receipt for capital asset or construction project completion per W40.3">
+        <bpmn:outgoing>W1690_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1690_Task7" name="System auto-generates asset registration candidate from approved PO or capex…">
+        <bpmn:documentation>Step 1: System auto-generates asset registration candidate from approved PO or capex project closure: (a) PO with asset category flag triggers asset creation workflow, (b) capex project completion triggers CIP-to-asset conversion per W40.3, (c) manual creation for donated, leased, or transferred assets
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1690_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1690_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1690_Task8" name="Fixed Asset Accountant reviews and enriches asset record: (a) assigns unique…">
+        <bpmn:documentation>Step 2: Fixed Asset Accountant reviews and enriches asset record: (a) assigns unique asset number (format: BRD-XX-YYYY-NNNNN where XX = entity code, YYYY = year, NNNNN = sequential), (b) enters asset description, category, sub-category (POS terminal, forklift, fixture, vehicle, IT equipment, office furniture), (c) links to cost center, location (store/DC/HQ code), and responsible department, (d) records acquisition cost including non-recoverable VAT, delivery, installation, and testing costs per PFRS, (e) assigns useful life per category schedule (POS terminals: 5 years; forklifts: 7 years; store fixtures: 10 years; vehicles: 5 years; IT servers: 4 years; office furniture: 8 years), (f) assigns depreciation method (straight-line for all; declining balance for vehicles), (g) records vendor, PO reference, GR reference, and warranty expiry
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 15 min/asset</bpmn:documentation>
+        <bpmn:incoming>W1690_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1690_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1690_Task9" name="System validates capitalization threshold: assets ≥ PHP 20,000 capitalized…">
+        <bpmn:documentation>Step 3: System validates capitalization threshold: assets ≥ PHP 20,000 capitalized; assets &lt; PHP 20,000 charged to expense (policy threshold reviewed annually). Threshold excludes low-value items like individual hand tools, cables, or accessories
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1690_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1690_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1690_Task10" name="For assets requiring capitalization approval (≥ PHP 500K): Accounting Manager…">
+        <bpmn:documentation>Step 4: For assets requiring capitalization approval (≥ PHP 500K): Accounting Manager reviews asset record, verifies capex approval per W1811, confirms classification and useful life; approves capitalization
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 10 min/asset</bpmn:documentation>
+        <bpmn:incoming>W1690_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1690_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1690_Task11" name="System activates asset in fixed asset register; depreciation begins from the…">
+        <bpmn:documentation>Step 5: System activates asset in fixed asset register; depreciation begins from the asset&#x27;s ready-for-use date (not invoice date); asset appears in entity-specific fixed asset register and consolidated group register
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1690_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1690_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1690_Task12" name="Asset tag generated and assigned per W1692; physical label applied to asset at…">
+        <bpmn:documentation>Step 6: Asset tag generated and assigned per W1692; physical label applied to asset at receiving or installation
+Responsible (R): Receiving Clerk / Fixed Asset Accountant
+Accountable (A): —
+Duration: 5 min/asset</bpmn:documentation>
+        <bpmn:incoming>W1690_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1690_End13" name="Complete">
+        <bpmn:incoming>W1690_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1690_Annotation14">
+        <bpmn:text>Controls: - CTL-219 (ensure fixed-asset register accuracy.) | - operational: Fixed Asset Accountant review and approval gate
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1690_Assoc15" sourceRef="W1690_Annotation14" targetRef="W1690_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1690_Flow16" sourceRef="W1690_Start6" targetRef="W1690_Task7" />
+      <bpmn:sequenceFlow id="W1690_Flow17" sourceRef="W1690_Task7" targetRef="W1690_Task8" />
+      <bpmn:sequenceFlow id="W1690_Flow18" sourceRef="W1690_Task8" targetRef="W1690_Task9" />
+      <bpmn:sequenceFlow id="W1690_Flow19" sourceRef="W1690_Task9" targetRef="W1690_Task10" />
+      <bpmn:sequenceFlow id="W1690_Flow20" sourceRef="W1690_Task10" targetRef="W1690_Task11" />
+      <bpmn:sequenceFlow id="W1690_Flow21" sourceRef="W1690_Task11" targetRef="W1690_Task12" />
+      <bpmn:sequenceFlow id="W1690_Flow22" sourceRef="W1690_Task12" targetRef="W1690_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1690_diag">
+      <bpmndi:BPMNPlane id="W1690_plane" bpmnElement="W_W1690">
+        <bpmndi:BPMNShape id="W1690_Lane1_di" bpmnElement="W1690_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Lane2_di" bpmnElement="W1690_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Lane3_di" bpmnElement="W1690_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Lane4_di" bpmnElement="W1690_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Task7_di" bpmnElement="W1690_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Task8_di" bpmnElement="W1690_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Task9_di" bpmnElement="W1690_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Task10_di" bpmnElement="W1690_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Task11_di" bpmnElement="W1690_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Task12_di" bpmnElement="W1690_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Start6_di" bpmnElement="W1690_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_End13_di" bpmnElement="W1690_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1690_Annotation14_di" bpmnElement="W1690_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1690_Flow16_di" bpmnElement="W1690_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1690_Flow17_di" bpmnElement="W1690_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1690_Flow18_di" bpmnElement="W1690_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1690_Flow19_di" bpmnElement="W1690_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1690_Flow20_di" bpmnElement="W1690_Flow20"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1690_Flow21_di" bpmnElement="W1690_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1690_Flow22_di" bpmnElement="W1690_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1690_Assoc15_di" bpmnElement="W1690_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1691" name="W1691. Asset Classification &amp; Category Assignment" isExecutable="false">
+      <bpmn:documentation>Trigger: New asset registration (W1690) or annual classification review
+Frequency: Continuous for new assets; annual review in Q4
+Volume: ~2,500–3,500 new classifications/year + ~15,000–20,000 existing assets reviewed annually
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Accounting Manager, External Auditor
+Source: workflow W1691 — Asset Classification &amp; Category Assignment</bpmn:documentation>
+      <bpmn:laneSet id="W1691_LaneSet4">
+        <bpmn:lane id="W1691_Lane1" name="System">
+        <bpmn:flowNodeRef>W1691_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1691_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1691_Lane2" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1691_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1691_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1691_Lane3" name="External Auditor">
+        <bpmn:flowNodeRef>W1691_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1691_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1691_Start5" name="New asset registration (W1690) or annual classification review">
+        <bpmn:outgoing>W1691_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1691_Task6" name="System maintains standardized asset category tree aligned to PFRS/IAS 16 and…">
+        <bpmn:documentation>Step 1: System maintains standardized asset category tree aligned to PFRS/IAS 16 and Philippine tax rules: (a) Land (non-depreciable), (b) Buildings &amp; Improvements (20–40 years), (c) Leasehold Improvements (shorter of useful life or lease term), (d) Plant &amp; Machinery (7–15 years), (e) Vehicles (5 years), (f) Furniture, Fixtures &amp; Equipment (5–10 years), (g) IT Equipment &amp; Software (3–5 years), (h) POS &amp; Retail Technology (5 years), (i) Warehouse Equipment (7–10 years)
+Responsible (R): System
+Accountable (A): Accounting Manager
+Duration: Pre-configured</bpmn:documentation>
+        <bpmn:incoming>W1691_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1691_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1691_Task7" name="Fixed Asset Accountant assigns category and sub-category during registration…">
+        <bpmn:documentation>Step 2: Fixed Asset Accountant assigns category and sub-category during registration; system auto-populates default useful life and depreciation method; Accountant can override with justification (e.g., harsh environment may reduce useful life of DC forklifts from 7 to 5 years)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 5 min/asset</bpmn:documentation>
+        <bpmn:incoming>W1691_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1691_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1691_Task8" name="Annual review (Q4): Fixed Asset Accountant reviews category assignments for…">
+        <bpmn:documentation>Step 3: Annual review (Q4): Fixed Asset Accountant reviews category assignments for material misclassifications; identifies assets with useful life that should be adjusted based on condition assessment; proposes reclassification to Accounting Manager
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 2–3 days/year</bpmn:documentation>
+        <bpmn:incoming>W1691_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1691_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1691_Task9" name="External auditor reviews classification and useful life assumptions during…">
+        <bpmn:documentation>Step 4: External auditor reviews classification and useful life assumptions during annual audit; confirms PFRS compliance; any reclassification adjustments posted before year-end close
+Responsible (R): External Auditor / Fixed Asset Accountant
+Accountable (A): CFO
+Duration: During annual audit</bpmn:documentation>
+        <bpmn:incoming>W1691_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1691_End10" name="Complete">
+        <bpmn:incoming>W1691_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1691_Annotation11">
+        <bpmn:text>Controls: - CTL-346 (ensure controlled execution — Asset Registration &amp; Lifecycle Tracking (PA-35.1).) | - operational: Fixed Asset Accountant review and approval gate
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1691_Assoc12" sourceRef="W1691_Annotation11" targetRef="W1691_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1691_Flow13" sourceRef="W1691_Start5" targetRef="W1691_Task6" />
+      <bpmn:sequenceFlow id="W1691_Flow14" sourceRef="W1691_Task6" targetRef="W1691_Task7" />
+      <bpmn:sequenceFlow id="W1691_Flow15" sourceRef="W1691_Task7" targetRef="W1691_Task8" />
+      <bpmn:sequenceFlow id="W1691_Flow16" sourceRef="W1691_Task8" targetRef="W1691_Task9" />
+      <bpmn:sequenceFlow id="W1691_Flow17" sourceRef="W1691_Task9" targetRef="W1691_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1691_diag">
+      <bpmndi:BPMNPlane id="W1691_plane" bpmnElement="W_W1691">
+        <bpmndi:BPMNShape id="W1691_Lane1_di" bpmnElement="W1691_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Lane2_di" bpmnElement="W1691_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Lane3_di" bpmnElement="W1691_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Task6_di" bpmnElement="W1691_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Task7_di" bpmnElement="W1691_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Task8_di" bpmnElement="W1691_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Task9_di" bpmnElement="W1691_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Start5_di" bpmnElement="W1691_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_End10_di" bpmnElement="W1691_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1691_Annotation11_di" bpmnElement="W1691_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1691_Flow13_di" bpmnElement="W1691_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1691_Flow14_di" bpmnElement="W1691_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1691_Flow15_di" bpmnElement="W1691_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1691_Flow16_di" bpmnElement="W1691_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1691_Flow17_di" bpmnElement="W1691_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1691_Assoc12_di" bpmnElement="W1691_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1692" name="W1692. Asset Tag &amp; Label Generation &amp; Application" isExecutable="false">
+      <bpmn:documentation>Trigger: New asset registration (W1690) or replacement of damaged/missing tag
+Frequency: ~2,500–3,500 tags/year for new assets + ~500–1,000 replacement tags/year
+Volume: ~3,000–4,500 tags/year
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Receiving Clerk, Store Manager, DC Supervisor
+Source: workflow W1692 — Asset Tag &amp; Label Generation &amp; Application</bpmn:documentation>
+      <bpmn:laneSet id="W1692_LaneSet5">
+        <bpmn:lane id="W1692_Lane1" name="System">
+        <bpmn:flowNodeRef>W1692_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1692_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1692_Lane2" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1692_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1692_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1692_Lane3" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1692_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1692_Lane4" name="Store Manager">
+        <bpmn:flowNodeRef>W1692_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1692_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1692_Start6" name="New asset registration (W1690) or replacement of damaged/missing tag">
+        <bpmn:outgoing>W1692_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1692_Task7" name="System auto-generates asset tag upon asset registration: (a) QR code containing…">
+        <bpmn:documentation>Step 1: System auto-generates asset tag upon asset registration: (a) QR code containing asset number, description, location, category, and acquisition date, (b) barcode (Code 128) for scanning during physical verification per W1706, (c) human-readable label with asset number and brief description
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1692_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1692_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1692_Task8" name="Tag printed on durable polyester/Vinyl label (weather-resistant for DC/yard…">
+        <bpmn:documentation>Step 2: Tag printed on durable polyester/Vinyl label (weather-resistant for DC/yard assets; tamper-evident for POS terminals and IT equipment); for high-value assets (≥ PHP 500K): engraved metal tag or RFID tag
+Responsible (R): Fixed Asset Accountant / Receiving Clerk
+Accountable (A): —
+Duration: 2 min/tag</bpmn:documentation>
+        <bpmn:incoming>W1692_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1692_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1692_Task9" name="Tag applied to asset at receiving or installation: (a) POS terminals: tag…">
+        <bpmn:documentation>Step 3: Tag applied to asset at receiving or installation: (a) POS terminals: tag affixed to underside or back panel, (b) forklifts: metal tag riveted to frame, (c) store fixtures: tag on non-visible surface, (d) vehicles: tag in glove compartment + windshield sticker, (e) IT equipment: tag on back panel, (f) DC racking: tag at aisle end
+Responsible (R): Receiving Clerk / Store Maintenance
+Accountable (A): —
+Duration: 2 min/tag</bpmn:documentation>
+        <bpmn:incoming>W1692_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1692_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1692_Task10" name="Store Manager / DC Supervisor confirms tag application via mobile app scan…">
+        <bpmn:documentation>Step 4: Store Manager / DC Supervisor confirms tag application via mobile app scan; system updates asset record with &quot;Tag Applied&quot; status and date
+Responsible (R): Store Manager / DC Supervisor
+Accountable (A): —
+Duration: 1 min/scan</bpmn:documentation>
+        <bpmn:incoming>W1692_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1692_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1692_Task11" name="Missing/damaged tag replacement: any employee reports missing tag via helpdesk…">
+        <bpmn:documentation>Step 5: Missing/damaged tag replacement: any employee reports missing tag via helpdesk ticket; Fixed Asset Accountant verifies asset existence, generates replacement tag, ships to location; location confirms re-application
+Responsible (R): Fixed Asset Accountant / Store Manager
+Accountable (A): —
+Duration: 15 min/case</bpmn:documentation>
+        <bpmn:incoming>W1692_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1692_End12" name="Complete">
+        <bpmn:incoming>W1692_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1692_Annotation13">
+        <bpmn:text>Controls: - CTL-219 (ensure fixed-asset register accuracy.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1692_Assoc14" sourceRef="W1692_Annotation13" targetRef="W1692_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1692_Flow15" sourceRef="W1692_Start6" targetRef="W1692_Task7" />
+      <bpmn:sequenceFlow id="W1692_Flow16" sourceRef="W1692_Task7" targetRef="W1692_Task8" />
+      <bpmn:sequenceFlow id="W1692_Flow17" sourceRef="W1692_Task8" targetRef="W1692_Task9" />
+      <bpmn:sequenceFlow id="W1692_Flow18" sourceRef="W1692_Task9" targetRef="W1692_Task10" />
+      <bpmn:sequenceFlow id="W1692_Flow19" sourceRef="W1692_Task10" targetRef="W1692_Task11" />
+      <bpmn:sequenceFlow id="W1692_Flow20" sourceRef="W1692_Task11" targetRef="W1692_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1692_diag">
+      <bpmndi:BPMNPlane id="W1692_plane" bpmnElement="W_W1692">
+        <bpmndi:BPMNShape id="W1692_Lane1_di" bpmnElement="W1692_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Lane2_di" bpmnElement="W1692_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Lane3_di" bpmnElement="W1692_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Lane4_di" bpmnElement="W1692_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Task7_di" bpmnElement="W1692_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Task8_di" bpmnElement="W1692_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Task9_di" bpmnElement="W1692_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Task10_di" bpmnElement="W1692_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Task11_di" bpmnElement="W1692_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Start6_di" bpmnElement="W1692_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_End12_di" bpmnElement="W1692_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1692_Annotation13_di" bpmnElement="W1692_Annotation13"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1692_Flow15_di" bpmnElement="W1692_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1692_Flow16_di" bpmnElement="W1692_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1692_Flow17_di" bpmnElement="W1692_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1692_Flow18_di" bpmnElement="W1692_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1692_Flow19_di" bpmnElement="W1692_Flow19"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1692_Flow20_di" bpmnElement="W1692_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1692_Assoc14_di" bpmnElement="W1692_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1693" name="W1693. Asset Transfer Between Locations" isExecutable="false">
+      <bpmn:documentation>Trigger: Business need to relocate asset (store closure, new store needs equipment, DC rebalancing, departmental reorganization)
+Frequency: ~50–100 transfers/month
+Volume: ~600–1,200 transfers/year
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Sending Location Manager, Receiving Location Manager, Logistics
+Source: workflow W1693 — Asset Transfer Between Locations</bpmn:documentation>
+      <bpmn:laneSet id="W1693_LaneSet6">
+        <bpmn:lane id="W1693_Lane1" name="Sending Location Manager">
+        <bpmn:flowNodeRef>W1693_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1693_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1693_Lane2" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1693_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1693_Lane3" name="Logistics">
+        <bpmn:flowNodeRef>W1693_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1693_Lane4" name="Receiving Location Manager">
+        <bpmn:flowNodeRef>W1693_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1693_Lane5" name="System">
+        <bpmn:flowNodeRef>W1693_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1693_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1693_Start7" name="Business need to relocate asset (store closure, new store needs equipment, DC…">
+        <bpmn:outgoing>W1693_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1693_Task8" name="Sending location initiates asset transfer request in system: (a) selects…">
+        <bpmn:documentation>Step 1: Sending location initiates asset transfer request in system: (a) selects asset(s) to transfer, (b) specifies destination location and reason, (c) for inter-entity transfers (e.g., Depot Inc. → Logistics Inc.): triggers intercompany transfer pricing review
+Responsible (R): Sending Location Manager
+Accountable (A): Fixed Asset Accountant
+Duration: 10 min/request</bpmn:documentation>
+        <bpmn:incoming>W1693_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1693_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1693_Task9" name="Fixed Asset Accountant reviews transfer request: (a) verifies asset exists and…">
+        <bpmn:documentation>Step 2: Fixed Asset Accountant reviews transfer request: (a) verifies asset exists and is active at sending location, (b) confirms asset is not pledged as collateral or subject to legal hold, (c) for inter-entity: ensures arm&#x27;s-length valuation (book value or fair value per transfer pricing policy), (d) approves or rejects transfer
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 10 min/request</bpmn:documentation>
+        <bpmn:incoming>W1693_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1693_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1693_Task10" name="System generates asset transfer order; logistics arranges physical movement if…">
+        <bpmn:documentation>Step 3: System generates asset transfer order; logistics arranges physical movement if needed (forklifts, large fixtures); sending location prepares asset for transport
+Responsible (R): Logistics / Sending Location
+Accountable (A): —
+Duration: Variable</bpmn:documentation>
+        <bpmn:incoming>W1693_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1693_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1693_Task11" name="Receiving location scans asset tag upon arrival; confirms asset identity and…">
+        <bpmn:documentation>Step 4: Receiving location scans asset tag upon arrival; confirms asset identity and condition; system updates: (a) asset location code changed to receiving location, (b) cost center reassigned, (c) physical inventory record updated, (d) depreciation continues without interruption (same useful life and method)
+Responsible (R): Receiving Location Manager
+Accountable (A): Fixed Asset Accountant
+Duration: 5 min/asset</bpmn:documentation>
+        <bpmn:incoming>W1693_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1693_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1693_Task12" name="For inter-entity transfers: system generates intercompany journal entry — asset…">
+        <bpmn:documentation>Step 5: For inter-entity transfers: system generates intercompany journal entry — asset removed from sending entity&#x27;s register, added to receiving entity&#x27;s register; any gain/loss on transfer recognized in sending entity if transfer price ≠ book value
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1693_Flow20</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1693_End13" name="Complete">
+        <bpmn:incoming>W1693_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1693_Annotation14">
+        <bpmn:text>Controls: - CTL-346 (ensure controlled execution — Asset Registration &amp; Lifecycle Tracking (PA-35.1).) | - operational: Fixed Asset Accountant review and approval gate
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1693_Assoc15" sourceRef="W1693_Annotation14" targetRef="W1693_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1693_Flow16" sourceRef="W1693_Start7" targetRef="W1693_Task8" />
+      <bpmn:sequenceFlow id="W1693_Flow17" sourceRef="W1693_Task8" targetRef="W1693_Task9" />
+      <bpmn:sequenceFlow id="W1693_Flow18" sourceRef="W1693_Task9" targetRef="W1693_Task10" />
+      <bpmn:sequenceFlow id="W1693_Flow19" sourceRef="W1693_Task10" targetRef="W1693_Task11" />
+      <bpmn:sequenceFlow id="W1693_Flow20" sourceRef="W1693_Task11" targetRef="W1693_Task12" />
+      <bpmn:sequenceFlow id="W1693_Flow21" sourceRef="W1693_Task12" targetRef="W1693_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1693_diag">
+      <bpmndi:BPMNPlane id="W1693_plane" bpmnElement="W_W1693">
+        <bpmndi:BPMNShape id="W1693_Lane1_di" bpmnElement="W1693_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Lane2_di" bpmnElement="W1693_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Lane3_di" bpmnElement="W1693_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Lane4_di" bpmnElement="W1693_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Lane5_di" bpmnElement="W1693_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Task8_di" bpmnElement="W1693_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Task9_di" bpmnElement="W1693_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Task10_di" bpmnElement="W1693_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Task11_di" bpmnElement="W1693_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Task12_di" bpmnElement="W1693_Task12"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Start7_di" bpmnElement="W1693_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_End13_di" bpmnElement="W1693_End13"><dc:Bounds x="1470" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1693_Annotation14_di" bpmnElement="W1693_Annotation14"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1693_Flow16_di" bpmnElement="W1693_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1693_Flow17_di" bpmnElement="W1693_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1693_Flow18_di" bpmnElement="W1693_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1693_Flow19_di" bpmnElement="W1693_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1693_Flow20_di" bpmnElement="W1693_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1693_Flow21_di" bpmnElement="W1693_Flow21"><di:waypoint x="1420" y="845" /><di:waypoint x="1470" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1693_Assoc15_di" bpmnElement="W1693_Assoc15"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1694" name="W1694. Asset Component &amp; Sub-Asset Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Asset installation with identifiable components of different useful lives, or major component replacement
+Frequency: ~3–5 component structures/month (10–15 new store builds/year per W1427 plus ~30–40 remodels/year per W109.2)
+Volume: ~40–60/year
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, COO, Project Engineer
+Source: workflow W1694 — Asset Component &amp; Sub-Asset Management</bpmn:documentation>
+      <bpmn:laneSet id="W1694_LaneSet3">
+        <bpmn:lane id="W1694_Lane1" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1694_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1694_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1694_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1694_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1694_Lane2" name="System">
+        <bpmn:flowNodeRef>W1694_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1694_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1694_Start4" name="Asset installation with identifiable components of different useful lives, or major…">
+        <bpmn:outgoing>W1694_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1694_Task5" name="During new store build or major renovation, Fixed Asset Accountant decomposes…">
+        <bpmn:documentation>Step 1: During new store build or major renovation, Fixed Asset Accountant decomposes the project into component assets per PFRS component accounting: (a) building structure / leasehold improvements (10–20 years or lease term), (b) HVAC system (10–15 years), (c) electrical installation (15–20 years), (d) plumbing (15–20 years), (e) racking and shelving (10 years), (f) POS system (5 years), (g) signage (7–10 years), (h) paint and cosmetic finishes (3–5 years)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1–2 hours/store</bpmn:documentation>
+        <bpmn:incoming>W1694_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1694_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1694_Task6" name="System creates parent asset record with sub-asset components, each with its…">
+        <bpmn:documentation>Step 2: System creates parent asset record with sub-asset components, each with its own: (a) acquisition cost allocation (proportion of total project cost), (b) useful life, (c) depreciation method and schedule, (d) replacement schedule
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: 30 min/store</bpmn:documentation>
+        <bpmn:incoming>W1694_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1694_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1694_Task7" name="When a component is replaced (e.g., HVAC replacement after 12 years): (a) old…">
+        <bpmn:documentation>Step 3: When a component is replaced (e.g., HVAC replacement after 12 years): (a) old component derecognized — remaining book value written off, (b) new component capitalized as sub-asset with its own useful life, (c) parent asset and other components unaffected
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 15 min/component</bpmn:documentation>
+        <bpmn:incoming>W1694_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1694_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1694_Task8" name="Annual review: Fixed Asset Accountant reviews component structures for assets…">
+        <bpmn:documentation>Step 4: Annual review: Fixed Asset Accountant reviews component structures for assets approaching component replacement; coordinates with Facilities for planned replacement budget
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1 day/year</bpmn:documentation>
+        <bpmn:incoming>W1694_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1694_End9" name="Complete">
+        <bpmn:incoming>W1694_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1694_Annotation10">
+        <bpmn:text>Controls: - CTL-346 (ensure controlled execution — Asset Registration &amp; Lifecycle Tracking (PA-35.1).) | - operational: Fixed Asset Accountant review and approval gate
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1694_Assoc11" sourceRef="W1694_Annotation10" targetRef="W1694_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1694_Flow12" sourceRef="W1694_Start4" targetRef="W1694_Task5" />
+      <bpmn:sequenceFlow id="W1694_Flow13" sourceRef="W1694_Task5" targetRef="W1694_Task6" />
+      <bpmn:sequenceFlow id="W1694_Flow14" sourceRef="W1694_Task6" targetRef="W1694_Task7" />
+      <bpmn:sequenceFlow id="W1694_Flow15" sourceRef="W1694_Task7" targetRef="W1694_Task8" />
+      <bpmn:sequenceFlow id="W1694_Flow16" sourceRef="W1694_Task8" targetRef="W1694_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1694_diag">
+      <bpmndi:BPMNPlane id="W1694_plane" bpmnElement="W_W1694">
+        <bpmndi:BPMNShape id="W1694_Lane1_di" bpmnElement="W1694_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_Lane2_di" bpmnElement="W1694_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_Task5_di" bpmnElement="W1694_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_Task6_di" bpmnElement="W1694_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_Task7_di" bpmnElement="W1694_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_Task8_di" bpmnElement="W1694_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_Start4_di" bpmnElement="W1694_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_End9_di" bpmnElement="W1694_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1694_Annotation10_di" bpmnElement="W1694_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1694_Flow12_di" bpmnElement="W1694_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1694_Flow13_di" bpmnElement="W1694_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1694_Flow14_di" bpmnElement="W1694_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1694_Flow15_di" bpmnElement="W1694_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1694_Flow16_di" bpmnElement="W1694_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1694_Assoc11_di" bpmnElement="W1694_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1695" name="W1695. Asset Maintenance Schedule &amp; History Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Asset registration (W1690), manufacturer warranty requirement, or regulatory mandate (e.g., forklift annual inspection)
+Frequency: Continuous — ~4,000–6,000 maintenance events/month across all assets
+Volume: ~50,000–70,000 maintenance records/year
+Owner: Maintenance Supervisor (DC) / Store Maintenance (stores) / IT Helpdesk (IT assets)
+Participants: Maintenance Supervisor, Store Maintenance, IT Helpdesk, Fixed Asset Accountant
+Source: workflow W1695 — Asset Maintenance Schedule &amp; History Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W1695_LaneSet4">
+        <bpmn:lane id="W1695_Lane1" name="System">
+        <bpmn:flowNodeRef>W1695_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1695_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1695_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1695_Lane2" name="Maintenance Technician">
+        <bpmn:flowNodeRef>W1695_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1695_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1695_Lane3" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1695_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1695_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1695_Start5" name="Asset registration (W1690), manufacturer warranty requirement, or regulatory mandate…">
+        <bpmn:outgoing>W1695_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1695_Task6" name="System auto-generates preventive maintenance schedule based on asset category…">
+        <bpmn:documentation>Step 1: System auto-generates preventive maintenance schedule based on asset category rules: (a) forklifts: monthly inspection, annual comprehensive service, (b) HVAC: quarterly filter change, annual full service, (c) POS terminals: quarterly cleaning and calibration, (d) delivery vehicles: every 5,000 km oil change, annual registration renewal, (e) generators: monthly test run, quarterly full load test, (f) fire suppression systems: annual certification
+Responsible (R): System
+Accountable (A): Maintenance Supervisor
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1695_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1695_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1695_Task7" name="Maintenance team performs scheduled maintenance; records in system: (a) date…">
+        <bpmn:documentation>Step 2: Maintenance team performs scheduled maintenance; records in system: (a) date, technician, work performed, parts used (linked to spare parts inventory), (b) cost (labor hours + parts) — categorized as maintenance expense (not capitalized), (c) next service due date updated automatically
+Responsible (R): Maintenance Technician
+Accountable (A): Maintenance Supervisor
+Duration: 30 min–4 hours/event</bpmn:documentation>
+        <bpmn:incoming>W1695_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1695_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1695_Task8" name="Emergency/breakdown maintenance: (a) asset user reports failure via helpdesk…">
+        <bpmn:documentation>Step 3: Emergency/breakdown maintenance: (a) asset user reports failure via helpdesk, (b) maintenance team responds and diagnoses, (c) repair or replacement performed, (d) if repair extends useful life or increases capacity → cost capitalized as asset improvement per W1690; if repair merely restores function → expensed, (e) maintenance history updated
+Responsible (R): Maintenance Technician
+Accountable (A): Maintenance Supervisor
+Duration: Variable</bpmn:documentation>
+        <bpmn:incoming>W1695_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1695_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1695_Task9" name="Fixed Asset Accountant reviews capitalized maintenance costs monthly to ensure…">
+        <bpmn:documentation>Step 4: Fixed Asset Accountant reviews capitalized maintenance costs monthly to ensure proper capitalization vs. expense treatment per PFRS
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1695_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1695_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1695_Task10" name="Asset maintenance history available for: (a) physical verification condition…">
+        <bpmn:documentation>Step 5: Asset maintenance history available for: (a) physical verification condition assessment per W1706, (b) vendor warranty claims, (c) replacement decision support (frequency and cost of repairs vs. replacement)
+Responsible (R): System
+Accountable (A): —
+Duration: On-demand</bpmn:documentation>
+        <bpmn:incoming>W1695_Flow18</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1695_End11" name="Complete">
+        <bpmn:incoming>W1695_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1695_Annotation12">
+        <bpmn:text>Controls: - CTL-346 (ensure controlled execution — Asset Registration &amp; Lifecycle Tracking (PA-35.1).) | - operational: Maintenance Supervisor (DC) / Store Maintenance (stores) / IT Helpdesk (IT assets) review and approval gate
+Owner: Maintenance Supervisor (DC) / Store Maintenance (stores) / IT Helpdesk (IT assets)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1695_Assoc13" sourceRef="W1695_Annotation12" targetRef="W1695_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1695_Flow14" sourceRef="W1695_Start5" targetRef="W1695_Task6" />
+      <bpmn:sequenceFlow id="W1695_Flow15" sourceRef="W1695_Task6" targetRef="W1695_Task7" />
+      <bpmn:sequenceFlow id="W1695_Flow16" sourceRef="W1695_Task7" targetRef="W1695_Task8" />
+      <bpmn:sequenceFlow id="W1695_Flow17" sourceRef="W1695_Task8" targetRef="W1695_Task9" />
+      <bpmn:sequenceFlow id="W1695_Flow18" sourceRef="W1695_Task9" targetRef="W1695_Task10" />
+      <bpmn:sequenceFlow id="W1695_Flow19" sourceRef="W1695_Task10" targetRef="W1695_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1695_diag">
+      <bpmndi:BPMNPlane id="W1695_plane" bpmnElement="W_W1695">
+        <bpmndi:BPMNShape id="W1695_Lane1_di" bpmnElement="W1695_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Lane2_di" bpmnElement="W1695_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Lane3_di" bpmnElement="W1695_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Task6_di" bpmnElement="W1695_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Task7_di" bpmnElement="W1695_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Task8_di" bpmnElement="W1695_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Task9_di" bpmnElement="W1695_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Task10_di" bpmnElement="W1695_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Start5_di" bpmnElement="W1695_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_End11_di" bpmnElement="W1695_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1695_Annotation12_di" bpmnElement="W1695_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1695_Flow14_di" bpmnElement="W1695_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1695_Flow15_di" bpmnElement="W1695_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1695_Flow16_di" bpmnElement="W1695_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1695_Flow17_di" bpmnElement="W1695_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1695_Flow18_di" bpmnElement="W1695_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1695_Flow19_di" bpmnElement="W1695_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1695_Assoc13_di" bpmnElement="W1695_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1696" name="W1696. Asset Lease vs. Buy Decision &amp; Recording" isExecutable="false">
+      <bpmn:documentation>Trigger: Need for new asset (vehicle, equipment, IT hardware) identified during budgeting or operational planning
+Frequency: ~20–30 lease-vs-buy decisions/year for material assets
+Volume: Low volume but high value — each decision may involve PHP 1–20M
+Owner: FP&amp;A Manager
+Participants: FP&amp;A Manager, CFO, Department Head, Treasury
+Source: workflow W1696 — Asset Lease vs. Buy Decision &amp; Recording</bpmn:documentation>
+      <bpmn:laneSet id="W1696_LaneSet5">
+        <bpmn:lane id="W1696_Lane1" name="FP&amp;A Manager">
+        <bpmn:flowNodeRef>W1696_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1696_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1696_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W1696_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1696_Lane3" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1696_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1696_Lane4" name="Treasury">
+        <bpmn:flowNodeRef>W1696_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1696_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1696_Start6" name="Need for new asset (vehicle, equipment, IT hardware) identified during budgeting or…">
+        <bpmn:outgoing>W1696_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1696_Task7" name="Department Head identifies need for new asset; FP&amp;A performs lease-vs-buy…">
+        <bpmn:documentation>Step 1: Department Head identifies need for new asset; FP&amp;A performs lease-vs-buy analysis: (a) total cost of ownership (purchase price + maintenance + disposal vs. lease payments + maintenance), (b) NPV comparison using company&#x27;s incremental borrowing rate, (c) cash flow impact (upfront purchase vs. monthly lease), (d) tax implications (depreciation vs. lease expense deductibility), (e) flexibility (lease allows upgrade; purchase builds equity), (f) balance sheet impact per PFRS 16 (most leases now on-balance-sheet)
+Responsible (R): FP&amp;A Manager
+Accountable (A): CFO
+Duration: 2–4 hours/decision</bpmn:documentation>
+        <bpmn:incoming>W1696_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1696_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1696_Task8" name="CFO reviews analysis and decides: (a) purchase — triggers capex request per…">
+        <bpmn:documentation>Step 2: CFO reviews analysis and decides: (a) purchase — triggers capex request per W1811, (b) finance lease — recorded as asset and liability on balance sheet per PFRS 16, (c) operating lease (short-term ≤ 12 months or low-value) — recorded as expense on straight-line basis
+Responsible (R): CFO
+Accountable (A): CEO (if &gt; PHP 5M)
+Duration: 30 min/decision</bpmn:documentation>
+        <bpmn:incoming>W1696_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1696_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1696_Task9" name="For leased assets: Fixed Asset Accountant records right-of-use asset and lease…">
+        <bpmn:documentation>Step 3: For leased assets: Fixed Asset Accountant records right-of-use asset and lease liability at inception: (a) right-of-use asset = present value of lease payments, (b) lease liability = same present value, (c) asset depreciated over lease term, (d) liability reduced by lease payments with interest expense on outstanding balance
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 30 min/lease</bpmn:documentation>
+        <bpmn:incoming>W1696_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1696_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1696_Task10" name="Lease payments scheduled in treasury system; monthly: (a) lease payment…">
+        <bpmn:documentation>Step 4: Lease payments scheduled in treasury system; monthly: (a) lease payment processed to lessor, (b) system splits payment into principal reduction and interest expense, (c) right-of-use asset depreciated monthly
+Responsible (R): Treasury / System
+Accountable (A): Fixed Asset Accountant
+Duration: Automated monthly</bpmn:documentation>
+        <bpmn:incoming>W1696_Flow17</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1696_End11" name="Complete">
+        <bpmn:incoming>W1696_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1696_Annotation12">
+        <bpmn:text>Controls: - CTL-346 (ensure controlled execution — Asset Registration &amp; Lifecycle Tracking (PA-35.1).) | - operational: FP&amp;A Manager review and approval gate
+Owner: FP&amp;A Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1696_Assoc13" sourceRef="W1696_Annotation12" targetRef="W1696_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1696_Flow14" sourceRef="W1696_Start6" targetRef="W1696_Task7" />
+      <bpmn:sequenceFlow id="W1696_Flow15" sourceRef="W1696_Task7" targetRef="W1696_Task8" />
+      <bpmn:sequenceFlow id="W1696_Flow16" sourceRef="W1696_Task8" targetRef="W1696_Task9" />
+      <bpmn:sequenceFlow id="W1696_Flow17" sourceRef="W1696_Task9" targetRef="W1696_Task10" />
+      <bpmn:sequenceFlow id="W1696_Flow18" sourceRef="W1696_Task10" targetRef="W1696_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1696_diag">
+      <bpmndi:BPMNPlane id="W1696_plane" bpmnElement="W_W1696">
+        <bpmndi:BPMNShape id="W1696_Lane1_di" bpmnElement="W1696_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Lane2_di" bpmnElement="W1696_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Lane3_di" bpmnElement="W1696_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Lane4_di" bpmnElement="W1696_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Task7_di" bpmnElement="W1696_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Task8_di" bpmnElement="W1696_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Task9_di" bpmnElement="W1696_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Task10_di" bpmnElement="W1696_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Start6_di" bpmnElement="W1696_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_End11_di" bpmnElement="W1696_End11"><dc:Bounds x="1260" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1696_Annotation12_di" bpmnElement="W1696_Annotation12"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1696_Flow14_di" bpmnElement="W1696_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1696_Flow15_di" bpmnElement="W1696_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1696_Flow16_di" bpmnElement="W1696_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1696_Flow17_di" bpmnElement="W1696_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1696_Flow18_di" bpmnElement="W1696_Flow18"><di:waypoint x="1210" y="675" /><di:waypoint x="1260" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1696_Assoc13_di" bpmnElement="W1696_Assoc13"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1697" name="W1697. Asset Insurance Coverage Tracking &amp; Linkage" isExecutable="false">
+      <bpmn:documentation>Trigger: New asset registration (W1690), annual insurance renewal, or significant asset addition/disposal
+Frequency: Continuous for new assets; annual policy renewal review
+Volume: ~2,500–3,500 coverage updates/year
+Owner: Insurance &amp; Risk Officer
+Participants: Insurance &amp; Risk Officer, Fixed Asset Accountant, Treasury, Insurance Broker
+Source: workflow W1697 — Asset Insurance Coverage Tracking &amp; Linkage</bpmn:documentation>
+      <bpmn:laneSet id="W1697_LaneSet4">
+        <bpmn:lane id="W1697_Lane1" name="Insurance &amp; Risk Officer">
+        <bpmn:flowNodeRef>W1697_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1697_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1697_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1697_Lane2" name="System">
+        <bpmn:flowNodeRef>W1697_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1697_Lane3" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1697_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1697_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1697_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1697_Start5" name="New asset registration (W1690), annual insurance renewal, or significant asset…">
+        <bpmn:outgoing>W1697_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1697_Task6" name="Insurance &amp; Risk Officer maintains insurance coverage matrix by asset category…">
+        <bpmn:documentation>Step 1: Insurance &amp; Risk Officer maintains insurance coverage matrix by asset category: (a) property insurance (buildings, leasehold improvements, fixtures) — blanket policy per entity, (b) motor vehicle insurance — per-vehicle policy, (c) equipment breakdown / boiler &amp; machinery — DC equipment, generators, HVAC, (d) electronic equipment insurance — POS terminals, servers, RF guns, (e) transit / inland marine — assets in transit between locations, (f) business interruption — linked to property coverage
+Responsible (R): Insurance &amp; Risk Officer
+Accountable (A): CFO
+Duration: Maintained continuously</bpmn:documentation>
+        <bpmn:incoming>W1697_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1697_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1697_Task7" name="System auto-flags new assets above coverage threshold for insurance enrollment…">
+        <bpmn:documentation>Step 2: System auto-flags new assets above coverage threshold for insurance enrollment: (a) vehicles: auto-enrolled in motor fleet policy within 7 days of registration, (b) high-value assets ≥ PHP 1M: reported to broker for schedule update, (c) DC equipment: added to equipment breakdown schedule
+Responsible (R): System
+Accountable (A): Insurance &amp; Risk Officer
+Duration: Automated flag; manual update</bpmn:documentation>
+        <bpmn:incoming>W1697_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1697_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1697_Task8" name="Asset disposal/retirement per W1708 triggers insurance schedule update: (a)…">
+        <bpmn:documentation>Step 3: Asset disposal/retirement per W1708 triggers insurance schedule update: (a) vehicle retired → motor policy endorsement to remove, (b) asset written off due to damage → insurance claim initiated per W837 (VS-26), (c) blanket policy: no change needed for individual assets unless approaching aggregate limit
+Responsible (R): Fixed Asset Accountant / Insurance &amp; Risk Officer
+Accountable (A): —
+Duration: 10 min/disposal</bpmn:documentation>
+        <bpmn:incoming>W1697_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1697_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1697_Task9" name="Annual insurance renewal: (a) Insurance &amp; Risk Officer exports asset register…">
+        <bpmn:documentation>Step 4: Annual insurance renewal: (a) Insurance &amp; Risk Officer exports asset register summary by category and entity, (b) compares with insurance schedule to identify coverage gaps or over-insurance, (c) submits updated schedule to broker with renewal instructions, (d) Treasury processes premium payment
+Responsible (R): Insurance &amp; Risk Officer
+Accountable (A): CFO
+Duration: 2–3 days/year</bpmn:documentation>
+        <bpmn:incoming>W1697_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1697_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1697_Task10" name="Monthly reconciliation: Fixed Asset Accountant reconciles asset register totals…">
+        <bpmn:documentation>Step 5: Monthly reconciliation: Fixed Asset Accountant reconciles asset register totals with insurance coverage amounts; material variances (&gt; 10%) reported to Insurance &amp; Risk Officer for schedule correction
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Insurance &amp; Risk Officer
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1697_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1697_End11" name="Complete">
+        <bpmn:incoming>W1697_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1697_Annotation12">
+        <bpmn:text>Controls: - CTL-219 (ensure fixed-asset register accuracy.) | - operational: periodic reconciliation against source documents
+Owner: Insurance &amp; Risk Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1697_Assoc13" sourceRef="W1697_Annotation12" targetRef="W1697_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1697_Flow14" sourceRef="W1697_Start5" targetRef="W1697_Task6" />
+      <bpmn:sequenceFlow id="W1697_Flow15" sourceRef="W1697_Task6" targetRef="W1697_Task7" />
+      <bpmn:sequenceFlow id="W1697_Flow16" sourceRef="W1697_Task7" targetRef="W1697_Task8" />
+      <bpmn:sequenceFlow id="W1697_Flow17" sourceRef="W1697_Task8" targetRef="W1697_Task9" />
+      <bpmn:sequenceFlow id="W1697_Flow18" sourceRef="W1697_Task9" targetRef="W1697_Task10" />
+      <bpmn:sequenceFlow id="W1697_Flow19" sourceRef="W1697_Task10" targetRef="W1697_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1697_diag">
+      <bpmndi:BPMNPlane id="W1697_plane" bpmnElement="W_W1697">
+        <bpmndi:BPMNShape id="W1697_Lane1_di" bpmnElement="W1697_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Lane2_di" bpmnElement="W1697_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Lane3_di" bpmnElement="W1697_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Task6_di" bpmnElement="W1697_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Task7_di" bpmnElement="W1697_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Task8_di" bpmnElement="W1697_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Task9_di" bpmnElement="W1697_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Task10_di" bpmnElement="W1697_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Start5_di" bpmnElement="W1697_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_End11_di" bpmnElement="W1697_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1697_Annotation12_di" bpmnElement="W1697_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1697_Flow14_di" bpmnElement="W1697_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1697_Flow15_di" bpmnElement="W1697_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1697_Flow16_di" bpmnElement="W1697_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1697_Flow17_di" bpmnElement="W1697_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1697_Flow18_di" bpmnElement="W1697_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1697_Flow19_di" bpmnElement="W1697_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1697_Assoc13_di" bpmnElement="W1697_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

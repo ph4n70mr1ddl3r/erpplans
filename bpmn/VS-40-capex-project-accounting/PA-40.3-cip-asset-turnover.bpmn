@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-40.3-cip-asset-turnover" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1827" name="W1827. Construction-in-Progress (CIP) Account Management" isExecutable="false">
+      <bpmn:documentation>Trigger: First cost incurred on approved capex project
+Frequency: Continuous for active projects
+Volume: ~30–50 active CIP accounts at any time (one per active capex project, per the PA-40.1 ~30–50-project register)
+Owner: Project Accountant
+Participants: Project Accountant, Accounting Manager, FP&amp;A
+Source: workflow W1827 — Construction-in-Progress (CIP) Account Management</bpmn:documentation>
+      <bpmn:laneSet id="W1827_LaneSet4">
+        <bpmn:lane id="W1827_Lane1" name="System">
+        <bpmn:flowNodeRef>W1827_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1827_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1827_Lane2" name="Project Accountant">
+        <bpmn:flowNodeRef>W1827_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1827_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1827_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1827_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1827_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1827_Start5" name="First cost incurred on approved capex project">
+        <bpmn:outgoing>W1827_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1827_Task6" name="CIP account structure in GL: (a) one CIP account per active capex project…">
+        <bpmn:documentation>Step 1: CIP account structure in GL: (a) one CIP account per active capex project (e.g., CIP-BRD-001 Mindanao Store, CIP-IT-ERP-Upgrade), (b) sub-accounts by cost category: materials, labor, services, equipment, professional fees, capitalized interest, (c) entity-specific: each entity&#x27;s CIP tracked separately, (d) group-level CIP visible for consolidation
+Responsible (R): System
+Accountable (A): Accounting Manager
+Duration: Per project creation</bpmn:documentation>
+        <bpmn:incoming>W1827_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1827_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1827_Task7" name="Monthly CIP management: (a) all project costs accumulated in CIP (not…">
+        <bpmn:documentation>Step 2: Monthly CIP management: (a) all project costs accumulated in CIP (not depreciated — CIP assets are not yet in use), (b) monthly review per W1705 (CIP reconciliation), (c) CIP aging report: flag projects in CIP &gt; 12 months (risk of stalled or abandoned projects), (d) CIP balance should increase as project progresses and decrease to zero when asset is turned over
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1827_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1827_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1827_Task8" name="CIP balance sheet presentation: (a) CIP classified as non-current asset (part…">
+        <bpmn:documentation>Step 3: CIP balance sheet presentation: (a) CIP classified as non-current asset (part of Property, Plant &amp; Equipment) in balance sheet, (b) separate line item or combined with fixed assets (materiality-dependent), (c) CIP balance = total costs incurred but not yet capitalized as completed assets
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: At reporting date</bpmn:documentation>
+        <bpmn:incoming>W1827_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1827_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1827_Task9" name="Impairment of CIP: if project is stalled or abandoned, CIP must be assessed for…">
+        <bpmn:documentation>Step 4: Impairment of CIP: if project is stalled or abandoned, CIP must be assessed for impairment per PAS 36 (same as W1700 for completed assets); abandoned projects written off per W2750
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: If triggered</bpmn:documentation>
+        <bpmn:incoming>W1827_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1827_End10" name="Complete">
+        <bpmn:incoming>W1827_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1827_Annotation11">
+        <bpmn:text>Controls: - CTL-363 (ensure controlled execution — Construction-in-Progress &amp; Asset Turnover (PA-40.3).) | - operational: Project Accountant review and approval gate; periodic reconciliation against source documents
+Owner: Project Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1827_Assoc12" sourceRef="W1827_Annotation11" targetRef="W1827_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1827_Flow13" sourceRef="W1827_Start5" targetRef="W1827_Task6" />
+      <bpmn:sequenceFlow id="W1827_Flow14" sourceRef="W1827_Task6" targetRef="W1827_Task7" />
+      <bpmn:sequenceFlow id="W1827_Flow15" sourceRef="W1827_Task7" targetRef="W1827_Task8" />
+      <bpmn:sequenceFlow id="W1827_Flow16" sourceRef="W1827_Task8" targetRef="W1827_Task9" />
+      <bpmn:sequenceFlow id="W1827_Flow17" sourceRef="W1827_Task9" targetRef="W1827_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1827_diag">
+      <bpmndi:BPMNPlane id="W1827_plane" bpmnElement="W_W1827">
+        <bpmndi:BPMNShape id="W1827_Lane1_di" bpmnElement="W1827_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Lane2_di" bpmnElement="W1827_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Lane3_di" bpmnElement="W1827_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Task6_di" bpmnElement="W1827_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Task7_di" bpmnElement="W1827_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Task8_di" bpmnElement="W1827_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Task9_di" bpmnElement="W1827_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Start5_di" bpmnElement="W1827_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_End10_di" bpmnElement="W1827_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1827_Annotation11_di" bpmnElement="W1827_Annotation11"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1827_Flow13_di" bpmnElement="W1827_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1827_Flow14_di" bpmnElement="W1827_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1827_Flow15_di" bpmnElement="W1827_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1827_Flow16_di" bpmnElement="W1827_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1827_Flow17_di" bpmnElement="W1827_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1827_Assoc12_di" bpmnElement="W1827_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1828" name="W1828. Project Completion Certification &amp; Asset Turnover" isExecutable="false">
+      <bpmn:documentation>Trigger: Project reaches practical completion (asset ready for intended use)
+Frequency: ~10–15 store completions/year + ~20–35 other capex project completions (remodels, DC, IT, equipment)
+Volume: ~30–50 turnovers/year
+Owner: COO (construction) / CIO (IT) / Department Head (other)
+Participants: Project Manager, COO, Store Manager (for new stores), Project Accountant, Fixed Asset Accountant
+Source: workflow W1828 — Project Completion Certification &amp; Asset Turnover</bpmn:documentation>
+      <bpmn:laneSet id="W1828_LaneSet3">
+        <bpmn:lane id="W1828_Lane1" name="Project Manager">
+        <bpmn:flowNodeRef>W1828_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1828_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1828_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1828_Lane2" name="Project Accountant">
+        <bpmn:flowNodeRef>W1828_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1828_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1828_Start4" name="Project reaches practical completion (asset ready for intended use)">
+        <bpmn:outgoing>W1828_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1828_Task5" name="ready for its intended use">
+        <bpmn:documentation>Step 1: Project Manager confirms practical completion: (a) all construction/installation work complete (punch list items may remain but are not critical to operation), (b) systems tested and operational (IT projects: UAT passed; stores: POS live), (c) safety inspection passed, (d) occupancy permit received (if required), (e) asset is ready for its intended use per PFRS — this is the trigger for depreciation start (not the grand opening date)
+Responsible (R): Project Manager
+Accountable (A): COO / CIO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1828_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1828_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1828_Task6" name="Completion certificate prepared and signed: (a) Project Manager certifies…">
+        <bpmn:documentation>Step 2: Completion certificate prepared and signed: (a) Project Manager certifies completion, (b) COO or CIO accepts, (c) Store Manager (for new stores) confirms operational readiness, (d) punch list items documented with agreed resolution timeline
+Responsible (R): Project Manager / COO
+Accountable (A): COO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1828_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1828_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1828_Task7" name="Project Accountant initiates CIP-to-asset turnover per W1829: (a) reviews all…">
+        <bpmn:documentation>Step 3: Project Accountant initiates CIP-to-asset turnover per W1829: (a) reviews all CIP costs for completeness and accuracy, (b) ensures all invoices received and allocated, (c) accrues any known but uninvoiced costs, (d) transfers CIP balance to completed fixed assets
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: 2–4 days</bpmn:documentation>
+        <bpmn:incoming>W1828_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1828_End8" name="Complete">
+        <bpmn:incoming>W1828_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1828_Annotation9">
+        <bpmn:text>Controls: - CTL-363 (ensure controlled execution — Construction-in-Progress &amp; Asset Turnover (PA-40.3).) | - operational: COO (construction) / CIO (IT) / Department Head (other) review and approval gate
+Owner: COO (construction) / CIO (IT) / Department Head (other)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1828_Assoc10" sourceRef="W1828_Annotation9" targetRef="W1828_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1828_Flow11" sourceRef="W1828_Start4" targetRef="W1828_Task5" />
+      <bpmn:sequenceFlow id="W1828_Flow12" sourceRef="W1828_Task5" targetRef="W1828_Task6" />
+      <bpmn:sequenceFlow id="W1828_Flow13" sourceRef="W1828_Task6" targetRef="W1828_Task7" />
+      <bpmn:sequenceFlow id="W1828_Flow14" sourceRef="W1828_Task7" targetRef="W1828_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1828_diag">
+      <bpmndi:BPMNPlane id="W1828_plane" bpmnElement="W_W1828">
+        <bpmndi:BPMNShape id="W1828_Lane1_di" bpmnElement="W1828_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1828_Lane2_di" bpmnElement="W1828_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1828_Task5_di" bpmnElement="W1828_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1828_Task6_di" bpmnElement="W1828_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1828_Task7_di" bpmnElement="W1828_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1828_Start4_di" bpmnElement="W1828_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1828_End8_di" bpmnElement="W1828_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1828_Annotation9_di" bpmnElement="W1828_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1828_Flow11_di" bpmnElement="W1828_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1828_Flow12_di" bpmnElement="W1828_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1828_Flow13_di" bpmnElement="W1828_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1828_Flow14_di" bpmnElement="W1828_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1828_Assoc10_di" bpmnElement="W1828_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1829" name="W1829. CIP-to-Fixed Asset Conversion Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Project completion certified (W1828)
+Frequency: ~30–50 conversions/year
+Volume: 1 conversion per completed project (may result in multiple fixed assets)
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Project Accountant, Accounting Manager
+Source: workflow W1829 — CIP-to-Fixed Asset Conversion Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1829_LaneSet3">
+        <bpmn:lane id="W1829_Lane1" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1829_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1829_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1829_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1829_Lane2" name="System">
+        <bpmn:flowNodeRef>W1829_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1829_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1829_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1829_Start4" name="Project completion certified (W1828)">
+        <bpmn:outgoing>W1829_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1829_Task5" name="new store example">
+        <bpmn:documentation>Step 1: Fixed Asset Accountant decomposes project cost into component assets per W1694: (a) new store example (total cost PHP 50M): (i) leasehold improvements: PHP 20M (depreciate over lease term 10–15 years), (ii) HVAC system: PHP 5M (10–15 years), (iii) electrical installation: PHP 4M (15–20 years), (iv) plumbing: PHP 3M (15–20 years), (v) racking/shelving: PHP 5M (10 years), (vi) POS system (3 terminals): PHP 1.5M (5 years), (vii) signage: PHP 2M (7–10 years), (viii) generator: PHP 1.5M (7 years), (ix) CCTV system: PHP 1M (5 years), (x) initial inventory: PHP 5M (not fixed asset — transferred to inventory), (xi) pre-opening expenses (training, marketing): PHP 2M (not fixed asset — expensed), (xii) contingency unused: returned to capex pool
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1–2 days/project</bpmn:documentation>
+        <bpmn:incoming>W1829_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1829_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1829_Task6" name="ready-for-use date">
+        <bpmn:documentation>Step 2: System processes CIP-to-asset conversion: (a) CIP account debited to zero, (b) new fixed asset records created with component structures, (c) each component assigned useful life and depreciation method per W1691, (d) depreciation begins from the ready-for-use date (completion certificate date, not grand opening date), (e) pre-opening and non-capitalizable costs reclassified from CIP to expense
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: 30 min/project</bpmn:documentation>
+        <bpmn:incoming>W1829_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1829_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1829_Task7" name="Journal entries posted: (a) debit: fixed asset accounts (gross) per component…">
+        <bpmn:documentation>Step 3: Journal entries posted: (a) debit: fixed asset accounts (gross) per component, (b) credit: CIP account (cleared to zero), (c) debit: pre-opening expense (for non-capitalized costs), (d) debit: inventory (for initial stock), (e) credit: CIP (for above reclassifications)
+Responsible (R): System
+Accountable (A): Accounting Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1829_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1829_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1829_Task8" name="Fixed Asset Accountant verifies new asset records: (a) total asset value = CIP…">
+        <bpmn:documentation>Step 4: Fixed Asset Accountant verifies new asset records: (a) total asset value = CIP balance before conversion (no unexplained difference), (b) depreciation start date correct, (c) useful life per component is appropriate, (d) asset tags ordered per W1692
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1829_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1829_End9" name="Complete">
+        <bpmn:incoming>W1829_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1829_Annotation10">
+        <bpmn:text>Controls: - CTL-363 (ensure controlled execution — Construction-in-Progress &amp; Asset Turnover (PA-40.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1829_Assoc11" sourceRef="W1829_Annotation10" targetRef="W1829_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1829_Flow12" sourceRef="W1829_Start4" targetRef="W1829_Task5" />
+      <bpmn:sequenceFlow id="W1829_Flow13" sourceRef="W1829_Task5" targetRef="W1829_Task6" />
+      <bpmn:sequenceFlow id="W1829_Flow14" sourceRef="W1829_Task6" targetRef="W1829_Task7" />
+      <bpmn:sequenceFlow id="W1829_Flow15" sourceRef="W1829_Task7" targetRef="W1829_Task8" />
+      <bpmn:sequenceFlow id="W1829_Flow16" sourceRef="W1829_Task8" targetRef="W1829_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1829_diag">
+      <bpmndi:BPMNPlane id="W1829_plane" bpmnElement="W_W1829">
+        <bpmndi:BPMNShape id="W1829_Lane1_di" bpmnElement="W1829_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_Lane2_di" bpmnElement="W1829_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_Task5_di" bpmnElement="W1829_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_Task6_di" bpmnElement="W1829_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_Task7_di" bpmnElement="W1829_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_Task8_di" bpmnElement="W1829_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_Start4_di" bpmnElement="W1829_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_End9_di" bpmnElement="W1829_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1829_Annotation10_di" bpmnElement="W1829_Annotation10"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1829_Flow12_di" bpmnElement="W1829_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1829_Flow13_di" bpmnElement="W1829_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1829_Flow14_di" bpmnElement="W1829_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1829_Flow15_di" bpmnElement="W1829_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1829_Flow16_di" bpmnElement="W1829_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1829_Assoc11_di" bpmnElement="W1829_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2748" name="W2748. Post-Implementation Review &amp; Actual vs. Projected ROI Analysis" isExecutable="false">
+      <bpmn:documentation>Trigger: 12 months after project completion
+Frequency: ~30–50 post-implementation reviews/year (one per completed project, per W1828)
+Volume: 1 review per completed project
+Owner: FP&amp;A
+Participants: FP&amp;A, Project Sponsor, Department Head, CFO
+Source: workflow W2748 — Post-Implementation Review &amp; Actual vs. Projected ROI Analysis</bpmn:documentation>
+      <bpmn:laneSet id="W2748_LaneSet2">
+        <bpmn:lane id="W2748_Lane1" name="FP&amp;A">
+        <bpmn:flowNodeRef>W2748_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2748_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2748_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2748_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2748_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2748_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2748_Start3" name="12 months after project completion">
+        <bpmn:outgoing>W2748_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2748_Task4" name="cost">
+        <bpmn:documentation>Step 1: FP&amp;A compares actual project outcomes to original business case: (a) cost: actual total cost vs. approved budget (typically actual is 5–15% over budget for construction projects), (b) timeline: actual completion date vs. planned (typically 1–3 months delayed), (c) revenue: for new stores — actual Year 1 revenue vs. projected revenue per W1652, (d) profitability: store EBITDA margin vs. projected, (e) payback: actual payback trajectory vs. projected payback period, (f) IRR/NPV: recalculate with actual cash flows
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1–2 days/project</bpmn:documentation>
+        <bpmn:incoming>W2748_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2748_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2748_Task5" name="For non-revenue projects (IT, equipment replacement): (a) cost savings achieved…">
+        <bpmn:documentation>Step 2: For non-revenue projects (IT, equipment replacement): (a) cost savings achieved vs. projected, (b) operational improvements measured vs. baseline, (c) user satisfaction survey, (d) compliance achieved (if regulatory project)
+Responsible (R): FP&amp;A
+Accountable (A): Department Head
+Duration: 1 day/project</bpmn:documentation>
+        <bpmn:incoming>W2748_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2748_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2748_Task6" name="FP&amp;A prepares post-implementation review report: (a) summary of actual vs…">
+        <bpmn:documentation>Step 3: FP&amp;A prepares post-implementation review report: (a) summary of actual vs. projected, (b) key learnings (what went well, what didn&#x27;t), (c) calibration: how accurate were original projections? (d) recommendations for future similar projects, (e) presented to steering committee or CFO
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W2748_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2748_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2748_Task7" name="Annual: FP&amp;A compiles post-implementation results across all completed…">
+        <bpmn:documentation>Step 4: Annual: FP&amp;A compiles post-implementation results across all completed projects; identifies systematic biases in project estimation (e.g., consistently overestimating revenue, underestimating costs); adjusts estimation methodology for future business cases
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day/year</bpmn:documentation>
+        <bpmn:incoming>W2748_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2748_End8" name="Complete">
+        <bpmn:incoming>W2748_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2748_Annotation9">
+        <bpmn:text>Controls: - CTL-363 (ensure controlled execution — Construction-in-Progress &amp; Asset Turnover (PA-40.3).) | - operational: FP&amp;A review and approval gate
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2748_Assoc10" sourceRef="W2748_Annotation9" targetRef="W2748_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2748_Flow11" sourceRef="W2748_Start3" targetRef="W2748_Task4" />
+      <bpmn:sequenceFlow id="W2748_Flow12" sourceRef="W2748_Task4" targetRef="W2748_Task5" />
+      <bpmn:sequenceFlow id="W2748_Flow13" sourceRef="W2748_Task5" targetRef="W2748_Task6" />
+      <bpmn:sequenceFlow id="W2748_Flow14" sourceRef="W2748_Task6" targetRef="W2748_Task7" />
+      <bpmn:sequenceFlow id="W2748_Flow15" sourceRef="W2748_Task7" targetRef="W2748_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2748_diag">
+      <bpmndi:BPMNPlane id="W2748_plane" bpmnElement="W_W2748">
+        <bpmndi:BPMNShape id="W2748_Lane1_di" bpmnElement="W2748_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2748_Task4_di" bpmnElement="W2748_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2748_Task5_di" bpmnElement="W2748_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2748_Task6_di" bpmnElement="W2748_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2748_Task7_di" bpmnElement="W2748_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2748_Start3_di" bpmnElement="W2748_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2748_End8_di" bpmnElement="W2748_End8"><dc:Bounds x="1260" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2748_Annotation9_di" bpmnElement="W2748_Annotation9"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2748_Flow11_di" bpmnElement="W2748_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2748_Flow12_di" bpmnElement="W2748_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2748_Flow13_di" bpmnElement="W2748_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2748_Flow14_di" bpmnElement="W2748_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2748_Flow15_di" bpmnElement="W2748_Flow15"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2748_Assoc10_di" bpmnElement="W2748_Assoc10"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2749" name="W2749. Partial Asset Turnover (Phased Project Completion)" isExecutable="false">
+      <bpmn:documentation>Trigger: Part of a large project is ready for use before the entire project is complete
+Frequency: ~5–10 partial turnovers/year (primarily multi-store builds, DC expansions)
+Volume: Occasional — depends on project phasing
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Project Manager, Accounting Manager
+Source: workflow W2749 — Partial Asset Turnover (Phased Project Completion)</bpmn:documentation>
+      <bpmn:laneSet id="W2749_LaneSet4">
+        <bpmn:lane id="W2749_Lane1" name="Project Manager">
+        <bpmn:flowNodeRef>W2749_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2749_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2749_Lane2" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W2749_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2749_Lane3" name="System">
+        <bpmn:flowNodeRef>W2749_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2749_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2749_Start5" name="Part of a large project is ready for use before the entire project is complete">
+        <bpmn:outgoing>W2749_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2749_Task6" name="Scenarios requiring partial turnover: (a) DC expansion: new wing operational…">
+        <bpmn:documentation>Step 1: Scenarios requiring partial turnover: (a) DC expansion: new wing operational while second wing still under construction, (b) multi-store build: first 3 stores of a 5-store batch open before remaining 2, (c) IT rollout: phase 1 modules live while phase 2 still in development
+Responsible (R): Project Manager
+Accountable (A): Department Head
+Duration: Event-driven</bpmn:documentation>
+        <bpmn:incoming>W2749_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2749_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2749_Task7" name="Fixed Asset Accountant allocates CIP costs between completed and in-progress…">
+        <bpmn:documentation>Step 2: Fixed Asset Accountant allocates CIP costs between completed and in-progress portions: (a) completed portion: identify specific costs attributable to the ready-for-use portion, (b) in-progress portion: remaining costs stay in CIP, (c) apportionment methodology: direct identification where possible; proportional allocation for shared costs (e.g., project management, permits)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W2749_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2749_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W2749_Task8" name="System processes partial turnover: (a) completed portion transferred from CIP…">
+        <bpmn:documentation>Step 3: System processes partial turnover: (a) completed portion transferred from CIP to fixed assets, (b) depreciation begins on completed portion, (c) remaining CIP continues to accumulate costs until next phase completes, (d) subsequent turnovers processed same way until project fully complete
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: Per phase</bpmn:documentation>
+        <bpmn:incoming>W2749_Flow14</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2749_End9" name="Complete">
+        <bpmn:incoming>W2749_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2749_Annotation10">
+        <bpmn:text>Controls: - CTL-210 (ensure capex authorization &amp; commitment control.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2749_Assoc11" sourceRef="W2749_Annotation10" targetRef="W2749_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2749_Flow12" sourceRef="W2749_Start5" targetRef="W2749_Task6" />
+      <bpmn:sequenceFlow id="W2749_Flow13" sourceRef="W2749_Task6" targetRef="W2749_Task7" />
+      <bpmn:sequenceFlow id="W2749_Flow14" sourceRef="W2749_Task7" targetRef="W2749_Task8" />
+      <bpmn:sequenceFlow id="W2749_Flow15" sourceRef="W2749_Task8" targetRef="W2749_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2749_diag">
+      <bpmndi:BPMNPlane id="W2749_plane" bpmnElement="W_W2749">
+        <bpmndi:BPMNShape id="W2749_Lane1_di" bpmnElement="W2749_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_Lane2_di" bpmnElement="W2749_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_Lane3_di" bpmnElement="W2749_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_Task6_di" bpmnElement="W2749_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_Task7_di" bpmnElement="W2749_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_Task8_di" bpmnElement="W2749_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_Start5_di" bpmnElement="W2749_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_End9_di" bpmnElement="W2749_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2749_Annotation10_di" bpmnElement="W2749_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2749_Flow12_di" bpmnElement="W2749_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2749_Flow13_di" bpmnElement="W2749_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2749_Flow14_di" bpmnElement="W2749_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2749_Flow15_di" bpmnElement="W2749_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2749_Assoc11_di" bpmnElement="W2749_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2750" name="W2750. Abandoned Project Write-Off &amp; Cost Recovery" isExecutable="false">
+      <bpmn:documentation>Trigger: Decision to abandon or indefinitely suspend a capex project
+Frequency: ~1–3 abandoned projects/year (low frequency but high impact)
+Volume: Low
+Owner: CFO
+Participants: CFO, FP&amp;A, Project Manager, CEO, Board
+Source: workflow W2750 — Abandoned Project Write-Off &amp; Cost Recovery</bpmn:documentation>
+      <bpmn:laneSet id="W2750_LaneSet6">
+        <bpmn:lane id="W2750_Lane1" name="Project Manager">
+        <bpmn:flowNodeRef>W2750_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2750_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2750_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W2750_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2750_Lane3" name="Approver per tier">
+        <bpmn:flowNodeRef>W2750_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2750_Lane4" name="Project Accountant">
+        <bpmn:flowNodeRef>W2750_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2750_Lane5" name="COO">
+        <bpmn:flowNodeRef>W2750_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2750_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2750_Start7" name="Decision to abandon or indefinitely suspend a capex project">
+        <bpmn:outgoing>W2750_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2750_Task8" name="Triggers for project abandonment: (a) site issues discovered during…">
+        <bpmn:documentation>Step 1: Triggers for project abandonment: (a) site issues discovered during construction (soil, legal, environmental), (b) market conditions change (trade area no longer viable — competitor opens nearby, economic downturn), (c) regulatory block (permit denied, zoning change), (d) strategic pivot (company changes expansion plan), (e) contractor failure (contractor abandons project)
+Responsible (R): Project Manager / COO
+Accountable (A): CEO
+Duration: Event-driven</bpmn:documentation>
+        <bpmn:incoming>W2750_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W2750_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2750_Task9" name="CFO and FP&amp;A assess financial impact: (a) total CIP costs incurred to date, (b)…">
+        <bpmn:documentation>Step 2: CFO and FP&amp;A assess financial impact: (a) total CIP costs incurred to date, (b) recovery potential: (i) materials salvageable and reusable (transfer to other projects), (ii) equipment already purchased (sell, return to vendor, or redeploy), (iii) contractor claims and counterclaims, (iv) insurance recovery (if applicable), (c) net write-off amount = CIP costs − recoveries
+Responsible (R): CFO / FP&amp;A
+Accountable (A): CEO
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W2750_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W2750_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2750_Task10" name="Write-off approval: (a) &lt; PHP 5M: CFO approval, (b) PHP 5–50M: CEO approval…">
+        <bpmn:documentation>Step 3: Write-off approval: (a) &lt; PHP 5M: CFO approval, (b) PHP 5–50M: CEO approval, (c) &gt; PHP 50M: Board approval, (d) write-off recognized as non-current asset disposal loss (not inventory write-off)
+Responsible (R): Approver per tier
+Accountable (A): Board (if material)
+Duration: 1–5 days</bpmn:documentation>
+        <bpmn:incoming>W2750_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W2750_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2750_Task11" name="Write-off processing: (a) CIP balance written off to P&amp;L (debit: project…">
+        <bpmn:documentation>Step 4: Write-off processing: (a) CIP balance written off to P&amp;L (debit: project abandonment loss, credit: CIP), (b) recoverable amounts recorded as receivable, (c) when recovery received: credit to project abandonment loss (partial offset), (d) Board notified at next meeting regardless of amount
+Responsible (R): Project Accountant / Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W2750_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W2750_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2750_Task12" name="Lessons learned documented per W2751; preventive measures implemented to reduce…">
+        <bpmn:documentation>Step 5: Lessons learned documented per W2751; preventive measures implemented to reduce future abandonment risk
+Responsible (R): COO / CIO
+Accountable (A): CEO
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W2750_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2750_End13" name="Complete">
+        <bpmn:incoming>W2750_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2750_Annotation14">
+        <bpmn:text>Controls: - CTL-363 (ensure controlled execution — Construction-in-Progress &amp; Asset Turnover (PA-40.3).) | - operational: CFO review and approval gate
+Owner: CFO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2750_Assoc15" sourceRef="W2750_Annotation14" targetRef="W2750_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2750_Flow16" sourceRef="W2750_Start7" targetRef="W2750_Task8" />
+      <bpmn:sequenceFlow id="W2750_Flow17" sourceRef="W2750_Task8" targetRef="W2750_Task9" />
+      <bpmn:sequenceFlow id="W2750_Flow18" sourceRef="W2750_Task9" targetRef="W2750_Task10" />
+      <bpmn:sequenceFlow id="W2750_Flow19" sourceRef="W2750_Task10" targetRef="W2750_Task11" />
+      <bpmn:sequenceFlow id="W2750_Flow20" sourceRef="W2750_Task11" targetRef="W2750_Task12" />
+      <bpmn:sequenceFlow id="W2750_Flow21" sourceRef="W2750_Task12" targetRef="W2750_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2750_diag">
+      <bpmndi:BPMNPlane id="W2750_plane" bpmnElement="W_W2750">
+        <bpmndi:BPMNShape id="W2750_Lane1_di" bpmnElement="W2750_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Lane2_di" bpmnElement="W2750_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Lane3_di" bpmnElement="W2750_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Lane4_di" bpmnElement="W2750_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Lane5_di" bpmnElement="W2750_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Task8_di" bpmnElement="W2750_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Task9_di" bpmnElement="W2750_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Task10_di" bpmnElement="W2750_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Task11_di" bpmnElement="W2750_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Task12_di" bpmnElement="W2750_Task12"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Start7_di" bpmnElement="W2750_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_End13_di" bpmnElement="W2750_End13"><dc:Bounds x="1470" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2750_Annotation14_di" bpmnElement="W2750_Annotation14"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2750_Flow16_di" bpmnElement="W2750_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2750_Flow17_di" bpmnElement="W2750_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2750_Flow18_di" bpmnElement="W2750_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2750_Flow19_di" bpmnElement="W2750_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2750_Flow20_di" bpmnElement="W2750_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2750_Flow21_di" bpmnElement="W2750_Flow21"><di:waypoint x="1420" y="845" /><di:waypoint x="1470" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2750_Assoc15_di" bpmnElement="W2750_Assoc15"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2751" name="W2751. Project Closeout Documentation &amp; Archiving" isExecutable="false">
+      <bpmn:documentation>Trigger: Project completed and asset turned over (W1828–1829) or abandoned (W2750)
+Frequency: ~30–50 closeouts/year
+Volume: 1 closeout package per project
+Owner: Project Manager
+Participants: Project Manager, Project Accountant, COO, FP&amp;A
+Source: workflow W2751 — Project Closeout Documentation &amp; Archiving</bpmn:documentation>
+      <bpmn:laneSet id="W2751_LaneSet3">
+        <bpmn:lane id="W2751_Lane1" name="Project Manager">
+        <bpmn:flowNodeRef>W2751_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2751_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2751_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2751_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2751_Lane2" name="System">
+        <bpmn:flowNodeRef>W2751_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2751_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2751_Start4" name="Project completed and asset turned over (W1828–1829) or abandoned (W2750)">
+        <bpmn:outgoing>W2751_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2751_Task5" name="Project closeout checklist: (a) all costs received and allocated to project…">
+        <bpmn:documentation>Step 1: Project closeout checklist: (a) all costs received and allocated to project, (b) all POs closed (no open commitments), (c) all vendor invoices received and paid (including retention release if applicable), (d) CIP account cleared (zero balance after turnover), (e) fixed assets registered per W1690, (f) asset tags applied per W1692, (g) project completion certificate signed, (h) post-implementation review scheduled per W2748
+Responsible (R): Project Manager / Project Accountant
+Accountable (A): COO / CIO
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W2751_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2751_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2751_Task6" name="Documentation archive: (a) original capex request and business case, (b)…">
+        <bpmn:documentation>Step 2: Documentation archive: (a) original capex request and business case, (b) financial evaluation and approval documentation, (c) all vendor contracts and POs, (d) contractor progress billings and payment records, (e) change orders with approvals, (f) completion certificate and turnover documentation, (g) warranty certificates from contractors and equipment vendors, (h) as-built drawings (for construction projects), (i) post-implementation review, (j) budget vs. actual final report
+Responsible (R): Project Manager
+Accountable (A): COO / CIO
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W2751_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2751_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2751_Task7" name="Archive retention: (a) project documentation retained for asset useful life +…">
+        <bpmn:documentation>Step 3: Archive retention: (a) project documentation retained for asset useful life + 10 years (for tax and audit purposes), (b) stored in document management system (electronic) and physical archive (for signed originals), (c) indexed by project number for retrieval
+Responsible (R): Project Manager / Project Accountant
+Accountable (A): Accounting Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W2751_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W2751_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W2751_Task8" name="System project status changed to &quot;Closed&quot;; no further costs can be charged to…">
+        <bpmn:documentation>Step 4: System project status changed to &quot;Closed&quot;; no further costs can be charged to the project
+Responsible (R): System
+Accountable (A): Project Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W2751_Flow15</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2751_End9" name="Complete">
+        <bpmn:incoming>W2751_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2751_Annotation10">
+        <bpmn:text>Controls: - CTL-363 (ensure controlled execution — Construction-in-Progress &amp; Asset Turnover (PA-40.3).) | - operational: Project Manager review and approval gate
+Owner: Project Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2751_Assoc11" sourceRef="W2751_Annotation10" targetRef="W2751_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2751_Flow12" sourceRef="W2751_Start4" targetRef="W2751_Task5" />
+      <bpmn:sequenceFlow id="W2751_Flow13" sourceRef="W2751_Task5" targetRef="W2751_Task6" />
+      <bpmn:sequenceFlow id="W2751_Flow14" sourceRef="W2751_Task6" targetRef="W2751_Task7" />
+      <bpmn:sequenceFlow id="W2751_Flow15" sourceRef="W2751_Task7" targetRef="W2751_Task8" />
+      <bpmn:sequenceFlow id="W2751_Flow16" sourceRef="W2751_Task8" targetRef="W2751_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2751_diag">
+      <bpmndi:BPMNPlane id="W2751_plane" bpmnElement="W_W2751">
+        <bpmndi:BPMNShape id="W2751_Lane1_di" bpmnElement="W2751_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_Lane2_di" bpmnElement="W2751_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_Task5_di" bpmnElement="W2751_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_Task6_di" bpmnElement="W2751_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_Task7_di" bpmnElement="W2751_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_Task8_di" bpmnElement="W2751_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_Start4_di" bpmnElement="W2751_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_End9_di" bpmnElement="W2751_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2751_Annotation10_di" bpmnElement="W2751_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2751_Flow12_di" bpmnElement="W2751_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2751_Flow13_di" bpmnElement="W2751_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2751_Flow14_di" bpmnElement="W2751_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2751_Flow15_di" bpmnElement="W2751_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2751_Flow16_di" bpmnElement="W2751_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2751_Assoc11_di" bpmnElement="W2751_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2752" name="W2752. Annual Capex Portfolio Review &amp; Process Improvement" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual strategic planning cycle (Q4)
+Frequency: Annual
+Volume: 1 comprehensive review
+Owner: CFO
+Participants: CFO, FP&amp;A, VP Store Operations, COO, CIO, CEO
+Source: workflow W2752 — Annual Capex Portfolio Review &amp; Process Improvement</bpmn:documentation>
+      <bpmn:laneSet id="W2752_LaneSet3">
+        <bpmn:lane id="W2752_Lane1" name="FP&amp;A">
+        <bpmn:flowNodeRef>W2752_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2752_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2752_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W2752_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2752_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2752_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2752_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2752_Start4" name="Annual strategic planning cycle (Q4)">
+        <bpmn:outgoing>W2752_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2752_Task5" name="FP&amp;A prepares annual capex portfolio review: (a) total capex spent vs. budget…">
+        <bpmn:documentation>Step 1: FP&amp;A prepares annual capex portfolio review: (a) total capex spent vs. budget (by category: new stores, renovations, DC, IT, equipment), (b) project delivery performance: % on time, % on budget, % achieving projected ROI, (c) cost estimation accuracy: average budget variance per project type, (d) timeline estimation accuracy: average schedule variance, (e) post-implementation ROI results: actual vs. projected across completed projects, (f) abandoned project cost and reasons, (g) capital productivity: revenue growth ÷ capex invested
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W2752_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2752_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2752_Task6" name="CFO and C-Suite review capex portfolio performance: (a) which project types…">
+        <bpmn:documentation>Step 2: CFO and C-Suite review capex portfolio performance: (a) which project types deliver best returns (new stores vs. renovations vs. IT)? (b) what systemic issues cause overruns? (c) what estimation biases need correction? (d) is capex spend aligned with strategic priorities?
+Responsible (R): CFO / C-Suite
+Accountable (A): CEO
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W2752_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2752_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2752_Task7" name="Process improvements identified and implemented: (a) estimation methodology…">
+        <bpmn:documentation>Step 3: Process improvements identified and implemented: (a) estimation methodology: adjust cost escalation factors based on actual construction inflation, (b) approval process: streamline for repeatable project types (new stores have standardized approval), (c) contractor management: update contractor qualification criteria based on performance, (d) system enhancements: automate CIP-to-asset conversion, improve cost tracking granularity per W1810
+Responsible (R): CFO / COO / CIO
+Accountable (A): CEO
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W2752_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W2752_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2752_Task8" name="Updated capex process guidelines distributed to all project stakeholders…">
+        <bpmn:documentation>Step 4: Updated capex process guidelines distributed to all project stakeholders; training provided for new procedures
+Responsible (R): CFO / FP&amp;A
+Accountable (A): —
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W2752_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2752_End9" name="Complete">
+        <bpmn:incoming>W2752_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2752_Annotation10">
+        <bpmn:text>Controls: - CTL-363 (ensure controlled execution — Construction-in-Progress &amp; Asset Turnover (PA-40.3).) | - operational: CFO review and approval gate
+Owner: CFO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2752_Assoc11" sourceRef="W2752_Annotation10" targetRef="W2752_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2752_Flow12" sourceRef="W2752_Start4" targetRef="W2752_Task5" />
+      <bpmn:sequenceFlow id="W2752_Flow13" sourceRef="W2752_Task5" targetRef="W2752_Task6" />
+      <bpmn:sequenceFlow id="W2752_Flow14" sourceRef="W2752_Task6" targetRef="W2752_Task7" />
+      <bpmn:sequenceFlow id="W2752_Flow15" sourceRef="W2752_Task7" targetRef="W2752_Task8" />
+      <bpmn:sequenceFlow id="W2752_Flow16" sourceRef="W2752_Task8" targetRef="W2752_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2752_diag">
+      <bpmndi:BPMNPlane id="W2752_plane" bpmnElement="W_W2752">
+        <bpmndi:BPMNShape id="W2752_Lane1_di" bpmnElement="W2752_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_Lane2_di" bpmnElement="W2752_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_Task5_di" bpmnElement="W2752_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_Task6_di" bpmnElement="W2752_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_Task7_di" bpmnElement="W2752_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_Task8_di" bpmnElement="W2752_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_Start4_di" bpmnElement="W2752_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_End9_di" bpmnElement="W2752_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2752_Annotation10_di" bpmnElement="W2752_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2752_Flow12_di" bpmnElement="W2752_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2752_Flow13_di" bpmnElement="W2752_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2752_Flow14_di" bpmnElement="W2752_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2752_Flow15_di" bpmnElement="W2752_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2752_Flow16_di" bpmnElement="W2752_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2752_Assoc11_di" bpmnElement="W2752_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

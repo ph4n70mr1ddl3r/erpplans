@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-45.3-consignment-vmi-settlement-analytics" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1942" name="W1942. Consignment Sell-Through Settlement &amp; Vendor Payment" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly settlement cycle per consignment agreement
+Frequency: Monthly
+Volume: ~15–25 consignment vendors settled monthly
+Owner: AP Manager
+Participants: AP Manager, Category Manager, Vendor
+Source: workflow W1942 — Consignment Sell-Through Settlement &amp; Vendor Payment</bpmn:documentation>
+      <bpmn:laneSet id="W1942_LaneSet3">
+        <bpmn:lane id="W1942_Lane1" name="System">
+        <bpmn:flowNodeRef>W1942_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1942_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1942_Lane2" name="AP Manager">
+        <bpmn:flowNodeRef>W1942_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1942_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1942_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1942_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1942_Start4" name="Monthly settlement cycle per consignment agreement">
+        <bpmn:outgoing>W1942_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1942_Task5" name="System generates monthly consignment sell-through report per vendor: (a) total…">
+        <bpmn:documentation>Step 1: System generates monthly consignment sell-through report per vendor: (a) total units sold by SKU in settlement period, (b) consignment cost per unit per SKU, (c) total settlement amount: units sold × consignment cost, (d) deductions: (i) returns processed, (ii) damages charged to vendor per agreement, (iii) promotional discounts shared per agreement, (e) net settlement amount
+Responsible (R): System
+Accountable (A): AP Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1942_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1942_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1942_Task6" name="AP Manager reviews sell-through report: (a) verify unit counts against POS…">
+        <bpmn:documentation>Step 2: AP Manager reviews sell-through report: (a) verify unit counts against POS transaction data, (b) verify consignment costs per agreement (any price changes applied correctly?), (c) verify deductions (returns, damages, promo contributions), (d) flag any discrepancies for Category Manager review
+Responsible (R): AP Manager
+Accountable (A): Accounting Manager
+Duration: 2–4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1942_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1942_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1942_Task7" name="AP Manager submits settlement statement to vendor: (a) via vendor portal…">
+        <bpmn:documentation>Step 3: AP Manager submits settlement statement to vendor: (a) via vendor portal (preferred), (b) settlement statement includes: sell-through detail, deductions, net amount, payment terms (typically Net 30 from settlement date), (c) vendor reviews and confirms within 10 business days
+Responsible (R): AP Manager
+Accountable (A): —
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1942_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1942_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1942_Task8" name="Payment processing: (a) vendor invoice (settlement statement) processed through…">
+        <bpmn:documentation>Step 4: Payment processing: (a) vendor invoice (settlement statement) processed through AP, (b) standard payment run per W7.9, (c) payment to vendor bank account, (d) GL posting: debit consignment AP (liability created at ownership transfer), credit cash/bank
+Responsible (R): AP Manager / System
+Accountable (A): Accounting Manager
+Duration: Per payment run</bpmn:documentation>
+        <bpmn:incoming>W1942_Flow15</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1942_End9" name="Complete">
+        <bpmn:incoming>W1942_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1942_Annotation10">
+        <bpmn:text>Controls: - CTL-378 (ensure controlled execution — Consignment &amp; VMI Settlement &amp; Analytics (PA-45.3).) | - operational: AP Manager review and approval gate
+Owner: AP Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1942_Assoc11" sourceRef="W1942_Annotation10" targetRef="W1942_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1942_Flow12" sourceRef="W1942_Start4" targetRef="W1942_Task5" />
+      <bpmn:sequenceFlow id="W1942_Flow13" sourceRef="W1942_Task5" targetRef="W1942_Task6" />
+      <bpmn:sequenceFlow id="W1942_Flow14" sourceRef="W1942_Task6" targetRef="W1942_Task7" />
+      <bpmn:sequenceFlow id="W1942_Flow15" sourceRef="W1942_Task7" targetRef="W1942_Task8" />
+      <bpmn:sequenceFlow id="W1942_Flow16" sourceRef="W1942_Task8" targetRef="W1942_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1942_diag">
+      <bpmndi:BPMNPlane id="W1942_plane" bpmnElement="W_W1942">
+        <bpmndi:BPMNShape id="W1942_Lane1_di" bpmnElement="W1942_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_Lane2_di" bpmnElement="W1942_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_Task5_di" bpmnElement="W1942_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_Task6_di" bpmnElement="W1942_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_Task7_di" bpmnElement="W1942_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_Task8_di" bpmnElement="W1942_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_Start4_di" bpmnElement="W1942_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_End9_di" bpmnElement="W1942_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1942_Annotation10_di" bpmnElement="W1942_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1942_Flow12_di" bpmnElement="W1942_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1942_Flow13_di" bpmnElement="W1942_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1942_Flow14_di" bpmnElement="W1942_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1942_Flow15_di" bpmnElement="W1942_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1942_Flow16_di" bpmnElement="W1942_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1942_Assoc11_di" bpmnElement="W1942_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1943" name="W1943. Consignment Margin Analysis &amp; Vendor Negotiation" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly consignment margin review
+Frequency: Quarterly
+Volume: ~15–25 consignment vendors
+Owner: Category Manager
+Participants: Category Manager, Pricing Analyst, VP Merchandising
+Source: workflow W1943 — Consignment Margin Analysis &amp; Vendor Negotiation</bpmn:documentation>
+      <bpmn:laneSet id="W1943_LaneSet3">
+        <bpmn:lane id="W1943_Lane1" name="Pricing Analyst">
+        <bpmn:flowNodeRef>W1943_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1943_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1943_Lane2" name="Category Manager">
+        <bpmn:flowNodeRef>W1943_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1943_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1943_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1943_Start4" name="Quarterly consignment margin review">
+        <bpmn:outgoing>W1943_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1943_Task5" name="Pricing Analyst generates quarterly consignment margin report: (a) gross margin…">
+        <bpmn:documentation>Step 1: Pricing Analyst generates quarterly consignment margin report: (a) gross margin % by consignment vendor, (b) gross margin % by consignment category (appliances, tiles), (c) compare consignment margin to owned-inventory margin for same categories, (d) margin trend: improving or declining by vendor, (e) identify vendors where consignment margin &lt; owned-inventory margin by &gt; 5 percentage points
+Responsible (R): Pricing Analyst
+Accountable (A): Category Manager
+Duration: 1 day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1943_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1943_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1943_Task6" name="Category Manager reviews margin analysis: (a) low-margin consignment vendors…">
+        <bpmn:documentation>Step 2: Category Manager reviews margin analysis: (a) low-margin consignment vendors: negotiate improved consignment costs, (b) evaluate alternatives: can BuildRight purchase directly at better margin?, (c) high-margin consignment: consider expanding consignment range with vendor, (d) assess total value of consignment arrangement: (margin × volume) vs. (capital saved from not owning inventory)
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 1 day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1943_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1943_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1943_Task7" name="Annual: Category Manager negotiates consignment cost adjustments with vendors…">
+        <bpmn:documentation>Step 3: Annual: Category Manager negotiates consignment cost adjustments with vendors based on: (a) volume commitment (higher volume = lower consignment cost), (b) competitive benchmarking (what margin do other retailers get?), (c) total relationship value (vendor also supplies non-consignment goods)
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: Per annual negotiation</bpmn:documentation>
+        <bpmn:incoming>W1943_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1943_End8" name="Complete">
+        <bpmn:incoming>W1943_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1943_Annotation9">
+        <bpmn:text>Controls: - CTL-378 (ensure controlled execution — Consignment &amp; VMI Settlement &amp; Analytics (PA-45.3).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1943_Assoc10" sourceRef="W1943_Annotation9" targetRef="W1943_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1943_Flow11" sourceRef="W1943_Start4" targetRef="W1943_Task5" />
+      <bpmn:sequenceFlow id="W1943_Flow12" sourceRef="W1943_Task5" targetRef="W1943_Task6" />
+      <bpmn:sequenceFlow id="W1943_Flow13" sourceRef="W1943_Task6" targetRef="W1943_Task7" />
+      <bpmn:sequenceFlow id="W1943_Flow14" sourceRef="W1943_Task7" targetRef="W1943_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1943_diag">
+      <bpmndi:BPMNPlane id="W1943_plane" bpmnElement="W_W1943">
+        <bpmndi:BPMNShape id="W1943_Lane1_di" bpmnElement="W1943_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1943_Lane2_di" bpmnElement="W1943_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1943_Task5_di" bpmnElement="W1943_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1943_Task6_di" bpmnElement="W1943_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1943_Task7_di" bpmnElement="W1943_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1943_Start4_di" bpmnElement="W1943_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1943_End8_di" bpmnElement="W1943_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1943_Annotation9_di" bpmnElement="W1943_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1943_Flow11_di" bpmnElement="W1943_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1943_Flow12_di" bpmnElement="W1943_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1943_Flow13_di" bpmnElement="W1943_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1943_Flow14_di" bpmnElement="W1943_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1943_Assoc10_di" bpmnElement="W1943_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1944" name="W1944. VMI Inventory Carrying Cost &amp; Optimization Analysis" isExecutable="false">
+      <bpmn:documentation>Trigger: Semi-annual VMI program optimization review
+Frequency: Semi-annual
+Volume: 12 VMI vendors; ~300 VMI SKUs
+Owner: VP Supply Chain
+Participants: VP Supply Chain, Category Manager, Finance Manager
+Source: workflow W1944 — VMI Inventory Carrying Cost &amp; Optimization Analysis</bpmn:documentation>
+      <bpmn:laneSet id="W1944_LaneSet3">
+        <bpmn:lane id="W1944_Lane1" name="Finance Manager">
+        <bpmn:flowNodeRef>W1944_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1944_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1944_Lane2" name="VP Supply Chain">
+        <bpmn:flowNodeRef>W1944_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1944_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1944_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1944_Start4" name="Semi-annual VMI program optimization review">
+        <bpmn:outgoing>W1944_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1944_Task5" name="Finance Manager calculates VMI inventory carrying cost: (a) average VMI…">
+        <bpmn:documentation>Step 1: Finance Manager calculates VMI inventory carrying cost: (a) average VMI inventory value (at WAC) per month, (b) carrying cost rate: warehousing + insurance + obsolescence risk + cost of capital (~20–25% of average inventory value per year for Philippine retail), (c) compare VMI carrying cost to non-VMI carrying cost for similar SKUs
+Responsible (R): Finance Manager
+Accountable (A): VP Supply Chain
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1944_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1944_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1944_Task6" name="VP Supply Chain evaluates VMI optimization: (a) inventory turns: VMI SKUs vs…">
+        <bpmn:documentation>Step 2: VP Supply Chain evaluates VMI optimization: (a) inventory turns: VMI SKUs vs. non-VMI SKUs in same category, (b) stockout cost: lost sales from VMI stockouts vs. non-VMI stockouts, (c) procurement labor savings: VMI auto-replenishment reduces Buyer workload by ~X hours/month, (d) overstock cost: excess VMI inventory carrying cost above max level
+Responsible (R): VP Supply Chain
+Accountable (A): VP Merchandising
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1944_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1944_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1944_Task7" name="Recommendations: (a) VMI SKUs with high overstock: tighten max levels or remove…">
+        <bpmn:documentation>Step 3: Recommendations: (a) VMI SKUs with high overstock: tighten max levels or remove from VMI, (b) VMI SKUs with frequent stockouts: increase min levels or add supplier, (c) high-performing VMI vendors: expand VMI scope to additional SKUs, (d) low-performing VMI vendors: consider converting to standard procurement per W1947
+Responsible (R): VP Supply Chain
+Accountable (A): VP Merchandising
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1944_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1944_End8" name="Complete">
+        <bpmn:incoming>W1944_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1944_Annotation9">
+        <bpmn:text>Controls: - CTL-378 (ensure controlled execution — Consignment &amp; VMI Settlement &amp; Analytics (PA-45.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: VP Supply Chain</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1944_Assoc10" sourceRef="W1944_Annotation9" targetRef="W1944_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1944_Flow11" sourceRef="W1944_Start4" targetRef="W1944_Task5" />
+      <bpmn:sequenceFlow id="W1944_Flow12" sourceRef="W1944_Task5" targetRef="W1944_Task6" />
+      <bpmn:sequenceFlow id="W1944_Flow13" sourceRef="W1944_Task6" targetRef="W1944_Task7" />
+      <bpmn:sequenceFlow id="W1944_Flow14" sourceRef="W1944_Task7" targetRef="W1944_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1944_diag">
+      <bpmndi:BPMNPlane id="W1944_plane" bpmnElement="W_W1944">
+        <bpmndi:BPMNShape id="W1944_Lane1_di" bpmnElement="W1944_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1944_Lane2_di" bpmnElement="W1944_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1944_Task5_di" bpmnElement="W1944_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1944_Task6_di" bpmnElement="W1944_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1944_Task7_di" bpmnElement="W1944_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1944_Start4_di" bpmnElement="W1944_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1944_End8_di" bpmnElement="W1944_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1944_Annotation9_di" bpmnElement="W1944_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1944_Flow11_di" bpmnElement="W1944_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1944_Flow12_di" bpmnElement="W1944_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1944_Flow13_di" bpmnElement="W1944_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1944_Flow14_di" bpmnElement="W1944_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1944_Assoc10_di" bpmnElement="W1944_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1945" name="W1945. Consignment &amp; VMI Dashboard &amp; Executive Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly reporting cycle
+Frequency: Monthly dashboard; quarterly executive report
+Volume: Consolidated across all consignment &amp; VMI operations
+Owner: VP Supply Chain
+Participants: VP Supply Chain, Category Manager, CFO
+Source: workflow W1945 — Consignment &amp; VMI Dashboard &amp; Executive Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W1945_LaneSet3">
+        <bpmn:lane id="W1945_Lane1" name="System">
+        <bpmn:flowNodeRef>W1945_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1945_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1945_Lane2" name="VP Supply Chain">
+        <bpmn:flowNodeRef>W1945_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1945_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1945_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1945_Start4" name="Monthly reporting cycle">
+        <bpmn:outgoing>W1945_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1945_Task5" name="Monthly dashboard generation: (a) consignment: total consignment inventory…">
+        <bpmn:documentation>Step 1: Monthly dashboard generation: (a) consignment: total consignment inventory value (vendor-owned), sell-through rate, settlement accuracy, aging distribution, (b) VMI: total VMI inventory value (BuildRight-owned), fill rate, stockout rate, overstock rate, vendor compliance score, (c) combined: total consignment + VMI inventory as % of total inventory, total margin contribution, vendor count, SKU count
+Responsible (R): System
+Accountable (A): VP Supply Chain
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1945_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1945_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1945_Task6" name="VP Supply Chain reviews dashboard: (a) identify trends, (b) flag exceptions for…">
+        <bpmn:documentation>Step 2: VP Supply Chain reviews dashboard: (a) identify trends, (b) flag exceptions for action, (c) distribute to Category Managers and Finance Manager
+Responsible (R): VP Supply Chain
+Accountable (A): —
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1945_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1945_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1945_Task7" name="Quarterly: VP Supply Chain presents executive report to CFO and VP…">
+        <bpmn:documentation>Step 3: Quarterly: VP Supply Chain presents executive report to CFO and VP Merchandising: (a) program health: is consignment/VMI creating value?, (b) vendor performance: which vendors to expand, reduce, or terminate?, (c) financial impact: margin contribution, carrying cost, capital savings, (d) strategic recommendations
+Responsible (R): VP Supply Chain
+Accountable (A): CFO
+Duration: 1 day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1945_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1945_End8" name="Complete">
+        <bpmn:incoming>W1945_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1945_Annotation9">
+        <bpmn:text>Controls: - CTL-378 (ensure controlled execution — Consignment &amp; VMI Settlement &amp; Analytics (PA-45.3).) | - operational: VP Supply Chain review and approval gate
+Owner: VP Supply Chain</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1945_Assoc10" sourceRef="W1945_Annotation9" targetRef="W1945_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1945_Flow11" sourceRef="W1945_Start4" targetRef="W1945_Task5" />
+      <bpmn:sequenceFlow id="W1945_Flow12" sourceRef="W1945_Task5" targetRef="W1945_Task6" />
+      <bpmn:sequenceFlow id="W1945_Flow13" sourceRef="W1945_Task6" targetRef="W1945_Task7" />
+      <bpmn:sequenceFlow id="W1945_Flow14" sourceRef="W1945_Task7" targetRef="W1945_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1945_diag">
+      <bpmndi:BPMNPlane id="W1945_plane" bpmnElement="W_W1945">
+        <bpmndi:BPMNShape id="W1945_Lane1_di" bpmnElement="W1945_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1945_Lane2_di" bpmnElement="W1945_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1945_Task5_di" bpmnElement="W1945_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1945_Task6_di" bpmnElement="W1945_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1945_Task7_di" bpmnElement="W1945_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1945_Start4_di" bpmnElement="W1945_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1945_End8_di" bpmnElement="W1945_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1945_Annotation9_di" bpmnElement="W1945_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1945_Flow11_di" bpmnElement="W1945_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1945_Flow12_di" bpmnElement="W1945_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1945_Flow13_di" bpmnElement="W1945_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1945_Flow14_di" bpmnElement="W1945_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1945_Assoc10_di" bpmnElement="W1945_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1946" name="W1946. Consignment Agreement Renewal &amp; Terms Negotiation" isExecutable="false">
+      <bpmn:documentation>Trigger: Consignment agreement expiration (typically annual)
+Frequency: ~15–25 renewals/year
+Volume: ~15–25 active consignment vendors
+Owner: Category Manager
+Participants: Category Manager, VP Merchandising, VP Supply Chain, CFO, Vendor
+Source: workflow W1946 — Consignment Agreement Renewal &amp; Terms Negotiation</bpmn:documentation>
+      <bpmn:laneSet id="W1946_LaneSet3">
+        <bpmn:lane id="W1946_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1946_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1946_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1946_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1946_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W1946_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1946_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1946_Start4" name="Consignment agreement expiration (typically annual)">
+        <bpmn:outgoing>W1946_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1946_Task5" name="Category Manager prepares renewal analysis: (a) past year performance…">
+        <bpmn:documentation>Step 1: Category Manager prepares renewal analysis: (a) past year performance: sell-through rate, margin, return rate, (b) compare consignment arrangement vs. direct purchase alternative, (c) vendor relationship: payment timeliness, dispute resolution, support quality, (d) market conditions: are there alternative vendors offering better consignment terms?
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 1–2 days/vendor</bpmn:documentation>
+        <bpmn:incoming>W1946_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1946_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1946_Task6" name="Negotiation: (a) improved consignment cost (target 2–5% reduction annually)…">
+        <bpmn:documentation>Step 2: Negotiation: (a) improved consignment cost (target 2–5% reduction annually), (b) expanded SKU range (add high-demand items to consignment), (c) improved terms: faster settlement, better damage responsibility allocation, (d) performance incentives: volume-based consignment cost reduction
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: Per negotiation</bpmn:documentation>
+        <bpmn:incoming>W1946_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1946_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1946_Task7" name="CFO approves consignment terms from financial perspective: (a) margin impact…">
+        <bpmn:documentation>Step 3: CFO approves consignment terms from financial perspective: (a) margin impact, (b) balance sheet impact (consignment stock is off-balance-sheet — vendor-owned), (c) settlement terms cash flow impact
+Responsible (R): CFO
+Accountable (A): VP Merchandising
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1946_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1946_End8" name="Complete">
+        <bpmn:incoming>W1946_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1946_Annotation9">
+        <bpmn:text>Controls: - CTL-378 (ensure controlled execution — Consignment &amp; VMI Settlement &amp; Analytics (PA-45.3).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1946_Assoc10" sourceRef="W1946_Annotation9" targetRef="W1946_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1946_Flow11" sourceRef="W1946_Start4" targetRef="W1946_Task5" />
+      <bpmn:sequenceFlow id="W1946_Flow12" sourceRef="W1946_Task5" targetRef="W1946_Task6" />
+      <bpmn:sequenceFlow id="W1946_Flow13" sourceRef="W1946_Task6" targetRef="W1946_Task7" />
+      <bpmn:sequenceFlow id="W1946_Flow14" sourceRef="W1946_Task7" targetRef="W1946_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1946_diag">
+      <bpmndi:BPMNPlane id="W1946_plane" bpmnElement="W_W1946">
+        <bpmndi:BPMNShape id="W1946_Lane1_di" bpmnElement="W1946_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1946_Lane2_di" bpmnElement="W1946_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1946_Task5_di" bpmnElement="W1946_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1946_Task6_di" bpmnElement="W1946_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1946_Task7_di" bpmnElement="W1946_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1946_Start4_di" bpmnElement="W1946_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1946_End8_di" bpmnElement="W1946_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1946_Annotation9_di" bpmnElement="W1946_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1946_Flow11_di" bpmnElement="W1946_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1946_Flow12_di" bpmnElement="W1946_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1946_Flow13_di" bpmnElement="W1946_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1946_Flow14_di" bpmnElement="W1946_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1946_Assoc10_di" bpmnElement="W1946_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1947" name="W1947. VMI-to-Standard Procurement Conversion Decision" isExecutable="false">
+      <bpmn:documentation>Trigger: VMI vendor consistently underperforming; strategic decision to internalize replenishment
+Frequency: ~1–2 conversion decisions/year
+Volume: 12 VMI vendors monitored
+Owner: VP Supply Chain
+Participants: VP Supply Chain, Category Manager, VP Merchandising
+Source: workflow W1947 — VMI-to-Standard Procurement Conversion Decision</bpmn:documentation>
+      <bpmn:laneSet id="W1947_LaneSet2">
+        <bpmn:lane id="W1947_Lane1" name="VP Supply Chain">
+        <bpmn:flowNodeRef>W1947_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1947_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1947_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1947_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1947_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1947_Start3" name="VMI vendor consistently underperforming; strategic decision to internalize replenishment">
+        <bpmn:outgoing>W1947_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1947_Task4" name="VP Supply Chain identifies VMI vendor for conversion: (a) fill rate…">
+        <bpmn:documentation>Step 1: VP Supply Chain identifies VMI vendor for conversion: (a) fill rate consistently &lt; 93% (below 97% target for 2+ quarters), (b) stockout frequency impacting sales, (c) vendor unable or unwilling to improve, (d) internal replenishment capability available (Buyer capacity, demand planning tools)
+Responsible (R): VP Supply Chain
+Accountable (A): VP Merchandising
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W1947_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W1947_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1947_Task5" name="Decision analysis: (a) cost of conversion: additional Buyer labor, demand…">
+        <bpmn:documentation>Step 2: Decision analysis: (a) cost of conversion: additional Buyer labor, demand planning tool cost, (b) benefit of conversion: better fill rate, lower stockout, more control over replenishment timing, (c) risk of conversion: loss of vendor collaboration, BuildRight bears forecasting risk, (d) present business case to VP Merchandising
+Responsible (R): VP Supply Chain
+Accountable (A): VP Merchandising
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1947_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1947_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1947_Task6" name="If approved: (a) transition VMI SKUs to standard procurement per W2A, (b)…">
+        <bpmn:documentation>Step 3: If approved: (a) transition VMI SKUs to standard procurement per W2A, (b) establish ROP/EOQ parameters per W312, (c) notify vendor of VMI termination per contractual notice period, (d) monitor first 90 days closely for service level impact
+Responsible (R): VP Supply Chain / Category Manager
+Accountable (A): VP Merchandising
+Duration: 2–4 weeks transition</bpmn:documentation>
+        <bpmn:incoming>W1947_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1947_End7" name="Complete">
+        <bpmn:incoming>W1947_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1947_Annotation8">
+        <bpmn:text>Controls: - CTL-378 (ensure controlled execution — Consignment &amp; VMI Settlement &amp; Analytics (PA-45.3).) | - operational: VP Supply Chain review and approval gate
+Owner: VP Supply Chain</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1947_Assoc9" sourceRef="W1947_Annotation8" targetRef="W1947_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1947_Flow10" sourceRef="W1947_Start3" targetRef="W1947_Task4" />
+      <bpmn:sequenceFlow id="W1947_Flow11" sourceRef="W1947_Task4" targetRef="W1947_Task5" />
+      <bpmn:sequenceFlow id="W1947_Flow12" sourceRef="W1947_Task5" targetRef="W1947_Task6" />
+      <bpmn:sequenceFlow id="W1947_Flow13" sourceRef="W1947_Task6" targetRef="W1947_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1947_diag">
+      <bpmndi:BPMNPlane id="W1947_plane" bpmnElement="W_W1947">
+        <bpmndi:BPMNShape id="W1947_Lane1_di" bpmnElement="W1947_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1947_Task4_di" bpmnElement="W1947_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1947_Task5_di" bpmnElement="W1947_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1947_Task6_di" bpmnElement="W1947_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1947_Start3_di" bpmnElement="W1947_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1947_End7_di" bpmnElement="W1947_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1947_Annotation8_di" bpmnElement="W1947_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1947_Flow10_di" bpmnElement="W1947_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1947_Flow11_di" bpmnElement="W1947_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1947_Flow12_di" bpmnElement="W1947_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1947_Flow13_di" bpmnElement="W1947_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1947_Assoc9_di" bpmnElement="W1947_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1948" name="W1948. Consignment &amp; VMI Intercompany Settlement (Multi-Entity)" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly IC settlement cycle
+Frequency: Monthly
+Volume: Cross-entity consignment/VMI transactions across 5 legal entities
+Owner: AP Manager
+Participants: AP Manager, Accounting Manager, IC Settlement Team
+Source: workflow W1948 — Consignment &amp; VMI Intercompany Settlement (Multi-Entity)</bpmn:documentation>
+      <bpmn:laneSet id="W1948_LaneSet4">
+        <bpmn:lane id="W1948_Lane1" name="System">
+        <bpmn:flowNodeRef>W1948_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1948_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1948_Lane2" name="AP Manager">
+        <bpmn:flowNodeRef>W1948_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1948_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1948_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1948_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1948_Start5" name="Monthly IC settlement cycle">
+        <bpmn:outgoing>W1948_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1948_Task6" name="System identifies cross-entity consignment/VMI transactions: (a) consignment…">
+        <bpmn:documentation>Step 1: System identifies cross-entity consignment/VMI transactions: (a) consignment goods received by BuildRight Logistics DC but sold by BuildRight Depot store, (b) VMI stock at BuildRight Logistics DC transferred to BuildRight Depot stores, (c) ownership transfer revenue and COGS must be allocated to correct entities
+Responsible (R): System
+Accountable (A): AP Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1948_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1948_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1948_Task7" name="AP Manager processes IC settlement for consignment/VMI: (a) consignment…">
+        <bpmn:documentation>Step 2: AP Manager processes IC settlement for consignment/VMI: (a) consignment settlement: vendor payment from BuildRight Depot (selling entity), IC service fee from BuildRight Logistics (DC storage/service), (b) VMI settlement: standard PO payment from purchasing entity, IC transfer pricing for stock movements between entities, (c) post IC AP/AR per W14
+Responsible (R): AP Manager
+Accountable (A): Accounting Manager
+Duration: 1–2 days/month</bpmn:documentation>
+        <bpmn:incoming>W1948_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1948_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1948_Task8" name="Monthly IC reconciliation: (a) verify consignment/VMI IC balances match across…">
+        <bpmn:documentation>Step 3: Monthly IC reconciliation: (a) verify consignment/VMI IC balances match across entities, (b) resolve timing differences (sale in one entity, settlement in another), (c) elimination entries for consolidation per W9A
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: Per month-end close</bpmn:documentation>
+        <bpmn:incoming>W1948_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1948_End9" name="Complete">
+        <bpmn:incoming>W1948_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1948_Annotation10">
+        <bpmn:text>Controls: - CTL-174 (ensure consignment &amp; VMI settlement integrity.) | - operational: periodic reconciliation against source documents
+Owner: AP Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1948_Assoc11" sourceRef="W1948_Annotation10" targetRef="W1948_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1948_Flow12" sourceRef="W1948_Start5" targetRef="W1948_Task6" />
+      <bpmn:sequenceFlow id="W1948_Flow13" sourceRef="W1948_Task6" targetRef="W1948_Task7" />
+      <bpmn:sequenceFlow id="W1948_Flow14" sourceRef="W1948_Task7" targetRef="W1948_Task8" />
+      <bpmn:sequenceFlow id="W1948_Flow15" sourceRef="W1948_Task8" targetRef="W1948_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1948_diag">
+      <bpmndi:BPMNPlane id="W1948_plane" bpmnElement="W_W1948">
+        <bpmndi:BPMNShape id="W1948_Lane1_di" bpmnElement="W1948_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_Lane2_di" bpmnElement="W1948_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_Lane3_di" bpmnElement="W1948_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_Task6_di" bpmnElement="W1948_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_Task7_di" bpmnElement="W1948_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_Task8_di" bpmnElement="W1948_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_Start5_di" bpmnElement="W1948_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_End9_di" bpmnElement="W1948_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1948_Annotation10_di" bpmnElement="W1948_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1948_Flow12_di" bpmnElement="W1948_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1948_Flow13_di" bpmnElement="W1948_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1948_Flow14_di" bpmnElement="W1948_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1948_Flow15_di" bpmnElement="W1948_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1948_Assoc11_di" bpmnElement="W1948_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1949" name="W1949. Consignment &amp; VMI Audit Trail &amp; Compliance Documentation" isExecutable="false">
+      <bpmn:documentation>Trigger: Ongoing; annual audit preparation
+Frequency: Continuous audit trail; annual documentation review
+Volume: All consignment &amp; VMI transactions
+Owner: Accounting Manager
+Participants: Accounting Manager, Internal Auditor, External Auditor
+Source: workflow W1949 — Consignment &amp; VMI Audit Trail &amp; Compliance Documentation</bpmn:documentation>
+      <bpmn:laneSet id="W1949_LaneSet4">
+        <bpmn:lane id="W1949_Lane1" name="System">
+        <bpmn:flowNodeRef>W1949_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1949_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1949_Lane2" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1949_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1949_Lane3" name="Internal Auditor">
+        <bpmn:flowNodeRef>W1949_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1949_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1949_Start5" name="Ongoing; annual audit preparation">
+        <bpmn:outgoing>W1949_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1949_Task6" name="System maintains continuous audit trail: (a) consignment: receipt → display →…">
+        <bpmn:documentation>Step 1: System maintains continuous audit trail: (a) consignment: receipt → display → sale → ownership transfer → settlement, with timestamps, user IDs, and system references, (b) VMI: data sharing → replenishment → receipt → auto-confirmation → payment, with full traceability, (c) adjustments: damage, shrinkage, returns — all documented with reason codes and approvals
+Responsible (R): System
+Accountable (A): Accounting Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1949_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1949_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1949_Task7" name="Annual: Accounting Manager prepares consignment &amp; VMI documentation for…">
+        <bpmn:documentation>Step 2: Annual: Accounting Manager prepares consignment &amp; VMI documentation for external audit: (a) consignment inventory is vendor-owned — excluded from BuildRight&#x27;s balance sheet inventory; provide vendor ownership documentation, (b) VMI inventory is BuildRight-owned — included in balance sheet at WAC; provide VMI agreement terms for audit review, (c) settlement reconciliation: consignment settlements matched to sell-through, VMI payments matched to GR, (d) provide sample of transactions for auditor testing
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 2–3 days/year</bpmn:documentation>
+        <bpmn:incoming>W1949_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1949_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1949_Task8" name="Internal audit of consignment &amp; VMI per W21: (a) verify consignment stock is…">
+        <bpmn:documentation>Step 3: Internal audit of consignment &amp; VMI per W21: (a) verify consignment stock is correctly classified (not inadvertently included in owned inventory valuation), (b) verify VMI stock levels per physical count, (c) test settlement accuracy on sample basis, (d) review vendor agreements for compliance with BuildRight policies
+Responsible (R): Internal Auditor
+Accountable (A): CFO
+Duration: Per annual audit plan</bpmn:documentation>
+        <bpmn:incoming>W1949_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1949_End9" name="Complete">
+        <bpmn:incoming>W1949_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1949_Annotation10">
+        <bpmn:text>Controls: - CTL-378 (ensure controlled execution — Consignment &amp; VMI Settlement &amp; Analytics (PA-45.3).) | - operational: must strictly enforce non-valuated treatment
+Owner: Accounting Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1949_Assoc11" sourceRef="W1949_Annotation10" targetRef="W1949_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1949_Flow12" sourceRef="W1949_Start5" targetRef="W1949_Task6" />
+      <bpmn:sequenceFlow id="W1949_Flow13" sourceRef="W1949_Task6" targetRef="W1949_Task7" />
+      <bpmn:sequenceFlow id="W1949_Flow14" sourceRef="W1949_Task7" targetRef="W1949_Task8" />
+      <bpmn:sequenceFlow id="W1949_Flow15" sourceRef="W1949_Task8" targetRef="W1949_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1949_diag">
+      <bpmndi:BPMNPlane id="W1949_plane" bpmnElement="W_W1949">
+        <bpmndi:BPMNShape id="W1949_Lane1_di" bpmnElement="W1949_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_Lane2_di" bpmnElement="W1949_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_Lane3_di" bpmnElement="W1949_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_Task6_di" bpmnElement="W1949_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_Task7_di" bpmnElement="W1949_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_Task8_di" bpmnElement="W1949_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_Start5_di" bpmnElement="W1949_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_End9_di" bpmnElement="W1949_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1949_Annotation10_di" bpmnElement="W1949_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1949_Flow12_di" bpmnElement="W1949_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1949_Flow13_di" bpmnElement="W1949_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1949_Flow14_di" bpmnElement="W1949_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1949_Flow15_di" bpmnElement="W1949_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1949_Assoc11_di" bpmnElement="W1949_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

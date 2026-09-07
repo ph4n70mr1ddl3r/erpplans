@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-186.2-equipment-rental-transaction-lifecycle" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W5329" name="W5329. Heavy Equipment Reservation, Quoting &amp; Rental Agreement Generation" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer booking (online W5328 or in-store)
+Frequency: ~3,000–6,000 rentals/yr
+Volume: 1 reservation per rental
+Owner: Rental Counter Supervisor
+Participants: Credit Analyst, Customer, Store Manager (override approvals)
+Source: workflow W5329 — Heavy Equipment Reservation, Quoting &amp; Rental Agreement Generation</bpmn:documentation>
+      <bpmn:laneSet id="W5329_LaneSet3">
+        <bpmn:lane id="W5329_Lane1" name="Rental Counter Staff">
+        <bpmn:flowNodeRef>W5329_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5329_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5329_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5329_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5329_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5329_Lane2" name="Credit Analyst">
+        <bpmn:flowNodeRef>W5329_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5329_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5329_Start4" name="Customer booking (online W5328 or in-store)">
+        <bpmn:outgoing>W5329_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5329_Task5" name="Confirm unit availability for the requested window at the chosen hub (single…">
+        <bpmn:documentation>Step 1: Confirm unit availability for the requested window at the chosen hub (single rental-asset ledger).
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5329_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5329_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5329_Task6" name="Generate quote: base rate (day/week), delivery (W5331), CDW (W5327), deposit…">
+        <bpmn:documentation>Step 2: Generate quote: base rate (day/week), delivery (W5331), CDW (W5327), deposit hold, and estimated fuel/wear.
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5329_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5329_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5329_Task7" name="Confirm pre-qualification standing (W5326); place deposit pre-auth on…">
+        <bpmn:documentation>Step 3: Confirm pre-qualification standing (W5326); place deposit pre-auth on card/trade account.
+Responsible (R): Credit Analyst
+Accountable (A): Rental Counter Supervisor
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W5329_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5329_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5329_Task8" name="Generate the rental agreement: serial, hour-meter-out, rate, period, CDW…">
+        <bpmn:documentation>Step 4: Generate the rental agreement: serial, hour-meter-out, rate, period, CDW election, and operator acknowledgment.
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W5329_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5329_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5329_Task9" name="Reserve the unit (status: Reserved) and freeze availability for the window.">
+        <bpmn:documentation>Step 5: Reserve the unit (status: Reserved) and freeze availability for the window.
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W5329_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5329_End10" name="Complete">
+        <bpmn:incoming>W5329_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5329_Annotation11">
+        <bpmn:text>Controls: - CTL-05: prevent unauthorized credit-limit overrides on the deposit hold; CTL-12 (credit approval separated from the counter).
+Owner: Rental Counter Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5329_Assoc12" sourceRef="W5329_Annotation11" targetRef="W5329_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5329_Flow13" sourceRef="W5329_Start4" targetRef="W5329_Task5" />
+      <bpmn:sequenceFlow id="W5329_Flow14" sourceRef="W5329_Task5" targetRef="W5329_Task6" />
+      <bpmn:sequenceFlow id="W5329_Flow15" sourceRef="W5329_Task6" targetRef="W5329_Task7" />
+      <bpmn:sequenceFlow id="W5329_Flow16" sourceRef="W5329_Task7" targetRef="W5329_Task8" />
+      <bpmn:sequenceFlow id="W5329_Flow17" sourceRef="W5329_Task8" targetRef="W5329_Task9" />
+      <bpmn:sequenceFlow id="W5329_Flow18" sourceRef="W5329_Task9" targetRef="W5329_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5329_diag">
+      <bpmndi:BPMNPlane id="W5329_plane" bpmnElement="W_W5329">
+        <bpmndi:BPMNShape id="W5329_Lane1_di" bpmnElement="W5329_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Lane2_di" bpmnElement="W5329_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Task5_di" bpmnElement="W5329_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Task6_di" bpmnElement="W5329_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Task7_di" bpmnElement="W5329_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Task8_di" bpmnElement="W5329_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Task9_di" bpmnElement="W5329_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Start4_di" bpmnElement="W5329_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_End10_di" bpmnElement="W5329_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5329_Annotation11_di" bpmnElement="W5329_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5329_Flow13_di" bpmnElement="W5329_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5329_Flow14_di" bpmnElement="W5329_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5329_Flow15_di" bpmnElement="W5329_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5329_Flow16_di" bpmnElement="W5329_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5329_Flow17_di" bpmnElement="W5329_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5329_Flow18_di" bpmnElement="W5329_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5329_Assoc12_di" bpmnElement="W5329_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5330" name="W5330. Equipment Pre-Rental Inspection, Safety Briefing &amp; Operator Handover" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer collects at counter, or unit about to be delivered to jobsite (W5331)
+Frequency: Every rental out
+Volume: ~3,000–6,000 handovers/yr
+Owner: Rental Yard Lead
+Participants: Mechanic, HSE Officer, Customer/Operator
+Source: workflow W5330 — Equipment Pre-Rental Inspection, Safety Briefing &amp; Operator Handover</bpmn:documentation>
+      <bpmn:laneSet id="W5330_LaneSet4">
+        <bpmn:lane id="W5330_Lane1" name="Rental Yard Lead">
+        <bpmn:flowNodeRef>W5330_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5330_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5330_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5330_Lane2" name="HSE Officer">
+        <bpmn:flowNodeRef>W5330_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5330_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5330_Lane3" name="Mechanic">
+        <bpmn:flowNodeRef>W5330_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5330_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5330_Start5" name="Customer collects at counter, or unit about to be delivered to jobsite (W5331)">
+        <bpmn:outgoing>W5330_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5330_Task6" name="Conduct pre-rental inspection with the customer: condition photos…">
+        <bpmn:documentation>Step 1: Conduct pre-rental inspection with the customer: condition photos, hour-meter-out, fluids, tires/tracks, safety devices, and damage log.
+Responsible (R): Rental Yard Lead
+Accountable (A): Rental Yard Lead
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W5330_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5330_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5330_Task7" name="Deliver class-specific safety briefing: controls, emergency stop, PPE required…">
+        <bpmn:documentation>Step 2: Deliver class-specific safety briefing: controls, emergency stop, PPE required, load/capacity limits, refueling/charging, and emergency contact.
+Responsible (R): HSE Officer
+Accountable (A): Rental Yard Lead
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W5330_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5330_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5330_Task8" name="Verify operator competency acknowledgment (W5326) is signed; re-confirm for…">
+        <bpmn:documentation>Step 3: Verify operator competency acknowledgment (W5326) is signed; re-confirm for high-risk classes (aerial lifts, earthmoving).
+Responsible (R): HSE Officer
+Accountable (A): Rental Yard Lead
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W5330_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5330_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5330_Task9" name="Confirm telematics (W5324) is live and geofence set; hand over keys/controls.">
+        <bpmn:documentation>Step 4: Confirm telematics (W5324) is live and geofence set; hand over keys/controls.
+Responsible (R): Mechanic
+Accountable (A): Rental Yard Lead
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W5330_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5330_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5330_Task10" name="Capture customer signature on condition + briefing acknowledgment; post to the…">
+        <bpmn:documentation>Step 5: Capture customer signature on condition + briefing acknowledgment; post to the agreement (VS-88).
+Responsible (R): Rental Yard Lead
+Accountable (A): Rental Yard Lead
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W5330_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5330_End11" name="Complete">
+        <bpmn:incoming>W5330_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5330_Annotation12">
+        <bpmn:text>Controls: - CTL-104: rental-equipment condition &amp; safety baselining; operational: no-handover-without-signed-acknowledgment gate.
+Owner: Rental Yard Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5330_Assoc13" sourceRef="W5330_Annotation12" targetRef="W5330_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5330_Flow14" sourceRef="W5330_Start5" targetRef="W5330_Task6" />
+      <bpmn:sequenceFlow id="W5330_Flow15" sourceRef="W5330_Task6" targetRef="W5330_Task7" />
+      <bpmn:sequenceFlow id="W5330_Flow16" sourceRef="W5330_Task7" targetRef="W5330_Task8" />
+      <bpmn:sequenceFlow id="W5330_Flow17" sourceRef="W5330_Task8" targetRef="W5330_Task9" />
+      <bpmn:sequenceFlow id="W5330_Flow18" sourceRef="W5330_Task9" targetRef="W5330_Task10" />
+      <bpmn:sequenceFlow id="W5330_Flow19" sourceRef="W5330_Task10" targetRef="W5330_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5330_diag">
+      <bpmndi:BPMNPlane id="W5330_plane" bpmnElement="W_W5330">
+        <bpmndi:BPMNShape id="W5330_Lane1_di" bpmnElement="W5330_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Lane2_di" bpmnElement="W5330_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Lane3_di" bpmnElement="W5330_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Task6_di" bpmnElement="W5330_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Task7_di" bpmnElement="W5330_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Task8_di" bpmnElement="W5330_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Task9_di" bpmnElement="W5330_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Task10_di" bpmnElement="W5330_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Start5_di" bpmnElement="W5330_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_End11_di" bpmnElement="W5330_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5330_Annotation12_di" bpmnElement="W5330_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5330_Flow14_di" bpmnElement="W5330_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5330_Flow15_di" bpmnElement="W5330_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5330_Flow16_di" bpmnElement="W5330_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5330_Flow17_di" bpmnElement="W5330_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5330_Flow18_di" bpmnElement="W5330_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5330_Flow19_di" bpmnElement="W5330_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5330_Assoc13_di" bpmnElement="W5330_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5331" name="W5331. Customer Equipment Transport, Delivery-to-Jobsite &amp; Pickup Logistics" isExecutable="false">
+      <bpmn:documentation>Trigger: Rental with delivery option (vs. customer self-haul)
+Frequency: ~40–60% of rentals include delivery (~1,500–3,000 deliveries/yr)
+Volume: 1 delivery leg per delivered rental (out + return)
+Owner: Logistics Dispatcher
+Participants: 3PL/Hauler, Store Receiving (at jobsite return), Insurance (W5327)
+Source: workflow W5331 — Customer Equipment Transport, Delivery-to-Jobsite &amp; Pickup Logistics</bpmn:documentation>
+      <bpmn:laneSet id="W5331_LaneSet3">
+        <bpmn:lane id="W5331_Lane1" name="Logistics Dispatcher">
+        <bpmn:flowNodeRef>W5331_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5331_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5331_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5331_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5331_Lane2" name="3PL Driver">
+        <bpmn:flowNodeRef>W5331_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5331_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5331_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5331_Start4" name="Rental with delivery option (vs. customer self-haul)">
+        <bpmn:outgoing>W5331_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5331_Task5" name="Plan transport: equipment weight/dimensions, tilt-bed/lowboy/trailer…">
+        <bpmn:documentation>Step 1: Plan transport: equipment weight/dimensions, tilt-bed/lowboy/trailer requirement, and route permits for oversized loads (links VS-74).
+Responsible (R): Logistics Dispatcher
+Accountable (A): Logistics Dispatcher
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W5331_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5331_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5331_Task6" name="Book qualified hauler (3PL or BuildRight tow vehicle) with cargo/CTR insurance…">
+        <bpmn:documentation>Step 2: Book qualified hauler (3PL or BuildRight tow vehicle) with cargo/CTR insurance (VS-25/VS-26).
+Responsible (R): Logistics Dispatcher
+Accountable (A): Logistics Dispatcher
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W5331_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5331_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5331_Task7" name="Load, secure, and chain per equipment class; document load-down photos.">
+        <bpmn:documentation>Step 3: Load, secure, and chain per equipment class; document load-down photos.
+Responsible (R): 3PL Driver
+Accountable (A): Logistics Dispatcher
+Duration: 45 min</bpmn:documentation>
+        <bpmn:incoming>W5331_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5331_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5331_Task8" name="Deliver to jobsite; obtain site sign-off and handover to the customer&#x27;s…">
+        <bpmn:documentation>Step 4: Deliver to jobsite; obtain site sign-off and handover to the customer&#x27;s operator (W5330).
+Responsible (R): 3PL Driver
+Accountable (A): Logistics Dispatcher
+Duration: varies</bpmn:documentation>
+        <bpmn:incoming>W5331_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5331_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5331_Task9" name="Schedule and execute return pickup; confirm telematics (W5324) re-enters the…">
+        <bpmn:documentation>Step 5: Schedule and execute return pickup; confirm telematics (W5324) re-enters the yard geofence.
+Responsible (R): Logistics Dispatcher
+Accountable (A): Logistics Dispatcher
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W5331_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5331_End10" name="Complete">
+        <bpmn:incoming>W5331_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5331_Annotation11">
+        <bpmn:text>Controls: - CTL-25: safeguard inventory in transit; operational: permit-checklist gate before dispatch.
+Owner: Logistics Dispatcher</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5331_Assoc12" sourceRef="W5331_Annotation11" targetRef="W5331_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5331_Flow13" sourceRef="W5331_Start4" targetRef="W5331_Task5" />
+      <bpmn:sequenceFlow id="W5331_Flow14" sourceRef="W5331_Task5" targetRef="W5331_Task6" />
+      <bpmn:sequenceFlow id="W5331_Flow15" sourceRef="W5331_Task6" targetRef="W5331_Task7" />
+      <bpmn:sequenceFlow id="W5331_Flow16" sourceRef="W5331_Task7" targetRef="W5331_Task8" />
+      <bpmn:sequenceFlow id="W5331_Flow17" sourceRef="W5331_Task8" targetRef="W5331_Task9" />
+      <bpmn:sequenceFlow id="W5331_Flow18" sourceRef="W5331_Task9" targetRef="W5331_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5331_diag">
+      <bpmndi:BPMNPlane id="W5331_plane" bpmnElement="W_W5331">
+        <bpmndi:BPMNShape id="W5331_Lane1_di" bpmnElement="W5331_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Lane2_di" bpmnElement="W5331_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Task5_di" bpmnElement="W5331_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Task6_di" bpmnElement="W5331_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Task7_di" bpmnElement="W5331_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Task8_di" bpmnElement="W5331_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Task9_di" bpmnElement="W5331_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Start4_di" bpmnElement="W5331_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_End10_di" bpmnElement="W5331_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5331_Annotation11_di" bpmnElement="W5331_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5331_Flow13_di" bpmnElement="W5331_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5331_Flow14_di" bpmnElement="W5331_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5331_Flow15_di" bpmnElement="W5331_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5331_Flow16_di" bpmnElement="W5331_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5331_Flow17_di" bpmnElement="W5331_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5331_Flow18_di" bpmnElement="W5331_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5331_Assoc12_di" bpmnElement="W5331_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5332" name="W5332. In-Period Equipment Monitoring, Telematics Tracking &amp; Misuse Detection" isExecutable="false">
+      <bpmn:documentation>Trigger: Unit is out on rental (post W5330)
+Frequency: Continuous while rented
+Volume: ~40–90 units out at any time (at 3–7-day average rentals on the ~3,000–6,000 rentals/year volume)
+Owner: Rental Fleet Manager
+Participants: IT/IoT Engineer, HSE Officer, Customer
+Source: workflow W5332 — In-Period Equipment Monitoring, Telematics Tracking &amp; Misuse Detection</bpmn:documentation>
+      <bpmn:laneSet id="W5332_LaneSet3">
+        <bpmn:lane id="W5332_Lane1" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W5332_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5332_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5332_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5332_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5332_Lane2" name="IT">
+        <bpmn:flowNodeRef>W5332_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5332_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5332_Start4" name="Unit is out on rental (post W5330)">
+        <bpmn:outgoing>W5332_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5332_Task5" name="Monitor telematics feed: location vs. agreed jobsite geofence, hour-meter…">
+        <bpmn:documentation>Step 1: Monitor telematics feed: location vs. agreed jobsite geofence, hour-meter accumulation, and idle/duty patterns.
+Responsible (R): Rental Fleet Manager
+Accountable (A): Rental Fleet Manager
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5332_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W5332_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5332_Task6" name="Alert on anomalies: geofence breach (unit leaving the agreed area), excessive…">
+        <bpmn:documentation>Step 2: Alert on anomalies: geofence breach (unit leaving the agreed area), excessive hours vs. booked period, or kill-switch/ignition tamper.
+Responsible (R): IT/IoT Engineer
+Accountable (A): Rental Fleet Manager
+Duration: real-time</bpmn:documentation>
+        <bpmn:incoming>W5332_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5332_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5332_Task7" name="Triage alerts: contact renter for legitimate job-site moves vs. escalate to…">
+        <bpmn:documentation>Step 3: Triage alerts: contact renter for legitimate job-site moves vs. escalate to recovery (W5336) for a suspected theft/breach.
+Responsible (R): Rental Fleet Manager
+Accountable (A): Rental Fleet Manager
+Duration: per alert</bpmn:documentation>
+        <bpmn:incoming>W5332_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5332_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5332_Task8" name="Reconcile accumulated hours to the booked period; flag likely overage →…">
+        <bpmn:documentation>Step 4: Reconcile accumulated hours to the booked period; flag likely overage → extension billing (W5333).
+Responsible (R): Rental Fleet Manager
+Accountable (A): Rental Fleet Manager
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5332_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5332_End9" name="Complete">
+        <bpmn:incoming>W5332_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5332_Annotation10">
+        <bpmn:text>Controls: - CTL-23: detect theft/fraud via telematics exception; operational: same-day geofence-breach triage SLA.
+Owner: Rental Fleet Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5332_Assoc11" sourceRef="W5332_Annotation10" targetRef="W5332_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5332_Flow12" sourceRef="W5332_Start4" targetRef="W5332_Task5" />
+      <bpmn:sequenceFlow id="W5332_Flow13" sourceRef="W5332_Task5" targetRef="W5332_Task6" />
+      <bpmn:sequenceFlow id="W5332_Flow14" sourceRef="W5332_Task6" targetRef="W5332_Task7" />
+      <bpmn:sequenceFlow id="W5332_Flow15" sourceRef="W5332_Task7" targetRef="W5332_Task8" />
+      <bpmn:sequenceFlow id="W5332_Flow16" sourceRef="W5332_Task8" targetRef="W5332_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5332_diag">
+      <bpmndi:BPMNPlane id="W5332_plane" bpmnElement="W_W5332">
+        <bpmndi:BPMNShape id="W5332_Lane1_di" bpmnElement="W5332_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_Lane2_di" bpmnElement="W5332_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_Task5_di" bpmnElement="W5332_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_Task6_di" bpmnElement="W5332_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_Task7_di" bpmnElement="W5332_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_Task8_di" bpmnElement="W5332_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_Start4_di" bpmnElement="W5332_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_End9_di" bpmnElement="W5332_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5332_Annotation10_di" bpmnElement="W5332_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5332_Flow12_di" bpmnElement="W5332_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5332_Flow13_di" bpmnElement="W5332_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5332_Flow14_di" bpmnElement="W5332_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5332_Flow15_di" bpmnElement="W5332_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5332_Flow16_di" bpmnElement="W5332_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5332_Assoc11_di" bpmnElement="W5332_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5333" name="W5333. Equipment Extension, Rollover, Early Return &amp; Re-rental Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Renter requests extension; telematics shows overage (W5332); or early return
+Frequency: ~20–30% of rentals have a change
+Volume: ~1,000–1,800 changes/yr
+Owner: Rental Counter Supervisor
+Participants: Credit Analyst, Customer, Next-in-queue renter
+Source: workflow W5333 — Equipment Extension, Rollover, Early Return &amp; Re-rental Processing</bpmn:documentation>
+      <bpmn:laneSet id="W5333_LaneSet2">
+        <bpmn:lane id="W5333_Lane1" name="Rental Counter Staff">
+        <bpmn:flowNodeRef>W5333_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5333_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5333_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5333_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5333_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5333_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5333_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5333_Start3" name="Renter requests extension; telematics shows overage (W5332); or early return">
+        <bpmn:outgoing>W5333_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5333_Task4" name="Validate the change request against the unit&#x27;s next reservation (no conflict)…">
+        <bpmn:documentation>Step 1: Validate the change request against the unit&#x27;s next reservation (no conflict) and renter&#x27;s credit standing.
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5333_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W5333_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5333_Task5" name="For extension: re-rate to the appropriate daily/weekly tier and re-confirm…">
+        <bpmn:documentation>Step 2: For extension: re-rate to the appropriate daily/weekly tier and re-confirm deposit/CDW coverage (W5327).
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5333_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5333_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5333_Task6" name="For early return: stop billing at actual return, release the remaining window…">
+        <bpmn:documentation>Step 3: For early return: stop billing at actual return, release the remaining window to availability, and notify any waitlist (links VS-149/W139 booking).
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5333_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5333_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5333_Task7" name="Amend the agreement and capture customer acknowledgment; re-freeze availability.">
+        <bpmn:documentation>Step 4: Amend the agreement and capture customer acknowledgment; re-freeze availability.
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5333_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5333_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5333_Task8" name="Re-invoice/reverse per the change; post to billing (W5335).">
+        <bpmn:documentation>Step 5: Re-invoice/reverse per the change; post to billing (W5335).
+Responsible (R): Rental Counter Staff
+Accountable (A): Rental Counter Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5333_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5333_End9" name="Complete">
+        <bpmn:incoming>W5333_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5333_Annotation10">
+        <bpmn:text>Controls: - CTL-05: deposit/credit re-check on extension; operational: reservation-conflict block.
+Owner: Rental Counter Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5333_Assoc11" sourceRef="W5333_Annotation10" targetRef="W5333_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5333_Flow12" sourceRef="W5333_Start3" targetRef="W5333_Task4" />
+      <bpmn:sequenceFlow id="W5333_Flow13" sourceRef="W5333_Task4" targetRef="W5333_Task5" />
+      <bpmn:sequenceFlow id="W5333_Flow14" sourceRef="W5333_Task5" targetRef="W5333_Task6" />
+      <bpmn:sequenceFlow id="W5333_Flow15" sourceRef="W5333_Task6" targetRef="W5333_Task7" />
+      <bpmn:sequenceFlow id="W5333_Flow16" sourceRef="W5333_Task7" targetRef="W5333_Task8" />
+      <bpmn:sequenceFlow id="W5333_Flow17" sourceRef="W5333_Task8" targetRef="W5333_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5333_diag">
+      <bpmndi:BPMNPlane id="W5333_plane" bpmnElement="W_W5333">
+        <bpmndi:BPMNShape id="W5333_Lane1_di" bpmnElement="W5333_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_Task4_di" bpmnElement="W5333_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_Task5_di" bpmnElement="W5333_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_Task6_di" bpmnElement="W5333_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_Task7_di" bpmnElement="W5333_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_Task8_di" bpmnElement="W5333_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_Start3_di" bpmnElement="W5333_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_End9_di" bpmnElement="W5333_End9"><dc:Bounds x="1470" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5333_Annotation10_di" bpmnElement="W5333_Annotation10"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5333_Flow12_di" bpmnElement="W5333_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5333_Flow13_di" bpmnElement="W5333_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5333_Flow14_di" bpmnElement="W5333_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5333_Flow15_di" bpmnElement="W5333_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5333_Flow16_di" bpmnElement="W5333_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5333_Flow17_di" bpmnElement="W5333_Flow17"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5333_Assoc11_di" bpmnElement="W5333_Assoc11"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5334" name="W5334. Heavy Equipment Return Inspection, Damage Assessment &amp; Repair Cost Recovery" isExecutable="false">
+      <bpmn:documentation>Trigger: Unit returns to yard (post W5331 pickup or self-return)
+Frequency: Every rental return
+Volume: ~3,000–6,000 returns/yr
+Owner: Rental Yard Lead
+Participants: Mechanic, Customer, Credit/Billing, Insurance (W5327)
+Source: workflow W5334 — Heavy Equipment Return Inspection, Damage Assessment &amp; Repair Cost Recovery</bpmn:documentation>
+      <bpmn:laneSet id="W5334_LaneSet4">
+        <bpmn:lane id="W5334_Lane1" name="Rental Yard Lead">
+        <bpmn:flowNodeRef>W5334_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5334_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5334_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5334_Lane2" name="Mechanic">
+        <bpmn:flowNodeRef>W5334_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5334_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5334_Lane3" name="Credit">
+        <bpmn:flowNodeRef>W5334_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5334_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5334_Start5" name="Unit returns to yard (post W5331 pickup or self-return)">
+        <bpmn:outgoing>W5334_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5334_Task6" name="Inspect against the pre-rental baseline (W5330): compare condition photos…">
+        <bpmn:documentation>Step 1: Inspect against the pre-rental baseline (W5330): compare condition photos, hour-meter-in, fluids, tracks/tires, glass, and structure.
+Responsible (R): Rental Yard Lead
+Accountable (A): Rental Yard Lead
+Duration: 25 min</bpmn:documentation>
+        <bpmn:incoming>W5334_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5334_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5334_Task7" name="Log any new damage with photos and a damage code; classify fair-wear vs…">
+        <bpmn:documentation>Step 2: Log any new damage with photos and a damage code; classify fair-wear vs. chargeable.
+Responsible (R): Mechanic
+Accountable (A): Rental Yard Lead
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W5334_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5334_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5334_Task8" name="Quote repair cost (parts + labour + downtime) for chargeable damage; confirm…">
+        <bpmn:documentation>Step 3: Quote repair cost (parts + labour + downtime) for chargeable damage; confirm with customer.
+Responsible (R): Mechanic
+Accountable (A): Rental Yard Lead
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W5334_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5334_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5334_Task9" name="Recover from deposit/CDW/insurance per the agreement (W5327); raise a damage…">
+        <bpmn:documentation>Step 4: Recover from deposit/CDW/insurance per the agreement (W5327); raise a damage charge invoice if deposit/CDW is insufficient.
+Responsible (R): Credit/Billing
+Accountable (A): Rental Yard Lead
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W5334_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5334_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5334_Task10" name="Route unit to maintenance (W5337) or back to available; release deposit balance.">
+        <bpmn:documentation>Step 5: Route unit to maintenance (W5337) or back to available; release deposit balance.
+Responsible (R): Rental Yard Lead
+Accountable (A): Rental Yard Lead
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5334_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5334_End11" name="Complete">
+        <bpmn:incoming>W5334_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5334_Annotation12">
+        <bpmn:text>Controls: - CTL-104: asset recovery/damage control — inflated or fabricated damage-claim detection.
+Owner: Rental Yard Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5334_Assoc13" sourceRef="W5334_Annotation12" targetRef="W5334_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5334_Flow14" sourceRef="W5334_Start5" targetRef="W5334_Task6" />
+      <bpmn:sequenceFlow id="W5334_Flow15" sourceRef="W5334_Task6" targetRef="W5334_Task7" />
+      <bpmn:sequenceFlow id="W5334_Flow16" sourceRef="W5334_Task7" targetRef="W5334_Task8" />
+      <bpmn:sequenceFlow id="W5334_Flow17" sourceRef="W5334_Task8" targetRef="W5334_Task9" />
+      <bpmn:sequenceFlow id="W5334_Flow18" sourceRef="W5334_Task9" targetRef="W5334_Task10" />
+      <bpmn:sequenceFlow id="W5334_Flow19" sourceRef="W5334_Task10" targetRef="W5334_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5334_diag">
+      <bpmndi:BPMNPlane id="W5334_plane" bpmnElement="W_W5334">
+        <bpmndi:BPMNShape id="W5334_Lane1_di" bpmnElement="W5334_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Lane2_di" bpmnElement="W5334_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Lane3_di" bpmnElement="W5334_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Task6_di" bpmnElement="W5334_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Task7_di" bpmnElement="W5334_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Task8_di" bpmnElement="W5334_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Task9_di" bpmnElement="W5334_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Task10_di" bpmnElement="W5334_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Start5_di" bpmnElement="W5334_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_End11_di" bpmnElement="W5334_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5334_Annotation12_di" bpmnElement="W5334_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5334_Flow14_di" bpmnElement="W5334_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5334_Flow15_di" bpmnElement="W5334_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5334_Flow16_di" bpmnElement="W5334_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5334_Flow17_di" bpmnElement="W5334_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5334_Flow18_di" bpmnElement="W5334_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5334_Flow19_di" bpmnElement="W5334_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5334_Assoc13_di" bpmnElement="W5334_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5335" name="W5335. Equipment Rental Billing, Deposit/Hold Management &amp; Settlement" isExecutable="false">
+      <bpmn:documentation>Trigger: Rental closes (return W5334) or periodic billing for long rentals
+Frequency: Every rental close + weekly billing for open rentals
+Volume: ~3,000–6,000 invoices/yr
+Owner: Rental Billing Lead
+Participants: Credit/Billing, Customer, Finance
+Source: workflow W5335 — Equipment Rental Billing, Deposit/Hold Management &amp; Settlement</bpmn:documentation>
+      <bpmn:laneSet id="W5335_LaneSet4">
+        <bpmn:lane id="W5335_Lane1" name="Rental Billing Lead">
+        <bpmn:flowNodeRef>W5335_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5335_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5335_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5335_Lane2" name="Credit">
+        <bpmn:flowNodeRef>W5335_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5335_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5335_Lane3" name="Finance Business Partner">
+        <bpmn:flowNodeRef>W5335_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5335_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5335_Start5" name="Rental closes (return W5334) or periodic billing for long rentals">
+        <bpmn:outgoing>W5335_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5335_Task6" name="Compute final charges: actual hours/days from telematics (W5332), delivery…">
+        <bpmn:documentation>Step 1: Compute final charges: actual hours/days from telematics (W5332), delivery, fuel/wear top-up, CDW, and damage (W5334).
+Responsible (R): Rental Billing Lead
+Accountable (A): Rental Billing Lead
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W5335_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5335_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5335_Task7" name="Apply deposit hold and CDW; calculate net receivable or refund.">
+        <bpmn:documentation>Step 2: Apply deposit hold and CDW; calculate net receivable or refund.
+Responsible (R): Credit/Billing
+Accountable (A): Rental Billing Lead
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5335_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5335_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5335_Task8" name="Generate invoice; post to AR (trade account) or settle against the card…">
+        <bpmn:documentation>Step 3: Generate invoice; post to AR (trade account) or settle against the card pre-auth (links VS-16).
+Responsible (R): Rental Billing Lead
+Accountable (A): Rental Billing Lead
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5335_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5335_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5335_Task9" name="Release/refund the deposit balance per the agreement; record revenue split…">
+        <bpmn:documentation>Step 4: Release/refund the deposit balance per the agreement; record revenue split (rental vs. CDW vs. delivery).
+Responsible (R): Credit/Billing
+Accountable (A): Rental Billing Lead
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W5335_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5335_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5335_Task10" name="Reconcile the rental-day revenue to the fleet utilization analytics (W5342).">
+        <bpmn:documentation>Step 5: Reconcile the rental-day revenue to the fleet utilization analytics (W5342).
+Responsible (R): Finance Business Partner
+Accountable (A): CFO
+Duration: weekly</bpmn:documentation>
+        <bpmn:incoming>W5335_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5335_End11" name="Complete">
+        <bpmn:incoming>W5335_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5335_Annotation12">
+        <bpmn:text>Controls: - CTL-20: cash/deposit accountability; CTL-22 (correct VAT on rental vs. CDW vs. delivery).
+Owner: Rental Billing Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5335_Assoc13" sourceRef="W5335_Annotation12" targetRef="W5335_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5335_Flow14" sourceRef="W5335_Start5" targetRef="W5335_Task6" />
+      <bpmn:sequenceFlow id="W5335_Flow15" sourceRef="W5335_Task6" targetRef="W5335_Task7" />
+      <bpmn:sequenceFlow id="W5335_Flow16" sourceRef="W5335_Task7" targetRef="W5335_Task8" />
+      <bpmn:sequenceFlow id="W5335_Flow17" sourceRef="W5335_Task8" targetRef="W5335_Task9" />
+      <bpmn:sequenceFlow id="W5335_Flow18" sourceRef="W5335_Task9" targetRef="W5335_Task10" />
+      <bpmn:sequenceFlow id="W5335_Flow19" sourceRef="W5335_Task10" targetRef="W5335_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5335_diag">
+      <bpmndi:BPMNPlane id="W5335_plane" bpmnElement="W_W5335">
+        <bpmndi:BPMNShape id="W5335_Lane1_di" bpmnElement="W5335_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Lane2_di" bpmnElement="W5335_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Lane3_di" bpmnElement="W5335_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Task6_di" bpmnElement="W5335_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Task7_di" bpmnElement="W5335_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Task8_di" bpmnElement="W5335_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Task9_di" bpmnElement="W5335_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Task10_di" bpmnElement="W5335_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Start5_di" bpmnElement="W5335_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_End11_di" bpmnElement="W5335_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5335_Annotation12_di" bpmnElement="W5335_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5335_Flow14_di" bpmnElement="W5335_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5335_Flow15_di" bpmnElement="W5335_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5335_Flow16_di" bpmnElement="W5335_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5335_Flow17_di" bpmnElement="W5335_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5335_Flow18_di" bpmnElement="W5335_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5335_Flow19_di" bpmnElement="W5335_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5335_Assoc13_di" bpmnElement="W5335_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5336" name="W5336. Lost, Stolen or Abandoned Equipment Recovery, Recovery Agent &amp; Police Coordination" isExecutable="false">
+      <bpmn:documentation>Trigger: Geofence breach unresolved (W5332), overdue non-return (VS-12.2 W1375 escalation), or unit abandoned
+Frequency: Rare (~0.3–1% of rentals); high impact
+Volume: ~15–60 incidents/yr
+Owner: Loss Prevention Officer
+Participants: Corporate Security (VS-159), Legal (VS-100), Police, Insurance (VS-26), Recovery Agent
+Source: workflow W5336 — Lost, Stolen or Abandoned Equipment Recovery, Recovery Agent &amp; Police Coordination</bpmn:documentation>
+      <bpmn:laneSet id="W5336_LaneSet5">
+        <bpmn:lane id="W5336_Lane1" name="Loss Prevention Officer">
+        <bpmn:flowNodeRef>W5336_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5336_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5336_Lane2" name="Corporate Security">
+        <bpmn:flowNodeRef>W5336_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5336_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5336_Lane3" name="Risk &amp; Insurance Manager">
+        <bpmn:flowNodeRef>W5336_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5336_Lane4" name="Legal Counsel">
+        <bpmn:flowNodeRef>W5336_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5336_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5336_Start6" name="Geofence breach unresolved (W5332), overdue non-return (VS-12.2 W1375 escalation), or…">
+        <bpmn:outgoing>W5336_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5336_Task7" name="Confirm the loss: telematics last-known location, kill-switch activation, and…">
+        <bpmn:documentation>Step 1: Confirm the loss: telematics last-known location, kill-switch activation, and contact attempts to the renter.
+Responsible (R): Loss Prevention Officer
+Accountable (A): Loss Prevention Officer
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W5336_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5336_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5336_Task8" name="Escalate to Corporate Security and engage a licensed recovery agent; file a…">
+        <bpmn:documentation>Step 2: Escalate to Corporate Security and engage a licensed recovery agent; file a police report (theft/embezzlement under RPC).
+Responsible (R): Corporate Security
+Accountable (A): Loss Prevention Officer
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W5336_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5336_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5336_Task9" name="Notify insurance/captive (W5327/VS-26) within the policy notice window…">
+        <bpmn:documentation>Step 3: Notify insurance/captive (W5327/VS-26) within the policy notice window; preserve evidence for the claim.
+Responsible (R): Risk &amp; Insurance Manager
+Accountable (A): Loss Prevention Officer
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W5336_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5336_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5336_Task10" name="Coordinate recovery/repo where located; if unrecoverable, process the claim and…">
+        <bpmn:documentation>Step 4: Coordinate recovery/repo where located; if unrecoverable, process the claim and charge-off (VS-35).
+Responsible (R): Corporate Security
+Accountable (A): Loss Prevention Officer
+Duration: varies</bpmn:documentation>
+        <bpmn:incoming>W5336_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5336_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5336_Task11" name="Update the renter record (blacklist), file legal recovery of the unit value…">
+        <bpmn:documentation>Step 5: Update the renter record (blacklist), file legal recovery of the unit value (VS-100), and capture lessons-learned.
+Responsible (R): Legal Counsel
+Accountable (A): Loss Prevention Officer
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W5336_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5336_End12" name="Complete">
+        <bpmn:incoming>W5336_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5336_Annotation13">
+        <bpmn:text>Controls: - CTL-23: theft/fraud detection; CTL-26 (asset loss/charge-off); operational: 48-hour insurance-notice SLA.
+Owner: Loss Prevention Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5336_Assoc14" sourceRef="W5336_Annotation13" targetRef="W5336_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5336_Flow15" sourceRef="W5336_Start6" targetRef="W5336_Task7" />
+      <bpmn:sequenceFlow id="W5336_Flow16" sourceRef="W5336_Task7" targetRef="W5336_Task8" />
+      <bpmn:sequenceFlow id="W5336_Flow17" sourceRef="W5336_Task8" targetRef="W5336_Task9" />
+      <bpmn:sequenceFlow id="W5336_Flow18" sourceRef="W5336_Task9" targetRef="W5336_Task10" />
+      <bpmn:sequenceFlow id="W5336_Flow19" sourceRef="W5336_Task10" targetRef="W5336_Task11" />
+      <bpmn:sequenceFlow id="W5336_Flow20" sourceRef="W5336_Task11" targetRef="W5336_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5336_diag">
+      <bpmndi:BPMNPlane id="W5336_plane" bpmnElement="W_W5336">
+        <bpmndi:BPMNShape id="W5336_Lane1_di" bpmnElement="W5336_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Lane2_di" bpmnElement="W5336_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Lane3_di" bpmnElement="W5336_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Lane4_di" bpmnElement="W5336_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Task7_di" bpmnElement="W5336_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Task8_di" bpmnElement="W5336_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Task9_di" bpmnElement="W5336_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Task10_di" bpmnElement="W5336_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Task11_di" bpmnElement="W5336_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Start6_di" bpmnElement="W5336_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_End12_di" bpmnElement="W5336_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5336_Annotation13_di" bpmnElement="W5336_Annotation13"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5336_Flow15_di" bpmnElement="W5336_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5336_Flow16_di" bpmnElement="W5336_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5336_Flow17_di" bpmnElement="W5336_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5336_Flow18_di" bpmnElement="W5336_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5336_Flow19_di" bpmnElement="W5336_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5336_Flow20_di" bpmnElement="W5336_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5336_Assoc14_di" bpmnElement="W5336_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

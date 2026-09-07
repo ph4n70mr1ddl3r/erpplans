@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-71.1-product-authentication-serialization" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W2550" name="W2550. High-Risk Product Serialization &amp; Registration" isExecutable="false">
+      <bpmn:documentation>Trigger: Inbound receipt of serialized products (power tools, high-value electrical, premium fixtures)
+Frequency: Per goods receipt; ~2,000–3,000 serialized units/month
+Volume: ~500 SKUs requiring serialization across power tools, premium electrical, appliances
+Owner: Receiving Clerk / DC Warehouse Supervisor
+Participants: Receiving Clerk, Quality Inspector, LP Officer
+Source: workflow W2550 — High-Risk Product Serialization &amp; Registration</bpmn:documentation>
+      <bpmn:laneSet id="W2550_LaneSet3">
+        <bpmn:lane id="W2550_Lane1" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W2550_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2550_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2550_Lane2" name="System">
+        <bpmn:flowNodeRef>W2550_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2550_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2550_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2550_Start4" name="Inbound receipt of serialized products (power tools, high-value electrical, premium…">
+        <bpmn:outgoing>W2550_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2550_Task5" name="Receiving Clerk scans vendor serial numbers/QR codes during goods receipt…">
+        <bpmn:documentation>Step 1: Receiving Clerk scans vendor serial numbers/QR codes during goods receipt; system validates against vendor master serialization file (ASN); flags units with missing, duplicate, or non-matching serial numbers for investigation
+Responsible (R): Receiving Clerk
+Accountable (A): DC Ops Manager
+Duration: 5–10 min per shipment</bpmn:documentation>
+        <bpmn:incoming>W2550_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2550_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W2550_Task6" name="System registers each serial number in authentication database: vendor, model…">
+        <bpmn:documentation>Step 2: System registers each serial number in authentication database: vendor, model, manufacturing date, batch/lot, import documentation reference; generates BuildRight authentication QR label applied to packaging
+Responsible (R): System / Receiving Clerk
+Accountable (A): LP Manager
+Duration: 2–3 min per unit</bpmn:documentation>
+        <bpmn:incoming>W2550_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2550_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W2550_Task7" name="For products without vendor serialization (local brands): system generates…">
+        <bpmn:documentation>Step 3: For products without vendor serialization (local brands): system generates BuildRight-unique serial at GR; records origin vendor, PO reference, and receipt date; enables full chain-of-custody tracking from receipt to sale
+Responsible (R): System / Receiving Clerk
+Accountable (A): LP Manager
+Duration: 1–2 min per unit</bpmn:documentation>
+        <bpmn:incoming>W2550_Flow13</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W2550_End8" name="Complete">
+        <bpmn:incoming>W2550_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2550_Annotation9">
+        <bpmn:text>Controls: - CTL-233 (ensure anti-counterfeit program integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Receiving Clerk / DC Warehouse Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2550_Assoc10" sourceRef="W2550_Annotation9" targetRef="W2550_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2550_Flow11" sourceRef="W2550_Start4" targetRef="W2550_Task5" />
+      <bpmn:sequenceFlow id="W2550_Flow12" sourceRef="W2550_Task5" targetRef="W2550_Task6" />
+      <bpmn:sequenceFlow id="W2550_Flow13" sourceRef="W2550_Task6" targetRef="W2550_Task7" />
+      <bpmn:sequenceFlow id="W2550_Flow14" sourceRef="W2550_Task7" targetRef="W2550_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2550_diag">
+      <bpmndi:BPMNPlane id="W2550_plane" bpmnElement="W_W2550">
+        <bpmndi:BPMNShape id="W2550_Lane1_di" bpmnElement="W2550_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2550_Lane2_di" bpmnElement="W2550_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2550_Task5_di" bpmnElement="W2550_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2550_Task6_di" bpmnElement="W2550_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2550_Task7_di" bpmnElement="W2550_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2550_Start4_di" bpmnElement="W2550_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2550_End8_di" bpmnElement="W2550_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2550_Annotation9_di" bpmnElement="W2550_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2550_Flow11_di" bpmnElement="W2550_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2550_Flow12_di" bpmnElement="W2550_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2550_Flow13_di" bpmnElement="W2550_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2550_Flow14_di" bpmnElement="W2550_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2550_Assoc10_di" bpmnElement="W2550_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2551" name="W2551. QR Code Authentication System Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer or staff scans product QR code
+Frequency: Continuous; ~5,000–10,000 scans/month
+Volume: ~500,000+ active QR codes in system
+Owner: IT Application Manager
+Participants: IT App Manager, LP Manager, Vendors
+Source: workflow W2551 — QR Code Authentication System Management</bpmn:documentation>
+      <bpmn:laneSet id="W2551_LaneSet4">
+        <bpmn:lane id="W2551_Lane1" name="IT Application Manager">
+        <bpmn:flowNodeRef>W2551_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2551_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2551_Lane2" name="System">
+        <bpmn:flowNodeRef>W2551_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2551_Lane3" name="IT">
+        <bpmn:flowNodeRef>W2551_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2551_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2551_Start5" name="Customer or staff scans product QR code">
+        <bpmn:outgoing>W2551_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2551_Task6" name="IT maintains authentication platform: QR code generation engine, scan…">
+        <bpmn:documentation>Step 1: IT maintains authentication platform: QR code generation engine, scan validation API, mobile-responsive result page, analytics backend; ensures 99.9% uptime for customer-facing verification; manages vendor API integrations for real-time validation
+Responsible (R): IT Application Manager
+Accountable (A): CIO
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W2551_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2551_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W2551_Task7" name="When QR scanned: system validates code authenticity, returns product…">
+        <bpmn:documentation>Step 2: When QR scanned: system validates code authenticity, returns product information (brand, model, manufacturing date, authorized retailer confirmation, warranty status); flags previously scanned codes (potential counterfeiting indicator) for LP investigation
+Responsible (R): System
+Accountable (A): LP Manager
+Duration: &lt;3 seconds per scan</bpmn:documentation>
+        <bpmn:incoming>W2551_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2551_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W2551_Task8" name="IT generates weekly authentication analytics: scan volume by product category…">
+        <bpmn:documentation>Step 3: IT generates weekly authentication analytics: scan volume by product category and region, authentication failure rate, geographic scan patterns, repeat-scan alerts (same code scanned at different locations = counterfeiting indicator)
+Responsible (R): IT / LP Analyst
+Accountable (A): LP Manager
+Duration: 2–3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W2551_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2551_End9" name="Complete">
+        <bpmn:incoming>W2551_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2551_Annotation10">
+        <bpmn:text>Controls: - CTL-442 (ensure controlled execution — Product Authentication &amp; Serialization (PA-71.1).) | - operational: unique per-unit codes and geographic scan anomaly detection; authentication-platform uptime SLA monitored (99.9% target) with offline-verification fallback and vendor-API failover tested quarterly
+Owner: IT Application Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2551_Assoc11" sourceRef="W2551_Annotation10" targetRef="W2551_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2551_Flow12" sourceRef="W2551_Start5" targetRef="W2551_Task6" />
+      <bpmn:sequenceFlow id="W2551_Flow13" sourceRef="W2551_Task6" targetRef="W2551_Task7" />
+      <bpmn:sequenceFlow id="W2551_Flow14" sourceRef="W2551_Task7" targetRef="W2551_Task8" />
+      <bpmn:sequenceFlow id="W2551_Flow15" sourceRef="W2551_Task8" targetRef="W2551_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2551_diag">
+      <bpmndi:BPMNPlane id="W2551_plane" bpmnElement="W_W2551">
+        <bpmndi:BPMNShape id="W2551_Lane1_di" bpmnElement="W2551_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_Lane2_di" bpmnElement="W2551_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_Lane3_di" bpmnElement="W2551_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_Task6_di" bpmnElement="W2551_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_Task7_di" bpmnElement="W2551_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_Task8_di" bpmnElement="W2551_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_Start5_di" bpmnElement="W2551_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_End9_di" bpmnElement="W2551_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2551_Annotation10_di" bpmnElement="W2551_Annotation10"><dc:Bounds x="160" y="630" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2551_Flow12_di" bpmnElement="W2551_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2551_Flow13_di" bpmnElement="W2551_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2551_Flow14_di" bpmnElement="W2551_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2551_Flow15_di" bpmnElement="W2551_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2551_Assoc11_di" bpmnElement="W2551_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2552" name="W2552. Customer Product Verification Support" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer reports suspected counterfeit product or requests verification
+Frequency: ~50–100 inquiries/month
+Volume: ~50–100/month via customer service, in-store, online
+Owner: Customer Service Representative
+Participants: Customer Service Rep, LP Officer, Category Manager, Vendor
+Source: workflow W2552 — Customer Product Verification Support</bpmn:documentation>
+      <bpmn:laneSet id="W2552_LaneSet3">
+        <bpmn:lane id="W2552_Lane1" name="Customer Service Rep">
+        <bpmn:flowNodeRef>W2552_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2552_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2552_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2552_Lane2" name="LP Officer">
+        <bpmn:flowNodeRef>W2552_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2552_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2552_Start4" name="Customer reports suspected counterfeit product or requests verification">
+        <bpmn:outgoing>W2552_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2552_Task5" name="Customer submits verification request: product photos, QR code scan result…">
+        <bpmn:documentation>Step 1: Customer submits verification request: product photos, QR code scan result, purchase receipt, reason for suspicion (poor quality, packaging differences, performance issues); Customer Service logs in authentication case system
+Responsible (R): Customer Service Rep
+Accountable (A): LP Manager
+Duration: 15–20 min</bpmn:documentation>
+        <bpmn:incoming>W2552_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2552_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2552_Task6" name="LP Officer reviews case: compares product images against authentic reference…">
+        <bpmn:documentation>Step 2: LP Officer reviews case: compares product images against authentic reference library, validates serial number in database, checks purchase history for source store verification; if counterfeit confirmed: escalates to LP Manager and initiates investigation (W2559)
+Responsible (R): LP Officer
+Accountable (A): LP Manager
+Duration: 30–60 min</bpmn:documentation>
+        <bpmn:incoming>W2552_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2552_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2552_Task7" name="Customer Service communicates result: if authentic — reassures customer and…">
+        <bpmn:documentation>Step 3: Customer Service communicates result: if authentic — reassures customer and explains verification; if counterfeit — offers replacement with genuine product, issues refund, requests customer cooperation in investigation (source information); documents all interactions
+Responsible (R): Customer Service Rep
+Accountable (A): LP Manager
+Duration: 15–30 min</bpmn:documentation>
+        <bpmn:incoming>W2552_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2552_End8" name="Complete">
+        <bpmn:incoming>W2552_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2552_Annotation9">
+        <bpmn:text>Controls: - CTL-442 (ensure controlled execution — Product Authentication &amp; Serialization (PA-71.1).) | - operational: Customer Service Representative review and approval gate
+Owner: Customer Service Representative</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2552_Assoc10" sourceRef="W2552_Annotation9" targetRef="W2552_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2552_Flow11" sourceRef="W2552_Start4" targetRef="W2552_Task5" />
+      <bpmn:sequenceFlow id="W2552_Flow12" sourceRef="W2552_Task5" targetRef="W2552_Task6" />
+      <bpmn:sequenceFlow id="W2552_Flow13" sourceRef="W2552_Task6" targetRef="W2552_Task7" />
+      <bpmn:sequenceFlow id="W2552_Flow14" sourceRef="W2552_Task7" targetRef="W2552_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2552_diag">
+      <bpmndi:BPMNPlane id="W2552_plane" bpmnElement="W_W2552">
+        <bpmndi:BPMNShape id="W2552_Lane1_di" bpmnElement="W2552_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2552_Lane2_di" bpmnElement="W2552_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2552_Task5_di" bpmnElement="W2552_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2552_Task6_di" bpmnElement="W2552_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2552_Task7_di" bpmnElement="W2552_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2552_Start4_di" bpmnElement="W2552_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2552_End8_di" bpmnElement="W2552_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2552_Annotation9_di" bpmnElement="W2552_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2552_Flow11_di" bpmnElement="W2552_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2552_Flow12_di" bpmnElement="W2552_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2552_Flow13_di" bpmnElement="W2552_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2552_Flow14_di" bpmnElement="W2552_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2552_Assoc10_di" bpmnElement="W2552_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2553" name="W2553. Vendor Serialization Compliance Audit" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual vendor audit cycle or serialization non-compliance incident
+Frequency: Annual per vendor; ad-hoc for incidents
+Volume: ~50–80 vendors with serialization-required products
+Owner: LP Manager
+Participants: LP Manager, Procurement, Quality, Vendor
+Source: workflow W2553 — Vendor Serialization Compliance Audit</bpmn:documentation>
+      <bpmn:laneSet id="W2553_LaneSet3">
+        <bpmn:lane id="W2553_Lane1" name="LP Manager">
+        <bpmn:flowNodeRef>W2553_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2553_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2553_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2553_Lane2" name="Procurement">
+        <bpmn:flowNodeRef>W2553_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2553_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2553_Start4" name="Annual vendor audit cycle or serialization non-compliance incident">
+        <bpmn:outgoing>W2553_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2553_Task5" name="LP Manager reviews vendor serialization compliance rate: percentage of…">
+        <bpmn:documentation>Step 1: LP Manager reviews vendor serialization compliance rate: percentage of shipments with complete ASN serialization data, serial number format consistency, QR code quality, packaging integrity; identifies non-compliant vendors
+Responsible (R): LP Manager
+Accountable (A): COO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W2553_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2553_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2553_Task6" name="For non-compliant vendors: Procurement conducts vendor meeting to communicate…">
+        <bpmn:documentation>Step 2: For non-compliant vendors: Procurement conducts vendor meeting to communicate requirements, timeline for compliance, and consequences (shipment rejection, vendor scorecard impact); Quality inspects suspect vendor products for authenticity indicators
+Responsible (R): Procurement / Quality
+Accountable (A): VP Merchandising
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W2553_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2553_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2553_Task7" name="LP Manager establishes serialization compliance as vendor scorecard KPI…">
+        <bpmn:documentation>Step 3: LP Manager establishes serialization compliance as vendor scorecard KPI (minimum 95% compliance); includes in vendor contracts; quarterly review of compliance trends; persistent non-compliance triggers vendor review and potential replacement
+Responsible (R): LP Manager / Procurement
+Accountable (A): VP Merchandising
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W2553_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2553_End8" name="Complete">
+        <bpmn:incoming>W2553_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2553_Annotation9">
+        <bpmn:text>Controls: - CTL-442 (ensure controlled execution — Product Authentication &amp; Serialization (PA-71.1).) | - operational: LP Manager review and approval gate
+Owner: LP Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2553_Assoc10" sourceRef="W2553_Annotation9" targetRef="W2553_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2553_Flow11" sourceRef="W2553_Start4" targetRef="W2553_Task5" />
+      <bpmn:sequenceFlow id="W2553_Flow12" sourceRef="W2553_Task5" targetRef="W2553_Task6" />
+      <bpmn:sequenceFlow id="W2553_Flow13" sourceRef="W2553_Task6" targetRef="W2553_Task7" />
+      <bpmn:sequenceFlow id="W2553_Flow14" sourceRef="W2553_Task7" targetRef="W2553_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2553_diag">
+      <bpmndi:BPMNPlane id="W2553_plane" bpmnElement="W_W2553">
+        <bpmndi:BPMNShape id="W2553_Lane1_di" bpmnElement="W2553_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2553_Lane2_di" bpmnElement="W2553_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2553_Task5_di" bpmnElement="W2553_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2553_Task6_di" bpmnElement="W2553_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2553_Task7_di" bpmnElement="W2553_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2553_Start4_di" bpmnElement="W2553_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2553_End8_di" bpmnElement="W2553_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2553_Annotation9_di" bpmnElement="W2553_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2553_Flow11_di" bpmnElement="W2553_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2553_Flow12_di" bpmnElement="W2553_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2553_Flow13_di" bpmnElement="W2553_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2553_Flow14_di" bpmnElement="W2553_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2553_Assoc10_di" bpmnElement="W2553_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2554" name="W2554. Product Authentication Data Platform Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Platform maintenance cycle or system update
+Frequency: Monthly maintenance; quarterly feature updates
+Volume: 1 platform managing 500K+ serial records
+Owner: IT Data Architect
+Participants: IT Data Architect, LP Manager, IT Operations
+Source: workflow W2554 — Product Authentication Data Platform Management</bpmn:documentation>
+      <bpmn:laneSet id="W2554_LaneSet2">
+        <bpmn:lane id="W2554_Lane1" name="IT Data Architect">
+        <bpmn:flowNodeRef>W2554_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2554_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2554_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2554_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2554_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2554_Start3" name="Platform maintenance cycle or system update">
+        <bpmn:outgoing>W2554_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2554_Task4" name="IT maintains authentication data platform: serial number database, vendor ASN…">
+        <bpmn:documentation>Step 1: IT maintains authentication data platform: serial number database, vendor ASN integration APIs, QR code generation engine, scan analytics, reference image library; ensures data integrity with daily reconciliation against inventory records
+Responsible (R): IT Data Architect
+Accountable (A): CIO
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W2554_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W2554_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2554_Task5" name="IT implements platform enhancements: batch QR code generation for faster GR…">
+        <bpmn:documentation>Step 2: IT implements platform enhancements: batch QR code generation for faster GR processing, mobile app integration for in-store verification by staff, vendor self-service portal for ASN submission, machine learning model for counterfeit pattern detection
+Responsible (R): IT Data Architect
+Accountable (A): CIO
+Duration: Quarterly releases</bpmn:documentation>
+        <bpmn:incoming>W2554_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2554_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2554_Task6" name="IT manages data lifecycle: archives sold/expired product serial records…">
+        <bpmn:documentation>Step 3: IT manages data lifecycle: archives sold/expired product serial records (10-year retention per BIR), purges invalid scan data, maintains platform performance targets (&lt;3 sec scan response), manages database capacity growth (~2,000–3,000 new serials/month per W2550; ~500K+ records accumulated over the 10-year BIR retention window)
+Responsible (R): IT Data Architect / IT Ops
+Accountable (A): CIO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2554_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2554_End7" name="Complete">
+        <bpmn:incoming>W2554_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2554_Annotation8">
+        <bpmn:text>Controls: - CTL-233 (ensure anti-counterfeit program integrity.) | - operational: periodic reconciliation against source documents
+Owner: IT Data Architect</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2554_Assoc9" sourceRef="W2554_Annotation8" targetRef="W2554_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2554_Flow10" sourceRef="W2554_Start3" targetRef="W2554_Task4" />
+      <bpmn:sequenceFlow id="W2554_Flow11" sourceRef="W2554_Task4" targetRef="W2554_Task5" />
+      <bpmn:sequenceFlow id="W2554_Flow12" sourceRef="W2554_Task5" targetRef="W2554_Task6" />
+      <bpmn:sequenceFlow id="W2554_Flow13" sourceRef="W2554_Task6" targetRef="W2554_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2554_diag">
+      <bpmndi:BPMNPlane id="W2554_plane" bpmnElement="W_W2554">
+        <bpmndi:BPMNShape id="W2554_Lane1_di" bpmnElement="W2554_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2554_Task4_di" bpmnElement="W2554_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2554_Task5_di" bpmnElement="W2554_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2554_Task6_di" bpmnElement="W2554_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2554_Start3_di" bpmnElement="W2554_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2554_End7_di" bpmnElement="W2554_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2554_Annotation8_di" bpmnElement="W2554_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2554_Flow10_di" bpmnElement="W2554_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2554_Flow11_di" bpmnElement="W2554_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2554_Flow12_di" bpmnElement="W2554_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2554_Flow13_di" bpmnElement="W2554_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2554_Assoc9_di" bpmnElement="W2554_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2555" name="W2555. Gray Market &amp; Unauthorized Channel Detection" isExecutable="false">
+      <bpmn:documentation>Trigger: Anomalous scan patterns or market monitoring alerts
+Frequency: Weekly monitoring; ad-hoc investigations
+Volume: ~5–10 investigations/month
+Owner: LP Analyst
+Participants: LP Analyst, LP Manager, Category Manager, Legal
+Source: workflow W2555 — Gray Market &amp; Unauthorized Channel Detection</bpmn:documentation>
+      <bpmn:laneSet id="W2555_LaneSet3">
+        <bpmn:lane id="W2555_Lane1" name="LP Analyst">
+        <bpmn:flowNodeRef>W2555_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2555_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2555_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2555_Lane2" name="LP Manager">
+        <bpmn:flowNodeRef>W2555_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2555_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2555_Start4" name="Anomalous scan patterns or market monitoring alerts">
+        <bpmn:outgoing>W2555_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2555_Task5" name="LP Analyst monitors for gray market indicators: BuildRight-serialized products…">
+        <bpmn:documentation>Step 1: LP Analyst monitors for gray market indicators: BuildRight-serialized products found in unauthorized retail channels (online marketplaces, competitor stores), geographic scan anomalies (products scanning far from authorized store), bulk scan patterns (reseller activity detection)
+Responsible (R): LP Analyst
+Accountable (A): LP Manager
+Duration: 2–3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W2555_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2555_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2555_Task6" name="Analyst investigates suspicious patterns: traces product origin through serial…">
+        <bpmn:documentation>Step 2: Analyst investigates suspicious patterns: traces product origin through serial chain-of-custody, identifies purchase point (store/POS transaction), determines if diversion occurred at vendor, DC, or store level; compiles evidence dossier
+Responsible (R): LP Analyst
+Accountable (A): LP Manager
+Duration: 1–2 days per case</bpmn:documentation>
+        <bpmn:incoming>W2555_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2555_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2555_Task7" name="LP Manager escalates confirmed gray market cases: to Category Manager for…">
+        <bpmn:documentation>Step 3: LP Manager escalates confirmed gray market cases: to Category Manager for vendor discussion (if vendor-side diversion), to Legal for contractual enforcement, to LP team for store-level investigation (if internal diversion); implements controls: quantity limits for high-risk products, enhanced tracking for repeat offenders
+Responsible (R): LP Manager
+Accountable (A): COO
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W2555_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2555_End8" name="Complete">
+        <bpmn:incoming>W2555_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2555_Annotation9">
+        <bpmn:text>Controls: - CTL-442 (ensure controlled execution — Product Authentication &amp; Serialization (PA-71.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: LP Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2555_Assoc10" sourceRef="W2555_Annotation9" targetRef="W2555_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2555_Flow11" sourceRef="W2555_Start4" targetRef="W2555_Task5" />
+      <bpmn:sequenceFlow id="W2555_Flow12" sourceRef="W2555_Task5" targetRef="W2555_Task6" />
+      <bpmn:sequenceFlow id="W2555_Flow13" sourceRef="W2555_Task6" targetRef="W2555_Task7" />
+      <bpmn:sequenceFlow id="W2555_Flow14" sourceRef="W2555_Task7" targetRef="W2555_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2555_diag">
+      <bpmndi:BPMNPlane id="W2555_plane" bpmnElement="W_W2555">
+        <bpmndi:BPMNShape id="W2555_Lane1_di" bpmnElement="W2555_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2555_Lane2_di" bpmnElement="W2555_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2555_Task5_di" bpmnElement="W2555_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2555_Task6_di" bpmnElement="W2555_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2555_Task7_di" bpmnElement="W2555_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2555_Start4_di" bpmnElement="W2555_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2555_End8_di" bpmnElement="W2555_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2555_Annotation9_di" bpmnElement="W2555_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2555_Flow11_di" bpmnElement="W2555_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2555_Flow12_di" bpmnElement="W2555_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2555_Flow13_di" bpmnElement="W2555_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2555_Flow14_di" bpmnElement="W2555_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2555_Assoc10_di" bpmnElement="W2555_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2556" name="W2556. Serialization Label &amp; Packaging Standard Management" isExecutable="false">
+      <bpmn:documentation>Trigger: New product introduction or packaging redesign
+Frequency: 5–10 updates/month
+Volume: ~500 serialized SKUs
+Owner: Category Manager
+Participants: Category Mgr, Vendor, LP Manager, Merchandising
+Source: workflow W2556 — Serialization Label &amp; Packaging Standard Management</bpmn:documentation>
+      <bpmn:laneSet id="W2556_LaneSet4">
+        <bpmn:lane id="W2556_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W2556_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2556_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2556_Lane2" name="Vendor">
+        <bpmn:flowNodeRef>W2556_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2556_Lane3" name="Quality Inspector">
+        <bpmn:flowNodeRef>W2556_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2556_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2556_Start5" name="New product introduction or packaging redesign">
+        <bpmn:outgoing>W2556_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2556_Task6" name="Category Manager defines serialization requirements per product category: power…">
+        <bpmn:documentation>Step 1: Category Manager defines serialization requirements per product category: power tools (mandatory vendor serialization + BuildRight QR), electrical components (mandatory for circuit breakers, wiring), appliances (mandatory serial + extended warranty QR), accessories (optional based on price point)
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W2556_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2556_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2556_Task7" name="Vendor implements serialization standards: provides specification for QR…">
+        <bpmn:documentation>Step 2: Vendor implements serialization standards: provides specification for QR placement on packaging, data format for ASN transmission, minimum label durability requirements (must survive Philippine humidity and handling); BuildRight LP reviews and approves
+Responsible (R): Vendor / LP Manager
+Accountable (A): Category Manager
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W2556_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2556_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2556_Task8" name="Quality Inspector verifies packaging compliance during incoming inspection: QR…">
+        <bpmn:documentation>Step 3: Quality Inspector verifies packaging compliance during incoming inspection: QR code present and scannable, label placement per specification, packaging security features (tamper-evident seals, holograms for premium products); non-compliant shipments quarantined until resolved
+Responsible (R): Quality Inspector
+Accountable (A): LP Manager
+Duration: Per GR (5–10 min)</bpmn:documentation>
+        <bpmn:incoming>W2556_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2556_End9" name="Complete">
+        <bpmn:incoming>W2556_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2556_Annotation10">
+        <bpmn:text>Controls: - CTL-442 (ensure controlled execution — Product Authentication &amp; Serialization (PA-71.1).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2556_Assoc11" sourceRef="W2556_Annotation10" targetRef="W2556_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2556_Flow12" sourceRef="W2556_Start5" targetRef="W2556_Task6" />
+      <bpmn:sequenceFlow id="W2556_Flow13" sourceRef="W2556_Task6" targetRef="W2556_Task7" />
+      <bpmn:sequenceFlow id="W2556_Flow14" sourceRef="W2556_Task7" targetRef="W2556_Task8" />
+      <bpmn:sequenceFlow id="W2556_Flow15" sourceRef="W2556_Task8" targetRef="W2556_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2556_diag">
+      <bpmndi:BPMNPlane id="W2556_plane" bpmnElement="W_W2556">
+        <bpmndi:BPMNShape id="W2556_Lane1_di" bpmnElement="W2556_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_Lane2_di" bpmnElement="W2556_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_Lane3_di" bpmnElement="W2556_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_Task6_di" bpmnElement="W2556_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_Task7_di" bpmnElement="W2556_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_Task8_di" bpmnElement="W2556_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_Start5_di" bpmnElement="W2556_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_End9_di" bpmnElement="W2556_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2556_Annotation10_di" bpmnElement="W2556_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2556_Flow12_di" bpmnElement="W2556_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2556_Flow13_di" bpmnElement="W2556_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2556_Flow14_di" bpmnElement="W2556_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2556_Flow15_di" bpmnElement="W2556_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2556_Assoc11_di" bpmnElement="W2556_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2557" name="W2557. Product Authentication Staff Training" isExecutable="false">
+      <bpmn:documentation>Trigger: New hire onboarding or annual refresher
+Frequency: Annual certification; onboarding for new hires
+Volume: ~800–1,000 staff in receiving, customer service, and sales roles
+Owner: Training Manager
+Participants: Training Mgr, LP Manager, Category Manager
+Source: workflow W2557 — Product Authentication Staff Training</bpmn:documentation>
+      <bpmn:laneSet id="W2557_LaneSet3">
+        <bpmn:lane id="W2557_Lane1" name="Training Manager">
+        <bpmn:flowNodeRef>W2557_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2557_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2557_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2557_Lane2" name="LP Manager">
+        <bpmn:flowNodeRef>W2557_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2557_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2557_Start4" name="New hire onboarding or annual refresher">
+        <bpmn:outgoing>W2557_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2557_Task5" name="Training Manager develops authentication curriculum: product authentication…">
+        <bpmn:documentation>Step 1: Training Manager develops authentication curriculum: product authentication fundamentals, QR code scanning procedures, counterfeit identification techniques (visual, weight, packaging quality), escalation procedures for suspected counterfeits, customer communication scripts
+Responsible (R): Training Manager / LP Manager
+Accountable (A): LP Manager
+Duration: 1 week initial</bpmn:documentation>
+        <bpmn:incoming>W2557_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2557_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2557_Task6" name="Delivery: online module (2 hours) covering identification techniques and…">
+        <bpmn:documentation>Step 2: Delivery: online module (2 hours) covering identification techniques and procedures; in-store practical workshop (2 hours) with authentic vs. counterfeit sample comparison for key brands (Bosch, Makita, DeWalt, Schneider Electric); certification quiz (90% pass rate)
+Responsible (R): Training Manager
+Accountable (A): CHRO
+Duration: 4 hours per cohort</bpmn:documentation>
+        <bpmn:incoming>W2557_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2557_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2557_Task7" name="LP Manager conducts monthly counterfeit awareness updates: new counterfeiting…">
+        <bpmn:documentation>Step 3: LP Manager conducts monthly counterfeit awareness updates: new counterfeiting trends, specific brand alerts from vendors, recent investigation outcomes; distributes via LMS and store communication system
+Responsible (R): LP Manager
+Accountable (A): COO
+Duration: 1–2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W2557_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2557_End8" name="Complete">
+        <bpmn:incoming>W2557_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2557_Annotation9">
+        <bpmn:text>Controls: - CTL-442 (ensure controlled execution — Product Authentication &amp; Serialization (PA-71.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Training Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2557_Assoc10" sourceRef="W2557_Annotation9" targetRef="W2557_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2557_Flow11" sourceRef="W2557_Start4" targetRef="W2557_Task5" />
+      <bpmn:sequenceFlow id="W2557_Flow12" sourceRef="W2557_Task5" targetRef="W2557_Task6" />
+      <bpmn:sequenceFlow id="W2557_Flow13" sourceRef="W2557_Task6" targetRef="W2557_Task7" />
+      <bpmn:sequenceFlow id="W2557_Flow14" sourceRef="W2557_Task7" targetRef="W2557_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2557_diag">
+      <bpmndi:BPMNPlane id="W2557_plane" bpmnElement="W_W2557">
+        <bpmndi:BPMNShape id="W2557_Lane1_di" bpmnElement="W2557_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2557_Lane2_di" bpmnElement="W2557_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2557_Task5_di" bpmnElement="W2557_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2557_Task6_di" bpmnElement="W2557_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2557_Task7_di" bpmnElement="W2557_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2557_Start4_di" bpmnElement="W2557_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2557_End8_di" bpmnElement="W2557_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2557_Annotation9_di" bpmnElement="W2557_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2557_Flow11_di" bpmnElement="W2557_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2557_Flow12_di" bpmnElement="W2557_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2557_Flow13_di" bpmnElement="W2557_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2557_Flow14_di" bpmnElement="W2557_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2557_Assoc10_di" bpmnElement="W2557_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

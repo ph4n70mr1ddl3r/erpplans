@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-32.1-customer-returns-processing" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1622" name="W1622. In-Store Customer Return Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer brings purchased item(s) to customer service counter for return
+Frequency: ~56,000 returns/month across 200 stores (~2% return rate on 2.8M transactions)
+Volume: ~280 returns/store/month (~9/day); seasonal spikes post-promotion
+Owner: Customer Service Representative (CSR)
+Participants: CSR, Customer Service Manager, Store Manager (overrides)
+Source: workflow W1622 — In-Store Customer Return Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1622_LaneSet3">
+        <bpmn:lane id="W1622_Lane1" name="CSR">
+        <bpmn:flowNodeRef>W1622_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1622_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1622_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1622_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1622_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1622_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1622_Lane2" name="System">
+        <bpmn:flowNodeRef>W1622_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1622_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1622_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1622_Start4" name="Customer brings purchased item(s) to customer service counter for return">
+        <bpmn:outgoing>W1622_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1622_Task5" name="Customer presents item(s) and receipt (or loyalty card/transaction reference)…">
+        <bpmn:documentation>Step 1: Customer presents item(s) and receipt (or loyalty card/transaction reference) at customer service counter; CSR scans receipt barcode or looks up transaction by date/loyalty card/amount
+Responsible (R): CSR
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1622_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1622_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1622_Task6" name="System retrieves original transaction: (a) verifies item was purchased at this…">
+        <bpmn:documentation>Step 2: System retrieves original transaction: (a) verifies item was purchased at this store (or BuildRight network — cross-store returns accepted), (b) checks return eligibility: (i) within 30-day return window (standard items), (ii) 7-day return window for appliances and power tools, (iii) non-returnable items: paint (custom mixed), cut-to-length items (wire, lumber, pipe), clearance/final sale items, (c) checks item has not been previously returned for same transaction
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1622_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1622_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1622_Task7" name="CSR inspects returned item: (a) matches item to receipt line (SKU…">
+        <bpmn:documentation>Step 3: CSR inspects returned item: (a) matches item to receipt line (SKU, description), (b) checks condition: unused, original packaging, all accessories included, (c) checks for damage (if damaged: route to W1626 for quality assessment), (d) for electrical items: verifies safety seals intact, (e) for power tools: checks for signs of use (bit wear, scratches on chuck)
+Responsible (R): CSR
+Accountable (A): Customer Service Manager
+Duration: 3 min</bpmn:documentation>
+        <bpmn:incoming>W1622_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1622_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1622_Task8" name="Accept">
+        <bpmn:documentation>Step 4: Accept: CSR processes return in system: (a) scans item barcode, (b) selects return reason code (14 codes: unwanted, wrong size, found cheaper, defective, damaged in transit, wrong item, missing parts, not as described, quality issue, duplicate purchase, gift return, installation incompatibility, buyer&#x27;s remorse, other), (c) system creates return receipt with authorization number
+Responsible (R): CSR
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1622_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1622_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1622_Task9" name="Refund method selection (per BuildRight policy): (a) original tender refund —…">
+        <bpmn:documentation>Step 5: Refund method selection (per BuildRight policy): (a) original tender refund — cash for cash purchase, card refund for card purchase, (b) store credit (gift card) for returns &gt; 30 days or without receipt (per W1625), (c) exchange for different item (per W1624)
+Responsible (R): CSR
+Accountable (A): Customer Service Manager
+Duration: 1 min</bpmn:documentation>
+        <bpmn:incoming>W1622_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1622_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1622_Task10" name="System processes: (a) inventory added back to store available stock (if…">
+        <bpmn:documentation>Step 6: System processes: (a) inventory added back to store available stock (if resaleable condition — &quot;Return to Stock&quot; status), or moved to &quot;Damaged/Defective&quot; status (per W91), or moved to &quot;Quarantine&quot; for quality review (per W1626), (b) refund/payment reversal processed, (c) return transaction posted to GL (contra-revenue, inventory adjustment), (d) loyalty points reversed if points were earned on original purchase
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1622_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1622_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1622_Task11" name="Customer signs return receipt (digital signature pad or paper); CSR returns…">
+        <bpmn:documentation>Step 7: Customer signs return receipt (digital signature pad or paper); CSR returns item to designated returns staging area; resaleable items returned to shelf within 2 hours by Stock Associate
+Responsible (R): CSR / Stock Associate
+Accountable (A): Customer Service Manager
+Duration: 2 min + restock time</bpmn:documentation>
+        <bpmn:incoming>W1622_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1622_End12" name="Complete">
+        <bpmn:incoming>W1622_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1622_Annotation13">
+        <bpmn:text>Controls: - CTL-179 (ensure returns integrity &amp; refund-fraud prevention.) | - operational: Customer Service Representative review and approval gate
+Owner: Customer Service Representative (CSR)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1622_Assoc14" sourceRef="W1622_Annotation13" targetRef="W1622_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1622_Flow15" sourceRef="W1622_Start4" targetRef="W1622_Task5" />
+      <bpmn:sequenceFlow id="W1622_Flow16" sourceRef="W1622_Task5" targetRef="W1622_Task6" />
+      <bpmn:sequenceFlow id="W1622_Flow17" sourceRef="W1622_Task6" targetRef="W1622_Task7" />
+      <bpmn:sequenceFlow id="W1622_Flow18" sourceRef="W1622_Task7" targetRef="W1622_Task8" />
+      <bpmn:sequenceFlow id="W1622_Flow19" sourceRef="W1622_Task8" targetRef="W1622_Task9" />
+      <bpmn:sequenceFlow id="W1622_Flow20" sourceRef="W1622_Task9" targetRef="W1622_Task10" />
+      <bpmn:sequenceFlow id="W1622_Flow21" sourceRef="W1622_Task10" targetRef="W1622_Task11" />
+      <bpmn:sequenceFlow id="W1622_Flow22" sourceRef="W1622_Task11" targetRef="W1622_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1622_diag">
+      <bpmndi:BPMNPlane id="W1622_plane" bpmnElement="W_W1622">
+        <bpmndi:BPMNShape id="W1622_Lane1_di" bpmnElement="W1622_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Lane2_di" bpmnElement="W1622_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Task5_di" bpmnElement="W1622_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Task6_di" bpmnElement="W1622_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Task7_di" bpmnElement="W1622_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Task8_di" bpmnElement="W1622_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Task9_di" bpmnElement="W1622_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Task10_di" bpmnElement="W1622_Task10"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Task11_di" bpmnElement="W1622_Task11"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Start4_di" bpmnElement="W1622_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_End12_di" bpmnElement="W1622_End12"><dc:Bounds x="1890" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1622_Annotation13_di" bpmnElement="W1622_Annotation13"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1622_Flow15_di" bpmnElement="W1622_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Flow16_di" bpmnElement="W1622_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Flow17_di" bpmnElement="W1622_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Flow18_di" bpmnElement="W1622_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Flow19_di" bpmnElement="W1622_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Flow20_di" bpmnElement="W1622_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Flow21_di" bpmnElement="W1622_Flow21"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Flow22_di" bpmnElement="W1622_Flow22"><di:waypoint x="1840" y="165" /><di:waypoint x="1890" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1622_Assoc14_di" bpmnElement="W1622_Assoc14"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1623" name="W1623. Ecommerce Customer Return Initiation &amp; Authorization" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer initiates return request via buildright.com.ph or mobile app
+Frequency: ~4,000–5,000 ecommerce return requests/month (~10–12% ecommerce return rate)
+Volume: Variable by category; highest for appliances and power tools
+Owner: Customer Service — Ecommerce Returns Specialist
+Participants: Customer, Ecommerce Returns Specialist, Store CSR, DC Returns Processing
+Source: workflow W1623 — Ecommerce Customer Return Initiation &amp; Authorization</bpmn:documentation>
+      <bpmn:laneSet id="W1623_LaneSet5">
+        <bpmn:lane id="W1623_Lane1" name="Customer">
+        <bpmn:flowNodeRef>W1623_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1623_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1623_Lane2" name="System">
+        <bpmn:flowNodeRef>W1623_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1623_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1623_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1623_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1623_Lane3" name="Store CSR">
+        <bpmn:flowNodeRef>W1623_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1623_Lane4" name="Courier">
+        <bpmn:flowNodeRef>W1623_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1623_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1623_Start6" name="Customer initiates return request via buildright.com.ph or mobile app">
+        <bpmn:outgoing>W1623_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1623_Task7" name="Customer logs into ecommerce account, selects order, initiates return: (a)…">
+        <bpmn:documentation>Step 1: Customer logs into ecommerce account, selects order, initiates return: (a) selects items to return, (b) selects return reason from dropdown, (c) uploads photos of item condition (required for damaged/defective claims), (d) selects preferred resolution: refund, exchange, or store credit
+Responsible (R): Customer
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1623_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1623_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1623_Task8" name="System auto-assesses return eligibility: (a) order within 30-day return window…">
+        <bpmn:documentation>Step 2: System auto-assesses return eligibility: (a) order within 30-day return window, (b) item is returnable category, (c) item has not been previously returned, (d) auto-approve for standard returns (unwanted, wrong size); route to Ecommerce Returns Specialist review for: (i) high-value items &gt; PHP 10K, (ii) damaged/defective claims, (iii) return requests &gt; 30 days
+Responsible (R): System
+Accountable (A): Ecommerce Returns Specialist
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1623_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1623_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1623_Task9" name="Drop-off at any BuildRight store">
+        <bpmn:documentation>Step 3: System generates Return Merchandise Authorization (RMA) number; provides customer with return options: (a) Drop-off at any BuildRight store: customer brings item + RMA to customer service counter, (b) Courier pickup: for items &gt; PHP 5K or bulky items; system generates courier pickup scheduling link with partner (Lalamove, Transportify), (c) DC drop-off: not customer-facing; for B2B large orders only
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1623_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1623_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1623_Task10" name="Customer selects return method; system provides return shipping label (for…">
+        <bpmn:documentation>Step 4: Customer selects return method; system provides return shipping label (for courier pickup) or QR code for in-store drop-off
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1623_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1623_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1623_Task11" name="For in-store drop-off: Customer brings item to any BuildRight store; Store CSR…">
+        <bpmn:documentation>Step 5: For in-store drop-off: Customer brings item to any BuildRight store; Store CSR scans RMA QR code; verifies item matches RMA (SKU, quantity, condition); processes return per W1622 steps 3–7 with RMA reference
+Responsible (R): Store CSR
+Accountable (A): Customer Service Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1623_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1623_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1623_Task12" name="For courier pickup: Courier collects item from customer; delivers to designated…">
+        <bpmn:documentation>Step 6: For courier pickup: Courier collects item from customer; delivers to designated DC returns processing area; DC Returns Processing verifies item against RMA; processes return
+Responsible (R): Courier / DC Returns Processing
+Accountable (A): Ecommerce Returns Specialist
+Duration: Variable</bpmn:documentation>
+        <bpmn:incoming>W1623_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1623_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1623_Task13" name="Refund processing: (a) system triggers refund upon return receipt confirmation…">
+        <bpmn:documentation>Step 7: Refund processing: (a) system triggers refund upon return receipt confirmation, (b) card refund: 3–5 business days processing, (c) e-wallet refund: 1–2 business days, (d) store credit: immediate, (e) COD refund: bank transfer to customer account within 5 business days
+Responsible (R): System / Ecommerce Returns Specialist
+Accountable (A): Finance
+Duration: 5 min + processing time</bpmn:documentation>
+        <bpmn:incoming>W1623_Flow23</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1623_End14" name="Complete">
+        <bpmn:incoming>W1623_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1623_Annotation15">
+        <bpmn:text>Controls: - CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).) | - operational: Customer Service — Ecommerce Returns Specialist review and approval gate
+Owner: Customer Service — Ecommerce Returns Specialist</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1623_Assoc16" sourceRef="W1623_Annotation15" targetRef="W1623_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1623_Flow17" sourceRef="W1623_Start6" targetRef="W1623_Task7" />
+      <bpmn:sequenceFlow id="W1623_Flow18" sourceRef="W1623_Task7" targetRef="W1623_Task8" />
+      <bpmn:sequenceFlow id="W1623_Flow19" sourceRef="W1623_Task8" targetRef="W1623_Task9" />
+      <bpmn:sequenceFlow id="W1623_Flow20" sourceRef="W1623_Task9" targetRef="W1623_Task10" />
+      <bpmn:sequenceFlow id="W1623_Flow21" sourceRef="W1623_Task10" targetRef="W1623_Task11" />
+      <bpmn:sequenceFlow id="W1623_Flow22" sourceRef="W1623_Task11" targetRef="W1623_Task12" />
+      <bpmn:sequenceFlow id="W1623_Flow23" sourceRef="W1623_Task12" targetRef="W1623_Task13" />
+      <bpmn:sequenceFlow id="W1623_Flow24" sourceRef="W1623_Task13" targetRef="W1623_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1623_diag">
+      <bpmndi:BPMNPlane id="W1623_plane" bpmnElement="W_W1623">
+        <bpmndi:BPMNShape id="W1623_Lane1_di" bpmnElement="W1623_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Lane2_di" bpmnElement="W1623_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Lane3_di" bpmnElement="W1623_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Lane4_di" bpmnElement="W1623_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Task7_di" bpmnElement="W1623_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Task8_di" bpmnElement="W1623_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Task9_di" bpmnElement="W1623_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Task10_di" bpmnElement="W1623_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Task11_di" bpmnElement="W1623_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Task12_di" bpmnElement="W1623_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Task13_di" bpmnElement="W1623_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Start6_di" bpmnElement="W1623_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_End14_di" bpmnElement="W1623_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1623_Annotation15_di" bpmnElement="W1623_Annotation15"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1623_Flow17_di" bpmnElement="W1623_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Flow18_di" bpmnElement="W1623_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Flow19_di" bpmnElement="W1623_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Flow20_di" bpmnElement="W1623_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Flow21_di" bpmnElement="W1623_Flow21"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Flow22_di" bpmnElement="W1623_Flow22"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Flow23_di" bpmnElement="W1623_Flow23"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Flow24_di" bpmnElement="W1623_Flow24"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1623_Assoc16_di" bpmnElement="W1623_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1624" name="W1624. Customer Exchange Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer requests exchange (different size, color, or item) instead of refund
+Frequency: ~15,000 exchanges/month (~27% of returns result in exchange)
+Volume: ~75 exchanges/store/month
+Owner: CSR
+Participants: CSR, Customer Service Manager
+Source: workflow W1624 — Customer Exchange Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1624_LaneSet3">
+        <bpmn:lane id="W1624_Lane1" name="CSR">
+        <bpmn:flowNodeRef>W1624_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1624_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1624_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1624_Lane2" name="System">
+        <bpmn:flowNodeRef>W1624_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1624_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1624_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1624_Start4" name="Customer requests exchange (different size, color, or item) instead of refund">
+        <bpmn:outgoing>W1624_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1624_Task5" name="Customer requests exchange during return process (W1622 step 4); selects…">
+        <bpmn:documentation>Step 1: Customer requests exchange during return process (W1622 step 4); selects replacement item — same SKU different variant (size, color) or different SKU within same category
+Responsible (R): CSR
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1624_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1624_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1624_Task6" name="System checks: (a) requested exchange item availability at current store, (b)…">
+        <bpmn:documentation>Step 2: System checks: (a) requested exchange item availability at current store, (b) if not available at current store: checks nearby stores (within 30 km) or offers home delivery from DC, (c) price difference calculation: (i) same price item — even exchange, (ii) higher price item — customer pays difference, (iii) lower price item — customer receives store credit for difference (no cash refund on exchange)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1624_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1624_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1624_Task7" name="CSR processes exchange: (a) scans returned item (return transaction), (b) scans…">
+        <bpmn:documentation>Step 3: CSR processes exchange: (a) scans returned item (return transaction), (b) scans new item (sale transaction), (c) system creates linked exchange transaction (return + sale), (d) price difference collected or store credit issued
+Responsible (R): CSR
+Accountable (A): —
+Duration: 3 min</bpmn:documentation>
+        <bpmn:incoming>W1624_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1624_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1624_Task8" name="Inventory: returned item added back to stock; exchanged item deducted from…">
+        <bpmn:documentation>Step 4: Inventory: returned item added back to stock; exchanged item deducted from stock; net inventory impact is zero if same SKU variant, or one SKU increase / one SKU decrease
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1624_Flow15</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1624_End9" name="Complete">
+        <bpmn:incoming>W1624_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1624_Annotation10">
+        <bpmn:text>Controls: - CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: CSR</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1624_Assoc11" sourceRef="W1624_Annotation10" targetRef="W1624_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1624_Flow12" sourceRef="W1624_Start4" targetRef="W1624_Task5" />
+      <bpmn:sequenceFlow id="W1624_Flow13" sourceRef="W1624_Task5" targetRef="W1624_Task6" />
+      <bpmn:sequenceFlow id="W1624_Flow14" sourceRef="W1624_Task6" targetRef="W1624_Task7" />
+      <bpmn:sequenceFlow id="W1624_Flow15" sourceRef="W1624_Task7" targetRef="W1624_Task8" />
+      <bpmn:sequenceFlow id="W1624_Flow16" sourceRef="W1624_Task8" targetRef="W1624_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1624_diag">
+      <bpmndi:BPMNPlane id="W1624_plane" bpmnElement="W_W1624">
+        <bpmndi:BPMNShape id="W1624_Lane1_di" bpmnElement="W1624_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_Lane2_di" bpmnElement="W1624_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_Task5_di" bpmnElement="W1624_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_Task6_di" bpmnElement="W1624_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_Task7_di" bpmnElement="W1624_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_Task8_di" bpmnElement="W1624_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_Start4_di" bpmnElement="W1624_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_End9_di" bpmnElement="W1624_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1624_Annotation10_di" bpmnElement="W1624_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1624_Flow12_di" bpmnElement="W1624_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1624_Flow13_di" bpmnElement="W1624_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1624_Flow14_di" bpmnElement="W1624_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1624_Flow15_di" bpmnElement="W1624_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1624_Flow16_di" bpmnElement="W1624_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1624_Assoc11_di" bpmnElement="W1624_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1625" name="W1625. Customer Return Without Receipt Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer presents item for return without receipt or proof of purchase
+Frequency: ~8,000–10,000 no-receipt returns/month (~15–18% of all returns)
+Volume: ~45–50 per store/month
+Owner: Customer Service Manager
+Participants: Customer Service Manager, Store Manager (authorization)
+Source: workflow W1625 — Customer Return Without Receipt Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1625_LaneSet3">
+        <bpmn:lane id="W1625_Lane1" name="CSR">
+        <bpmn:flowNodeRef>W1625_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1625_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1625_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1625_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1625_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1625_Lane2" name="System">
+        <bpmn:flowNodeRef>W1625_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1625_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1625_Start4" name="Customer presents item for return without receipt or proof of purchase">
+        <bpmn:outgoing>W1625_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1625_Task5" name="CSR attempts to locate transaction: (a) scan loyalty card if customer is a…">
+        <bpmn:documentation>Step 1: CSR attempts to locate transaction: (a) scan loyalty card if customer is a member, (b) search by customer name/phone in system, (c) search by credit/debit card last 4 digits, (d) search by transaction date and amount estimate
+Responsible (R): CSR
+Accountable (A): Customer Service Manager
+Duration: 3 min</bpmn:documentation>
+        <bpmn:incoming>W1625_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1625_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1625_Task6" name="If transaction found: process as standard return per W1622">
+        <bpmn:documentation>Step 2: If transaction found: process as standard return per W1622
+Responsible (R): CSR
+Accountable (A): —
+Duration: Per W1622</bpmn:documentation>
+        <bpmn:incoming>W1625_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1625_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1625_Task7" name="If transaction not found: CSR processes no-receipt return: (a) verify item is a…">
+        <bpmn:documentation>Step 3: If transaction not found: CSR processes no-receipt return: (a) verify item is a BuildRight-carried SKU (system lookup), (b) check item condition (unused, original packaging), (c) system applies no-receipt return policy: (i) refund limited to current selling price or lowest price in last 90 days (whichever is lower) to prevent fraud, (ii) refund issued as store credit only (no cash/card refund), (iii) customer must present valid government ID (recorded in system for fraud tracking), (iv) limit: max 3 no-receipt returns per customer per 6-month period
+Responsible (R): CSR
+Accountable (A): Customer Service Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1625_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1625_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1625_Task8" name="System records no-receipt return against customer ID (government ID number)…">
+        <bpmn:documentation>Step 4: System records no-receipt return against customer ID (government ID number); updates no-receipt return counter; blocks further no-receipt returns if limit exceeded
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1625_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1625_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1625_Task9" name="Store credit (gift card) issued for refund amount; customer can use immediately">
+        <bpmn:documentation>Step 5: Store credit (gift card) issued for refund amount; customer can use immediately
+Responsible (R): CSR
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1625_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1625_End10" name="Complete">
+        <bpmn:incoming>W1625_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1625_Annotation11">
+        <bpmn:text>Controls: - CTL-179 (ensure returns integrity &amp; refund-fraud prevention.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Customer Service Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1625_Assoc12" sourceRef="W1625_Annotation11" targetRef="W1625_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1625_Flow13" sourceRef="W1625_Start4" targetRef="W1625_Task5" />
+      <bpmn:sequenceFlow id="W1625_Flow14" sourceRef="W1625_Task5" targetRef="W1625_Task6" />
+      <bpmn:sequenceFlow id="W1625_Flow15" sourceRef="W1625_Task6" targetRef="W1625_Task7" />
+      <bpmn:sequenceFlow id="W1625_Flow16" sourceRef="W1625_Task7" targetRef="W1625_Task8" />
+      <bpmn:sequenceFlow id="W1625_Flow17" sourceRef="W1625_Task8" targetRef="W1625_Task9" />
+      <bpmn:sequenceFlow id="W1625_Flow18" sourceRef="W1625_Task9" targetRef="W1625_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1625_diag">
+      <bpmndi:BPMNPlane id="W1625_plane" bpmnElement="W_W1625">
+        <bpmndi:BPMNShape id="W1625_Lane1_di" bpmnElement="W1625_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Lane2_di" bpmnElement="W1625_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Task5_di" bpmnElement="W1625_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Task6_di" bpmnElement="W1625_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Task7_di" bpmnElement="W1625_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Task8_di" bpmnElement="W1625_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Task9_di" bpmnElement="W1625_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Start4_di" bpmnElement="W1625_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_End10_di" bpmnElement="W1625_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1625_Annotation11_di" bpmnElement="W1625_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1625_Flow13_di" bpmnElement="W1625_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1625_Flow14_di" bpmnElement="W1625_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1625_Flow15_di" bpmnElement="W1625_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1625_Flow16_di" bpmnElement="W1625_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1625_Flow17_di" bpmnElement="W1625_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1625_Flow18_di" bpmnElement="W1625_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1625_Assoc12_di" bpmnElement="W1625_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1626" name="W1626. Customer Return Quality Assessment &amp; Disposition" isExecutable="false">
+      <bpmn:documentation>Trigger: Returned item fails visual inspection during return processing (W1622 step 3)
+Frequency: ~8,000–10,000 returns/month require quality assessment (~15–18% of returns)
+Volume: ~40–50 per store/month
+Owner: Department Supervisor
+Participants: Department Supervisor, CSR, Quality Manager (escalated)
+Source: workflow W1626 — Customer Return Quality Assessment &amp; Disposition</bpmn:documentation>
+      <bpmn:laneSet id="W1626_LaneSet5">
+        <bpmn:lane id="W1626_Lane1" name="CSR">
+        <bpmn:flowNodeRef>W1626_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1626_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1626_Lane2" name="Department Supervisor">
+        <bpmn:flowNodeRef>W1626_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1626_Lane3" name="System">
+        <bpmn:flowNodeRef>W1626_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1626_Lane4" name="Store Manager">
+        <bpmn:flowNodeRef>W1626_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1626_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1626_Start6" name="Returned item fails visual inspection during return processing (W1622 step 3)">
+        <bpmn:outgoing>W1626_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1626_Task7" name="CSR flags returned item as &quot;Condition Issue&quot; during return processing; routes…">
+        <bpmn:documentation>Step 1: CSR flags returned item as &quot;Condition Issue&quot; during return processing; routes to Department Supervisor for quality assessment instead of immediate restock
+Responsible (R): CSR
+Accountable (A): Department Supervisor
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1626_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1626_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1626_Task8" name="Resaleable">
+        <bpmn:documentation>Step 2: Department Supervisor assesses returned item: (a) Resaleable: item is unused, packaging intact, all accessories present — return to stock at full price, (b) Resaleable at discount: minor cosmetic damage (scratched box, dented can) — route to markdown per W93, (c) Defective — vendor liability: product malfunction due to manufacturing defect — route to RTV per W88/W1280, (d) Defective — customer caused: damage clearly caused by customer misuse — deny return or issue partial store credit at Store Manager discretion, (e) Unsaleable: item cannot be resold (used, damaged, incomplete) — route to disposition per W91 (donate, scrap, or vendor return)
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 5 min/item</bpmn:documentation>
+        <bpmn:incoming>W1626_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1626_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1626_Task9" name="System updates inventory status based on disposition: &quot;Available&quot; (resaleable)…">
+        <bpmn:documentation>Step 3: System updates inventory status based on disposition: &quot;Available&quot; (resaleable), &quot;Markdown&quot; (discount), &quot;Damaged/Defective&quot; (RTV or scrap), &quot;Quarantine&quot; (pending vendor decision)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1626_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1626_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1626_Task10" name="Weekly: Store Manager reviews items in &quot;Quarantine&quot; status &gt; 7 days; escalates…">
+        <bpmn:documentation>Step 4: Weekly: Store Manager reviews items in &quot;Quarantine&quot; status &gt; 7 days; escalates unresolved items to Buyer for vendor disposition decision
+Responsible (R): Store Manager
+Accountable (A): VP Merchandising
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1626_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1626_End11" name="Complete">
+        <bpmn:incoming>W1626_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1626_Annotation12">
+        <bpmn:text>Controls: - CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).) | - operational: Department Supervisor review and approval gate
+Owner: Department Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1626_Assoc13" sourceRef="W1626_Annotation12" targetRef="W1626_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1626_Flow14" sourceRef="W1626_Start6" targetRef="W1626_Task7" />
+      <bpmn:sequenceFlow id="W1626_Flow15" sourceRef="W1626_Task7" targetRef="W1626_Task8" />
+      <bpmn:sequenceFlow id="W1626_Flow16" sourceRef="W1626_Task8" targetRef="W1626_Task9" />
+      <bpmn:sequenceFlow id="W1626_Flow17" sourceRef="W1626_Task9" targetRef="W1626_Task10" />
+      <bpmn:sequenceFlow id="W1626_Flow18" sourceRef="W1626_Task10" targetRef="W1626_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1626_diag">
+      <bpmndi:BPMNPlane id="W1626_plane" bpmnElement="W_W1626">
+        <bpmndi:BPMNShape id="W1626_Lane1_di" bpmnElement="W1626_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Lane2_di" bpmnElement="W1626_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Lane3_di" bpmnElement="W1626_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Lane4_di" bpmnElement="W1626_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Task7_di" bpmnElement="W1626_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Task8_di" bpmnElement="W1626_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Task9_di" bpmnElement="W1626_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Task10_di" bpmnElement="W1626_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Start6_di" bpmnElement="W1626_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_End11_di" bpmnElement="W1626_End11"><dc:Bounds x="1260" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1626_Annotation12_di" bpmnElement="W1626_Annotation12"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1626_Flow14_di" bpmnElement="W1626_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1626_Flow15_di" bpmnElement="W1626_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1626_Flow16_di" bpmnElement="W1626_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1626_Flow17_di" bpmnElement="W1626_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1626_Flow18_di" bpmnElement="W1626_Flow18"><di:waypoint x="1210" y="675" /><di:waypoint x="1260" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1626_Assoc13_di" bpmnElement="W1626_Assoc13"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1627" name="W1627. Customer Return Credit Issuance &amp; Refund Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Return transaction completed (W1622, W1623, or W1625)
+Frequency: ~41,000 refund transactions/month (56,000 returns less ~15,000 exchanges per W1624)
+Volume: ~205 per store/month (41,000 refund transactions/month ÷ 200 stores; the ~280/store figure is the all-returns W1622 canon)
+Owner: CSR (processing); Finance (reconciliation)
+Participants: CSR, Customer Service Manager, AP/AR Clerk, Controller
+Source: workflow W1627 — Customer Return Credit Issuance &amp; Refund Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1627_LaneSet4">
+        <bpmn:lane id="W1627_Lane1" name="CSR">
+        <bpmn:flowNodeRef>W1627_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1627_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1627_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1627_Lane2" name="System">
+        <bpmn:flowNodeRef>W1627_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1627_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1627_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1627_Lane3" name="AP">
+        <bpmn:flowNodeRef>W1627_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1627_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1627_Start5" name="Return transaction completed (W1622, W1623, or W1625)">
+        <bpmn:outgoing>W1627_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1627_Task6" name="Refund method determined per return type: (a) with receipt — original tender…">
+        <bpmn:documentation>Step 1: Refund method determined per return type: (a) with receipt — original tender method, (b) without receipt — store credit only, (c) exchange — no refund (credit applied to exchange), (d) ecommerce — per W1623.7 (card/e-wallet/bank transfer), (e) B2B credit note — per W1629
+Responsible (R): CSR / System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1627_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1627_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1627_Task7" name="Cash refund: CSR opens cash drawer; dispenses cash per return receipt amount…">
+        <bpmn:documentation>Step 2: Cash refund: CSR opens cash drawer; dispenses cash per return receipt amount; cash count updated in system; included in daily cash reconciliation per W5F
+Responsible (R): CSR
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1627_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1627_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1627_Task8" name="Card refund: system initiates refund to original card; transaction posts in 3–5…">
+        <bpmn:documentation>Step 3: Card refund: system initiates refund to original card; transaction posts in 3–5 business days; CSR gives customer card refund receipt; no cash handling required
+Responsible (R): System / CSR
+Accountable (A): —
+Duration: 1 min</bpmn:documentation>
+        <bpmn:incoming>W1627_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1627_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1627_Task9" name="Store credit: system issues store credit (gift card or digital credit to…">
+        <bpmn:documentation>Step 4: Store credit: system issues store credit (gift card or digital credit to loyalty account); credit amount = return value; credit expires 12 months from issuance; BIR-compliant receipt generated
+Responsible (R): System / CSR
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1627_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1627_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1627_Task10" name="B2B credit note: system generates credit note against trade/corporate account…">
+        <bpmn:documentation>Step 5: B2B credit note: system generates credit note against trade/corporate account; credit applied to AR balance; no cash outflow; per W1629
+Responsible (R): System / AR Clerk
+Accountable (A): Controller
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1627_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1627_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1627_Task11" name="Daily: Finance reconciles return refunds — total refunds by type (cash, card…">
+        <bpmn:documentation>Step 6: Daily: Finance reconciles return refunds — total refunds by type (cash, card, store credit, credit note) against return transactions posted; flags discrepancies for investigation
+Responsible (R): AP/AR Clerk
+Accountable (A): Controller
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1627_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1627_End12" name="Complete">
+        <bpmn:incoming>W1627_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1627_Annotation13">
+        <bpmn:text>Controls: - CTL-179 (ensure returns integrity &amp; refund-fraud prevention.) | - operational: periodic reconciliation against source documents
+Owner: CSR (processing); Finance (reconciliation)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1627_Assoc14" sourceRef="W1627_Annotation13" targetRef="W1627_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1627_Flow15" sourceRef="W1627_Start5" targetRef="W1627_Task6" />
+      <bpmn:sequenceFlow id="W1627_Flow16" sourceRef="W1627_Task6" targetRef="W1627_Task7" />
+      <bpmn:sequenceFlow id="W1627_Flow17" sourceRef="W1627_Task7" targetRef="W1627_Task8" />
+      <bpmn:sequenceFlow id="W1627_Flow18" sourceRef="W1627_Task8" targetRef="W1627_Task9" />
+      <bpmn:sequenceFlow id="W1627_Flow19" sourceRef="W1627_Task9" targetRef="W1627_Task10" />
+      <bpmn:sequenceFlow id="W1627_Flow20" sourceRef="W1627_Task10" targetRef="W1627_Task11" />
+      <bpmn:sequenceFlow id="W1627_Flow21" sourceRef="W1627_Task11" targetRef="W1627_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1627_diag">
+      <bpmndi:BPMNPlane id="W1627_plane" bpmnElement="W_W1627">
+        <bpmndi:BPMNShape id="W1627_Lane1_di" bpmnElement="W1627_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Lane2_di" bpmnElement="W1627_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Lane3_di" bpmnElement="W1627_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Task6_di" bpmnElement="W1627_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Task7_di" bpmnElement="W1627_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Task8_di" bpmnElement="W1627_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Task9_di" bpmnElement="W1627_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Task10_di" bpmnElement="W1627_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Task11_di" bpmnElement="W1627_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Start5_di" bpmnElement="W1627_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_End12_di" bpmnElement="W1627_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1627_Annotation13_di" bpmnElement="W1627_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1627_Flow15_di" bpmnElement="W1627_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1627_Flow16_di" bpmnElement="W1627_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1627_Flow17_di" bpmnElement="W1627_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1627_Flow18_di" bpmnElement="W1627_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1627_Flow19_di" bpmnElement="W1627_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1627_Flow20_di" bpmnElement="W1627_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1627_Flow21_di" bpmnElement="W1627_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1627_Assoc14_di" bpmnElement="W1627_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1628" name="W1628. Customer Return Trend Analysis &amp; Fraud Detection" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly returns analysis cycle or real-time fraud alert
+Frequency: Monthly trend analysis; real-time fraud monitoring
+Volume: ~56,000 returns/month across 200 stores
+Owner: Loss Prevention Manager
+Participants: Loss Prevention Manager, Store Managers, Customer Service Manager, Finance
+Source: workflow W1628 — Customer Return Trend Analysis &amp; Fraud Detection</bpmn:documentation>
+      <bpmn:laneSet id="W1628_LaneSet4">
+        <bpmn:lane id="W1628_Lane1" name="System">
+        <bpmn:flowNodeRef>W1628_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1628_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1628_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1628_Lane2" name="Loss Prevention Manager">
+        <bpmn:flowNodeRef>W1628_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1628_Lane3" name="Category Manager">
+        <bpmn:flowNodeRef>W1628_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1628_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1628_Start5" name="Monthly returns analysis cycle or real-time fraud alert">
+        <bpmn:outgoing>W1628_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1628_Task6" name="System continuously monitors return patterns for fraud indicators: (a) same…">
+        <bpmn:documentation>Step 1: System continuously monitors return patterns for fraud indicators: (a) same customer &gt; 5 returns in 30 days, (b) no-receipt returns &gt; 3 per customer in 6 months, (c) returns of high-value items without original packaging, (d) return rate by store &gt; 3% (flag vs. chain average ~2%), (e) returns processed by same CSR with high frequency (&gt; 20% of store returns), (f) price difference between original purchase and return credit (switch fraud — buy on sale, return at full price using old receipt)
+Responsible (R): System
+Accountable (A): Loss Prevention Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1628_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1628_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1628_Task7" name="Real-time alerts: system sends fraud alert to Loss Prevention Manager and Store…">
+        <bpmn:documentation>Step 2: Real-time alerts: system sends fraud alert to Loss Prevention Manager and Store Manager for flagged transactions; Store Manager has authority to deny return if fraud suspected
+Responsible (R): System
+Accountable (A): Store Manager
+Duration: Immediate</bpmn:documentation>
+        <bpmn:incoming>W1628_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1628_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1628_Task8" name="Monthly: Loss Prevention Manager generates Returns Analytics Report: (a) return…">
+        <bpmn:documentation>Step 3: Monthly: Loss Prevention Manager generates Returns Analytics Report: (a) return rate by store, by category, by reason code, (b) return rate trend (monthly, quarterly, YoY), (c) top 20 items by return volume, (d) top 20 customers by return frequency, (e) return fraud cases detected and resolved, (f) financial impact of returns (revenue reversal, handling cost, markdown cost)
+Responsible (R): Loss Prevention Manager
+Accountable (A): VP Store Operations
+Duration: 4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1628_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1628_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1628_Task9" name="Monthly: Category Manager reviews top 20 items by return volume; identifies…">
+        <bpmn:documentation>Step 4: Monthly: Category Manager reviews top 20 items by return volume; identifies root causes: (a) quality issue → vendor VCAR (W1610), (b) product description mismatch → update product information (W50), (c) sizing confusion → update labeling and store signage, (d) packaging damage → improve packaging or handling procedure
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1628_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1628_End10" name="Complete">
+        <bpmn:incoming>W1628_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1628_Annotation11">
+        <bpmn:text>Controls: - CTL-179 (ensure returns integrity &amp; refund-fraud prevention.) | - operational: Loss Prevention Manager review and approval gate
+Owner: Loss Prevention Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1628_Assoc12" sourceRef="W1628_Annotation11" targetRef="W1628_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1628_Flow13" sourceRef="W1628_Start5" targetRef="W1628_Task6" />
+      <bpmn:sequenceFlow id="W1628_Flow14" sourceRef="W1628_Task6" targetRef="W1628_Task7" />
+      <bpmn:sequenceFlow id="W1628_Flow15" sourceRef="W1628_Task7" targetRef="W1628_Task8" />
+      <bpmn:sequenceFlow id="W1628_Flow16" sourceRef="W1628_Task8" targetRef="W1628_Task9" />
+      <bpmn:sequenceFlow id="W1628_Flow17" sourceRef="W1628_Task9" targetRef="W1628_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1628_diag">
+      <bpmndi:BPMNPlane id="W1628_plane" bpmnElement="W_W1628">
+        <bpmndi:BPMNShape id="W1628_Lane1_di" bpmnElement="W1628_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Lane2_di" bpmnElement="W1628_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Lane3_di" bpmnElement="W1628_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Task6_di" bpmnElement="W1628_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Task7_di" bpmnElement="W1628_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Task8_di" bpmnElement="W1628_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Task9_di" bpmnElement="W1628_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Start5_di" bpmnElement="W1628_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_End10_di" bpmnElement="W1628_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1628_Annotation11_di" bpmnElement="W1628_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1628_Flow13_di" bpmnElement="W1628_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1628_Flow14_di" bpmnElement="W1628_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1628_Flow15_di" bpmnElement="W1628_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1628_Flow16_di" bpmnElement="W1628_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1628_Flow17_di" bpmnElement="W1628_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1628_Assoc12_di" bpmnElement="W1628_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1629" name="W1629. B2B Trade Account Return &amp; Credit Note Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Trade or corporate account customer requests return of purchased goods
+Frequency: ~500–700 B2B returns/month (~5% of B2B order volume)
+Volume: ~100–150 consolidated monthly credit notes (covering the ~500–700 B2B returns/month, one per account per month)
+Owner: AR Clerk
+Participants: AR Clerk, Customer Service Manager, Sales Manager, Controller
+Source: workflow W1629 — B2B Trade Account Return &amp; Credit Note Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1629_LaneSet5">
+        <bpmn:lane id="W1629_Lane1" name="Sales Manager">
+        <bpmn:flowNodeRef>W1629_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1629_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1629_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1629_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1629_Lane2" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1629_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1629_Lane3" name="AR Clerk">
+        <bpmn:flowNodeRef>W1629_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1629_Lane4" name="Controller">
+        <bpmn:flowNodeRef>W1629_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1629_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1629_Start6" name="Trade or corporate account customer requests return of purchased goods">
+        <bpmn:outgoing>W1629_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1629_Task7" name="Trade customer contacts Sales Manager or Customer Service to request return…">
+        <bpmn:documentation>Step 1: Trade customer contacts Sales Manager or Customer Service to request return: (a) provides invoice number, item details, quantity, return reason, (b) for defective claims: provides photos and defect description
+Responsible (R): Sales Manager / CSR
+Accountable (A): Customer Service Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1629_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1629_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1629_Task8" name="Sales Manager reviews return request: (a) validates against original invoice…">
+        <bpmn:documentation>Step 2: Sales Manager reviews return request: (a) validates against original invoice (within return window, item match), (b) assesses return reason — defective product, over-ordering, project cancellation, wrong specification, (c) for project accounts: checks if return is partial delivery from larger project order (may indicate project delay rather than product issue)
+Responsible (R): Sales Manager
+Accountable (A): VP Store Operations
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1629_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1629_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1629_Task9" name="Approve">
+        <bpmn:documentation>Step 3: Sales Manager approves or denies return: (a) Approve: creates Return Authorization in system; customer arranges delivery of returned goods to designated store or DC, (b) Deny: provides reason to customer; escalates to VP Store Operations if customer disputes
+Responsible (R): Sales Manager
+Accountable (A): VP Store Operations
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1629_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1629_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1629_Task10" name="Returned goods received at store or DC: Receiving Clerk verifies against Return…">
+        <bpmn:documentation>Step 4: Returned goods received at store or DC: Receiving Clerk verifies against Return Authorization (items, quantities, condition); processes GR for returned items
+Responsible (R): Receiving Clerk
+Accountable (A): DC Supervisor / Store Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1629_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1629_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1629_Task11" name="AR Clerk processes credit note: (a) system generates credit note against…">
+        <bpmn:documentation>Step 5: AR Clerk processes credit note: (a) system generates credit note against customer account for returned goods value, (b) credit note references original invoice and Return Authorization, (c) credit note reduces AR balance, (d) BIR-compliant credit note generated (per Philippine tax requirements — credit note must reference original invoice number and include VAT adjustment)
+Responsible (R): AR Clerk / System
+Accountable (A): Controller
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1629_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1629_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1629_Task12" name="Monthly: Controller reviews B2B credit note register — (a) total credit notes…">
+        <bpmn:documentation>Step 6: Monthly: Controller reviews B2B credit note register — (a) total credit notes issued, (b) credit note rate as % of B2B revenue, (c) top 10 customers by credit note volume, (d) top 10 items by B2B return frequency
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1629_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1629_End13" name="Complete">
+        <bpmn:incoming>W1629_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1629_Annotation14">
+        <bpmn:text>Controls: - CTL-337 (ensure controlled execution — Customer Returns Processing (PA-32.1).) | - operational: AR Clerk review and approval gate
+Owner: AR Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1629_Assoc15" sourceRef="W1629_Annotation14" targetRef="W1629_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1629_Flow16" sourceRef="W1629_Start6" targetRef="W1629_Task7" />
+      <bpmn:sequenceFlow id="W1629_Flow17" sourceRef="W1629_Task7" targetRef="W1629_Task8" />
+      <bpmn:sequenceFlow id="W1629_Flow18" sourceRef="W1629_Task8" targetRef="W1629_Task9" />
+      <bpmn:sequenceFlow id="W1629_Flow19" sourceRef="W1629_Task9" targetRef="W1629_Task10" />
+      <bpmn:sequenceFlow id="W1629_Flow20" sourceRef="W1629_Task10" targetRef="W1629_Task11" />
+      <bpmn:sequenceFlow id="W1629_Flow21" sourceRef="W1629_Task11" targetRef="W1629_Task12" />
+      <bpmn:sequenceFlow id="W1629_Flow22" sourceRef="W1629_Task12" targetRef="W1629_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1629_diag">
+      <bpmndi:BPMNPlane id="W1629_plane" bpmnElement="W_W1629">
+        <bpmndi:BPMNShape id="W1629_Lane1_di" bpmnElement="W1629_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Lane2_di" bpmnElement="W1629_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Lane3_di" bpmnElement="W1629_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Lane4_di" bpmnElement="W1629_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Task7_di" bpmnElement="W1629_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Task8_di" bpmnElement="W1629_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Task9_di" bpmnElement="W1629_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Task10_di" bpmnElement="W1629_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Task11_di" bpmnElement="W1629_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Task12_di" bpmnElement="W1629_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Start6_di" bpmnElement="W1629_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_End13_di" bpmnElement="W1629_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1629_Annotation14_di" bpmnElement="W1629_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1629_Flow16_di" bpmnElement="W1629_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1629_Flow17_di" bpmnElement="W1629_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1629_Flow18_di" bpmnElement="W1629_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1629_Flow19_di" bpmnElement="W1629_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1629_Flow20_di" bpmnElement="W1629_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1629_Flow21_di" bpmnElement="W1629_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1629_Flow22_di" bpmnElement="W1629_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1629_Assoc15_di" bpmnElement="W1629_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1630" name="W1630. Customer Warranty Claim Processing &amp; Vendor Claim Initiation" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer reports product failure within warranty period; or warranty claim registered at POS per POS-019
+Frequency: ~2,000–3,000 warranty claims/month
+Volume: ~10–15 per store/month; highest for power tools and appliances
+Owner: Customer Service Manager
+Participants: CSR, Customer Service Manager, Department Supervisor, Buyer, vendor service center
+Source: workflow W1630 — Customer Warranty Claim Processing &amp; Vendor Claim Initiation</bpmn:documentation>
+      <bpmn:laneSet id="W1630_LaneSet4">
+        <bpmn:lane id="W1630_Lane1" name="CSR">
+        <bpmn:flowNodeRef>W1630_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1630_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1630_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1630_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1630_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1630_Lane2" name="Buyer">
+        <bpmn:flowNodeRef>W1630_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1630_Lane3" name="Customer Service Manager">
+        <bpmn:flowNodeRef>W1630_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1630_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1630_Start5" name="Customer reports product failure within warranty period; or warranty claim registered at…">
+        <bpmn:outgoing>W1630_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1630_Task6" name="Customer presents product with warranty claim at customer service counter: (a)…">
+        <bpmn:documentation>Step 1: Customer presents product with warranty claim at customer service counter: (a) CSR looks up original purchase transaction (receipt, loyalty card, or transaction number), (b) verifies warranty eligibility: (i) within warranty period (power tools: 6–12 months; appliances: 12–24 months per manufacturer), (ii) warranty covers reported failure type (manufacturing defect; excludes misuse, accidental damage, normal wear), (c) inspects product for misuse indicators (water damage on power tool, impact damage on appliance)
+Responsible (R): CSR
+Accountable (A): Customer Service Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1630_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1630_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1630_Task7" name="Repair">
+        <bpmn:documentation>Step 2: CSR creates warranty claim in system: (a) records product details, failure description, purchase date, warranty period, (b) attaches photos of product and defect, (c) classifies claim type: (i) Repair — product can be repaired at vendor service center, (ii) Replacement — product is beyond repair; vendor provides replacement unit, (iii) Refund — product is discontinued and no replacement available; process refund per W1627
+Responsible (R): CSR
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1630_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1630_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1630_Task8" name="Repair path">
+        <bpmn:documentation>Step 3: Repair path: (a) system generates shipping label to vendor service center, (b) customer leaves product at store, (c) store consolidates warranty repair shipments weekly (sent to vendor service center), (d) vendor repairs and returns to store, (e) CSR notifies customer to pick up repaired product, (f) SLA: repair turnaround 14–21 business days
+Responsible (R): CSR / Buyer
+Accountable (A): Customer Service Manager
+Duration: 5 min + waiting</bpmn:documentation>
+        <bpmn:incoming>W1630_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1630_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1630_Task9" name="Replacement path">
+        <bpmn:documentation>Step 4: Replacement path: (a) system checks replacement inventory at store; if available, immediate exchange per W1624, (b) if not available: Buyer contacts vendor for replacement unit; customer offered store credit (per W1627) or wait for replacement, (c) replacement unit received from vendor: CSR notifies customer for pickup
+Responsible (R): CSR / Buyer
+Accountable (A): Customer Service Manager
+Duration: 5 min + waiting</bpmn:documentation>
+        <bpmn:incoming>W1630_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1630_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1630_Task10" name="Vendor recovery">
+        <bpmn:documentation>Step 5: Vendor recovery: (a) Buyer files warranty claim with vendor for all warranty repairs/replacements, (b) tracks vendor warranty claim status and recovery amount, (c) vendor provides: repair at no cost, replacement unit at no cost, or credit note, (d) unrecovered warranty costs tracked per vendor as quality cost per W1614
+Responsible (R): Buyer
+Accountable (A): Category Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1630_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1630_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1630_Task11" name="Monthly: Customer Service Manager generates warranty claim report: (a) claims…">
+        <bpmn:documentation>Step 6: Monthly: Customer Service Manager generates warranty claim report: (a) claims by product category and vendor, (b) claim rate as % of sales by SKU, (c) average turnaround time by vendor, (d) customer satisfaction with warranty process, (e) feeds into vendor quality scorecard per W1608
+Responsible (R): Customer Service Manager
+Accountable (A): VP Store Operations
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1630_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1630_End12" name="Complete">
+        <bpmn:incoming>W1630_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1630_Annotation13">
+        <bpmn:text>Controls: - CTL-179 (ensure returns integrity &amp; refund-fraud prevention.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Customer Service Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1630_Assoc14" sourceRef="W1630_Annotation13" targetRef="W1630_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1630_Flow15" sourceRef="W1630_Start5" targetRef="W1630_Task6" />
+      <bpmn:sequenceFlow id="W1630_Flow16" sourceRef="W1630_Task6" targetRef="W1630_Task7" />
+      <bpmn:sequenceFlow id="W1630_Flow17" sourceRef="W1630_Task7" targetRef="W1630_Task8" />
+      <bpmn:sequenceFlow id="W1630_Flow18" sourceRef="W1630_Task8" targetRef="W1630_Task9" />
+      <bpmn:sequenceFlow id="W1630_Flow19" sourceRef="W1630_Task9" targetRef="W1630_Task10" />
+      <bpmn:sequenceFlow id="W1630_Flow20" sourceRef="W1630_Task10" targetRef="W1630_Task11" />
+      <bpmn:sequenceFlow id="W1630_Flow21" sourceRef="W1630_Task11" targetRef="W1630_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1630_diag">
+      <bpmndi:BPMNPlane id="W1630_plane" bpmnElement="W_W1630">
+        <bpmndi:BPMNShape id="W1630_Lane1_di" bpmnElement="W1630_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Lane2_di" bpmnElement="W1630_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Lane3_di" bpmnElement="W1630_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Task6_di" bpmnElement="W1630_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Task7_di" bpmnElement="W1630_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Task8_di" bpmnElement="W1630_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Task9_di" bpmnElement="W1630_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Task10_di" bpmnElement="W1630_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Task11_di" bpmnElement="W1630_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Start5_di" bpmnElement="W1630_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_End12_di" bpmnElement="W1630_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1630_Annotation13_di" bpmnElement="W1630_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1630_Flow15_di" bpmnElement="W1630_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1630_Flow16_di" bpmnElement="W1630_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1630_Flow17_di" bpmnElement="W1630_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1630_Flow18_di" bpmnElement="W1630_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1630_Flow19_di" bpmnElement="W1630_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1630_Flow20_di" bpmnElement="W1630_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1630_Flow21_di" bpmnElement="W1630_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1630_Assoc14_di" bpmnElement="W1630_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

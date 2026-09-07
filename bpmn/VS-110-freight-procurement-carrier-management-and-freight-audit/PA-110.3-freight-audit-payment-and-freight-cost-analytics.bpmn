@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-110.3-freight-audit-payment-and-freight-cost-analytics" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W3513" name="W3513. Freight Invoice Audit &amp; Match" isExecutable="false">
+      <bpmn:documentation>Trigger: Carrier freight invoice (links to VS-15); monthly cycle
+Frequency: Continuous + monthly
+Volume: High-volume across all carriers/legs
+Owner: Logistics / AP (Freight Audit)
+Participants: Logistics (links to VS-06), AP (links to VS-15.1/W7), Finance (links to VS-17), Carrier, IT (links to VS-27)
+Source: workflow W3513 — Freight Invoice Audit &amp; Match</bpmn:documentation>
+      <bpmn:laneSet id="W3513_LaneSet2">
+        <bpmn:lane id="W3513_Lane1" name="AP">
+        <bpmn:flowNodeRef>W3513_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3513_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3513_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3513_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3513_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3513_Start3" name="Carrier freight invoice (links to VS-15); monthly cycle">
+        <bpmn:outgoing>W3513_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3513_Task4" name="AP/Logistics receive the carrier freight invoice and perform automated freight…">
+        <bpmn:documentation>Step 1: AP/Logistics receive the carrier freight invoice and perform automated freight audit (links to W1166): match the invoice line to the shipment/load and contracted rate/accessorial (W3499), validate mode/lane/weight/cube/distance, apply fuel surcharge (W3519) and accessorial rules, and flag exceptions (rate variance, duplicate, unauthorized accessorial, off-guide W3500)
+Responsible (R): AP / Logistics / TMS
+Accountable (A): Logistics Manager / AP Manager
+Duration: Per invoice</bpmn:documentation>
+        <bpmn:incoming>W3513_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W3513_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3513_Task5" name="AP/Logistics resolve exceptions: validate with the carrier/Logistics…">
+        <bpmn:documentation>Step 2: AP/Logistics resolve exceptions: validate with the carrier/Logistics, approve/deduct/dispute per contract (W3499), and manage short-paid/disputed invoices and credits; capture dispute root-cause for the carrier scorecard (W3512) and reduction program (W3518)
+Responsible (R): AP / Logistics / Carrier
+Accountable (A): Logistics Manager / Finance
+Duration: Per exception</bpmn:documentation>
+        <bpmn:incoming>W3513_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3513_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3513_Task6" name="AP post the approved freight invoice to GL (links to VS-17.1/W7), allocate to…">
+        <bpmn:documentation>Step 3: AP post the approved freight invoice to GL (links to VS-17.1/W7), allocate to cost object/entity (W3514), and pay per terms (links to VS-15.2); report audit-accuracy, exception rate, and savings-from-audit to the freight analytics (W3516) and review (W3520)
+Responsible (R): AP / Finance
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3513_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3513_End7" name="Complete">
+        <bpmn:incoming>W3513_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3513_Annotation8">
+        <bpmn:text>Controls: - CTL-78 (ensure freight invoice accuracy &amp; carrier compliance.) | - operational: automated audit and rate match; operational: disciplined resolution
+Owner: Logistics / AP (Freight Audit)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3513_Assoc9" sourceRef="W3513_Annotation8" targetRef="W3513_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3513_Flow10" sourceRef="W3513_Start3" targetRef="W3513_Task4" />
+      <bpmn:sequenceFlow id="W3513_Flow11" sourceRef="W3513_Task4" targetRef="W3513_Task5" />
+      <bpmn:sequenceFlow id="W3513_Flow12" sourceRef="W3513_Task5" targetRef="W3513_Task6" />
+      <bpmn:sequenceFlow id="W3513_Flow13" sourceRef="W3513_Task6" targetRef="W3513_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3513_diag">
+      <bpmndi:BPMNPlane id="W3513_plane" bpmnElement="W_W3513">
+        <bpmndi:BPMNShape id="W3513_Lane1_di" bpmnElement="W3513_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3513_Task4_di" bpmnElement="W3513_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3513_Task5_di" bpmnElement="W3513_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3513_Task6_di" bpmnElement="W3513_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3513_Start3_di" bpmnElement="W3513_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3513_End7_di" bpmnElement="W3513_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3513_Annotation8_di" bpmnElement="W3513_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3513_Flow10_di" bpmnElement="W3513_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3513_Flow11_di" bpmnElement="W3513_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3513_Flow12_di" bpmnElement="W3513_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3513_Flow13_di" bpmnElement="W3513_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3513_Assoc9_di" bpmnElement="W3513_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3514" name="W3514. Freight Payment, Allocation &amp; Chargeback to Entities" isExecutable="false">
+      <bpmn:documentation>Trigger: Audited freight invoice (W3513); intercompany need
+Frequency: Monthly
+Volume: Group freight across 5 entities
+Owner: Finance / Logistics
+Participants: Finance (links to VS-17/VS-72), Logistics (links to VS-06), AP (links to VS-15), Treasury (links to VS-18), Intercompany (links to VS-72)
+Source: workflow W3514 — Freight Payment, Allocation &amp; Chargeback to Entities</bpmn:documentation>
+      <bpmn:laneSet id="W3514_LaneSet3">
+        <bpmn:lane id="W3514_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W3514_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3514_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3514_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3514_Lane2" name="Treasury">
+        <bpmn:flowNodeRef>W3514_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3514_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3514_Start4" name="Audited freight invoice (W3513); intercompany need">
+        <bpmn:outgoing>W3514_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3514_Task5" name="Finance/Logistics allocate freight cost to the correct cost object: by entity…">
+        <bpmn:documentation>Step 1: Finance/Logistics allocate freight cost to the correct cost object: by entity (Depot/Logistics/Digital Commerce/Property links to VS-72), by site/DC/store (links to VS-29 location), by category/SKU (for landed cost W3515), by channel (store/ecommerce links to VS-10), and by customer/order (cost-to-serve W3516); apply driver-based allocation keys
+Responsible (R): Finance / Logistics
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3514_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3514_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3514_Task6" name="Finance/Intercompany manage the intercompany freight: BuildRight Logistics Inc…">
+        <bpmn:documentation>Step 2: Finance/Intercompany manage the intercompany freight: BuildRight Logistics Inc. warehousing/distribution fees (profile §2), Digital Commerce per-order fulfillment fee, and cross-entity shared-services chargeback (links to VS-72); settle at arm&#x27;s-length transfer pricing and eliminate on consolidation (links to VS-17.2)
+Responsible (R): Finance / Intercompany
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3514_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3514_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3514_Task7" name="Treasury/AP pay the carrier per terms (links to VS-15.2/VS-18.2), manage…">
+        <bpmn:documentation>Step 3: Treasury/AP pay the carrier per terms (links to VS-15.2/VS-18.2), manage freight float/cash impact, and report the allocated freight cost by entity/site/category to FP&amp;A (links to VS-17.4/W3516) and intercompany (links to VS-72); reconcile allocations to GL (links to VS-17.1)
+Responsible (R): Treasury / AP / Finance
+Accountable (A): Finance Controller / CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3514_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3514_End8" name="Complete">
+        <bpmn:incoming>W3514_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3514_Annotation9">
+        <bpmn:text>Controls: - CTL-561 (ensure controlled execution — Freight Audit, Payment &amp; Freight Cost Analytics (PA-110.3).) | - operational: driver-based allocation; operational: transfer-pricing policy (links to VS-72)
+Owner: Finance / Logistics</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3514_Assoc10" sourceRef="W3514_Annotation9" targetRef="W3514_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3514_Flow11" sourceRef="W3514_Start4" targetRef="W3514_Task5" />
+      <bpmn:sequenceFlow id="W3514_Flow12" sourceRef="W3514_Task5" targetRef="W3514_Task6" />
+      <bpmn:sequenceFlow id="W3514_Flow13" sourceRef="W3514_Task6" targetRef="W3514_Task7" />
+      <bpmn:sequenceFlow id="W3514_Flow14" sourceRef="W3514_Task7" targetRef="W3514_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3514_diag">
+      <bpmndi:BPMNPlane id="W3514_plane" bpmnElement="W_W3514">
+        <bpmndi:BPMNShape id="W3514_Lane1_di" bpmnElement="W3514_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3514_Lane2_di" bpmnElement="W3514_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3514_Task5_di" bpmnElement="W3514_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3514_Task6_di" bpmnElement="W3514_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3514_Task7_di" bpmnElement="W3514_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3514_Start4_di" bpmnElement="W3514_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3514_End8_di" bpmnElement="W3514_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3514_Annotation9_di" bpmnElement="W3514_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3514_Flow11_di" bpmnElement="W3514_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3514_Flow12_di" bpmnElement="W3514_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3514_Flow13_di" bpmnElement="W3514_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3514_Flow14_di" bpmnElement="W3514_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3514_Assoc10_di" bpmnElement="W3514_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3515" name="W3515. Landed Cost &amp; Freight Cost Component Capture" isExecutable="false">
+      <bpmn:documentation>Trigger: Import receipt (links to VS-02.2/VS-87); freight-audit (W3513)
+Frequency: Per import/receipt + monthly
+Volume: Import landed cost (~40% of COGS) + domestic freight
+Owner: Logistics / Finance
+Participants: Logistics (links to VS-06/VS-02.2), Import/Customs (links to VS-87), Finance (links to VS-17/VS-05), AP (links to VS-15), Merchandising (links to VS-01/VS-101)
+Source: workflow W3515 — Landed Cost &amp; Freight Cost Component Capture</bpmn:documentation>
+      <bpmn:laneSet id="W3515_LaneSet3">
+        <bpmn:lane id="W3515_Lane1" name="Logistics">
+        <bpmn:flowNodeRef>W3515_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3515_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3515_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W3515_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3515_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3515_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3515_Start4" name="Import receipt (links to VS-02.2/VS-87); freight-audit (W3513)">
+        <bpmn:outgoing>W3515_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3515_Task5" name="Logistics/Import capture the import landed-cost components per PO/item (links…">
+        <bpmn:documentation>Step 1: Logistics/Import capture the import landed-cost components per PO/item (links to VS-02.2/W3503): product cost, ocean freight, BAF, THC, drayage, duty/customs (links to VS-87/W2560), customs broker, insurance (links to VS-26), and inbound handling; allocate by weight/cube/value to the SKU for inventory valuation (links to VS-17/W275 WAC)
+Responsible (R): Logistics / Import / Finance
+Accountable (A): Finance Controller
+Duration: Per import</bpmn:documentation>
+        <bpmn:incoming>W3515_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3515_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3515_Task6" name="Finance/Merchandising capture domestic freight into landed/standard cost where…">
+        <bpmn:documentation>Step 2: Finance/Merchandising capture domestic freight into landed/standard cost where policy dictates (inbound collect freight, DC handling), update the item standard/landed cost (links to VS-17/W275), and process PPV/freight-variance (links to VS-03/W633); reconcile to GL freight accounts (links to VS-17.1)
+Responsible (R): Finance / Merchandising
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3515_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3515_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3515_Task7" name="Finance/Merchandising report landed-cost composition and freight-as-%-of-COGS…">
+        <bpmn:documentation>Step 3: Finance/Merchandising report landed-cost composition and freight-as-%-of-COGS by category/vendor/lane (links to VS-01/VS-101/VS-106), identify landed-cost reduction opportunities, and feed margin analytics (links to VS-101) and sourcing decisions (links to VS-03/W3497)
+Responsible (R): Finance / Merchandising
+Accountable (A): CFO / VP Merchandising
+Duration: Monthly/quarterly</bpmn:documentation>
+        <bpmn:incoming>W3515_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3515_End8" name="Complete">
+        <bpmn:incoming>W3515_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3515_Annotation9">
+        <bpmn:text>Controls: - CTL-561 (ensure controlled execution — Freight Audit, Payment &amp; Freight Cost Analytics (PA-110.3).) | - operational: disciplined allocation and SKU-level capture; operational: standard-cost governance (links to VS-17)
+Owner: Logistics / Finance</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3515_Assoc10" sourceRef="W3515_Annotation9" targetRef="W3515_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3515_Flow11" sourceRef="W3515_Start4" targetRef="W3515_Task5" />
+      <bpmn:sequenceFlow id="W3515_Flow12" sourceRef="W3515_Task5" targetRef="W3515_Task6" />
+      <bpmn:sequenceFlow id="W3515_Flow13" sourceRef="W3515_Task6" targetRef="W3515_Task7" />
+      <bpmn:sequenceFlow id="W3515_Flow14" sourceRef="W3515_Task7" targetRef="W3515_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3515_diag">
+      <bpmndi:BPMNPlane id="W3515_plane" bpmnElement="W_W3515">
+        <bpmndi:BPMNShape id="W3515_Lane1_di" bpmnElement="W3515_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3515_Lane2_di" bpmnElement="W3515_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3515_Task5_di" bpmnElement="W3515_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3515_Task6_di" bpmnElement="W3515_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3515_Task7_di" bpmnElement="W3515_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3515_Start4_di" bpmnElement="W3515_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3515_End8_di" bpmnElement="W3515_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3515_Annotation9_di" bpmnElement="W3515_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3515_Flow11_di" bpmnElement="W3515_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3515_Flow12_di" bpmnElement="W3515_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3515_Flow13_di" bpmnElement="W3515_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3515_Flow14_di" bpmnElement="W3515_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3515_Assoc10_di" bpmnElement="W3515_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3516" name="W3516. Freight Cost-to-Serve &amp; Lane Profitability Analytics" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly analytics cycle; allocation (W3514)
+Frequency: Monthly + quarterly
+Volume: All lanes/orders/customers
+Owner: Logistics / FP&amp;A
+Participants: Logistics (links to VS-06), FP&amp;A (links to VS-17.4/VS-33.2), BI (links to VS-28.1), Merchandising (links to VS-01/VS-101), Ecommerce (links to VS-10)
+Source: workflow W3516 — Freight Cost-to-Serve &amp; Lane Profitability Analytics</bpmn:documentation>
+      <bpmn:laneSet id="W3516_LaneSet3">
+        <bpmn:lane id="W3516_Lane1" name="Logistics">
+        <bpmn:flowNodeRef>W3516_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3516_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3516_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3516_Lane2" name="FP&amp;A">
+        <bpmn:flowNodeRef>W3516_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3516_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3516_Start4" name="Monthly analytics cycle; allocation (W3514)">
+        <bpmn:outgoing>W3516_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3516_Task5" name="Logistics/BI compute cost-to-serve by customer/order/channel/region/island…">
+        <bpmn:documentation>Step 1: Logistics/BI compute cost-to-serve by customer/order/channel/region/island (links to VS-107/VS-10/VS-82): freight + handling + last-mile + inter-island + returns (links to VS-32), per-order and per-customer; identify unprofitable segments and free-delivery threshold leakage (profile §8.3)
+Responsible (R): Logistics / BI / FP&amp;A
+Accountable (A): Logistics Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3516_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3516_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3516_Task6" name="FP&amp;A/Logistics compute lane profitability: revenue vs freight cost-to-serve by…">
+        <bpmn:documentation>Step 2: FP&amp;A/Logistics compute lane profitability: revenue vs freight cost-to-serve by lane/region/island/category, identify loss-making lanes/customers, and model pricing/delivery-charge/network actions; align to margin targets (links to VS-101) and key-account profitability (links to VS-107/W3447)
+Responsible (R): FP&amp;A / Logistics / Merchandising
+Accountable (A): CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W3516_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3516_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3516_Task7" name="Logistics/FP&amp;A publish the freight cost-to-serve and lane-profitability…">
+        <bpmn:documentation>Step 3: Logistics/FP&amp;A publish the freight cost-to-serve and lane-profitability dashboard to executives (links to VS-33.2) and governance (W3520), feed insights to network design (links to VS-04/VS-02.3), pricing (links to VS-01.2), delivery-charge policy, and the reduction program (W3518)
+Responsible (R): Logistics / FP&amp;A
+Accountable (A): COO / CFO
+Duration: Monthly/quarterly</bpmn:documentation>
+        <bpmn:incoming>W3516_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3516_End8" name="Complete">
+        <bpmn:incoming>W3516_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3516_Annotation9">
+        <bpmn:text>Controls: - CTL-561 (ensure controlled execution — Freight Audit, Payment &amp; Freight Cost Analytics (PA-110.3).) | - operational: granular cost-to-serve; operational: governance and tracked actions
+Owner: Logistics / FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3516_Assoc10" sourceRef="W3516_Annotation9" targetRef="W3516_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3516_Flow11" sourceRef="W3516_Start4" targetRef="W3516_Task5" />
+      <bpmn:sequenceFlow id="W3516_Flow12" sourceRef="W3516_Task5" targetRef="W3516_Task6" />
+      <bpmn:sequenceFlow id="W3516_Flow13" sourceRef="W3516_Task6" targetRef="W3516_Task7" />
+      <bpmn:sequenceFlow id="W3516_Flow14" sourceRef="W3516_Task7" targetRef="W3516_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3516_diag">
+      <bpmndi:BPMNPlane id="W3516_plane" bpmnElement="W_W3516">
+        <bpmndi:BPMNShape id="W3516_Lane1_di" bpmnElement="W3516_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3516_Lane2_di" bpmnElement="W3516_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3516_Task5_di" bpmnElement="W3516_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3516_Task6_di" bpmnElement="W3516_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3516_Task7_di" bpmnElement="W3516_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3516_Start4_di" bpmnElement="W3516_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3516_End8_di" bpmnElement="W3516_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3516_Annotation9_di" bpmnElement="W3516_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3516_Flow11_di" bpmnElement="W3516_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3516_Flow12_di" bpmnElement="W3516_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3516_Flow13_di" bpmnElement="W3516_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3516_Flow14_di" bpmnElement="W3516_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3516_Assoc10_di" bpmnElement="W3516_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3517" name="W3517. Freight Budget, Forecast &amp; Variance Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual budget (links to VS-33.1); monthly close
+Frequency: Annual + monthly
+Volume: Group freight budget
+Owner: FP&amp;A / Logistics
+Participants: FP&amp;A (links to VS-17.4/VS-33.1), Logistics (links to VS-06), Treasury (links to VS-18), Merchandising (links to VS-01/VS-101), Supply Planning (links to VS-02)
+Source: workflow W3517 — Freight Budget, Forecast &amp; Variance Management</bpmn:documentation>
+      <bpmn:laneSet id="W3517_LaneSet2">
+        <bpmn:lane id="W3517_Lane1" name="FP&amp;A">
+        <bpmn:flowNodeRef>W3517_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3517_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3517_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3517_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3517_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3517_Start3" name="Annual budget (links to VS-33.1); monthly close">
+        <bpmn:outgoing>W3517_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3517_Task4" name="FP&amp;A/Logistics build the annual freight budget: by leg/carrier/lane/entity…">
+        <bpmn:documentation>Step 1: FP&amp;A/Logistics build the annual freight budget: by leg/carrier/lane/entity, driven by the sales/S&amp;OP plan (links to VS-33.1/VS-02.1), import volume (links to VS-02.2), network/store-growth (links to VS-37/VS-04), fuel/commodity outlook (links to VS-106/VS-61/W3519), and rate plans (W3499); set the baseline and contingencies
+Responsible (R): FP&amp;A / Logistics
+Accountable (A): CFO
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W3517_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W3517_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3517_Task5" name="FP&amp;A/Logistics forecast and track monthly: actual vs budget freight spend by…">
+        <bpmn:documentation>Step 2: FP&amp;A/Logistics forecast and track monthly: actual vs budget freight spend by leg/carrier/lane, volume/rate/fuel drivers, and variance; identify root cause (volume mix, rate change, accessorial, off-guide, fuel) and corrective action
+Responsible (R): FP&amp;A / Logistics
+Accountable (A): Logistics Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3517_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3517_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3517_Task6" name="FP&amp;A/Logistics report freight variance to executives (links to VS-33.2) and…">
+        <bpmn:documentation>Step 3: FP&amp;A/Logistics report freight variance to executives (links to VS-33.2) and governance (W3520), re-forecast the full-year freight, and feed variance insights to the reduction program (W3518), budget cycle (links to VS-33.1), and carrier sourcing (W3497)
+Responsible (R): FP&amp;A / Logistics
+Accountable (A): CFO
+Duration: Monthly/quarterly</bpmn:documentation>
+        <bpmn:incoming>W3517_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3517_End7" name="Complete">
+        <bpmn:incoming>W3517_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3517_Annotation8">
+        <bpmn:text>Controls: - CTL-561 (ensure controlled execution — Freight Audit, Payment &amp; Freight Cost Analytics (PA-110.3).) | - operational: driver-based forecasting and rolling re-forecast; operational: monthly discipline
+Owner: FP&amp;A / Logistics</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3517_Assoc9" sourceRef="W3517_Annotation8" targetRef="W3517_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3517_Flow10" sourceRef="W3517_Start3" targetRef="W3517_Task4" />
+      <bpmn:sequenceFlow id="W3517_Flow11" sourceRef="W3517_Task4" targetRef="W3517_Task5" />
+      <bpmn:sequenceFlow id="W3517_Flow12" sourceRef="W3517_Task5" targetRef="W3517_Task6" />
+      <bpmn:sequenceFlow id="W3517_Flow13" sourceRef="W3517_Task6" targetRef="W3517_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3517_diag">
+      <bpmndi:BPMNPlane id="W3517_plane" bpmnElement="W_W3517">
+        <bpmndi:BPMNShape id="W3517_Lane1_di" bpmnElement="W3517_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3517_Task4_di" bpmnElement="W3517_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3517_Task5_di" bpmnElement="W3517_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3517_Task6_di" bpmnElement="W3517_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3517_Start3_di" bpmnElement="W3517_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3517_End7_di" bpmnElement="W3517_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3517_Annotation8_di" bpmnElement="W3517_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3517_Flow10_di" bpmnElement="W3517_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3517_Flow11_di" bpmnElement="W3517_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3517_Flow12_di" bpmnElement="W3517_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3517_Flow13_di" bpmnElement="W3517_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3517_Assoc9_di" bpmnElement="W3517_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3518" name="W3518. Freight Cost Reduction &amp; Continuous Improvement Program" isExecutable="false">
+      <bpmn:documentation>Trigger: Targets (W3497); analytics (W3516); QBR (W3512)
+Frequency: Continuous + quarterly
+Volume: Program-wide
+Owner: Logistics / Procurement
+Participants: Logistics (links to VS-06), Procurement (links to VS-03/VS-34), FP&amp;A (links to VS-17.4), Supply Planning (links to VS-02), IT (links to VS-27/VS-30), Innovation (links to VS-30)
+Source: workflow W3518 — Freight Cost Reduction &amp; Continuous Improvement Program</bpmn:documentation>
+      <bpmn:laneSet id="W3518_LaneSet2">
+        <bpmn:lane id="W3518_Lane1" name="Logistics">
+        <bpmn:flowNodeRef>W3518_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3518_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3518_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3518_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3518_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3518_Start3" name="Targets (W3497); analytics (W3516); QBR (W3512)">
+        <bpmn:outgoing>W3518_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3518_Task4" name="Logistics/Procurement maintain the freight cost-reduction pipeline…">
+        <bpmn:documentation>Step 1: Logistics/Procurement maintain the freight cost-reduction pipeline: opportunities from spend analytics (W3497/W3516), carrier consolidation/rationalization, mode-shift (e.g., RORO vs air for urgent), load consolidation (W3507), backhaul utilization, network redesign (links to VS-04), packaging/cube optimization (links to VS-111/W3541), and technology/automation (links to VS-30/VS-27 TMS)
+Responsible (R): Logistics / Procurement
+Accountable (A): COO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W3518_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W3518_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3518_Task5" name="Logistics execute the opportunities: business case, sponsor/approval (links to…">
+        <bpmn:documentation>Step 2: Logistics execute the opportunities: business case, sponsor/approval (links to VS-40 where capex), implementation, and benefit tracking vs baseline (W3497); manage cross-functional initiatives (network, packaging, IT) via the PMO (links to VS-112)
+Responsible (R): Logistics / PMO
+Accountable (A): COO
+Duration: Per initiative</bpmn:documentation>
+        <bpmn:incoming>W3518_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3518_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3518_Task6" name="Logistics/FP&amp;A track realized savings vs target and re-baseline the spend…">
+        <bpmn:documentation>Step 3: Logistics/FP&amp;A track realized savings vs target and re-baseline the spend (W3497), publish the reduction-program performance to executives (links to VS-33.2) and governance (W3520), and feed continuous improvement/lessons to sourcing (W3498) and operations (links to VS-21 audit)
+Responsible (R): Logistics / FP&amp;A
+Accountable (A): COO / CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W3518_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3518_End7" name="Complete">
+        <bpmn:incoming>W3518_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3518_Annotation8">
+        <bpmn:text>Controls: - CTL-561 (ensure controlled execution — Freight Audit, Payment &amp; Freight Cost Analytics (PA-110.3).) | - operational: re-baselining and tracking; operational: continuous ideation and analytics
+Owner: Logistics / Procurement</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3518_Assoc9" sourceRef="W3518_Annotation8" targetRef="W3518_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3518_Flow10" sourceRef="W3518_Start3" targetRef="W3518_Task4" />
+      <bpmn:sequenceFlow id="W3518_Flow11" sourceRef="W3518_Task4" targetRef="W3518_Task5" />
+      <bpmn:sequenceFlow id="W3518_Flow12" sourceRef="W3518_Task5" targetRef="W3518_Task6" />
+      <bpmn:sequenceFlow id="W3518_Flow13" sourceRef="W3518_Task6" targetRef="W3518_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3518_diag">
+      <bpmndi:BPMNPlane id="W3518_plane" bpmnElement="W_W3518">
+        <bpmndi:BPMNShape id="W3518_Lane1_di" bpmnElement="W3518_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3518_Task4_di" bpmnElement="W3518_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3518_Task5_di" bpmnElement="W3518_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3518_Task6_di" bpmnElement="W3518_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3518_Start3_di" bpmnElement="W3518_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3518_End7_di" bpmnElement="W3518_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3518_Annotation8_di" bpmnElement="W3518_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3518_Flow10_di" bpmnElement="W3518_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3518_Flow11_di" bpmnElement="W3518_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3518_Flow12_di" bpmnElement="W3518_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3518_Flow13_di" bpmnElement="W3518_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3518_Assoc9_di" bpmnElement="W3518_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3519" name="W3519. Fuel Surcharge, Index Management &amp; Freight Rate Volatility" isExecutable="false">
+      <bpmn:documentation>Trigger: Fuel-price change; contract cycle (W3499); commodity outlook (links to VS-106)
+Frequency: Continuous + periodic adjustment
+Volume: All fuel-surcharge/index-linked contracts
+Owner: Logistics / Finance
+Participants: Logistics (links to VS-06/VS-61), Finance/FP&amp;A (links to VS-17.4), Treasury (links to VS-18), Procurement (links to VS-03), Carrier
+Source: workflow W3519 — Fuel Surcharge, Index Management &amp; Freight Rate Volatility</bpmn:documentation>
+      <bpmn:laneSet id="W3519_LaneSet3">
+        <bpmn:lane id="W3519_Lane1" name="Logistics">
+        <bpmn:flowNodeRef>W3519_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3519_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3519_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3519_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W3519_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3519_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3519_Start4" name="Fuel-price change; contract cycle (W3499); commodity outlook (links to VS-106)">
+        <bpmn:outgoing>W3519_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3519_Task5" name="Logistics/Procurement manage fuel-surcharge and index clauses in carrier…">
+        <bpmn:documentation>Step 1: Logistics/Procurement manage fuel-surcharge and index clauses in carrier contracts (W3499): formula (DOE/industry fuel index), adjustment frequency/cap/floor, pass-through vs shared, and commodity-index links where relevant (steel/cement links to VS-106); negotiate balanced mechanisms
+Responsible (R): Logistics / Procurement / Legal
+Accountable (A): COO
+Duration: Per contract</bpmn:documentation>
+        <bpmn:incoming>W3519_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W3519_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3519_Task6" name="Logistics/Finance track fuel/rate volatility impact (links to W1440/W1166)…">
+        <bpmn:documentation>Step 2: Logistics/Finance track fuel/rate volatility impact (links to W1440/W1166): monitor the fuel index, compute surcharge impact on freight cost, forecast the budget impact (W3517), and trigger rate/routing actions to absorb volatility; hedge where policy permits (links to VS-18.3/VS-106)
+Responsible (R): Logistics / Finance / Treasury
+Accountable (A): Logistics Manager / CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W3519_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3519_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3519_Task7" name="Finance/Logistics report fuel/rate-volatility impact and hedging outcome to…">
+        <bpmn:documentation>Step 3: Finance/Logistics report fuel/rate-volatility impact and hedging outcome to executives (links to VS-33.2) and governance (W3520), validate the surcharge in freight audit (W3513), and feed rate-volatility insights to contract negotiation (W3499) and commodity risk (links to VS-106)
+Responsible (R): Finance / Logistics
+Accountable (A): CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W3519_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3519_End8" name="Complete">
+        <bpmn:incoming>W3519_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3519_Annotation9">
+        <bpmn:text>Controls: - CTL-561 (ensure controlled execution — Freight Audit, Payment &amp; Freight Cost Analytics (PA-110.3).) | - operational: balanced cap/floor; operational: monitoring and hedging
+Owner: Logistics / Finance</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3519_Assoc10" sourceRef="W3519_Annotation9" targetRef="W3519_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3519_Flow11" sourceRef="W3519_Start4" targetRef="W3519_Task5" />
+      <bpmn:sequenceFlow id="W3519_Flow12" sourceRef="W3519_Task5" targetRef="W3519_Task6" />
+      <bpmn:sequenceFlow id="W3519_Flow13" sourceRef="W3519_Task6" targetRef="W3519_Task7" />
+      <bpmn:sequenceFlow id="W3519_Flow14" sourceRef="W3519_Task7" targetRef="W3519_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3519_diag">
+      <bpmndi:BPMNPlane id="W3519_plane" bpmnElement="W_W3519">
+        <bpmndi:BPMNShape id="W3519_Lane1_di" bpmnElement="W3519_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3519_Lane2_di" bpmnElement="W3519_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3519_Task5_di" bpmnElement="W3519_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3519_Task6_di" bpmnElement="W3519_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3519_Task7_di" bpmnElement="W3519_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3519_Start4_di" bpmnElement="W3519_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3519_End8_di" bpmnElement="W3519_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3519_Annotation9_di" bpmnElement="W3519_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3519_Flow11_di" bpmnElement="W3519_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3519_Flow12_di" bpmnElement="W3519_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3519_Flow13_di" bpmnElement="W3519_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3519_Flow14_di" bpmnElement="W3519_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3519_Assoc10_di" bpmnElement="W3519_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W3520" name="W3520. Freight Risk, Insurance &amp; Business Continuity" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual risk review (links to VS-21.2); BCP cycle (links to VS-26); disruption event (links to VS-69)
+Frequency: Annual + event-driven
+Volume: Program-wide
+Owner: Logistics / Risk
+Participants: Logistics (links to VS-06), Risk (links to VS-21.2), Insurance (links to VS-26), BCP (links to VS-26.1), Compliance (links to VS-22), Procurement (links to VS-03), Finance (links to VS-17)
+Source: workflow W3520 — Freight Risk, Insurance &amp; Business Continuity</bpmn:documentation>
+      <bpmn:laneSet id="W3520_LaneSet4">
+        <bpmn:lane id="W3520_Lane1" name="Logistics">
+        <bpmn:flowNodeRef>W3520_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3520_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3520_Lane2" name="Insurance">
+        <bpmn:flowNodeRef>W3520_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W3520_Lane3" name="BCP">
+        <bpmn:flowNodeRef>W3520_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W3520_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W3520_Start5" name="Annual risk review (links to VS-21.2); BCP cycle (links to VS-26); disruption event…">
+        <bpmn:outgoing>W3520_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W3520_Task6" name="Logistics/Risk maintain the freight-risk view: carrier concentration and…">
+        <bpmn:documentation>Step 1: Logistics/Risk maintain the freight-risk view: carrier concentration and financial-distress risk, capacity/space risk (peak/typhoon links to VS-69), port/congestion risk, fuel/price risk (W3519), cargo loss/damage risk (W3511), regulatory/customs risk (links to VS-22/VS-87), cyber risk (TMS/track links to VS-27.3), and counterparty risk; integrate to ERM (links to VS-21.2)
+Responsible (R): Logistics / Risk
+Accountable (A): COO
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W3520_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W3520_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3520_Task7" name="Insurance/Risk ensure adequate cargo/marine/transit and carrier-liability…">
+        <bpmn:documentation>Step 2: Insurance/Risk ensure adequate cargo/marine/transit and carrier-liability coverage (links to VS-26.3/W59), set deductibles/limits, manage the claims process (W3511), and review annually; align to group insurance (links to VS-26)
+Responsible (R): Insurance / Risk / Finance
+Accountable (A): CFO
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W3520_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W3520_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W3520_Task8" name="BCP/Logistics maintain freight business continuity: alternate…">
+        <bpmn:documentation>Step 3: BCP/Logistics maintain freight business continuity: alternate carriers/lanes/modes, port diversification, island BCP (links to VS-69/VS-26), inventory safety stock (links to VS-02/VS-05), and crisis response; report freight risk/BCP to executives (links to VS-33.2) and risk/audit committee (links to VS-36/VS-21)
+Responsible (R): BCP / Logistics / Risk
+Accountable (A): COO
+Duration: Annual + event-driven</bpmn:documentation>
+        <bpmn:incoming>W3520_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W3520_End9" name="Complete">
+        <bpmn:incoming>W3520_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W3520_Annotation10">
+        <bpmn:text>Controls: - CTL-561 (ensure controlled execution — Freight Audit, Payment &amp; Freight Cost Analytics (PA-110.3).) | - operational: dual-sourcing and financial monitoring; operational: BCP and alternate routing
+Owner: Logistics / Risk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W3520_Assoc11" sourceRef="W3520_Annotation10" targetRef="W3520_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W3520_Flow12" sourceRef="W3520_Start5" targetRef="W3520_Task6" />
+      <bpmn:sequenceFlow id="W3520_Flow13" sourceRef="W3520_Task6" targetRef="W3520_Task7" />
+      <bpmn:sequenceFlow id="W3520_Flow14" sourceRef="W3520_Task7" targetRef="W3520_Task8" />
+      <bpmn:sequenceFlow id="W3520_Flow15" sourceRef="W3520_Task8" targetRef="W3520_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W3520_diag">
+      <bpmndi:BPMNPlane id="W3520_plane" bpmnElement="W_W3520">
+        <bpmndi:BPMNShape id="W3520_Lane1_di" bpmnElement="W3520_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_Lane2_di" bpmnElement="W3520_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_Lane3_di" bpmnElement="W3520_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_Task6_di" bpmnElement="W3520_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_Task7_di" bpmnElement="W3520_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_Task8_di" bpmnElement="W3520_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_Start5_di" bpmnElement="W3520_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_End9_di" bpmnElement="W3520_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W3520_Annotation10_di" bpmnElement="W3520_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W3520_Flow12_di" bpmnElement="W3520_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3520_Flow13_di" bpmnElement="W3520_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3520_Flow14_di" bpmnElement="W3520_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3520_Flow15_di" bpmnElement="W3520_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W3520_Assoc11_di" bpmnElement="W3520_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

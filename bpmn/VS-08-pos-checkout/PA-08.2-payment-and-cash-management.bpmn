@@ -1,0 +1,1396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-08.2-payment-and-cash-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W517" name="W517. POS Cashier Shift Handover &amp; Drawer Accountability" isExecutable="false">
+      <bpmn:documentation>Trigger: Shift change (typically mid-day, ~2:00 PM at stores with 2 shifts)
+Frequency: Daily per POS terminal with shift-based staffing
+Volume: ~1 double-shifted terminal × 200 stores = ~200 mid-shift handovers/day; the remaining 2 terminals per store operate single-shift and only require EOD per W5F
+Owner: Outgoing Cashier / Incoming Cashier
+Participants: Outgoing Cashier, Incoming Cashier, Store Manager (variance escalation)
+Source: workflow W517 — POS Cashier Shift Handover &amp; Drawer Accountability</bpmn:documentation>
+      <bpmn:laneSet id="W517_LaneSet5">
+        <bpmn:lane id="W517_Lane1" name="Outgoing Cashier">
+        <bpmn:flowNodeRef>W517_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W517_Lane2" name="System">
+        <bpmn:flowNodeRef>W517_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W517_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W517_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W517_Lane4" name="Incoming Cashier">
+        <bpmn:flowNodeRef>W517_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W517_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W517_Start6" name="Shift change (typically mid-day, ~2:00 PM at stores with 2 shifts)">
+        <bpmn:outgoing>W517_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W517_Task7" name="Outgoing Cashier completes or suspends any in-progress transaction per W521…">
+        <bpmn:documentation>Step 1: Outgoing Cashier completes or suspends any in-progress transaction per W521; system enforces no pending transactions before handover can proceed
+Responsible (R): Outgoing Cashier
+Accountable (A): —
+Duration: 1 min</bpmn:documentation>
+        <bpmn:incoming>W517_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W517_Task8" name="System generates X-report (mid-day sales summary by tender type for this…">
+        <bpmn:documentation>Step 2: System generates X-report (mid-day sales summary by tender type for this terminal since opening or last handover) — distinct from Z-report which is end-of-day
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W517_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W517_Task9" name="Outgoing Cashier counts physical cash in drawer; compares to X-report expected…">
+        <bpmn:documentation>Step 3: Outgoing Cashier counts physical cash in drawer; compares to X-report expected cash
+Responsible (R): Outgoing Cashier
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W517_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W517_Task10" name="If cash variance &gt; PHP 200: Outgoing Cashier documents variance reason in…">
+        <bpmn:documentation>Step 4: If cash variance &gt; PHP 200: Outgoing Cashier documents variance reason in system; system alerts Store Manager; Store Manager investigates per W272 (cashier over/short dispute resolution)
+Responsible (R): Outgoing Cashier / Store Manager
+Accountable (A): Store Manager
+Duration: 10 min if variance</bpmn:documentation>
+        <bpmn:incoming>W517_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W517_Task11" name="Outgoing Cashier records drawer count in system: cash by denomination, total…">
+        <bpmn:documentation>Step 5: Outgoing Cashier records drawer count in system: cash by denomination, total cash, credit/debit card slips count, e-wallet transaction count, total tender amount per X-report, variance (if any)
+Responsible (R): Outgoing Cashier
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W517_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W517_Task12" name="Outgoing Cashier removes cash drawer (till); places in tamper-evident bag with…">
+        <bpmn:documentation>Step 6: Outgoing Cashier removes cash drawer (till); places in tamper-evident bag with handwritten or printed count slip; secures in backroom safe
+Responsible (R): Outgoing Cashier
+Accountable (A): Store Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W517_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W517_Task13" name="Store Manager or Lead Cashier issues sealed replacement drawer with standard…">
+        <bpmn:documentation>Step 7: Store Manager or Lead Cashier issues sealed replacement drawer with standard float (PHP 5,000 per W5A.4) from safe to Incoming Cashier
+Responsible (R): Store Manager / Lead Cashier
+Accountable (A): Store Manager
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W517_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W517_Task14" name="Incoming Cashier logs into POS terminal; system displays handover screen…">
+        <bpmn:documentation>Step 8: Incoming Cashier logs into POS terminal; system displays handover screen showing X-report totals from Outgoing Cashier; Incoming Cashier confirms receipt of sealed drawer and acknowledges handover in system
+Responsible (R): Incoming Cashier
+Accountable (A): —
+Duration: 3 min</bpmn:documentation>
+        <bpmn:incoming>W517_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W517_Task15" name="System records handover event: outgoing cashier ID, incoming cashier ID…">
+        <bpmn:documentation>Step 9: System records handover event: outgoing cashier ID, incoming cashier ID, terminal ID, X-report totals, drawer count, variance (if any), handover timestamp; links to W272 if variance escalated
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W517_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W517_Flow28</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W517_Task16" name="If no replacement cashier available (sick call, no-show): Store Manager assigns…">
+        <bpmn:documentation>Step 10: If no replacement cashier available (sick call, no-show): Store Manager assigns float cashier from available staff; if no staff available, Store Manager operates terminal directly or closes terminal for shift (reducing store checkout capacity)
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W517_Flow200</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W517_End17" name="Complete">
+        <bpmn:incoming>W517_Flow201</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W517_Annotation18">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: staggering handover across terminals (not all at once); operational: should enforce logout/login cycle at shift change
+Owner: Outgoing Cashier / Incoming Cashier</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W517_Assoc19" sourceRef="W517_Annotation18" targetRef="W517_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W517_Flow20" sourceRef="W517_Start6" targetRef="W517_Task7" />
+      <bpmn:sequenceFlow id="W517_Flow21" sourceRef="W517_Task7" targetRef="W517_Task8" />
+      <bpmn:sequenceFlow id="W517_Flow22" sourceRef="W517_Task8" targetRef="W517_Task9" />
+      <bpmn:sequenceFlow id="W517_Flow23" sourceRef="W517_Task9" targetRef="W517_Task10" />
+      <bpmn:sequenceFlow id="W517_Flow24" sourceRef="W517_Task10" targetRef="W517_Task11" />
+      <bpmn:sequenceFlow id="W517_Flow25" sourceRef="W517_Task11" targetRef="W517_Task12" />
+      <bpmn:sequenceFlow id="W517_Flow26" sourceRef="W517_Task12" targetRef="W517_Task13" />
+      <bpmn:sequenceFlow id="W517_Flow27" sourceRef="W517_Task13" targetRef="W517_Task14" />
+      <bpmn:sequenceFlow id="W517_Flow28" sourceRef="W517_Task14" targetRef="W517_Task15" />
+      <bpmn:sequenceFlow id="W517_Flow29" sourceRef="W517_Task15" targetRef="W517_Task16" />
+      <bpmn:sequenceFlow id="W517_Flow30" sourceRef="W517_Task16" targetRef="W517_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W517_diag">
+      <bpmndi:BPMNPlane id="W517_plane" bpmnElement="W_W517">
+        <bpmndi:BPMNShape id="W517_Lane1_di" bpmnElement="W517_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Lane2_di" bpmnElement="W517_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Lane3_di" bpmnElement="W517_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Lane4_di" bpmnElement="W517_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task7_di" bpmnElement="W517_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task8_di" bpmnElement="W517_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task9_di" bpmnElement="W517_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task10_di" bpmnElement="W517_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task11_di" bpmnElement="W517_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task12_di" bpmnElement="W517_Task12"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task13_di" bpmnElement="W517_Task13"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task14_di" bpmnElement="W517_Task14"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task15_di" bpmnElement="W517_Task15"><dc:Bounds x="2080" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Task16_di" bpmnElement="W517_Task16"><dc:Bounds x="2290" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Start6_di" bpmnElement="W517_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_End17_di" bpmnElement="W517_End17"><dc:Bounds x="2520" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W517_Annotation18_di" bpmnElement="W517_Annotation18"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W517_Flow20_di" bpmnElement="W517_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow21_di" bpmnElement="W517_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow22_di" bpmnElement="W517_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow23_di" bpmnElement="W517_Flow23"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow24_di" bpmnElement="W517_Flow24"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow25_di" bpmnElement="W517_Flow25"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow26_di" bpmnElement="W517_Flow26"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow27_di" bpmnElement="W517_Flow27"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow28_di" bpmnElement="W517_Flow28"><di:waypoint x="2050" y="675" /><di:waypoint x="2080" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow29_di" bpmnElement="W517_Flow29"><di:waypoint x="2260" y="335" /><di:waypoint x="2290" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Flow30_di" bpmnElement="W517_Flow30"><di:waypoint x="2470" y="505" /><di:waypoint x="2520" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W517_Assoc19_di" bpmnElement="W517_Assoc19"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W537" name="W537. POS Card Terminal &amp; Acquirer Settlement Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: End of cashier shift (batch close) or end-of-day store close (W5F); also triggered by card reader error or settlement exception
+Frequency: Daily — per shift per terminal (3 terminals × 200 stores EOD + ~1 double-shifted terminal × 200 stores = ~800 batch closes/day)
+Volume: ~1.0M card transactions/month (36% of 2.8M POS transactions); ~5,000 card transactions/store/month (~167/day/store)
+Owner: Store Manager (settlement review); IT Operations (terminal troubleshooting)
+Participants: Cashier (batch close), Store Manager (exception review), IT Helpdesk (terminal issues), Bank Acquirer (settlement processing)
+Source: workflow W537 — POS Card Terminal &amp; Acquirer Settlement Operations</bpmn:documentation>
+      <bpmn:laneSet id="W537_LaneSet5">
+        <bpmn:lane id="W537_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W537_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W537_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W537_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W537_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W537_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W537_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W537_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W537_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W537_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W537_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W537_Lane4" name="IT Operations">
+        <bpmn:flowNodeRef>W537_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W537_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W537_Start6" name="End of cashier shift (batch close) or end-of-day store close (W5F); also triggered by…">
+        <bpmn:outgoing>W537_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W537_Task7" name="Card authorization at POS">
+        <bpmn:documentation>Step 1: Card authorization at POS: during checkout (W5B.7), customer presents card; cashier or customer taps/inserts/swipes on PIN pad; POS system sends authorization request to acquirer via integrated payment gateway; system receives approval/decline with authorization code; transaction completed with card tender line on receipt
+Responsible (R): Cashier / System
+Accountable (A): —
+Duration: 5–15 sec per transaction</bpmn:documentation>
+        <bpmn:incoming>W537_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W537_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W537_Task8" name="Contactless / QR payment">
+        <bpmn:documentation>Step 2: Contactless / QR payment: customer taps contactless card or scans e-wallet QR on PIN pad for amounts below contactless limit (PHP 2,000); system processes without PIN; amounts above limit require PIN entry; e-wallet payments (GCash, Maya) processed via same PIN pad terminal using QR display
+Responsible (R): Cashier / System
+Accountable (A): —
+Duration: 3–10 sec</bpmn:documentation>
+        <bpmn:incoming>W537_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W537_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W537_Task9" name="Shift-end card batch close">
+        <bpmn:documentation>Step 3: Shift-end card batch close: at shift handover (W517), cashier or Store Manager initiates card batch close on each terminal; system transmits all authorized card transactions since last batch close to acquirer for settlement; acquirer confirms batch total (count + amount); batch close receipt printed and retained
+Responsible (R): Cashier / Store Manager
+Accountable (A): Store Manager
+Duration: 2–5 min per terminal</bpmn:documentation>
+        <bpmn:incoming>W537_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W537_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W537_Task10" name="Batch total verification">
+        <bpmn:documentation>Step 4: Batch total verification: Store Manager compares card batch total on close receipt to POS card tender total from X-report (mid-shift) or Z-report (end-of-day); verifies transaction count and total amount match; flags variance &gt; PHP 100 for investigation
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W537_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W537_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W537_Task11" name="Settlement exception handling">
+        <bpmn:documentation>Step 5: Settlement exception handling: if batch close fails (communication error, acquirer timeout, total mismatch), system queues batch for retry; Store Manager contacts acquirer support if retry fails after 3 attempts; unsettled transactions held in terminal memory and retransmitted on next successful connection; exception logged per W48 (helpdesk ticket if IT assistance needed)
+Responsible (R): Store Manager / IT Helpdesk
+Accountable (A): Store Manager
+Duration: 10–30 min per exception</bpmn:documentation>
+        <bpmn:incoming>W537_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W537_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W537_Task12" name="PIN pad error troubleshooting">
+        <bpmn:documentation>Step 6: PIN pad error troubleshooting: if PIN pad malfunctions during transaction (offline, printer error, communication failure), cashier follows troubleshooting protocol: (a) restart PIN pad, (b) test with service card, (c) if persistent, log IT ticket per W265; cashier redirects card customers to adjacent terminal; if all terminals down, cash-only mode per W5E
+Responsible (R): Cashier / IT Helpdesk
+Accountable (A): Store Manager
+Duration: 5–15 min</bpmn:documentation>
+        <bpmn:incoming>W537_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W537_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W537_Task13" name="Daily settlement reconciliation">
+        <bpmn:documentation>Step 7: Daily settlement reconciliation: next-business-day, Finance receives settlement file from acquirer per W99 (payment settlement reconciliation); settlement file matched to POS batch totals; discrepancies (MDR fees, chargebacks, rejected transactions) flagged for investigation per FIN-037
+Responsible (R): Finance / System
+Accountable (A): Finance Manager
+Duration: Per W99</bpmn:documentation>
+        <bpmn:incoming>W537_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W537_Flow24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W537_Task14" name="Quarterly terminal inventory &amp; firmware audit">
+        <bpmn:documentation>Step 8: Quarterly terminal inventory &amp; firmware audit (per the Duration and staffing basis): IT Operations verifies all 600 PIN pads are online, running current firmware, and PCI-DSS compliant; firmware updates pushed during off-hours; non-compliant terminals flagged for replacement per W265
+Responsible (R): IT Operations
+Accountable (A): IT Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W537_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W537_End15" name="Complete">
+        <bpmn:incoming>W537_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W537_Annotation16">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: automatic retry and terminal memory buffer; operational: retry and terminal memory buffer; operational: next-day settlement file matching per W99
+Owner: Store Manager (settlement review); IT Operations (terminal troubleshooting)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W537_Assoc17" sourceRef="W537_Annotation16" targetRef="W537_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W537_Flow18" sourceRef="W537_Start6" targetRef="W537_Task7" />
+      <bpmn:sequenceFlow id="W537_Flow19" sourceRef="W537_Task7" targetRef="W537_Task8" />
+      <bpmn:sequenceFlow id="W537_Flow20" sourceRef="W537_Task8" targetRef="W537_Task9" />
+      <bpmn:sequenceFlow id="W537_Flow21" sourceRef="W537_Task9" targetRef="W537_Task10" />
+      <bpmn:sequenceFlow id="W537_Flow22" sourceRef="W537_Task10" targetRef="W537_Task11" />
+      <bpmn:sequenceFlow id="W537_Flow23" sourceRef="W537_Task11" targetRef="W537_Task12" />
+      <bpmn:sequenceFlow id="W537_Flow24" sourceRef="W537_Task12" targetRef="W537_Task13" />
+      <bpmn:sequenceFlow id="W537_Flow25" sourceRef="W537_Task13" targetRef="W537_Task14" />
+      <bpmn:sequenceFlow id="W537_Flow26" sourceRef="W537_Task14" targetRef="W537_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W537_diag">
+      <bpmndi:BPMNPlane id="W537_plane" bpmnElement="W_W537">
+        <bpmndi:BPMNShape id="W537_Lane1_di" bpmnElement="W537_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Lane2_di" bpmnElement="W537_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Lane3_di" bpmnElement="W537_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Lane4_di" bpmnElement="W537_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task7_di" bpmnElement="W537_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task8_di" bpmnElement="W537_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task9_di" bpmnElement="W537_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task10_di" bpmnElement="W537_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task11_di" bpmnElement="W537_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task12_di" bpmnElement="W537_Task12"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task13_di" bpmnElement="W537_Task13"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Task14_di" bpmnElement="W537_Task14"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Start6_di" bpmnElement="W537_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_End15_di" bpmnElement="W537_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W537_Annotation16_di" bpmnElement="W537_Annotation16"><dc:Bounds x="160" y="800" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W537_Flow18_di" bpmnElement="W537_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow19_di" bpmnElement="W537_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow20_di" bpmnElement="W537_Flow20"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow21_di" bpmnElement="W537_Flow21"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow22_di" bpmnElement="W537_Flow22"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow23_di" bpmnElement="W537_Flow23"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow24_di" bpmnElement="W537_Flow24"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow25_di" bpmnElement="W537_Flow25"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Flow26_di" bpmnElement="W537_Flow26"><di:waypoint x="2050" y="675" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W537_Assoc17_di" bpmnElement="W537_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W541" name="W541. POS Cash Office Operations &amp; Bank Deposit Preparation" isExecutable="false">
+      <bpmn:documentation>Trigger: End of cashier shift (W517) or end-of-day store close (W5F) when cash drawers are submitted to cash office
+Frequency: Daily — 2 shifts × 200 stores = 400 cash office processing cycles/day
+Volume: ~PHP 2.1B in monthly cash sales (42% of PHP 5.04B); ~PHP 350,000/day/average store in cash
+Owner: Store Manager (cash office operations); Finance (bank deposit verification)
+Participants: Cash Office Clerk / designated Store Manager on-duty, Cashier (drawer handover), CIT Guard (cash pickup per W212), Bank (deposit processing)
+Source: workflow W541 — POS Cash Office Operations &amp; Bank Deposit Preparation</bpmn:documentation>
+      <bpmn:laneSet id="W541_LaneSet3">
+        <bpmn:lane id="W541_Lane1" name="Cash Office Clerk">
+        <bpmn:flowNodeRef>W541_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W541_Lane2" name="System">
+        <bpmn:flowNodeRef>W541_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W541_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W541_Start4" name="End of cashier shift (W517) or end-of-day store close (W5F) when cash drawers are…">
+        <bpmn:outgoing>W541_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W541_Task5" name="Drawer receipt from cashier">
+        <bpmn:documentation>Step 1: Drawer receipt from cashier: at shift end (W517.7) or EOD (W5F.2), cashier brings sealed cash drawer or tamper-evident cash bag to cash office; Cash Office Clerk verifies tamper-evident seal is intact; records receipt time and cashier name
+Responsible (R): Cash Office Clerk
+Accountable (A): Store Manager
+Duration: 2–3 min per drawer</bpmn:documentation>
+        <bpmn:incoming>W541_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W541_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W541_Task6" name="Drawer count and verification">
+        <bpmn:documentation>Step 2: Drawer count and verification: Cash Office Clerk opens drawer/bag in cash office (secure room with CCTV); counts bills by denomination; counts coins by denomination; records actual cash amount per cashier; system compares actual count to POS system expected amount (opening float + cash sales − cash refunds − cash payouts − voids)
+Responsible (R): Cash Office Clerk
+Accountable (A): —
+Duration: 5–8 min per drawer</bpmn:documentation>
+        <bpmn:incoming>W541_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W541_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W541_Task7" name="Variance documentation">
+        <bpmn:documentation>Step 3: Variance documentation: if variance between actual and expected &gt; PHP 50 (configurable threshold): (a) system flags variance for investigation per W272 (cashier over/short), (b) Cash Office Clerk documents variance with cashier name, amount, date, shift, (c) Store Manager notified, (d) cashier notified and signs variance acknowledgment; variance &lt; PHP 50 recorded but not escalated
+Responsible (R): Cash Office Clerk / Store Manager
+Accountable (A): Store Manager
+Duration: 3–5 min per variance</bpmn:documentation>
+        <bpmn:incoming>W541_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W541_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W541_Task8" name="Non-cash tender verification">
+        <bpmn:documentation>Step 4: Non-cash tender verification: for stores without Smart Safe, Cash Office Clerk also verifies non-cash tender totals: (a) card batch totals vs. POS card tender report (per W537), (b) e-wallet settlement totals vs. POS e-wallet tender report, (c) trade account charges vs. POS trade account report; discrepancies flagged per W537 or W261
+Responsible (R): Cash Office Clerk
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W541_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W541_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W541_Task9" name="Bank deposit preparation">
+        <bpmn:documentation>Step 5: Bank deposit preparation: Cash Office Clerk prepares bank deposit: (a) selects bills and coins for deposit (keeping working float for next day), (b) fills bank deposit slip with cash breakdown by denomination, (c) includes any check payments received, (d) seals deposit in tamper-evident bank bag with deposit slip, (e) records deposit amount in cash office log; for Smart Safe stores (W212): Smart Safe counts and verifies cash automatically; Cash Office Clerk confirms Smart Safe count and initiates deposit report
+Responsible (R): Cash Office Clerk
+Accountable (A): Store Manager
+Duration: 10–15 min</bpmn:documentation>
+        <bpmn:incoming>W541_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W541_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W541_Task10" name="Cash securing">
+        <bpmn:documentation>Step 6: Cash securing: remaining working float (next day&#x27;s opening float per W5A) placed in store safe; bank deposit bag secured in safe pending CIT pickup (W212) or manager bank run; cash office log updated with safe contents (working float + deposit bag); safe locked and time-lock set
+Responsible (R): Cash Office Clerk
+Accountable (A): Store Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W541_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W541_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W541_Task11" name="Cash office close report">
+        <bpmn:documentation>Step 7: Cash office close report: system generates cash office close report: (a) per-cashier actual vs. expected with variances, (b) total cash received, (c) bank deposit amount, (d) working float retained, (e) non-cash tender summary, (f) net cash position; Store Manager reviews and digitally signs; report transmitted to Finance via event stream (W533)
+Responsible (R): System / Cash Office Clerk
+Accountable (A): Store Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W541_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W541_Flow22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W541_Task12" name="CIT pickup or bank deposit execution">
+        <bpmn:documentation>Step 8: CIT pickup or bank deposit execution: for stores with CIT service (W212, FIN-025): CIT guard arrives per schedule; two-person custody transfer (Cash Office Clerk + CIT guard); both sign custody transfer log; CIT guard transports deposit to bank; for stores without CIT: Store Manager or designated supervisor makes bank run before close; bank deposit receipt obtained and filed
+Responsible (R): Cash Office Clerk / CIT Guard
+Accountable (A): Store Manager
+Duration: 10–15 min</bpmn:documentation>
+        <bpmn:incoming>W541_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W541_End13" name="Complete">
+        <bpmn:incoming>W541_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W541_Annotation14">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: denomination-level count recording and dual-verification for variances &gt; PHP 200; operational: CIT service for high-volume stores, varying bank run times for others; operational: staggered shift handover schedule and Smart Safe automation (W212)
+Owner: Store Manager (cash office operations); Finance (bank deposit verification)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W541_Assoc15" sourceRef="W541_Annotation14" targetRef="W541_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W541_Flow16" sourceRef="W541_Start4" targetRef="W541_Task5" />
+      <bpmn:sequenceFlow id="W541_Flow17" sourceRef="W541_Task5" targetRef="W541_Task6" />
+      <bpmn:sequenceFlow id="W541_Flow18" sourceRef="W541_Task6" targetRef="W541_Task7" />
+      <bpmn:sequenceFlow id="W541_Flow19" sourceRef="W541_Task7" targetRef="W541_Task8" />
+      <bpmn:sequenceFlow id="W541_Flow20" sourceRef="W541_Task8" targetRef="W541_Task9" />
+      <bpmn:sequenceFlow id="W541_Flow21" sourceRef="W541_Task9" targetRef="W541_Task10" />
+      <bpmn:sequenceFlow id="W541_Flow22" sourceRef="W541_Task10" targetRef="W541_Task11" />
+      <bpmn:sequenceFlow id="W541_Flow23" sourceRef="W541_Task11" targetRef="W541_Task12" />
+      <bpmn:sequenceFlow id="W541_Flow24" sourceRef="W541_Task12" targetRef="W541_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W541_diag">
+      <bpmndi:BPMNPlane id="W541_plane" bpmnElement="W_W541">
+        <bpmndi:BPMNShape id="W541_Lane1_di" bpmnElement="W541_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Lane2_di" bpmnElement="W541_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task5_di" bpmnElement="W541_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task6_di" bpmnElement="W541_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task7_di" bpmnElement="W541_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task8_di" bpmnElement="W541_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task9_di" bpmnElement="W541_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task10_di" bpmnElement="W541_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task11_di" bpmnElement="W541_Task11"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Task12_di" bpmnElement="W541_Task12"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Start4_di" bpmnElement="W541_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_End13_di" bpmnElement="W541_End13"><dc:Bounds x="2100" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W541_Annotation14_di" bpmnElement="W541_Annotation14"><dc:Bounds x="160" y="460" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W541_Flow16_di" bpmnElement="W541_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow17_di" bpmnElement="W541_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow18_di" bpmnElement="W541_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow19_di" bpmnElement="W541_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow20_di" bpmnElement="W541_Flow20"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow21_di" bpmnElement="W541_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow22_di" bpmnElement="W541_Flow22"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow23_di" bpmnElement="W541_Flow23"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Flow24_di" bpmnElement="W541_Flow24"><di:waypoint x="2050" y="165" /><di:waypoint x="2100" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W541_Assoc15_di" bpmnElement="W541_Assoc15"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W543" name="W543. POS Consignment Sell-Through Transaction Processing &amp; Vendor Settlement Trigger" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer purchases a consignment item at POS; consignment sell-through period settlement
+Frequency: ~42,000 consignment POS transactions/month (~1.5% of POS transactions)
+Volume: ~PHP 378M/month in consignment sales (~7.5% of in-store revenue)
+Owner: Merchandising Manager (consignment terms); Store Manager (POS processing compliance)
+Participants: Cashier (scanning), System (ownership transfer detection), Finance (vendor settlement), Vendor (consignment partner)
+Source: workflow W543 — POS Consignment Sell-Through Transaction Processing &amp; Vendor Settlement Trigger</bpmn:documentation>
+      <bpmn:laneSet id="W543_LaneSet4">
+        <bpmn:lane id="W543_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W543_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W543_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W543_Lane2" name="System">
+        <bpmn:flowNodeRef>W543_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W543_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W543_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W543_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W543_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W543_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W543_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W543_Start5" name="Customer purchases a consignment item at POS; consignment sell-through period settlement">
+        <bpmn:outgoing>W543_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W543_Task6" name="Consignment item scan at checkout">
+        <bpmn:documentation>Step 1: Consignment item scan at checkout: cashier scans consignment item barcode; POS system identifies item as consignment from item master flag (MDM — consignment indicator); system displays consignment indicator on cashier screen (discrete — not shown to customer); standard pricing and promotions applied per normal POS rules (W5B)
+Responsible (R): Cashier / System
+Accountable (A): —
+Duration: No incremental time vs. standard scan</bpmn:documentation>
+        <bpmn:incoming>W543_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W543_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W543_Task7" name="Consignment ownership transfer">
+        <bpmn:documentation>Step 2: Consignment ownership transfer: at transaction completion (payment tender accepted), system executes ownership transfer for each consignment line item: (a) vendor-owned consignment inventory reduced by quantity sold, (b) standard owned inventory not affected (no owned stock existed), (c) ownership transfer event published via W533 with consignment flag, (d) COGS entry posted using consignment cost (not standard cost), (e) revenue posted per normal sales transaction
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W543_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W543_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W543_Task8" name="Consignment sell-through data accumulation">
+        <bpmn:documentation>Step 3: Consignment sell-through data accumulation: system accumulates daily consignment sell-through data per vendor: (a) item-level sales quantities and values, (b) date and store of sale, (c) transaction reference numbers; data published to vendor settlement accumulation table for FIN-018 processing
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W543_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W543_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W543_Task9" name="Consignment return processing">
+        <bpmn:documentation>Step 4: Consignment return processing: when a consignment item is returned (W12), system reverses ownership transfer: (a) inventory returned to vendor-owned consignment stock (not BuildRight owned stock), (b) COGS reversed, (c) revenue reversed per standard return processing, (d) sell-through accumulation adjusted; if item is defective, system flags for vendor RTV per consignment terms rather than standard RTV
+Responsible (R): System / Cashier
+Accountable (A): Store Manager
+Duration: Per W12</bpmn:documentation>
+        <bpmn:incoming>W543_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W543_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W543_Task10" name="Consignment pricing exception">
+        <bpmn:documentation>Step 5: Consignment pricing exception: if vendor requests a temporary price change on consignment items (promotional pricing, markdown), pricing update flows through standard price push mechanism (POS-047) with consignment-specific GL posting (vendor-funded discount); Store Manager does not need to distinguish at POS — system handles automatically
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W543_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W543_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W543_Task11" name="Monthly vendor settlement trigger">
+        <bpmn:documentation>Step 6: Monthly vendor settlement trigger: at month-end, Finance runs consignment settlement per FIN-018; POS sell-through data accumulated in W543.3 provides the settlement basis; settlement report shared with vendor for reconciliation; AP voucher created for vendor payment (consignment cost × quantity sold − vendor-funded discounts − defectives)
+Responsible (R): Finance / System
+Accountable (A): Finance Manager
+Duration: Per FIN-018</bpmn:documentation>
+        <bpmn:incoming>W543_Flow20</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W543_End12" name="Complete">
+        <bpmn:incoming>W543_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W543_Annotation13">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: item master governance (W252) with consignment flag validation at SKU creation; operational: real-time consignment inventory deduction and vendor recall processing per W29; operational: transaction-level sell-through data (W543.3) as evidence
+Owner: Merchandising Manager (consignment terms); Store Manager (POS processing compliance)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W543_Assoc14" sourceRef="W543_Annotation13" targetRef="W543_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W543_Flow15" sourceRef="W543_Start5" targetRef="W543_Task6" />
+      <bpmn:sequenceFlow id="W543_Flow16" sourceRef="W543_Task6" targetRef="W543_Task7" />
+      <bpmn:sequenceFlow id="W543_Flow17" sourceRef="W543_Task7" targetRef="W543_Task8" />
+      <bpmn:sequenceFlow id="W543_Flow18" sourceRef="W543_Task8" targetRef="W543_Task9" />
+      <bpmn:sequenceFlow id="W543_Flow19" sourceRef="W543_Task9" targetRef="W543_Task10" />
+      <bpmn:sequenceFlow id="W543_Flow20" sourceRef="W543_Task10" targetRef="W543_Task11" />
+      <bpmn:sequenceFlow id="W543_Flow21" sourceRef="W543_Task11" targetRef="W543_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W543_diag">
+      <bpmndi:BPMNPlane id="W543_plane" bpmnElement="W_W543">
+        <bpmndi:BPMNShape id="W543_Lane1_di" bpmnElement="W543_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Lane2_di" bpmnElement="W543_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Lane3_di" bpmnElement="W543_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Task6_di" bpmnElement="W543_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Task7_di" bpmnElement="W543_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Task8_di" bpmnElement="W543_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Task9_di" bpmnElement="W543_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Task10_di" bpmnElement="W543_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Task11_di" bpmnElement="W543_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Start5_di" bpmnElement="W543_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_End12_di" bpmnElement="W543_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W543_Annotation13_di" bpmnElement="W543_Annotation13"><dc:Bounds x="160" y="630" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W543_Flow15_di" bpmnElement="W543_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W543_Flow16_di" bpmnElement="W543_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W543_Flow17_di" bpmnElement="W543_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W543_Flow18_di" bpmnElement="W543_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W543_Flow19_di" bpmnElement="W543_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W543_Flow20_di" bpmnElement="W543_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W543_Flow21_di" bpmnElement="W543_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W543_Assoc14_di" bpmnElement="W543_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1268" name="W1268. E-Wallet (GCash/Maya) Daily Settlement &amp; Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: End-of-day store closing; daily e-wallet settlement window
+Frequency: Daily per store (200 stores) + consolidated HQ review
+Volume: ~420,000 e-wallet transactions/month (~15% of 2.8M total POS transactions); ~PHP 756M/month in e-wallet tender (~15% of PHP 5.04B in-store revenue)
+Owner: Cash Office Clerk (store-level); Treasury Analyst (HQ reconciliation)
+Participants: Cash Office Clerk, Store Manager (exception escalation), Treasury Analyst, Finance Analyst
+Source: workflow W1268 — E-Wallet (GCash/Maya) Daily Settlement &amp; Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1268_LaneSet4">
+        <bpmn:lane id="W1268_Lane1" name="System">
+        <bpmn:flowNodeRef>W1268_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1268_Lane2" name="Cash Office Clerk">
+        <bpmn:flowNodeRef>W1268_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1268_Lane3" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1268_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1268_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1268_Start5" name="End-of-day store closing; daily e-wallet settlement window">
+        <bpmn:outgoing>W1268_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1268_Task6" name="End-of-day e-wallet report generation">
+        <bpmn:documentation>Step 1: End-of-day e-wallet report generation: at store closing per W574, system generates e-wallet tender summary per terminal and per store: (a) total GCash transactions — count and amount, (b) total Maya transactions — count and amount, (c) per-terminal breakdown, (d) any failed/declined e-wallet transactions during the day, (e) total e-wallet refunds processed
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1268_Task7" name="Cash Office Clerk verifies e-wallet totals">
+        <bpmn:documentation>Step 2: Cash Office Clerk verifies e-wallet totals: Cash Office Clerk compares system e-wallet report (step 1) against POS e-wallet tender totals from Z-report (W574); flags discrepancies &gt; PHP 500 for Store Manager review
+Responsible (R): Cash Office Clerk
+Accountable (A): Store Manager
+Duration: 10 min/store</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1268_Task8" name="System submits e-wallet batch settlement file">
+        <bpmn:documentation>Step 3: System submits e-wallet batch settlement file: POS system transmits end-of-day batch settlement request to each e-wallet provider: (a) GCash — batch sent to GCash merchant API with store ID, terminal IDs, transaction list, and total amount, (b) Maya — batch sent to Maya Business dashboard API with same data; system logs batch submission confirmation with reference number
+Responsible (R): System
+Accountable (A): —
+Duration: Automated (runs at 11:00 PM nightly)</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1268_Task9" name="E-wallet provider settlement confirmation">
+        <bpmn:documentation>Step 4: E-wallet provider settlement confirmation: by T+1 (next business day morning), e-wallet providers process the batch and: (a) credit BuildRight&#x27;s designated bank account with gross e-wallet collections minus MDR, (b) generate settlement report accessible via provider portal or API — showing: gross amount, MDR deducted, net settled amount, transaction count, any exceptions (duplicate charges, chargebacks), (c) system retrieves settlement confirmation via API or manual portal download
+Responsible (R): System / Treasury Analyst
+Accountable (A): Treasury Analyst
+Duration: 15 min/day (HQ)</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1268_Task10" name="Automated reconciliation — store level">
+        <bpmn:documentation>Step 5: Automated reconciliation — store level: system matches: (a) POS e-wallet tender per store (step 1) vs. e-wallet provider settlement per store (step 4); (b) flags unmatched transactions (POS shows sale but no settlement confirmation, or settlement shows transaction not in POS); (c) calculates MDR per transaction and total MDR per store per provider
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1268_Task11" name="Automated reconciliation — HQ consolidation">
+        <bpmn:documentation>Step 6: Automated reconciliation — HQ consolidation: Treasury Analyst reviews consolidated e-wallet settlement dashboard: (a) total e-wallet collections per provider across all 200 stores, (b) total MDR fees deducted, (c) net settled amount vs. expected, (d) unmatched transactions by store, (e) exception summary (failed settlements, chargebacks, refunds)
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1268_Task12" name="Exception resolution">
+        <bpmn:documentation>Step 7: Exception resolution: for each unmatched or disputed transaction: (a) Treasury Analyst investigates with e-wallet provider support (GCash/Maya merchant hotline or portal ticket); (b) common exceptions: (i) customer-initiated chargeback — verify with POS transaction log and CCTV timestamp, (ii) duplicate charge — refund via provider portal, (iii) settlement delay — track and follow up in 48 hours, (iv) QR scan failure where customer paid but POS didn&#x27;t record — reconcile manually with provider transaction reference; (c) unresolved exceptions &gt; PHP 5,000 escalated to Treasury Manager
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 30 min/day (as needed)</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1268_Task13" name="MDR fee accounting">
+        <bpmn:documentation>Step 8: MDR fee accounting: system posts daily journal entries per store: (a) debit: bank account (net settlement received), (b) debit: MDR expense (merchant discount rate —GCash 1.5%, Maya 2.0% per contract), (c) credit: accounts receivable — e-wallet (gross e-wallet sales); monthly: Finance Analyst reconciles total MDR expense vs. provider MDR statements; MDR variance &gt; 0.1% of e-wallet revenue investigated
+Responsible (R): System / Finance Analyst
+Accountable (A): Controller
+Duration: Automated + 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1268_Flow25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1268_Task14" name="Weekly e-wallet trend review">
+        <bpmn:documentation>Step 9: Weekly e-wallet trend review: Treasury Analyst reviews weekly e-wallet metrics: (a) e-wallet share of total tender (target: ~15%), (b) average transaction value by e-wallet vs. cash vs. card, (c) e-wallet settlement exception rate (target: &lt; 0.5%), (d) MDR cost trend, (e) provider uptime/downtime incidents; findings shared with Store Operations and IT for terminal health monitoring
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W1268_Flow26</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1268_End15" name="Complete">
+        <bpmn:incoming>W1268_Flow180</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1268_Annotation16">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: dual-provider strategy (if GCash is down, Maya may still work) and encouraging card/cash as backup
+Owner: Cash Office Clerk (store-level); Treasury Analyst (HQ reconciliation)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1268_Assoc17" sourceRef="W1268_Annotation16" targetRef="W1268_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1268_Flow18" sourceRef="W1268_Start5" targetRef="W1268_Task6" />
+      <bpmn:sequenceFlow id="W1268_Flow19" sourceRef="W1268_Task6" targetRef="W1268_Task7" />
+      <bpmn:sequenceFlow id="W1268_Flow20" sourceRef="W1268_Task7" targetRef="W1268_Task8" />
+      <bpmn:sequenceFlow id="W1268_Flow21" sourceRef="W1268_Task8" targetRef="W1268_Task9" />
+      <bpmn:sequenceFlow id="W1268_Flow22" sourceRef="W1268_Task9" targetRef="W1268_Task10" />
+      <bpmn:sequenceFlow id="W1268_Flow23" sourceRef="W1268_Task10" targetRef="W1268_Task11" />
+      <bpmn:sequenceFlow id="W1268_Flow24" sourceRef="W1268_Task11" targetRef="W1268_Task12" />
+      <bpmn:sequenceFlow id="W1268_Flow25" sourceRef="W1268_Task12" targetRef="W1268_Task13" />
+      <bpmn:sequenceFlow id="W1268_Flow26" sourceRef="W1268_Task13" targetRef="W1268_Task14" />
+      <bpmn:sequenceFlow id="W1268_Flow27" sourceRef="W1268_Task14" targetRef="W1268_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1268_diag">
+      <bpmndi:BPMNPlane id="W1268_plane" bpmnElement="W_W1268">
+        <bpmndi:BPMNShape id="W1268_Lane1_di" bpmnElement="W1268_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Lane2_di" bpmnElement="W1268_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Lane3_di" bpmnElement="W1268_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task6_di" bpmnElement="W1268_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task7_di" bpmnElement="W1268_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task8_di" bpmnElement="W1268_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task9_di" bpmnElement="W1268_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task10_di" bpmnElement="W1268_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task11_di" bpmnElement="W1268_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task12_di" bpmnElement="W1268_Task12"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task13_di" bpmnElement="W1268_Task13"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Task14_di" bpmnElement="W1268_Task14"><dc:Bounds x="2080" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Start5_di" bpmnElement="W1268_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_End15_di" bpmnElement="W1268_End15"><dc:Bounds x="2310" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1268_Annotation16_di" bpmnElement="W1268_Annotation16"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1268_Flow18_di" bpmnElement="W1268_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow19_di" bpmnElement="W1268_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow20_di" bpmnElement="W1268_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow21_di" bpmnElement="W1268_Flow21"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow22_di" bpmnElement="W1268_Flow22"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow23_di" bpmnElement="W1268_Flow23"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow24_di" bpmnElement="W1268_Flow24"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow25_di" bpmnElement="W1268_Flow25"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow26_di" bpmnElement="W1268_Flow26"><di:waypoint x="2050" y="165" /><di:waypoint x="2080" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Flow27_di" bpmnElement="W1268_Flow27"><di:waypoint x="2260" y="505" /><di:waypoint x="2310" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1268_Assoc17_di" bpmnElement="W1268_Assoc17"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1301" name="W1301. E-Wallet (GCash/Maya) Settlement Reconciliation &amp; Discrepancy Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily settlement reconciliation cycle; or e-wallet provider settlement delay &gt; T+2
+Frequency: Daily reconciliation across 200 stores; ~420,000 e-wallet transactions/month (15% of total transactions)
+Volume: ~2,100 e-wallet transactions per store per month; ~14,000/day chain-wide; average PHP 1,800/transaction (in line with the PHP 1,800 ATV, per W1268)
+Owner: Treasury Analyst
+Participants: Treasury Analyst, Store Cashier, POS System Administrator, E-Wallet Provider (GCash/Maya) Operations
+Source: workflow W1301 — E-Wallet (GCash/Maya) Settlement Reconciliation &amp; Discrepancy Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W1301_LaneSet3">
+        <bpmn:lane id="W1301_Lane1" name="System">
+        <bpmn:flowNodeRef>W1301_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1301_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1301_Lane2" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1301_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1301_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1301_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1301_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1301_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1301_Start4" name="Daily settlement reconciliation cycle; or e-wallet provider settlement delay &gt; T+2">
+        <bpmn:outgoing>W1301_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1301_Task5" name="Daily POS e-wallet transaction extraction">
+        <bpmn:documentation>Step 1: Daily POS e-wallet transaction extraction: (a) system extracts all POS transactions with e-wallet tender type for the previous business day: transaction ID, store, terminal, timestamp, amount, e-wallet provider (GCash or Maya), authorization reference; (b) total POS e-wallet sales computed per provider per store per day; (c) system generates daily e-wallet transaction summary: total GCash transactions × amount, total Maya transactions × amount, grand total per store
+Responsible (R): System
+Accountable (A): Treasury Analyst
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1301_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1301_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1301_Task6" name="Settlement file matching">
+        <bpmn:documentation>Step 2: Settlement file matching: (a) Treasury Analyst downloads daily settlement files from GCash Merchant Portal and Maya Business Dashboard; (b) settlement file contains: batch settlement amount, settlement date, number of transactions covered, gross transaction amount, fees deducted, net settlement amount; (c) system matches settlement batch to POS daily summary: (i) POS total gross e-wallet sales vs. settlement gross amount — expect match within PHP 100 tolerance (normal variance from voids processed after batch cutoff); (ii) if variance &gt; PHP 100: system flags for investigation
+Responsible (R): Treasury Analyst / System
+Accountable (A): Treasury Analyst
+Duration: 30–45 min/day</bpmn:documentation>
+        <bpmn:incoming>W1301_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1301_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1301_Task7" name="Discrepancy investigation &amp; resolution">
+        <bpmn:documentation>Step 3: Discrepancy investigation &amp; resolution: For flagged discrepancies: (a) Treasury Analyst compares transaction-level data: (i) POS transaction list vs. settlement transaction list (by authorization reference) — identify missing or extra transactions; (ii) check for voids/refunds processed in POS after settlement cutoff — these will appear in next day&#x27;s settlement; (iii) check for connectivity failures — transactions where customer&#x27;s e-wallet authorized but POS did not receive confirmation (result: customer was charged but BuildRight POS shows no payment — requires manual verification and journal entry); (iv) check for duplicate settlements — provider error settling same batch twice; (b) for unreconciled items: create investigation ticket with e-wallet provider&#x27;s merchant support with POS transaction details and settlement batch reference; (c) provider investigates and issues adjustment in next settlement or manual refund; (d) target resolution: all discrepancies resolved within 5 business days
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Analyst
+Duration: 1–2 hours/day (on discrepancy days)</bpmn:documentation>
+        <bpmn:incoming>W1301_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1301_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1301_Task8" name="Monthly e-wallet fee reconciliation">
+        <bpmn:documentation>Step 4: Monthly e-wallet fee reconciliation: (a) at month-end, Treasury Analyst reconciles e-wallet provider fees: (i) total fees deducted from settlements per provider vs. contracted fee rate × transaction volume, (ii) verify enterprise monthly flat fee billing vs. per-transaction fee calculation — whichever is more favorable per contract, (iii) identify any unauthorized fee rate changes by provider; (b) dispute any fee overcharges with provider; (c) post fee expense to GL: debit E-Wallet Processing Fees, credit Cash/Bank
+Responsible (R): Treasury Analyst
+Accountable (A): Finance Controller
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1301_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1301_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1301_Task9" name="Store-level e-wallet operational support">
+        <bpmn:documentation>Step 5: Store-level e-wallet operational support: When stores report e-wallet issues: (a) QR code not scanning: POS System Administrator checks terminal configuration and QR code display; (b) e-wallet payment failing: check if store&#x27;s internet connection is stable (e-wallet requires online connectivity unlike offline-capable POS); (c) customer claims payment was deducted but POS shows unpaid: Treasury Analyst checks provider portal for the authorization reference — if confirmed: process manual payment confirmation at POS and note for next day reconciliation; (d) weekly: POS System Administrator reviews e-wallet transaction failure rate per store — stores with &gt; 5% failure rate receive troubleshooting visit
+Responsible (R): Treasury Analyst / POS System Administrator
+Accountable (A): Treasury Analyst
+Duration: Per incident + 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1301_Flow17</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1301_End10" name="Complete">
+        <bpmn:incoming>W1301_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1301_Annotation11">
+        <bpmn:text>Controls: - CTL-184 (ensure POS settlement &amp; tender reconciliation completeness.) | - operational: Treasury Analyst review and approval gate; operational: periodic reconciliation against source documents
+Owner: Treasury Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1301_Assoc12" sourceRef="W1301_Annotation11" targetRef="W1301_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1301_Flow13" sourceRef="W1301_Start4" targetRef="W1301_Task5" />
+      <bpmn:sequenceFlow id="W1301_Flow14" sourceRef="W1301_Task5" targetRef="W1301_Task6" />
+      <bpmn:sequenceFlow id="W1301_Flow15" sourceRef="W1301_Task6" targetRef="W1301_Task7" />
+      <bpmn:sequenceFlow id="W1301_Flow16" sourceRef="W1301_Task7" targetRef="W1301_Task8" />
+      <bpmn:sequenceFlow id="W1301_Flow17" sourceRef="W1301_Task8" targetRef="W1301_Task9" />
+      <bpmn:sequenceFlow id="W1301_Flow18" sourceRef="W1301_Task9" targetRef="W1301_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1301_diag">
+      <bpmndi:BPMNPlane id="W1301_plane" bpmnElement="W_W1301">
+        <bpmndi:BPMNShape id="W1301_Lane1_di" bpmnElement="W1301_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Lane2_di" bpmnElement="W1301_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Task5_di" bpmnElement="W1301_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Task6_di" bpmnElement="W1301_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Task7_di" bpmnElement="W1301_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Task8_di" bpmnElement="W1301_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Task9_di" bpmnElement="W1301_Task9"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Start4_di" bpmnElement="W1301_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_End10_di" bpmnElement="W1301_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1301_Annotation11_di" bpmnElement="W1301_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1301_Flow13_di" bpmnElement="W1301_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1301_Flow14_di" bpmnElement="W1301_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1301_Flow15_di" bpmnElement="W1301_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1301_Flow16_di" bpmnElement="W1301_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1301_Flow17_di" bpmnElement="W1301_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1301_Flow18_di" bpmnElement="W1301_Flow18"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1301_Assoc12_di" bpmnElement="W1301_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1354" name="W1354. Store Daily Cash Deposit Preparation, Armored Car Pickup &amp; Bank Credit Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Store end-of-day cash count and Z-report completion (W574)
+Frequency: Daily per store (200 stores × 365 days = 73,000 deposits/year)
+Volume: Average cash sales ~42% of PHP 25M/store/month = ~PHP 10.5M cash/store/month; daily cash deposit ~PHP 350,000/store/day
+Owner: Store Manager
+Participants: Cashier (cash count), Store Manager (deposit preparation), Armored Car Service, Treasury Analyst (bank credit reconciliation)
+Source: workflow W1354 — Store Daily Cash Deposit Preparation, Armored Car Pickup &amp; Bank Credit Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1354_LaneSet6">
+        <bpmn:lane id="W1354_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W1354_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1354_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1354_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W1354_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1354_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1354_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1354_Lane3" name="Armored Car Guard">
+        <bpmn:flowNodeRef>W1354_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1354_Lane4" name="Bank">
+        <bpmn:flowNodeRef>W1354_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1354_Lane5" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1354_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1354_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1354_Start7" name="Store end-of-day cash count and Z-report completion (W574)">
+        <bpmn:outgoing>W1354_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1354_Task8" name="Cashier completes end-of-day Z-report; counts physical cash per terminal (3…">
+        <bpmn:documentation>Step 1: Cashier completes end-of-day Z-report; counts physical cash per terminal (3 terminals); records count vs. system expected; reports variance to Store Manager
+Responsible (R): Cashier
+Accountable (A): Store Manager
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W1354_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1354_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1354_Task9" name="Store Manager verifies cash count; investigates any variance &gt; PHP 500 per…">
+        <bpmn:documentation>Step 2: Store Manager verifies cash count; investigates any variance &gt; PHP 500 per terminal (per W958); resolves or escalates
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1354_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1354_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1354_Task10" name="Store Manager prepares bank deposit slip: separates notes by denomination…">
+        <bpmn:documentation>Step 3: Store Manager prepares bank deposit slip: separates notes by denomination; seals cash in tamper-evident deposit bag with pre-printed barcode; retains duplicate deposit slip
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1354_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1354_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1354_Task11" name="Armored car guard arrives at scheduled pickup time (varies by store location…">
+        <bpmn:documentation>Step 4: Armored car guard arrives at scheduled pickup time (varies by store location; provincial stores may have every-other-day pickup); guard and Store Manager sign handover log; guard scans deposit bag barcode
+Responsible (R): Armored Car Guard / Store Manager
+Accountable (A): Store Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1354_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1354_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1354_Task12" name="Armored car service delivers cash to bank branch; bank processes deposit and…">
+        <bpmn:documentation>Step 5: Armored car service delivers cash to bank branch; bank processes deposit and credits store bank account; armored car service transmits electronic pickup confirmation to BuildRight treasury
+Responsible (R): Bank / Armored Car Service
+Accountable (A): —
+Duration: Same day or next day</bpmn:documentation>
+        <bpmn:incoming>W1354_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1354_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1354_Task13" name="Treasury Analyst matches daily store deposit records (from ERP Z-report)…">
+        <bpmn:documentation>Step 6: Treasury Analyst matches daily store deposit records (from ERP Z-report) against bank credit confirmations; flags unmatched deposits for investigation
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 2–3 hours/day</bpmn:documentation>
+        <bpmn:incoming>W1354_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1354_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1354_Task14" name="Store Manager reviews weekly cash reconciliation report showing deposits vs…">
+        <bpmn:documentation>Step 7: Store Manager reviews weekly cash reconciliation report showing deposits vs. bank credits; confirms or disputes any unmatched items
+Responsible (R): Store Manager
+Accountable (A): Treasury Manager
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W1354_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1354_End15" name="Complete">
+        <bpmn:incoming>W1354_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1354_Annotation16">
+        <bpmn:text>Controls: - CTL-184 (ensure POS settlement &amp; tender reconciliation completeness.) | - operational: Store Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1354_Assoc17" sourceRef="W1354_Annotation16" targetRef="W1354_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1354_Flow18" sourceRef="W1354_Start7" targetRef="W1354_Task8" />
+      <bpmn:sequenceFlow id="W1354_Flow19" sourceRef="W1354_Task8" targetRef="W1354_Task9" />
+      <bpmn:sequenceFlow id="W1354_Flow20" sourceRef="W1354_Task9" targetRef="W1354_Task10" />
+      <bpmn:sequenceFlow id="W1354_Flow21" sourceRef="W1354_Task10" targetRef="W1354_Task11" />
+      <bpmn:sequenceFlow id="W1354_Flow22" sourceRef="W1354_Task11" targetRef="W1354_Task12" />
+      <bpmn:sequenceFlow id="W1354_Flow23" sourceRef="W1354_Task12" targetRef="W1354_Task13" />
+      <bpmn:sequenceFlow id="W1354_Flow24" sourceRef="W1354_Task13" targetRef="W1354_Task14" />
+      <bpmn:sequenceFlow id="W1354_Flow25" sourceRef="W1354_Task14" targetRef="W1354_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1354_diag">
+      <bpmndi:BPMNPlane id="W1354_plane" bpmnElement="W_W1354">
+        <bpmndi:BPMNShape id="W1354_Lane1_di" bpmnElement="W1354_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Lane2_di" bpmnElement="W1354_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Lane3_di" bpmnElement="W1354_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Lane4_di" bpmnElement="W1354_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Lane5_di" bpmnElement="W1354_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Task8_di" bpmnElement="W1354_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Task9_di" bpmnElement="W1354_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Task10_di" bpmnElement="W1354_Task10"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Task11_di" bpmnElement="W1354_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Task12_di" bpmnElement="W1354_Task12"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Task13_di" bpmnElement="W1354_Task13"><dc:Bounds x="1450" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Task14_di" bpmnElement="W1354_Task14"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Start7_di" bpmnElement="W1354_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_End15_di" bpmnElement="W1354_End15"><dc:Bounds x="1890" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1354_Annotation16_di" bpmnElement="W1354_Annotation16"><dc:Bounds x="160" y="970" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1354_Flow18_di" bpmnElement="W1354_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Flow19_di" bpmnElement="W1354_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Flow20_di" bpmnElement="W1354_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Flow21_di" bpmnElement="W1354_Flow21"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Flow22_di" bpmnElement="W1354_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Flow23_di" bpmnElement="W1354_Flow23"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Flow24_di" bpmnElement="W1354_Flow24"><di:waypoint x="1630" y="845" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Flow25_di" bpmnElement="W1354_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1354_Assoc17_di" bpmnElement="W1354_Assoc17"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1425" name="W1425. Multi-Tender POS Transaction Daily Reconciliation, Settlement Matching &amp; Variance Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Store end-of-day (EOD) close; daily settlement files from payment processors, card acquirers, and e-wallet providers
+Frequency: Daily per store (200 stores); consolidated at HQ by next business day
+Volume: ~2.8M POS transactions/month = ~93,000/day across 200 stores; split across cash (42%), card (36%), e-wallet (15%), corporate/charge (5%), returns/exchanges (~2% per profile §5)
+Owner: AR Supervisor (HQ); Store Manager (store-level)
+Participants: Store Manager, Cashier, AR Supervisor, Treasury Analyst, Card Acquirer Operations, E-Wallet Provider Operations
+Source: workflow W1425 — Multi-Tender POS Transaction Daily Reconciliation, Settlement Matching &amp; Variance Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W1425_LaneSet4">
+        <bpmn:lane id="W1425_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W1425_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1425_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1425_Lane2" name="System">
+        <bpmn:flowNodeRef>W1425_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1425_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1425_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1425_Lane3" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1425_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1425_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1425_Start5" name="Store end-of-day (EOD) close; daily settlement files from payment processors, card…">
+        <bpmn:outgoing>W1425_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1425_Task6" name="Store-level EOD cash reconciliation">
+        <bpmn:documentation>Step 1: Store-level EOD cash reconciliation (at store close): per W541 (cash office operations): (a) count physical cash in each drawer vs. POS Z-report cash total, (b) verify cash drawer count: starting float + cash sales − cash refunds − cash drops = ending cash, (c) record variance (over/short) per W272, (d) prepare bank deposit per W541
+Responsible (R): Cashier / Store Manager
+Accountable (A): Store Manager
+Duration: 15–20 min/store/day</bpmn:documentation>
+        <bpmn:incoming>W1425_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1425_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1425_Task7" name="Card settlement reconciliation">
+        <bpmn:documentation>Step 2: Card settlement reconciliation (T+1): (a) system matches POS card transaction records against card acquirer settlement file (received T+1 morning): (i) match by terminal ID, transaction reference, and amount, (ii) identify unmatched: POS shows card transaction but no acquirer settlement (possible terminal communication failure — transaction approved locally but not captured by acquirer), (iii) identify variances: settlement amount ≠ POS amount (possible partial refund not processed, currency rounding), (b) AR Supervisor investigates exceptions &gt; PHP 500 per transaction
+Responsible (R): System / AR Supervisor
+Accountable (A): Controller
+Duration: 1–2 hours/day (HQ)</bpmn:documentation>
+        <bpmn:incoming>W1425_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1425_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1425_Task8" name="E-wallet settlement reconciliation">
+        <bpmn:documentation>Step 3: E-wallet settlement reconciliation (T+1): (a) system matches POS e-wallet transaction records against GCash/Maya settlement files per W1268: (i) match by QR code transaction reference and amount, (ii) identify unmatched transactions: POS shows e-wallet payment but no settlement (customer QR scan succeeded at POS but payment failed on e-wallet side — rare but happens with poor connectivity), (iii) identify timing differences: e-wallet settlements batched at end of day — some transactions may settle T+2, (b) AR Supervisor follows up on unmatched transactions &gt; PHP 500
+Responsible (R): System / AR Supervisor
+Accountable (A): Controller
+Duration: 1–2 hours/day (HQ)</bpmn:documentation>
+        <bpmn:incoming>W1425_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1425_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1425_Task9" name="Corporate/charge account reconciliation">
+        <bpmn:documentation>Step 4: Corporate/charge account reconciliation (T+0 to T+1): (a) POS corporate/charge transactions automatically create AR invoices per W16 (order-to-cash): (i) match customer account number to POS transaction, (ii) verify credit limit compliance per W24, (iii) post AR invoice: Dr. Accounts Receivable / Cr. Revenue, (b) reconciliation: total corporate/charge per POS Z-report vs. total AR invoices posted — must match exactly
+Responsible (R): System / AR Clerk
+Accountable (A): AR Supervisor
+Duration: 30 min/day (HQ)</bpmn:documentation>
+        <bpmn:incoming>W1425_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1425_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1425_Task10" name="HQ consolidated daily settlement report">
+        <bpmn:documentation>Step 5: HQ consolidated daily settlement report: (a) Treasury Analyst prepares daily settlement summary: (i) total POS revenue (all tenders) from 200 stores, (ii) total cash collected (deposited at bank per W541), (iii) total card settlements received, (iv) total e-wallet settlements received, (v) total corporate/charge invoiced, (vi) total loyalty points redeemed (points liability increase), (vii) total revenue per GL = sum of all settlement channels, (b) identify and escalate: (i) stores with cash variance &gt; PHP 1,000 for 2+ consecutive days (LP investigation per W562), (ii) card settlement discrepancies &gt; PHP 10,000 total per store (possible terminal fraud), (iii) e-wallet unreconciled transactions &gt; 5 per store per day (connectivity issue)
+Responsible (R): Treasury Analyst
+Accountable (A): Controller
+Duration: 1–2 hours/day</bpmn:documentation>
+        <bpmn:incoming>W1425_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1425_End11" name="Complete">
+        <bpmn:incoming>W1425_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1425_Annotation12">
+        <bpmn:text>Controls: - CTL-184 (ensure POS settlement &amp; tender reconciliation completeness.) | - operational: AR Supervisor (HQ); Store Manager (store-level) review and approval gate; operational: periodic reconciliation against source documents
+Owner: AR Supervisor (HQ); Store Manager (store-level)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1425_Assoc13" sourceRef="W1425_Annotation12" targetRef="W1425_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1425_Flow14" sourceRef="W1425_Start5" targetRef="W1425_Task6" />
+      <bpmn:sequenceFlow id="W1425_Flow15" sourceRef="W1425_Task6" targetRef="W1425_Task7" />
+      <bpmn:sequenceFlow id="W1425_Flow16" sourceRef="W1425_Task7" targetRef="W1425_Task8" />
+      <bpmn:sequenceFlow id="W1425_Flow17" sourceRef="W1425_Task8" targetRef="W1425_Task9" />
+      <bpmn:sequenceFlow id="W1425_Flow18" sourceRef="W1425_Task9" targetRef="W1425_Task10" />
+      <bpmn:sequenceFlow id="W1425_Flow19" sourceRef="W1425_Task10" targetRef="W1425_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1425_diag">
+      <bpmndi:BPMNPlane id="W1425_plane" bpmnElement="W_W1425">
+        <bpmndi:BPMNShape id="W1425_Lane1_di" bpmnElement="W1425_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Lane2_di" bpmnElement="W1425_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Lane3_di" bpmnElement="W1425_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Task6_di" bpmnElement="W1425_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Task7_di" bpmnElement="W1425_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Task8_di" bpmnElement="W1425_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Task9_di" bpmnElement="W1425_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Task10_di" bpmnElement="W1425_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Start5_di" bpmnElement="W1425_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_End11_di" bpmnElement="W1425_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1425_Annotation12_di" bpmnElement="W1425_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1425_Flow14_di" bpmnElement="W1425_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1425_Flow15_di" bpmnElement="W1425_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1425_Flow16_di" bpmnElement="W1425_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1425_Flow17_di" bpmnElement="W1425_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1425_Flow18_di" bpmnElement="W1425_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1425_Flow19_di" bpmnElement="W1425_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1425_Assoc13_di" bpmnElement="W1425_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1467" name="W1467. Store Petty Cash Replenishment, Expense Tracking, Float Audit &amp; Custody Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Petty cash float drops below 30% of authorized limit; end-of-month expense reporting cycle; quarterly petty cash audit; or unplanned emergency expense
+Frequency: ~2–3 replenishment requests per store per month; monthly expense report per store; quarterly physical audit of all 200 stores
+Volume: ~400–600 replenishment transactions/month across 200 stores (PHP 20,000 float/store); ~PHP 5.6M–8.4M/month in petty cash expenses chain-wide (2–3 replenishments/store × ~PHP 14K+ restore)
+Owner: Store Manager
+Participants: Store Manager (custodian), Assistant Store Manager (alternate custodian), Cashier, Regional Operations Manager, AP Accountant, Internal Auditor
+Source: workflow W1467 — Store Petty Cash Replenishment, Expense Tracking, Float Audit &amp; Custody Management</bpmn:documentation>
+      <bpmn:laneSet id="W1467_LaneSet5">
+        <bpmn:lane id="W1467_Lane1" name="Store Manager">
+        <bpmn:flowNodeRef>W1467_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1467_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1467_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1467_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1467_Lane2" name="System">
+        <bpmn:flowNodeRef>W1467_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1467_Lane3" name="Cashier">
+        <bpmn:flowNodeRef>W1467_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1467_Lane4" name="Internal Auditor">
+        <bpmn:flowNodeRef>W1467_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1467_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1467_Start6" name="Petty cash float drops below 30% of authorized limit; end-of-month expense reporting…">
+        <bpmn:outgoing>W1467_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1467_Task7" name="Disbursement">
+        <bpmn:documentation>Step 1: Disbursement: (a) Store Manager (or Assistant Store Manager as alternate custodian) approves petty cash expenditure: (i) verify expense is within authorized petty cash policy (items &lt; PHP 2,000 per transaction; exclusions: payroll advances, personal loans, alcohol, tobacco), (ii) verify supporting receipt or invoice is provided; (b) Cashier processes disbursement from petty cash box; (c) system records: date, amount, payee, expense category, purpose, receipt reference; (d) for expenses &gt; PHP 1,000: Store Manager documents justification in system
+Responsible (R): Store Manager / Cashier
+Accountable (A): Regional Operations Manager
+Duration: 5 min/transaction</bpmn:documentation>
+        <bpmn:incoming>W1467_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1467_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1467_Task8" name="Expense tracking &amp; categorization">
+        <bpmn:documentation>Step 2: Expense tracking &amp; categorization: (a) system maintains running petty cash ledger per store: opening balance, disbursements (by category), running balance, replenishment received; (b) expense categories: maintenance supplies, office supplies, customer goodwill, transport/delivery, meals, emergency tools, other; (c) Store Manager reviews weekly: total disbursements vs. budget allocation, unusual spending patterns, receipts outstanding
+Responsible (R): System / Store Manager
+Accountable (A): —
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W1467_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1467_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1467_Task9" name="Replenishment request">
+        <bpmn:documentation>Step 3: Replenishment request: When petty cash balance drops below 30% of authorized float (PHP 6,000): (a) system auto-generates replenishment request to AP; (b) Store Manager reviews outstanding disbursements, attaches all receipts, and submits replenishment request with: (i) total disbursements since last replenishment, (ii) receipts totaling disbursements, (iii) remaining float balance, (iv) requested replenishment amount = disbursements (to restore full float); (c) AP Accountant reviews: (i) receipts match disbursements, (ii) expenses within policy, (iii) no duplicate claims; (d) AP approves replenishment and initiates bank transfer or cash pickup per W541 deposit process
+Responsible (R): Store Manager / AP Accountant
+Accountable (A): Controller
+Duration: 15 min/request</bpmn:documentation>
+        <bpmn:incoming>W1467_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1467_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1467_Task10" name="Replenishment receipt">
+        <bpmn:documentation>Step 4: Replenishment receipt: (a) Cashier receives replenishment cash (from armored car pickup per W1354 or bank withdrawal); (b) Cashier counts and verifies replenishment amount matches approved request; (c) system records replenishment and updates petty cash balance to full float
+Responsible (R): Cashier
+Accountable (A): Store Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1467_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1467_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1467_Task11" name="Monthly expense report">
+        <bpmn:documentation>Step 5: Monthly expense report: (a) Store Manager generates monthly petty cash expense report: total disbursements by category, receipt compliance rate, replenishment frequency, variance from budget; (b) Regional Operations Manager reviews store-level petty cash reports for policy compliance and spending anomalies; (c) AP Accountant reconciles petty cash expenses against GL store operating expense accounts
+Responsible (R): Store Manager / AP Accountant
+Accountable (A): Controller
+Duration: 30 min/store/month</bpmn:documentation>
+        <bpmn:incoming>W1467_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1467_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1467_Task12" name="Quarterly physical audit">
+        <bpmn:documentation>Step 6: Quarterly physical audit: Internal Auditor conducts surprise petty cash audit at sampled stores (~20 stores/quarter): (a) physical count of petty cash box — cash on hand + unreceipted vouchers must equal authorized float; (b) verify custody: petty cash box secured in safe, only authorized custodians have access; (c) review last 3 months of disbursements for policy compliance; (d) report findings to Controller; (e) any shortage &gt; PHP 500 investigated per LP exception process per W842
+Responsible (R): Internal Auditor
+Accountable (A): Controller
+Duration: 1 hour/store</bpmn:documentation>
+        <bpmn:incoming>W1467_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1467_End13" name="Complete">
+        <bpmn:incoming>W1467_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1467_Annotation14">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: dual-custodian (Store Manager + ASM) model with safe storage; operational: auto-trigger at 30% threshold
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1467_Assoc15" sourceRef="W1467_Annotation14" targetRef="W1467_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1467_Flow16" sourceRef="W1467_Start6" targetRef="W1467_Task7" />
+      <bpmn:sequenceFlow id="W1467_Flow17" sourceRef="W1467_Task7" targetRef="W1467_Task8" />
+      <bpmn:sequenceFlow id="W1467_Flow18" sourceRef="W1467_Task8" targetRef="W1467_Task9" />
+      <bpmn:sequenceFlow id="W1467_Flow19" sourceRef="W1467_Task9" targetRef="W1467_Task10" />
+      <bpmn:sequenceFlow id="W1467_Flow20" sourceRef="W1467_Task10" targetRef="W1467_Task11" />
+      <bpmn:sequenceFlow id="W1467_Flow21" sourceRef="W1467_Task11" targetRef="W1467_Task12" />
+      <bpmn:sequenceFlow id="W1467_Flow22" sourceRef="W1467_Task12" targetRef="W1467_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1467_diag">
+      <bpmndi:BPMNPlane id="W1467_plane" bpmnElement="W_W1467">
+        <bpmndi:BPMNShape id="W1467_Lane1_di" bpmnElement="W1467_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Lane2_di" bpmnElement="W1467_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Lane3_di" bpmnElement="W1467_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Lane4_di" bpmnElement="W1467_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Task7_di" bpmnElement="W1467_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Task8_di" bpmnElement="W1467_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Task9_di" bpmnElement="W1467_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Task10_di" bpmnElement="W1467_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Task11_di" bpmnElement="W1467_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Task12_di" bpmnElement="W1467_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Start6_di" bpmnElement="W1467_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_End13_di" bpmnElement="W1467_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1467_Annotation14_di" bpmnElement="W1467_Annotation14"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1467_Flow16_di" bpmnElement="W1467_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1467_Flow17_di" bpmnElement="W1467_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1467_Flow18_di" bpmnElement="W1467_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1467_Flow19_di" bpmnElement="W1467_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1467_Flow20_di" bpmnElement="W1467_Flow20"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1467_Flow21_di" bpmnElement="W1467_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1467_Flow22_di" bpmnElement="W1467_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1467_Assoc15_di" bpmnElement="W1467_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1468" name="W1468. Multi-Entity Cash Concentration, Zero-Balance Sweeping &amp; Intercompany Settlement Automation" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily — end-of-business cash positioning; or triggered by zero-balance sweep schedule; or monthly intercompany settlement cycle
+Frequency: Daily sweeping for 5 entities across 4 banking partners; monthly intercompany netting and settlement
+Volume: ~200 store bank accounts + 4 DC accounts + 5 entity main accounts = ~209 accounts; ~PHP 5B/month in total cash flows
+Owner: Treasury Manager
+Participants: Treasury Analyst, Controller, Bank Relationship Manager, IT (system integration), Entity Finance Leads
+Source: workflow W1468 — Multi-Entity Cash Concentration, Zero-Balance Sweeping &amp; Intercompany Settlement Automation</bpmn:documentation>
+      <bpmn:laneSet id="W1468_LaneSet5">
+        <bpmn:lane id="W1468_Lane1" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W1468_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1468_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1468_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1468_Lane2" name="System">
+        <bpmn:flowNodeRef>W1468_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1468_Lane3" name="Treasury Manager">
+        <bpmn:flowNodeRef>W1468_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1468_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1468_Lane4" name="Controller">
+        <bpmn:flowNodeRef>W1468_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1468_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1468_Start6" name="Daily — end-of-business cash positioning; or triggered by zero-balance sweep schedule; or…">
+        <bpmn:outgoing>W1468_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1468_Task7" name="Daily cash position consolidation">
+        <bpmn:documentation>Step 1: Daily cash position consolidation (morning): Treasury Analyst retrieves previous day&#x27;s bank balances across all ~209 accounts via bank API/EBBS integration: (a) store deposit accounts — cash receipts from W1354 deposits; (b) DC operating accounts; (c) entity main accounts; (d) USD accounts for import payments; (e) investment accounts per W318; Treasury Analyst produces consolidated cash position report by entity and by bank
+Responsible (R): Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: 45 min</bpmn:documentation>
+        <bpmn:incoming>W1468_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1468_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1468_Task8" name="Zero-balance sweep execution">
+        <bpmn:documentation>Step 2: Zero-balance sweep execution: For each operating account (stores, DCs), system executes automated end-of-day sweep: (a) accounts with balance &gt; target operating balance: excess swept to entity concentration account at same bank; (b) accounts with balance &lt; target: funded from entity concentration account to maintain minimum operating balance; (c) sweep parameters: store accounts maintain PHP 50,000 minimum; DC accounts maintain PHP 200,000 minimum; entity concentration accounts maintain PHP 5M minimum; (d) Treasury Analyst reviews sweep results next morning and investigates any exceptions (failed sweeps, insufficient concentration balance)
+Responsible (R): System / Treasury Analyst
+Accountable (A): Treasury Manager
+Duration: Automated + 15 min review</bpmn:documentation>
+        <bpmn:incoming>W1468_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1468_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1468_Task9" name="Entity-level cash concentration">
+        <bpmn:documentation>Step 3: Entity-level cash concentration: (a) Treasury Manager reviews entity-level cash positions weekly: which entities have surplus cash, which have deficits; (b) surplus entities lend to deficit entities via intercompany current accounts per W87 transfer pricing; (c) system records intercompany loan: principal, interest rate (arm&#x27;s-length per BSP guidelines), term, and settlement date; (d) monthly: intercompany interest calculated and recorded per W87 consolidation
+Responsible (R): Treasury Manager
+Accountable (A): CFO
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1468_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1468_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1468_Task10" name="Monthly intercompany netting &amp; settlement">
+        <bpmn:documentation>Step 4: Monthly intercompany netting &amp; settlement: (a) Controller compiles monthly intercompany balances: (i) Depot Inc. → Logistics Inc. (warehousing fees), (ii) Depot Inc. → Digital Commerce Inc. (ecommerce fulfillment fees), (iii) Depot Inc. → Property Management Inc. (lease payments), (iv) Holdings Inc. → all entities (management fees); (b) Treasury Manager runs multi-lateral netting: offset payables and receivables between entities to minimize actual cash movements; (c) net settlements executed via bank transfer between entity accounts; (d) system posts intercompany settlement entries with supporting documentation per W87
+Responsible (R): Controller / Treasury Manager
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1468_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1468_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1468_Task11" name="Bank account reconciliation">
+        <bpmn:documentation>Step 5: Bank account reconciliation: (a) Treasury Analyst reconciles all bank statements against ERP cash ledger weekly: (i) deposits per W1354 matched to bank credits, (ii) sweeps matched to bank debit/credit entries, (iii) intercompany settlements matched to bank transfers, (iv) bank fees and charges identified and recorded; (b) unreconciled items investigated and resolved within 5 business days
+Responsible (R): Treasury Analyst
+Accountable (A): Controller
+Duration: 4 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1468_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1468_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1468_Task12" name="Quarterly bank relationship review">
+        <bpmn:documentation>Step 6: Quarterly bank relationship review: Treasury Manager meets with each banking partner quarterly: (a) review account structures, sweep arrangements, and service fees; (b) negotiate improved sweep terms, higher deposit rates for concentration accounts; (c) evaluate banking technology (API reliability, EBBS features); (d) assess credit facilities per W319
+Responsible (R): Treasury Manager
+Accountable (A): CFO
+Duration: 2 hours/bank/quarter</bpmn:documentation>
+        <bpmn:incoming>W1468_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1468_End13" name="Complete">
+        <bpmn:incoming>W1468_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1468_Annotation14">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: Treasury Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1468_Assoc15" sourceRef="W1468_Annotation14" targetRef="W1468_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1468_Flow16" sourceRef="W1468_Start6" targetRef="W1468_Task7" />
+      <bpmn:sequenceFlow id="W1468_Flow17" sourceRef="W1468_Task7" targetRef="W1468_Task8" />
+      <bpmn:sequenceFlow id="W1468_Flow18" sourceRef="W1468_Task8" targetRef="W1468_Task9" />
+      <bpmn:sequenceFlow id="W1468_Flow19" sourceRef="W1468_Task9" targetRef="W1468_Task10" />
+      <bpmn:sequenceFlow id="W1468_Flow20" sourceRef="W1468_Task10" targetRef="W1468_Task11" />
+      <bpmn:sequenceFlow id="W1468_Flow21" sourceRef="W1468_Task11" targetRef="W1468_Task12" />
+      <bpmn:sequenceFlow id="W1468_Flow22" sourceRef="W1468_Task12" targetRef="W1468_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1468_diag">
+      <bpmndi:BPMNPlane id="W1468_plane" bpmnElement="W_W1468">
+        <bpmndi:BPMNShape id="W1468_Lane1_di" bpmnElement="W1468_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Lane2_di" bpmnElement="W1468_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Lane3_di" bpmnElement="W1468_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Lane4_di" bpmnElement="W1468_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Task7_di" bpmnElement="W1468_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Task8_di" bpmnElement="W1468_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Task9_di" bpmnElement="W1468_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Task10_di" bpmnElement="W1468_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Task11_di" bpmnElement="W1468_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Task12_di" bpmnElement="W1468_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Start6_di" bpmnElement="W1468_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_End13_di" bpmnElement="W1468_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1468_Annotation14_di" bpmnElement="W1468_Annotation14"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1468_Flow16_di" bpmnElement="W1468_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1468_Flow17_di" bpmnElement="W1468_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1468_Flow18_di" bpmnElement="W1468_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1468_Flow19_di" bpmnElement="W1468_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1468_Flow20_di" bpmnElement="W1468_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1468_Flow21_di" bpmnElement="W1468_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1468_Flow22_di" bpmnElement="W1468_Flow22"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1468_Assoc15_di" bpmnElement="W1468_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5566" name="W5566. Payment-Terminal Tampering &amp; Card-Skimmer Response (PIN-Pad Compromise Event)" isExecutable="false">
+      <bpmn:documentation>Trigger: Discovery of a card-skimming overlay/shimmer/pinhole device on a PIN pad or payment terminal, a device with broken or absent tamper-evident seals or swapped hardware, a terminal missing from its assigned lane, or an acquirer/card-brand/PCI forensic alert naming compromised devices at BuildRight sites
+Frequency: Rare but a standing industry threat: ~1–3 device-compromise discoveries chain-wide per year across the ~3,200-unit PIN-pad estate; organized skimming crews rotate through retail lanes, so the discovery cadence is unpredictable
+Volume: 1 discovery × the terminal-fleet inspection sweep (200 stores × ~16 payment devices = ~3,200 units) × the card-present transactions at the affected lane(s) feeding the compromised-card assessment
+Owner: Store Manager (site response); IT Operations (payment-device estate, forensics &amp; fleet sweep)
+Participants: Cashier / Front-End Supervisor (first observers), Loss Prevention (CCTV preservation &amp; suspect-window analysis), Payment Operations Manager (acquirer &amp; card-brand liaison, W1205 PCI forensic engagement), Security Guard (lane closure &amp; device custody), VS-125 (compromised-card fraud watch), VS-91 (personal-data assessment where cardholder data was captured), Store Communications (VS-63)
+Source: workflow W5566 — Payment-Terminal Tampering &amp; Card-Skimmer Response (PIN-Pad Compromise Event)</bpmn:documentation>
+      <bpmn:laneSet id="W5566_LaneSet6">
+        <bpmn:lane id="W5566_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W5566_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5566_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5566_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W5566_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5566_Lane3" name="Payment Operations Manager">
+        <bpmn:flowNodeRef>W5566_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5566_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5566_Lane4" name="IT Operations">
+        <bpmn:flowNodeRef>W5566_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5566_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5566_Lane5" name="VS-91">
+        <bpmn:flowNodeRef>W5566_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5566_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5566_Start7" name="Discovery of a card-skimming overlay/shimmer/pinhole device on a PIN pad or payment…">
+        <bpmn:outgoing>W5566_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5566_Task8" name="Discovery &amp; freeze">
+        <bpmn:documentation>Step 1: Discovery &amp; freeze: suspected device (bulky overlay, loose fascia, damaged seal, unknown pigtail) → do not remove or power-cycle beyond isolating the lane; photograph in place; close the lane; the device stays under security custody until IT Security/forensics release it
+Responsible (R): Cashier / Front-End Supervisor
+Accountable (A): Store Manager
+Duration: Immediate</bpmn:documentation>
+        <bpmn:incoming>W5566_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5566_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5566_Task9" name="Preserve &amp; escalate">
+        <bpmn:documentation>Step 2: Preserve &amp; escalate: CCTV hold on the lane and approach paths per W838 covering at least 72 hours before discovery; note the last known-clean inspection from the W537 daily checks; escalate to IT Operations and Payment Operations Manager same hour
+Responsible (R): Store Manager / LP
+Accountable (A): IT Operations
+Duration: Same hour</bpmn:documentation>
+        <bpmn:incoming>W5566_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W5566_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5566_Task10" name="Notify acquirer &amp; card brands">
+        <bpmn:documentation>Step 3: Notify acquirer &amp; card brands: device-compromise notification through the acquirer per the scheme&#x27;s PFI-trigger rules; engage the PCI forensic investigator through the W1205 program where card data capture is confirmed
+Responsible (R): Payment Operations Manager
+Accountable (A): CFO
+Duration: 24 hours</bpmn:documentation>
+        <bpmn:incoming>W5566_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W5566_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5566_Task11" name="Fleet sweep">
+        <bpmn:documentation>Step 4: Fleet sweep: chain-wide physical inspection directive — every terminal checked against seal/serial baseline, photographed, logged; stores confirm within the directive window; anomalies quarantine per Step 1
+Responsible (R): IT Operations / Store Managers
+Accountable (A): VP Store Operations
+Duration: 48–72 hours</bpmn:documentation>
+        <bpmn:incoming>W5566_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W5566_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5566_Task12" name="Compromised-card assessment">
+        <bpmn:documentation>Step 5: Compromised-card assessment: affected lane(s), dates and transaction populations compiled from W537 settlement logs and W1425 reconciliation; feeds issuer compromise alerts via the acquirer and the VS-125 fraud watch for presentment abuse
+Responsible (R): Payment Operations Manager / VS-125
+Accountable (A): CFO
+Duration: 3–7 days</bpmn:documentation>
+        <bpmn:incoming>W5566_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W5566_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5566_Task13" name="Privacy &amp; customer messaging">
+        <bpmn:documentation>Step 6: Privacy &amp; customer messaging: where captured cardholder data is confirmed, route the VS-91 assessment (PAN + PIN is personal data under RA 10173; the W53 clock applies from confirmation); scripts for customer inquiries ready at the affected store
+Responsible (R): VS-91 / DPO
+Accountable (A): Data Protection Officer
+Duration: Per W53</bpmn:documentation>
+        <bpmn:incoming>W5566_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W5566_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5566_Task14" name="Retrofit &amp; after-action">
+        <bpmn:documentation>Step 7: Retrofit &amp; after-action: tamper-evident seals and serial-baseline registry standing on the fleet; W537 daily checklist gains the seal/skimmer visual; LP briefing on the suspect pattern; inspection-sweep findings feed the W1205 evidence pack
+Responsible (R): IT Operations / LP
+Accountable (A): CFO
+Duration: 2–4 weeks</bpmn:documentation>
+        <bpmn:incoming>W5566_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5566_End15" name="Complete">
+        <bpmn:incoming>W5566_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5566_Annotation16">
+        <bpmn:text>Controls: - CTL-264 (ensure controlled execution — Payment &amp; Cash Management (PA-08.2).) | - operational: payment devices are inspected against the seal/serial baseline daily (W537) and quarantined-in-place on suspicion; device-compromise notifications to the acquirer within 24 hours of discovery; fleet-sweep completion is evidenced per store before the event closes
+Owner: Store Manager (site response); IT Operations (payment-device estate, forensics &amp; fleet sweep)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5566_Assoc17" sourceRef="W5566_Annotation16" targetRef="W5566_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5566_Flow18" sourceRef="W5566_Start7" targetRef="W5566_Task8" />
+      <bpmn:sequenceFlow id="W5566_Flow19" sourceRef="W5566_Task8" targetRef="W5566_Task9" />
+      <bpmn:sequenceFlow id="W5566_Flow20" sourceRef="W5566_Task9" targetRef="W5566_Task10" />
+      <bpmn:sequenceFlow id="W5566_Flow21" sourceRef="W5566_Task10" targetRef="W5566_Task11" />
+      <bpmn:sequenceFlow id="W5566_Flow22" sourceRef="W5566_Task11" targetRef="W5566_Task12" />
+      <bpmn:sequenceFlow id="W5566_Flow23" sourceRef="W5566_Task12" targetRef="W5566_Task13" />
+      <bpmn:sequenceFlow id="W5566_Flow24" sourceRef="W5566_Task13" targetRef="W5566_Task14" />
+      <bpmn:sequenceFlow id="W5566_Flow25" sourceRef="W5566_Task14" targetRef="W5566_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5566_diag">
+      <bpmndi:BPMNPlane id="W5566_plane" bpmnElement="W_W5566">
+        <bpmndi:BPMNShape id="W5566_Lane1_di" bpmnElement="W5566_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Lane2_di" bpmnElement="W5566_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Lane3_di" bpmnElement="W5566_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Lane4_di" bpmnElement="W5566_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Lane5_di" bpmnElement="W5566_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Task8_di" bpmnElement="W5566_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Task9_di" bpmnElement="W5566_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Task10_di" bpmnElement="W5566_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Task11_di" bpmnElement="W5566_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Task12_di" bpmnElement="W5566_Task12"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Task13_di" bpmnElement="W5566_Task13"><dc:Bounds x="1450" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Task14_di" bpmnElement="W5566_Task14"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Start7_di" bpmnElement="W5566_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_End15_di" bpmnElement="W5566_End15"><dc:Bounds x="1890" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5566_Annotation16_di" bpmnElement="W5566_Annotation16"><dc:Bounds x="160" y="970" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5566_Flow18_di" bpmnElement="W5566_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Flow19_di" bpmnElement="W5566_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Flow20_di" bpmnElement="W5566_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Flow21_di" bpmnElement="W5566_Flow21"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Flow22_di" bpmnElement="W5566_Flow22"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Flow23_di" bpmnElement="W5566_Flow23"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Flow24_di" bpmnElement="W5566_Flow24"><di:waypoint x="1630" y="845" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Flow25_di" bpmnElement="W5566_Flow25"><di:waypoint x="1840" y="675" /><di:waypoint x="1890" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5566_Assoc17_di" bpmnElement="W5566_Assoc17"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

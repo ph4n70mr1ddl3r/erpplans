@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-79.2-withholding-tax-and-2307-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W2761" name="W2761. Expanded Withholding Tax (EWT) Determination &amp; Quarterly Form 1601EQ" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly close; vendor payment run
+Frequency: Monthly per entity
+Volume: ~8,500 AP invoices/month; ~PHP 42–45B annual COGS from which EWT-applicable payments (services, rent, contractors) are screened at payment
+Owner: Tax Manager
+Participants: Tax Manager, AP, Tax Accountant
+Source: workflow W2761 — Expanded Withholding Tax (EWT) Determination &amp; Quarterly Form 1601EQ</bpmn:documentation>
+      <bpmn:laneSet id="W2761_LaneSet4">
+        <bpmn:lane id="W2761_Lane1" name="AP">
+        <bpmn:flowNodeRef>W2761_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2761_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2761_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2761_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2761_Lane3" name="Tax Manager">
+        <bpmn:flowNodeRef>W2761_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2761_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2761_Start5" name="Monthly close; vendor payment run">
+        <bpmn:outgoing>W2761_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2761_Task6" name="AP applies EWT rate per nature-of-payment (rent 5%, professional 10–15%…">
+        <bpmn:documentation>Step 1: AP applies EWT rate per nature-of-payment (rent 5%, professional 10–15%, supplies 1%, contractors 2% etc.) at invoice entry via ERP tax code; withholds at payment
+Responsible (R): AP
+Accountable (A): Tax Manager
+Duration: Per payment</bpmn:documentation>
+        <bpmn:incoming>W2761_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2761_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2761_Task7" name="Tax Accountant reconciles monthly EWT withheld ledger to GL withholding…">
+        <bpmn:documentation>Step 2: Tax Accountant reconciles monthly EWT withheld ledger to GL withholding liability; investigates un-withheld payments; books accruals for late-detected under-withholding
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 1–2 days/entity</bpmn:documentation>
+        <bpmn:incoming>W2761_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2761_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2761_Task8" name="Tax Manager prepares and files BIR Form 1601-EQ (quarterly, due the last day of…">
+        <bpmn:documentation>Step 3: Tax Manager prepares and files BIR Form 1601-EQ (quarterly, due the last day of the month following quarter close) via eFPS; remits withheld amounts; archives schedules
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W2761_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2761_End9" name="Complete">
+        <bpmn:incoming>W2761_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2761_Annotation10">
+        <bpmn:text>Controls: - CTL-214 (ensure BIR tax compliance &amp; filing integrity.) | - operational: automated tax-code mapping and payment-run validation
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2761_Assoc11" sourceRef="W2761_Annotation10" targetRef="W2761_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2761_Flow12" sourceRef="W2761_Start5" targetRef="W2761_Task6" />
+      <bpmn:sequenceFlow id="W2761_Flow13" sourceRef="W2761_Task6" targetRef="W2761_Task7" />
+      <bpmn:sequenceFlow id="W2761_Flow14" sourceRef="W2761_Task7" targetRef="W2761_Task8" />
+      <bpmn:sequenceFlow id="W2761_Flow15" sourceRef="W2761_Task8" targetRef="W2761_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2761_diag">
+      <bpmndi:BPMNPlane id="W2761_plane" bpmnElement="W_W2761">
+        <bpmndi:BPMNShape id="W2761_Lane1_di" bpmnElement="W2761_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_Lane2_di" bpmnElement="W2761_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_Lane3_di" bpmnElement="W2761_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_Task6_di" bpmnElement="W2761_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_Task7_di" bpmnElement="W2761_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_Task8_di" bpmnElement="W2761_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_Start5_di" bpmnElement="W2761_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_End9_di" bpmnElement="W2761_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2761_Annotation10_di" bpmnElement="W2761_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2761_Flow12_di" bpmnElement="W2761_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2761_Flow13_di" bpmnElement="W2761_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2761_Flow14_di" bpmnElement="W2761_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2761_Flow15_di" bpmnElement="W2761_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2761_Assoc11_di" bpmnElement="W2761_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2762" name="W2762. Creditable Withholding Tax (CWT) at Source &amp; Vendor 2307 Issuance" isExecutable="false">
+      <bpmn:documentation>Trigger: Each taxable vendor/contractor payment subject to CWT
+Frequency: Continuous; ~3,000–4,000 payments/month
+Volume: ~800–1,000 active vendors
+Owner: AP Manager
+Participants: AP, Tax Accountant, Vendor
+Source: workflow W2762 — Creditable Withholding Tax (CWT) at Source &amp; Vendor 2307 Issuance</bpmn:documentation>
+      <bpmn:laneSet id="W2762_LaneSet3">
+        <bpmn:lane id="W2762_Lane1" name="AP">
+        <bpmn:flowNodeRef>W2762_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2762_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2762_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2762_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2762_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2762_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2762_Start4" name="Each taxable vendor/contractor payment subject to CWT">
+        <bpmn:outgoing>W2762_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2762_Task5" name="AP withholds CWT at payment per vendor&#x27;s ATC (Alphanumeric Tax Code); generates…">
+        <bpmn:documentation>Step 1: AP withholds CWT at payment per vendor&#x27;s ATC (Alphanumeric Tax Code); generates BIR Form 2307 (Certificate of Tax Withheld) from ERP per payee/quarter
+Responsible (R): AP
+Accountable (A): AP Manager
+Duration: Per payment</bpmn:documentation>
+        <bpmn:incoming>W2762_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2762_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2762_Task6" name="AP submits 2307 to vendor via portal/email; tracks acknowledgment; handles…">
+        <bpmn:documentation>Step 2: AP submits 2307 to vendor via portal/email; tracks acknowledgment; handles vendor disputes over amount/tax base
+Responsible (R): AP
+Accountable (A): AP Manager
+Duration: Per payment</bpmn:documentation>
+        <bpmn:incoming>W2762_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2762_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2762_Task7" name="Tax Accountant rolls up 2307 totals into the quarterly 1601-EQ filings and the…">
+        <bpmn:documentation>Step 3: Tax Accountant rolls up 2307 totals into the quarterly 1601-EQ filings and the annual 1604E information return; reconciles sum of issued 2307 to GL withholding; archives certificates
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2762_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2762_End8" name="Complete">
+        <bpmn:incoming>W2762_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2762_Annotation9">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: automated generation and portal delivery
+Owner: AP Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2762_Assoc10" sourceRef="W2762_Annotation9" targetRef="W2762_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2762_Flow11" sourceRef="W2762_Start4" targetRef="W2762_Task5" />
+      <bpmn:sequenceFlow id="W2762_Flow12" sourceRef="W2762_Task5" targetRef="W2762_Task6" />
+      <bpmn:sequenceFlow id="W2762_Flow13" sourceRef="W2762_Task6" targetRef="W2762_Task7" />
+      <bpmn:sequenceFlow id="W2762_Flow14" sourceRef="W2762_Task7" targetRef="W2762_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2762_diag">
+      <bpmndi:BPMNPlane id="W2762_plane" bpmnElement="W_W2762">
+        <bpmndi:BPMNShape id="W2762_Lane1_di" bpmnElement="W2762_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2762_Lane2_di" bpmnElement="W2762_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2762_Task5_di" bpmnElement="W2762_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2762_Task6_di" bpmnElement="W2762_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2762_Task7_di" bpmnElement="W2762_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2762_Start4_di" bpmnElement="W2762_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2762_End8_di" bpmnElement="W2762_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2762_Annotation9_di" bpmnElement="W2762_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2762_Flow11_di" bpmnElement="W2762_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2762_Flow12_di" bpmnElement="W2762_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2762_Flow13_di" bpmnElement="W2762_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2762_Flow14_di" bpmnElement="W2762_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2762_Assoc10_di" bpmnElement="W2762_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2763" name="W2763. Customer CWT Collection (2307) &amp; AR Application" isExecutable="false">
+      <bpmn:documentation>Trigger: Government/corporate customer withholds tax on payment
+Frequency: Event-driven; ~1,500–2,000 AR receipts/month
+Volume: ~5,200 AR trade/corporate accounts
+Owner: AR Manager
+Participants: AR, Tax Accountant, Customer, Collector
+Source: workflow W2763 — Customer CWT Collection (2307) &amp; AR Application</bpmn:documentation>
+      <bpmn:laneSet id="W2763_LaneSet3">
+        <bpmn:lane id="W2763_Lane1" name="AR">
+        <bpmn:flowNodeRef>W2763_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2763_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2763_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2763_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2763_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2763_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2763_Start4" name="Government/corporate customer withholds tax on payment">
+        <bpmn:outgoing>W2763_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2763_Task5" name="Collector obtains customer-issued BIR Form 2307 at collection; AR matches…">
+        <bpmn:documentation>Step 1: Collector obtains customer-issued BIR Form 2307 at collection; AR matches withholding to open invoice(s); applies as credit to customer&#x27;s withholding tax receivable
+Responsible (R): AR / Collector
+Accountable (A): AR Manager
+Duration: Per receipt</bpmn:documentation>
+        <bpmn:incoming>W2763_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2763_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2763_Task6" name="Tax Accountant validates customer 2307 authenticity and ATC; reconciles to…">
+        <bpmn:documentation>Step 2: Tax Accountant validates customer 2307 authenticity and ATC; reconciles to customer&#x27;s withholding against books; flags missing certificates for follow-up
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2763_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2763_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2763_Task7" name="Tax Accountant uses accumulated customer CWT certificates to reduce income tax…">
+        <bpmn:documentation>Step 3: Tax Accountant uses accumulated customer CWT certificates to reduce income tax payable on 1702Q/1702RT; files refund/TCC claim for excess creditable withholding
+Responsible (R): Tax Accountant / Tax Manager
+Accountable (A): CFO
+Duration: Quarterly/Annual</bpmn:documentation>
+        <bpmn:incoming>W2763_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2763_End8" name="Complete">
+        <bpmn:incoming>W2763_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2763_Annotation9">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: aggressive 2307 collection and TCC claim-back
+Owner: AR Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2763_Assoc10" sourceRef="W2763_Annotation9" targetRef="W2763_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2763_Flow11" sourceRef="W2763_Start4" targetRef="W2763_Task5" />
+      <bpmn:sequenceFlow id="W2763_Flow12" sourceRef="W2763_Task5" targetRef="W2763_Task6" />
+      <bpmn:sequenceFlow id="W2763_Flow13" sourceRef="W2763_Task6" targetRef="W2763_Task7" />
+      <bpmn:sequenceFlow id="W2763_Flow14" sourceRef="W2763_Task7" targetRef="W2763_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2763_diag">
+      <bpmndi:BPMNPlane id="W2763_plane" bpmnElement="W_W2763">
+        <bpmndi:BPMNShape id="W2763_Lane1_di" bpmnElement="W2763_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2763_Lane2_di" bpmnElement="W2763_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2763_Task5_di" bpmnElement="W2763_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2763_Task6_di" bpmnElement="W2763_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2763_Task7_di" bpmnElement="W2763_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2763_Start4_di" bpmnElement="W2763_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2763_End8_di" bpmnElement="W2763_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2763_Annotation9_di" bpmnElement="W2763_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2763_Flow11_di" bpmnElement="W2763_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2763_Flow12_di" bpmnElement="W2763_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2763_Flow13_di" bpmnElement="W2763_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2763_Flow14_di" bpmnElement="W2763_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2763_Assoc10_di" bpmnElement="W2763_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2764" name="W2764. Compensation Withholding Tax (1601C) &amp; TRAIN Tax Table Maintenance" isExecutable="false">
+      <bpmn:documentation>Trigger: Semi-monthly payroll run; monthly close
+Frequency: Semi-monthly withholding; monthly filing
+Volume: 6,762 employees across 5 entities
+Owner: Payroll Manager
+Participants: Payroll Mgr, Tax Accountant, HR
+Source: workflow W2764 — Compensation Withholding Tax (1601C) &amp; TRAIN Tax Table Maintenance</bpmn:documentation>
+      <bpmn:laneSet id="W2764_LaneSet4">
+        <bpmn:lane id="W2764_Lane1" name="Payroll Manager">
+        <bpmn:flowNodeRef>W2764_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2764_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2764_Lane2" name="Payroll">
+        <bpmn:flowNodeRef>W2764_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2764_Lane3" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2764_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2764_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2764_Start5" name="Semi-monthly payroll run; monthly close">
+        <bpmn:outgoing>W2764_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2764_Task6" name="Payroll Manager maintains TRAIN-law graduated withholding tax table in payroll…">
+        <bpmn:documentation>Step 1: Payroll Manager maintains TRAIN-law graduated withholding tax table in payroll engine per latest BIR revenue regulations; validates per-pay-period computation against manual sample
+Responsible (R): Payroll Manager
+Accountable (A): Tax Manager
+Duration: Per payroll cycle</bpmn:documentation>
+        <bpmn:incoming>W2764_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2764_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2764_Task7" name="Payroll withholds compensation tax semi-monthly; remits via 1601C monthly…">
+        <bpmn:documentation>Step 2: Payroll withholds compensation tax semi-monthly; remits via 1601C monthly; reconciles withholding register to payroll register and GL liability
+Responsible (R): Payroll / Tax Accountant
+Accountable (A): Payroll Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2764_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2764_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2764_Task8" name="Tax Accountant files 1601C via eFPS; supports BIR 2316 issuance to each…">
+        <bpmn:documentation>Step 3: Tax Accountant files 1601C via eFPS; supports BIR 2316 issuance to each employee by January 31; archives employer copy
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: Monthly/Annual</bpmn:documentation>
+        <bpmn:incoming>W2764_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2764_End9" name="Complete">
+        <bpmn:incoming>W2764_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2764_Annotation10">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: version-controlled table updates and sample validation
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2764_Assoc11" sourceRef="W2764_Annotation10" targetRef="W2764_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2764_Flow12" sourceRef="W2764_Start5" targetRef="W2764_Task6" />
+      <bpmn:sequenceFlow id="W2764_Flow13" sourceRef="W2764_Task6" targetRef="W2764_Task7" />
+      <bpmn:sequenceFlow id="W2764_Flow14" sourceRef="W2764_Task7" targetRef="W2764_Task8" />
+      <bpmn:sequenceFlow id="W2764_Flow15" sourceRef="W2764_Task8" targetRef="W2764_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2764_diag">
+      <bpmndi:BPMNPlane id="W2764_plane" bpmnElement="W_W2764">
+        <bpmndi:BPMNShape id="W2764_Lane1_di" bpmnElement="W2764_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_Lane2_di" bpmnElement="W2764_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_Lane3_di" bpmnElement="W2764_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_Task6_di" bpmnElement="W2764_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_Task7_di" bpmnElement="W2764_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_Task8_di" bpmnElement="W2764_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_Start5_di" bpmnElement="W2764_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_End9_di" bpmnElement="W2764_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2764_Annotation10_di" bpmnElement="W2764_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2764_Flow12_di" bpmnElement="W2764_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2764_Flow13_di" bpmnElement="W2764_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2764_Flow14_di" bpmnElement="W2764_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2764_Flow15_di" bpmnElement="W2764_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2764_Assoc11_di" bpmnElement="W2764_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2765" name="W2765. Annual Information Return (1604E/1604C) &amp; Alphabetical Employee List" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual close (1604-C by January 31; 1604-E by March 1)
+Frequency: Annual per entity
+Volume: 5 entities; ~800 vendors + 6,762 employees
+Owner: Tax Manager
+Participants: Tax Manager, Tax Accountant, Payroll, AP
+Source: workflow W2765 — Annual Information Return (1604E/1604C) &amp; Alphabetical Employee List</bpmn:documentation>
+      <bpmn:laneSet id="W2765_LaneSet4">
+        <bpmn:lane id="W2765_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2765_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2765_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2765_Lane2" name="Payroll">
+        <bpmn:flowNodeRef>W2765_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2765_Lane3" name="Tax Manager">
+        <bpmn:flowNodeRef>W2765_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2765_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2765_Start5" name="Annual close (1604-C by January 31; 1604-E by March 1)">
+        <bpmn:outgoing>W2765_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2765_Task6" name="Tax Accountant compiles annual Alpha List of Payees (1604E — income/payments…">
+        <bpmn:documentation>Step 1: Tax Accountant compiles annual Alpha List of Payees (1604E — income/payments and 1604C — compensation); validates vendor TINs against BIR TIN Validation System
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 3–5 days/entity</bpmn:documentation>
+        <bpmn:incoming>W2765_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2765_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2765_Task7" name="Payroll compiles Alphabetical List of Employees ( alphalist.dat); cross-checks…">
+        <bpmn:documentation>Step 2: Payroll compiles Alphabetical List of Employees ( alphalist.dat); cross-checks 2316 totals to payroll register; resolves duplicate/invalid TIN records
+Responsible (R): Payroll
+Accountable (A): Tax Manager
+Duration: 2–3 days</bpmn:documentation>
+        <bpmn:incoming>W2765_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2765_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2765_Task8" name="Tax Manager files 1604-C with employee alphalist before January 31 and 1604-E…">
+        <bpmn:documentation>Step 3: Tax Manager files 1604-C with employee alphalist before January 31 and 1604-E with payees alphalist before March 1, both via eFPS; archives annual withholding certificates
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W2765_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2765_End9" name="Complete">
+        <bpmn:incoming>W2765_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2765_Annotation10">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: TIN validation at onboarding and pre-filing scrub
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2765_Assoc11" sourceRef="W2765_Annotation10" targetRef="W2765_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2765_Flow12" sourceRef="W2765_Start5" targetRef="W2765_Task6" />
+      <bpmn:sequenceFlow id="W2765_Flow13" sourceRef="W2765_Task6" targetRef="W2765_Task7" />
+      <bpmn:sequenceFlow id="W2765_Flow14" sourceRef="W2765_Task7" targetRef="W2765_Task8" />
+      <bpmn:sequenceFlow id="W2765_Flow15" sourceRef="W2765_Task8" targetRef="W2765_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2765_diag">
+      <bpmndi:BPMNPlane id="W2765_plane" bpmnElement="W_W2765">
+        <bpmndi:BPMNShape id="W2765_Lane1_di" bpmnElement="W2765_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_Lane2_di" bpmnElement="W2765_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_Lane3_di" bpmnElement="W2765_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_Task6_di" bpmnElement="W2765_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_Task7_di" bpmnElement="W2765_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_Task8_di" bpmnElement="W2765_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_Start5_di" bpmnElement="W2765_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_End9_di" bpmnElement="W2765_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2765_Annotation10_di" bpmnElement="W2765_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2765_Flow12_di" bpmnElement="W2765_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2765_Flow13_di" bpmnElement="W2765_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2765_Flow14_di" bpmnElement="W2765_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2765_Flow15_di" bpmnElement="W2765_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2765_Assoc11_di" bpmnElement="W2765_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2766" name="W2766. Final Withholding Tax (Interest, Dividends, Rentals) Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Interest, dividend, royalty, or rental payment to resident/non-resident
+Frequency: Event-driven; ~50–100 FWT events/year
+Volume: Intercompany loans, bank interest, property rentals, dividends
+Owner: Tax Manager
+Participants: Tax Manager, Treasury, AP, Legal
+Source: workflow W2766 — Final Withholding Tax (Interest, Dividends, Rentals) Management</bpmn:documentation>
+      <bpmn:laneSet id="W2766_LaneSet4">
+        <bpmn:lane id="W2766_Lane1" name="Treasury">
+        <bpmn:flowNodeRef>W2766_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2766_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2766_Lane2" name="Tax Manager">
+        <bpmn:flowNodeRef>W2766_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2766_Lane3" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2766_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2766_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2766_Start5" name="Interest, dividend, royalty, or rental payment to resident/non-resident">
+        <bpmn:outgoing>W2766_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2766_Task6" name="Treasury/AP identifies FWT-applicable payment (bank deposit interest 20%…">
+        <bpmn:documentation>Step 1: Treasury/AP identifies FWT-applicable payment (bank deposit interest 20%, dividends 10% individuals / 15% RFC with intercorporate dividends exempt per CREATE, rentals 5%, royalties); applies final tax at source
+Responsible (R): Treasury / AP
+Accountable (A): Tax Manager
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W2766_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2766_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2766_Task7" name="Tax Manager determines treaty relief applicability for non-resident payees…">
+        <bpmn:documentation>Step 2: Tax Manager determines treaty relief applicability for non-resident payees; prepares Treaty Tax Relief Application (TTRA) with BIR for cross-border payments
+Responsible (R): Tax Manager / Legal
+Accountable (A): CFO
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W2766_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2766_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2766_Task8" name="Tax Accountant remits FWT via 1601-FQ quarterly (1601-FF for non-resident…">
+        <bpmn:documentation>Step 3: Tax Accountant remits FWT via 1601-FQ quarterly (1601-FF for non-resident payments); grosses-up/net reporting per BIR rules; archives certificate
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2766_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2766_End9" name="Complete">
+        <bpmn:incoming>W2766_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2766_Annotation10">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: legal review and TTRA documentation
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2766_Assoc11" sourceRef="W2766_Annotation10" targetRef="W2766_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2766_Flow12" sourceRef="W2766_Start5" targetRef="W2766_Task6" />
+      <bpmn:sequenceFlow id="W2766_Flow13" sourceRef="W2766_Task6" targetRef="W2766_Task7" />
+      <bpmn:sequenceFlow id="W2766_Flow14" sourceRef="W2766_Task7" targetRef="W2766_Task8" />
+      <bpmn:sequenceFlow id="W2766_Flow15" sourceRef="W2766_Task8" targetRef="W2766_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2766_diag">
+      <bpmndi:BPMNPlane id="W2766_plane" bpmnElement="W_W2766">
+        <bpmndi:BPMNShape id="W2766_Lane1_di" bpmnElement="W2766_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_Lane2_di" bpmnElement="W2766_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_Lane3_di" bpmnElement="W2766_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_Task6_di" bpmnElement="W2766_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_Task7_di" bpmnElement="W2766_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_Task8_di" bpmnElement="W2766_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_Start5_di" bpmnElement="W2766_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_End9_di" bpmnElement="W2766_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2766_Annotation10_di" bpmnElement="W2766_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2766_Flow12_di" bpmnElement="W2766_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2766_Flow13_di" bpmnElement="W2766_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2766_Flow14_di" bpmnElement="W2766_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2766_Flow15_di" bpmnElement="W2766_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2766_Assoc11_di" bpmnElement="W2766_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2767" name="W2767. EWT Rate Master Governance &amp; Tax Code Mapping" isExecutable="false">
+      <bpmn:documentation>Trigger: BIR revenue regulation update or new payment type
+Frequency: Quarterly review; event-driven
+Volume: ~60 ATC codes; ~500 item/service categories mapped
+Owner: Tax Manager
+Participants: Tax Manager, IT, Master Data, AP
+Source: workflow W2767 — EWT Rate Master Governance &amp; Tax Code Mapping</bpmn:documentation>
+      <bpmn:laneSet id="W2767_LaneSet3">
+        <bpmn:lane id="W2767_Lane1" name="Tax Manager">
+        <bpmn:flowNodeRef>W2767_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2767_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2767_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2767_Lane2" name="Master Data">
+        <bpmn:flowNodeRef>W2767_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2767_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2767_Start4" name="BIR revenue regulation update or new payment type">
+        <bpmn:outgoing>W2767_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2767_Task5" name="Tax Manager monitors BIR Revenue Regulations/Revenue Memoranda for rate changes…">
+        <bpmn:documentation>Step 1: Tax Manager monitors BIR Revenue Regulations/Revenue Memoranda for rate changes (e.g., CREATE adjustments); maintains EWT/FWT rate master per ATC
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2767_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2767_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2767_Task6" name="Master Data maps service/purchase categories and vendor types to ATC codes…">
+        <bpmn:documentation>Step 2: Master Data maps service/purchase categories and vendor types to ATC codes; configures ERP tax determination rules; versions and tests changes in sandbox
+Responsible (R): Master Data / IT
+Accountable (A): Tax Manager
+Duration: Per change</bpmn:documentation>
+        <bpmn:incoming>W2767_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2767_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2767_Task7" name="Tax Manager communicates changes to AP/Procurement; runs retro-impact analysis…">
+        <bpmn:documentation>Step 3: Tax Manager communicates changes to AP/Procurement; runs retro-impact analysis on recent payments; documents control evidence for audit
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: Per change</bpmn:documentation>
+        <bpmn:incoming>W2767_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2767_End8" name="Complete">
+        <bpmn:incoming>W2767_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2767_Annotation9">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: quarterly regulatory scan and versioned tax master
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2767_Assoc10" sourceRef="W2767_Annotation9" targetRef="W2767_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2767_Flow11" sourceRef="W2767_Start4" targetRef="W2767_Task5" />
+      <bpmn:sequenceFlow id="W2767_Flow12" sourceRef="W2767_Task5" targetRef="W2767_Task6" />
+      <bpmn:sequenceFlow id="W2767_Flow13" sourceRef="W2767_Task6" targetRef="W2767_Task7" />
+      <bpmn:sequenceFlow id="W2767_Flow14" sourceRef="W2767_Task7" targetRef="W2767_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2767_diag">
+      <bpmndi:BPMNPlane id="W2767_plane" bpmnElement="W_W2767">
+        <bpmndi:BPMNShape id="W2767_Lane1_di" bpmnElement="W2767_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2767_Lane2_di" bpmnElement="W2767_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2767_Task5_di" bpmnElement="W2767_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2767_Task6_di" bpmnElement="W2767_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2767_Task7_di" bpmnElement="W2767_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2767_Start4_di" bpmnElement="W2767_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2767_End8_di" bpmnElement="W2767_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2767_Annotation9_di" bpmnElement="W2767_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2767_Flow11_di" bpmnElement="W2767_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2767_Flow12_di" bpmnElement="W2767_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2767_Flow13_di" bpmnElement="W2767_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2767_Flow14_di" bpmnElement="W2767_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2767_Assoc10_di" bpmnElement="W2767_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2768" name="W2768. Withholding Tax Reconciliation, 2307 Discrepancy &amp; Vendor Dispute Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor dispute or monthly reconciliation variance
+Frequency: Monthly + event-driven
+Volume: ~50–100 disputes/year
+Owner: Tax Accountant
+Participants: Tax Accountant, AP, Vendor, Tax Manager
+Source: workflow W2768 — Withholding Tax Reconciliation, 2307 Discrepancy &amp; Vendor Dispute Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W2768_LaneSet4">
+        <bpmn:lane id="W2768_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W2768_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2768_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2768_Lane2" name="AP">
+        <bpmn:flowNodeRef>W2768_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2768_Lane3" name="Tax Manager">
+        <bpmn:flowNodeRef>W2768_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2768_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2768_Start5" name="Vendor dispute or monthly reconciliation variance">
+        <bpmn:outgoing>W2768_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2768_Task6" name="Tax Accountant reconciles total 2307 issued to total EWT booked in GL monthly…">
+        <bpmn:documentation>Step 1: Tax Accountant reconciles total 2307 issued to total EWT booked in GL monthly; investigates variances; identifies duplicate/missed withholdings
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W2768_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2768_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2768_Task7" name="AP responds to vendor disputes over 2307 amount/tax-base/ATC; provides payment…">
+        <bpmn:documentation>Step 2: AP responds to vendor disputes over 2307 amount/tax-base/ATC; provides payment evidence and reissues corrected 2307 where warranted
+Responsible (R): AP / Tax Accountant
+Accountable (A): AP Manager
+Duration: Per dispute</bpmn:documentation>
+        <bpmn:incoming>W2768_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2768_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2768_Task8" name="Tax Manager approves any amended 2307 and corresponding SWD (Sworn Statement of…">
+        <bpmn:documentation>Step 3: Tax Manager approves any amended 2307 and corresponding SWD (Sworn Statement of Deduction); tracks corrections for annual 1604E alignment
+Responsible (R): Tax Manager
+Accountable (A): CFO
+Duration: Per dispute</bpmn:documentation>
+        <bpmn:incoming>W2768_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2768_End9" name="Complete">
+        <bpmn:incoming>W2768_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2768_Annotation10">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: self-service portal and SLA-bound dispute handling
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2768_Assoc11" sourceRef="W2768_Annotation10" targetRef="W2768_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2768_Flow12" sourceRef="W2768_Start5" targetRef="W2768_Task6" />
+      <bpmn:sequenceFlow id="W2768_Flow13" sourceRef="W2768_Task6" targetRef="W2768_Task7" />
+      <bpmn:sequenceFlow id="W2768_Flow14" sourceRef="W2768_Task7" targetRef="W2768_Task8" />
+      <bpmn:sequenceFlow id="W2768_Flow15" sourceRef="W2768_Task8" targetRef="W2768_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2768_diag">
+      <bpmndi:BPMNPlane id="W2768_plane" bpmnElement="W_W2768">
+        <bpmndi:BPMNShape id="W2768_Lane1_di" bpmnElement="W2768_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_Lane2_di" bpmnElement="W2768_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_Lane3_di" bpmnElement="W2768_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_Task6_di" bpmnElement="W2768_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_Task7_di" bpmnElement="W2768_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_Task8_di" bpmnElement="W2768_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_Start5_di" bpmnElement="W2768_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_End9_di" bpmnElement="W2768_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2768_Annotation10_di" bpmnElement="W2768_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2768_Flow12_di" bpmnElement="W2768_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2768_Flow13_di" bpmnElement="W2768_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2768_Flow14_di" bpmnElement="W2768_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2768_Flow15_di" bpmnElement="W2768_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2768_Assoc11_di" bpmnElement="W2768_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5508" name="W5508. Fringe Benefits Tax (FBT) Determination, Valuation &amp; Quarterly BIR Form 1605 Filing" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly FBT computation and filing cycle (15 days after quarter close); benefit-plan or de-minimis-threshold changes at C&amp;B; new fringe-benefit source activation (housing allocation, vehicle assignment, loan issuance)
+Frequency: Continuous benefit-event accrual; quarterly filing per entity
+Volume: 5 entities × 4 quarters = 20 BIR 1605 filings/year; ~40–120 FBT-liable benefit instances per quarter chain-wide (managerial/supervisory recipients only — housing allocations, executive vehicle personal-use, club memberships, below-market loans, officer-only medical)
+Owner: Tax Accountant
+Participants: Tax Accountant, C&amp;B Manager, Payroll Manager, HRIS Analyst, Controller (computation review), CFO (filing approval), external tax advisor (interpretation)
+Source: workflow W5508 — Fringe Benefits Tax (FBT) Determination, Valuation &amp; Quarterly BIR Form 1605 Filing</bpmn:documentation>
+      <bpmn:laneSet id="W5508_LaneSet4">
+        <bpmn:lane id="W5508_Lane1" name="Tax Accountant">
+        <bpmn:flowNodeRef>W5508_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5508_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5508_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5508_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5508_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5508_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5508_Lane2" name="System">
+        <bpmn:flowNodeRef>W5508_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5508_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5508_Lane3" name="C&amp;B Manager">
+        <bpmn:flowNodeRef>W5508_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5508_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5508_Start5" name="Quarterly FBT computation and filing cycle (15 days after quarter close); benefit-plan or…">
+        <bpmn:outgoing>W5508_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5508_Task6" name="Benefit-source identification">
+        <bpmn:documentation>Step 1: Benefit-source identification: Tax Accountant and C&amp;B Manager maintain the fringe-benefit source register fed from HRIS and the C&amp;B benefit master (W3313/W3316): employer-provided housing incl. dormitory allocations to managerial residents (VS-144), vehicle personal-use share from fleet assignment logs and telematics (VS-06), officer-only HMO/medical beyond the universal plan (W3313), educational assistance, club memberships, below-market employee loans (imputed interest on W76 loan issuances), and employee-discount patterns beyond policy (W5B.12 limits); each source carries a valuation method, rank-eligibility flag, and entity attribution
+Responsible (R): Tax Accountant / C&amp;B Manager
+Accountable (A): Tax Manager
+Duration: Quarterly refresh, 2–3 hours</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5508_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W5508_Task7" name="Rank and exclusion test">
+        <bpmn:documentation>Step 2: Rank and exclusion test: system classifies each benefit event: (a) recipient rank — FBT applies only to managerial/supervisory employees; benefits furnished to the general rank-and-file population are instead taxable compensation routed to W2764; (b) exclusion screening — de minimis benefits within the BIR threshold schedule (RR 3-98 as updated by RR 5-2018: monetized unused leave within limits, rice subsidy, uniforms, rank-and-file medical assistance within caps), mandatory contributions, and benefits required for the employer&#x27;s convenience / furnished on the necessity of the business (e.g., worksite housing where residency is required) are excluded with documented rationale
+Responsible (R): System / Tax Accountant
+Accountable (A): Tax Manager
+Duration: Automated + 1–2 hours/quarter review</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5508_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W5508_Task8" name="Valuation per NIRC §33 rules">
+        <bpmn:documentation>Step 3: Valuation per NIRC §33 rules: housing at fair rental value; vehicles at depreciation plus operating costs × personal-use share (telematics/logbook evidence); loans at imputed interest using the prescribed rate × forgone spread; other benefits at acquisition cost; Tax Accountant overrides system values where evidence dictates (e.g., co-occupied housing pro-ration)
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 1–2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W5508_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W5508_Task9" name="Gross-up computation and aggregation">
+        <bpmn:documentation>Step 4: Gross-up computation and aggregation: system computes the grossed-up monetary value (monetary value ÷ (1 − 35%)) and FBT thereon at 35%, aggregated per employee, per benefit type, per entity; FBT is a final tax — the benefit is excluded from the employee&#x27;s taxable compensation so no W2764 double-count (BIR 2316 coordination at year-end via W2765)
+Responsible (R): System
+Accountable (A): Tax Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W5508_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W5508_Task10" name="Monthly accrual and reconciliation">
+        <bpmn:documentation>Step 5: Monthly accrual and reconciliation: month-end close posts the FBT accrual (Dr. Fringe Benefits Tax Expense / Cr. FBT Payable) per the W9A tax-provision step; Tax Accountant reconciles the benefit-event register to the GL accrual and to payroll/payslip exclusion trails; variances investigated before filing
+Responsible (R): Tax Accountant / Chief Accountant
+Accountable (A): Controller
+Duration: 30–45 min/month</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W5508_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5508_Task11" name="Quarterly BIR 1605 filing">
+        <bpmn:documentation>Step 6: Quarterly BIR 1605 filing: Tax Accountant generates BIR Form 1605 per entity from the FBT register, reviews against the accrual, and files via eFPS within 15 days following quarter close (due-date governance per the W2776 tax calendar); payment via e-Payment rails per W2755; BIR confirmation and PRN archived in the tax evidence repository
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: 2–3 hours/entity/quarter</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W5508_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5508_Task12" name="Evidence, audit defense and employee-facing consistency">
+        <bpmn:documentation>Step 7: Evidence, audit defense and employee-facing consistency: FBT register, valuation evidence (telematics extracts, rental appraisals, loan amortization schedules), exclusion rationale memos, and filed 1605s retained 10 years per BIR rules; register excerpt feeds BIR audit response (W2773) and the annual information-return ecosystem (W2765); employee-side: FBT-covered benefits flagged in the HRIS so they neither appear as taxable compensation on 2316s nor are double-reported
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 30 min/quarter</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W5508_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5508_Task13" name="Annual benefit-design review">
+        <bpmn:documentation>Step 8: Annual benefit-design review: C&amp;B Manager and Tax Accountant review benefit-plan changes for FBT efficiency (structure vs cash-equivalent, de-minimis headroom under updated BIR issuances, rank-population design that keeps benefits universal where intended), feeding the W3320 benefits cost model, the W2776 tax-risk register, and next year&#x27;s plan design (W3313 renewal)
+Responsible (R): C&amp;B Manager / Tax Accountant
+Accountable (A): CHRO / CFO
+Duration: Annual, 2–4 hours</bpmn:documentation>
+        <bpmn:incoming>W5508_Flow24</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5508_End14" name="Complete">
+        <bpmn:incoming>W5508_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5508_Annotation15">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: exclusion rationale memos per benefit type; telematics/appraisal valuation evidence attached before computation; three-way register/GL/payroll reconciliation before each quarterly filing; 10-year evidence retention feeding W2773 audit defense
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5508_Assoc16" sourceRef="W5508_Annotation15" targetRef="W5508_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5508_Flow17" sourceRef="W5508_Start5" targetRef="W5508_Task6" />
+      <bpmn:sequenceFlow id="W5508_Flow18" sourceRef="W5508_Task6" targetRef="W5508_Task7" />
+      <bpmn:sequenceFlow id="W5508_Flow19" sourceRef="W5508_Task7" targetRef="W5508_Task8" />
+      <bpmn:sequenceFlow id="W5508_Flow20" sourceRef="W5508_Task8" targetRef="W5508_Task9" />
+      <bpmn:sequenceFlow id="W5508_Flow21" sourceRef="W5508_Task9" targetRef="W5508_Task10" />
+      <bpmn:sequenceFlow id="W5508_Flow22" sourceRef="W5508_Task10" targetRef="W5508_Task11" />
+      <bpmn:sequenceFlow id="W5508_Flow23" sourceRef="W5508_Task11" targetRef="W5508_Task12" />
+      <bpmn:sequenceFlow id="W5508_Flow24" sourceRef="W5508_Task12" targetRef="W5508_Task13" />
+      <bpmn:sequenceFlow id="W5508_Flow25" sourceRef="W5508_Task13" targetRef="W5508_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5508_diag">
+      <bpmndi:BPMNPlane id="W5508_plane" bpmnElement="W_W5508">
+        <bpmndi:BPMNShape id="W5508_Lane1_di" bpmnElement="W5508_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Lane2_di" bpmnElement="W5508_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Lane3_di" bpmnElement="W5508_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task6_di" bpmnElement="W5508_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task7_di" bpmnElement="W5508_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task8_di" bpmnElement="W5508_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task9_di" bpmnElement="W5508_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task10_di" bpmnElement="W5508_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task11_di" bpmnElement="W5508_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task12_di" bpmnElement="W5508_Task12"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Task13_di" bpmnElement="W5508_Task13"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Start5_di" bpmnElement="W5508_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_End14_di" bpmnElement="W5508_End14"><dc:Bounds x="2100" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5508_Annotation15_di" bpmnElement="W5508_Annotation15"><dc:Bounds x="160" y="630" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5508_Flow17_di" bpmnElement="W5508_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow18_di" bpmnElement="W5508_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow19_di" bpmnElement="W5508_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow20_di" bpmnElement="W5508_Flow20"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow21_di" bpmnElement="W5508_Flow21"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow22_di" bpmnElement="W5508_Flow22"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow23_di" bpmnElement="W5508_Flow23"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow24_di" bpmnElement="W5508_Flow24"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Flow25_di" bpmnElement="W5508_Flow25"><di:waypoint x="2050" y="505" /><di:waypoint x="2100" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5508_Assoc16_di" bpmnElement="W5508_Assoc16"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5533" name="W5533. BIR Form 2316 Annual Issuance, Employee Acknowledgment &amp; Certificate Lifecycle" isExecutable="false">
+      <bpmn:documentation>Trigger: Calendar year-end close (the W9A/W10 year-end payroll cycle); the January 31 BIR deadline for furnishing 2316 to employees; the February 28 deadline for the related 1604C/alphalist filing (W2765); an employee separation (W43/W643) requiring an interim certificate; an employee request for a replacement or corrected certificate; or a BIR/labor examination evidence request (W77)
+Frequency: Annual issuance cycle with per-separation interim issuances; event-driven replacements and corrections
+Volume: ~6,762 active employees furnished annually across the multi-entity payroll (W816 consolidation scope, 5 entities) + ~1,400–1,600 separated employees/year receiving separation 2316s; acknowledgment tracking to a ≥ 98% completion gate per entity; ~50–100 replacement/correction requests/year
+Owner: Tax Manager
+Participants: Payroll Specialist, HR Shared Services (W3334-class issuance/verification requests), HR Technology Manager (ESS distribution per W3330), Store/DC HR Administrators (printed-copy distribution), Controller, External Audit Team, BIR (deadline regime and examination requests), Employees (recipients)
+Source: workflow W5533 — BIR Form 2316 Annual Issuance, Employee Acknowledgment &amp; Certificate Lifecycle</bpmn:documentation>
+      <bpmn:laneSet id="W5533_LaneSet4">
+        <bpmn:lane id="W5533_Lane1" name="Payroll Specialist">
+        <bpmn:flowNodeRef>W5533_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5533_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5533_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5533_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5533_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5533_Lane2" name="HR Technology Manager">
+        <bpmn:flowNodeRef>W5533_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5533_Lane3" name="Tax Accountant">
+        <bpmn:flowNodeRef>W5533_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5533_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5533_Start5" name="Calendar year-end close (the W9A/W10 year-end payroll cycle); the January 31 BIR deadline…">
+        <bpmn:outgoing>W5533_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5533_Task6" name="Year-end data assembly &amp; validation">
+        <bpmn:documentation>Step 1: Year-end data assembly &amp; validation: per entity, assemble annual gross compensation and withholding per employee from the W10/W816 payroll runs — 13th-month exempt excess (W1416/W1384), taxable benefits, prior-employer income declared by mid-year hires; reconcile per-employee totals to the W2764 monthly 1601C remittances and pre-validate against the W2765 1604C/alphalist before any certificate is issued
+Responsible (R): Payroll Specialist
+Accountable (A): Tax Manager
+Duration: 2–3 hours per entity per year</bpmn:documentation>
+        <bpmn:incoming>W5533_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5533_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5533_Task7" name="Certificate generation &amp; QC">
+        <bpmn:documentation>Step 2: Certificate generation &amp; QC: generate BIR Form 2316 per employee from the payroll/tax module (the W90.8 certificate-generation capability, BIR December format); QC-sample per entity (marginal tax rates, exempt 13th-month treatment, net compensation figure, TIN validity against the W292 employee master) and correct at source before distribution
+Responsible (R): Payroll Specialist
+Accountable (A): Tax Manager
+Duration: 6–8 hours per year (generation) + QC</bpmn:documentation>
+        <bpmn:incoming>W5533_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5533_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5533_Task8" name="Distribution &amp; acknowledgment tracking">
+        <bpmn:documentation>Step 3: Distribution &amp; acknowledgment tracking: distribute via ESS download (the W3330 portal tax-document capability) with e-acknowledgment capture; run printed-copy distribution with signed receipt logs for non-ESS populations (store/DC staff) administered by store HR; track per-entity acknowledgment completion daily in January and escalate laggard sites at T-7 days before the January 31 deadline
+Responsible (R): HR Technology Manager / Store HR Administrators
+Accountable (A): Tax Manager
+Duration: ~40–60 hours/year (store distribution effort dominates: ~15–20 min/store × ~200 stores)</bpmn:documentation>
+        <bpmn:incoming>W5533_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5533_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5533_Task9" name="Separation &amp; interim issuance">
+        <bpmn:documentation>Step 4: Separation &amp; interim issuance: issue the 2316 upon separation as a W43 clearance-checklist item gated in the W643 final-pay release; issue interim certificates on employee request for financing, visa or loan purposes (the W2972 financing-desk evidence demand) within 2 business days
+Responsible (R): Payroll Specialist / HR Shared Services
+Accountable (A): Tax Manager
+Duration: ~0.3 h per separation × ~1,400–1,600/year; per-request otherwise</bpmn:documentation>
+        <bpmn:incoming>W5533_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5533_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5533_Task10" name="Corrections &amp; replacements">
+        <bpmn:documentation>Step 5: Corrections &amp; replacements: process corrected certificates where under/over-withholding is identified — feed the correction back to W2764 adjustments (refund or deficiency handling) and reissue; log every replacement with a reason code for the annual quality review
+Responsible (R): Payroll Specialist
+Accountable (A): Tax Manager
+Duration: per request; ~50–100 requests/year</bpmn:documentation>
+        <bpmn:incoming>W5533_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W5533_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5533_Task11" name="Deadline evidence &amp; audit support">
+        <bpmn:documentation>Step 6: Deadline evidence &amp; audit support: archive the issuance evidence pack (generation logs, acknowledgment register, ESS download logs, printed-copy receipt sign-offs, separation-issue records) per the W256/W2977 retention schedule; fold into the W351/W95 audit package and the BIR-examination evidence per W77 — the 2316 file is the standard first document request in a compensation-tax examination
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: ~12 hours/year</bpmn:documentation>
+        <bpmn:incoming>W5533_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5533_End12" name="Complete">
+        <bpmn:incoming>W5533_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5533_Annotation13">
+        <bpmn:text>Controls: - CTL-467 (ensure controlled execution — Withholding Tax (EWT/CWT) &amp; Form 2307 Management (PA-79.2).) | - operational: annual issuance cannot close per entity until the 2316-to-1604C reconciliation is signed off by the Tax Manager | - operational: separation 2316 issuance is a W643 final-pay release checklist gate; overrides require Payroll Manager approval and are logged
+Owner: Tax Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5533_Assoc14" sourceRef="W5533_Annotation13" targetRef="W5533_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5533_Flow15" sourceRef="W5533_Start5" targetRef="W5533_Task6" />
+      <bpmn:sequenceFlow id="W5533_Flow16" sourceRef="W5533_Task6" targetRef="W5533_Task7" />
+      <bpmn:sequenceFlow id="W5533_Flow17" sourceRef="W5533_Task7" targetRef="W5533_Task8" />
+      <bpmn:sequenceFlow id="W5533_Flow18" sourceRef="W5533_Task8" targetRef="W5533_Task9" />
+      <bpmn:sequenceFlow id="W5533_Flow19" sourceRef="W5533_Task9" targetRef="W5533_Task10" />
+      <bpmn:sequenceFlow id="W5533_Flow20" sourceRef="W5533_Task10" targetRef="W5533_Task11" />
+      <bpmn:sequenceFlow id="W5533_Flow21" sourceRef="W5533_Task11" targetRef="W5533_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5533_diag">
+      <bpmndi:BPMNPlane id="W5533_plane" bpmnElement="W_W5533">
+        <bpmndi:BPMNShape id="W5533_Lane1_di" bpmnElement="W5533_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Lane2_di" bpmnElement="W5533_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Lane3_di" bpmnElement="W5533_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Task6_di" bpmnElement="W5533_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Task7_di" bpmnElement="W5533_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Task8_di" bpmnElement="W5533_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Task9_di" bpmnElement="W5533_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Task10_di" bpmnElement="W5533_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Task11_di" bpmnElement="W5533_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Start5_di" bpmnElement="W5533_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_End12_di" bpmnElement="W5533_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5533_Annotation13_di" bpmnElement="W5533_Annotation13"><dc:Bounds x="160" y="630" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5533_Flow15_di" bpmnElement="W5533_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5533_Flow16_di" bpmnElement="W5533_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5533_Flow17_di" bpmnElement="W5533_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5533_Flow18_di" bpmnElement="W5533_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5533_Flow19_di" bpmnElement="W5533_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5533_Flow20_di" bpmnElement="W5533_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5533_Flow21_di" bpmnElement="W5533_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5533_Assoc14_di" bpmnElement="W5533_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

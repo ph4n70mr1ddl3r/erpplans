@@ -1,0 +1,1519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-19.2-payroll-and-compensation" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W10" name="W10. Payroll Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Semi-monthly payroll calendar (15th and 30th)
+Frequency: 10 payroll runs/month (5 entities × 2)
+Volume: ~6,762 employees total
+Owner: Payroll Manager
+Participants: Payroll Officer, HR Assistant, Department Heads (OT/leave approval), Finance (bank file)
+Source: workflow W10 — Payroll Processing</bpmn:documentation>
+      <bpmn:laneSet id="W10_LaneSet6">
+        <bpmn:lane id="W10_Lane1" name="Payroll Officer">
+        <bpmn:flowNodeRef>W10_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task19</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W10_Lane2" name="HR Assistant">
+        <bpmn:flowNodeRef>W10_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W10_Lane3" name="System">
+        <bpmn:flowNodeRef>W10_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_Task20</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W10_Lane4" name="Payroll Manager">
+        <bpmn:flowNodeRef>W10_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W10_Lane5" name="Treasury Analyst">
+        <bpmn:flowNodeRef>W10_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W10_End21</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W10_Start7" name="Semi-monthly payroll calendar (15th and 30th)">
+        <bpmn:outgoing>W10_Flow24</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W10_Task8" name="Payroll Officer pulls time &amp; attendance data from biometric/RFID system">
+        <bpmn:documentation>Step 1: Payroll Officer pulls time &amp; attendance data from biometric/RFID system
+Responsible (R): Payroll Officer
+Accountable (A): Payroll Manager
+Duration: 30 min/run</bpmn:documentation>
+        <bpmn:incoming>W10_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W10_Task9" name="HR Assistant verifies approved leaves, overtime, and schedule adjustments are…">
+        <bpmn:documentation>Step 2: HR Assistant verifies approved leaves, overtime, and schedule adjustments are posted
+Responsible (R): HR Assistant
+Accountable (A): Payroll Manager
+Duration: 2 hours/run</bpmn:documentation>
+        <bpmn:incoming>W10_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W10_Task10" name="Payroll Officer validates: basic salary + OT + night differential + holiday pay…">
+        <bpmn:documentation>Step 3: Payroll Officer validates: basic salary + OT + night differential + holiday pay + allowances
+Responsible (R): Payroll Officer
+Accountable (A): Payroll Manager
+Duration: 1 hour/run</bpmn:documentation>
+        <bpmn:incoming>W10_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W10_Task11" name="System calculates deductions: SSS, PhilHealth, Pag-IBIG, withholding tax (TRAIN…">
+        <bpmn:documentation>Step 4: System calculates deductions: SSS, PhilHealth, Pag-IBIG, withholding tax (TRAIN law), loans, advances
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W10_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow27</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W10_Task12" name="Payroll Officer reviews computed payroll for anomalies (negative net pay…">
+        <bpmn:documentation>Step 5: Payroll Officer reviews computed payroll for anomalies (negative net pay, unusually high OT)
+Responsible (R): Payroll Officer
+Accountable (A): Payroll Manager
+Duration: 1 hour/run</bpmn:documentation>
+        <bpmn:incoming>W10_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W10_Task13" name="Payroll Manager reviews and approves payroll register">
+        <bpmn:documentation>Step 6: Payroll Manager reviews and approves payroll register
+Responsible (R): Payroll Manager
+Accountable (A): CHRO
+Duration: 30 min/run</bpmn:documentation>
+        <bpmn:incoming>W10_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W10_Task14" name="System generates bank file for payroll crediting (BDO, BPI, etc.)">
+        <bpmn:documentation>Step 7: System generates bank file for payroll crediting (BDO, BPI, etc.)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W10_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow30</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W10_Task15" name="Finance/Treasury reviews bank file; transmits to bank">
+        <bpmn:documentation>Step 8: Finance/Treasury reviews bank file; transmits to bank
+Responsible (R): Treasury Analyst
+Accountable (A): CFO
+Duration: 30 min/run</bpmn:documentation>
+        <bpmn:incoming>W10_Flow31</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow31</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W10_Task16" name="System posts payroll journal entries to GL (salary expense, payable, deductions)">
+        <bpmn:documentation>Step 9: System posts payroll journal entries to GL (salary expense, payable, deductions)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W10_Flow32</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow32</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W10_Task17" name="Payslips generated; distributed via email or employee self-service portal">
+        <bpmn:documentation>Step 10: Payslips generated; distributed via email or employee self-service portal
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W10_Flow240</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow240</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W10_Task18" name="Monthly: generate SSS PRN, PhilHealth contribution, Pag-IBIG contribution files…">
+        <bpmn:documentation>Step 11: Monthly: generate SSS PRN, PhilHealth contribution, Pag-IBIG contribution files for remittance
+Responsible (R): Payroll Officer
+Accountable (A): Payroll Manager
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W10_Flow241</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow241</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W10_Task19" name="Final pay computation (upon employee separation): system calculates pro-rated…">
+        <bpmn:documentation>Step 12: Final pay computation (upon employee separation): system calculates pro-rated 13th month pay, converted unused leave credits, less outstanding loans/advances and clearance deductions
+Responsible (R): Payroll Officer
+Accountable (A): Payroll Manager
+Duration: 30 min/employee</bpmn:documentation>
+        <bpmn:incoming>W10_Flow242</bpmn:incoming>
+        <bpmn:outgoing>W10_Flow242</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W10_Task20" name="System posts final pay as separate payroll run or adjustment; generates final…">
+        <bpmn:documentation>Step 13: System posts final pay as separate payroll run or adjustment; generates final payslip
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W10_Flow243</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W10_End21" name="Complete">
+        <bpmn:incoming>W10_Flow244</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W10_Annotation22">
+        <bpmn:text>Controls: - CTL-13 (separate payroll computation from approval.); CTL-34 (ensure complete tax compliance.) | - operational: must dynamically cap deductions, but manual overrides can bypass this safeguard
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W10_Assoc23" sourceRef="W10_Annotation22" targetRef="W10_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W10_Flow24" sourceRef="W10_Start7" targetRef="W10_Task8" />
+      <bpmn:sequenceFlow id="W10_Flow25" sourceRef="W10_Task8" targetRef="W10_Task9" />
+      <bpmn:sequenceFlow id="W10_Flow26" sourceRef="W10_Task9" targetRef="W10_Task10" />
+      <bpmn:sequenceFlow id="W10_Flow27" sourceRef="W10_Task10" targetRef="W10_Task11" />
+      <bpmn:sequenceFlow id="W10_Flow28" sourceRef="W10_Task11" targetRef="W10_Task12" />
+      <bpmn:sequenceFlow id="W10_Flow29" sourceRef="W10_Task12" targetRef="W10_Task13" />
+      <bpmn:sequenceFlow id="W10_Flow30" sourceRef="W10_Task13" targetRef="W10_Task14" />
+      <bpmn:sequenceFlow id="W10_Flow31" sourceRef="W10_Task14" targetRef="W10_Task15" />
+      <bpmn:sequenceFlow id="W10_Flow32" sourceRef="W10_Task15" targetRef="W10_Task16" />
+      <bpmn:sequenceFlow id="W10_Flow33" sourceRef="W10_Task16" targetRef="W10_Task17" />
+      <bpmn:sequenceFlow id="W10_Flow34" sourceRef="W10_Task17" targetRef="W10_Task18" />
+      <bpmn:sequenceFlow id="W10_Flow35" sourceRef="W10_Task18" targetRef="W10_Task19" />
+      <bpmn:sequenceFlow id="W10_Flow36" sourceRef="W10_Task19" targetRef="W10_Task20" />
+      <bpmn:sequenceFlow id="W10_Flow37" sourceRef="W10_Task20" targetRef="W10_End21" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W10_diag">
+      <bpmndi:BPMNPlane id="W10_plane" bpmnElement="W_W10">
+        <bpmndi:BPMNShape id="W10_Lane1_di" bpmnElement="W10_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="3050" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Lane2_di" bpmnElement="W10_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="3050" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Lane3_di" bpmnElement="W10_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="3050" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Lane4_di" bpmnElement="W10_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="3050" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Lane5_di" bpmnElement="W10_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="3050" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task8_di" bpmnElement="W10_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task9_di" bpmnElement="W10_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task10_di" bpmnElement="W10_Task10"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task11_di" bpmnElement="W10_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task12_di" bpmnElement="W10_Task12"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task13_di" bpmnElement="W10_Task13"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task14_di" bpmnElement="W10_Task14"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task15_di" bpmnElement="W10_Task15"><dc:Bounds x="1870" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task16_di" bpmnElement="W10_Task16"><dc:Bounds x="2080" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task17_di" bpmnElement="W10_Task17"><dc:Bounds x="2290" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task18_di" bpmnElement="W10_Task18"><dc:Bounds x="2500" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task19_di" bpmnElement="W10_Task19"><dc:Bounds x="2710" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Task20_di" bpmnElement="W10_Task20"><dc:Bounds x="2920" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Start7_di" bpmnElement="W10_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_End21_di" bpmnElement="W10_End21"><dc:Bounds x="3150" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W10_Annotation22_di" bpmnElement="W10_Annotation22"><dc:Bounds x="160" y="970" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W10_Flow24_di" bpmnElement="W10_Flow24"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow25_di" bpmnElement="W10_Flow25"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow26_di" bpmnElement="W10_Flow26"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow27_di" bpmnElement="W10_Flow27"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow28_di" bpmnElement="W10_Flow28"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow29_di" bpmnElement="W10_Flow29"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow30_di" bpmnElement="W10_Flow30"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow31_di" bpmnElement="W10_Flow31"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow32_di" bpmnElement="W10_Flow32"><di:waypoint x="2050" y="845" /><di:waypoint x="2080" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow33_di" bpmnElement="W10_Flow33"><di:waypoint x="2260" y="505" /><di:waypoint x="2290" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow34_di" bpmnElement="W10_Flow34"><di:waypoint x="2470" y="505" /><di:waypoint x="2500" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow35_di" bpmnElement="W10_Flow35"><di:waypoint x="2680" y="165" /><di:waypoint x="2710" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow36_di" bpmnElement="W10_Flow36"><di:waypoint x="2890" y="165" /><di:waypoint x="2920" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Flow37_di" bpmnElement="W10_Flow37"><di:waypoint x="3100" y="505" /><di:waypoint x="3150" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W10_Assoc23_di" bpmnElement="W10_Assoc23"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W280" name="W280. Court-Ordered Wage Garnishment &amp; Third-Party Deductions" isExecutable="false">
+      <bpmn:documentation>Trigger: HR receives a legal order or authorized request to deduct funds directly from an employee&#x27;s net pay (e.g., child support, cooperative loan, union dues).
+Frequency: Semi-monthly payroll cycle
+Volume: 50-100 employees affected
+Owner: Payroll Manager
+Participants: HR Admin, Legal, Employee, Third-Party Payee
+Source: workflow W280 — Court-Ordered Wage Garnishment &amp; Third-Party Deductions</bpmn:documentation>
+      <bpmn:laneSet id="W280_LaneSet5">
+        <bpmn:lane id="W280_Lane1" name="Payroll Admin">
+        <bpmn:flowNodeRef>W280_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W280_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W280_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W280_Lane2" name="Legal Counsel">
+        <bpmn:flowNodeRef>W280_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W280_Lane3" name="Payroll Manager">
+        <bpmn:flowNodeRef>W280_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W280_Lane4" name="HR Admin">
+        <bpmn:flowNodeRef>W280_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W280_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W280_Start6" name="HR receives a legal order or authorized request to deduct funds directly from an…">
+        <bpmn:outgoing>W280_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W280_Task7" name="Legal/HR receives and verifies the garnishment order or loan agreement.">
+        <bpmn:documentation>Step 1: Legal/HR receives and verifies the garnishment order or loan agreement.
+Responsible (R): Payroll Admin
+Accountable (A): Payroll Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W280_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W280_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W280_Task8" name="Payroll Admin configures a recurring deduction wage type in the employee&#x27;s…">
+        <bpmn:documentation>Step 2: Payroll Admin configures a recurring deduction wage type in the employee&#x27;s compensation profile.
+Responsible (R): Legal Counsel
+Accountable (A): CHRO
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W280_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W280_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W280_Task9" name="System logic applies prioritization rules (e.g., statutory taxes first, court…">
+        <bpmn:documentation>Step 3: System logic applies prioritization rules (e.g., statutory taxes first, court orders second, voluntary loans third) to ensure net pay does not fall below legal minimums.
+Responsible (R): Payroll Manager
+Accountable (A): CFO
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W280_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W280_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W280_Task10" name="Payroll runs; funds are deducted and booked to a specific AP liability account.">
+        <bpmn:documentation>Step 4: Payroll runs; funds are deducted and booked to a specific AP liability account.
+Responsible (R): Payroll Admin
+Accountable (A): Payroll Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W280_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W280_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W280_Task11" name="Finance remits the consolidated deducted funds to the court, union, or…">
+        <bpmn:documentation>Step 5: Finance remits the consolidated deducted funds to the court, union, or cooperative.
+Responsible (R): HR Admin
+Accountable (A): CHRO
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W280_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W280_End12" name="Complete">
+        <bpmn:incoming>W280_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W280_Annotation13">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: must apply strict prioritization rules while ensuring net pay does not fall below minimum wage
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W280_Assoc14" sourceRef="W280_Annotation13" targetRef="W280_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W280_Flow15" sourceRef="W280_Start6" targetRef="W280_Task7" />
+      <bpmn:sequenceFlow id="W280_Flow16" sourceRef="W280_Task7" targetRef="W280_Task8" />
+      <bpmn:sequenceFlow id="W280_Flow17" sourceRef="W280_Task8" targetRef="W280_Task9" />
+      <bpmn:sequenceFlow id="W280_Flow18" sourceRef="W280_Task9" targetRef="W280_Task10" />
+      <bpmn:sequenceFlow id="W280_Flow19" sourceRef="W280_Task10" targetRef="W280_Task11" />
+      <bpmn:sequenceFlow id="W280_Flow20" sourceRef="W280_Task11" targetRef="W280_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W280_diag">
+      <bpmndi:BPMNPlane id="W280_plane" bpmnElement="W_W280">
+        <bpmndi:BPMNShape id="W280_Lane1_di" bpmnElement="W280_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Lane2_di" bpmnElement="W280_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Lane3_di" bpmnElement="W280_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Lane4_di" bpmnElement="W280_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Task7_di" bpmnElement="W280_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Task8_di" bpmnElement="W280_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Task9_di" bpmnElement="W280_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Task10_di" bpmnElement="W280_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Task11_di" bpmnElement="W280_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Start6_di" bpmnElement="W280_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_End12_di" bpmnElement="W280_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W280_Annotation13_di" bpmnElement="W280_Annotation13"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W280_Flow15_di" bpmnElement="W280_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W280_Flow16_di" bpmnElement="W280_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W280_Flow17_di" bpmnElement="W280_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W280_Flow18_di" bpmnElement="W280_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W280_Flow19_di" bpmnElement="W280_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W280_Flow20_di" bpmnElement="W280_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W280_Assoc14_di" bpmnElement="W280_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W641" name="W641. Off-Cycle &amp; Ad-Hoc Payment Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Off-cycle payment request (DOLE order for back-pay, NLRC decision, retroactive wage adjustment, corrected payslip, emergency salary release, final pay outside regular payroll run)
+Frequency: ~75–100 off-cycle payments/month
+Volume: ~15–20 per entity per month
+Owner: Payroll Manager
+Participants: HR Business Partner (requester), Finance Manager (approver), Payroll Specialist (processor), Employee (payee)
+Source: workflow W641 — Off-Cycle &amp; Ad-Hoc Payment Processing</bpmn:documentation>
+      <bpmn:laneSet id="W641_LaneSet6">
+        <bpmn:lane id="W641_Lane1" name="HR Business Partner">
+        <bpmn:flowNodeRef>W641_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W641_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W641_Lane2" name="Payroll Manager">
+        <bpmn:flowNodeRef>W641_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W641_Lane3" name="Finance Manager">
+        <bpmn:flowNodeRef>W641_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W641_Lane4" name="Payroll Specialist">
+        <bpmn:flowNodeRef>W641_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W641_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W641_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W641_Lane5" name="System">
+        <bpmn:flowNodeRef>W641_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W641_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W641_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W641_Start7" name="Off-cycle payment request (DOLE order for back-pay, NLRC decision, retroactive wage…">
+        <bpmn:outgoing>W641_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W641_Task8" name="HR Business Partner or Department Head submits off-cycle payment request via…">
+        <bpmn:documentation>Step 1: HR Business Partner or Department Head submits off-cycle payment request via self-service portal with: employee ID, payment type (back-pay, wage adjustment, corrected payslip, emergency release, court-ordered), amount or basis of computation, supporting documentation (DOLE order, NLRC decision, management memo), and urgency classification (standard 3-day, urgent next-business-day)
+Responsible (R): HR Business Partner
+Accountable (A): Payroll Manager
+Duration: 15 min/request</bpmn:documentation>
+        <bpmn:incoming>W641_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W641_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W641_Task9" name="Payroll Manager validates request: confirms employee status (active, on-leave…">
+        <bpmn:documentation>Step 2: Payroll Manager validates request: confirms employee status (active, on-leave, separated), verifies supporting documentation completeness, confirms correct payment type classification
+Responsible (R): Payroll Manager
+Accountable (A): Finance Manager
+Duration: 30 min/request</bpmn:documentation>
+        <bpmn:incoming>W641_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W641_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W641_Task10" name="For amounts &gt; PHP 50,000 or retroactive periods &gt; 6 months: route to Finance…">
+        <bpmn:documentation>Step 3: For amounts &gt; PHP 50,000 or retroactive periods &gt; 6 months: route to Finance Manager for approval before processing
+Responsible (R): Finance Manager
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W641_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W641_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W641_Task11" name="Payroll Specialist processes off-cycle payment: computes gross amount, applies…">
+        <bpmn:documentation>Step 4: Payroll Specialist processes off-cycle payment: computes gross amount, applies statutory deductions (SSS, PhilHealth, Pag-IBIG, BIR withholding tax) per TRAIN law tables, nets to take-home pay
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 30 min/payment</bpmn:documentation>
+        <bpmn:incoming>W641_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W641_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W641_Task12" name="System validates minimum wage protection (net pay cannot fall below applicable…">
+        <bpmn:documentation>Step 5: System validates minimum wage protection (net pay cannot fall below applicable regional minimum wage for the period); flags if violation detected
+Responsible (R): System
+Accountable (A): Payroll Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W641_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W641_Flow23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W641_Task13" name="Payroll Specialist generates bank file for off-cycle crediting or manual check…">
+        <bpmn:documentation>Step 6: Payroll Specialist generates bank file for off-cycle crediting or manual check preparation; routes for bank file approval
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 15 min/batch</bpmn:documentation>
+        <bpmn:incoming>W641_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W641_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W641_Task14" name="System auto-adjusts next regular payroll run to reflect off-cycle payment…">
+        <bpmn:documentation>Step 7: System auto-adjusts next regular payroll run to reflect off-cycle payment: updated YTD totals, adjusted tax withholding for remaining periods, corrected statutory deduction brackets
+Responsible (R): System
+Accountable (A): Payroll Specialist
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W641_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W641_Flow25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W641_Task15" name="Payroll Specialist generates corrected payslip (if applicable) or supplementary…">
+        <bpmn:documentation>Step 8: Payroll Specialist generates corrected payslip (if applicable) or supplementary payslip with detailed computation; distributes to employee
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W641_Flow26</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W641_End16" name="Complete">
+        <bpmn:incoming>W641_Flow27</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W641_Annotation17">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: Payroll Manager validation gate; Finance Manager approval for payments &gt;PHP 50,000; minimum-wage-protection system guardrail; DOLE deadline compliance tracking | ---
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W641_Assoc18" sourceRef="W641_Annotation17" targetRef="W641_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W641_Flow19" sourceRef="W641_Start7" targetRef="W641_Task8" />
+      <bpmn:sequenceFlow id="W641_Flow20" sourceRef="W641_Task8" targetRef="W641_Task9" />
+      <bpmn:sequenceFlow id="W641_Flow21" sourceRef="W641_Task9" targetRef="W641_Task10" />
+      <bpmn:sequenceFlow id="W641_Flow22" sourceRef="W641_Task10" targetRef="W641_Task11" />
+      <bpmn:sequenceFlow id="W641_Flow23" sourceRef="W641_Task11" targetRef="W641_Task12" />
+      <bpmn:sequenceFlow id="W641_Flow24" sourceRef="W641_Task12" targetRef="W641_Task13" />
+      <bpmn:sequenceFlow id="W641_Flow25" sourceRef="W641_Task13" targetRef="W641_Task14" />
+      <bpmn:sequenceFlow id="W641_Flow26" sourceRef="W641_Task14" targetRef="W641_Task15" />
+      <bpmn:sequenceFlow id="W641_Flow27" sourceRef="W641_Task15" targetRef="W641_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W641_diag">
+      <bpmndi:BPMNPlane id="W641_plane" bpmnElement="W_W641">
+        <bpmndi:BPMNShape id="W641_Lane1_di" bpmnElement="W641_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Lane2_di" bpmnElement="W641_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Lane3_di" bpmnElement="W641_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Lane4_di" bpmnElement="W641_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Lane5_di" bpmnElement="W641_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task8_di" bpmnElement="W641_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task9_di" bpmnElement="W641_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task10_di" bpmnElement="W641_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task11_di" bpmnElement="W641_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task12_di" bpmnElement="W641_Task12"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task13_di" bpmnElement="W641_Task13"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task14_di" bpmnElement="W641_Task14"><dc:Bounds x="1660" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Task15_di" bpmnElement="W641_Task15"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Start7_di" bpmnElement="W641_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_End16_di" bpmnElement="W641_End16"><dc:Bounds x="2100" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W641_Annotation17_di" bpmnElement="W641_Annotation17"><dc:Bounds x="160" y="970" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W641_Flow19_di" bpmnElement="W641_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow20_di" bpmnElement="W641_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow21_di" bpmnElement="W641_Flow21"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow22_di" bpmnElement="W641_Flow22"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow23_di" bpmnElement="W641_Flow23"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow24_di" bpmnElement="W641_Flow24"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow25_di" bpmnElement="W641_Flow25"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow26_di" bpmnElement="W641_Flow26"><di:waypoint x="1840" y="845" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Flow27_di" bpmnElement="W641_Flow27"><di:waypoint x="2050" y="675" /><di:waypoint x="2100" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W641_Assoc18_di" bpmnElement="W641_Assoc18"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W643" name="W643. Final Pay Computation &amp; Separation Settlement" isExecutable="false">
+      <bpmn:documentation>Trigger: Employee separation (resignation, termination, retirement, end of contract) per W43
+Frequency: ~100–130 separations/month (~15–20% annual turnover rate)
+Volume: ~5–7 per business day across all entities
+Owner: Payroll Specialist
+Participants: HR Business Partner, Department Head (clearance sign-off), Finance Analyst, Employee
+Source: workflow W643 — Final Pay Computation &amp; Separation Settlement</bpmn:documentation>
+      <bpmn:laneSet id="W643_LaneSet6">
+        <bpmn:lane id="W643_Lane1" name="HR Business Partner">
+        <bpmn:flowNodeRef>W643_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W643_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W643_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W643_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W643_Lane2" name="System">
+        <bpmn:flowNodeRef>W643_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W643_Lane3" name="Payroll Specialist">
+        <bpmn:flowNodeRef>W643_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W643_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W643_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W643_Lane4" name="Payroll Manager">
+        <bpmn:flowNodeRef>W643_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W643_Lane5" name="Finance Analyst">
+        <bpmn:flowNodeRef>W643_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W643_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W643_Start7" name="Employee separation (resignation, termination, retirement, end of contract) per W43">
+        <bpmn:outgoing>W643_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W643_Task8" name="HR Business Partner initiates final pay computation trigger in system on…">
+        <bpmn:documentation>Step 1: HR Business Partner initiates final pay computation trigger in system on separation effective date (or upon receipt of resignation letter for proactive processing); classifies separation type (resignation, termination for just cause, authorized cause separation, retirement, end of contract)
+Responsible (R): HR Business Partner
+Accountable (A): HR Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W643_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W643_Task9" name="System auto-computes final pay components: (a) proportionate basic salary…">
+        <bpmn:documentation>Step 2: System auto-computes final pay components: (a) proportionate basic salary through last day, (b) proportionate 13th month pay per PD 851 (1/12 × monthly basic × months worked), (c) cash conversion of unused Service Incentive Leave (minimum 5 days per Labor Code; company policy may grant more), (d) proportionate Sil (if company grants beyond 5 days statutory minimum), (e) overtime/holiday/night differential unpaid in last period, (f) separation pay if applicable (authorized causes per Art. 298–299: redundancy = ½ month per year, retrenchment = 1 month per year, etc.), (g) retirement pay per RA 7641 if qualified (½ month per year of service)
+Responsible (R): System
+Accountable (A): Payroll Specialist
+Duration: Automated computation</bpmn:documentation>
+        <bpmn:incoming>W643_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W643_Task10" name="Payroll Specialist reviews system computation; validates each component against…">
+        <bpmn:documentation>Step 3: Payroll Specialist reviews system computation; validates each component against employee&#x27;s records: attendance, leave balance, salary history, outstanding loans (W76), prior 13th month payments
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W643_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W643_Task11" name="Payroll Specialist computes statutory deductions: (a) withholding tax on final…">
+        <bpmn:documentation>Step 4: Payroll Specialist computes statutory deductions: (a) withholding tax on final pay per BIR rules (different treatment for resignation vs. retirement vs. termination — retirement pay and separation pay below PHP 90,000 threshold are tax-exempt per TRAIN law Section 32(B)(6)(b)), (b) final SSS, PhilHealth, Pag-IBIG contributions for last period, (c) outstanding employee loan deductions, (d) salary advance or cash advance offsets, (e) company property non-return deductions (if authorized per policy)
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W643_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W643_Task12" name="Payroll Manager approves final pay computation; validates net pay is…">
+        <bpmn:documentation>Step 5: Payroll Manager approves final pay computation; validates net pay is non-negative (minimum wage protection does not apply to final pay but net should not be zero unless deductions exceed pay)
+Responsible (R): Payroll Manager
+Accountable (A): HR Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W643_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W643_Task13" name="Finance Analyst processes payment: generates bank transfer file for direct…">
+        <bpmn:documentation>Step 6: Finance Analyst processes payment: generates bank transfer file for direct deposit; for employees without bank accounts, prepares manual check
+Responsible (R): Finance Analyst
+Accountable (A): Finance Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W643_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W643_Task14" name="HR Business Partner coordinates clearance process: ensures all department…">
+        <bpmn:documentation>Step 7: HR Business Partner coordinates clearance process: ensures all department clearances completed (IT equipment return per W152, company property return, PPE return per W172, confidential document return) before payment release
+Responsible (R): HR Business Partner
+Accountable (A): HR Manager
+Duration: 1–5 days clearance</bpmn:documentation>
+        <bpmn:incoming>W643_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W643_Task15" name="Payment released within DOLE Advisory 06-2020 timeline: 30 days from separation…">
+        <bpmn:documentation>Step 8: Payment released within DOLE Advisory 06-2020 timeline: 30 days from separation date for resignation; immediately for termination/retirement; or per specific DOLE/Labor Arbiter order
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: Per timeline</bpmn:documentation>
+        <bpmn:incoming>W643_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W643_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W643_Task16" name="Employee receives final pay with itemized computation document; HR Business…">
+        <bpmn:documentation>Step 9: Employee receives final pay with itemized computation document; HR Business Partner obtains signed acknowledgment
+Responsible (R): HR Business Partner
+Accountable (A): HR Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W643_Flow28</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W643_End17" name="Complete">
+        <bpmn:incoming>W643_Flow200</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W643_Annotation18">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: Payroll Manager computation review; DOLE 30-day final-pay compliance tracking; separation-pay formula validation per cause type; signed employee acknowledgment of final pay | ---
+Owner: Payroll Specialist</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W643_Assoc19" sourceRef="W643_Annotation18" targetRef="W643_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W643_Flow20" sourceRef="W643_Start7" targetRef="W643_Task8" />
+      <bpmn:sequenceFlow id="W643_Flow21" sourceRef="W643_Task8" targetRef="W643_Task9" />
+      <bpmn:sequenceFlow id="W643_Flow22" sourceRef="W643_Task9" targetRef="W643_Task10" />
+      <bpmn:sequenceFlow id="W643_Flow23" sourceRef="W643_Task10" targetRef="W643_Task11" />
+      <bpmn:sequenceFlow id="W643_Flow24" sourceRef="W643_Task11" targetRef="W643_Task12" />
+      <bpmn:sequenceFlow id="W643_Flow25" sourceRef="W643_Task12" targetRef="W643_Task13" />
+      <bpmn:sequenceFlow id="W643_Flow26" sourceRef="W643_Task13" targetRef="W643_Task14" />
+      <bpmn:sequenceFlow id="W643_Flow27" sourceRef="W643_Task14" targetRef="W643_Task15" />
+      <bpmn:sequenceFlow id="W643_Flow28" sourceRef="W643_Task15" targetRef="W643_Task16" />
+      <bpmn:sequenceFlow id="W643_Flow29" sourceRef="W643_Task16" targetRef="W643_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W643_diag">
+      <bpmndi:BPMNPlane id="W643_plane" bpmnElement="W_W643">
+        <bpmndi:BPMNShape id="W643_Lane1_di" bpmnElement="W643_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Lane2_di" bpmnElement="W643_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Lane3_di" bpmnElement="W643_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Lane4_di" bpmnElement="W643_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Lane5_di" bpmnElement="W643_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task8_di" bpmnElement="W643_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task9_di" bpmnElement="W643_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task10_di" bpmnElement="W643_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task11_di" bpmnElement="W643_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task12_di" bpmnElement="W643_Task12"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task13_di" bpmnElement="W643_Task13"><dc:Bounds x="1450" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task14_di" bpmnElement="W643_Task14"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task15_di" bpmnElement="W643_Task15"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Task16_di" bpmnElement="W643_Task16"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Start7_di" bpmnElement="W643_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_End17_di" bpmnElement="W643_End17"><dc:Bounds x="2310" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W643_Annotation18_di" bpmnElement="W643_Annotation18"><dc:Bounds x="160" y="970" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W643_Flow20_di" bpmnElement="W643_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow21_di" bpmnElement="W643_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow22_di" bpmnElement="W643_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow23_di" bpmnElement="W643_Flow23"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow24_di" bpmnElement="W643_Flow24"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow25_di" bpmnElement="W643_Flow25"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow26_di" bpmnElement="W643_Flow26"><di:waypoint x="1630" y="845" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow27_di" bpmnElement="W643_Flow27"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow28_di" bpmnElement="W643_Flow28"><di:waypoint x="2050" y="505" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Flow29_di" bpmnElement="W643_Flow29"><di:waypoint x="2260" y="165" /><di:waypoint x="2310" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W643_Assoc19_di" bpmnElement="W643_Assoc19"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W644" name="W644. 13th Month Pay Reconciliation &amp; Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly accrual cycle; December payment preparation
+Frequency: Monthly accrual booking; November review and reconciliation; December payment
+Volume: 6,762 employees across 5 entities
+Owner: Payroll Specialist
+Participants: Payroll Manager, Finance Analyst, HR Business Partner
+Source: workflow W644 — 13th Month Pay Reconciliation &amp; Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W644_LaneSet5">
+        <bpmn:lane id="W644_Lane1" name="System">
+        <bpmn:flowNodeRef>W644_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W644_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W644_Lane2" name="Payroll Specialist">
+        <bpmn:flowNodeRef>W644_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W644_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W644_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W644_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W644_Lane3" name="Finance Analyst">
+        <bpmn:flowNodeRef>W644_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W644_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W644_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W644_Lane4" name="Payroll Manager">
+        <bpmn:flowNodeRef>W644_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W644_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W644_Start6" name="Monthly accrual cycle; December payment preparation">
+        <bpmn:outgoing>W644_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W644_Task7" name="Monthly: System auto-accrues 13th month pay per employee based on basic salary…">
+        <bpmn:documentation>Step 1: Monthly: System auto-accrues 13th month pay per employee based on basic salary earned during the month (1/12 of total basic salary earned from January 1); excludes allowances, overtime pay, night differential, and non-taxable benefits per PD 851 and DOLE guidelines
+Responsible (R): System
+Accountable (A): Payroll Specialist
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W644_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W644_Task8" name="Monthly: Payroll Specialist reviews accrual computation: validates base salary…">
+        <bpmn:documentation>Step 2: Monthly: Payroll Specialist reviews accrual computation: validates base salary definition (basic salary only — excludes COLA, hazard pay, overtime, commissions unless mandated by CBA per W493); flags employees with mid-year salary changes for correct pro-ration
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W644_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W644_Task9" name="Monthly: Finance Analyst posts accrual journal entry (DR 13th Month Pay Expense…">
+        <bpmn:documentation>Step 3: Monthly: Finance Analyst posts accrual journal entry (DR 13th Month Pay Expense / CR 13th Month Pay Accrued Liability) per entity; verifies total accrual against payroll register
+Responsible (R): Finance Analyst
+Accountable (A): Finance Manager
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W644_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W644_Task10" name="November: Payroll Specialist performs comprehensive reconciliation: total…">
+        <bpmn:documentation>Step 4: November: Payroll Specialist performs comprehensive reconciliation: total accrued 13th month per employee vs. YTD basic salary ÷ 12; identifies discrepancies from mid-year salary changes, leaves without pay, absences, and split-entity employment
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W644_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W644_Task11" name="November: Payroll Specialist adjusts accruals for: (a) separating employees who…">
+        <bpmn:documentation>Step 5: November: Payroll Specialist adjusts accruals for: (a) separating employees who already received proportionate 13th month in final pay (W643), (b) employees who received employer&#x27;s elected half payment in May (if BuildRight practices May + December split), (c) employees with salary adjustments requiring retroactive accrual correction
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 0.5 day</bpmn:documentation>
+        <bpmn:incoming>W644_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W644_Task12" name="November: Payroll Specialist computes tax impact: 13th month pay is tax-exempt…">
+        <bpmn:documentation>Step 6: November: Payroll Specialist computes tax impact: 13th month pay is tax-exempt up to PHP 90,000 threshold per TRAIN law Section 32(B)(6)(e); excess amount subject to graduated withholding tax; generates report of employees exceeding threshold for Finance Manager review
+Responsible (R): Payroll Specialist
+Accountable (A): Finance Manager
+Duration: 0.5 day</bpmn:documentation>
+        <bpmn:incoming>W644_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W644_Task13" name="December 1–15: Payroll Manager prepares 13th month payment batch: confirms…">
+        <bpmn:documentation>Step 7: December 1–15: Payroll Manager prepares 13th month payment batch: confirms final amounts per employee, validates bank account details, generates bank file, routes for approval
+Responsible (R): Payroll Manager
+Accountable (A): Finance Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W644_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W644_Task14" name="December 15–24: Finance Analyst executes payment via bank transfer; ensures all…">
+        <bpmn:documentation>Step 8: December 15–24: Finance Analyst executes payment via bank transfer; ensures all 6,762 employees receive payment by December 24 deadline per PD 851
+Responsible (R): Finance Analyst
+Accountable (A): Finance Manager
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W644_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W644_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W644_Task15" name="December 31: System reverses remaining accrual balance to actual payment…">
+        <bpmn:documentation>Step 9: December 31: System reverses remaining accrual balance to actual payment; Finance Analyst reconciles GL accrual account to zero
+Responsible (R): Finance Analyst
+Accountable (A): Finance Manager
+Duration: 0.5 day</bpmn:documentation>
+        <bpmn:incoming>W644_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W644_End16" name="Complete">
+        <bpmn:incoming>W644_Flow190</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W644_Annotation17">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: Payroll Manager monthly accrual review; Finance Manager GL reconciliation; DOLE December 24 payment-deadline compliance tracking; PHP 90,000 tax-exemption threshold monitoring | ---
+Owner: Payroll Specialist</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W644_Assoc18" sourceRef="W644_Annotation17" targetRef="W644_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W644_Flow19" sourceRef="W644_Start6" targetRef="W644_Task7" />
+      <bpmn:sequenceFlow id="W644_Flow20" sourceRef="W644_Task7" targetRef="W644_Task8" />
+      <bpmn:sequenceFlow id="W644_Flow21" sourceRef="W644_Task8" targetRef="W644_Task9" />
+      <bpmn:sequenceFlow id="W644_Flow22" sourceRef="W644_Task9" targetRef="W644_Task10" />
+      <bpmn:sequenceFlow id="W644_Flow23" sourceRef="W644_Task10" targetRef="W644_Task11" />
+      <bpmn:sequenceFlow id="W644_Flow24" sourceRef="W644_Task11" targetRef="W644_Task12" />
+      <bpmn:sequenceFlow id="W644_Flow25" sourceRef="W644_Task12" targetRef="W644_Task13" />
+      <bpmn:sequenceFlow id="W644_Flow26" sourceRef="W644_Task13" targetRef="W644_Task14" />
+      <bpmn:sequenceFlow id="W644_Flow27" sourceRef="W644_Task14" targetRef="W644_Task15" />
+      <bpmn:sequenceFlow id="W644_Flow28" sourceRef="W644_Task15" targetRef="W644_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W644_diag">
+      <bpmndi:BPMNPlane id="W644_plane" bpmnElement="W_W644">
+        <bpmndi:BPMNShape id="W644_Lane1_di" bpmnElement="W644_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Lane2_di" bpmnElement="W644_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Lane3_di" bpmnElement="W644_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Lane4_di" bpmnElement="W644_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task7_di" bpmnElement="W644_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task8_di" bpmnElement="W644_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task9_di" bpmnElement="W644_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task10_di" bpmnElement="W644_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task11_di" bpmnElement="W644_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task12_di" bpmnElement="W644_Task12"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task13_di" bpmnElement="W644_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task14_di" bpmnElement="W644_Task14"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Task15_di" bpmnElement="W644_Task15"><dc:Bounds x="2080" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Start6_di" bpmnElement="W644_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_End16_di" bpmnElement="W644_End16"><dc:Bounds x="2310" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W644_Annotation17_di" bpmnElement="W644_Annotation17"><dc:Bounds x="160" y="800" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W644_Flow19_di" bpmnElement="W644_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow20_di" bpmnElement="W644_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow21_di" bpmnElement="W644_Flow21"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow22_di" bpmnElement="W644_Flow22"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow23_di" bpmnElement="W644_Flow23"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow24_di" bpmnElement="W644_Flow24"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow25_di" bpmnElement="W644_Flow25"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow26_di" bpmnElement="W644_Flow26"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow27_di" bpmnElement="W644_Flow27"><di:waypoint x="2050" y="505" /><di:waypoint x="2080" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Flow28_di" bpmnElement="W644_Flow28"><di:waypoint x="2260" y="505" /><di:waypoint x="2310" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W644_Assoc18_di" bpmnElement="W644_Assoc18"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W779" name="W779. Store-Level Employee Injury Incident Reporting &amp; Workers&#x27; Compensation Claim Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Employee work-related injury or illness
+Frequency: Ad-hoc; ~5–10 workplace injuries per month chain-wide
+Volume: ~60–120 reported workplace injuries/year across 200 stores, 4 DCs, and HQ
+Owner: Store Manager
+Participants: Store Manager, Injured Employee, HR Business Partner, Safety Officer, SSS/EC Claims, DOLE
+Source: workflow W779 — Store-Level Employee Injury Incident Reporting &amp; Workers&#x27; Compensation Claim Processing</bpmn:documentation>
+      <bpmn:laneSet id="W779_LaneSet7">
+        <bpmn:lane id="W779_Lane1" name="First Aider">
+        <bpmn:flowNodeRef>W779_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W779_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W779_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W779_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W779_Lane3" name="Employee">
+        <bpmn:flowNodeRef>W779_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W779_Lane4" name="HR BP">
+        <bpmn:flowNodeRef>W779_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W779_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W779_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W779_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W779_Lane5" name="Safety Officer">
+        <bpmn:flowNodeRef>W779_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W779_Lane6" name="HR Manager">
+        <bpmn:flowNodeRef>W779_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W779_End18</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W779_Start8" name="Employee work-related injury or illness">
+        <bpmn:outgoing>W779_Flow21</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W779_Task9" name="Immediate incident response">
+        <bpmn:documentation>Step 1: Immediate incident response: (a) first aid administered per W501, (b) if serious: emergency medical transport coordinated, (c) scene secured per W140, (d) Store Manager notified immediately
+Responsible (R): First Aider / Supervisor
+Accountable (A): Store Manager
+Duration: 10-30 min</bpmn:documentation>
+        <bpmn:incoming>W779_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task10" name="Incident documentation (within 4 hours)">
+        <bpmn:documentation>Step 2: Incident documentation (within 4 hours): Store Manager completes incident report: (a) date, time, location of incident, (b) employee details and department, (c) description of what happened, (d) witnesses and statements, (e) injury description and body part affected, (f) immediate cause and contributing factors, (g) photos of scene and equipment involved, (h) first aid or medical treatment provided
+Responsible (R): Store Manager
+Accountable (A): Safety Officer
+Duration: 30-60 min</bpmn:documentation>
+        <bpmn:incoming>W779_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task11" name="Medical treatment and documentation">
+        <bpmn:documentation>Step 3: Medical treatment and documentation: Employee seeks medical attention: (a) if minor: company-designated clinic or HMO provider per W642, (b) if serious: nearest hospital emergency room, (c) all medical certificates, treatment records, and receipts collected for SSS EC claim, (d) Store Manager ensures &quot;off-duty&quot; status recorded in time &amp; attendance per W561
+Responsible (R): Employee / Store Manager
+Accountable (A): HR BP
+Duration: 2-4 hours</bpmn:documentation>
+        <bpmn:incoming>W779_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task12" name="DOLE incident reporting">
+        <bpmn:documentation>Step 4: DOLE incident reporting: For serious incidents (fatality, serious injury requiring &gt; 7 days absence, or mass casualty): (a) HR BP submits DOLE report within 24 hours per DOLE Department Order 198, (b) report includes incident details, causes, and corrective actions taken, (c) DOLE may conduct investigation — coordinate per W505 labor inspection protocol
+Responsible (R): HR BP
+Accountable (A): HR Manager
+Duration: 2-4 hours</bpmn:documentation>
+        <bpmn:incoming>W779_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task13" name="SSS EC claim filing (within 30 days)">
+        <bpmn:documentation>Step 5: SSS EC claim filing (within 30 days): HR BP files SSS Employees&#x27; Compensation claim: (a) SSS EC claim form (B-300), (b) employer&#x27;s incident report, (c) medical certificate from attending physician, (d) proof of SSS contributions, (e) salary payment records for disability benefit computation; SSS processes: (i) temporary total disability (TTD) — daily allowance, (ii) permanent partial/total disability — lump sum or pension, (iii) medical reimbursement
+Responsible (R): HR BP
+Accountable (A): —
+Duration: 4-6 hours/claim</bpmn:documentation>
+        <bpmn:incoming>W779_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task14" name="Modified duty management">
+        <bpmn:documentation>Step 6: Modified duty management: For employees cleared for light duty: (a) Safety Officer and HR BP review medical restrictions, (b) assign modified duties within restrictions (e.g., cash desk duty for employee with lifting restriction), (c) coordinate with W34 scheduling, (d) monitor recovery progress with medical clearance updates
+Responsible (R): HR BP
+Accountable (A): Store Manager
+Duration: 1-2 hours/week during recovery</bpmn:documentation>
+        <bpmn:incoming>W779_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task15" name="Return-to-work processing">
+        <bpmn:documentation>Step 7: Return-to-work processing: When employee receives full medical clearance: (a) HR BP processes return-to-work documentation, (b) fitness-for-work certification filed, (c) employee reinstated to full duties, (d) any workplace accommodation made permanent if needed per W497 accessibility standards, (e) incident closed in OHS system
+Responsible (R): HR BP
+Accountable (A): Store Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W779_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task16" name="Incident investigation and corrective action">
+        <bpmn:documentation>Step 8: Incident investigation and corrective action: Safety Officer investigates root cause: (a) 5-Why analysis, (b) equipment inspection per W579, (c) procedure review, (d) corrective action implementation (e.g., additional training per W655, equipment replacement, PPE upgrade per W172), (e) corrective action tracked to completion per W140
+Responsible (R): Safety Officer
+Accountable (A): HR Manager
+Duration: 4-8 hours</bpmn:documentation>
+        <bpmn:incoming>W779_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W779_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W779_Task17" name="Monthly injury analytics">
+        <bpmn:documentation>Step 9: Monthly injury analytics: HR Manager reports: (a) injury frequency rate (target: &lt; 2.0 per 200,000 hours worked), (b) lost-time injury rate, (c) injury type and cause distribution, (d) average days lost per injury, (e) claim settlement rate and amount, (f) corrective action completion rate
+Responsible (R): HR Manager
+Accountable (A): COO
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W779_Flow29</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W779_End18" name="Complete">
+        <bpmn:incoming>W779_Flow210</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W779_Annotation19">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: corrective actions
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W779_Assoc20" sourceRef="W779_Annotation19" targetRef="W779_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W779_Flow21" sourceRef="W779_Start8" targetRef="W779_Task9" />
+      <bpmn:sequenceFlow id="W779_Flow22" sourceRef="W779_Task9" targetRef="W779_Task10" />
+      <bpmn:sequenceFlow id="W779_Flow23" sourceRef="W779_Task10" targetRef="W779_Task11" />
+      <bpmn:sequenceFlow id="W779_Flow24" sourceRef="W779_Task11" targetRef="W779_Task12" />
+      <bpmn:sequenceFlow id="W779_Flow25" sourceRef="W779_Task12" targetRef="W779_Task13" />
+      <bpmn:sequenceFlow id="W779_Flow26" sourceRef="W779_Task13" targetRef="W779_Task14" />
+      <bpmn:sequenceFlow id="W779_Flow27" sourceRef="W779_Task14" targetRef="W779_Task15" />
+      <bpmn:sequenceFlow id="W779_Flow28" sourceRef="W779_Task15" targetRef="W779_Task16" />
+      <bpmn:sequenceFlow id="W779_Flow29" sourceRef="W779_Task16" targetRef="W779_Task17" />
+      <bpmn:sequenceFlow id="W779_Flow30" sourceRef="W779_Task17" targetRef="W779_End18" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W779_diag">
+      <bpmndi:BPMNPlane id="W779_plane" bpmnElement="W_W779">
+        <bpmndi:BPMNShape id="W779_Lane1_di" bpmnElement="W779_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Lane2_di" bpmnElement="W779_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Lane3_di" bpmnElement="W779_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Lane4_di" bpmnElement="W779_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Lane5_di" bpmnElement="W779_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Lane6_di" bpmnElement="W779_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task9_di" bpmnElement="W779_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task10_di" bpmnElement="W779_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task11_di" bpmnElement="W779_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task12_di" bpmnElement="W779_Task12"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task13_di" bpmnElement="W779_Task13"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task14_di" bpmnElement="W779_Task14"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task15_di" bpmnElement="W779_Task15"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task16_di" bpmnElement="W779_Task16"><dc:Bounds x="1870" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Task17_di" bpmnElement="W779_Task17"><dc:Bounds x="2080" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Start8_di" bpmnElement="W779_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_End18_di" bpmnElement="W779_End18"><dc:Bounds x="2310" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W779_Annotation19_di" bpmnElement="W779_Annotation19"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W779_Flow21_di" bpmnElement="W779_Flow21"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow22_di" bpmnElement="W779_Flow22"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow23_di" bpmnElement="W779_Flow23"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow24_di" bpmnElement="W779_Flow24"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow25_di" bpmnElement="W779_Flow25"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow26_di" bpmnElement="W779_Flow26"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow27_di" bpmnElement="W779_Flow27"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow28_di" bpmnElement="W779_Flow28"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow29_di" bpmnElement="W779_Flow29"><di:waypoint x="2050" y="845" /><di:waypoint x="2080" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Flow30_di" bpmnElement="W779_Flow30"><di:waypoint x="2260" y="1015" /><di:waypoint x="2310" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W779_Assoc20_di" bpmnElement="W779_Assoc20"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W816" name="W816. Multi-Entity Payroll Consolidation &amp; Cross-Entity Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Semi-monthly payroll run completion across all 5 entities per W10
+Frequency: Semi-monthly; 2 consolidation runs per month
+Volume: 5 entities × 2 runs = 10 payroll runs per consolidation cycle
+Owner: Payroll Manager
+Participants: Payroll Manager, HR BP, Finance Manager, Tax Accountant
+Source: workflow W816 — Multi-Entity Payroll Consolidation &amp; Cross-Entity Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W816_LaneSet4">
+        <bpmn:lane id="W816_Lane1" name="Payroll Manager">
+        <bpmn:flowNodeRef>W816_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W816_Lane2" name="System">
+        <bpmn:flowNodeRef>W816_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W816_Lane3" name="Tax Accountant">
+        <bpmn:flowNodeRef>W816_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W816_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W816_Start5" name="Semi-monthly payroll run completion across all 5 entities per W10">
+        <bpmn:outgoing>W816_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W816_Task6" name="Confirm all entity payroll runs completed">
+        <bpmn:documentation>Step 1: Confirm all entity payroll runs completed: Payroll Manager verifies: (a) all 5 entity payroll runs completed successfully per W10, (b) payroll registers approved and locked by each entity&#x27;s authorized signatory, (c) all payroll entries posted to respective entity general ledgers, (d) no pending payroll corrections or void transactions, (e) bank disbursement files generated and transmitted per entity; any entity with incomplete payroll blocks consolidation start
+Responsible (R): Payroll Manager
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W816_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W816_Task7" name="System generates cross-entity payroll reconciliation report">
+        <bpmn:documentation>Step 2: System generates cross-entity payroll reconciliation report: Automated report includes: (a) total gross payroll by entity with breakdown (basic salary, overtime, allowances, bonuses, commissions), (b) total deductions by entity (SSS ER/EE, PhilHealth ER/EE, Pag-IBIG ER/EE, BIR withholding tax, loans, other deductions), (c) net payroll by entity, (d) intercompany labor allocations summary — shared services costs allocated to operating entities per W752, (e) cross-entity employee list — employees paid by one entity but with costs allocated to another entity (e.g., IT staff employed by Holdings but serving Depot), (f) statutory contribution totals by entity vs. consolidated total, (g) intercompany payroll receivable/payable balances
+Responsible (R): System
+Accountable (A): Payroll Manager
+Duration: Automated (15 min generation)</bpmn:documentation>
+        <bpmn:incoming>W816_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W816_Task8" name="Review intercompany labor allocations">
+        <bpmn:documentation>Step 3: Review intercompany labor allocations: Payroll Manager and Finance Manager validate: (a) HQ shared services allocation (IT, Finance, HR, Legal) — costs distributed to Depot (60%), Logistics (20%), Digital Commerce (15%), Property Management (5%) per W752 allocation keys, (b) allocation methodology matches approved transfer pricing policy per W235 — arm&#x27;s length basis using headcount + revenue weighting, (c) verify no shared services employee is duplicated (paid by Holdings AND allocated to operating entity — should be paid once and allocated), (d) check for new employees not yet included in allocation methodology, (e) validate allocation journal entries posted correctly to each entity GL
+Responsible (R): Payroll Manager
+Accountable (A): Finance Manager
+Duration: 1-2 hours</bpmn:documentation>
+        <bpmn:incoming>W816_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W816_Task9" name="Reconcile statutory contributions across entities">
+        <bpmn:documentation>Step 4: Reconcile statutory contributions across entities: Tax Accountant performs: (a) SSS — verify each entity&#x27;s SSS ER and EE contributions reconcile to consolidated total; check against SSS online portal per entity, (b) PhilHealth — verify each entity&#x27;s PhilHealth contributions (2026 rate: 5% of monthly basic salary, split 2.5% ER / 2.5% EE) reconcile to consolidated; verify against PhilHealth employer portal, (c) Pag-IBIG — verify each entity&#x27;s Pag-IBIG contributions (PHP 100 EE + PHP 100 ER for employees earning &gt;PHP 1,500/month) reconcile to consolidated, (d) BIR withholding tax — verify each entity&#x27;s expanded withholding tax on compensation reconciles to consolidated; cross-check against BIR eFPS filing per entity per W90
+Responsible (R): Tax Accountant
+Accountable (A): Payroll Manager
+Duration: 1-2 hours</bpmn:documentation>
+        <bpmn:incoming>W816_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W816_Task10" name="Identify and resolve discrepancies">
+        <bpmn:documentation>Step 5: Identify and resolve discrepancies: Common discrepancy types: (a) cross-entity employee paid by wrong entity — employee transferred mid-period per W511 but payroll not updated in time, resulting in dual payment or missed payment; requires reversal and rebooking, (b) allocation calculation errors — rounding differences, headcount changes not reflected in allocation keys, or manual override errors; requires correction to W752 allocation parameters, (c) statutory calculation differences — SSS/PhilHealth/Pag-IBIG contribution caps applied differently across entities due to configuration variance; requires system correction, (d) intercompany balance mismatches — shared services allocation posted in one entity but not the receiving entity; requires journal entry correction per W638
+Responsible (R): Payroll Manager
+Accountable (A): Finance Manager
+Duration: 1-2 hours</bpmn:documentation>
+        <bpmn:incoming>W816_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W816_Task11" name="Post consolidation adjustments">
+        <bpmn:documentation>Step 6: Post consolidation adjustments: For each identified discrepancy: (a) prepare journal entries per W638 journal entry review workflow, (b) intercompany corrections require dual-entry (debit in receiving entity, credit in sending entity), (c) adjustments must maintain balanced intercompany positions per W235, (d) post adjustments with full documentation supporting the correction, (e) re-run reconciliation report to verify zero remaining discrepancies or document accepted variances below materiality threshold (PHP 5,000 per entity pair)
+Responsible (R): Payroll Manager
+Accountable (A): Finance Manager
+Duration: 30-60 min</bpmn:documentation>
+        <bpmn:incoming>W816_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W816_Task12" name="Generate consolidated payroll expense report">
+        <bpmn:documentation>Step 7: Generate consolidated payroll expense report: Payroll Manager produces consolidated report for management reporting per W35: (a) consolidated payroll expense by natural account (basic salary, overtime, allowances, statutory ER contributions, HMO, other benefits), (b) payroll expense by entity, (c) payroll expense by department/function, (d) intercompany allocation summary, (e) month-over-month and year-over-year comparison, (f) headcount reconciliation by entity (opening + hires - separations = closing per W645), (g) payroll-to-revenue ratio (target: &lt;12% for retail operations)
+Responsible (R): Payroll Manager
+Accountable (A): Finance Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W816_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W816_Task13" name="Monthly payroll tax reconciliation">
+        <bpmn:documentation>Step 8: Monthly payroll tax reconciliation: Tax Accountant reconciles: (a) BIR withholding tax on compensation per entity vs. consolidated per W590, (b) verify withholding tax deposits made per entity per W90 deadlines (10th of the following month), (c) reconcile taxable compensation per entity with BIR Alphalist of Employees (due January 31 following year), (d) verify SSS/PhilHealth/Pag-IBIG remittance per entity matches payroll register per W251, (e) flag any entity with late remittance for immediate action to avoid penalties and surcharges
+Responsible (R): Tax Accountant
+Accountable (A): Payroll Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W816_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W816_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W816_Task14" name="Quarterly methodology review with Finance Manager">
+        <bpmn:documentation>Step 9: Quarterly methodology review with Finance Manager: Validate: (a) cross-entity allocation methodology still appropriate — headcount and revenue weighting ratios, (b) transfer pricing documentation per W235 compliant with BIR requirements, (c) any new shared services functions requiring allocation methodology update, (d) benchmark allocation methodology against industry practices, (e) review intercompany payroll balance aging — ensure all intercompany balances settled within quarter, (f) update allocation parameters in system if methodology changes approved
+Responsible (R): Payroll Manager
+Accountable (A): Finance Manager
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W816_Flow26</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W816_End15" name="Complete">
+        <bpmn:incoming>W816_Flow180</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W816_Annotation16">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: Payroll Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W816_Assoc17" sourceRef="W816_Annotation16" targetRef="W816_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W816_Flow18" sourceRef="W816_Start5" targetRef="W816_Task6" />
+      <bpmn:sequenceFlow id="W816_Flow19" sourceRef="W816_Task6" targetRef="W816_Task7" />
+      <bpmn:sequenceFlow id="W816_Flow20" sourceRef="W816_Task7" targetRef="W816_Task8" />
+      <bpmn:sequenceFlow id="W816_Flow21" sourceRef="W816_Task8" targetRef="W816_Task9" />
+      <bpmn:sequenceFlow id="W816_Flow22" sourceRef="W816_Task9" targetRef="W816_Task10" />
+      <bpmn:sequenceFlow id="W816_Flow23" sourceRef="W816_Task10" targetRef="W816_Task11" />
+      <bpmn:sequenceFlow id="W816_Flow24" sourceRef="W816_Task11" targetRef="W816_Task12" />
+      <bpmn:sequenceFlow id="W816_Flow25" sourceRef="W816_Task12" targetRef="W816_Task13" />
+      <bpmn:sequenceFlow id="W816_Flow26" sourceRef="W816_Task13" targetRef="W816_Task14" />
+      <bpmn:sequenceFlow id="W816_Flow27" sourceRef="W816_Task14" targetRef="W816_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W816_diag">
+      <bpmndi:BPMNPlane id="W816_plane" bpmnElement="W_W816">
+        <bpmndi:BPMNShape id="W816_Lane1_di" bpmnElement="W816_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Lane2_di" bpmnElement="W816_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Lane3_di" bpmnElement="W816_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task6_di" bpmnElement="W816_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task7_di" bpmnElement="W816_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task8_di" bpmnElement="W816_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task9_di" bpmnElement="W816_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task10_di" bpmnElement="W816_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task11_di" bpmnElement="W816_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task12_di" bpmnElement="W816_Task12"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task13_di" bpmnElement="W816_Task13"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Task14_di" bpmnElement="W816_Task14"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Start5_di" bpmnElement="W816_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_End15_di" bpmnElement="W816_End15"><dc:Bounds x="2310" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W816_Annotation16_di" bpmnElement="W816_Annotation16"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W816_Flow18_di" bpmnElement="W816_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow19_di" bpmnElement="W816_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow20_di" bpmnElement="W816_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow21_di" bpmnElement="W816_Flow21"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow22_di" bpmnElement="W816_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow23_di" bpmnElement="W816_Flow23"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow24_di" bpmnElement="W816_Flow24"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow25_di" bpmnElement="W816_Flow25"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow26_di" bpmnElement="W816_Flow26"><di:waypoint x="2050" y="505" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Flow27_di" bpmnElement="W816_Flow27"><di:waypoint x="2260" y="165" /><di:waypoint x="2310" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W816_Assoc17_di" bpmnElement="W816_Assoc17"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1306" name="W1306. Multi-Entity Statutory Benefits Consolidation, Remittance Reconciliation &amp; Government Portal Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly statutory benefits remittance deadline (SSS: last day of month; PhilHealth: every 10th; Pag-IBIG: every 10th of following month); or quarterly reconciliation cycle
+Frequency: Monthly remittance across 5 entities (15 separate filings/month: 5 entities × 3 agencies); quarterly reconciliation
+Volume: 6,762 employees across 5 entities; ~PHP 100–120M/month in total statutory contributions (employee + employer share)
+Owner: Payroll Manager
+Participants: Payroll Manager, Payroll Analyst, HR Data Specialist, Finance Controller, SSS/PhilHealth/Pag-IBIG branch representatives
+Source: workflow W1306 — Multi-Entity Statutory Benefits Consolidation, Remittance Reconciliation &amp; Government Portal Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W1306_LaneSet4">
+        <bpmn:lane id="W1306_Lane1" name="System">
+        <bpmn:flowNodeRef>W1306_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1306_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1306_Lane2" name="Payroll Analyst">
+        <bpmn:flowNodeRef>W1306_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1306_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1306_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1306_Lane3" name="Payroll Manager">
+        <bpmn:flowNodeRef>W1306_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1306_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1306_Start5" name="Monthly statutory benefits remittance deadline (SSS: last day of month; PhilHealth: every…">
+        <bpmn:outgoing>W1306_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1306_Task6" name="Monthly contribution calculation">
+        <bpmn:documentation>Step 1: Monthly contribution calculation: (a) upon completion of semi-monthly payroll runs per entity (W10), system calculates statutory contributions per employee: (i) SSS: monthly salary credit determination (based on actual monthly compensation, mapped to SSS salary bracket), employer and employee share calculation; (ii) PhilHealth: monthly basic salary (capped at PHP 80,000), employer and employee share at 2.5% each; (iii) Pag-IBIG: monthly basic salary (capped at PHP 5,000 for mandatory contributions), employer and employee share at 2% each; (b) system generates contribution schedule per entity: (i) employee-level breakdown: employee ID, name, SSS/PhilHealth/Pag-IBIG number, monthly salary, employer share, employee share, total; (ii) entity-level summary: total employer contribution, total employee contribution (deducted from payroll), grand total remittance per agency; (c) Payroll Analyst reviews calculated contributions: (i) verify no employee has missing SSS/PhilHealth/Pag-IBIG number (new hires must be registered per W518), (ii) verify salary caps applied correctly, (iii) verify employee on leave without pay excluded from contribution for the period
+Responsible (R): System / Payroll Analyst
+Accountable (A): Payroll Manager
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1306_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1306_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1306_Task7" name="Monthly remittance filing &amp; payment">
+        <bpmn:documentation>Step 2: Monthly remittance filing &amp; payment: (a) Payroll Analyst generates remittance files per entity per agency: (i) SSS: generate R3 (Contributions Collection List) file in SSS format → upload to SSS online portal → obtain PRN → process payment via BDO/BPI online banking before month-end deadline; (ii) PhilHealth: generate ER2 (Premium Remittance) file in PhilHealth EPRS format → upload to PhilHealth portal → process payment before 10th of following month; (iii) Pag-IBIG: generate Member&#x27;s Contribution Form (MCF) file in Pag-IBIG format → upload to Pag-IBIG online portal → process payment before 14th of following month; (b) for each entity: 3 separate filings × 5 entities = 15 filings/month; (c) payment released from each entity&#x27;s designated bank account (not commingled — BuildRight Depot&#x27;s SSS payment comes from Depot&#x27;s bank account, not Holdings&#x27; account)
+Responsible (R): Payroll Analyst
+Accountable (A): Payroll Manager
+Duration: 4–6 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1306_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1306_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1306_Task8" name="Remittance reconciliation">
+        <bpmn:documentation>Step 3: Remittance reconciliation: (a) after payment confirmation from bank: Payroll Analyst reconciles each remittance: (i) bank debit amount matches system-calculated remittance amount, (ii) SSS/PhilHealth/Pag-IBIG portal shows payment posted to correct employer number and correct billing period, (iii) employee-level contributions posted correctly to individual member records; (b) common discrepancies: (i) PRN expired (SSS PRNs are valid for the billing month only — late payment requires new PRN generation with penalties), (ii) employee SSS/PhilHealth/Pag-IBIG number mismatch (employee transferred between entities but membership record not updated), (iii) over/under payment due to payroll adjustment (late overtime inclusion, retroactive salary increase) — requires supplementary remittance; (c) resolve all discrepancies within 5 business days of remittance
+Responsible (R): Payroll Analyst
+Accountable (A): Payroll Manager
+Duration: 3–4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1306_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1306_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1306_Task9" name="Quarterly reconciliation &amp; government portal audit">
+        <bpmn:documentation>Step 4: Quarterly reconciliation &amp; government portal audit: (a) quarterly, Payroll Manager reconciles cumulative statutory contributions: (i) total payroll deductions (employee share) per GL account vs. total remittances to each agency — any difference indicates unremitted deductions (serious DOLE violation) or over-remittance; (ii) employee count per entity per agency vs. active employee count per HR system — discrepancies indicate unregistered new hires or unreported separations; (iii) download employee contribution records from SSS/PhilHealth/Pag-IBIG portals and compare to internal records — verify all employee contributions posted correctly; (b) for any unreconciled items: investigate and resolve — common causes: late new-hire registration (SSS number application takes 2–4 weeks for new employees), returned payments (wrong employer number, wrong billing period)
+Responsible (R): Payroll Manager / Payroll Analyst
+Accountable (A): Finance Controller
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1306_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1306_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1306_Task10" name="Employee benefit claim support">
+        <bpmn:documentation>Step 5: Employee benefit claim support: (a) when an employee files for SSS sickness/maternity/disability/retirement benefit, PhilHealth hospitalization claim, or Pag-IBIG housing loan/calamity loan: Payroll Analyst provides supporting documentation: (i) certificate of employment with compensation history, (ii) contribution history printout from ERP, (iii) employer certification of contributions remitted; (b) for maternity benefit (105 days under RA 11210 / Expanded Maternity Leave): Payroll Analyst processes: (i) advance maternity payment to employee per W10 (off-cycle payment if needed per W641), (ii) SSS maternity reimbursement claim on behalf of employee, (iii) SSS reimbursement received and reconciled per entity
+Responsible (R): Payroll Analyst
+Accountable (A): Payroll Manager
+Duration: Per claim: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W1306_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1306_End11" name="Complete">
+        <bpmn:incoming>W1306_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1306_Annotation12">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: Payroll Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1306_Assoc13" sourceRef="W1306_Annotation12" targetRef="W1306_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1306_Flow14" sourceRef="W1306_Start5" targetRef="W1306_Task6" />
+      <bpmn:sequenceFlow id="W1306_Flow15" sourceRef="W1306_Task6" targetRef="W1306_Task7" />
+      <bpmn:sequenceFlow id="W1306_Flow16" sourceRef="W1306_Task7" targetRef="W1306_Task8" />
+      <bpmn:sequenceFlow id="W1306_Flow17" sourceRef="W1306_Task8" targetRef="W1306_Task9" />
+      <bpmn:sequenceFlow id="W1306_Flow18" sourceRef="W1306_Task9" targetRef="W1306_Task10" />
+      <bpmn:sequenceFlow id="W1306_Flow19" sourceRef="W1306_Task10" targetRef="W1306_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1306_diag">
+      <bpmndi:BPMNPlane id="W1306_plane" bpmnElement="W_W1306">
+        <bpmndi:BPMNShape id="W1306_Lane1_di" bpmnElement="W1306_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Lane2_di" bpmnElement="W1306_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Lane3_di" bpmnElement="W1306_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Task6_di" bpmnElement="W1306_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Task7_di" bpmnElement="W1306_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Task8_di" bpmnElement="W1306_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Task9_di" bpmnElement="W1306_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Task10_di" bpmnElement="W1306_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Start5_di" bpmnElement="W1306_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_End11_di" bpmnElement="W1306_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1306_Annotation12_di" bpmnElement="W1306_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1306_Flow14_di" bpmnElement="W1306_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1306_Flow15_di" bpmnElement="W1306_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1306_Flow16_di" bpmnElement="W1306_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1306_Flow17_di" bpmnElement="W1306_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1306_Flow18_di" bpmnElement="W1306_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1306_Flow19_di" bpmnElement="W1306_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1306_Assoc13_di" bpmnElement="W1306_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1416" name="W1416. Philippine 13th Month Pay Computation, Monthly Accrual Booking &amp; Year-End Compliance Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly accrual cycle (ongoing); year-end payment processing (November–December); or employee separation (W643) triggering pro-rated 13th month payout
+Frequency: Monthly accrual; annual computation and payment (paid by December 24 per Presidential Decree No. 851)
+Volume: 6,762 employees across 5 legal entities; ~1,200–1,600 separations/year requiring pro-rated computation
+Owner: Payroll Manager
+Participants: Payroll Manager, HR Specialist, Controller, FP&amp;A Analyst, DOLE Compliance Officer
+Source: workflow W1416 — Philippine 13th Month Pay Computation, Monthly Accrual Booking &amp; Year-End Compliance Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1416_LaneSet4">
+        <bpmn:lane id="W1416_Lane1" name="System">
+        <bpmn:flowNodeRef>W1416_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1416_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1416_Lane2" name="Payroll Manager">
+        <bpmn:flowNodeRef>W1416_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1416_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1416_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1416_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1416_Lane3" name="HR Specialist">
+        <bpmn:flowNodeRef>W1416_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1416_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1416_Start5" name="Monthly accrual cycle (ongoing); year-end payment processing (November–December); or…">
+        <bpmn:outgoing>W1416_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1416_Task6" name="Monthly accrual booking">
+        <bpmn:documentation>Step 1: Monthly accrual booking: Each payroll run (semi-monthly), Payroll Manager books 13th month accrual: (a) accrual = total basic salary for the pay period ÷ 12, (b) journal entry: Dr. 13th Month Pay Expense / Cr. 13th Month Pay Accrued Liability, (c) accrual posted per entity (5 entities × 2 payroll runs/month = 10 journal entries/month), (d) FP&amp;A Analyst reviews monthly accrual vs. budget
+Responsible (R): System / Payroll Manager
+Accountable (A): Controller
+Duration: Automated per payroll run</bpmn:documentation>
+        <bpmn:incoming>W1416_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1416_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1416_Task7" name="Quarterly accrual reconciliation">
+        <bpmn:documentation>Step 2: Quarterly accrual reconciliation: Quarterly, Payroll Manager reconciles: (a) accumulated 13th month accrual balance per GL vs. sum of individual employee accruals from payroll system, (b) identify discrepancies: employees transferred between entities (accrual must transfer), employees on leave without pay (accrual should reduce), new hires (accrual should start from hire date), separated employees (accrual should have been paid with final pay), (c) post adjustments as needed
+Responsible (R): Payroll Manager
+Accountable (A): Controller
+Duration: 2–4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1416_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1416_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1416_Task8" name="Mid-year computation preview">
+        <bpmn:documentation>Step 3: Mid-year computation preview (June): Payroll Manager generates mid-year 13th month projection: (a) per-employee projected 13th month pay based on current salary rate × 12 months (or pro-rated for partial year), (b) total projected liability per entity and consolidated, (c) compare to current accrual balance: identify any shortfall or over-accrual, (d) FP&amp;A Analyst incorporates into mid-year cash flow forecast per W37 (treasury cash forecasting)
+Responsible (R): Payroll Manager / FP&amp;A Analyst
+Accountable (A): CFO
+Duration: 4–6 hours</bpmn:documentation>
+        <bpmn:incoming>W1416_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1416_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1416_Task9" name="Year-end computation">
+        <bpmn:documentation>Step 4: Year-end computation (November): Payroll Manager runs final 13th month computation: (a) per-employee computation: total basic salary earned Jan 1 – Dec 31 ÷ 12 = 13th month pay, (b) adjustments for: (i) leaves without pay (basic salary reduced by unpaid leave days), (ii) salary changes during the year (each salary period computed separately then summed), (iii) mid-year hires (pro-rated from hire date), (iv) employees who received 13th month advance or partial payment during the year, (c) tax computation: 13th month pay up to PHP 90,000 is tax-exempt; any amount above PHP 90,000 is added to December taxable income and taxed per graduated rates
+Responsible (R): Payroll Manager
+Accountable (A): Controller
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1416_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1416_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1416_Task10" name="Payment processing">
+        <bpmn:documentation>Step 5: Payment processing (by December 24): (a) Payroll Manager submits 13th month payment batch to bank: typically paid with the December 15 or December 30 payroll run, (b) for each entity: generate payment file, Controller approves, Treasury releases payment per W34, (c) system posts: Dr. 13th Month Pay Accrued Liability / Cr. Cash (Bank), (d) any remaining accrual balance closed to expense (for employees who separated during the year but accrual was retained)
+Responsible (R): Payroll Manager / Treasury
+Accountable (A): CFO
+Duration: 4–6 hours</bpmn:documentation>
+        <bpmn:incoming>W1416_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1416_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1416_Task11" name="DOLE compliance documentation">
+        <bpmn:documentation>Step 6: DOLE compliance documentation: (a) Payroll Manager maintains 13th month pay records per DOLE requirements: (i) employee name, (ii) basic salary per month, (iii) total basic salary earned, (iv) 13th month pay amount, (v) date paid, (b) records must be available for DOLE inspection per W54 (regulatory compliance), (c) employee acknowledgment of receipt filed per entity
+Responsible (R): HR Specialist / Payroll Manager
+Accountable (A): VP Legal &amp; Compliance
+Duration: 2–4 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1416_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1416_End12" name="Complete">
+        <bpmn:incoming>W1416_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1416_Annotation13">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: monthly accrual booking and mid-year projection for treasury planning per W37
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1416_Assoc14" sourceRef="W1416_Annotation13" targetRef="W1416_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1416_Flow15" sourceRef="W1416_Start5" targetRef="W1416_Task6" />
+      <bpmn:sequenceFlow id="W1416_Flow16" sourceRef="W1416_Task6" targetRef="W1416_Task7" />
+      <bpmn:sequenceFlow id="W1416_Flow17" sourceRef="W1416_Task7" targetRef="W1416_Task8" />
+      <bpmn:sequenceFlow id="W1416_Flow18" sourceRef="W1416_Task8" targetRef="W1416_Task9" />
+      <bpmn:sequenceFlow id="W1416_Flow19" sourceRef="W1416_Task9" targetRef="W1416_Task10" />
+      <bpmn:sequenceFlow id="W1416_Flow20" sourceRef="W1416_Task10" targetRef="W1416_Task11" />
+      <bpmn:sequenceFlow id="W1416_Flow21" sourceRef="W1416_Task11" targetRef="W1416_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1416_diag">
+      <bpmndi:BPMNPlane id="W1416_plane" bpmnElement="W_W1416">
+        <bpmndi:BPMNShape id="W1416_Lane1_di" bpmnElement="W1416_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Lane2_di" bpmnElement="W1416_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Lane3_di" bpmnElement="W1416_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Task6_di" bpmnElement="W1416_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Task7_di" bpmnElement="W1416_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Task8_di" bpmnElement="W1416_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Task9_di" bpmnElement="W1416_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Task10_di" bpmnElement="W1416_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Task11_di" bpmnElement="W1416_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Start5_di" bpmnElement="W1416_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_End12_di" bpmnElement="W1416_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1416_Annotation13_di" bpmnElement="W1416_Annotation13"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1416_Flow15_di" bpmnElement="W1416_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1416_Flow16_di" bpmnElement="W1416_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1416_Flow17_di" bpmnElement="W1416_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1416_Flow18_di" bpmnElement="W1416_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1416_Flow19_di" bpmnElement="W1416_Flow19"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1416_Flow20_di" bpmnElement="W1416_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1416_Flow21_di" bpmnElement="W1416_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1416_Assoc14_di" bpmnElement="W1416_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1527" name="W1527. Employee SSS, PhilHealth, Pag-IBIG Monthly Contribution Filing, Remittance &amp; Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Semi-monthly payroll processing cycle (15th and 30th pay periods)
+Frequency: Monthly filing and remittance (contributions deducted from payroll must be remitted to each agency by specified deadlines: SSS by last day of following month, PhilHealth by end of following month, Pag-IBIG by 10th of following month)
+Volume: ~6,762 employees across 5 legal entities (200 stores + 4 DCs + HQ)
+Owner: Payroll Manager
+Participants: Payroll Manager, Payroll Clerks, HR Business Partner, Finance Controller, SSS/PhilHealth/Pag-IBIG portal administrators
+Source: workflow W1527 — Employee SSS, PhilHealth, Pag-IBIG Monthly Contribution Filing, Remittance &amp; Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1527_LaneSet4">
+        <bpmn:lane id="W1527_Lane1" name="Payroll Clerk">
+        <bpmn:flowNodeRef>W1527_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1527_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1527_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1527_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1527_Lane2" name="HR Business Partner">
+        <bpmn:flowNodeRef>W1527_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1527_Lane3" name="Payroll Manager">
+        <bpmn:flowNodeRef>W1527_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1527_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1527_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1527_Start5" name="Semi-monthly payroll processing cycle (15th and 30th pay periods)">
+        <bpmn:outgoing>W1527_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1527_Task6" name="Payroll deduction computation">
+        <bpmn:documentation>Step 1: Payroll deduction computation (semi-monthly): (a) during payroll processing per W644/1416: Payroll Clerk runs statutory benefits computation: (i) SSS: employee share (4.5% of MSC) and employer share (9.5% of MSC) based on SSS contribution table (tiered by monthly salary credit — 2026 rates); (ii) PhilHealth: employee share (2.5%) and employer share (2.5%) based on monthly basic salary (floor: PHP 10,000, ceiling: PHP 80,000); (iii) Pag-IBIG: employee share (1% or 2% based on monthly compensation) and employer share (2%); (b) system auto-calculates per employee based on: salary, employment status (regular, probationary, seasonal/project — seasonal workers also covered), entity assignment; (c) total deductions per employee reflected on payslip
+Responsible (R): Payroll Clerk / System
+Accountable (A): Payroll Manager
+Duration: Automated during payroll run</bpmn:documentation>
+        <bpmn:incoming>W1527_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1527_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1527_Task7" name="Monthly contribution report generation">
+        <bpmn:documentation>Step 2: Monthly contribution report generation: (a) after both semi-monthly payrolls processed (end of month): system generates monthly contribution reports for each agency and each legal entity: (i) SSS Form R-3 (Contribution Collection List): employee names, SSS numbers, MSC, employee share, employer share, total per employee; (ii) PhilHealth ERP (Electronic Premium Remittance) file: employee PhilHealth numbers, monthly basic salary, employee share, employer share; (iii) Pag-IBIG MCR (Member&#x27;s Contribution Remittance) form: employee Pag-IBIG numbers, monthly compensation, employee share, employer share; (b) Payroll Clerk reviews reports for anomalies: (i) new hires without SSS/PhilHealth/Pag-IBIG numbers, (ii) separated employees still appearing in report, (iii) unusually high or low contribution amounts
+Responsible (R): Payroll Clerk / System
+Accountable (A): Payroll Manager
+Duration: 2–3 hours per agency per entity = ~15–20 hours total</bpmn:documentation>
+        <bpmn:incoming>W1527_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1527_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1527_Task8" name="New hire registration">
+        <bpmn:documentation>Step 3: New hire registration (if needed): (a) for employees without SSS/PhilHealth/Pag-IBIG numbers (typically new hires who are first-time workers): (i) HR Business Partner registers employee online via each agency&#x27;s portal (SSS online registration, PhilHealth electronic registration, Pag-IBIG online membership); (ii) registration typically takes 3–5 business days for number generation; (b) Payroll Clerk flags unregistered employees in contribution report; contributions for unregistered employees are accumulated and remitted retroactively once numbers are issued
+Responsible (R): HR Business Partner / Payroll Clerk
+Accountable (A): Payroll Manager
+Duration: 15–20 min per new hire</bpmn:documentation>
+        <bpmn:incoming>W1527_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1527_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1527_Task9" name="Remittance payment processing">
+        <bpmn:documentation>Step 4: Remittance payment processing: (a) Payroll Manager authorizes payment to each agency for each entity: (i) SSS: via SSS online payment facility or accredited bank (BDO, Metrobank, etc.); total remittance = employer share + employee share deductions across all employees in entity; (ii) PhilHealth: via PhilHealth electronic remittance or accredited bank; (iii) Pag-IBIG: via Pag-IBIG online payment or accredited collecting partner; (b) Finance Controller reviews and approves fund transfers from each entity&#x27;s bank account; (c) payments made by deadline: SSS (last day of following month), PhilHealth (end of following month), Pag-IBIG (10th of following month)
+Responsible (R): Payroll Manager / Finance Controller
+Accountable (A): CFO
+Duration: 2–3 hours per entity × 5 entities = ~10–15 hours</bpmn:documentation>
+        <bpmn:incoming>W1527_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1527_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1527_Task10" name="Reconciliation">
+        <bpmn:documentation>Step 5: Reconciliation: (a) Payroll Clerk reconciles: (i) total deductions in payroll system vs. total remitted to each agency (must match to the peso); (ii) per-employee contributions in payroll system vs. per-employee contributions in agency reports; (b) common discrepancies: (i) late new-hire registration causes retroactive adjustment, (ii) mid-month separation causes proration, (iii) salary adjustment effective mid-month causes split contribution; (c) Payroll Clerk resolves discrepancies and files adjusted report with agency if needed
+Responsible (R): Payroll Clerk
+Accountable (A): Payroll Manager
+Duration: 2–4 hours per entity per month</bpmn:documentation>
+        <bpmn:incoming>W1527_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1527_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1527_Task11" name="Quarterly audit and employee statement">
+        <bpmn:documentation>Step 6: Quarterly audit and employee statement: (a) quarterly: Payroll Manager reviews cumulative contributions per employee across all 3 agencies: (i) YTD employee share vs. expected based on YTD salary, (ii) any employees with contribution gaps (unpaid leaves, LWOP exceeding 1 month); (b) generates individual employee contribution certificates on request (e.g., for SSS salary loan application, Pag-IBIG housing loan application); (c) annual: reconcile total contributions against each agency&#x27;s annual statement of account
+Responsible (R): Payroll Manager
+Accountable (A): Finance Controller
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1527_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1527_End12" name="Complete">
+        <bpmn:incoming>W1527_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1527_Annotation13">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).) | - operational: Payroll Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1527_Assoc14" sourceRef="W1527_Annotation13" targetRef="W1527_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1527_Flow15" sourceRef="W1527_Start5" targetRef="W1527_Task6" />
+      <bpmn:sequenceFlow id="W1527_Flow16" sourceRef="W1527_Task6" targetRef="W1527_Task7" />
+      <bpmn:sequenceFlow id="W1527_Flow17" sourceRef="W1527_Task7" targetRef="W1527_Task8" />
+      <bpmn:sequenceFlow id="W1527_Flow18" sourceRef="W1527_Task8" targetRef="W1527_Task9" />
+      <bpmn:sequenceFlow id="W1527_Flow19" sourceRef="W1527_Task9" targetRef="W1527_Task10" />
+      <bpmn:sequenceFlow id="W1527_Flow20" sourceRef="W1527_Task10" targetRef="W1527_Task11" />
+      <bpmn:sequenceFlow id="W1527_Flow21" sourceRef="W1527_Task11" targetRef="W1527_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1527_diag">
+      <bpmndi:BPMNPlane id="W1527_plane" bpmnElement="W_W1527">
+        <bpmndi:BPMNShape id="W1527_Lane1_di" bpmnElement="W1527_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Lane2_di" bpmnElement="W1527_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Lane3_di" bpmnElement="W1527_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Task6_di" bpmnElement="W1527_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Task7_di" bpmnElement="W1527_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Task8_di" bpmnElement="W1527_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Task9_di" bpmnElement="W1527_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Task10_di" bpmnElement="W1527_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Task11_di" bpmnElement="W1527_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Start5_di" bpmnElement="W1527_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_End12_di" bpmnElement="W1527_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1527_Annotation13_di" bpmnElement="W1527_Annotation13"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1527_Flow15_di" bpmnElement="W1527_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1527_Flow16_di" bpmnElement="W1527_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1527_Flow17_di" bpmnElement="W1527_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1527_Flow18_di" bpmnElement="W1527_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1527_Flow19_di" bpmnElement="W1527_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1527_Flow20_di" bpmnElement="W1527_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1527_Flow21_di" bpmnElement="W1527_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1527_Assoc14_di" bpmnElement="W1527_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5540" name="W5540. Payroll Run Failure, Correction &amp; Emergency Off-Cycle Payment" isExecutable="false">
+      <bpmn:documentation>Trigger: A payroll run aborts or is compromised inside the payroll window: validation failure on the payroll register, bank-file (credit/debit-advice) rejection by the disbursement bank, funding shortblock, payroll-system/ERP outage at cut-off, or a disbursement-partner platform outage
+Frequency: ~2–6 failure events chain-wide per year across the 6,762-employee estate (monthly run × 5 entities; most aborts caught at validation and re-run inside the window)
+Volume: 1 run × affected population (a validation abort typically hits 1–3 batches; a bank-file reject or provider outage hits up to all ~6,762 payslips for that entity-run) × statutory remittance deadlines (W1527/W1306) that keep running regardless
+Owner: Payroll Manager
+Participants: Payroll Specialist, HR Shared Services (employee comms per VS-103), Finance Controller (funding release), Treasury (funding/debit account status per VS-18), IT Service Desk &amp; ERP payroll support (system restoration), disbursement bank / payroll funding partner, CHRO (communications), HR Benefits (SSS/PhilHealth/Pag-IBIG desk), Audit (post-mortem for material events)
+Source: workflow W5540 — Payroll Run Failure, Correction &amp; Emergency Off-Cycle Payment</bpmn:documentation>
+      <bpmn:laneSet id="W5540_LaneSet4">
+        <bpmn:lane id="W5540_Lane1" name="Payroll Specialist">
+        <bpmn:flowNodeRef>W5540_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5540_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5540_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5540_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5540_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5540_Lane2" name="Payroll Manager">
+        <bpmn:flowNodeRef>W5540_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5540_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5540_Lane3" name="HR Shared Services">
+        <bpmn:flowNodeRef>W5540_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5540_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5540_Start5" name="A payroll run aborts or is compromised inside the payroll window: validation failure on…">
+        <bpmn:outgoing>W5540_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5540_Task6" name="Failure classification &amp; clock">
+        <bpmn:documentation>Step 1: Failure classification &amp; clock: classify against the payday countdown — (a) validation abort ≥ 48 h before payday → correct &amp; re-run (Step 2); (b) bank-file rejection / provider outage &lt; 48 h → contingency branch (Steps 3–5); (c) funding block (Treasury/debit account issue) → Treasury joint branch (Step 3c); open the event log with timestamps (recovery-time accountability)
+Responsible (R): Payroll Specialist
+Accountable (A): Payroll Manager
+Duration: 30–60 min</bpmn:documentation>
+        <bpmn:incoming>W5540_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5540_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5540_Task7" name="Correct &amp; re-run (inside window)">
+        <bpmn:documentation>Step 2: Correct &amp; re-run (inside window): isolate failing records (negative net, invalid deduction, missing bank/enrollment per W10 validations), fix master-data or deduction errors, re-run only the failed batches with the normal approval chain intact (CTL-13: computation/approval separation preserved under time pressure); confirm register-to-bank-file control totals
+Responsible (R): Payroll Specialist / Payroll Manager
+Accountable (A): Payroll Manager
+Duration: 2–6 hrs</bpmn:documentation>
+        <bpmn:incoming>W5540_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5540_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5540_Task8" name="Funding &amp; file verification (contingency branch)">
+        <bpmn:documentation>Step 3: Funding &amp; file verification (contingency branch): (a) bank-file reject → obtain the bank&#x27;s reject/error report, regenerate the file per spec, resubmit and obtain acknowledged credit-advice; (b) provider platform outage → invoke the secondary disbursement channel per contract (backup partner or alternate file protocol); (c) funding block → Treasury confirms debit-account funding per the W318 settlement-account structure and releases per Finance Controller sign-off
+Responsible (R): Payroll Specialist / Treasury / Finance Controller
+Accountable (A): Finance Controller
+Duration: 2–12 hrs</bpmn:documentation>
+        <bpmn:incoming>W5540_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5540_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5540_Task9" name="Emergency off-cycle payment decision (&lt; 24 h to payday, credit not assured)">
+        <bpmn:documentation>Step 4: Emergency off-cycle payment decision (&lt; 24 h to payday, credit not assured): CHRO + Finance Controller approve an emergency net-pay advance via the W641 off-cycle rails — scope: affected employees, amount (default 50% net, up to 100% for hardship cases), channel (card-partner push or store cash-card load for cash-paid segments under dual-custody cash controls per VS-81 store-cash rules); employees sign the W641 advance agreement (recovery via deduction from the late-arriving original credit)
+Responsible (R): Payroll Manager / CHRO / Finance Controller
+Accountable (A): CHRO + Finance Controller (joint)
+Duration: 4–8 hrs</bpmn:documentation>
+        <bpmn:incoming>W5540_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W5540_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5540_Task10" name="Employee communication &amp; floor support">
+        <bpmn:documentation>Step 5: Employee communication &amp; floor support: HR Shared Services issues the ESS banner + SMS/email with facts, cause, and the assured new credit time; store/DC bulletins via the VS-63 store-communication channel; payroll helpdesk surge script (no-pay-confirmation handling); store managers briefed not to improvise promises
+Responsible (R): HR Shared Services / Store Managers
+Accountable (A): CHRO
+Duration: 2–4 hrs</bpmn:documentation>
+        <bpmn:incoming>W5540_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W5540_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5540_Task11" name="Statutory protection &amp; reconciliation">
+        <bpmn:documentation>Step 6: Statutory protection &amp; reconciliation: verify remittance calendar still met — SSS/PhilHealth/Pag-IBIG (W1527) and BIR withholding (W1306 chain) computed from the corrected register, paid on statutory deadlines with penalty exposure assessed if the failure touches them; when the original credit lands late, reconcile against any Step-4 advances (deduction per agreement), close the register-to-bank reconciliation, and document the event trail for audit
+Responsible (R): Payroll Specialist / HR Benefits
+Accountable (A): Payroll Manager
+Duration: 4–16 hrs</bpmn:documentation>
+        <bpmn:incoming>W5540_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W5540_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5540_Task12" name="Post-mortem &amp; control hardening">
+        <bpmn:documentation>Step 7: Post-mortem &amp; control hardening: within 5 business days — root cause (data, file spec, funding, vendor, infrastructure), run-book update, added pre-run validations, provider SLA review or channel remediation; material events (full-run failure, &gt; 24 h delay, statutory penalty) reported to the Audit Committee via the W81-class write-off/exception reporting path if losses resulted
+Responsible (R): Payroll Manager / Audit
+Accountable (A): CHRO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W5540_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5540_End13" name="Complete">
+        <bpmn:incoming>W5540_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5540_Annotation14">
+        <bpmn:text>Controls: - CTL-297 (ensure controlled execution — Payroll &amp; Compensation (PA-19.2).); CTL-13 (separate payroll computation from approval.); CTL-34 (ensure complete tax compliance.) | - operational: emergency advances ride W641 agreements with documented recovery deductions — never free-standing payouts | - operational: every failure event carries a timestamped event log and a 5-day post-mortem with control-hardening actions
+Owner: Payroll Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5540_Assoc15" sourceRef="W5540_Annotation14" targetRef="W5540_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5540_Flow16" sourceRef="W5540_Start5" targetRef="W5540_Task6" />
+      <bpmn:sequenceFlow id="W5540_Flow17" sourceRef="W5540_Task6" targetRef="W5540_Task7" />
+      <bpmn:sequenceFlow id="W5540_Flow18" sourceRef="W5540_Task7" targetRef="W5540_Task8" />
+      <bpmn:sequenceFlow id="W5540_Flow19" sourceRef="W5540_Task8" targetRef="W5540_Task9" />
+      <bpmn:sequenceFlow id="W5540_Flow20" sourceRef="W5540_Task9" targetRef="W5540_Task10" />
+      <bpmn:sequenceFlow id="W5540_Flow21" sourceRef="W5540_Task10" targetRef="W5540_Task11" />
+      <bpmn:sequenceFlow id="W5540_Flow22" sourceRef="W5540_Task11" targetRef="W5540_Task12" />
+      <bpmn:sequenceFlow id="W5540_Flow23" sourceRef="W5540_Task12" targetRef="W5540_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5540_diag">
+      <bpmndi:BPMNPlane id="W5540_plane" bpmnElement="W_W5540">
+        <bpmndi:BPMNShape id="W5540_Lane1_di" bpmnElement="W5540_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Lane2_di" bpmnElement="W5540_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Lane3_di" bpmnElement="W5540_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Task6_di" bpmnElement="W5540_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Task7_di" bpmnElement="W5540_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Task8_di" bpmnElement="W5540_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Task9_di" bpmnElement="W5540_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Task10_di" bpmnElement="W5540_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Task11_di" bpmnElement="W5540_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Task12_di" bpmnElement="W5540_Task12"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Start5_di" bpmnElement="W5540_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_End13_di" bpmnElement="W5540_End13"><dc:Bounds x="1890" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5540_Annotation14_di" bpmnElement="W5540_Annotation14"><dc:Bounds x="160" y="630" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5540_Flow16_di" bpmnElement="W5540_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Flow17_di" bpmnElement="W5540_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Flow18_di" bpmnElement="W5540_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Flow19_di" bpmnElement="W5540_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Flow20_di" bpmnElement="W5540_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Flow21_di" bpmnElement="W5540_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Flow22_di" bpmnElement="W5540_Flow22"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Flow23_di" bpmnElement="W5540_Flow23"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5540_Assoc15_di" bpmnElement="W5540_Assoc15"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

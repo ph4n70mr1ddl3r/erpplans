@@ -1,0 +1,1199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-12.2-tool-rental-and-equipment" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W139" name="W139. Tool &amp; Equipment Rental Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer requests rental of professional tools (jackhammers, tile cutters, generators)
+Frequency: Daily; ~5–7 rentals per store per month (~1,000–1,500/month chain-wide per W1319/W1376)
+Volume: ~1,500 active rental units chain-wide
+Owner: Store Manager
+Participants: CSR, Warehouse/Stock Associate, Finance, Customer
+Source: workflow W139 — Tool &amp; Equipment Rental Operations</bpmn:documentation>
+      <bpmn:laneSet id="W139_LaneSet4">
+        <bpmn:lane id="W139_Lane1" name="CSR">
+        <bpmn:flowNodeRef>W139_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W139_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W139_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W139_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W139_Lane2" name="Stock Associate">
+        <bpmn:flowNodeRef>W139_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W139_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W139_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W139_Lane3" name="System">
+        <bpmn:flowNodeRef>W139_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W139_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W139_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W139_Start5" name="Customer requests rental of professional tools (jackhammers, tile cutters, generators)">
+        <bpmn:outgoing>W139_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W139_Task6" name="Rental Request">
+        <bpmn:documentation>Step 1: Rental Request: CSR checks real-time availability of tool in store; verifies customer ID and loyalty status
+Responsible (R): CSR
+Accountable (A): Store Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W139_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W139_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W139_Task7" name="Contract &amp; Deposit">
+        <bpmn:documentation>Step 2: Contract &amp; Deposit: System generates Rental Agreement; Customer pays Rental Fee + Refundable Security Deposit at POS
+Responsible (R): CSR / Cashier
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W139_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W139_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W139_Task8" name="Tool Release">
+        <bpmn:documentation>Step 3: Tool Release: Stock Associate performs &quot;Outbound Inspection&quot; with customer: verify tool condition, fuel level, and safety features; Customer signs release form
+Responsible (R): Stock Associate
+Accountable (A): Store Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W139_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W139_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W139_Task9" name="In-Use Tracking">
+        <bpmn:documentation>Step 4: In-Use Tracking: System tracks rental duration; sends SMS reminder 2 hours before scheduled return
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W139_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W139_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W139_Task10" name="Return &amp; Inspection">
+        <bpmn:documentation>Step 5: Return &amp; Inspection: Customer returns tool; Stock Associate performs &quot;Inbound Inspection&quot;: check for damage, cleanliness, and functionality
+Responsible (R): Stock Associate
+Accountable (A): Store Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W139_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W139_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W139_Task11" name="Closing &amp; Refund">
+        <bpmn:documentation>Step 6: Closing &amp; Refund: (a) If tool OK: System processes deposit refund; (b) If tool damaged/dirty: CSR applies cleaning/repair fee from deposit; (c) If late: System calculates late fee
+Responsible (R): CSR / Cashier
+Accountable (A): Store Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W139_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W139_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W139_Task12" name="Maintenance">
+        <bpmn:documentation>Step 7: Maintenance: Tool moved to &quot;Maintenance&quot; status; Stock Associate performs standard cleaning/servicing before making &quot;Available&quot; again
+Responsible (R): Stock Associate
+Accountable (A): Maintenance
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W139_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W139_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W139_Task13" name="Asset Lifecycle">
+        <bpmn:documentation>Step 8: Asset Lifecycle: System tracks total hours used/rentals per unit; triggers major preventive maintenance (PM) or retirement based on usage thresholds
+Responsible (R): System
+Accountable (A): Maintenance
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W139_Flow24</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W139_End14" name="Complete">
+        <bpmn:incoming>W139_Flow25</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W139_Annotation15">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W139_Assoc16" sourceRef="W139_Annotation15" targetRef="W139_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W139_Flow17" sourceRef="W139_Start5" targetRef="W139_Task6" />
+      <bpmn:sequenceFlow id="W139_Flow18" sourceRef="W139_Task6" targetRef="W139_Task7" />
+      <bpmn:sequenceFlow id="W139_Flow19" sourceRef="W139_Task7" targetRef="W139_Task8" />
+      <bpmn:sequenceFlow id="W139_Flow20" sourceRef="W139_Task8" targetRef="W139_Task9" />
+      <bpmn:sequenceFlow id="W139_Flow21" sourceRef="W139_Task9" targetRef="W139_Task10" />
+      <bpmn:sequenceFlow id="W139_Flow22" sourceRef="W139_Task10" targetRef="W139_Task11" />
+      <bpmn:sequenceFlow id="W139_Flow23" sourceRef="W139_Task11" targetRef="W139_Task12" />
+      <bpmn:sequenceFlow id="W139_Flow24" sourceRef="W139_Task12" targetRef="W139_Task13" />
+      <bpmn:sequenceFlow id="W139_Flow25" sourceRef="W139_Task13" targetRef="W139_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W139_diag">
+      <bpmndi:BPMNPlane id="W139_plane" bpmnElement="W_W139">
+        <bpmndi:BPMNShape id="W139_Lane1_di" bpmnElement="W139_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Lane2_di" bpmnElement="W139_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Lane3_di" bpmnElement="W139_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task6_di" bpmnElement="W139_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task7_di" bpmnElement="W139_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task8_di" bpmnElement="W139_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task9_di" bpmnElement="W139_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task10_di" bpmnElement="W139_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task11_di" bpmnElement="W139_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task12_di" bpmnElement="W139_Task12"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Task13_di" bpmnElement="W139_Task13"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Start5_di" bpmnElement="W139_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_End14_di" bpmnElement="W139_End14"><dc:Bounds x="2100" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W139_Annotation15_di" bpmnElement="W139_Annotation15"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W139_Flow17_di" bpmnElement="W139_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow18_di" bpmnElement="W139_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow19_di" bpmnElement="W139_Flow19"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow20_di" bpmnElement="W139_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow21_di" bpmnElement="W139_Flow21"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow22_di" bpmnElement="W139_Flow22"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow23_di" bpmnElement="W139_Flow23"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow24_di" bpmnElement="W139_Flow24"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Flow25_di" bpmnElement="W139_Flow25"><di:waypoint x="2050" y="505" /><di:waypoint x="2100" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W139_Assoc16_di" bpmnElement="W139_Assoc16"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1172" name="W1172. Tool Rental Fleet Procurement, Lifecycle Planning &amp; Retirement Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual rental fleet planning cycle; or individual unit reaches usage threshold for retirement; or new tool category demand identified
+Frequency: Annual planning; quarterly procurement; ad-hoc retirement decisions
+Volume: ~1,500 active rental units chain-wide; ~200–300 units replaced/added annually
+Owner: Rental Fleet Manager (HQ Merchandising)
+Participants: Category Manager (Tools), Procurement, Store Manager, Finance, Maintenance Supervisor
+Source: workflow W1172 — Tool Rental Fleet Procurement, Lifecycle Planning &amp; Retirement Management</bpmn:documentation>
+      <bpmn:laneSet id="W1172_LaneSet5">
+        <bpmn:lane id="W1172_Lane1" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1172_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1172_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1172_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1172_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1172_Lane2" name="Procurement">
+        <bpmn:flowNodeRef>W1172_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1172_Lane3" name="System">
+        <bpmn:flowNodeRef>W1172_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1172_Lane4" name="Store Manager">
+        <bpmn:flowNodeRef>W1172_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1172_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1172_Start6" name="Annual rental fleet planning cycle; or individual unit reaches usage threshold for…">
+        <bpmn:outgoing>W1172_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1172_Task7" name="Annual fleet plan">
+        <bpmn:documentation>Step 1: Annual fleet plan: Rental Fleet Manager compiles annual fleet plan: (a) current fleet age and condition by tool category; (b) utilization rate per unit (rental days/available days) — target ≥ 60%; (c) maintenance cost trend per unit; (d) revenue per unit vs. carrying cost; (e) customer complaint rate by unit age; (f) identify categories for expansion (new store openings, new tool types) and categories for contraction (low-demand tools); (g) budget request to Finance per W489
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager (Tools)
+Duration: 2–3 days</bpmn:documentation>
+        <bpmn:incoming>W1172_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1172_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1172_Task8" name="Procurement &amp; deployment">
+        <bpmn:documentation>Step 2: Procurement &amp; deployment: For approved fleet additions: (a) Procurement issues RFP per W224 to tool manufacturers (Bosch, Makita, DeWalt, Hilti) for professional-grade rental fleet pricing; (b) evaluate on: durability rating, parts availability in Philippines, manufacturer rental program support, warranty terms; (c) Finance approves CAPEX per W21; (d) receive new units at DC; register in ERP as individual rental assets with serial number; (e) distribute to stores based on fleet plan allocation; (f) Store Manager assigns storage location and ensures staff training on new equipment per W139
+Responsible (R): Procurement / Rental Fleet Manager
+Accountable (A): VP Merchandising
+Duration: 4–6 weeks</bpmn:documentation>
+        <bpmn:incoming>W1172_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1172_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1172_Task9" name="Lifecycle tracking">
+        <bpmn:documentation>Step 3: Lifecycle tracking: System tracks per-unit lifecycle metrics: (a) total rental count, (b) total operating hours, (c) maintenance events and cost, (d) revenue generated, (e) days out of service for maintenance; triggers alerts at: (i) 500 operating hours: major PM required, (ii) 1,000 hours or 3 years: retirement review, (iii) maintenance cost &gt; 40% of replacement value: mandatory retirement review
+Responsible (R): System
+Accountable (A): Rental Fleet Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1172_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1172_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1172_Task10" name="Retirement decision">
+        <bpmn:documentation>Step 4: Retirement decision: Rental Fleet Manager reviews units flagged for retirement: (a) compare maintenance cost trend to replacement cost; (b) assess reliability risk (customer complaint rate, breakdown frequency); (c) determine disposition: (i) sell to employee at book value, (ii) sell to used equipment dealer, (iii) transfer to store demo/display inventory, (iv) scrap if beyond repair; (d) initiate replacement procurement per Step 2
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager
+Duration: 30 min/unit</bpmn:documentation>
+        <bpmn:incoming>W1172_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1172_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1172_Task11" name="Disposition execution">
+        <bpmn:documentation>Step 5: Disposition execution: For retired units: (a) remove from rental inventory in ERP; (b) Finance processes asset disposal per W39 (gain/loss on disposal); (c) if sold: process through POS as used equipment sale; (d) if scrapped: document destruction for tax purposes; (e) update fleet plan with replacement unit
+Responsible (R): Store Manager / Finance
+Accountable (A): Rental Fleet Manager
+Duration: 1–2 hours/unit</bpmn:documentation>
+        <bpmn:incoming>W1172_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1172_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1172_Task12" name="Quarterly fleet performance review">
+        <bpmn:documentation>Step 6: Quarterly fleet performance review: Rental Fleet Manager presents quarterly fleet report to Category Manager: (a) fleet utilization by category, (b) revenue per unit and ROI, (c) maintenance cost ratio, (d) customer satisfaction with rental equipment, (e) upcoming retirement schedule, (f) recommended category additions/removals
+Responsible (R): Rental Fleet Manager
+Accountable (A): VP Merchandising
+Duration: 4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1172_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1172_End13" name="Complete">
+        <bpmn:incoming>W1172_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1172_Annotation14">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: Rental Fleet Manager (HQ Merchandising) review and approval gate
+Owner: Rental Fleet Manager (HQ Merchandising)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1172_Assoc15" sourceRef="W1172_Annotation14" targetRef="W1172_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1172_Flow16" sourceRef="W1172_Start6" targetRef="W1172_Task7" />
+      <bpmn:sequenceFlow id="W1172_Flow17" sourceRef="W1172_Task7" targetRef="W1172_Task8" />
+      <bpmn:sequenceFlow id="W1172_Flow18" sourceRef="W1172_Task8" targetRef="W1172_Task9" />
+      <bpmn:sequenceFlow id="W1172_Flow19" sourceRef="W1172_Task9" targetRef="W1172_Task10" />
+      <bpmn:sequenceFlow id="W1172_Flow20" sourceRef="W1172_Task10" targetRef="W1172_Task11" />
+      <bpmn:sequenceFlow id="W1172_Flow21" sourceRef="W1172_Task11" targetRef="W1172_Task12" />
+      <bpmn:sequenceFlow id="W1172_Flow22" sourceRef="W1172_Task12" targetRef="W1172_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1172_diag">
+      <bpmndi:BPMNPlane id="W1172_plane" bpmnElement="W_W1172">
+        <bpmndi:BPMNShape id="W1172_Lane1_di" bpmnElement="W1172_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Lane2_di" bpmnElement="W1172_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Lane3_di" bpmnElement="W1172_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Lane4_di" bpmnElement="W1172_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Task7_di" bpmnElement="W1172_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Task8_di" bpmnElement="W1172_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Task9_di" bpmnElement="W1172_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Task10_di" bpmnElement="W1172_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Task11_di" bpmnElement="W1172_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Task12_di" bpmnElement="W1172_Task12"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Start6_di" bpmnElement="W1172_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_End13_di" bpmnElement="W1172_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1172_Annotation14_di" bpmnElement="W1172_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1172_Flow16_di" bpmnElement="W1172_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1172_Flow17_di" bpmnElement="W1172_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1172_Flow18_di" bpmnElement="W1172_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1172_Flow19_di" bpmnElement="W1172_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1172_Flow20_di" bpmnElement="W1172_Flow20"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1172_Flow21_di" bpmnElement="W1172_Flow21"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1172_Flow22_di" bpmnElement="W1172_Flow22"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1172_Assoc15_di" bpmnElement="W1172_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1374" name="W1374. Tool Rental Equipment Breakdown, Emergency Repair Dispatch &amp; Substitute Unit Provisioning" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer reports tool breakdown during rental period via phone, SMS, or in-store; or tool fails outbound inspection at W139.3 return processing
+Frequency: ~50–80 breakdowns/month chain-wide (~5% of rentals); ~0.25–0.4 per store per month
+Volume: ~600–960 breakdowns/year across 1,500 rental units
+Owner: Store Manager
+Participants: Customer, Stock Associate, CSR, Store Manager, Rental Fleet Manager (HQ), Maintenance Technician, Vendor Service Center
+Source: workflow W1374 — Tool Rental Equipment Breakdown, Emergency Repair Dispatch &amp; Substitute Unit Provisioning</bpmn:documentation>
+      <bpmn:laneSet id="W1374_LaneSet7">
+        <bpmn:lane id="W1374_Lane1" name="Customer">
+        <bpmn:flowNodeRef>W1374_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1374_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1374_Lane2" name="CSR">
+        <bpmn:flowNodeRef>W1374_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1374_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1374_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1374_Lane4" name="Stock Associate">
+        <bpmn:flowNodeRef>W1374_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1374_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1374_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1374_Lane5" name="Buyer">
+        <bpmn:flowNodeRef>W1374_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1374_Lane6" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1374_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1374_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1374_Start8" name="Customer reports tool breakdown during rental period via phone, SMS, or in-store; or tool…">
+        <bpmn:outgoing>W1374_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1374_Task9" name="Customer contacts store (phone or SMS) to report tool breakdown during rental…">
+        <bpmn:documentation>Step 1: Customer contacts store (phone or SMS) to report tool breakdown during rental: describes tool, issue (won&#x27;t start, loss of power, unusual noise, smoke, fluid leak), and urgency of their project timeline
+Responsible (R): Customer
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1374_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1374_Task10" name="CSR creates breakdown report in system: (a) linked to active rental transaction…">
+        <bpmn:documentation>Step 2: CSR creates breakdown report in system: (a) linked to active rental transaction per W139; (b) records customer-reported symptoms; (c) checks warranty status of the unit; (d) checks substitute tool availability at this store and nearest stores
+Responsible (R): CSR
+Accountable (A): Store Manager
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1374_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1374_Task11" name="Substitute unit available at store">
+        <bpmn:documentation>Step 3: Store Manager determines resolution path: (a) Substitute unit available at store: Stock Associate retrieves substitute unit; prepares for customer exchange; customer brings broken tool to store for swap (or store dispatches substitute via delivery partner for high-value trade accounts); (b) No substitute at store, available at nearby store: Store Manager arranges inter-store transfer per W22 with &quot;Rental Emergency&quot; priority flag; estimated transfer time 1–4 hours for same-city stores; (c) No substitute available within reasonable distance: Store Manager offers rental extension waiver (free rental days equal to downtime), project schedule accommodation, or referral to competitor rental shop with BuildRight covering the cost difference
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1374_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1374_Task12" name="If substitute provided: (a) system closes original rental at breakdown time…">
+        <bpmn:documentation>Step 4: If substitute provided: (a) system closes original rental at breakdown time; rental fee prorated to actual usage duration; (b) system opens new rental for substitute unit with same return date as original (customer does not lose rental days to breakdown); (c) system waives any substitute unit rental fee difference if substitute is a higher-tier model; (d) Stock Associate conducts abbreviated W1319 safety briefing if substitute is a different tool type
+Responsible (R): Stock Associate / CSR / System
+Accountable (A): Store Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1374_Flow23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1374_Task13" name="Broken unit disposition: (a) Stock Associate performs diagnostic inspection and…">
+        <bpmn:documentation>Step 5: Broken unit disposition: (a) Stock Associate performs diagnostic inspection and categorizes failure: (i) minor (clogged filter, worn brush, blown fuse — repairable in-store by Stock Associate with standard parts kit), (ii) moderate (motor replacement, hydraulic seal leak — requires vendor service center), (iii) major (structural failure, frame crack — unit retirement review per W1172); (b) unit status set to &quot;In Repair&quot; in system; (c) if vendor repair required: Buyer arranges service center pickup per W139.8 warranty process
+Responsible (R): Stock Associate / Buyer
+Accountable (A): Rental Fleet Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1374_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1374_Task14" name="In-store minor repair execution: (a) Stock Associate performs repair using…">
+        <bpmn:documentation>Step 6: In-store minor repair execution: (a) Stock Associate performs repair using standard maintenance parts kit (filters, brushes, fuses, belts, spark plugs); (b) tests repaired tool before returning to &quot;Available&quot; status; (c) system records repair event: parts used, labor time, root cause code; (d) parts consumed deducted from store maintenance inventory
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 30–60 min</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1374_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1374_Task15" name="Vendor service center repair: (a) Buyer issues repair PO to tool manufacturer&#x27;s…">
+        <bpmn:documentation>Step 7: Vendor service center repair: (a) Buyer issues repair PO to tool manufacturer&#x27;s authorized service center; (b) system tracks repair status; (c) vendor returns repaired unit with service report; (d) Stock Associate tests and returns to &quot;Available&quot;; (e) repair cost charged to rental unit&#x27;s lifecycle cost per W1172
+Responsible (R): Buyer / Vendor
+Accountable (A): Rental Fleet Manager
+Duration: 1–3 weeks</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1374_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1374_Task16" name="Rental Fleet Manager reviews monthly breakdown analytics: (a) breakdown rate by…">
+        <bpmn:documentation>Step 8: Rental Fleet Manager reviews monthly breakdown analytics: (a) breakdown rate by tool category and unit age; (b) mean time to repair (MTTR); (c) substitute unit fulfillment rate; (d) customer satisfaction post-breakdown; (e) units exceeding W1172 maintenance cost threshold flagged for retirement review
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1374_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1374_End17" name="Complete">
+        <bpmn:incoming>W1374_Flow28</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1374_Annotation18">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: Store Manager review and approval gate
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1374_Assoc19" sourceRef="W1374_Annotation18" targetRef="W1374_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1374_Flow20" sourceRef="W1374_Start8" targetRef="W1374_Task9" />
+      <bpmn:sequenceFlow id="W1374_Flow21" sourceRef="W1374_Task9" targetRef="W1374_Task10" />
+      <bpmn:sequenceFlow id="W1374_Flow22" sourceRef="W1374_Task10" targetRef="W1374_Task11" />
+      <bpmn:sequenceFlow id="W1374_Flow23" sourceRef="W1374_Task11" targetRef="W1374_Task12" />
+      <bpmn:sequenceFlow id="W1374_Flow24" sourceRef="W1374_Task12" targetRef="W1374_Task13" />
+      <bpmn:sequenceFlow id="W1374_Flow25" sourceRef="W1374_Task13" targetRef="W1374_Task14" />
+      <bpmn:sequenceFlow id="W1374_Flow26" sourceRef="W1374_Task14" targetRef="W1374_Task15" />
+      <bpmn:sequenceFlow id="W1374_Flow27" sourceRef="W1374_Task15" targetRef="W1374_Task16" />
+      <bpmn:sequenceFlow id="W1374_Flow28" sourceRef="W1374_Task16" targetRef="W1374_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1374_diag">
+      <bpmndi:BPMNPlane id="W1374_plane" bpmnElement="W_W1374">
+        <bpmndi:BPMNShape id="W1374_Lane1_di" bpmnElement="W1374_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Lane2_di" bpmnElement="W1374_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Lane3_di" bpmnElement="W1374_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Lane4_di" bpmnElement="W1374_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Lane5_di" bpmnElement="W1374_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Lane6_di" bpmnElement="W1374_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task9_di" bpmnElement="W1374_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task10_di" bpmnElement="W1374_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task11_di" bpmnElement="W1374_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task12_di" bpmnElement="W1374_Task12"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task13_di" bpmnElement="W1374_Task13"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task14_di" bpmnElement="W1374_Task14"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task15_di" bpmnElement="W1374_Task15"><dc:Bounds x="1660" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Task16_di" bpmnElement="W1374_Task16"><dc:Bounds x="1870" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Start8_di" bpmnElement="W1374_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_End17_di" bpmnElement="W1374_End17"><dc:Bounds x="2100" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1374_Annotation18_di" bpmnElement="W1374_Annotation18"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1374_Flow20_di" bpmnElement="W1374_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow21_di" bpmnElement="W1374_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow22_di" bpmnElement="W1374_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow23_di" bpmnElement="W1374_Flow23"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow24_di" bpmnElement="W1374_Flow24"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow25_di" bpmnElement="W1374_Flow25"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow26_di" bpmnElement="W1374_Flow26"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow27_di" bpmnElement="W1374_Flow27"><di:waypoint x="1840" y="845" /><di:waypoint x="1870" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Flow28_di" bpmnElement="W1374_Flow28"><di:waypoint x="2050" y="1015" /><di:waypoint x="2100" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1374_Assoc19_di" bpmnElement="W1374_Assoc19"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1375" name="W1375. Tool Rental Overdue Return Escalation, Recovery &amp; Penalty Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Rented tool not returned by scheduled return date/time; system detects overdue status
+Frequency: ~150–300 overdue returns/month chain-wide (~10–20% of rentals, concentrated on weekend rentals)
+Volume: ~0.75–1.5 overdue returns per store per month
+Owner: CSR (initial contact); Store Manager (escalation)
+Participants: CSR, Store Manager, Customer, Rental Fleet Manager (HQ), Finance (deposit forfeiture), Legal (unreturned equipment)
+Source: workflow W1375 — Tool Rental Overdue Return Escalation, Recovery &amp; Penalty Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1375_LaneSet5">
+        <bpmn:lane id="W1375_Lane1" name="System">
+        <bpmn:flowNodeRef>W1375_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1375_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1375_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1375_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1375_Lane2" name="CSR">
+        <bpmn:flowNodeRef>W1375_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1375_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1375_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1375_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1375_Lane4" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1375_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1375_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1375_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1375_Start6" name="Rented tool not returned by scheduled return date/time; system detects overdue status">
+        <bpmn:outgoing>W1375_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1375_Task7" name="System detects overdue status at 1 hour past scheduled return time: sends…">
+        <bpmn:documentation>Step 1: System detects overdue status at 1 hour past scheduled return time: sends automated SMS/app push to customer: &quot;Your rental of [tool] was due at [time]. Please return to [store] as soon as possible. Late fees may apply per your rental agreement.&quot;
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1375_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1375_Task8" name="If not returned within 4 hours of due time: CSR calls customer: (a) confirms…">
+        <bpmn:documentation>Step 2: If not returned within 4 hours of due time: CSR calls customer: (a) confirms customer received overdue notification; (b) asks for expected return time; (c) if customer needs extension: CSR processes rental extension in system — calculates additional rental days at standard rate, confirms extension does not conflict with existing reservation per W1318; (d) if extension conflicts with reservation: CSR offers alternative (return now, or swap to different tool category, or transfer reservation to another store with availability)
+Responsible (R): CSR
+Accountable (A): Store Manager
+Duration: 5 min/call</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1375_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1375_Task9" name="If not returned by end of next business day (24+ hours overdue): Store Manager…">
+        <bpmn:documentation>Step 3: If not returned by end of next business day (24+ hours overdue): Store Manager calls customer; emphasizes escalating late fees and deposit implications; documents conversation in system with expected return commitment
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1375_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1375_Task10" name="System calculates and posts late fees: (a) standard daily rental rate applied…">
+        <bpmn:documentation>Step 4: System calculates and posts late fees: (a) standard daily rental rate applied for each calendar day past return date (including day of return); (b) late fees deducted from security deposit first; (c) if late fees exceed deposit amount: customer notified of additional amount due; (d) system tracks cumulative late fees and remaining deposit balance
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1375_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1375_Task11" name="If not returned within 3 days (72+ hours overdue) and customer unreachable…">
+        <bpmn:documentation>Step 5: If not returned within 3 days (72+ hours overdue) and customer unreachable after 3 contact attempts: (a) system automatically flags tool as &quot;Overdue — Deposit Forfeiture&quot;; (b) full security deposit forfeited; (c) CSR sends formal demand letter via registered mail (PhilPost) and email: demands return of equipment within 5 business days or payment of replacement value; (d) customer account flagged in loyalty system — future rentals blocked until resolution
+Responsible (R): System / CSR / Store Manager
+Accountable (A): Rental Fleet Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1375_Flow22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1375_Task12" name="If not returned within 10 days of original due date: (a) case escalated to…">
+        <bpmn:documentation>Step 6: If not returned within 10 days of original due date: (a) case escalated to Rental Fleet Manager at HQ; (b) Rental Fleet Manager reviews: equipment value, customer history, contact attempts, any dispute or complaint linked to the rental; (c) if equipment value &lt; PHP 20,000: Rental Fleet Manager authorizes write-off as loss per W92; equipment removed from rental fleet; (d) if equipment value ≥ PHP 20,000: case escalated to VP Legal for formal recovery action (demand letter from legal counsel, potential small claims filing)
+Responsible (R): Rental Fleet Manager / VP Legal
+Accountable (A): VP Supply Chain
+Duration: 30 min/case</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1375_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1375_Task13" name="Customer returns overdue tool at any point: (a) standard W139 inbound…">
+        <bpmn:documentation>Step 7: Customer returns overdue tool at any point: (a) standard W139 inbound inspection performed; (b) late fees and any damage fees calculated per W139.6; (c) security deposit applied: (i) if deposit covers late fees + damage: remainder refunded; (ii) if fees exceed deposit: customer pays additional amount at POS; (d) customer loyalty flag removed if case resolved; (e) system closes overdue case
+Responsible (R): CSR / Cashier / Stock Associate
+Accountable (A): Store Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1375_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1375_Task14" name="Monthly: Rental Fleet Manager reviews overdue analytics: (a) overdue rate by…">
+        <bpmn:documentation>Step 8: Monthly: Rental Fleet Manager reviews overdue analytics: (a) overdue rate by store, tool category, and customer segment (trade vs. B2C); (b) average overdue duration; (c) deposit forfeiture rate; (d) equipment write-off value; (e) repeat offender rate; (f) stores with consistently high overdue rates reviewed for process improvement (better customer screening, higher deposits for high-risk categories)
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1375_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1375_End15" name="Complete">
+        <bpmn:incoming>W1375_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1375_Annotation16">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: CSR (initial contact); Store Manager (escalation) review and approval gate
+Owner: CSR (initial contact); Store Manager (escalation)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1375_Assoc17" sourceRef="W1375_Annotation16" targetRef="W1375_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1375_Flow18" sourceRef="W1375_Start6" targetRef="W1375_Task7" />
+      <bpmn:sequenceFlow id="W1375_Flow19" sourceRef="W1375_Task7" targetRef="W1375_Task8" />
+      <bpmn:sequenceFlow id="W1375_Flow20" sourceRef="W1375_Task8" targetRef="W1375_Task9" />
+      <bpmn:sequenceFlow id="W1375_Flow21" sourceRef="W1375_Task9" targetRef="W1375_Task10" />
+      <bpmn:sequenceFlow id="W1375_Flow22" sourceRef="W1375_Task10" targetRef="W1375_Task11" />
+      <bpmn:sequenceFlow id="W1375_Flow23" sourceRef="W1375_Task11" targetRef="W1375_Task12" />
+      <bpmn:sequenceFlow id="W1375_Flow24" sourceRef="W1375_Task12" targetRef="W1375_Task13" />
+      <bpmn:sequenceFlow id="W1375_Flow25" sourceRef="W1375_Task13" targetRef="W1375_Task14" />
+      <bpmn:sequenceFlow id="W1375_Flow26" sourceRef="W1375_Task14" targetRef="W1375_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1375_diag">
+      <bpmndi:BPMNPlane id="W1375_plane" bpmnElement="W_W1375">
+        <bpmndi:BPMNShape id="W1375_Lane1_di" bpmnElement="W1375_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Lane2_di" bpmnElement="W1375_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Lane3_di" bpmnElement="W1375_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Lane4_di" bpmnElement="W1375_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task7_di" bpmnElement="W1375_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task8_di" bpmnElement="W1375_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task9_di" bpmnElement="W1375_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task10_di" bpmnElement="W1375_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task11_di" bpmnElement="W1375_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task12_di" bpmnElement="W1375_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task13_di" bpmnElement="W1375_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Task14_di" bpmnElement="W1375_Task14"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Start6_di" bpmnElement="W1375_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_End15_di" bpmnElement="W1375_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1375_Annotation16_di" bpmnElement="W1375_Annotation16"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1375_Flow18_di" bpmnElement="W1375_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow19_di" bpmnElement="W1375_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow20_di" bpmnElement="W1375_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow21_di" bpmnElement="W1375_Flow21"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow22_di" bpmnElement="W1375_Flow22"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow23_di" bpmnElement="W1375_Flow23"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow24_di" bpmnElement="W1375_Flow24"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow25_di" bpmnElement="W1375_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Flow26_di" bpmnElement="W1375_Flow26"><di:waypoint x="2050" y="675" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1375_Assoc17_di" bpmnElement="W1375_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1376" name="W1376. Tool Rental Revenue Analytics, Utilization Optimization &amp; Store Performance Benchmarking" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly rental performance reporting cycle; or quarterly fleet review per W1172.6; or Category Manager requests store-level rental benchmarking
+Frequency: Monthly reporting; quarterly deep-dive analysis
+Volume: 200 stores × ~7–8 rental units each = ~1,500 units; ~1,000–1,500 rentals/month chain-wide
+Owner: Rental Fleet Manager (HQ)
+Participants: Rental Fleet Manager, Category Manager (Tools), VP Merchandising, Store Manager (store-level review), BI Analyst
+Source: workflow W1376 — Tool Rental Revenue Analytics, Utilization Optimization &amp; Store Performance Benchmarking</bpmn:documentation>
+      <bpmn:laneSet id="W1376_LaneSet4">
+        <bpmn:lane id="W1376_Lane1" name="System">
+        <bpmn:flowNodeRef>W1376_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1376_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1376_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1376_Lane2" name="BI Analyst">
+        <bpmn:flowNodeRef>W1376_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1376_Lane3" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1376_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1376_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1376_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1376_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1376_Start5" name="Monthly rental performance reporting cycle; or quarterly fleet review per W1172.6; or…">
+        <bpmn:outgoing>W1376_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1376_Task6" name="System generates monthly rental performance report: (a) total rental revenue by…">
+        <bpmn:documentation>Step 1: System generates monthly rental performance report: (a) total rental revenue by store, tool category, and unit; (b) utilization rate by unit (rental days ÷ available days); (c) average rental duration by tool category; (d) average revenue per rental day; (e) overdue rate by store; (f) breakdown rate by tool category and unit age; (g) consumable attach rate (revenue from blades, bits, fuel sold alongside rentals); (h) customer segment analysis (B2C DIYer vs. trade professional)
+Responsible (R): System
+Accountable (A): Rental Fleet Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1376_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1376_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1376_Task7" name="BI Analyst enriches report with: (a) rental revenue per sqm of store rental…">
+        <bpmn:documentation>Step 2: BI Analyst enriches report with: (a) rental revenue per sqm of store rental display area; (b) rental gross margin (rental revenue minus depreciation, maintenance cost, parts cost, PPE cost); (c) trend analysis vs. prior month and same month prior year; (d) correlation between rental activity and store-level sales in complementary categories (e.g., tile cutter rentals correlated with tile sales)
+Responsible (R): BI Analyst
+Accountable (A): Rental Fleet Manager
+Duration: 4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1376_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1376_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1376_Task8" name="Rental Fleet Manager produces store performance benchmarking: (a) rank all 200…">
+        <bpmn:documentation>Step 3: Rental Fleet Manager produces store performance benchmarking: (a) rank all 200 stores by rental revenue, utilization rate, and gross margin; (b) identify top 20 stores (best practices to replicate) and bottom 20 stores (coaching or fleet reallocation); (c) compare stores within same geographic region to control for market differences; (d) flag stores where utilization &lt; 30% for three consecutive months as candidates for fleet reduction per W1172
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager
+Duration: 4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1376_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1376_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1376_Task9" name="High demand, low supply stores">
+        <bpmn:documentation>Step 4: Rental Fleet Manager identifies optimization actions: (a) High demand, low supply stores: recommend fleet augmentation per W1172 (add units to stores where utilization consistently &gt; 80%); (b) Low demand, high supply stores: recommend fleet redistribution (move underutilized units to high-demand stores); (c) Category expansion: tool categories with consistently high utilization and long waitlists per W1318 indicate demand for additional units or new tool types; (d) Category contraction: tool categories with &lt; 25% utilization across multiple stores flagged for potential removal; (e) Pricing optimization: tool categories with &gt; 90% utilization and no waitlist may be underpriced — price increase test recommended
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1376_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1376_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1376_Task10" name="Quarterly: Rental Fleet Manager presents rental performance review to Category…">
+        <bpmn:documentation>Step 5: Quarterly: Rental Fleet Manager presents rental performance review to Category Manager and VP Merchandising: (a) total rental revenue and gross margin vs. plan; (b) fleet utilization heat map by store and category; (c) recommended fleet movements (additions, redistributions, retirements); (d) capital expenditure request for fleet additions per W1172; (e) pricing adjustment recommendations; (f) new tool category proposals (based on customer requests and market trends)
+Responsible (R): Rental Fleet Manager
+Accountable (A): VP Merchandising
+Duration: Half day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1376_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1376_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1376_Task11" name="Store Manager receives monthly store-level rental scorecard: (a) store&#x27;s rental…">
+        <bpmn:documentation>Step 6: Store Manager receives monthly store-level rental scorecard: (a) store&#x27;s rental revenue, utilization, and gross margin vs. chain average and regional peers; (b) overdue and breakdown rates vs. chain average; (c) consumable attach rate; (d) specific improvement recommendations (e.g., &quot;Increase weekend rental promotion for tile cutters — store is below regional average&quot;); (e) Store Manager includes rental performance in monthly store review per W67
+Responsible (R): System / Rental Fleet Manager
+Accountable (A): Store Manager
+Duration: 15 min/store/month</bpmn:documentation>
+        <bpmn:incoming>W1376_Flow20</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1376_End12" name="Complete">
+        <bpmn:incoming>W1376_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1376_Annotation13">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: Rental Fleet Manager review and approval gate
+Owner: Rental Fleet Manager (HQ)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1376_Assoc14" sourceRef="W1376_Annotation13" targetRef="W1376_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1376_Flow15" sourceRef="W1376_Start5" targetRef="W1376_Task6" />
+      <bpmn:sequenceFlow id="W1376_Flow16" sourceRef="W1376_Task6" targetRef="W1376_Task7" />
+      <bpmn:sequenceFlow id="W1376_Flow17" sourceRef="W1376_Task7" targetRef="W1376_Task8" />
+      <bpmn:sequenceFlow id="W1376_Flow18" sourceRef="W1376_Task8" targetRef="W1376_Task9" />
+      <bpmn:sequenceFlow id="W1376_Flow19" sourceRef="W1376_Task9" targetRef="W1376_Task10" />
+      <bpmn:sequenceFlow id="W1376_Flow20" sourceRef="W1376_Task10" targetRef="W1376_Task11" />
+      <bpmn:sequenceFlow id="W1376_Flow21" sourceRef="W1376_Task11" targetRef="W1376_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1376_diag">
+      <bpmndi:BPMNPlane id="W1376_plane" bpmnElement="W_W1376">
+        <bpmndi:BPMNShape id="W1376_Lane1_di" bpmnElement="W1376_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Lane2_di" bpmnElement="W1376_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Lane3_di" bpmnElement="W1376_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Task6_di" bpmnElement="W1376_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Task7_di" bpmnElement="W1376_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Task8_di" bpmnElement="W1376_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Task9_di" bpmnElement="W1376_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Task10_di" bpmnElement="W1376_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Task11_di" bpmnElement="W1376_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Start5_di" bpmnElement="W1376_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_End12_di" bpmnElement="W1376_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1376_Annotation13_di" bpmnElement="W1376_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1376_Flow15_di" bpmnElement="W1376_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1376_Flow16_di" bpmnElement="W1376_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1376_Flow17_di" bpmnElement="W1376_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1376_Flow18_di" bpmnElement="W1376_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1376_Flow19_di" bpmnElement="W1376_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1376_Flow20_di" bpmnElement="W1376_Flow20"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1376_Flow21_di" bpmnElement="W1376_Flow21"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1376_Assoc14_di" bpmnElement="W1376_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1318" name="W1318. Tool Rental Reservation, Waitlist &amp; Scheduling" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer requests advance booking for a rental tool via mobile app, phone, or in-store; or system identifies peak-demand window approaching (weekends, holiday construction periods)
+Frequency: Daily; ~30–50 reservation requests chain-wide/day
+Volume: ~1,000–1,500 reservations/month; peak on Friday–Saturday for weekend projects
+Owner: Store Manager
+Participants: Customer, CSR, Store Manager, Rental Fleet Manager (HQ), System
+Source: workflow W1318 — Tool Rental Reservation, Waitlist &amp; Scheduling</bpmn:documentation>
+      <bpmn:laneSet id="W1318_LaneSet4">
+        <bpmn:lane id="W1318_Lane1" name="Customer">
+        <bpmn:flowNodeRef>W1318_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1318_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1318_Lane2" name="System">
+        <bpmn:flowNodeRef>W1318_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1318_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1318_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1318_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1318_Lane3" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1318_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1318_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1318_Start5" name="Customer requests advance booking for a rental tool via mobile app, phone, or in-store…">
+        <bpmn:outgoing>W1318_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1318_Task6" name="Customer reservation request">
+        <bpmn:documentation>Step 1: Customer reservation request: Customer submits reservation via: (a) BuildRight mobile app &quot;Rent Tools&quot; section — selects store, tool category, preferred date/time window, and rental duration (half-day, full-day, multi-day); (b) phone call to store CSR; (c) walk-in request at customer service counter; system checks real-time availability of requested tool category at selected store for the requested date range, considering existing reservations and currently rented units with scheduled return dates
+Responsible (R): Customer / CSR / System
+Accountable (A): —
+Duration: 3–5 min</bpmn:documentation>
+        <bpmn:incoming>W1318_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1318_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1318_Task7" name="Availability confirmation &amp; booking">
+        <bpmn:documentation>Step 2: Availability confirmation &amp; booking: If tool available: (a) system creates reservation record with unique reservation ID; (b) reservation held for 2 hours pending customer confirmation; (c) customer receives SMS/app confirmation with reservation ID, pickup time window, store location, and rental rate; (d) system blocks the unit from other reservations for the booked period; (e) CSR reminds customer of required ID and deposit amount per W139
+Responsible (R): System / CSR
+Accountable (A): —
+Duration: Automated + 2 min</bpmn:documentation>
+        <bpmn:incoming>W1318_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1318_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1318_Task8" name="Waitlist management">
+        <bpmn:documentation>Step 3: Waitlist management: If tool unavailable for requested period: (a) system offers alternatives: (i) different dates with availability, (ii) same tool at nearest store with availability (with distance and transfer feasibility), (iii) equivalent tool in same category (e.g., Bosch jackhammer if DeWalt jackhammer unavailable per W279 substitution rules); (b) if no alternatives acceptable: customer placed on waitlist with preferred date range; (c) system monitors cancellations and returns across all stores for waitlisted tool categories; (d) when availability opens: system auto-notifies waitlisted customers by SMS/app push in queue order; customer has 1 hour to confirm before system moves to next waitlisted customer
+Responsible (R): System / CSR
+Accountable (A): Store Manager
+Duration: Automated + 5 min per waitlist interaction</bpmn:documentation>
+        <bpmn:incoming>W1318_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1318_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1318_Task9" name="Cross-store reservation fulfillment">
+        <bpmn:documentation>Step 4: Cross-store reservation fulfillment: For high-demand categories where the local store has no availability: (a) system identifies nearest store with available unit (within 30 km or same island per W22 transfer logistics); (b) Rental Fleet Manager approves cross-store transfer for rental purposes; (c) unit transferred to requesting store per W22 with &quot;Rental Reservation&quot; priority flag; (d) system updates availability at both stores; (e) customer notified of pickup location and any slight timing adjustment
+Responsible (R): Rental Fleet Manager / System
+Accountable (A): Store Manager
+Duration: 30 min coordination + transfer time</bpmn:documentation>
+        <bpmn:incoming>W1318_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1318_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1318_Task10" name="Demand-based fleet scheduling">
+        <bpmn:documentation>Step 5: Demand-based fleet scheduling: Weekly: system generates rental demand forecast per store: (a) historical rental patterns by day-of-week, season, and local construction activity; (b) upcoming reservations vs. available fleet; (c) stores with consistently &gt; 80% weekend utilization flagged for fleet augmentation per W1172; (d) stores with &lt; 30% utilization flagged for potential fleet reduction or cross-store sharing; (e) Rental Fleet Manager reviews weekly demand report and adjusts inter-store unit distribution if needed
+Responsible (R): System / Rental Fleet Manager
+Accountable (A): VP Merchandising
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W1318_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1318_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1318_Task11" name="Reservation no-show management">
+        <bpmn:documentation>Step 6: Reservation no-show management: If customer fails to pick up reserved tool within the pickup window (typically 2 hours): (a) system sends SMS/app reminder 30 minutes before window closes; (b) if no pickup by window end: reservation cancelled; unit released for walk-in or waitlist customers; (c) repeat no-show customers (3+ in 6 months) flagged in system — future reservations require deposit pre-payment via GCash/card to secure booking; (d) Store Manager may grant exceptions for documented emergencies
+Responsible (R): System / Store Manager
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1318_Flow20</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1318_End12" name="Complete">
+        <bpmn:incoming>W1318_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1318_Annotation13">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: must enforce return deadlines or proactively offer alternative units
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1318_Assoc14" sourceRef="W1318_Annotation13" targetRef="W1318_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1318_Flow15" sourceRef="W1318_Start5" targetRef="W1318_Task6" />
+      <bpmn:sequenceFlow id="W1318_Flow16" sourceRef="W1318_Task6" targetRef="W1318_Task7" />
+      <bpmn:sequenceFlow id="W1318_Flow17" sourceRef="W1318_Task7" targetRef="W1318_Task8" />
+      <bpmn:sequenceFlow id="W1318_Flow18" sourceRef="W1318_Task8" targetRef="W1318_Task9" />
+      <bpmn:sequenceFlow id="W1318_Flow19" sourceRef="W1318_Task9" targetRef="W1318_Task10" />
+      <bpmn:sequenceFlow id="W1318_Flow20" sourceRef="W1318_Task10" targetRef="W1318_Task11" />
+      <bpmn:sequenceFlow id="W1318_Flow21" sourceRef="W1318_Task11" targetRef="W1318_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1318_diag">
+      <bpmndi:BPMNPlane id="W1318_plane" bpmnElement="W_W1318">
+        <bpmndi:BPMNShape id="W1318_Lane1_di" bpmnElement="W1318_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Lane2_di" bpmnElement="W1318_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Lane3_di" bpmnElement="W1318_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Task6_di" bpmnElement="W1318_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Task7_di" bpmnElement="W1318_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Task8_di" bpmnElement="W1318_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Task9_di" bpmnElement="W1318_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Task10_di" bpmnElement="W1318_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Task11_di" bpmnElement="W1318_Task11"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Start5_di" bpmnElement="W1318_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_End12_di" bpmnElement="W1318_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1318_Annotation13_di" bpmnElement="W1318_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1318_Flow15_di" bpmnElement="W1318_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1318_Flow16_di" bpmnElement="W1318_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1318_Flow17_di" bpmnElement="W1318_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1318_Flow18_di" bpmnElement="W1318_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1318_Flow19_di" bpmnElement="W1318_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1318_Flow20_di" bpmnElement="W1318_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1318_Flow21_di" bpmnElement="W1318_Flow21"><di:waypoint x="1630" y="335" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1318_Assoc14_di" bpmnElement="W1318_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1319" name="W1319. Tool Rental Customer Safety Briefing, Liability Waiver &amp; Equipment Operation Acknowledgment" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer proceeds with tool rental after reservation (W1318) or walk-in (W139); required before tool release at step W139.3
+Frequency: Per rental transaction; ~1,000–1,500 rentals/month chain-wide
+Volume: ~50–75 safety briefings per store per month
+Owner: Department Supervisor
+Participants: Customer, Stock Associate (briefing conductor), Store Manager
+Source: workflow W1319 — Tool Rental Customer Safety Briefing, Liability Waiver &amp; Equipment Operation Acknowledgment</bpmn:documentation>
+      <bpmn:laneSet id="W1319_LaneSet5">
+        <bpmn:lane id="W1319_Lane1" name="Stock Associate">
+        <bpmn:flowNodeRef>W1319_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1319_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1319_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1319_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1319_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1319_Lane2" name="Customer">
+        <bpmn:flowNodeRef>W1319_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1319_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1319_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1319_Lane4" name="Department Supervisor">
+        <bpmn:flowNodeRef>W1319_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1319_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1319_Start6" name="Customer proceeds with tool rental after reservation (W1318) or walk-in (W139); required…">
+        <bpmn:outgoing>W1319_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1319_Task7" name="Pre-briefing customer assessment">
+        <bpmn:documentation>Step 1: Pre-briefing customer assessment: Before conducting the safety briefing: (a) Stock Associate verifies customer is ≥ 18 years old (government-issued ID check, per W139.1); (b) visual assessment: customer appears alert, not under influence of alcohol or drugs, and physically capable of operating the equipment; (c) if customer appears impaired or is a minor: Stock Associate politely declines rental and informs Store Manager; (d) Stock Associate asks customer: &quot;Have you operated this type of equipment before?&quot; — answer recorded in system for briefing depth adjustment
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1319_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1319_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1319_Task8" name="Tool-specific safety briefing">
+        <bpmn:documentation>Step 2: Tool-specific safety briefing: Stock Associate conducts standardized safety briefing using the tool&#x27;s Safety Briefing Card (laminated, attached to each rental unit&#x27;s storage case): (a) Personal protective equipment (PPE): required PPE for the specific tool (safety goggles for grinders, ear protection for jackhammers, gloves for all power tools, dust mask for tile cutters); PPE included with rental per W139; (b) Operating instructions: start/stop procedure, speed settings, blade/bit orientation; (c) Hazard identification: kickback risk (circular saws), electrocution risk (wet conditions with electric tools), crush risk (jackhammers), burn risk (generators — hot surfaces); (d) Safe work area: clear area of bystanders, secure workpiece, ensure ventilation for indoor gas-powered equipment; (e) Emergency shutdown: how to immediately stop the tool in an emergency; (f) Prohibited uses: modifications, removal of safety guards, use in rain for electric tools, exceeding rated load capacity; (g) briefing duration: 5 min for hand tools, 8–10 min for power tools and generators
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W1319_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1319_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1319_Task9" name="Liability waiver signing">
+        <bpmn:documentation>Step 3: Liability waiver signing: After safety briefing: (a) Stock Associate presents the Tool Rental Liability Waiver on the store tablet: (i) customer confirms receipt of safety briefing and understanding of operating instructions; (ii) customer acknowledges inherent risks of power tool operation and assumes personal responsibility for safe use; (iii) customer agrees to indemnify BuildRight for damage caused by improper operation; (iv) customer acknowledges obligation to return tool in same condition (normal wear excepted) per W139; (v) customer authorizes deposit deduction for damage or cleaning per W139.6; (b) customer signs waiver on tablet (digital signature captured with timestamp); (c) system stores signed waiver with rental transaction record; (d) a copy of the signed waiver emailed/SMSed to customer
+Responsible (R): Customer / Stock Associate / System
+Accountable (A): Store Manager
+Duration: 3–5 min</bpmn:documentation>
+        <bpmn:incoming>W1319_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1319_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1319_Task10" name="PPE issuance confirmation">
+        <bpmn:documentation>Step 4: PPE issuance confirmation: Stock Associate confirms required PPE is included with the rental: (a) system auto-generates PPE checklist based on tool category; (b) Stock Associate hands over PPE items (safety goggles, ear protection, gloves, dust mask as applicable); (c) PPE items are disposable/customer-keeps — not returned with tool; (d) PPE cost included in rental fee (estimated PHP 50–150 per rental for PPE); (e) system records PPE items issued for inventory deduction
+Responsible (R): Stock Associate
+Accountable (A): —
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W1319_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1319_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1319_Task11" name="Demonstration for first-time operators">
+        <bpmn:documentation>Step 5: Demonstration for first-time operators: If customer indicated no prior experience with the tool (Step 1d): (a) Stock Associate provides hands-on demonstration in the store&#x27;s designated demo area or outdoor yard; (b) customer practices starting, operating, and stopping the tool under Stock Associate supervision; (c) Stock Associate confirms customer can safely operate the tool before proceeding to release; (d) demonstration adds 10–15 min to the rental process
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 10–15 min (only for first-time operators)</bpmn:documentation>
+        <bpmn:incoming>W1319_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1319_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1319_Task12" name="Incident reporting linkage">
+        <bpmn:documentation>Step 6: Incident reporting linkage: If customer reports injury during rental period or returns tool with safety-related complaint: (a) Store Manager completes incident report per W140 (workplace safety incident); (b) system links incident to rental transaction and signed waiver; (c) Store Manager investigates: was safety briefing conducted? was waiver signed? was the tool in safe operating condition at release? (d) VP Legal reviews all rental-related injuries within 24 hours; (e) findings feed into quarterly safety briefing review (Step 7)
+Responsible (R): Store Manager / VP Legal
+Accountable (A): COO
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W1319_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1319_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1319_Task13" name="Quarterly safety briefing review">
+        <bpmn:documentation>Step 7: Quarterly safety briefing review: Department Supervisor reviews rental safety metrics quarterly: (a) briefing completion rate — target 100%; (b) PPE issuance rate — target 100%; (c) waiver signing rate — target 100%; (d) first-time operator demonstration completion rate; (e) rental-related injuries, near-misses, and customer complaints; (f) update Safety Briefing Cards if tool manufacturers issue safety advisories; (g) refresh Stock Associate training on safety briefing delivery per W51
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1319_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1319_End14" name="Complete">
+        <bpmn:incoming>W1319_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1319_Annotation15">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: offering an annual &quot;Certified Renter&quot; program — customers who pass a one-time comprehensive safety assessment receive a Certified Renter badge in the system
+Owner: Department Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1319_Assoc16" sourceRef="W1319_Annotation15" targetRef="W1319_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1319_Flow17" sourceRef="W1319_Start6" targetRef="W1319_Task7" />
+      <bpmn:sequenceFlow id="W1319_Flow18" sourceRef="W1319_Task7" targetRef="W1319_Task8" />
+      <bpmn:sequenceFlow id="W1319_Flow19" sourceRef="W1319_Task8" targetRef="W1319_Task9" />
+      <bpmn:sequenceFlow id="W1319_Flow20" sourceRef="W1319_Task9" targetRef="W1319_Task10" />
+      <bpmn:sequenceFlow id="W1319_Flow21" sourceRef="W1319_Task10" targetRef="W1319_Task11" />
+      <bpmn:sequenceFlow id="W1319_Flow22" sourceRef="W1319_Task11" targetRef="W1319_Task12" />
+      <bpmn:sequenceFlow id="W1319_Flow23" sourceRef="W1319_Task12" targetRef="W1319_Task13" />
+      <bpmn:sequenceFlow id="W1319_Flow24" sourceRef="W1319_Task13" targetRef="W1319_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1319_diag">
+      <bpmndi:BPMNPlane id="W1319_plane" bpmnElement="W_W1319">
+        <bpmndi:BPMNShape id="W1319_Lane1_di" bpmnElement="W1319_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Lane2_di" bpmnElement="W1319_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Lane3_di" bpmnElement="W1319_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Lane4_di" bpmnElement="W1319_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Task7_di" bpmnElement="W1319_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Task8_di" bpmnElement="W1319_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Task9_di" bpmnElement="W1319_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Task10_di" bpmnElement="W1319_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Task11_di" bpmnElement="W1319_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Task12_di" bpmnElement="W1319_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Task13_di" bpmnElement="W1319_Task13"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Start6_di" bpmnElement="W1319_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_End14_di" bpmnElement="W1319_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1319_Annotation15_di" bpmnElement="W1319_Annotation15"><dc:Bounds x="160" y="800" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1319_Flow17_di" bpmnElement="W1319_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Flow18_di" bpmnElement="W1319_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Flow19_di" bpmnElement="W1319_Flow19"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Flow20_di" bpmnElement="W1319_Flow20"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Flow21_di" bpmnElement="W1319_Flow21"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Flow22_di" bpmnElement="W1319_Flow22"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Flow23_di" bpmnElement="W1319_Flow23"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Flow24_di" bpmnElement="W1319_Flow24"><di:waypoint x="1840" y="675" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1319_Assoc16_di" bpmnElement="W1319_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1553" name="W1553. Tool Rental Fleet Seasonal Demand Management, Cross-Store Fleet Rebalancing &amp; Capital Replacement Planning" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly rental fleet review cycle; or seasonal demand shift (rainy season → dry season); or tool reaching end-of-economic-life threshold; or sustained utilization above 85% for a tool category
+Frequency: Quarterly fleet planning review; continuous demand monitoring; capital replacement decisions 1–2 times/year
+Volume: ~1,500 rental units across 200 stores (~7–8 units/store avg per W139/W1172/W1374: jackhammers, tile cutters, concrete mixers, generators, pressure washers, circular saws, grinders, nail guns, compressors, welders); ~15 tool categories
+Owner: Rental Fleet Manager
+Participants: Rental Fleet Manager, Category Manager (Tools), VP Merchandising, CFO (Capex), Store Manager, DC Logistics Coordinator
+Source: workflow W1553 — Tool Rental Fleet Seasonal Demand Management, Cross-Store Fleet Rebalancing &amp; Capital Replacement Planning</bpmn:documentation>
+      <bpmn:laneSet id="W1553_LaneSet2">
+        <bpmn:lane id="W1553_Lane1" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1553_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1553_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1553_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1553_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1553_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1553_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1553_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1553_Start3" name="Quarterly rental fleet review cycle; or seasonal demand shift (rainy season → dry…">
+        <bpmn:outgoing>W1553_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1553_Task4" name="Quarterly utilization analysis">
+        <bpmn:documentation>Step 1: Quarterly utilization analysis: Rental Fleet Manager analyzes rental utilization by tool category, store, and season: (a) utilization rate = days rented ÷ days available × 100; (b) revenue per unit per month; (c) maintenance cost per unit (trend — rising maintenance cost signals end-of-life); (d) utilization heatmap by region: which stores have chronically underutilized units (utilization &lt; 30%) vs. over-demanded (utilization &gt; 85% with frequent unavailability); (e) seasonal demand index: compare current quarter utilization vs. same quarter prior year
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager
+Duration: 4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1553_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1553_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1553_Task5" name="Cross-store fleet rebalancing">
+        <bpmn:documentation>Step 2: Cross-store fleet rebalancing: Based on utilization analysis: (a) identify units with utilization &lt; 25% for 2+ consecutive quarters at a store — candidate for transfer to a higher-demand store; (b) identify stores with utilization &gt; 85% and frequent customer turn-aways — need additional units; (c) coordinate inter-store transfer per W22: (i) DC Logistics arranges pickup and delivery, (ii) system updates unit location assignment, (iii) receiving store conducts condition check per W139; (d) rebalancing targets: reduce fleet-wide underutilization (utilization &lt; 25%) from current ~15% of fleet to &lt; 10%; rebalancing moves: ~50–100 units/quarter
+Responsible (R): Rental Fleet Manager / DC Logistics
+Accountable (A): Category Manager
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1553_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1553_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1553_Task6" name="Capital replacement assessment">
+        <bpmn:documentation>Step 3: Capital replacement assessment: Rental Fleet Manager evaluates each unit against replacement criteria: (a) age &gt; 3 years (typical rental tool lifespan: 2–4 years depending on usage intensity); (b) cumulative maintenance cost &gt; 50% of replacement value; (c) maintenance frequency &gt; 4 repairs/year; (d) safety recall or manufacturer end-of-support notice; (e) units meeting 2+ criteria: flag for replacement in next capital cycle; (f) estimated annual replacement: ~200–300 units/year (10–15% of fleet)
+Responsible (R): Rental Fleet Manager
+Accountable (A): CFO
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1553_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1553_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1553_Task7" name="New fleet acquisition planning">
+        <bpmn:documentation>Step 4: New fleet acquisition planning: Based on demand trends and utilization gaps: (a) Rental Fleet Manager proposes new unit purchases: (i) tool categories with sustained utilization &gt; 80% (need fleet expansion), (ii) new tool types requested by customers (e.g., robotic lawnmowers, heat guns, floor sanders — emerging demand), (iii) stores with growing population but inadequate fleet size; (b) CFO evaluates capex request per W21: (i) ROI calculation: rental revenue per unit ÷ purchase cost, (ii) payback period target: &lt; 18 months; (c) annual new fleet acquisition budget: ~PHP 8–15M/year (~200–300 units × PHP 40–50K avg)
+Responsible (R): Rental Fleet Manager / CFO
+Accountable (A): VP Merchandising
+Duration: 4 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1553_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1553_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1553_Task8" name="Seasonal pre-positioning">
+        <bpmn:documentation>Step 5: Seasonal pre-positioning: Before peak seasons: (a) dry season (Nov–Dec preparation): pre-position jackhammers, concrete mixers, tile cutters at stores in construction-heavy regions (Metro Manila, CALABARZON, Cebu); (b) typhoon season (May–Jun preparation): pre-position generators at stores in typhoon-prone areas (Eastern Visayas, Bicol, Northern Luzon); (c) holiday season (Oct–Nov preparation): increase inventory of popular gift-quality tools (power drills, impact drivers) for both rental and retail
+Responsible (R): Rental Fleet Manager / DC Logistics
+Accountable (A): VP Merchandising
+Duration: 4 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1553_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1553_End9" name="Complete">
+        <bpmn:incoming>W1553_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1553_Annotation10">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Rental Fleet Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1553_Assoc11" sourceRef="W1553_Annotation10" targetRef="W1553_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1553_Flow12" sourceRef="W1553_Start3" targetRef="W1553_Task4" />
+      <bpmn:sequenceFlow id="W1553_Flow13" sourceRef="W1553_Task4" targetRef="W1553_Task5" />
+      <bpmn:sequenceFlow id="W1553_Flow14" sourceRef="W1553_Task5" targetRef="W1553_Task6" />
+      <bpmn:sequenceFlow id="W1553_Flow15" sourceRef="W1553_Task6" targetRef="W1553_Task7" />
+      <bpmn:sequenceFlow id="W1553_Flow16" sourceRef="W1553_Task7" targetRef="W1553_Task8" />
+      <bpmn:sequenceFlow id="W1553_Flow17" sourceRef="W1553_Task8" targetRef="W1553_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1553_diag">
+      <bpmndi:BPMNPlane id="W1553_plane" bpmnElement="W_W1553">
+        <bpmndi:BPMNShape id="W1553_Lane1_di" bpmnElement="W1553_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_Task4_di" bpmnElement="W1553_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_Task5_di" bpmnElement="W1553_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_Task6_di" bpmnElement="W1553_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_Task7_di" bpmnElement="W1553_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_Task8_di" bpmnElement="W1553_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_Start3_di" bpmnElement="W1553_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_End9_di" bpmnElement="W1553_End9"><dc:Bounds x="1470" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1553_Annotation10_di" bpmnElement="W1553_Annotation10"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1553_Flow12_di" bpmnElement="W1553_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1553_Flow13_di" bpmnElement="W1553_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1553_Flow14_di" bpmnElement="W1553_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1553_Flow15_di" bpmnElement="W1553_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1553_Flow16_di" bpmnElement="W1553_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1553_Flow17_di" bpmnElement="W1553_Flow17"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1553_Assoc11_di" bpmnElement="W1553_Assoc11"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1554" name="W1554. Power Tool Rental Preventive Maintenance, Wear Parts Replacement &amp; Servicing Vendor Coordination" isExecutable="false">
+      <bpmn:documentation>Trigger: Scheduled — based on rental hours counter or calendar interval per manufacturer; or post-rental customer-reported performance issue; or quarterly maintenance cycle
+Frequency: Monthly scheduled PM for high-use tools (jackhammers, generators); quarterly PM for medium-use tools (tile cutters, mixers); semi-annual for low-use tools; ~330–670 PM events/month chain-wide (per the ~4,000–8,000/year Volume)
+Volume: ~2,000 rental units; each unit serviced 2–6 times/year; ~4,000–8,000 PM events/year total
+Owner: Rental Fleet Manager
+Participants: Rental Fleet Manager, Stock Associate (store-level PM), Authorized Service Center (vendor), Department Supervisor
+Source: workflow W1554 — Power Tool Rental Preventive Maintenance, Wear Parts Replacement &amp; Servicing Vendor Coordination</bpmn:documentation>
+      <bpmn:laneSet id="W1554_LaneSet5">
+        <bpmn:lane id="W1554_Lane1" name="System">
+        <bpmn:flowNodeRef>W1554_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1554_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1554_Lane2" name="Stock Associate">
+        <bpmn:flowNodeRef>W1554_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1554_Lane3" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1554_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1554_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1554_Lane4" name="Department Supervisor">
+        <bpmn:flowNodeRef>W1554_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1554_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1554_Start6" name="Scheduled — based on rental hours counter or calendar interval per manufacturer; or…">
+        <bpmn:outgoing>W1554_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1554_Task7" name="PM scheduling">
+        <bpmn:documentation>Step 1: PM scheduling: Rental Fleet Manager maintains PM schedule per tool category based on manufacturer recommendations and rental usage intensity: (a) heavy-use tools (jackhammers, generators): PM every 100 rental hours or monthly, whichever comes first; (b) medium-use tools (tile cutters, concrete mixers, pressure washers): PM every 200 rental hours or quarterly; (c) light-use tools (drills, circular saws, grinders): PM every 300 rental hours or semi-annually; (d) system auto-generates PM work orders based on rental hour counters (tracked via rental transaction records)
+Responsible (R): System / Rental Fleet Manager
+Accountable (A): —
+Duration: Automated scheduling + 2 hours/month review</bpmn:documentation>
+        <bpmn:incoming>W1554_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1554_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1554_Task8" name="Store-level basic PM">
+        <bpmn:documentation>Step 2: Store-level basic PM: Stock Associate performs basic PM tasks between rentals: (a) visual inspection: check power cord integrity, switch function, guard presence, housing cracks; (b) clean: remove concrete dust, paint splatter, debris from air vents and moving parts; (c) lubricate moving parts per manufacturer guidelines; (d) check and replace minor wear parts: carbon brushes (for universal motors), air filters (generators), cutting blades (if dull — charge to previous renter per W139 if applicable); (e) log PM completion in system with date, hours counter reading, and any findings
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 15–30 min/unit</bpmn:documentation>
+        <bpmn:incoming>W1554_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1554_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1554_Task9" name="Authorized service center major PM">
+        <bpmn:documentation>Step 3: Authorized service center major PM: For major servicing (annual overhaul, motor bearing replacement, gearbox service): (a) Rental Fleet Manager coordinates with authorized service centers per tool brand (Bosch, Makita, DeWalt have Philippine service networks): (i) schedule pickup of tools due for major PM from each store, (ii) service center performs manufacturer-specified major PM: motor testing, bearing replacement, seal replacement, calibration, safety interlock testing; (b) turnaround time: 3–5 business days per unit; (c) Rental Fleet Manager tracks tools at service center — system flags units out for &gt; 7 days for follow-up; (d) store temporarily reassigns rental availability: remove serviced units from reservation system per W1318
+Responsible (R): Rental Fleet Manager / Service Center
+Accountable (A): Category Manager
+Duration: Coordination: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1554_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1554_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1554_Task10" name="Wear part inventory management">
+        <bpmn:documentation>Step 4: Wear part inventory management: Department Supervisor tracks replacement wear parts at store level: (a) common consumables kept in-stock per store: carbon brushes, air filters, blades, belts, safety guards, power cords; (b) reorder point per part based on replacement frequency: auto-generate PO per W2 for replenishment from vendor; (c) wear part cost tracking per unit: if cumulative wear part cost exceeds 40% of unit replacement cost, flag for capital replacement evaluation per W1553
+Responsible (R): Department Supervisor
+Accountable (A): Rental Fleet Manager
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1554_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1554_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1554_Task11" name="PM compliance monitoring">
+        <bpmn:documentation>Step 5: PM compliance monitoring: Rental Fleet Manager monitors PM compliance across 200 stores: (a) PM completion rate: % of scheduled PMs completed on time (target: ≥ 95%); (b) overdue PM alerts: units with overdue PM &gt; 7 days — system blocks unit from rental availability until PM completed; (c) PM cost per unit by tool category — identify categories with abnormally high PM costs for potential fleet replacement; (d) quarterly PM compliance report to Category Manager and VP Merchandising
+Responsible (R): Rental Fleet Manager
+Accountable (A): Category Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1554_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1554_End12" name="Complete">
+        <bpmn:incoming>W1554_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1554_Annotation13">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: system-block for units with overdue PM
+Owner: Rental Fleet Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1554_Assoc14" sourceRef="W1554_Annotation13" targetRef="W1554_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1554_Flow15" sourceRef="W1554_Start6" targetRef="W1554_Task7" />
+      <bpmn:sequenceFlow id="W1554_Flow16" sourceRef="W1554_Task7" targetRef="W1554_Task8" />
+      <bpmn:sequenceFlow id="W1554_Flow17" sourceRef="W1554_Task8" targetRef="W1554_Task9" />
+      <bpmn:sequenceFlow id="W1554_Flow18" sourceRef="W1554_Task9" targetRef="W1554_Task10" />
+      <bpmn:sequenceFlow id="W1554_Flow19" sourceRef="W1554_Task10" targetRef="W1554_Task11" />
+      <bpmn:sequenceFlow id="W1554_Flow20" sourceRef="W1554_Task11" targetRef="W1554_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1554_diag">
+      <bpmndi:BPMNPlane id="W1554_plane" bpmnElement="W_W1554">
+        <bpmndi:BPMNShape id="W1554_Lane1_di" bpmnElement="W1554_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Lane2_di" bpmnElement="W1554_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Lane3_di" bpmnElement="W1554_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Lane4_di" bpmnElement="W1554_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Task7_di" bpmnElement="W1554_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Task8_di" bpmnElement="W1554_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Task9_di" bpmnElement="W1554_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Task10_di" bpmnElement="W1554_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Task11_di" bpmnElement="W1554_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Start6_di" bpmnElement="W1554_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_End12_di" bpmnElement="W1554_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1554_Annotation13_di" bpmnElement="W1554_Annotation13"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1554_Flow15_di" bpmnElement="W1554_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1554_Flow16_di" bpmnElement="W1554_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1554_Flow17_di" bpmnElement="W1554_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1554_Flow18_di" bpmnElement="W1554_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1554_Flow19_di" bpmnElement="W1554_Flow19"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1554_Flow20_di" bpmnElement="W1554_Flow20"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1554_Assoc14_di" bpmnElement="W1554_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1555" name="W1555. Tool Rental Customer Damage Assessment, Repair Cost Recovery &amp; Dispute Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer returns rental tool with visible damage beyond normal wear; or tool malfunction reported during rental period; or missing accessories/components at return
+Frequency: ~150–250 damage incidents/month chain-wide (~10–15% of rental returns have some damage beyond normal wear)
+Volume: ~1,000–1,500 rentals/month; ~150–250 with damage assessment needed; ~30–50 with chargeable damage; ~5–10 with customer disputes
+Owner: Department Supervisor
+Participants: Department Supervisor, Stock Associate, Store Manager, Customer, Rental Fleet Manager, Customer Service Rep
+Source: workflow W1555 — Tool Rental Customer Damage Assessment, Repair Cost Recovery &amp; Dispute Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W1555_LaneSet5">
+        <bpmn:lane id="W1555_Lane1" name="Stock Associate">
+        <bpmn:flowNodeRef>W1555_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1555_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1555_Lane2" name="Department Supervisor">
+        <bpmn:flowNodeRef>W1555_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1555_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1555_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1555_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1555_Lane4" name="Rental Fleet Manager">
+        <bpmn:flowNodeRef>W1555_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1555_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1555_Start6" name="Customer returns rental tool with visible damage beyond normal wear; or tool malfunction…">
+        <bpmn:outgoing>W1555_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1555_Task7" name="Return inspection">
+        <bpmn:documentation>Step 1: Return inspection: Upon tool return per W139: (a) Stock Associate conducts standardized return checklist: (i) compare tool condition against pre-rental condition photos (taken at W139.3 checkout — 4 photos: front, back, left side, right side plus close-ups of any pre-existing damage), (ii) power test: plug in and run for 30 seconds — check for unusual noise, vibration, sparking, or overheating, (iii) accessory check: all included accessories present (blades, bits, hoses, guards, carrying case), (iv) cleanliness: tool returned in reasonable condition (excessive concrete/mud/paint requires cleaning fee); (b) classify damage: (i) Normal Wear — minor scratches, paint chips, faded labels; no charge, (ii) Chargeable Damage — broken handle, cracked housing, burnt smell (motor overload), missing guard, water damage; proceed to Step 2, (iii) Total Loss — tool destroyed, stolen, or unrepairable; proceed to Step 3
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W1555_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1555_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1555_Task8" name="Damage assessment &amp; cost estimate">
+        <bpmn:documentation>Step 2: Damage assessment &amp; cost estimate: For chargeable damage: (a) Department Supervisor assesses repair scope: (i) parts needed (reference manufacturer parts list), (ii) labor estimate (internal repair if minor, authorized service center if major per W1554), (iii) total repair cost estimate; (b) compare repair cost vs. tool replacement value: (i) if repair cost &lt; 50% of replacement: charge repair cost, (ii) if repair cost &gt; 50% of replacement: charge replacement value (total loss); (c) system generates damage assessment report with photos, cost estimate, and customer charge
+Responsible (R): Department Supervisor
+Accountable (A): Rental Fleet Manager
+Duration: 15–20 min</bpmn:documentation>
+        <bpmn:incoming>W1555_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1555_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1555_Task9" name="Customer notification &amp; charge">
+        <bpmn:documentation>Step 3: Customer notification &amp; charge: (a) Department Supervisor informs customer of damage finding and estimated charge: (i) show pre-rental vs. return photos for comparison, (ii) explain damage classification (normal wear vs. chargeable), (iii) present cost estimate; (b) if customer accepts: deduct from deposit held per W139; if damage exceeds deposit: customer pays difference at POS; (c) if customer disputes: proceed to Step 4
+Responsible (R): Department Supervisor / Customer
+Accountable (A): Store Manager
+Duration: 10–15 min</bpmn:documentation>
+        <bpmn:incoming>W1555_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1555_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1555_Task10" name="Dispute resolution">
+        <bpmn:documentation>Step 4: Dispute resolution: If customer disputes damage charge: (a) Level 1 (Store Manager): Store Manager reviews photos, damage assessment, and rental history; mediates between Department Supervisor and customer; may offer compromise (split cost 50/50 as goodwill for loyal trade customers); (b) Level 2 (Rental Fleet Manager): if unresolved at store level, Rental Fleet Manager reviews case remotely — examines pre-rental photos, maintenance history per W1554 (was tool already in declining condition?), and customer rental history (first-time damage or repeat offender?); (c) Level 3 (COO): for high-value disputes (&gt; PHP 10,000) or threats of legal action; COO makes final decision — may waive charge to preserve major trade account relationship; (d) all dispute resolutions documented in system for pattern analysis
+Responsible (R): Store Manager / Rental Fleet Manager / COO
+Accountable (A): COO
+Duration: 15–30 min per dispute</bpmn:documentation>
+        <bpmn:incoming>W1555_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1555_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1555_Task11" name="Pattern analysis &amp; chronic offender management">
+        <bpmn:documentation>Step 5: Pattern analysis &amp; chronic offender management: Monthly: (a) Rental Fleet Manager analyzes damage incident data: (i) damage rate by tool category (which tools get damaged most?), (ii) damage rate by store (do some stores have higher damage rates — indicating lax pre-rental inspection?), (iii) repeat damage offenders (customers with 2+ damage incidents in 12 months); (b) for repeat offenders: (i) first incident: standard charge, (ii) second incident: standard charge + mandatory demonstration per W1319 Step 5 regardless of experience, (iii) third incident: increased deposit (double standard) or rental privileges suspended for 6 months; (c) findings feed into W1553 fleet planning (tools with chronic damage may indicate quality issues requiring fleet replacement)
+Responsible (R): Rental Fleet Manager
+Accountable (A): VP Merchandising
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1555_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1555_End12" name="Complete">
+        <bpmn:incoming>W1555_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1555_Annotation13">
+        <bpmn:text>Controls: - CTL-276 (ensure controlled execution — Tool Rental &amp; Equipment (PA-12.2).) | - operational: Department Supervisor review and approval gate
+Owner: Department Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1555_Assoc14" sourceRef="W1555_Annotation13" targetRef="W1555_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1555_Flow15" sourceRef="W1555_Start6" targetRef="W1555_Task7" />
+      <bpmn:sequenceFlow id="W1555_Flow16" sourceRef="W1555_Task7" targetRef="W1555_Task8" />
+      <bpmn:sequenceFlow id="W1555_Flow17" sourceRef="W1555_Task8" targetRef="W1555_Task9" />
+      <bpmn:sequenceFlow id="W1555_Flow18" sourceRef="W1555_Task9" targetRef="W1555_Task10" />
+      <bpmn:sequenceFlow id="W1555_Flow19" sourceRef="W1555_Task10" targetRef="W1555_Task11" />
+      <bpmn:sequenceFlow id="W1555_Flow20" sourceRef="W1555_Task11" targetRef="W1555_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1555_diag">
+      <bpmndi:BPMNPlane id="W1555_plane" bpmnElement="W_W1555">
+        <bpmndi:BPMNShape id="W1555_Lane1_di" bpmnElement="W1555_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Lane2_di" bpmnElement="W1555_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Lane3_di" bpmnElement="W1555_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Lane4_di" bpmnElement="W1555_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Task7_di" bpmnElement="W1555_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Task8_di" bpmnElement="W1555_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Task9_di" bpmnElement="W1555_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Task10_di" bpmnElement="W1555_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Task11_di" bpmnElement="W1555_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Start6_di" bpmnElement="W1555_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_End12_di" bpmnElement="W1555_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1555_Annotation13_di" bpmnElement="W1555_Annotation13"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1555_Flow15_di" bpmnElement="W1555_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1555_Flow16_di" bpmnElement="W1555_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1555_Flow17_di" bpmnElement="W1555_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1555_Flow18_di" bpmnElement="W1555_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1555_Flow19_di" bpmnElement="W1555_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1555_Flow20_di" bpmnElement="W1555_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1555_Assoc14_di" bpmnElement="W1555_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

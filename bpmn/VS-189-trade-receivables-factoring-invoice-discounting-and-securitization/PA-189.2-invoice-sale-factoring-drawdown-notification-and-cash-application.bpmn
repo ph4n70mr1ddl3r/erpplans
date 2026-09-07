@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-189.2-invoice-sale-factoring-drawdown-notification-and-cash-application" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W5401" name="W5401. Eligible Invoice Batch Selection, Pooling &amp; Submission to Factor" isExecutable="false">
+      <bpmn:documentation>Trigger: Invoice issuance (VS-16); scheduled submission cycle
+Frequency: Daily/weekly submission batches
+Volume: ~3,500 AR invoices/month eligible; ~42,000/yr
+Owner: AR/Factoring Operations Lead
+Participants: Credit Analyst, Factor/Funder
+Source: workflow W5401 — Eligible Invoice Batch Selection, Pooling &amp; Submission to Factor</bpmn:documentation>
+      <bpmn:laneSet id="W5401_LaneSet3">
+        <bpmn:lane id="W5401_Lane1" name="AR">
+        <bpmn:flowNodeRef>W5401_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5401_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5401_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5401_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5401_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5401_Lane2" name="Credit Analyst">
+        <bpmn:flowNodeRef>W5401_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5401_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5401_Start4" name="Invoice issuance (VS-16); scheduled submission cycle">
+        <bpmn:outgoing>W5401_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5401_Task5" name="Select eligible invoices per criteria (W5395): approved customer, within age…">
+        <bpmn:documentation>Step 1: Select eligible invoices per criteria (W5395): approved customer, within age, undisputed, within concentration.
+Responsible (R): AR/Factoring Ops Lead
+Accountable (A): Credit Manager
+Duration: per batch</bpmn:documentation>
+        <bpmn:incoming>W5401_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5401_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5401_Task6" name="Pool into a submission batch with required data (customer, invoice, amount…">
+        <bpmn:documentation>Step 2: Pool into a submission batch with required data (customer, invoice, amount, terms, due date).
+Responsible (R): AR/Factoring Ops Lead
+Accountable (A): Credit Manager
+Duration: per batch</bpmn:documentation>
+        <bpmn:incoming>W5401_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5401_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5401_Task7" name="Gate eligibility automatically (W5395); exclude ineligible (over-age, disputed…">
+        <bpmn:documentation>Step 3: Gate eligibility automatically (W5395); exclude ineligible (over-age, disputed, over-limit).
+Responsible (R): Credit Analyst
+Accountable (A): Credit Manager
+Duration: per batch</bpmn:documentation>
+        <bpmn:incoming>W5401_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5401_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5401_Task8" name="Submit the batch to the factor via the factoring platform (W5398); obtain…">
+        <bpmn:documentation>Step 4: Submit the batch to the factor via the factoring platform (W5398); obtain acceptance.
+Responsible (R): AR/Factoring Ops Lead
+Accountable (A): Credit Manager
+Duration: per batch</bpmn:documentation>
+        <bpmn:incoming>W5401_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5401_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5401_Task9" name="Record submission and update invoice status to &quot;submitted/assigned&quot; in AR…">
+        <bpmn:documentation>Step 5: Record submission and update invoice status to &quot;submitted/assigned&quot; in AR (VS-16).
+Responsible (R): AR/Factoring Ops Lead
+Accountable (A): Credit Manager
+Duration: per batch</bpmn:documentation>
+        <bpmn:incoming>W5401_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5401_End10" name="Complete">
+        <bpmn:incoming>W5401_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5401_Annotation11">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: double-financing fraud detection with duplicate-submission guard (invoice-level uniqueness check).
+Owner: AR/Factoring Operations Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5401_Assoc12" sourceRef="W5401_Annotation11" targetRef="W5401_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5401_Flow13" sourceRef="W5401_Start4" targetRef="W5401_Task5" />
+      <bpmn:sequenceFlow id="W5401_Flow14" sourceRef="W5401_Task5" targetRef="W5401_Task6" />
+      <bpmn:sequenceFlow id="W5401_Flow15" sourceRef="W5401_Task6" targetRef="W5401_Task7" />
+      <bpmn:sequenceFlow id="W5401_Flow16" sourceRef="W5401_Task7" targetRef="W5401_Task8" />
+      <bpmn:sequenceFlow id="W5401_Flow17" sourceRef="W5401_Task8" targetRef="W5401_Task9" />
+      <bpmn:sequenceFlow id="W5401_Flow18" sourceRef="W5401_Task9" targetRef="W5401_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5401_diag">
+      <bpmndi:BPMNPlane id="W5401_plane" bpmnElement="W_W5401">
+        <bpmndi:BPMNShape id="W5401_Lane1_di" bpmnElement="W5401_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Lane2_di" bpmnElement="W5401_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Task5_di" bpmnElement="W5401_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Task6_di" bpmnElement="W5401_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Task7_di" bpmnElement="W5401_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Task8_di" bpmnElement="W5401_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Task9_di" bpmnElement="W5401_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Start4_di" bpmnElement="W5401_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_End10_di" bpmnElement="W5401_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5401_Annotation11_di" bpmnElement="W5401_Annotation11"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5401_Flow13_di" bpmnElement="W5401_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5401_Flow14_di" bpmnElement="W5401_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5401_Flow15_di" bpmnElement="W5401_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5401_Flow16_di" bpmnElement="W5401_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5401_Flow17_di" bpmnElement="W5401_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5401_Flow18_di" bpmnElement="W5401_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5401_Assoc12_di" bpmnElement="W5401_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5402" name="W5402. Factor Funding/Drawdown, Advance Posting &amp; Bank Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Factor accepts and funds a submission (W5401)
+Frequency: Per submission batch
+Volume: ~50 drawdowns/yr (batched)
+Owner: Treasury Manager
+Participants: Finance, Factor/Funder, Bank
+Source: workflow W5402 — Factor Funding/Drawdown, Advance Posting &amp; Bank Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W5402_LaneSet3">
+        <bpmn:lane id="W5402_Lane1" name="Treasury Manager">
+        <bpmn:flowNodeRef>W5402_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5402_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5402_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5402_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5402_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5402_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W5402_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5402_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5402_Start4" name="Factor accepts and funds a submission (W5401)">
+        <bpmn:outgoing>W5402_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5402_Task5" name="Receive the factor advance (advance rate × eligible batch) net of fees/reserve…">
+        <bpmn:documentation>Step 1: Receive the factor advance (advance rate × eligible batch) net of fees/reserve to BuildRight&#x27;s account.
+Responsible (R): Treasury Manager
+Accountable (A): Treasury Manager
+Duration: per drawdown</bpmn:documentation>
+        <bpmn:incoming>W5402_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5402_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5402_Task6" name="Post the advance to cash and the receivables-sale/factoring GL accounts…">
+        <bpmn:documentation>Step 2: Post the advance to cash and the receivables-sale/factoring GL accounts (VS-17/VS-157/W5397).
+Responsible (R): Finance
+Accountable (A): Finance Controller
+Duration: per drawdown</bpmn:documentation>
+        <bpmn:incoming>W5402_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5402_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5402_Task7" name="Reconcile the advance to the accepted submission and facility terms (rate…">
+        <bpmn:documentation>Step 3: Reconcile the advance to the accepted submission and facility terms (rate, advance, reserve).
+Responsible (R): Treasury Manager
+Accountable (A): Finance Controller
+Duration: per drawdown</bpmn:documentation>
+        <bpmn:incoming>W5402_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5402_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5402_Task8" name="Update facility utilization and available headroom (W5394).">
+        <bpmn:documentation>Step 4: Update facility utilization and available headroom (W5394).
+Responsible (R): Treasury Manager
+Accountable (A): Treasury Manager
+Duration: per drawdown</bpmn:documentation>
+        <bpmn:incoming>W5402_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5402_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5402_Task9" name="Investigate and resolve any funding discrepancy with the factor.">
+        <bpmn:documentation>Step 5: Investigate and resolve any funding discrepancy with the factor.
+Responsible (R): Treasury Manager
+Accountable (A): Finance Controller
+Duration: per exception</bpmn:documentation>
+        <bpmn:incoming>W5402_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5402_End10" name="Complete">
+        <bpmn:incoming>W5402_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5402_Annotation11">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: daily bank/posting reconciliation with month-end close tie-out.
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5402_Assoc12" sourceRef="W5402_Annotation11" targetRef="W5402_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5402_Flow13" sourceRef="W5402_Start4" targetRef="W5402_Task5" />
+      <bpmn:sequenceFlow id="W5402_Flow14" sourceRef="W5402_Task5" targetRef="W5402_Task6" />
+      <bpmn:sequenceFlow id="W5402_Flow15" sourceRef="W5402_Task6" targetRef="W5402_Task7" />
+      <bpmn:sequenceFlow id="W5402_Flow16" sourceRef="W5402_Task7" targetRef="W5402_Task8" />
+      <bpmn:sequenceFlow id="W5402_Flow17" sourceRef="W5402_Task8" targetRef="W5402_Task9" />
+      <bpmn:sequenceFlow id="W5402_Flow18" sourceRef="W5402_Task9" targetRef="W5402_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5402_diag">
+      <bpmndi:BPMNPlane id="W5402_plane" bpmnElement="W_W5402">
+        <bpmndi:BPMNShape id="W5402_Lane1_di" bpmnElement="W5402_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Lane2_di" bpmnElement="W5402_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Task5_di" bpmnElement="W5402_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Task6_di" bpmnElement="W5402_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Task7_di" bpmnElement="W5402_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Task8_di" bpmnElement="W5402_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Task9_di" bpmnElement="W5402_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Start4_di" bpmnElement="W5402_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_End10_di" bpmnElement="W5402_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5402_Annotation11_di" bpmnElement="W5402_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5402_Flow13_di" bpmnElement="W5402_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5402_Flow14_di" bpmnElement="W5402_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5402_Flow15_di" bpmnElement="W5402_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5402_Flow16_di" bpmnElement="W5402_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5402_Flow17_di" bpmnElement="W5402_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5402_Flow18_di" bpmnElement="W5402_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5402_Assoc12_di" bpmnElement="W5402_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5403" name="W5403. Customer Invoice Reissuance/Re-assignment &amp; Remit-To Instruction Update" isExecutable="false">
+      <bpmn:documentation>Trigger: Notification factoring (W5396); customer remit-to change
+Frequency: Per notified customer/segment; per remit change
+Volume: ~5,200 customer remit records; ~changes
+Owner: AR Lead
+Participants: Customer, Trade Account Manager (VS-107), Factor
+Source: workflow W5403 — Customer Invoice Reissuance/Re-assignment &amp; Remit-To Instruction Update</bpmn:documentation>
+      <bpmn:laneSet id="W5403_LaneSet3">
+        <bpmn:lane id="W5403_Lane1" name="AR Lead">
+        <bpmn:flowNodeRef>W5403_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5403_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5403_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5403_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5403_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5403_Lane2" name="Trade Account Manager">
+        <bpmn:flowNodeRef>W5403_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5403_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5403_Start4" name="Notification factoring (W5396); customer remit-to change">
+        <bpmn:outgoing>W5403_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5403_Task5" name="For notification factoring: update the customer master remit-to to the…">
+        <bpmn:documentation>Step 1: For notification factoring: update the customer master remit-to to the factor/lockbox (W5396).
+Responsible (R): AR Lead
+Accountable (A): Credit Manager
+Duration: per customer</bpmn:documentation>
+        <bpmn:incoming>W5403_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5403_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5403_Task6" name="Reissue/re-assign invoices (where required) with the new remit-to and…">
+        <bpmn:documentation>Step 2: Reissue/re-assign invoices (where required) with the new remit-to and assignment notice.
+Responsible (R): AR Lead
+Accountable (A): Credit Manager
+Duration: per invoice</bpmn:documentation>
+        <bpmn:incoming>W5403_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5403_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5403_Task7" name="Communicate the change to the customer (Trade Account Mgmt) to avoid…">
+        <bpmn:documentation>Step 3: Communicate the change to the customer (Trade Account Mgmt) to avoid mis-directed payment (W5404).
+Responsible (R): Trade Account Manager
+Accountable (A): Credit Manager
+Duration: per customer</bpmn:documentation>
+        <bpmn:incoming>W5403_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5403_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5403_Task8" name="Update AR (VS-16) and customer master (VS-29) with the assignment/remit status.">
+        <bpmn:documentation>Step 4: Update AR (VS-16) and customer master (VS-29) with the assignment/remit status.
+Responsible (R): AR Lead
+Accountable (A): Credit Manager
+Duration: per customer</bpmn:documentation>
+        <bpmn:incoming>W5403_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5403_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5403_Task9" name="Verify the customer&#x27;s next payment routes correctly to the factor/lockbox.">
+        <bpmn:documentation>Step 5: Verify the customer&#x27;s next payment routes correctly to the factor/lockbox.
+Responsible (R): AR Lead
+Accountable (A): Credit Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5403_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5403_End10" name="Complete">
+        <bpmn:incoming>W5403_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5403_Annotation11">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: payment-routing verification.
+Owner: AR Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5403_Assoc12" sourceRef="W5403_Annotation11" targetRef="W5403_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5403_Flow13" sourceRef="W5403_Start4" targetRef="W5403_Task5" />
+      <bpmn:sequenceFlow id="W5403_Flow14" sourceRef="W5403_Task5" targetRef="W5403_Task6" />
+      <bpmn:sequenceFlow id="W5403_Flow15" sourceRef="W5403_Task6" targetRef="W5403_Task7" />
+      <bpmn:sequenceFlow id="W5403_Flow16" sourceRef="W5403_Task7" targetRef="W5403_Task8" />
+      <bpmn:sequenceFlow id="W5403_Flow17" sourceRef="W5403_Task8" targetRef="W5403_Task9" />
+      <bpmn:sequenceFlow id="W5403_Flow18" sourceRef="W5403_Task9" targetRef="W5403_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5403_diag">
+      <bpmndi:BPMNPlane id="W5403_plane" bpmnElement="W_W5403">
+        <bpmndi:BPMNShape id="W5403_Lane1_di" bpmnElement="W5403_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Lane2_di" bpmnElement="W5403_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Task5_di" bpmnElement="W5403_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Task6_di" bpmnElement="W5403_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Task7_di" bpmnElement="W5403_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Task8_di" bpmnElement="W5403_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Task9_di" bpmnElement="W5403_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Start4_di" bpmnElement="W5403_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_End10_di" bpmnElement="W5403_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5403_Annotation11_di" bpmnElement="W5403_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5403_Flow13_di" bpmnElement="W5403_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5403_Flow14_di" bpmnElement="W5403_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5403_Flow15_di" bpmnElement="W5403_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5403_Flow16_di" bpmnElement="W5403_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5403_Flow17_di" bpmnElement="W5403_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5403_Flow18_di" bpmnElement="W5403_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5403_Assoc12_di" bpmnElement="W5403_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5404" name="W5404. Lockbox/Cash Receipt Processing, Customer Payment Matching &amp; Clearing" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer payment to the factor/lockbox (notification) or BuildRight (silent)
+Frequency: Daily
+Volume: ~3,500 AR payments/month
+Owner: Cash Application Lead
+Participants: Factor/Funder, AR (VS-16), Treasury
+Source: workflow W5404 — Lockbox/Cash Receipt Processing, Customer Payment Matching &amp; Clearing</bpmn:documentation>
+      <bpmn:laneSet id="W5404_LaneSet3">
+        <bpmn:lane id="W5404_Lane1" name="Cash Application Lead">
+        <bpmn:flowNodeRef>W5404_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5404_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5404_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5404_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5404_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5404_Lane2" name="Treasury Manager">
+        <bpmn:flowNodeRef>W5404_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5404_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5404_Start4" name="Customer payment to the factor/lockbox (notification) or BuildRight (silent)">
+        <bpmn:outgoing>W5404_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5404_Task5" name="Receive lockbox/factor remittance data with customer/invoice references.">
+        <bpmn:documentation>Step 1: Receive lockbox/factor remittance data with customer/invoice references.
+Responsible (R): Cash Application Lead
+Accountable (A): Credit Manager
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5404_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5404_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5404_Task6" name="Match payments to the assigned invoices in AR (VS-16); clear the receivable and…">
+        <bpmn:documentation>Step 2: Match payments to the assigned invoices in AR (VS-16); clear the receivable and the factoring advance.
+Responsible (R): Cash Application Lead
+Accountable (A): Credit Manager
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5404_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5404_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5404_Task7" name="Route the collected funds per the facility (to the factor / to BuildRight net…">
+        <bpmn:documentation>Step 3: Route the collected funds per the facility (to the factor / to BuildRight net of advance).
+Responsible (R): Treasury Manager
+Accountable (A): Credit Manager
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5404_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5404_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5404_Task8" name="Investigate and resolve unapplied/short/over-payments and unidentified…">
+        <bpmn:documentation>Step 4: Investigate and resolve unapplied/short/over-payments and unidentified remittances.
+Responsible (R): Cash Application Lead
+Accountable (A): Credit Manager
+Duration: per exception</bpmn:documentation>
+        <bpmn:incoming>W5404_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5404_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5404_Task9" name="Reconcile the lockbox/factor account daily (CTL-19).">
+        <bpmn:documentation>Step 5: Reconcile the lockbox/factor account daily (CTL-19).
+Responsible (R): Cash Application Lead
+Accountable (A): Finance Controller
+Duration: daily</bpmn:documentation>
+        <bpmn:incoming>W5404_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5404_End10" name="Complete">
+        <bpmn:incoming>W5404_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5404_Annotation11">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: bank/lockbox reconciliation with remittance-to-invoice matching.
+Owner: Cash Application Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5404_Assoc12" sourceRef="W5404_Annotation11" targetRef="W5404_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5404_Flow13" sourceRef="W5404_Start4" targetRef="W5404_Task5" />
+      <bpmn:sequenceFlow id="W5404_Flow14" sourceRef="W5404_Task5" targetRef="W5404_Task6" />
+      <bpmn:sequenceFlow id="W5404_Flow15" sourceRef="W5404_Task6" targetRef="W5404_Task7" />
+      <bpmn:sequenceFlow id="W5404_Flow16" sourceRef="W5404_Task7" targetRef="W5404_Task8" />
+      <bpmn:sequenceFlow id="W5404_Flow17" sourceRef="W5404_Task8" targetRef="W5404_Task9" />
+      <bpmn:sequenceFlow id="W5404_Flow18" sourceRef="W5404_Task9" targetRef="W5404_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5404_diag">
+      <bpmndi:BPMNPlane id="W5404_plane" bpmnElement="W_W5404">
+        <bpmndi:BPMNShape id="W5404_Lane1_di" bpmnElement="W5404_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Lane2_di" bpmnElement="W5404_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Task5_di" bpmnElement="W5404_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Task6_di" bpmnElement="W5404_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Task7_di" bpmnElement="W5404_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Task8_di" bpmnElement="W5404_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Task9_di" bpmnElement="W5404_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Start4_di" bpmnElement="W5404_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_End10_di" bpmnElement="W5404_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5404_Annotation11_di" bpmnElement="W5404_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5404_Flow13_di" bpmnElement="W5404_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5404_Flow14_di" bpmnElement="W5404_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5404_Flow15_di" bpmnElement="W5404_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5404_Flow16_di" bpmnElement="W5404_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5404_Flow17_di" bpmnElement="W5404_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5404_Flow18_di" bpmnElement="W5404_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5404_Assoc12_di" bpmnElement="W5404_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5405" name="W5405. Non-Recourse Credit Risk Event, Customer Dispute &amp; Short-Pay Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer dispute, short-pay, or credit risk event on a factored invoice
+Frequency: Event-driven (~1–5% of submitted invoices become dispute/short-pay/credit events)
+Volume: ~1–5% of factored invoices
+Owner: Credit Manager
+Participants: Factor/Funder, Trade Credit Insurer (VS-68), AR, Customer
+Source: workflow W5405 — Non-Recourse Credit Risk Event, Customer Dispute &amp; Short-Pay Handling</bpmn:documentation>
+      <bpmn:laneSet id="W5405_LaneSet4">
+        <bpmn:lane id="W5405_Lane1" name="Credit Analyst">
+        <bpmn:flowNodeRef>W5405_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5405_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5405_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5405_Lane2" name="Credit Manager">
+        <bpmn:flowNodeRef>W5405_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5405_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5405_Lane3" name="AR Lead">
+        <bpmn:flowNodeRef>W5405_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5405_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5405_Start5" name="Customer dispute, short-pay, or credit risk event on a factored invoice">
+        <bpmn:outgoing>W5405_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5405_Task6" name="Identify the event: dispute, short-pay, or customer credit deterioration on a…">
+        <bpmn:documentation>Step 1: Identify the event: dispute, short-pay, or customer credit deterioration on a factored invoice.
+Responsible (R): Credit Analyst
+Accountable (A): Credit Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5405_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5405_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5405_Task7" name="For non-recourse: file a claim with the trade-credit insurer (VS-68) within the…">
+        <bpmn:documentation>Step 2: For non-recourse: file a claim with the trade-credit insurer (VS-68) within the policy window.
+Responsible (R): Credit Manager
+Accountable (A): Credit Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5405_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5405_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5405_Task8" name="For recourse: prepare for buyback at recourse-period expiry (W5407) or…">
+        <bpmn:documentation>Step 3: For recourse: prepare for buyback at recourse-period expiry (W5407) or negotiate cure with the customer.
+Responsible (R): Credit Manager
+Accountable (A): Credit Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5405_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5405_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5405_Task9" name="Resolve the dispute/short-pay with the customer (links VS-16 dispute…">
+        <bpmn:documentation>Step 4: Resolve the dispute/short-pay with the customer (links VS-16 dispute management).
+Responsible (R): AR Lead
+Accountable (A): Credit Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5405_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5405_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5405_Task10" name="Update dilution analytics and reserve/holdback (W5399/W5406).">
+        <bpmn:documentation>Step 5: Update dilution analytics and reserve/holdback (W5399/W5406).
+Responsible (R): Credit Analyst
+Accountable (A): Credit Manager
+Duration: per event</bpmn:documentation>
+        <bpmn:incoming>W5405_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5405_End11" name="Complete">
+        <bpmn:incoming>W5405_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5405_Annotation12">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: credit-insurance claim validity checks; dispute-fraud review; dilution-rate accuracy in reserve true-ups.
+Owner: Credit Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5405_Assoc13" sourceRef="W5405_Annotation12" targetRef="W5405_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5405_Flow14" sourceRef="W5405_Start5" targetRef="W5405_Task6" />
+      <bpmn:sequenceFlow id="W5405_Flow15" sourceRef="W5405_Task6" targetRef="W5405_Task7" />
+      <bpmn:sequenceFlow id="W5405_Flow16" sourceRef="W5405_Task7" targetRef="W5405_Task8" />
+      <bpmn:sequenceFlow id="W5405_Flow17" sourceRef="W5405_Task8" targetRef="W5405_Task9" />
+      <bpmn:sequenceFlow id="W5405_Flow18" sourceRef="W5405_Task9" targetRef="W5405_Task10" />
+      <bpmn:sequenceFlow id="W5405_Flow19" sourceRef="W5405_Task10" targetRef="W5405_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5405_diag">
+      <bpmndi:BPMNPlane id="W5405_plane" bpmnElement="W_W5405">
+        <bpmndi:BPMNShape id="W5405_Lane1_di" bpmnElement="W5405_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Lane2_di" bpmnElement="W5405_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Lane3_di" bpmnElement="W5405_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Task6_di" bpmnElement="W5405_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Task7_di" bpmnElement="W5405_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Task8_di" bpmnElement="W5405_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Task9_di" bpmnElement="W5405_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Task10_di" bpmnElement="W5405_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Start5_di" bpmnElement="W5405_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_End11_di" bpmnElement="W5405_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5405_Annotation12_di" bpmnElement="W5405_Annotation12"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5405_Flow14_di" bpmnElement="W5405_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5405_Flow15_di" bpmnElement="W5405_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5405_Flow16_di" bpmnElement="W5405_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5405_Flow17_di" bpmnElement="W5405_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5405_Flow18_di" bpmnElement="W5405_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5405_Flow19_di" bpmnElement="W5405_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5405_Assoc13_di" bpmnElement="W5405_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5406" name="W5406. Dilution Reconciliation, Reserve Release &amp; Holdback Settlement" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer payment/close of factored invoice; periodic reserve settlement
+Frequency: Per invoice close; periodic settlement
+Volume: ~42,000 invoice closes/yr
+Owner: Finance (Receivables Finance)
+Participants: Factor/Funder, Credit Manager, Treasury
+Source: workflow W5406 — Dilution Reconciliation, Reserve Release &amp; Holdback Settlement</bpmn:documentation>
+      <bpmn:laneSet id="W5406_LaneSet4">
+        <bpmn:lane id="W5406_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W5406_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5406_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5406_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5406_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5406_Lane2" name="Treasury Manager">
+        <bpmn:flowNodeRef>W5406_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5406_Lane3" name="Credit Manager">
+        <bpmn:flowNodeRef>W5406_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5406_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5406_Start5" name="Customer payment/close of factored invoice; periodic reserve settlement">
+        <bpmn:outgoing>W5406_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5406_Task6" name="On invoice payment/close, reconcile actual vs. expected (full vs…">
+        <bpmn:documentation>Step 1: On invoice payment/close, reconcile actual vs. expected (full vs. short-pay/dispute).
+Responsible (R): Finance
+Accountable (A): Credit Manager
+Duration: per invoice</bpmn:documentation>
+        <bpmn:incoming>W5406_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5406_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5406_Task7" name="Compute dilution (short-pay/dispute as % of invoice) and impact on the…">
+        <bpmn:documentation>Step 2: Compute dilution (short-pay/dispute as % of invoice) and impact on the reserve/holdback (W5399).
+Responsible (R): Finance
+Accountable (A): Credit Manager
+Duration: per batch</bpmn:documentation>
+        <bpmn:incoming>W5406_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5406_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5406_Task8" name="Release the reserve/holdback to BuildRight net of dilution per the facility…">
+        <bpmn:documentation>Step 3: Release the reserve/holdback to BuildRight net of dilution per the facility terms.
+Responsible (R): Treasury Manager
+Accountable (A): Credit Manager
+Duration: per settlement</bpmn:documentation>
+        <bpmn:incoming>W5406_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5406_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5406_Task9" name="Post reserve release/holdback settlement to GL (VS-17).">
+        <bpmn:documentation>Step 4: Post reserve release/holdback settlement to GL (VS-17).
+Responsible (R): Finance
+Accountable (A): Finance Controller
+Duration: per settlement</bpmn:documentation>
+        <bpmn:incoming>W5406_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5406_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5406_Task10" name="Report dilution vs. facility threshold to the funder and credit committee…">
+        <bpmn:documentation>Step 5: Report dilution vs. facility threshold to the funder and credit committee (W5410).
+Responsible (R): Credit Manager
+Accountable (A): CFO
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5406_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5406_End11" name="Complete">
+        <bpmn:incoming>W5406_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5406_Annotation12">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: dilution/reserve accuracy; CTL-31 (adequate reserve); CTL-30 (close).
+Owner: Finance (Receivables Finance)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5406_Assoc13" sourceRef="W5406_Annotation12" targetRef="W5406_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5406_Flow14" sourceRef="W5406_Start5" targetRef="W5406_Task6" />
+      <bpmn:sequenceFlow id="W5406_Flow15" sourceRef="W5406_Task6" targetRef="W5406_Task7" />
+      <bpmn:sequenceFlow id="W5406_Flow16" sourceRef="W5406_Task7" targetRef="W5406_Task8" />
+      <bpmn:sequenceFlow id="W5406_Flow17" sourceRef="W5406_Task8" targetRef="W5406_Task9" />
+      <bpmn:sequenceFlow id="W5406_Flow18" sourceRef="W5406_Task9" targetRef="W5406_Task10" />
+      <bpmn:sequenceFlow id="W5406_Flow19" sourceRef="W5406_Task10" targetRef="W5406_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5406_diag">
+      <bpmndi:BPMNPlane id="W5406_plane" bpmnElement="W_W5406">
+        <bpmndi:BPMNShape id="W5406_Lane1_di" bpmnElement="W5406_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Lane2_di" bpmnElement="W5406_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Lane3_di" bpmnElement="W5406_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Task6_di" bpmnElement="W5406_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Task7_di" bpmnElement="W5406_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Task8_di" bpmnElement="W5406_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Task9_di" bpmnElement="W5406_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Task10_di" bpmnElement="W5406_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Start5_di" bpmnElement="W5406_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_End11_di" bpmnElement="W5406_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5406_Annotation12_di" bpmnElement="W5406_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5406_Flow14_di" bpmnElement="W5406_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5406_Flow15_di" bpmnElement="W5406_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5406_Flow16_di" bpmnElement="W5406_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5406_Flow17_di" bpmnElement="W5406_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5406_Flow18_di" bpmnElement="W5406_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5406_Flow19_di" bpmnElement="W5406_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5406_Assoc13_di" bpmnElement="W5406_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5407" name="W5407. Recourse Period Expiry, Unpaid-Invoice Buyback &amp; Repurchase Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Recourse period expiry on an unpaid factored invoice (recourse factoring)
+Frequency: ~1–3% of recourse factored invoices
+Volume: ~400–1,250 buybacks/yr (~1–3% of the ~42,000/yr recourse-factored invoice book per W5401/W5406)
+Owner: Credit Manager
+Participants: Factor/Funder, AR (VS-16), Finance, Collections
+Source: workflow W5407 — Recourse Period Expiry, Unpaid-Invoice Buyback &amp; Repurchase Processing</bpmn:documentation>
+      <bpmn:laneSet id="W5407_LaneSet4">
+        <bpmn:lane id="W5407_Lane1" name="Credit Analyst">
+        <bpmn:flowNodeRef>W5407_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5407_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5407_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W5407_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5407_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5407_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5407_Lane3" name="Finance Controller">
+        <bpmn:flowNodeRef>W5407_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5407_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5407_Start5" name="Recourse period expiry on an unpaid factored invoice (recourse factoring)">
+        <bpmn:outgoing>W5407_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5407_Task6" name="Identify invoices unpaid past the recourse period (recourse factoring).">
+        <bpmn:documentation>Step 1: Identify invoices unpaid past the recourse period (recourse factoring).
+Responsible (R): Credit Analyst
+Accountable (A): Credit Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5407_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5407_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5407_Task7" name="Repurchase/buyback the unpaid invoice from the factor per the recourse…">
+        <bpmn:documentation>Step 2: Repurchase/buyback the unpaid invoice from the factor per the recourse agreement (W5394).
+Responsible (R): Finance
+Accountable (A): Credit Manager
+Duration: per buyback</bpmn:documentation>
+        <bpmn:incoming>W5407_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5407_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5407_Task8" name="Re-establish the receivable on BuildRight&#x27;s books (re-recognize under PFRS 9 —…">
+        <bpmn:documentation>Step 3: Re-establish the receivable on BuildRight&#x27;s books (re-recognize under PFRS 9 — W5397) and pursue collection (VS-16/VS-68).
+Responsible (R): Finance
+Accountable (A): Finance Controller
+Duration: per buyback</bpmn:documentation>
+        <bpmn:incoming>W5407_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5407_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5407_Task9" name="Apply the recourse reserve/holdback (W5399) and provision for likely loss…">
+        <bpmn:documentation>Step 4: Apply the recourse reserve/holdback (W5399) and provision for likely loss (W5412).
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: per buyback</bpmn:documentation>
+        <bpmn:incoming>W5407_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5407_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5407_Task10" name="Monitor recourse activity for substance/re-characterization signals…">
+        <bpmn:documentation>Step 5: Monitor recourse activity for substance/re-characterization signals (W5397/W5415).
+Responsible (R): Finance Controller
+Accountable (A): CFO
+Duration: monthly</bpmn:documentation>
+        <bpmn:incoming>W5407_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5407_End11" name="Complete">
+        <bpmn:incoming>W5407_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5407_Annotation12">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: buyback accuracy; CTL-31 (adequate recourse reserve/provision); CTL-29 (consolidated reporting).
+Owner: Credit Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5407_Assoc13" sourceRef="W5407_Annotation12" targetRef="W5407_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5407_Flow14" sourceRef="W5407_Start5" targetRef="W5407_Task6" />
+      <bpmn:sequenceFlow id="W5407_Flow15" sourceRef="W5407_Task6" targetRef="W5407_Task7" />
+      <bpmn:sequenceFlow id="W5407_Flow16" sourceRef="W5407_Task7" targetRef="W5407_Task8" />
+      <bpmn:sequenceFlow id="W5407_Flow17" sourceRef="W5407_Task8" targetRef="W5407_Task9" />
+      <bpmn:sequenceFlow id="W5407_Flow18" sourceRef="W5407_Task9" targetRef="W5407_Task10" />
+      <bpmn:sequenceFlow id="W5407_Flow19" sourceRef="W5407_Task10" targetRef="W5407_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5407_diag">
+      <bpmndi:BPMNPlane id="W5407_plane" bpmnElement="W_W5407">
+        <bpmndi:BPMNShape id="W5407_Lane1_di" bpmnElement="W5407_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Lane2_di" bpmnElement="W5407_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Lane3_di" bpmnElement="W5407_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Task6_di" bpmnElement="W5407_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Task7_di" bpmnElement="W5407_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Task8_di" bpmnElement="W5407_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Task9_di" bpmnElement="W5407_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Task10_di" bpmnElement="W5407_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Start5_di" bpmnElement="W5407_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_End11_di" bpmnElement="W5407_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5407_Annotation12_di" bpmnElement="W5407_Annotation12"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5407_Flow14_di" bpmnElement="W5407_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5407_Flow15_di" bpmnElement="W5407_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5407_Flow16_di" bpmnElement="W5407_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5407_Flow17_di" bpmnElement="W5407_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5407_Flow18_di" bpmnElement="W5407_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5407_Flow19_di" bpmnElement="W5407_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5407_Assoc13_di" bpmnElement="W5407_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5408" name="W5408. Securitization Pool Reporting, Investor/Trustee Reporting &amp; Servicing" isExecutable="false">
+      <bpmn:documentation>Trigger: Securitization instrument selected (W5393); periodic investor reporting
+Frequency: Monthly investor/trustee reporting
+Volume: ~1 securitization pool; ~12 reports/yr
+Owner: Treasury Manager
+Participants: Trustee/SPV, Investors, Finance, Legal (VS-100)
+Source: workflow W5408 — Securitization Pool Reporting, Investor/Trustee Reporting &amp; Servicing</bpmn:documentation>
+      <bpmn:laneSet id="W5408_LaneSet4">
+        <bpmn:lane id="W5408_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W5408_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5408_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5408_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5408_Lane2" name="Treasury Manager">
+        <bpmn:flowNodeRef>W5408_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5408_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5408_Lane3" name="Legal Counsel">
+        <bpmn:flowNodeRef>W5408_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5408_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5408_Start5" name="Securitization instrument selected (W5393); periodic investor reporting">
+        <bpmn:outgoing>W5408_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5408_Task6" name="Aggregate pool performance: collections, dilution, delinquencies, and credit…">
+        <bpmn:documentation>Step 1: Aggregate pool performance: collections, dilution, delinquencies, and credit events (W5405).
+Responsible (R): Finance
+Accountable (A): Treasury Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5408_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5408_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5408_Task7" name="Prepare investor/trustee reports per the pooling-and-servicing agreement…">
+        <bpmn:documentation>Step 2: Prepare investor/trustee reports per the pooling-and-servicing agreement (covenants, triggers, waterfalls).
+Responsible (R): Finance
+Accountable (A): Treasury Manager
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5408_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5408_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5408_Task8" name="Reconcile pool cash flows and remit per the waterfall (senior fees, interest…">
+        <bpmn:documentation>Step 3: Reconcile pool cash flows and remit per the waterfall (senior fees, interest, principal, residual).
+Responsible (R): Treasury Manager
+Accountable (A): Finance Controller
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5408_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5408_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5408_Task9" name="Manage pool covenants/triggers (e.g. excess spread, delinquency triggers) and…">
+        <bpmn:documentation>Step 4: Manage pool covenants/triggers (e.g. excess spread, delinquency triggers) and report breaches.
+Responsible (R): Treasury Manager
+Accountable (A): CFO
+Duration: per cycle</bpmn:documentation>
+        <bpmn:incoming>W5408_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5408_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5408_Task10" name="Coordinate with the trustee/SPV and legal on pool administration (VS-100).">
+        <bpmn:documentation>Step 5: Coordinate with the trustee/SPV and legal on pool administration (VS-100).
+Responsible (R): Legal Counsel
+Accountable (A): Treasury Manager
+Duration: ongoing</bpmn:documentation>
+        <bpmn:incoming>W5408_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5408_End11" name="Complete">
+        <bpmn:incoming>W5408_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5408_Annotation12">
+        <bpmn:text>Controls: - CTL-798 (ensure controlled execution — Invoice Sale, Factoring Drawdown, Notification &amp; Cash Application (PA-189.2).) | - operational: pool-reporting accuracy; CTL-19 (cash/waterfall reconciliation); CTL-29 (consolidated/off-BS reporting).
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5408_Assoc13" sourceRef="W5408_Annotation12" targetRef="W5408_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5408_Flow14" sourceRef="W5408_Start5" targetRef="W5408_Task6" />
+      <bpmn:sequenceFlow id="W5408_Flow15" sourceRef="W5408_Task6" targetRef="W5408_Task7" />
+      <bpmn:sequenceFlow id="W5408_Flow16" sourceRef="W5408_Task7" targetRef="W5408_Task8" />
+      <bpmn:sequenceFlow id="W5408_Flow17" sourceRef="W5408_Task8" targetRef="W5408_Task9" />
+      <bpmn:sequenceFlow id="W5408_Flow18" sourceRef="W5408_Task9" targetRef="W5408_Task10" />
+      <bpmn:sequenceFlow id="W5408_Flow19" sourceRef="W5408_Task10" targetRef="W5408_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5408_diag">
+      <bpmndi:BPMNPlane id="W5408_plane" bpmnElement="W_W5408">
+        <bpmndi:BPMNShape id="W5408_Lane1_di" bpmnElement="W5408_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Lane2_di" bpmnElement="W5408_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Lane3_di" bpmnElement="W5408_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Task6_di" bpmnElement="W5408_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Task7_di" bpmnElement="W5408_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Task8_di" bpmnElement="W5408_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Task9_di" bpmnElement="W5408_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Task10_di" bpmnElement="W5408_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Start5_di" bpmnElement="W5408_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_End11_di" bpmnElement="W5408_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5408_Annotation12_di" bpmnElement="W5408_Annotation12"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5408_Flow14_di" bpmnElement="W5408_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5408_Flow15_di" bpmnElement="W5408_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5408_Flow16_di" bpmnElement="W5408_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5408_Flow17_di" bpmnElement="W5408_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5408_Flow18_di" bpmnElement="W5408_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5408_Flow19_di" bpmnElement="W5408_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5408_Assoc13_di" bpmnElement="W5408_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

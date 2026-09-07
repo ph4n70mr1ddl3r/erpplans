@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-02.2-import-and-customs-operations" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W144" name="W144. International Logistics &amp; Import Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Import Purchase Order (W2B) approved and sent to overseas vendor
+Frequency: Weekly; ~20–30 import shipments/month (multiple containers per shipment; ~400–600 TEUs/month)
+Volume: Primary sourcing from China, Vietnam, Thailand, and Europe
+Owner: Import Coordinator
+Participants: Buyer, Import Coordinator, Freight Forwarder, Customs Broker, Finance, DC Receiving
+Source: workflow W144 — International Logistics &amp; Import Operations</bpmn:documentation>
+      <bpmn:laneSet id="W144_LaneSet7">
+        <bpmn:lane id="W144_Lane1" name="Buyer">
+        <bpmn:flowNodeRef>W144_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W144_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W144_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W144_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W144_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W144_Lane3" name="Import Coordinator">
+        <bpmn:flowNodeRef>W144_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W144_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W144_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W144_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W144_Lane4" name="Customs Broker">
+        <bpmn:flowNodeRef>W144_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W144_Lane5" name="DC Receiving">
+        <bpmn:flowNodeRef>W144_Task17</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W144_Lane6" name="System">
+        <bpmn:flowNodeRef>W144_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W144_End19</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W144_Start8" name="Import Purchase Order (W2B) approved and sent to overseas vendor">
+        <bpmn:outgoing>W144_Flow22</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W144_Task9" name="Proforma Invoice (PI) Review">
+        <bpmn:documentation>Step 1: Proforma Invoice (PI) Review: Receive PI from vendor; verify against PO (W2B); check payment terms (L/C, T/T, CAD)
+Responsible (R): Buyer
+Accountable (A): Category Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W144_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task10" name="L/C Opening (if applicable)">
+        <bpmn:documentation>Step 2: L/C Opening (if applicable): Finance coordinates with Bank to open Letter of Credit; sends L/C to vendor bank
+Responsible (R): Finance (Treasury)
+Accountable (A): CFO
+Duration: 2–3 days</bpmn:documentation>
+        <bpmn:incoming>W144_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task11" name="Production &amp; Booking">
+        <bpmn:documentation>Step 3: Production &amp; Booking: Vendor confirms production completion; Import Coordinator coordinates with Freight Forwarder for vessel booking (FCL/LCL)
+Responsible (R): Import Coordinator
+Accountable (A): —
+Duration: 2–5 days</bpmn:documentation>
+        <bpmn:incoming>W144_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task12" name="Shipping Documents">
+        <bpmn:documentation>Step 4: Shipping Documents: Receive set of documents: Bill of Lading (B/L), Commercial Invoice, Packing List, Certificate of Origin (for FTA benefits like ATIGA/ACFTA)
+Responsible (R): Import Coordinator
+Accountable (A): —
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W144_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task13" name="In-Transit Tracking">
+        <bpmn:documentation>Step 5: In-Transit Tracking: Update system with vessel name, container ID, and ETA; monitor &quot;Estimated vs. Actual&quot; arrival dates
+Responsible (R): Import Coordinator
+Accountable (A): —
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W144_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task14" name="Customs Entry">
+        <bpmn:documentation>Step 6: Customs Entry: Customs Broker files entry via BOC E2M system; calculates Duties &amp; Taxes (VAT + Import Duty)
+Responsible (R): Customs Broker
+Accountable (A): Import Coordinator
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W144_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task15" name="Payment of Duties">
+        <bpmn:documentation>Step 7: Payment of Duties: Finance processes payment of duties/taxes to BOC via bank portal; system records as &quot;Inventory in Transit&quot; cost component
+Responsible (R): Finance
+Accountable (A): Controller
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W144_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task16" name="Release &amp; Haulage">
+        <bpmn:documentation>Step 8: Release &amp; Haulage: BOC releases cargo; Forwarder coordinates haulage from Port to DC; monitor &quot;Port Out&quot; to avoid demurrage/detention fees
+Responsible (R): Import Coordinator
+Accountable (A): DC Manager
+Duration: 1–3 days</bpmn:documentation>
+        <bpmn:incoming>W144_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W144_Task17" name="DC Arrival &amp; Stripping">
+        <bpmn:documentation>Step 9: DC Arrival &amp; Stripping: DC receives container; verifies seal integrity; strips container and performs &quot;Blind Count&quot; against Packing List
+Responsible (R): DC Receiving
+Accountable (A): DC Manager
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W144_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W144_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W144_Task18" name="Cost Finalization">
+        <bpmn:documentation>Step 10: Cost Finalization: System aggregates all landed costs (Product + Freight + Duties + Brokerage + Wharfage) to calculate final Landed WAC
+Responsible (R): System / Finance
+Accountable (A): Cost Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W144_Flow220</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W144_End19" name="Complete">
+        <bpmn:incoming>W144_Flow221</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W144_Annotation20">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).) | - operational: processing times vary widely
+Owner: Import Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W144_Assoc21" sourceRef="W144_Annotation20" targetRef="W144_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W144_Flow22" sourceRef="W144_Start8" targetRef="W144_Task9" />
+      <bpmn:sequenceFlow id="W144_Flow23" sourceRef="W144_Task9" targetRef="W144_Task10" />
+      <bpmn:sequenceFlow id="W144_Flow24" sourceRef="W144_Task10" targetRef="W144_Task11" />
+      <bpmn:sequenceFlow id="W144_Flow25" sourceRef="W144_Task11" targetRef="W144_Task12" />
+      <bpmn:sequenceFlow id="W144_Flow26" sourceRef="W144_Task12" targetRef="W144_Task13" />
+      <bpmn:sequenceFlow id="W144_Flow27" sourceRef="W144_Task13" targetRef="W144_Task14" />
+      <bpmn:sequenceFlow id="W144_Flow28" sourceRef="W144_Task14" targetRef="W144_Task15" />
+      <bpmn:sequenceFlow id="W144_Flow29" sourceRef="W144_Task15" targetRef="W144_Task16" />
+      <bpmn:sequenceFlow id="W144_Flow30" sourceRef="W144_Task16" targetRef="W144_Task17" />
+      <bpmn:sequenceFlow id="W144_Flow31" sourceRef="W144_Task17" targetRef="W144_Task18" />
+      <bpmn:sequenceFlow id="W144_Flow32" sourceRef="W144_Task18" targetRef="W144_End19" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W144_diag">
+      <bpmndi:BPMNPlane id="W144_plane" bpmnElement="W_W144">
+        <bpmndi:BPMNShape id="W144_Lane1_di" bpmnElement="W144_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Lane2_di" bpmnElement="W144_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Lane3_di" bpmnElement="W144_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Lane4_di" bpmnElement="W144_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Lane5_di" bpmnElement="W144_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Lane6_di" bpmnElement="W144_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task9_di" bpmnElement="W144_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task10_di" bpmnElement="W144_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task11_di" bpmnElement="W144_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task12_di" bpmnElement="W144_Task12"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task13_di" bpmnElement="W144_Task13"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task14_di" bpmnElement="W144_Task14"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task15_di" bpmnElement="W144_Task15"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task16_di" bpmnElement="W144_Task16"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task17_di" bpmnElement="W144_Task17"><dc:Bounds x="2080" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Task18_di" bpmnElement="W144_Task18"><dc:Bounds x="2290" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Start8_di" bpmnElement="W144_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_End19_di" bpmnElement="W144_End19"><dc:Bounds x="2520" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W144_Annotation20_di" bpmnElement="W144_Annotation20"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W144_Flow22_di" bpmnElement="W144_Flow22"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow23_di" bpmnElement="W144_Flow23"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow24_di" bpmnElement="W144_Flow24"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow25_di" bpmnElement="W144_Flow25"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow26_di" bpmnElement="W144_Flow26"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow27_di" bpmnElement="W144_Flow27"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow28_di" bpmnElement="W144_Flow28"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow29_di" bpmnElement="W144_Flow29"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow30_di" bpmnElement="W144_Flow30"><di:waypoint x="2050" y="505" /><di:waypoint x="2080" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow31_di" bpmnElement="W144_Flow31"><di:waypoint x="2260" y="845" /><di:waypoint x="2290" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Flow32_di" bpmnElement="W144_Flow32"><di:waypoint x="2470" y="1015" /><di:waypoint x="2520" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W144_Assoc21_di" bpmnElement="W144_Assoc21"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W191" name="W191. Global Supply Chain — Incoterm &amp; Marine Insurance Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Import PO creation (W2B) or Shipment Booking (W144)
+Frequency: Ongoing per import shipment
+Volume: ~400–600 TEUs/month
+Owner: Import Coordinator
+Participants: Buyer, Insurance Provider, Finance, Freight Forwarder
+Source: workflow W191 — Global Supply Chain — Incoterm &amp; Marine Insurance Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W191_LaneSet5">
+        <bpmn:lane id="W191_Lane1" name="Buyer">
+        <bpmn:flowNodeRef>W191_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W191_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W191_Lane2" name="Import Coordinator">
+        <bpmn:flowNodeRef>W191_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W191_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W191_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W191_Lane3" name="System">
+        <bpmn:flowNodeRef>W191_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W191_Lane4" name="Finance">
+        <bpmn:flowNodeRef>W191_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W191_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W191_Start6" name="Import PO creation (W2B) or Shipment Booking (W144)">
+        <bpmn:outgoing>W191_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W191_Task7" name="Incoterm Selection">
+        <bpmn:documentation>Step 1: Incoterm Selection: Buyer selects Incoterm (EXW, FOB, CFR, CIF) during PO negotiation (W2B); system calculates risk transfer point
+Responsible (R): Buyer
+Accountable (A): —
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W191_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W191_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W191_Task8" name="Insurance Booking">
+        <bpmn:documentation>Step 2: Insurance Booking: If Incoterm requires BuildRight to provide insurance (EXW, FOB, CFR), Import Coordinator issues &quot;Marine Insurance Declaration&quot;
+Responsible (R): Import Coordinator
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W191_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W191_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W191_Task9" name="Risk Monitoring">
+        <bpmn:documentation>Step 3: Risk Monitoring: System tracks shipment location vs. risk transfer point (e.g., &quot;On Board&quot; for FOB); alerts if insurance coverage gap exists
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W191_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W191_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W191_Task10" name="Claim Initiation">
+        <bpmn:documentation>Step 4: Claim Initiation: If damage/loss occurs during transit (W3.6a), Import Coordinator gathers B/L, Survey Report, and Invoice
+Responsible (R): Import Coordinator
+Accountable (A): —
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W191_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W191_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W191_Task11" name="Claim Filing">
+        <bpmn:documentation>Step 5: Claim Filing: Submit claim to Marine Insurance provider; track status in ERP
+Responsible (R): Import Coordinator
+Accountable (A): Finance Mgr
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W191_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W191_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W191_Task12" name="Settlement">
+        <bpmn:documentation>Step 6: Settlement: Finance records insurance recovery; offsets against inventory loss (W3.6a)
+Responsible (R): Finance
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W191_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W191_End13" name="Complete">
+        <bpmn:incoming>W191_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W191_Annotation14">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Import Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W191_Assoc15" sourceRef="W191_Annotation14" targetRef="W191_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W191_Flow16" sourceRef="W191_Start6" targetRef="W191_Task7" />
+      <bpmn:sequenceFlow id="W191_Flow17" sourceRef="W191_Task7" targetRef="W191_Task8" />
+      <bpmn:sequenceFlow id="W191_Flow18" sourceRef="W191_Task8" targetRef="W191_Task9" />
+      <bpmn:sequenceFlow id="W191_Flow19" sourceRef="W191_Task9" targetRef="W191_Task10" />
+      <bpmn:sequenceFlow id="W191_Flow20" sourceRef="W191_Task10" targetRef="W191_Task11" />
+      <bpmn:sequenceFlow id="W191_Flow21" sourceRef="W191_Task11" targetRef="W191_Task12" />
+      <bpmn:sequenceFlow id="W191_Flow22" sourceRef="W191_Task12" targetRef="W191_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W191_diag">
+      <bpmndi:BPMNPlane id="W191_plane" bpmnElement="W_W191">
+        <bpmndi:BPMNShape id="W191_Lane1_di" bpmnElement="W191_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Lane2_di" bpmnElement="W191_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Lane3_di" bpmnElement="W191_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Lane4_di" bpmnElement="W191_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Task7_di" bpmnElement="W191_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Task8_di" bpmnElement="W191_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Task9_di" bpmnElement="W191_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Task10_di" bpmnElement="W191_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Task11_di" bpmnElement="W191_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Task12_di" bpmnElement="W191_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Start6_di" bpmnElement="W191_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_End13_di" bpmnElement="W191_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W191_Annotation14_di" bpmnElement="W191_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W191_Flow16_di" bpmnElement="W191_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W191_Flow17_di" bpmnElement="W191_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W191_Flow18_di" bpmnElement="W191_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W191_Flow19_di" bpmnElement="W191_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W191_Flow20_di" bpmnElement="W191_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W191_Flow21_di" bpmnElement="W191_Flow21"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W191_Flow22_di" bpmnElement="W191_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W191_Assoc15_di" bpmnElement="W191_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W249" name="W249. Import Port Demurrage &amp; Detention Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Import container vessel arrival at Philippine port (Manila/Cebu/Davao) (W144)
+Frequency: Ongoing per import shipment (~20–30 shipments/month)
+Volume: Covers ~400–600 TEUs/month
+Owner: Logistics Manager
+Participants: Import Coordinator, Customs Broker, Finance Specialist, Shipping Line
+Source: workflow W249 — Import Port Demurrage &amp; Detention Management</bpmn:documentation>
+      <bpmn:laneSet id="W249_LaneSet5">
+        <bpmn:lane id="W249_Lane1" name="System">
+        <bpmn:flowNodeRef>W249_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W249_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W249_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W249_Lane2" name="Import Coordinator">
+        <bpmn:flowNodeRef>W249_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W249_Lane3" name="Hauler">
+        <bpmn:flowNodeRef>W249_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W249_Lane4" name="Finance Specialist">
+        <bpmn:flowNodeRef>W249_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W249_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W249_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W249_Start6" name="Import container vessel arrival at Philippine port (Manila/Cebu/Davao) (W144)">
+        <bpmn:outgoing>W249_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W249_Task7" name="Vessel Arrival">
+        <bpmn:documentation>Step 1: Vessel Arrival: System pulls actual arrival time from Port Authority API; calculates free-time expiration date (standard: 5 days demurrage, 3 days detention).
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W249_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W249_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W249_Task8" name="Clearance Tracking">
+        <bpmn:documentation>Step 2: Clearance Tracking: Import Coordinator monitors customs brokerage clearance progress (W239). If delayed (&gt; 3 days), triggers warning.
+Responsible (R): Import Coordinator
+Accountable (A): Logistics Mgr
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W249_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W249_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W249_Task9" name="Demurrage Alert">
+        <bpmn:documentation>Step 3: Demurrage Alert: System auto-calculates potential demurrage fees if containers are not gate-outed before free-time expiry; alerts Logistics Manager to prioritize pickup.
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W249_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W249_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W249_Task10" name="Gate-Out &amp; Return">
+        <bpmn:documentation>Step 4: Gate-Out &amp; Return: Containers are hauled to DC (W3). Hauler returns empty container to designated port yard within shipping line&#x27;s free-time window.
+Responsible (R): Hauler / DC Clerk
+Accountable (A): Logistics Mgr
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W249_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W249_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W249_Task11" name="Charges Auditing">
+        <bpmn:documentation>Step 5: Charges Auditing: If demurrage/detention occurs: Shipping line issues invoice; Finance Specialist audits charges against system-captured arrival/gate-out/gate-in logs.
+Responsible (R): Finance Specialist
+Accountable (A): Controller
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W249_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W249_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W249_Task12" name="Dispute / Payment">
+        <bpmn:documentation>Step 6: Dispute / Payment: If charges valid, approve payment to avoid port hold; if invalid, initiate dispute via shipping line portal with log evidence.
+Responsible (R): Finance Specialist
+Accountable (A): Logistics Mgr
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W249_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W249_End13" name="Complete">
+        <bpmn:incoming>W249_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W249_Annotation14">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).) | - operational: Logistics Manager review and approval gate
+Owner: Logistics Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W249_Assoc15" sourceRef="W249_Annotation14" targetRef="W249_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W249_Flow16" sourceRef="W249_Start6" targetRef="W249_Task7" />
+      <bpmn:sequenceFlow id="W249_Flow17" sourceRef="W249_Task7" targetRef="W249_Task8" />
+      <bpmn:sequenceFlow id="W249_Flow18" sourceRef="W249_Task8" targetRef="W249_Task9" />
+      <bpmn:sequenceFlow id="W249_Flow19" sourceRef="W249_Task9" targetRef="W249_Task10" />
+      <bpmn:sequenceFlow id="W249_Flow20" sourceRef="W249_Task10" targetRef="W249_Task11" />
+      <bpmn:sequenceFlow id="W249_Flow21" sourceRef="W249_Task11" targetRef="W249_Task12" />
+      <bpmn:sequenceFlow id="W249_Flow22" sourceRef="W249_Task12" targetRef="W249_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W249_diag">
+      <bpmndi:BPMNPlane id="W249_plane" bpmnElement="W_W249">
+        <bpmndi:BPMNShape id="W249_Lane1_di" bpmnElement="W249_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Lane2_di" bpmnElement="W249_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Lane3_di" bpmnElement="W249_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Lane4_di" bpmnElement="W249_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Task7_di" bpmnElement="W249_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Task8_di" bpmnElement="W249_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Task9_di" bpmnElement="W249_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Task10_di" bpmnElement="W249_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Task11_di" bpmnElement="W249_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Task12_di" bpmnElement="W249_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Start6_di" bpmnElement="W249_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_End13_di" bpmnElement="W249_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W249_Annotation14_di" bpmnElement="W249_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W249_Flow16_di" bpmnElement="W249_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W249_Flow17_di" bpmnElement="W249_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W249_Flow18_di" bpmnElement="W249_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W249_Flow19_di" bpmnElement="W249_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W249_Flow20_di" bpmnElement="W249_Flow20"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W249_Flow21_di" bpmnElement="W249_Flow21"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W249_Flow22_di" bpmnElement="W249_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W249_Assoc15_di" bpmnElement="W249_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W284" name="W284. Customs Bonded Warehouse (CBW) Operations &amp; Duty Deferral" isExecutable="false">
+      <bpmn:documentation>Trigger: Arrival of imported goods designated for the CBW to defer customs duties until final store allocation.
+Frequency: Weekly
+Volume: 10-20 containers per week
+Owner: Logistics Manager / Import Compliance
+Participants: Customs Broker, Bureau of Customs (BOC), DC Manager, Finance
+Source: workflow W284 — Customs Bonded Warehouse (CBW) Operations &amp; Duty Deferral</bpmn:documentation>
+      <bpmn:laneSet id="W284_LaneSet6">
+        <bpmn:lane id="W284_Lane1" name="Logistics Coordinator">
+        <bpmn:flowNodeRef>W284_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W284_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W284_Lane2" name="Warehouse Supervisor">
+        <bpmn:flowNodeRef>W284_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W284_Lane3" name="Supply Planner">
+        <bpmn:flowNodeRef>W284_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W284_Lane4" name="Finance Specialist">
+        <bpmn:flowNodeRef>W284_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W284_Lane5" name="Import Coordinator">
+        <bpmn:flowNodeRef>W284_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W284_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W284_Start7" name="Arrival of imported goods designated for the CBW to defer customs duties until final…">
+        <bpmn:outgoing>W284_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W284_Task8" name="Import container arrives and is received into a designated logical/physical CBW…">
+        <bpmn:documentation>Step 1: Import container arrives and is received into a designated logical/physical CBW location in the WMS without paying duties (under customs bond).
+Responsible (R): Logistics Coordinator
+Accountable (A): Import Compliance Mgr
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W284_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W284_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W284_Task9" name="System tags the inventory as bonded and unavailable for standard retail sale.">
+        <bpmn:documentation>Step 2: System tags the inventory as bonded and unavailable for standard retail sale.
+Responsible (R): Warehouse Supervisor
+Accountable (A): Logistics Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W284_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W284_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W284_Task10" name="When store replenishment (W4) demands the stock, a formal withdrawal request is…">
+        <bpmn:documentation>Step 3: When store replenishment (W4) demands the stock, a formal withdrawal request is generated.
+Responsible (R): Supply Planner
+Accountable (A): Import Compliance Mgr
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W284_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W284_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W284_Task11" name="Finance pays the specific duties/taxes for only the withdrawn quantity (W239).">
+        <bpmn:documentation>Step 4: Finance pays the specific duties/taxes for only the withdrawn quantity (W239).
+Responsible (R): Finance Specialist
+Accountable (A): Controller
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W284_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W284_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W284_Task12" name="BOC approves, and the WMS releases the stock from the CBW location to the…">
+        <bpmn:documentation>Step 5: BOC approves, and the WMS releases the stock from the CBW location to the standard picking area.
+Responsible (R): Import Coordinator
+Accountable (A): Import Compliance Mgr
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W284_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W284_End13" name="Complete">
+        <bpmn:incoming>W284_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W284_Annotation14">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).) | - operational: Logistics Manager / Import Compliance review and approval gate
+Owner: Logistics Manager / Import Compliance</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W284_Assoc15" sourceRef="W284_Annotation14" targetRef="W284_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W284_Flow16" sourceRef="W284_Start7" targetRef="W284_Task8" />
+      <bpmn:sequenceFlow id="W284_Flow17" sourceRef="W284_Task8" targetRef="W284_Task9" />
+      <bpmn:sequenceFlow id="W284_Flow18" sourceRef="W284_Task9" targetRef="W284_Task10" />
+      <bpmn:sequenceFlow id="W284_Flow19" sourceRef="W284_Task10" targetRef="W284_Task11" />
+      <bpmn:sequenceFlow id="W284_Flow20" sourceRef="W284_Task11" targetRef="W284_Task12" />
+      <bpmn:sequenceFlow id="W284_Flow21" sourceRef="W284_Task12" targetRef="W284_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W284_diag">
+      <bpmndi:BPMNPlane id="W284_plane" bpmnElement="W_W284">
+        <bpmndi:BPMNShape id="W284_Lane1_di" bpmnElement="W284_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Lane2_di" bpmnElement="W284_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Lane3_di" bpmnElement="W284_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Lane4_di" bpmnElement="W284_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Lane5_di" bpmnElement="W284_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Task8_di" bpmnElement="W284_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Task9_di" bpmnElement="W284_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Task10_di" bpmnElement="W284_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Task11_di" bpmnElement="W284_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Task12_di" bpmnElement="W284_Task12"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Start7_di" bpmnElement="W284_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_End13_di" bpmnElement="W284_End13"><dc:Bounds x="1470" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W284_Annotation14_di" bpmnElement="W284_Annotation14"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W284_Flow16_di" bpmnElement="W284_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W284_Flow17_di" bpmnElement="W284_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W284_Flow18_di" bpmnElement="W284_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W284_Flow19_di" bpmnElement="W284_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W284_Flow20_di" bpmnElement="W284_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W284_Flow21_di" bpmnElement="W284_Flow21"><di:waypoint x="1420" y="845" /><di:waypoint x="1470" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W284_Assoc15_di" bpmnElement="W284_Assoc15"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W464" name="W464. In-House Customs Brokerage &amp; Port Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Import container arrives at port (Manila/Davao/Cebu)
+Frequency: ~400–600 TEUs/month
+Volume: High; multiple containers per day
+Owner: Import Coordinator (Licensed Broker)
+Participants: Customs Broker (In-house), Logistics Manager, BOC, Haulier (Trucker)
+Source: workflow W464 — In-House Customs Brokerage &amp; Port Operations</bpmn:documentation>
+      <bpmn:laneSet id="W464_LaneSet5">
+        <bpmn:lane id="W464_Lane1" name="In-house Broker">
+        <bpmn:flowNodeRef>W464_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W464_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W464_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W464_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W464_Lane2" name="BOC Officer">
+        <bpmn:flowNodeRef>W464_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W464_Lane3" name="BOC">
+        <bpmn:flowNodeRef>W464_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W464_Lane4" name="Haulier">
+        <bpmn:flowNodeRef>W464_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W464_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W464_Start6" name="Import container arrives at port (Manila/Davao/Cebu)">
+        <bpmn:outgoing>W464_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W464_Task7" name="Entry Lodgment">
+        <bpmn:documentation>Step 1: Entry Lodgment: Broker submits &quot;Import Entry&quot; via BOC e2m system; calculates duties/taxes (W239)
+Responsible (R): In-house Broker
+Accountable (A): —
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W464_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W464_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W464_Task8" name="Documentary Review">
+        <bpmn:documentation>Step 2: Documentary Review: BOC verifies manifest vs. packing list and commercial invoice
+Responsible (R): BOC Officer
+Accountable (A): —
+Duration: 1-2 days</bpmn:documentation>
+        <bpmn:incoming>W464_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W464_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W464_Task9" name="Physical Inspection">
+        <bpmn:documentation>Step 3: Physical Inspection: If flagged (Red/Yellow lane), Broker attends physical inspection at the port
+Responsible (R): In-house Broker
+Accountable (A): Import Coordinator
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W464_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W464_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W464_Task10" name="Gate Pass &amp; Release">
+        <bpmn:documentation>Step 4: Gate Pass &amp; Release: Upon payment of duties (W239), BOC issues &quot;Release Instruction&quot; and Port Gate Pass
+Responsible (R): BOC / Broker
+Accountable (A): —
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W464_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W464_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W464_Task11" name="Drayage (Hauling)">
+        <bpmn:documentation>Step 5: Drayage (Hauling): Broker coordinates with haulier to pick up container and deliver to DC
+Responsible (R): In-house Broker
+Accountable (A): Logistics Mgr
+Duration: 4-8 hours</bpmn:documentation>
+        <bpmn:incoming>W464_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W464_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W464_Task12" name="Empty Return">
+        <bpmn:documentation>Step 6: Empty Return: Haulier returns empty container to port/yard to avoid detention fees (W249)
+Responsible (R): Haulier
+Accountable (A): —
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W464_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W464_End13" name="Complete">
+        <bpmn:incoming>W464_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W464_Annotation14">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).) | - operational: Import Coordinator (Licensed Broker) review and approval gate
+Owner: Import Coordinator (Licensed Broker)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W464_Assoc15" sourceRef="W464_Annotation14" targetRef="W464_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W464_Flow16" sourceRef="W464_Start6" targetRef="W464_Task7" />
+      <bpmn:sequenceFlow id="W464_Flow17" sourceRef="W464_Task7" targetRef="W464_Task8" />
+      <bpmn:sequenceFlow id="W464_Flow18" sourceRef="W464_Task8" targetRef="W464_Task9" />
+      <bpmn:sequenceFlow id="W464_Flow19" sourceRef="W464_Task9" targetRef="W464_Task10" />
+      <bpmn:sequenceFlow id="W464_Flow20" sourceRef="W464_Task10" targetRef="W464_Task11" />
+      <bpmn:sequenceFlow id="W464_Flow21" sourceRef="W464_Task11" targetRef="W464_Task12" />
+      <bpmn:sequenceFlow id="W464_Flow22" sourceRef="W464_Task12" targetRef="W464_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W464_diag">
+      <bpmndi:BPMNPlane id="W464_plane" bpmnElement="W_W464">
+        <bpmndi:BPMNShape id="W464_Lane1_di" bpmnElement="W464_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Lane2_di" bpmnElement="W464_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Lane3_di" bpmnElement="W464_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Lane4_di" bpmnElement="W464_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Task7_di" bpmnElement="W464_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Task8_di" bpmnElement="W464_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Task9_di" bpmnElement="W464_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Task10_di" bpmnElement="W464_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Task11_di" bpmnElement="W464_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Task12_di" bpmnElement="W464_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Start6_di" bpmnElement="W464_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_End13_di" bpmnElement="W464_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W464_Annotation14_di" bpmnElement="W464_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W464_Flow16_di" bpmnElement="W464_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W464_Flow17_di" bpmnElement="W464_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W464_Flow18_di" bpmnElement="W464_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W464_Flow19_di" bpmnElement="W464_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W464_Flow20_di" bpmnElement="W464_Flow20"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W464_Flow21_di" bpmnElement="W464_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W464_Flow22_di" bpmnElement="W464_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W464_Assoc15_di" bpmnElement="W464_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W728" name="W728. Port &amp; Customs Clearance Daily Status Tracking &amp; Escalation" isExecutable="false">
+      <bpmn:documentation>Trigger: Start of supply chain operations day; or customs/broker status update
+Frequency: Daily review; real-time status updates from customs broker
+Volume: ~400–600 TEUs/month import containers; ~15–25 containers in clearance pipeline at any time
+Owner: Import Coordinator
+Participants: Customs Broker, Logistics Manager, Finance (LC/duty payments), Warehouse Manager
+Source: workflow W728 — Port &amp; Customs Clearance Daily Status Tracking &amp; Escalation</bpmn:documentation>
+      <bpmn:laneSet id="W728_LaneSet2">
+        <bpmn:lane id="W728_Lane1" name="Import Coordinator">
+        <bpmn:flowNodeRef>W728_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W728_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W728_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W728_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W728_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W728_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W728_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W728_Start3" name="Start of supply chain operations day; or customs/broker status update">
+        <bpmn:outgoing>W728_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W728_Task4" name="Morning import pipeline status review">
+        <bpmn:documentation>Step 1: Morning import pipeline status review: Import Coordinator reviews import pipeline dashboard: (a) vessels expected to arrive in next 7 days: vessel name, ETA, number of BuildRight containers, port of discharge (Manila South Harbor, Manila North Harbor, Cebu, Davao, Clark); (b) containers currently at port: days since vessel arrival, current clearance status (discharged, under customs examination, assessed, payment pending, released for haulage, gated out); (c) containers in transit to DC: estimated arrival at DC per W250 tracking; (d) containers exceeding standard clearance timeline (&gt;7 days from discharge): flag as potential demurrage risk per W249
+Responsible (R): Import Coordinator
+Accountable (A): Logistics Manager
+Duration: 20-30 min/day</bpmn:documentation>
+        <bpmn:incoming>W728_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W728_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W728_Task5" name="Customs broker status update">
+        <bpmn:documentation>Step 2: Customs broker status update: Import Coordinator obtains daily status from customs broker: (a) for each container in clearance pipeline: (i) current status and next step; (ii) expected timeline for next milestone; (iii) any issues: missing documentation, customs hold, examination required, assessment dispute, BOC system downtime; (b) for containers requiring customs examination: (i) examination type: green lane (no exam), yellow lane (document exam), red lane (physical exam); (ii) red lane: coordinate with broker for examination scheduling, prepare supporting documentation; (iii) estimate additional clearance time for examinations; (c) document all status updates in tracking system with timestamps
+Responsible (R): Import Coordinator / Customs Broker
+Accountable (A): Logistics Manager
+Duration: 15-30 min/day</bpmn:documentation>
+        <bpmn:incoming>W728_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W728_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W728_Task6" name="Escalation management">
+        <bpmn:documentation>Step 3: Escalation management: for containers stuck at specific stages: (a) stuck at discharge (&gt;2 days): contact shipping line for container availability; (b) stuck awaiting customs examination (&gt;3 days): escalate to broker for examination scheduling; contact BOC if broker unable to resolve; (c) stuck at assessment (&gt;2 days): verify all documentation submitted; escalate duty assessment disputes per W239; (d) stuck at payment: coordinate with Finance for immediate duty payment via IPAY/Pass5 per W239 step 1; (e) stuck at release (&gt;1 day after payment): escalate to broker for gate-out coordination; (f) for each escalation: document actions taken and timeline for resolution
+Responsible (R): Import Coordinator
+Accountable (A): Logistics Manager
+Duration: 15-30 min/day</bpmn:documentation>
+        <bpmn:incoming>W728_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W728_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W728_Task7" name="Supply chain impact assessment">
+        <bpmn:documentation>Step 4: Supply chain impact assessment: Import Coordinator communicates clearance timeline impact: (a) for containers carrying critical stock (A-items, promotional items per W57): notify Supply Chain Planner of expected DC receipt date; (b) assess impact on store replenishment: will clearance delays cause stockouts at stores?; (c) for promotional items: alert Merchandising if promotional launch per W13 may be affected by delayed import receipt; (d) for seasonal items per W32: assess whether seasonal buy will arrive in time for seasonal window
+Responsible (R): Import Coordinator / Supply Chain Planner
+Accountable (A): VP Supply Chain
+Duration: 10-15 min/day</bpmn:documentation>
+        <bpmn:incoming>W728_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W728_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W728_Task8" name="Demurrage and storage cost monitoring">
+        <bpmn:documentation>Step 5: Demurrage and storage cost monitoring: daily, Import Coordinator tracks cost exposure: (a) containers exceeding free time at port (typically 5-7 days free, then PHP 5,000-8,000/day demurrage): calculate daily cost exposure; (b) total monthly demurrage cost vs. budget; (c) identify root causes of demurrage incidents: documentation delays, customs holds, payment delays, carrier no-show for haulage; (d) demurrage cost data feeds into W680 supply chain cost analysis
+Responsible (R): Import Coordinator
+Accountable (A): Finance Manager
+Duration: 10 min/day</bpmn:documentation>
+        <bpmn:incoming>W728_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W728_End9" name="Complete">
+        <bpmn:incoming>W728_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W728_Annotation10">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).) | - operational: Import Coordinator review and approval gate
+Owner: Import Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W728_Assoc11" sourceRef="W728_Annotation10" targetRef="W728_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W728_Flow12" sourceRef="W728_Start3" targetRef="W728_Task4" />
+      <bpmn:sequenceFlow id="W728_Flow13" sourceRef="W728_Task4" targetRef="W728_Task5" />
+      <bpmn:sequenceFlow id="W728_Flow14" sourceRef="W728_Task5" targetRef="W728_Task6" />
+      <bpmn:sequenceFlow id="W728_Flow15" sourceRef="W728_Task6" targetRef="W728_Task7" />
+      <bpmn:sequenceFlow id="W728_Flow16" sourceRef="W728_Task7" targetRef="W728_Task8" />
+      <bpmn:sequenceFlow id="W728_Flow17" sourceRef="W728_Task8" targetRef="W728_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W728_diag">
+      <bpmndi:BPMNPlane id="W728_plane" bpmnElement="W_W728">
+        <bpmndi:BPMNShape id="W728_Lane1_di" bpmnElement="W728_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_Task4_di" bpmnElement="W728_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_Task5_di" bpmnElement="W728_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_Task6_di" bpmnElement="W728_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_Task7_di" bpmnElement="W728_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_Task8_di" bpmnElement="W728_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_Start3_di" bpmnElement="W728_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_End9_di" bpmnElement="W728_End9"><dc:Bounds x="1470" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W728_Annotation10_di" bpmnElement="W728_Annotation10"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W728_Flow12_di" bpmnElement="W728_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W728_Flow13_di" bpmnElement="W728_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W728_Flow14_di" bpmnElement="W728_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W728_Flow15_di" bpmnElement="W728_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W728_Flow16_di" bpmnElement="W728_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W728_Flow17_di" bpmnElement="W728_Flow17"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W728_Assoc11_di" bpmnElement="W728_Assoc11"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1233" name="W1233. Philippine Bureau of Customs Import Entry Processing &amp; Duty Assessment Automation" isExecutable="false">
+      <bpmn:documentation>Trigger: Import container arrival at Philippine port (Manila, Cebu, Davao, or Subic/Clark)
+Frequency: ~400–600 TEUs/month; ~15–30 containers/working day
+Volume: ~1,800–3,600 import entries/year across all import vendors (multiple TEUs consolidated per entry per W464)
+Owner: Customs Broker / Import Specialist
+Participants: Customs Broker, Import Specialist, Category Manager, Finance – Tax, Freight Forwarder, Bureau of Customs
+Source: workflow W1233 — Philippine Bureau of Customs Import Entry Processing &amp; Duty Assessment Automation</bpmn:documentation>
+      <bpmn:laneSet id="W1233_LaneSet5">
+        <bpmn:lane id="W1233_Lane1" name="Import Specialist">
+        <bpmn:flowNodeRef>W1233_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1233_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1233_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1233_Lane2" name="System">
+        <bpmn:flowNodeRef>W1233_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1233_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1233_Lane3" name="Customs Broker">
+        <bpmn:flowNodeRef>W1233_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1233_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1233_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1233_Lane4" name="Finance – Tax">
+        <bpmn:flowNodeRef>W1233_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1233_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1233_Start6" name="Import container arrival at Philippine port (Manila, Cebu, Davao, or Subic/Clark)">
+        <bpmn:outgoing>W1233_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1233_Task7" name="Shipment pre-arrival preparation">
+        <bpmn:documentation>Step 1: Shipment pre-arrival preparation: Import Specialist receives advance shipping documents from vendor/freight forwarder: (a) commercial invoice, (b) packing list, (c) bill of lading (B/L) or airway bill, (d) certificate of origin (if FTA claim), (e) import permit or clearance (for regulated items per W467)
+Responsible (R): Import Specialist
+Accountable (A): Customs Broker
+Duration: 1–2 hours/entry</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1233_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1233_Task8" name="Automated HS code classification">
+        <bpmn:documentation>Step 2: Automated HS code classification: ERP system auto-matches item SKUs to HS codes from item master (maintained per W293 tax master): (a) system validates HS code against BOC latest tariff schedule; (b) system checks for preferential tariff eligibility (ASEAN, ACFTA); (c) system flags items with classification ambiguity for Customs Broker review; (d) system calculates estimated duty: duty amount = CIF value × duty rate (0–30% depending on HS chapter)
+Responsible (R): System / Import Specialist
+Accountable (A): Customs Broker
+Duration: 15 min/entry</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1233_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1233_Task9" name="Customs value declaration preparation">
+        <bpmn:documentation>Step 3: Customs value declaration preparation: (a) system calculates CIF value: invoice value + freight + insurance; (b) add dutiable ancillary costs (royalties, assists, packaging); (c) deduct non-dutiable items where applicable; (d) generate customs value declaration worksheet with supporting documentation
+Responsible (R): Import Specialist
+Accountable (A): Customs Broker
+Duration: 30 min/entry</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1233_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1233_Task10" name="BOC e2m (Electronic-to-Mobile) system filing">
+        <bpmn:documentation>Step 4: BOC e2m (Electronic-to-Mobile) system filing: Customs Broker files import entry via BOC e2m system: (a) select entry type (formal consumption, informal, warehousing per W284); (b) upload HS classifications, quantities, and values; (c) attach supporting documents electronically; (d) system auto-calculates duties, VAT, and other charges; (e) select payment mode (direct debit via AAB, or cash/manager&#x27;s check)
+Responsible (R): Customs Broker
+Accountable (A): —
+Duration: 30–60 min/entry</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1233_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1233_Task11" name="Duty payment &amp; assessment">
+        <bpmn:documentation>Step 5: Duty payment &amp; assessment: (a) BOC assesses entry; system calculates total duty liability; (b) Customs Broker authorizes payment via accredited bank (BDO/BPI); (c) BOC issues Single Administrative Document (SAD) with assessment; (d) for select shipments: BOC Green Lane (auto-release), Yellow Lane (document check), or Red Lane (physical inspection)
+Responsible (R): Customs Broker
+Accountable (A): —
+Duration: 1–4 hours</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1233_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1233_Task12" name="Cargo release &amp; delivery order">
+        <bpmn:documentation>Step 6: Cargo release &amp; delivery order: (a) once assessed and duty paid: BOC releases cargo; (b) Customs Broker obtains delivery order from shipping line; (c) arranges trucking from port to DC per W464; (d) system updates import PO status to &quot;Customs Cleared&quot; with duty and landed cost details
+Responsible (R): Customs Broker / Import Specialist
+Accountable (A): —
+Duration: 2–4 hours</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1233_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1233_Task13" name="Landed cost posting &amp; WAC update">
+        <bpmn:documentation>Step 7: Landed cost posting &amp; WAC update: (a) system calculates final landed cost per SKU: invoice cost + freight + insurance + duty + port charges + brokerage fees; (b) system posts landed cost to inventory receipt per W3; (c) WAC recalculated for received quantity; (d) duty and VAT posted to appropriate GL accounts per W90
+Responsible (R): System / Finance – Tax
+Accountable (A): Finance Manager
+Duration: Automated + 15 min review</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1233_Flow24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1233_Task14" name="Monthly duty reconciliation">
+        <bpmn:documentation>Step 8: Monthly duty reconciliation: Finance – Tax reconciles monthly: (a) total duties paid vs. BOC assessment; (b) VAT paid at customs vs. input VAT claimed on BIR 2550M; (c) FTA preferential duty savings vs. standard rates; (d) identify classification discrepancies for correction
+Responsible (R): Finance – Tax
+Accountable (A): Customs Broker
+Duration: 4–6 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1233_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1233_End15" name="Complete">
+        <bpmn:incoming>W1233_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1233_Annotation16">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).)
+Owner: Customs Broker / Import Specialist</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1233_Assoc17" sourceRef="W1233_Annotation16" targetRef="W1233_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1233_Flow18" sourceRef="W1233_Start6" targetRef="W1233_Task7" />
+      <bpmn:sequenceFlow id="W1233_Flow19" sourceRef="W1233_Task7" targetRef="W1233_Task8" />
+      <bpmn:sequenceFlow id="W1233_Flow20" sourceRef="W1233_Task8" targetRef="W1233_Task9" />
+      <bpmn:sequenceFlow id="W1233_Flow21" sourceRef="W1233_Task9" targetRef="W1233_Task10" />
+      <bpmn:sequenceFlow id="W1233_Flow22" sourceRef="W1233_Task10" targetRef="W1233_Task11" />
+      <bpmn:sequenceFlow id="W1233_Flow23" sourceRef="W1233_Task11" targetRef="W1233_Task12" />
+      <bpmn:sequenceFlow id="W1233_Flow24" sourceRef="W1233_Task12" targetRef="W1233_Task13" />
+      <bpmn:sequenceFlow id="W1233_Flow25" sourceRef="W1233_Task13" targetRef="W1233_Task14" />
+      <bpmn:sequenceFlow id="W1233_Flow26" sourceRef="W1233_Task14" targetRef="W1233_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1233_diag">
+      <bpmndi:BPMNPlane id="W1233_plane" bpmnElement="W_W1233">
+        <bpmndi:BPMNShape id="W1233_Lane1_di" bpmnElement="W1233_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Lane2_di" bpmnElement="W1233_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Lane3_di" bpmnElement="W1233_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Lane4_di" bpmnElement="W1233_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task7_di" bpmnElement="W1233_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task8_di" bpmnElement="W1233_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task9_di" bpmnElement="W1233_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task10_di" bpmnElement="W1233_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task11_di" bpmnElement="W1233_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task12_di" bpmnElement="W1233_Task12"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task13_di" bpmnElement="W1233_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Task14_di" bpmnElement="W1233_Task14"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Start6_di" bpmnElement="W1233_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_End15_di" bpmnElement="W1233_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1233_Annotation16_di" bpmnElement="W1233_Annotation16"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1233_Flow18_di" bpmnElement="W1233_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow19_di" bpmnElement="W1233_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow20_di" bpmnElement="W1233_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow21_di" bpmnElement="W1233_Flow21"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow22_di" bpmnElement="W1233_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow23_di" bpmnElement="W1233_Flow23"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow24_di" bpmnElement="W1233_Flow24"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow25_di" bpmnElement="W1233_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Flow26_di" bpmnElement="W1233_Flow26"><di:waypoint x="2050" y="675" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1233_Assoc17_di" bpmnElement="W1233_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1264" name="W1264. Import Container Consolidation, Multi-Vendor FCL Assembly &amp; Space Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: Scheduled — weekly container consolidation cycle; triggered when multiple LCL (less-than-container-load) import POs from the same origin region can be consolidated into FCL (full container load)
+Frequency: Weekly consolidation planning; ~400–600 TEUs/month across all import origins
+Volume: ~20–30 container bookings per week; ~60% currently FCL, ~40% LCL — target: reduce LCL to 20% through consolidation
+Owner: Import Coordinator
+Participants: Buyer, Freight Forwarder, Customs Broker, DC Operations Manager, Finance Controller
+Source: workflow W1264 — Import Container Consolidation, Multi-Vendor FCL Assembly &amp; Space Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W1264_LaneSet3">
+        <bpmn:lane id="W1264_Lane1" name="Import Coordinator">
+        <bpmn:flowNodeRef>W1264_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1264_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1264_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1264_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1264_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1264_Lane2" name="Finance Analyst">
+        <bpmn:flowNodeRef>W1264_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1264_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1264_Start4" name="Scheduled — weekly container consolidation cycle; triggered when multiple LCL…">
+        <bpmn:outgoing>W1264_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1264_Task5" name="Weekly consolidation planning">
+        <bpmn:documentation>Step 1: Weekly consolidation planning: Import Coordinator reviews all open import POs: (a) group POs by origin port/region (South China, East China, Taiwan, Southeast Asia, Europe); (b) for each region, calculate total CBM and weight of all open POs; (c) identify consolidation opportunities: (i) if total CBM for a region ≥ 28 CBM (FCL 20ft) or ≥ 58 CBM (FCL 40ft), consolidate into FCL; (ii) if near FCL threshold, check with Buyer for additional POs that could be pulled forward to fill the container; (iii) if below threshold, evaluate holding POs for 1 week to accumulate more volume vs. shipping LCL to meet DC delivery schedule
+Responsible (R): Import Coordinator
+Accountable (A): Procurement Manager
+Duration: 4 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1264_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1264_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1264_Task6" name="Multi-vendor FCL assembly">
+        <bpmn:documentation>Step 2: Multi-vendor FCL assembly: For consolidated FCL shipments: (a) coordinate with freight forwarder to arrange vendor factory delivery to consolidation warehouse at origin; (b) communicate required delivery date to each vendor — all PO goods must arrive at consolidation warehouse by cut-off date; (c) freight forwarder receives goods from multiple vendors, inspects quantity and packaging, and loads into single container; (d) system generates consolidated packing list with per-vendor breakdown and per-PO breakdown; (e) verify container loading plan: heavy items at bottom, fragile items protected, maximum CBM utilization
+Responsible (R): Import Coordinator / Freight Forwarder
+Accountable (A): Procurement Manager
+Duration: 3 hours per consolidation</bpmn:documentation>
+        <bpmn:incoming>W1264_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1264_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1264_Task7" name="Rate negotiation &amp; booking">
+        <bpmn:documentation>Step 3: Rate negotiation &amp; booking: Import Coordinator negotiates FCL freight rate and books vessel space: (a) obtain FCL rates from 2–3 freight forwarders for the route; (b) compare FCL consolidated rate vs. sum of individual LCL rates — confirm consolidation savings; (c) book earliest available vessel with transit time meeting DC delivery schedule; (d) confirm container type: standard 20ft/40ft, high-cube (for voluminous but light items like insulation), or open-top (for oversized items); (e) issue booking confirmation to all vendors in the consolidation
+Responsible (R): Import Coordinator
+Accountable (A): Finance Controller
+Duration: 2 hours per booking</bpmn:documentation>
+        <bpmn:incoming>W1264_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1264_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1264_Task8" name="Consolidation cost allocation">
+        <bpmn:documentation>Step 4: Consolidation cost allocation: Finance team allocates consolidated freight cost to individual POs: (a) total freight cost = FCL rate + origin consolidation warehouse fee + documentation fee; (b) allocate to each PO proportionally by: (i) CBM (volumetric allocation), or (ii) weight (weight allocation), whichever produces the charge; (c) add allocated freight cost to each PO&#x27;s landed cost calculation per W2B.12; (d) system updates PO landed cost estimate for accurate margin calculation
+Responsible (R): Finance Analyst
+Accountable (A): Finance Controller
+Duration: 2 hours per consolidation</bpmn:documentation>
+        <bpmn:incoming>W1264_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1264_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1264_Task9" name="Monthly consolidation performance review">
+        <bpmn:documentation>Step 5: Monthly consolidation performance review: Import Coordinator reviews monthly consolidation metrics: (a) container utilization rate — average CBM per container vs. capacity; (b) FCL vs. LCL ratio — trend towards higher FCL percentage; (c) freight cost per CBM — compare consolidated vs. non-consolidated; (d) transit time comparison — consolidated FCL vs. LCL; (e) consolidation savings — total PHP saved per month from FCL consolidation vs. LCL alternative; (f) present results to Procurement Manager and Finance Controller
+Responsible (R): Import Coordinator
+Accountable (A): Procurement Manager
+Duration: 4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1264_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1264_End10" name="Complete">
+        <bpmn:incoming>W1264_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1264_Annotation11">
+        <bpmn:text>Controls: - CTL-244 (ensure controlled execution — Import &amp; Customs Operations (PA-02.2).) | - operational: Import Coordinator review and approval gate
+Owner: Import Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1264_Assoc12" sourceRef="W1264_Annotation11" targetRef="W1264_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1264_Flow13" sourceRef="W1264_Start4" targetRef="W1264_Task5" />
+      <bpmn:sequenceFlow id="W1264_Flow14" sourceRef="W1264_Task5" targetRef="W1264_Task6" />
+      <bpmn:sequenceFlow id="W1264_Flow15" sourceRef="W1264_Task6" targetRef="W1264_Task7" />
+      <bpmn:sequenceFlow id="W1264_Flow16" sourceRef="W1264_Task7" targetRef="W1264_Task8" />
+      <bpmn:sequenceFlow id="W1264_Flow17" sourceRef="W1264_Task8" targetRef="W1264_Task9" />
+      <bpmn:sequenceFlow id="W1264_Flow18" sourceRef="W1264_Task9" targetRef="W1264_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1264_diag">
+      <bpmndi:BPMNPlane id="W1264_plane" bpmnElement="W_W1264">
+        <bpmndi:BPMNShape id="W1264_Lane1_di" bpmnElement="W1264_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Lane2_di" bpmnElement="W1264_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Task5_di" bpmnElement="W1264_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Task6_di" bpmnElement="W1264_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Task7_di" bpmnElement="W1264_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Task8_di" bpmnElement="W1264_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Task9_di" bpmnElement="W1264_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Start4_di" bpmnElement="W1264_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_End10_di" bpmnElement="W1264_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1264_Annotation11_di" bpmnElement="W1264_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1264_Flow13_di" bpmnElement="W1264_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1264_Flow14_di" bpmnElement="W1264_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1264_Flow15_di" bpmnElement="W1264_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1264_Flow16_di" bpmnElement="W1264_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1264_Flow17_di" bpmnElement="W1264_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1264_Flow18_di" bpmnElement="W1264_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1264_Assoc12_di" bpmnElement="W1264_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

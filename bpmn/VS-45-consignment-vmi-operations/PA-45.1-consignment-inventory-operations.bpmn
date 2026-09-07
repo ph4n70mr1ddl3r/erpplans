@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-45.1-consignment-inventory-operations" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1926" name="W1926. Consignment Goods Receipt &amp; Non-Valuated Inventory Posting" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor delivers consignment goods to DC or store
+Frequency: ~200–300 consignment receipts/month
+Volume: ~1,500–2,000 consignment SKUs (major appliances, select tiles)
+Owner: Receiving Clerk
+Participants: Receiving Clerk, Department Supervisor, AP Clerk, Vendor
+Source: workflow W1926 — Consignment Goods Receipt &amp; Non-Valuated Inventory Posting</bpmn:documentation>
+      <bpmn:laneSet id="W1926_LaneSet4">
+        <bpmn:lane id="W1926_Lane1" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1926_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1926_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1926_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1926_Lane2" name="System">
+        <bpmn:flowNodeRef>W1926_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1926_Lane3" name="Department Supervisor">
+        <bpmn:flowNodeRef>W1926_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1926_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1926_Start5" name="Vendor delivers consignment goods to DC or store">
+        <bpmn:outgoing>W1926_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1926_Task6" name="Receiving Clerk receives consignment delivery: (a) verify delivery against…">
+        <bpmn:documentation>Step 1: Receiving Clerk receives consignment delivery: (a) verify delivery against consignment shipment advice (CSA) from vendor, (b) check item condition — consignment goods often high-value (appliances: PHP 5K–80K per unit; tiles: PHP 200–2,000 per box), (c) scan barcode or manually enter SKU, (d) system posts to non-valuated consignment stock (no WAC impact, no GR/IR, no AP liability until sale)
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 15–30 min/delivery</bpmn:documentation>
+        <bpmn:incoming>W1926_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1926_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1926_Task7" name="System records: (a) consignment stock quantity by vendor by SKU by location…">
+        <bpmn:documentation>Step 2: System records: (a) consignment stock quantity by vendor by SKU by location, (b) vendor ownership indicator on inventory record, (c) consignment agreement reference (pricing, settlement terms), (d) no financial posting (no inventory value, no AP) — vendor retains ownership
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1926_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1926_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1926_Task8" name="Receiving Clerk stages consignment goods in designated area: (a) major…">
+        <bpmn:documentation>Step 3: Receiving Clerk stages consignment goods in designated area: (a) major appliances: appliance section display or backroom staging, (b) tiles: tile gallery display area, (c) attach consignment tag (vendor-owned indicator visible to staff but not customers)
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 15–30 min/delivery</bpmn:documentation>
+        <bpmn:incoming>W1926_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1926_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1926_Task9" name="Department Supervisor verifies receipt accuracy: (a) spot-check quantities…">
+        <bpmn:documentation>Step 4: Department Supervisor verifies receipt accuracy: (a) spot-check quantities against CSA, (b) verify item condition (no damage during transit), (c) confirm non-valuated posting in system
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 5–10 min</bpmn:documentation>
+        <bpmn:incoming>W1926_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1926_End10" name="Complete">
+        <bpmn:incoming>W1926_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1926_Annotation11">
+        <bpmn:text>Controls: - CTL-174 (ensure consignment &amp; VMI settlement integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Receiving Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1926_Assoc12" sourceRef="W1926_Annotation11" targetRef="W1926_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1926_Flow13" sourceRef="W1926_Start5" targetRef="W1926_Task6" />
+      <bpmn:sequenceFlow id="W1926_Flow14" sourceRef="W1926_Task6" targetRef="W1926_Task7" />
+      <bpmn:sequenceFlow id="W1926_Flow15" sourceRef="W1926_Task7" targetRef="W1926_Task8" />
+      <bpmn:sequenceFlow id="W1926_Flow16" sourceRef="W1926_Task8" targetRef="W1926_Task9" />
+      <bpmn:sequenceFlow id="W1926_Flow17" sourceRef="W1926_Task9" targetRef="W1926_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1926_diag">
+      <bpmndi:BPMNPlane id="W1926_plane" bpmnElement="W_W1926">
+        <bpmndi:BPMNShape id="W1926_Lane1_di" bpmnElement="W1926_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Lane2_di" bpmnElement="W1926_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Lane3_di" bpmnElement="W1926_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Task6_di" bpmnElement="W1926_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Task7_di" bpmnElement="W1926_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Task8_di" bpmnElement="W1926_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Task9_di" bpmnElement="W1926_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Start5_di" bpmnElement="W1926_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_End10_di" bpmnElement="W1926_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1926_Annotation11_di" bpmnElement="W1926_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1926_Flow13_di" bpmnElement="W1926_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1926_Flow14_di" bpmnElement="W1926_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1926_Flow15_di" bpmnElement="W1926_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1926_Flow16_di" bpmnElement="W1926_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1926_Flow17_di" bpmnElement="W1926_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1926_Assoc12_di" bpmnElement="W1926_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1927" name="W1927. Consignment Stock Display &amp; Shelf Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Ongoing store operations; weekly display review
+Frequency: Weekly per store
+Volume: ~8–15 consignment SKUs on display per store (major appliances + select tiles)
+Owner: Department Supervisor
+Participants: Department Supervisor, Sales Associate, Visual Merchandiser
+Source: workflow W1927 — Consignment Stock Display &amp; Shelf Management</bpmn:documentation>
+      <bpmn:laneSet id="W1927_LaneSet3">
+        <bpmn:lane id="W1927_Lane1" name="Department Supervisor">
+        <bpmn:flowNodeRef>W1927_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1927_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1927_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1927_Lane2" name="Sales Associate">
+        <bpmn:flowNodeRef>W1927_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1927_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1927_Start4" name="Ongoing store operations; weekly display review">
+        <bpmn:outgoing>W1927_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1927_Task5" name="Department Supervisor ensures consignment items are displayed per vendor…">
+        <bpmn:documentation>Step 1: Department Supervisor ensures consignment items are displayed per vendor planogram: (a) appliance section: display units powered on where applicable (fans, aircons), price tags with SRP, (b) tile gallery: sample boards with pricing, specification cards, (c) consignment items displayed alongside owned inventory without differentiation visible to customer
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1927_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1927_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1927_Task6" name="Sales Associate trained on consignment product knowledge: (a) know which items…">
+        <bpmn:documentation>Step 2: Sales Associate trained on consignment product knowledge: (a) know which items are consignment (internal knowledge only), (b) selling approach identical to owned inventory (no disclosure of consignment arrangement to customer), (c) warranty and return policies per BuildRight standard (BuildRight is point of contact, not vendor)
+Responsible (R): Sales Associate
+Accountable (A): Department Supervisor
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W1927_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1927_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1927_Task7" name="Weekly: Department Supervisor reviews display condition: (a) display units…">
+        <bpmn:documentation>Step 3: Weekly: Department Supervisor reviews display condition: (a) display units clean and functional, (b) price tags accurate and current, (c) demo/display units tracked separately per W97 (sample/demo inventory), (d) missing or damaged display items reported for vendor replacement
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W1927_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1927_End8" name="Complete">
+        <bpmn:incoming>W1927_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1927_Annotation9">
+        <bpmn:text>Controls: - CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).) | - operational: Department Supervisor review and approval gate
+Owner: Department Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1927_Assoc10" sourceRef="W1927_Annotation9" targetRef="W1927_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1927_Flow11" sourceRef="W1927_Start4" targetRef="W1927_Task5" />
+      <bpmn:sequenceFlow id="W1927_Flow12" sourceRef="W1927_Task5" targetRef="W1927_Task6" />
+      <bpmn:sequenceFlow id="W1927_Flow13" sourceRef="W1927_Task6" targetRef="W1927_Task7" />
+      <bpmn:sequenceFlow id="W1927_Flow14" sourceRef="W1927_Task7" targetRef="W1927_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1927_diag">
+      <bpmndi:BPMNPlane id="W1927_plane" bpmnElement="W_W1927">
+        <bpmndi:BPMNShape id="W1927_Lane1_di" bpmnElement="W1927_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1927_Lane2_di" bpmnElement="W1927_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1927_Task5_di" bpmnElement="W1927_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1927_Task6_di" bpmnElement="W1927_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1927_Task7_di" bpmnElement="W1927_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1927_Start4_di" bpmnElement="W1927_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1927_End8_di" bpmnElement="W1927_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1927_Annotation9_di" bpmnElement="W1927_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1927_Flow11_di" bpmnElement="W1927_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1927_Flow12_di" bpmnElement="W1927_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1927_Flow13_di" bpmnElement="W1927_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1927_Flow14_di" bpmnElement="W1927_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1927_Assoc10_di" bpmnElement="W1927_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1928" name="W1928. Consignment Sell-Through at POS &amp; Ownership Transfer" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer purchases consignment item at POS
+Frequency: ~8,000–12,000 consignment sales/month chain-wide
+Volume: ~5–6% of active SKUs are consignment; represents ~3–4% of revenue
+Owner: Cashier
+Participants: Cashier, Store Manager, System
+Source: workflow W1928 — Consignment Sell-Through at POS &amp; Ownership Transfer</bpmn:documentation>
+      <bpmn:laneSet id="W1928_LaneSet3">
+        <bpmn:lane id="W1928_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W1928_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1928_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1928_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1928_Lane2" name="System">
+        <bpmn:flowNodeRef>W1928_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1928_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1928_Start4" name="Customer purchases consignment item at POS">
+        <bpmn:outgoing>W1928_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1928_Task5" name="Cashier scans consignment item at POS: (a) system identifies item as…">
+        <bpmn:documentation>Step 1: Cashier scans consignment item at POS: (a) system identifies item as consignment via item master flag, (b) standard selling price applied (customer sees no difference), (c) standard POS receipt generated (no consignment indicator on customer receipt), (d) standard tender processing (cash, card, e-wallet, trade account)
+Responsible (R): Cashier
+Accountable (A): Store Manager
+Duration: &lt; 3 sec/scan</bpmn:documentation>
+        <bpmn:incoming>W1928_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1928_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1928_Task6" name="System executes ownership transfer at transaction completion: (a) consignment…">
+        <bpmn:documentation>Step 2: System executes ownership transfer at transaction completion: (a) consignment stock reduced by 1 unit (vendor-owned → sold), (b) COGS posted at consignment cost (vendor settlement price, not BuildRight cost), (c) revenue posted at selling price, (d) gross margin = selling price − consignment cost (typically 15–25% for appliances, 20–30% for tiles), (e) sell-through record created: transaction ID, vendor, SKU, qty, consignment cost, selling price, timestamp
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1928_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1928_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1928_Task7" name="For major appliances: (a) if customer needs delivery, create delivery order per…">
+        <bpmn:documentation>Step 3: For major appliances: (a) if customer needs delivery, create delivery order per W5D, (b) if display unit sold, trigger replacement order from vendor consignment stock or vendor direct shipment, (c) appliance serial number captured at POS for warranty registration per W33
+Responsible (R): Cashier / System
+Accountable (A): Store Manager
+Duration: 3–5 min</bpmn:documentation>
+        <bpmn:incoming>W1928_Flow13</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1928_End8" name="Complete">
+        <bpmn:incoming>W1928_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1928_Annotation9">
+        <bpmn:text>Controls: - CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).) | - operational: should use same barcode scan path as standard items
+Owner: Cashier</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1928_Assoc10" sourceRef="W1928_Annotation9" targetRef="W1928_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1928_Flow11" sourceRef="W1928_Start4" targetRef="W1928_Task5" />
+      <bpmn:sequenceFlow id="W1928_Flow12" sourceRef="W1928_Task5" targetRef="W1928_Task6" />
+      <bpmn:sequenceFlow id="W1928_Flow13" sourceRef="W1928_Task6" targetRef="W1928_Task7" />
+      <bpmn:sequenceFlow id="W1928_Flow14" sourceRef="W1928_Task7" targetRef="W1928_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1928_diag">
+      <bpmndi:BPMNPlane id="W1928_plane" bpmnElement="W_W1928">
+        <bpmndi:BPMNShape id="W1928_Lane1_di" bpmnElement="W1928_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1928_Lane2_di" bpmnElement="W1928_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1928_Task5_di" bpmnElement="W1928_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1928_Task6_di" bpmnElement="W1928_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1928_Task7_di" bpmnElement="W1928_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1928_Start4_di" bpmnElement="W1928_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1928_End8_di" bpmnElement="W1928_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1928_Annotation9_di" bpmnElement="W1928_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1928_Flow11_di" bpmnElement="W1928_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1928_Flow12_di" bpmnElement="W1928_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1928_Flow13_di" bpmnElement="W1928_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1928_Flow14_di" bpmnElement="W1928_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1928_Assoc10_di" bpmnElement="W1928_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1929" name="W1929. Consignment Stock Rotation &amp; Aging Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly consignment aging review
+Frequency: Monthly
+Volume: ~1,500–2,000 consignment SKUs monitored
+Owner: Category Manager
+Participants: Category Manager, Department Supervisor, Vendor
+Source: workflow W1929 — Consignment Stock Rotation &amp; Aging Management</bpmn:documentation>
+      <bpmn:laneSet id="W1929_LaneSet3">
+        <bpmn:lane id="W1929_Lane1" name="System">
+        <bpmn:flowNodeRef>W1929_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1929_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1929_Lane2" name="Category Manager">
+        <bpmn:flowNodeRef>W1929_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1929_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1929_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1929_Start4" name="Monthly consignment aging review">
+        <bpmn:outgoing>W1929_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1929_Task5" name="System generates monthly consignment aging report: (a) days-on-hand by SKU by…">
+        <bpmn:documentation>Step 1: System generates monthly consignment aging report: (a) days-on-hand by SKU by location, (b) sell-through rate: units sold / units available per month, (c) aging categories: &lt; 30 days (fast), 30–60 days (moderate), 60–90 days (slow), &gt; 90 days (dead stock), (d) compare consignment sell-through vs. owned inventory sell-through for same categories
+Responsible (R): System
+Accountable (A): Category Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1929_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1929_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1929_Task6" name="Category Manager reviews aging consignment stock: (a) identify slow-moving…">
+        <bpmn:documentation>Step 2: Category Manager reviews aging consignment stock: (a) identify slow-moving consignment SKUs (&gt; 60 days, &lt; 1 unit/month sell-through), (b) contact vendor to discuss: (i) price reduction to stimulate sales, (ii) markdown support from vendor, (iii) stock rotation: return slow movers to vendor, replace with faster-selling models, (c) evaluate whether consignment arrangement is worthwhile for low-sell-through items
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 2–4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1929_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1929_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1929_Task7" name="For consignment stock &gt; 90 days with no sales: (a) initiate return-to-vendor…">
+        <bpmn:documentation>Step 3: For consignment stock &gt; 90 days with no sales: (a) initiate return-to-vendor per W1931, or (b) negotiate markdown with vendor cost-sharing, or (c) convert to owned stock at discounted price if vendor offers deep discount
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W1929_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1929_End8" name="Complete">
+        <bpmn:incoming>W1929_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1929_Annotation9">
+        <bpmn:text>Controls: - CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1929_Assoc10" sourceRef="W1929_Annotation9" targetRef="W1929_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1929_Flow11" sourceRef="W1929_Start4" targetRef="W1929_Task5" />
+      <bpmn:sequenceFlow id="W1929_Flow12" sourceRef="W1929_Task5" targetRef="W1929_Task6" />
+      <bpmn:sequenceFlow id="W1929_Flow13" sourceRef="W1929_Task6" targetRef="W1929_Task7" />
+      <bpmn:sequenceFlow id="W1929_Flow14" sourceRef="W1929_Task7" targetRef="W1929_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1929_diag">
+      <bpmndi:BPMNPlane id="W1929_plane" bpmnElement="W_W1929">
+        <bpmndi:BPMNShape id="W1929_Lane1_di" bpmnElement="W1929_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1929_Lane2_di" bpmnElement="W1929_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1929_Task5_di" bpmnElement="W1929_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1929_Task6_di" bpmnElement="W1929_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1929_Task7_di" bpmnElement="W1929_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1929_Start4_di" bpmnElement="W1929_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1929_End8_di" bpmnElement="W1929_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1929_Annotation9_di" bpmnElement="W1929_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1929_Flow11_di" bpmnElement="W1929_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1929_Flow12_di" bpmnElement="W1929_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1929_Flow13_di" bpmnElement="W1929_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1929_Flow14_di" bpmnElement="W1929_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1929_Assoc10_di" bpmnElement="W1929_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1930" name="W1930. Consignment Physical Inventory &amp; Vendor Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly consignment reconciliation; annual physical inventory
+Frequency: Monthly reconciliation; annual wall-to-wall count
+Volume: ~1,500–2,000 consignment SKUs × 200 stores
+Owner: AP Manager
+Participants: AP Manager, Store Manager, Vendor, External Auditor
+Source: workflow W1930 — Consignment Physical Inventory &amp; Vendor Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1930_LaneSet4">
+        <bpmn:lane id="W1930_Lane1" name="System">
+        <bpmn:flowNodeRef>W1930_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1930_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1930_Lane2" name="AP Manager">
+        <bpmn:flowNodeRef>W1930_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1930_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1930_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1930_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1930_Start5" name="Monthly consignment reconciliation; annual physical inventory">
+        <bpmn:outgoing>W1930_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1930_Task6" name="Monthly: system generates consignment stock reconciliation report per vendor…">
+        <bpmn:documentation>Step 1: Monthly: system generates consignment stock reconciliation report per vendor: (a) opening balance (units), (b) additions (receipts), (c) reductions (sales), (d) returns to vendor, (e) adjustments (damages, shrinkage), (f) closing balance (units), (g) compare system closing balance to vendor&#x27;s recorded balance
+Responsible (R): System
+Accountable (A): AP Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1930_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1930_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1930_Task7" name="AP Manager investigates discrepancies: (a) system shows more than vendor…">
+        <bpmn:documentation>Step 2: AP Manager investigates discrepancies: (a) system shows more than vendor: possible unrecorded receipt or vendor counting error, (b) system shows less than vendor: possible unrecorded sale, theft, damage not reported, (c) resolve discrepancies within 5 business days, (d) adjust consignment stock in system with documented reason
+Responsible (R): AP Manager
+Accountable (A): Accounting Manager
+Duration: 1–2 days/month</bpmn:documentation>
+        <bpmn:incoming>W1930_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1930_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1930_Task8" name="Annual physical inventory: (a) consignment stock counted alongside owned…">
+        <bpmn:documentation>Step 3: Annual physical inventory: (a) consignment stock counted alongside owned inventory during wall-to-wall count per W42, (b) consignment stock tagged separately in count sheets, (c) vendor invited to observe count of their consignment stock, (d) count results shared with vendor within 10 business days, (e) discrepancies resolved per consignment agreement terms
+Responsible (R): Store Manager / AP Manager
+Accountable (A): Accounting Manager
+Duration: Per annual count</bpmn:documentation>
+        <bpmn:incoming>W1930_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1930_End9" name="Complete">
+        <bpmn:incoming>W1930_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1930_Annotation10">
+        <bpmn:text>Controls: - CTL-174 (ensure consignment &amp; VMI settlement integrity.) | - operational: periodic reconciliation against source documents
+Owner: AP Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1930_Assoc11" sourceRef="W1930_Annotation10" targetRef="W1930_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1930_Flow12" sourceRef="W1930_Start5" targetRef="W1930_Task6" />
+      <bpmn:sequenceFlow id="W1930_Flow13" sourceRef="W1930_Task6" targetRef="W1930_Task7" />
+      <bpmn:sequenceFlow id="W1930_Flow14" sourceRef="W1930_Task7" targetRef="W1930_Task8" />
+      <bpmn:sequenceFlow id="W1930_Flow15" sourceRef="W1930_Task8" targetRef="W1930_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1930_diag">
+      <bpmndi:BPMNPlane id="W1930_plane" bpmnElement="W_W1930">
+        <bpmndi:BPMNShape id="W1930_Lane1_di" bpmnElement="W1930_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_Lane2_di" bpmnElement="W1930_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_Lane3_di" bpmnElement="W1930_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_Task6_di" bpmnElement="W1930_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_Task7_di" bpmnElement="W1930_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_Task8_di" bpmnElement="W1930_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_Start5_di" bpmnElement="W1930_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_End9_di" bpmnElement="W1930_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1930_Annotation10_di" bpmnElement="W1930_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1930_Flow12_di" bpmnElement="W1930_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1930_Flow13_di" bpmnElement="W1930_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1930_Flow14_di" bpmnElement="W1930_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1930_Flow15_di" bpmnElement="W1930_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1930_Assoc11_di" bpmnElement="W1930_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1931" name="W1931. Consignment Return-to-Vendor Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Slow-moving consignment stock; vendor request; consignment agreement termination
+Frequency: ~50–100 consignment returns/year
+Volume: ~200–500 units/year
+Owner: Category Manager
+Participants: Category Manager, Receiving Clerk, AP Clerk, Vendor
+Source: workflow W1931 — Consignment Return-to-Vendor Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1931_LaneSet4">
+        <bpmn:lane id="W1931_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1931_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1931_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1931_Lane2" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1931_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1931_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1931_Lane3" name="System">
+        <bpmn:flowNodeRef>W1931_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1931_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1931_Start5" name="Slow-moving consignment stock; vendor request; consignment agreement termination">
+        <bpmn:outgoing>W1931_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1931_Task6" name="Category Manager initiates consignment return: (a) reason: slow-moving (&gt; 90…">
+        <bpmn:documentation>Step 1: Category Manager initiates consignment return: (a) reason: slow-moving (&gt; 90 days, no sales), model discontinued, vendor request, agreement termination, (b) create return request with SKU, qty, condition, reason, (c) notify vendor for pickup scheduling
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 15–30 min/return</bpmn:documentation>
+        <bpmn:incoming>W1931_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1931_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1931_Task7" name="Receiving Clerk processes consignment return: (a) verify item condition…">
+        <bpmn:documentation>Step 2: Receiving Clerk processes consignment return: (a) verify item condition (undamaged, complete with accessories, original packaging preferred), (b) scan items for system return posting, (c) system reduces consignment stock (no financial impact — vendor-owned), (d) stage items for vendor pickup
+Responsible (R): Receiving Clerk
+Accountable (A): Department Supervisor
+Duration: 10–20 min/return</bpmn:documentation>
+        <bpmn:incoming>W1931_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1931_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1931_Task8" name="Vendor picks up returned consignment goods: (a) vendor representative signs…">
+        <bpmn:documentation>Step 3: Vendor picks up returned consignment goods: (a) vendor representative signs return acknowledgment, (b) Receiving Clerk records pickup with vendor signature, (c) system records return completion with timestamp
+Responsible (R): Receiving Clerk / Vendor
+Accountable (A): Department Supervisor
+Duration: 15–30 min/pickup</bpmn:documentation>
+        <bpmn:incoming>W1931_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1931_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1931_Task9" name="System reconciles consignment return: (a) vendor consignment balance reduced…">
+        <bpmn:documentation>Step 4: System reconciles consignment return: (a) vendor consignment balance reduced, (b) no AP/AR impact (goods were vendor-owned), (c) return logged in vendor scorecard for performance tracking
+Responsible (R): System
+Accountable (A): AP Clerk
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1931_Flow16</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1931_End10" name="Complete">
+        <bpmn:incoming>W1931_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1931_Annotation11">
+        <bpmn:text>Controls: - CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).) | - operational: periodic reconciliation against source documents
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1931_Assoc12" sourceRef="W1931_Annotation11" targetRef="W1931_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1931_Flow13" sourceRef="W1931_Start5" targetRef="W1931_Task6" />
+      <bpmn:sequenceFlow id="W1931_Flow14" sourceRef="W1931_Task6" targetRef="W1931_Task7" />
+      <bpmn:sequenceFlow id="W1931_Flow15" sourceRef="W1931_Task7" targetRef="W1931_Task8" />
+      <bpmn:sequenceFlow id="W1931_Flow16" sourceRef="W1931_Task8" targetRef="W1931_Task9" />
+      <bpmn:sequenceFlow id="W1931_Flow17" sourceRef="W1931_Task9" targetRef="W1931_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1931_diag">
+      <bpmndi:BPMNPlane id="W1931_plane" bpmnElement="W_W1931">
+        <bpmndi:BPMNShape id="W1931_Lane1_di" bpmnElement="W1931_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Lane2_di" bpmnElement="W1931_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Lane3_di" bpmnElement="W1931_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Task6_di" bpmnElement="W1931_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Task7_di" bpmnElement="W1931_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Task8_di" bpmnElement="W1931_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Task9_di" bpmnElement="W1931_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Start5_di" bpmnElement="W1931_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_End10_di" bpmnElement="W1931_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1931_Annotation11_di" bpmnElement="W1931_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1931_Flow13_di" bpmnElement="W1931_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1931_Flow14_di" bpmnElement="W1931_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1931_Flow15_di" bpmnElement="W1931_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1931_Flow16_di" bpmnElement="W1931_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1931_Flow17_di" bpmnElement="W1931_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1931_Assoc12_di" bpmnElement="W1931_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1932" name="W1932. Consignment Price Change &amp; Promotional Price Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor price change; BuildRight promotional event
+Frequency: ~20–30 consignment price changes/month
+Volume: ~1,500–2,000 consignment SKUs
+Owner: Category Manager
+Participants: Category Manager, Pricing Analyst, VP Merchandising, Vendor
+Source: workflow W1932 — Consignment Price Change &amp; Promotional Price Handling</bpmn:documentation>
+      <bpmn:laneSet id="W1932_LaneSet2">
+        <bpmn:lane id="W1932_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1932_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1932_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1932_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1932_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1932_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1932_Start3" name="Vendor price change; BuildRight promotional event">
+        <bpmn:outgoing>W1932_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1932_Task4" name="Vendor-initiated price change: (a) vendor notifies Category Manager of…">
+        <bpmn:documentation>Step 1: Vendor-initiated price change: (a) vendor notifies Category Manager of consignment cost change (up or down), (b) Category Manager evaluates impact: (i) if cost increase: can BuildRight maintain current SRP and margin?, (ii) if cost decrease: should SRP be reduced or maintain to capture additional margin?, (c) update consignment cost in system (impacts COGS at next sale), (d) if SRP changes: initiate price change per W40
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 30 min/change</bpmn:documentation>
+        <bpmn:incoming>W1932_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W1932_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1932_Task5" name="BuildRight promotional event on consignment items: (a) Category Manager…">
+        <bpmn:documentation>Step 2: BuildRight promotional event on consignment items: (a) Category Manager negotiates promotional consignment cost with vendor (vendor funds a portion of the discount), (b) system applies promotional SRP at POS (standard promo mechanics per W13), (c) system calculates: (i) promotional revenue, (ii) promotional consignment cost, (iii) margin during promo period, (iv) vendor contribution to discount
+Responsible (R): Category Manager / Pricing Analyst
+Accountable (A): VP Merchandising
+Duration: Per promo event</bpmn:documentation>
+        <bpmn:incoming>W1932_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1932_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1932_Task6" name="Post-promotion: (a) system reverts to standard consignment cost and SRP, (b)…">
+        <bpmn:documentation>Step 3: Post-promotion: (a) system reverts to standard consignment cost and SRP, (b) Category Manager reviews promo performance: sell-through lift, vendor contribution, net margin
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 1 day/post-promo</bpmn:documentation>
+        <bpmn:incoming>W1932_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1932_End7" name="Complete">
+        <bpmn:incoming>W1932_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1932_Annotation8">
+        <bpmn:text>Controls: - CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1932_Assoc9" sourceRef="W1932_Annotation8" targetRef="W1932_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1932_Flow10" sourceRef="W1932_Start3" targetRef="W1932_Task4" />
+      <bpmn:sequenceFlow id="W1932_Flow11" sourceRef="W1932_Task4" targetRef="W1932_Task5" />
+      <bpmn:sequenceFlow id="W1932_Flow12" sourceRef="W1932_Task5" targetRef="W1932_Task6" />
+      <bpmn:sequenceFlow id="W1932_Flow13" sourceRef="W1932_Task6" targetRef="W1932_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1932_diag">
+      <bpmndi:BPMNPlane id="W1932_plane" bpmnElement="W_W1932">
+        <bpmndi:BPMNShape id="W1932_Lane1_di" bpmnElement="W1932_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1932_Task4_di" bpmnElement="W1932_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1932_Task5_di" bpmnElement="W1932_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1932_Task6_di" bpmnElement="W1932_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1932_Start3_di" bpmnElement="W1932_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1932_End7_di" bpmnElement="W1932_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1932_Annotation8_di" bpmnElement="W1932_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1932_Flow10_di" bpmnElement="W1932_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1932_Flow11_di" bpmnElement="W1932_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1932_Flow12_di" bpmnElement="W1932_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1932_Flow13_di" bpmnElement="W1932_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1932_Assoc9_di" bpmnElement="W1932_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1933" name="W1933. Consignment Stock Transfer Between Locations" isExecutable="false">
+      <bpmn:documentation>Trigger: Store requests consignment stock from another store or DC; vendor approves transfer
+Frequency: ~20–30 consignment transfers/month
+Volume: ~50–100 units/month
+Owner: Category Manager
+Participants: Category Manager, Store Manager (sending), Store Manager (receiving), Vendor
+Source: workflow W1933 — Consignment Stock Transfer Between Locations</bpmn:documentation>
+      <bpmn:laneSet id="W1933_LaneSet4">
+        <bpmn:lane id="W1933_Lane1" name="Category Manager">
+        <bpmn:flowNodeRef>W1933_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1933_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1933_Lane2" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1933_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1933_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1933_Lane3" name="System">
+        <bpmn:flowNodeRef>W1933_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1933_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1933_Start5" name="Store requests consignment stock from another store or DC; vendor approves transfer">
+        <bpmn:outgoing>W1933_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1933_Task6" name="Category Manager approves consignment transfer: (a) receiving store has…">
+        <bpmn:documentation>Step 1: Category Manager approves consignment transfer: (a) receiving store has customer waiting or strong demand, (b) sending store has excess consignment stock (slow-moving), (c) vendor notified of transfer (consignment agreement may require vendor approval for location changes), (d) transfer order created in system with consignment indicator
+Responsible (R): Category Manager
+Accountable (A): VP Merchandising
+Duration: 15–30 min/transfer</bpmn:documentation>
+        <bpmn:incoming>W1933_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1933_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1933_Task7" name="Sending store ships consignment goods: (a) Receiving Clerk packs and ships per…">
+        <bpmn:documentation>Step 2: Sending store ships consignment goods: (a) Receiving Clerk packs and ships per standard transfer process, (b) system posts consignment stock-out at sending location (no financial posting — vendor-owned), (c) goods in-transit tracked as consignment in-transit
+Responsible (R): Receiving Clerk (sending)
+Accountable (A): Store Manager (sending)
+Duration: Per standard transfer</bpmn:documentation>
+        <bpmn:incoming>W1933_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1933_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1933_Task8" name="Receiving store receives consignment transfer: (a) verify quantity and…">
+        <bpmn:documentation>Step 3: Receiving store receives consignment transfer: (a) verify quantity and condition, (b) system posts consignment stock-in at receiving location, (c) vendor consignment balance updated: vendor total unchanged, location allocation changed
+Responsible (R): Receiving Clerk (receiving)
+Accountable (A): Store Manager (receiving)
+Duration: Per standard receipt</bpmn:documentation>
+        <bpmn:incoming>W1933_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1933_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1933_Task9" name="Vendor notification: system sends automatic transfer notification to vendor…">
+        <bpmn:documentation>Step 4: Vendor notification: system sends automatic transfer notification to vendor with new location details for their records
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1933_Flow16</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1933_End10" name="Complete">
+        <bpmn:incoming>W1933_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1933_Annotation11">
+        <bpmn:text>Controls: - CTL-376 (ensure controlled execution — Consignment Inventory Operations (PA-45.1).) | - operational: Category Manager review and approval gate
+Owner: Category Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1933_Assoc12" sourceRef="W1933_Annotation11" targetRef="W1933_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1933_Flow13" sourceRef="W1933_Start5" targetRef="W1933_Task6" />
+      <bpmn:sequenceFlow id="W1933_Flow14" sourceRef="W1933_Task6" targetRef="W1933_Task7" />
+      <bpmn:sequenceFlow id="W1933_Flow15" sourceRef="W1933_Task7" targetRef="W1933_Task8" />
+      <bpmn:sequenceFlow id="W1933_Flow16" sourceRef="W1933_Task8" targetRef="W1933_Task9" />
+      <bpmn:sequenceFlow id="W1933_Flow17" sourceRef="W1933_Task9" targetRef="W1933_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1933_diag">
+      <bpmndi:BPMNPlane id="W1933_plane" bpmnElement="W_W1933">
+        <bpmndi:BPMNShape id="W1933_Lane1_di" bpmnElement="W1933_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Lane2_di" bpmnElement="W1933_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Lane3_di" bpmnElement="W1933_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Task6_di" bpmnElement="W1933_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Task7_di" bpmnElement="W1933_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Task8_di" bpmnElement="W1933_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Task9_di" bpmnElement="W1933_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Start5_di" bpmnElement="W1933_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_End10_di" bpmnElement="W1933_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1933_Annotation11_di" bpmnElement="W1933_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1933_Flow13_di" bpmnElement="W1933_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1933_Flow14_di" bpmnElement="W1933_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1933_Flow15_di" bpmnElement="W1933_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1933_Flow16_di" bpmnElement="W1933_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1933_Flow17_di" bpmnElement="W1933_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1933_Assoc12_di" bpmnElement="W1933_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

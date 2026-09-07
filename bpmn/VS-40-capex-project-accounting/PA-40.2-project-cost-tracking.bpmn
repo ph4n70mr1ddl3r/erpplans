@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-40.2-project-cost-tracking" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1819" name="W1819. Project Cost Capture &amp; Allocation" isExecutable="false">
+      <bpmn:documentation>Trigger: Invoice received, goods received, or labor cost incurred for capex project
+Frequency: ~200–500 cost entries/month across active projects
+Volume: ~2,500–6,000 cost entries/year
+Owner: Project Accountant
+Participants: Project Accountant, Project Manager, AP, Department Head
+Source: workflow W1819 — Project Cost Capture &amp; Allocation</bpmn:documentation>
+      <bpmn:laneSet id="W1819_LaneSet3">
+        <bpmn:lane id="W1819_Lane1" name="System">
+        <bpmn:flowNodeRef>W1819_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1819_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1819_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1819_Lane2" name="Project Accountant">
+        <bpmn:flowNodeRef>W1819_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1819_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1819_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1819_Start4" name="Invoice received, goods received, or labor cost incurred for capex project">
+        <bpmn:outgoing>W1819_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1819_Task5" name="vendor invoices">
+        <bpmn:documentation>Step 1: Cost capture methods: (a) vendor invoices linked to PO: AP matches invoice to PO and GR; cost auto-allocated to project, (b) internal labor: project time tracked by timesheet; labor cost allocated from payroll to project (capitalized if directly attributable), (c) internal purchases: requisitions for project materials charged to project cost center, (d) overhead allocation: project management costs, insurance, permits allocated based on policy
+Responsible (R): System / Project Accountant
+Accountable (A): Accounting Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W1819_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1819_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1819_Task6" name="System auto-allocates costs to project based on PO reference: (a) each PO…">
+        <bpmn:documentation>Step 2: System auto-allocates costs to project based on PO reference: (a) each PO references a capex project number, (b) invoice matching against PO auto-charges cost to project CIP account, (c) costs categorized: materials, labor, equipment, services, permits, contingency, (d) running total per project updated in real-time
+Responsible (R): System
+Accountable (A): Project Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1819_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1819_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1819_Task7" name="Project Accountant reviews unallocated costs weekly: (a) invoices received…">
+        <bpmn:documentation>Step 3: Project Accountant reviews unallocated costs weekly: (a) invoices received without project reference — identify correct project and allocate, (b) costs charged to wrong project — reclassify, (c) costs charged to operating expense that should be capitalized — journal entry to reclassify to CIP
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: 2–4 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1819_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1819_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1819_Task8" name="Monthly: Project Accountant reconciles project CIP accounts to project budget…">
+        <bpmn:documentation>Step 4: Monthly: Project Accountant reconciles project CIP accounts to project budget and actual costs; unresolved items escalated to Project Manager
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: 1–2 days/month</bpmn:documentation>
+        <bpmn:incoming>W1819_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1819_End9" name="Complete">
+        <bpmn:incoming>W1819_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1819_Annotation10">
+        <bpmn:text>Controls: - CTL-362 (ensure controlled execution — Project Cost Tracking &amp; Capitalization (PA-40.2).) | - operational: Project Accountant review and approval gate; periodic reconciliation against source documents
+Owner: Project Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1819_Assoc11" sourceRef="W1819_Annotation10" targetRef="W1819_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1819_Flow12" sourceRef="W1819_Start4" targetRef="W1819_Task5" />
+      <bpmn:sequenceFlow id="W1819_Flow13" sourceRef="W1819_Task5" targetRef="W1819_Task6" />
+      <bpmn:sequenceFlow id="W1819_Flow14" sourceRef="W1819_Task6" targetRef="W1819_Task7" />
+      <bpmn:sequenceFlow id="W1819_Flow15" sourceRef="W1819_Task7" targetRef="W1819_Task8" />
+      <bpmn:sequenceFlow id="W1819_Flow16" sourceRef="W1819_Task8" targetRef="W1819_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1819_diag">
+      <bpmndi:BPMNPlane id="W1819_plane" bpmnElement="W_W1819">
+        <bpmndi:BPMNShape id="W1819_Lane1_di" bpmnElement="W1819_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_Lane2_di" bpmnElement="W1819_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_Task5_di" bpmnElement="W1819_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_Task6_di" bpmnElement="W1819_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_Task7_di" bpmnElement="W1819_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_Task8_di" bpmnElement="W1819_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_Start4_di" bpmnElement="W1819_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_End9_di" bpmnElement="W1819_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1819_Annotation10_di" bpmnElement="W1819_Annotation10"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1819_Flow12_di" bpmnElement="W1819_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1819_Flow13_di" bpmnElement="W1819_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1819_Flow14_di" bpmnElement="W1819_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1819_Flow15_di" bpmnElement="W1819_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1819_Flow16_di" bpmnElement="W1819_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1819_Assoc11_di" bpmnElement="W1819_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1820" name="W1820. Construction Progress Payment &amp; Contractor Billing" isExecutable="false">
+      <bpmn:documentation>Trigger: Contractor submits progress billing (typically monthly)
+Frequency: ~4–8 progress billings per construction project
+Volume: ~40–120 progress billings/year (10–15 new stores × 4–8 billings)
+Owner: COO
+Participants: COO, Project Engineer, Project Accountant, Contractor
+Source: workflow W1820 — Construction Progress Payment &amp; Contractor Billing</bpmn:documentation>
+      <bpmn:laneSet id="W1820_LaneSet5">
+        <bpmn:lane id="W1820_Lane1" name="Contractor">
+        <bpmn:flowNodeRef>W1820_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1820_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1820_Lane2" name="Project Engineer">
+        <bpmn:flowNodeRef>W1820_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1820_Lane3" name="COO">
+        <bpmn:flowNodeRef>W1820_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1820_Lane4" name="AP">
+        <bpmn:flowNodeRef>W1820_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1820_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1820_Start6" name="Contractor submits progress billing (typically monthly)">
+        <bpmn:outgoing>W1820_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1820_Task7" name="Contractor submits progress billing with: (a) % completion claimed, (b) work…">
+        <bpmn:documentation>Step 1: Contractor submits progress billing with: (a) % completion claimed, (b) work completed this period (description and quantities), (c) materials delivered and installed, (d) billing amount = total contract × % completion − previous billings, (e) supporting documentation: photos, delivery receipts, inspection reports
+Responsible (R): Contractor
+Accountable (A): COO
+Duration: Monthly per project</bpmn:documentation>
+        <bpmn:incoming>W1820_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1820_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1820_Task8" name="Project Engineer verifies progress claim: (a) site inspection: confirm claimed…">
+        <bpmn:documentation>Step 2: Project Engineer verifies progress claim: (a) site inspection: confirm claimed work is actually completed, (b) quantity verification: measure installed items vs. claimed quantities, (c) quality check: installed work meets specifications, (d) recommends approved billing % (may be less than contractor&#x27;s claim if work incomplete or deficient)
+Responsible (R): Project Engineer
+Accountable (A): COO
+Duration: 1–2 days/billing</bpmn:documentation>
+        <bpmn:incoming>W1820_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1820_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1820_Task9" name="COO approves progress payment: (a) approved amount = contract × approved % −…">
+        <bpmn:documentation>Step 3: COO approves progress payment: (a) approved amount = contract × approved % − previous payments − retention (typically 10% retention until project completion and final acceptance), (b) Project Accountant records: debit CIP, credit AP (contractor), (c) retention withheld: recorded as AP retention liability
+Responsible (R): COO / Project Accountant
+Accountable (A): CFO (for amounts &gt; PHP 5M)
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1820_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1820_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1820_Task10" name="AP processes payment per standard payment cycle; retention released upon: (a)…">
+        <bpmn:documentation>Step 4: AP processes payment per standard payment cycle; retention released upon: (a) project completion certificate signed, (b) punch list items resolved (typically 3–6 months post-completion), (c) CFO approves retention release
+Responsible (R): AP / COO
+Accountable (A): CFO
+Duration: Per retention schedule</bpmn:documentation>
+        <bpmn:incoming>W1820_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1820_End11" name="Complete">
+        <bpmn:incoming>W1820_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1820_Annotation12">
+        <bpmn:text>Controls: - CTL-362 (ensure controlled execution — Project Cost Tracking &amp; Capitalization (PA-40.2).) | - operational: COO review and approval gate
+Owner: COO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1820_Assoc13" sourceRef="W1820_Annotation12" targetRef="W1820_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1820_Flow14" sourceRef="W1820_Start6" targetRef="W1820_Task7" />
+      <bpmn:sequenceFlow id="W1820_Flow15" sourceRef="W1820_Task7" targetRef="W1820_Task8" />
+      <bpmn:sequenceFlow id="W1820_Flow16" sourceRef="W1820_Task8" targetRef="W1820_Task9" />
+      <bpmn:sequenceFlow id="W1820_Flow17" sourceRef="W1820_Task9" targetRef="W1820_Task10" />
+      <bpmn:sequenceFlow id="W1820_Flow18" sourceRef="W1820_Task10" targetRef="W1820_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1820_diag">
+      <bpmndi:BPMNPlane id="W1820_plane" bpmnElement="W_W1820">
+        <bpmndi:BPMNShape id="W1820_Lane1_di" bpmnElement="W1820_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Lane2_di" bpmnElement="W1820_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Lane3_di" bpmnElement="W1820_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Lane4_di" bpmnElement="W1820_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Task7_di" bpmnElement="W1820_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Task8_di" bpmnElement="W1820_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Task9_di" bpmnElement="W1820_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Task10_di" bpmnElement="W1820_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Start6_di" bpmnElement="W1820_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_End11_di" bpmnElement="W1820_End11"><dc:Bounds x="1260" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1820_Annotation12_di" bpmnElement="W1820_Annotation12"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1820_Flow14_di" bpmnElement="W1820_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1820_Flow15_di" bpmnElement="W1820_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1820_Flow16_di" bpmnElement="W1820_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1820_Flow17_di" bpmnElement="W1820_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1820_Flow18_di" bpmnElement="W1820_Flow18"><di:waypoint x="1210" y="675" /><di:waypoint x="1260" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1820_Assoc13_di" bpmnElement="W1820_Assoc13"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1821" name="W1821. Project Material &amp; Equipment Cost Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Materials or equipment received for capex project
+Frequency: ~50–100 material receipts/month across active projects
+Volume: ~600–1,200 receipts/year
+Owner: Project Accountant
+Participants: Project Accountant, Receiving Clerk, Project Manager
+Source: workflow W1821 — Project Material &amp; Equipment Cost Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W1821_LaneSet4">
+        <bpmn:lane id="W1821_Lane1" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1821_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1821_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1821_Lane2" name="Project Accountant">
+        <bpmn:flowNodeRef>W1821_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1821_Lane3" name="Project Manager">
+        <bpmn:flowNodeRef>W1821_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1821_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1821_Start5" name="Materials or equipment received for capex project">
+        <bpmn:outgoing>W1821_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1821_Task6" name="Materials and equipment received at project site or DC: (a) receiving clerk…">
+        <bpmn:documentation>Step 1: Materials and equipment received at project site or DC: (a) receiving clerk processes GR against PO, (b) PO references capex project number, (c) system auto-charges cost to project CIP, (d) materials stored at project site or DC until needed
+Responsible (R): Receiving Clerk
+Accountable (A): Project Manager
+Duration: Per receipt</bpmn:documentation>
+        <bpmn:incoming>W1821_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1821_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1821_Task7" name="Special cost tracking for new store projects: (a) POS terminals (3 per store)…">
+        <bpmn:documentation>Step 2: Special cost tracking for new store projects: (a) POS terminals (3 per store): tracked individually as future fixed assets, (b) shelving and racking: tracked as bulk material cost → allocated to component assets at turnover, (c) signage: tracked per store, (d) generator: tracked as individual asset, (e) paint, cement, electrical supplies: bulk materials tracked as construction cost → component of leasehold improvement asset
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W1821_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1821_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1821_Task8" name="Waste and surplus tracking: (a) unused materials at project completion…">
+        <bpmn:documentation>Step 3: Waste and surplus tracking: (a) unused materials at project completion: returned to vendor for credit or transferred to next project, (b) wasted materials (damage, spoilage): documented and written off to project cost, (c) surplus inventory at store opening: transferred to store operating inventory (reclass from CIP to inventory asset)
+Responsible (R): Project Manager / Project Accountant
+Accountable (A): COO
+Duration: At project completion</bpmn:documentation>
+        <bpmn:incoming>W1821_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1821_End9" name="Complete">
+        <bpmn:incoming>W1821_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1821_Annotation10">
+        <bpmn:text>Controls: - CTL-210 (ensure capex authorization &amp; commitment control.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Project Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1821_Assoc11" sourceRef="W1821_Annotation10" targetRef="W1821_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1821_Flow12" sourceRef="W1821_Start5" targetRef="W1821_Task6" />
+      <bpmn:sequenceFlow id="W1821_Flow13" sourceRef="W1821_Task6" targetRef="W1821_Task7" />
+      <bpmn:sequenceFlow id="W1821_Flow14" sourceRef="W1821_Task7" targetRef="W1821_Task8" />
+      <bpmn:sequenceFlow id="W1821_Flow15" sourceRef="W1821_Task8" targetRef="W1821_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1821_diag">
+      <bpmndi:BPMNPlane id="W1821_plane" bpmnElement="W_W1821">
+        <bpmndi:BPMNShape id="W1821_Lane1_di" bpmnElement="W1821_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_Lane2_di" bpmnElement="W1821_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_Lane3_di" bpmnElement="W1821_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_Task6_di" bpmnElement="W1821_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_Task7_di" bpmnElement="W1821_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_Task8_di" bpmnElement="W1821_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_Start5_di" bpmnElement="W1821_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_End9_di" bpmnElement="W1821_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1821_Annotation10_di" bpmnElement="W1821_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1821_Flow12_di" bpmnElement="W1821_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1821_Flow13_di" bpmnElement="W1821_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1821_Flow14_di" bpmnElement="W1821_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1821_Flow15_di" bpmnElement="W1821_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1821_Assoc11_di" bpmnElement="W1821_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1822" name="W1822. Professional Service &amp; Consulting Fee Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Consulting or professional service invoice received for capex project
+Frequency: ~50–100 invoices/year
+Volume: Architecture, engineering, project management, IT consulting fees
+Owner: Project Accountant
+Participants: Project Accountant, COO, CIO, External Service Providers
+Source: workflow W1822 — Professional Service &amp; Consulting Fee Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W1822_LaneSet3">
+        <bpmn:lane id="W1822_Lane1" name="Project Manager">
+        <bpmn:flowNodeRef>W1822_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1822_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1822_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1822_Lane2" name="Project Accountant">
+        <bpmn:flowNodeRef>W1822_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1822_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1822_Start4" name="Consulting or professional service invoice received for capex project">
+        <bpmn:outgoing>W1822_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1822_Task5" name="Professional services in capex projects: (a) architectural and engineering…">
+        <bpmn:documentation>Step 1: Professional services in capex projects: (a) architectural and engineering design (typically 3–5% of construction cost), (b) project management (in-house or external PM), (c) IT consulting for system implementations, (d) geotechnical survey and soil testing, (e) environmental impact assessment (if required by DENR), (f) legal fees for permits and contracts, (g) audit fees for project cost verification
+Responsible (R): Project Manager
+Accountable (A): COO / CIO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W1822_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1822_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1822_Task6" name="Professional service invoices reviewed and approved: (a) verify services were…">
+        <bpmn:documentation>Step 2: Professional service invoices reviewed and approved: (a) verify services were actually performed (timesheets, deliverables), (b) verify billing is per contract terms (hourly rate, fixed fee, or % complete), (c) approve and process payment, (d) cost charged to project CIP
+Responsible (R): Project Manager / Project Accountant
+Accountable (A): Department Head
+Duration: 1–2 days/invoice</bpmn:documentation>
+        <bpmn:incoming>W1822_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1822_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1822_Task7" name="Capitalization of professional fees: (a) directly attributable fees capitalized…">
+        <bpmn:documentation>Step 3: Capitalization of professional fees: (a) directly attributable fees capitalized as part of project cost (architect, engineer, PM), (b) general administrative overhead not capitalized (HQ staff time not specifically devoted to project), (c) financing costs: borrowing costs directly attributable to qualifying asset capitalized per PFRS per W1824
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: At each invoice</bpmn:documentation>
+        <bpmn:incoming>W1822_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1822_End8" name="Complete">
+        <bpmn:incoming>W1822_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1822_Annotation9">
+        <bpmn:text>Controls: - CTL-362 (ensure controlled execution — Project Cost Tracking &amp; Capitalization (PA-40.2).) | - operational: Project Accountant review and approval gate
+Owner: Project Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1822_Assoc10" sourceRef="W1822_Annotation9" targetRef="W1822_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1822_Flow11" sourceRef="W1822_Start4" targetRef="W1822_Task5" />
+      <bpmn:sequenceFlow id="W1822_Flow12" sourceRef="W1822_Task5" targetRef="W1822_Task6" />
+      <bpmn:sequenceFlow id="W1822_Flow13" sourceRef="W1822_Task6" targetRef="W1822_Task7" />
+      <bpmn:sequenceFlow id="W1822_Flow14" sourceRef="W1822_Task7" targetRef="W1822_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1822_diag">
+      <bpmndi:BPMNPlane id="W1822_plane" bpmnElement="W_W1822">
+        <bpmndi:BPMNShape id="W1822_Lane1_di" bpmnElement="W1822_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1822_Lane2_di" bpmnElement="W1822_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1822_Task5_di" bpmnElement="W1822_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1822_Task6_di" bpmnElement="W1822_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1822_Task7_di" bpmnElement="W1822_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1822_Start4_di" bpmnElement="W1822_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1822_End8_di" bpmnElement="W1822_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1822_Annotation9_di" bpmnElement="W1822_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1822_Flow11_di" bpmnElement="W1822_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1822_Flow12_di" bpmnElement="W1822_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1822_Flow13_di" bpmnElement="W1822_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1822_Flow14_di" bpmnElement="W1822_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1822_Assoc10_di" bpmnElement="W1822_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1823" name="W1823. Project Cost Capitalization vs. Expense Determination" isExecutable="false">
+      <bpmn:documentation>Trigger: Cost incurred for capex-related item; determination needed whether to capitalize or expense
+Frequency: Every cost transaction (~200–500/month)
+Volume: ~2,500–6,000 determinations/year
+Owner: Project Accountant
+Participants: Project Accountant, Accounting Manager, CFO
+Source: workflow W1823 — Project Cost Capitalization vs. Expense Determination</bpmn:documentation>
+      <bpmn:laneSet id="W1823_LaneSet3">
+        <bpmn:lane id="W1823_Lane1" name="Project Accountant">
+        <bpmn:flowNodeRef>W1823_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1823_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1823_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1823_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1823_Lane2" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1823_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1823_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1823_Start4" name="Cost incurred for capex-related item; determination needed whether to capitalize or…">
+        <bpmn:outgoing>W1823_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1823_Task5" name="Capitalize">
+        <bpmn:documentation>Step 1: Capitalization policy per PFRS/IAS 16: Capitalize (add to CIP → future fixed asset): (a) purchase price of asset (including non-recoverable taxes, delivery, installation), (b) costs directly attributable to bringing asset to working condition (site preparation, initial delivery, installation, testing), (c) professional fees directly attributable (architect, engineer, project management), (d) borrowing costs directly attributable to qualifying asset per PFRS 23 (W1824), (e) demolition/dismantling costs of old assets (if replacement project), (f) initial operating losses: NOT capitalized (expensed)
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: Per transaction</bpmn:documentation>
+        <bpmn:incoming>W1823_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1823_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1823_Task6" name="Expense">
+        <bpmn:documentation>Step 2: Expense (charge to P&amp;L in period incurred): (a) costs below capitalization threshold (PHP 20K), (b) training costs for staff to operate new asset, (c) general administrative overhead not directly attributable, (d) operating losses in initial period (new store ramp-up losses), (e) marketing and promotional costs (grand opening), (f) relocation costs, (g) maintenance costs (vs. improvement — distinction per W1695)
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: Per transaction</bpmn:documentation>
+        <bpmn:incoming>W1823_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1823_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1823_Task7" name="Gray area determinations escalated to Accounting Manager: (a) software…">
+        <bpmn:documentation>Step 3: Gray area determinations escalated to Accounting Manager: (a) software customization vs. license (customization = capitalize; license = intangible asset), (b) repair during construction (capitalize if part of project scope), (c) change order due to design error (capitalize — part of project cost), (d) insurance claim recovery during construction (reduce project cost)
+Responsible (R): Project Accountant
+Accountable (A): Accounting Manager
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W1823_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1823_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1823_Task8" name="Monthly: Accounting Manager reviews all capitalized costs for appropriateness…">
+        <bpmn:documentation>Step 4: Monthly: Accounting Manager reviews all capitalized costs for appropriateness; any items incorrectly capitalized are reclassified to expense; policy guidance updated for common errors
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1823_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1823_End9" name="Complete">
+        <bpmn:incoming>W1823_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1823_Annotation10">
+        <bpmn:text>Controls: - CTL-362 (ensure controlled execution — Project Cost Tracking &amp; Capitalization (PA-40.2).) | - operational: Project Accountant review and approval gate
+Owner: Project Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1823_Assoc11" sourceRef="W1823_Annotation10" targetRef="W1823_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1823_Flow12" sourceRef="W1823_Start4" targetRef="W1823_Task5" />
+      <bpmn:sequenceFlow id="W1823_Flow13" sourceRef="W1823_Task5" targetRef="W1823_Task6" />
+      <bpmn:sequenceFlow id="W1823_Flow14" sourceRef="W1823_Task6" targetRef="W1823_Task7" />
+      <bpmn:sequenceFlow id="W1823_Flow15" sourceRef="W1823_Task7" targetRef="W1823_Task8" />
+      <bpmn:sequenceFlow id="W1823_Flow16" sourceRef="W1823_Task8" targetRef="W1823_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1823_diag">
+      <bpmndi:BPMNPlane id="W1823_plane" bpmnElement="W_W1823">
+        <bpmndi:BPMNShape id="W1823_Lane1_di" bpmnElement="W1823_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_Lane2_di" bpmnElement="W1823_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_Task5_di" bpmnElement="W1823_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_Task6_di" bpmnElement="W1823_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_Task7_di" bpmnElement="W1823_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_Task8_di" bpmnElement="W1823_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_Start4_di" bpmnElement="W1823_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_End9_di" bpmnElement="W1823_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1823_Annotation10_di" bpmnElement="W1823_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1823_Flow12_di" bpmnElement="W1823_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1823_Flow13_di" bpmnElement="W1823_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1823_Flow14_di" bpmnElement="W1823_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1823_Flow15_di" bpmnElement="W1823_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1823_Flow16_di" bpmnElement="W1823_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1823_Assoc11_di" bpmnElement="W1823_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1824" name="W1824. Capitalized Interest Calculation &amp; Recording" isExecutable="false">
+      <bpmn:documentation>Trigger: Active capex project with qualifying asset financed by borrowing; monthly close
+Frequency: Monthly calculation during construction period
+Volume: Only for projects financed by specific borrowing (typically large new stores or DC projects &gt; PHP 50M)
+Owner: Treasury
+Participants: Treasury, Project Accountant, Accounting Manager
+Source: workflow W1824 — Capitalized Interest Calculation &amp; Recording</bpmn:documentation>
+      <bpmn:laneSet id="W1824_LaneSet2">
+        <bpmn:lane id="W1824_Lane1" name="Treasury">
+        <bpmn:flowNodeRef>W1824_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1824_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1824_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1824_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1824_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1824_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1824_Start3" name="Active capex project with qualifying asset financed by borrowing; monthly close">
+        <bpmn:outgoing>W1824_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1824_Task4" name="Per PFRS 23 (Borrowing Costs): capitalize borrowing costs directly attributable…">
+        <bpmn:documentation>Step 1: Per PFRS 23 (Borrowing Costs): capitalize borrowing costs directly attributable to acquisition, construction, or production of a qualifying asset: (a) qualifying asset: asset that takes substantial time to get ready for intended use (new store construction, DC expansion qualify), (b) capitalization period: from when expenditures and borrowing costs are incurred until asset is substantially ready for use, (c) capitalization ceases when substantially all activities necessary to prepare the asset are complete
+Responsible (R): Treasury
+Accountable (A): Accounting Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1824_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1824_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1824_Task5" name="Calculation: (a) for specific borrowing: actual interest incurred on the loan…">
+        <bpmn:documentation>Step 2: Calculation: (a) for specific borrowing: actual interest incurred on the loan financing the project, (b) for general borrowing: weighted average cost of outstanding borrowings × cumulative expenditures on the asset, (c) capitalization amount cannot exceed actual interest incurred, (d) calculation performed monthly
+Responsible (R): Treasury
+Accountable (A): CFO
+Duration: 1–2 hours/project/month</bpmn:documentation>
+        <bpmn:incoming>W1824_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1824_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1824_Task6" name="Journal entry: (a) debit: CIP (capitalized interest), (b) credit: interest…">
+        <bpmn:documentation>Step 3: Journal entry: (a) debit: CIP (capitalized interest), (b) credit: interest expense (reduces P&amp;L interest expense), (c) capitalized interest becomes part of the asset&#x27;s cost and is depreciated over its useful life
+Responsible (R): Treasury / Project Accountant
+Accountable (A): Accounting Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1824_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1824_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1824_Task7" name="Capitalization ceases when store opens (substantially ready for use); any…">
+        <bpmn:documentation>Step 4: Capitalization ceases when store opens (substantially ready for use); any interest after opening is expensed
+Responsible (R): Treasury
+Accountable (A): Accounting Manager
+Duration: At project completion</bpmn:documentation>
+        <bpmn:incoming>W1824_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1824_End8" name="Complete">
+        <bpmn:incoming>W1824_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1824_Annotation9">
+        <bpmn:text>Controls: - CTL-362 (ensure controlled execution — Project Cost Tracking &amp; Capitalization (PA-40.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Treasury</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1824_Assoc10" sourceRef="W1824_Annotation9" targetRef="W1824_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1824_Flow11" sourceRef="W1824_Start3" targetRef="W1824_Task4" />
+      <bpmn:sequenceFlow id="W1824_Flow12" sourceRef="W1824_Task4" targetRef="W1824_Task5" />
+      <bpmn:sequenceFlow id="W1824_Flow13" sourceRef="W1824_Task5" targetRef="W1824_Task6" />
+      <bpmn:sequenceFlow id="W1824_Flow14" sourceRef="W1824_Task6" targetRef="W1824_Task7" />
+      <bpmn:sequenceFlow id="W1824_Flow15" sourceRef="W1824_Task7" targetRef="W1824_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1824_diag">
+      <bpmndi:BPMNPlane id="W1824_plane" bpmnElement="W_W1824">
+        <bpmndi:BPMNShape id="W1824_Lane1_di" bpmnElement="W1824_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1824_Task4_di" bpmnElement="W1824_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1824_Task5_di" bpmnElement="W1824_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1824_Task6_di" bpmnElement="W1824_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1824_Task7_di" bpmnElement="W1824_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1824_Start3_di" bpmnElement="W1824_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1824_End8_di" bpmnElement="W1824_End8"><dc:Bounds x="1260" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1824_Annotation9_di" bpmnElement="W1824_Annotation9"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1824_Flow11_di" bpmnElement="W1824_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1824_Flow12_di" bpmnElement="W1824_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1824_Flow13_di" bpmnElement="W1824_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1824_Flow14_di" bpmnElement="W1824_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1824_Flow15_di" bpmnElement="W1824_Flow15"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1824_Assoc10_di" bpmnElement="W1824_Assoc10"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1825" name="W1825. Project Budget vs. Actual Variance Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly management reporting
+Frequency: Monthly
+Volume: ~30–50 active projects
+Owner: FP&amp;A
+Participants: FP&amp;A, Project Manager, COO, CIO, CFO
+Source: workflow W1825 — Project Budget vs. Actual Variance Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W1825_LaneSet3">
+        <bpmn:lane id="W1825_Lane1" name="System">
+        <bpmn:flowNodeRef>W1825_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1825_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1825_Lane2" name="FP&amp;A">
+        <bpmn:flowNodeRef>W1825_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1825_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1825_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1825_Start4" name="Monthly management reporting">
+        <bpmn:outgoing>W1825_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1825_Task5" name="System generates project-level budget vs. actual report: (a) approved budget by…">
+        <bpmn:documentation>Step 1: System generates project-level budget vs. actual report: (a) approved budget by cost category, (b) committed costs (POs issued), (c) incurred costs (invoices processed), (d) paid costs (payments made), (e) remaining budget, (f) forecast to complete (Project Manager estimate), (g) forecast total cost = incurred + forecast to complete, (h) variance = forecast total − approved budget
+Responsible (R): System
+Accountable (A): FP&amp;A
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1825_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1825_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1825_Task6" name="FP&amp;A analyzes variances: (a) favorable (&lt; budget): identify if scope reduction…">
+        <bpmn:documentation>Step 2: FP&amp;A analyzes variances: (a) favorable (&lt; budget): identify if scope reduction, value engineering, or under-delivery, (b) unfavorable (&gt; budget): identify root cause (scope increase, cost escalation, design error, contractor delay), (c) trend: is variance increasing or stable? (d) contingency utilization: how much contingency remains?
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1–2 days/month</bpmn:documentation>
+        <bpmn:incoming>W1825_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1825_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1825_Task7" name="Project-level variance actions: (a) &lt; 5% over budget: Project Manager manages…">
+        <bpmn:documentation>Step 3: Project-level variance actions: (a) &lt; 5% over budget: Project Manager manages within contingency, (b) 5–15% over budget: requires change order per W1815 and VP approval, (c) &gt; 15% over budget: requires CFO/CEO review and may require additional board approval, (d) systemic overrun pattern (multiple projects over budget): triggers process review
+Responsible (R): FP&amp;A / CFO
+Accountable (A): CEO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1825_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1825_End8" name="Complete">
+        <bpmn:incoming>W1825_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1825_Annotation9">
+        <bpmn:text>Controls: - CTL-362 (ensure controlled execution — Project Cost Tracking &amp; Capitalization (PA-40.2).) | - operational: FP&amp;A review and approval gate
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1825_Assoc10" sourceRef="W1825_Annotation9" targetRef="W1825_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1825_Flow11" sourceRef="W1825_Start4" targetRef="W1825_Task5" />
+      <bpmn:sequenceFlow id="W1825_Flow12" sourceRef="W1825_Task5" targetRef="W1825_Task6" />
+      <bpmn:sequenceFlow id="W1825_Flow13" sourceRef="W1825_Task6" targetRef="W1825_Task7" />
+      <bpmn:sequenceFlow id="W1825_Flow14" sourceRef="W1825_Task7" targetRef="W1825_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1825_diag">
+      <bpmndi:BPMNPlane id="W1825_plane" bpmnElement="W_W1825">
+        <bpmndi:BPMNShape id="W1825_Lane1_di" bpmnElement="W1825_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1825_Lane2_di" bpmnElement="W1825_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1825_Task5_di" bpmnElement="W1825_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1825_Task6_di" bpmnElement="W1825_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1825_Task7_di" bpmnElement="W1825_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1825_Start4_di" bpmnElement="W1825_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1825_End8_di" bpmnElement="W1825_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1825_Annotation9_di" bpmnElement="W1825_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1825_Flow11_di" bpmnElement="W1825_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1825_Flow12_di" bpmnElement="W1825_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1825_Flow13_di" bpmnElement="W1825_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1825_Flow14_di" bpmnElement="W1825_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1825_Assoc10_di" bpmnElement="W1825_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1826" name="W1826. Multi-Entity Project Cost Allocation" isExecutable="false">
+      <bpmn:documentation>Trigger: Capex project benefits multiple entities (e.g., IT system used by all 5 entities)
+Frequency: ~10–20 multi-entity allocations/year
+Volume: Primarily IT and shared service projects
+Owner: FP&amp;A
+Participants: FP&amp;A, CFO, CIO
+Source: workflow W1826 — Multi-Entity Project Cost Allocation</bpmn:documentation>
+      <bpmn:laneSet id="W1826_LaneSet3">
+        <bpmn:lane id="W1826_Lane1" name="FP&amp;A">
+        <bpmn:flowNodeRef>W1826_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1826_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1826_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1826_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1826_Lane2" name="System">
+        <bpmn:flowNodeRef>W1826_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1826_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1826_Start4" name="Capex project benefits multiple entities (e.g., IT system used by all 5 entities)">
+        <bpmn:outgoing>W1826_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1826_Task5" name="Multi-entity project examples: (a) ERP system upgrade: benefits all 5 entities…">
+        <bpmn:documentation>Step 1: Multi-entity project examples: (a) ERP system upgrade: benefits all 5 entities — allocated by headcount or revenue, (b) new DC (BuildRight Logistics Inc.): primarily benefits Depot Inc. (stores it serves) — allocation by store volume, (c) corporate HQ renovation: allocated to Holdings Inc., (d) ecommerce platform: primarily Digital Commerce Inc. and Depot Inc. — allocated by order volume
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: Per project</bpmn:documentation>
+        <bpmn:incoming>W1826_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1826_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1826_Task6" name="Allocation methodology: (a) headcount-based: total headcount per entity (Depot…">
+        <bpmn:documentation>Step 2: Allocation methodology: (a) headcount-based: total headcount per entity (Depot: 5,800 store staff + 600 DC staff; Digital Commerce: ~30; Property: ~15; Holdings/HQ: ~362 per profile §3.3 — total ~6,762), (b) revenue-based: revenue per entity, (c) usage-based: transaction volume per entity, (d) methodology documented and approved by CFO; consistently applied
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1826_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1826_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1826_Task7" name="System posts intercompany allocations: (a) primary entity incurs cost →…">
+        <bpmn:documentation>Step 3: System posts intercompany allocations: (a) primary entity incurs cost → allocates to other entities via intercompany journal entries, (b) each entity records its share as capex in its own CIP, (c) intercompany receivable/payable created for the allocation amount
+Responsible (R): System / Project Accountant
+Accountable (A): Accounting Manager
+Duration: Monthly or at project completion</bpmn:documentation>
+        <bpmn:incoming>W1826_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1826_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1826_Task8" name="Transfer pricing documentation: for intercompany cost allocations, ensure…">
+        <bpmn:documentation>Step 4: Transfer pricing documentation: for intercompany cost allocations, ensure arm&#x27;s-length basis per BIR transfer pricing rules per W1731
+Responsible (R): FP&amp;A / Tax Accountant
+Accountable (A): CFO
+Duration: At allocation</bpmn:documentation>
+        <bpmn:incoming>W1826_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1826_End9" name="Complete">
+        <bpmn:incoming>W1826_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1826_Annotation10">
+        <bpmn:text>Controls: - CTL-362 (ensure controlled execution — Project Cost Tracking &amp; Capitalization (PA-40.2).) | - operational: FP&amp;A review and approval gate
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1826_Assoc11" sourceRef="W1826_Annotation10" targetRef="W1826_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1826_Flow12" sourceRef="W1826_Start4" targetRef="W1826_Task5" />
+      <bpmn:sequenceFlow id="W1826_Flow13" sourceRef="W1826_Task5" targetRef="W1826_Task6" />
+      <bpmn:sequenceFlow id="W1826_Flow14" sourceRef="W1826_Task6" targetRef="W1826_Task7" />
+      <bpmn:sequenceFlow id="W1826_Flow15" sourceRef="W1826_Task7" targetRef="W1826_Task8" />
+      <bpmn:sequenceFlow id="W1826_Flow16" sourceRef="W1826_Task8" targetRef="W1826_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1826_diag">
+      <bpmndi:BPMNPlane id="W1826_plane" bpmnElement="W_W1826">
+        <bpmndi:BPMNShape id="W1826_Lane1_di" bpmnElement="W1826_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_Lane2_di" bpmnElement="W1826_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_Task5_di" bpmnElement="W1826_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_Task6_di" bpmnElement="W1826_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_Task7_di" bpmnElement="W1826_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_Task8_di" bpmnElement="W1826_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_Start4_di" bpmnElement="W1826_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_End9_di" bpmnElement="W1826_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1826_Annotation10_di" bpmnElement="W1826_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1826_Flow12_di" bpmnElement="W1826_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1826_Flow13_di" bpmnElement="W1826_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1826_Flow14_di" bpmnElement="W1826_Flow14"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1826_Flow15_di" bpmnElement="W1826_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1826_Flow16_di" bpmnElement="W1826_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1826_Assoc11_di" bpmnElement="W1826_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

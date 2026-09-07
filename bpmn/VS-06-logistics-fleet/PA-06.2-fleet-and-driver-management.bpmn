@@ -1,0 +1,1929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-06.2-fleet-and-driver-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1348" name="W1348. Fleet Vehicle Preventive Maintenance Scheduling, Work Order &amp; Parts Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicle odometer or engine-hours threshold reached; or calendar-based service interval due
+Frequency: Per-vehicle: every 10,000 km or 6 months (whichever comes first); ~20% owned fleet (40 trucks) + 80% third-party (160 trucks, third-party maintenance outside scope)
+Volume: ~40 owned trucks × 2–3 services/year = ~80–120 preventive maintenance (PM) events/year; ~7–10 PM events/month
+Owner: Fleet Maintenance Supervisor
+Participants: Fleet Maintenance Supervisor, Mechanic, Parts Coordinator, Logistics Planner, Finance (capex approval for major services)
+Source: workflow W1348 — Fleet Vehicle Preventive Maintenance Scheduling, Work Order &amp; Parts Management</bpmn:documentation>
+      <bpmn:laneSet id="W1348_LaneSet6">
+        <bpmn:lane id="W1348_Lane1" name="System">
+        <bpmn:flowNodeRef>W1348_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1348_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1348_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1348_Lane2" name="Fleet Maintenance Supervisor">
+        <bpmn:flowNodeRef>W1348_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1348_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1348_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1348_Lane3" name="Parts Coordinator">
+        <bpmn:flowNodeRef>W1348_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1348_Lane4" name="Mechanic">
+        <bpmn:flowNodeRef>W1348_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1348_Lane5" name="Finance">
+        <bpmn:flowNodeRef>W1348_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1348_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1348_Start7" name="Vehicle odometer or engine-hours threshold reached; or calendar-based service interval due">
+        <bpmn:outgoing>W1348_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1348_Task8" name="System tracks vehicle odometer and engine-hours via telematics (W199)…">
+        <bpmn:documentation>Step 1: System tracks vehicle odometer and engine-hours via telematics (W199); auto-generates PM alert when threshold is within 500 km or 2 weeks of due date
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1348_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1348_Task9" name="Fleet Maintenance Supervisor reviews upcoming PM schedule against delivery…">
+        <bpmn:documentation>Step 2: Fleet Maintenance Supervisor reviews upcoming PM schedule against delivery dispatch plan; selects service window that minimizes fleet impact (typically between dispatch waves or on low-demand days)
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): Logistics Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1348_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1348_Task10" name="Fleet Maintenance Supervisor creates digital PM work order: standard service…">
+        <bpmn:documentation>Step 3: Fleet Maintenance Supervisor creates digital PM work order: standard service checklist (oil change, brake inspection, tire rotation, fluid top-up, belt/hose inspection, electrical system check)
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 15 min/work order</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1348_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1348_Task11" name="Parts Coordinator checks parts availability for scheduled PM items; orders…">
+        <bpmn:documentation>Step 4: Parts Coordinator checks parts availability for scheduled PM items; orders parts if not in stock from approved automotive suppliers (lead time: 2–5 days for common parts)
+Responsible (R): Parts Coordinator
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 30 min/work order</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1348_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1348_Task12" name="Mechanic performs PM per work order checklist; records findings, parts used…">
+        <bpmn:documentation>Step 5: Mechanic performs PM per work order checklist; records findings, parts used, and labor hours in system; flags any issues requiring follow-up repair
+Responsible (R): Mechanic
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 4–8 hours/truck</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1348_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1348_Task13" name="Fleet Maintenance Supervisor reviews completed work order; approves or…">
+        <bpmn:documentation>Step 6: Fleet Maintenance Supervisor reviews completed work order; approves or schedules follow-up repair for flagged issues; updates vehicle maintenance history
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 15 min/work order</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1348_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1348_Task14" name="Finance receives completed work order with parts and labor costs; processes…">
+        <bpmn:documentation>Step 7: Finance receives completed work order with parts and labor costs; processes vendor payment for externally sourced parts; records maintenance cost against vehicle asset
+Responsible (R): Finance (AP)
+Accountable (A): Controller
+Duration: Per W7</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1348_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1348_Task15" name="System updates vehicle availability status back to &quot;active&quot; in dispatch…">
+        <bpmn:documentation>Step 8: System updates vehicle availability status back to &quot;active&quot; in dispatch planning module
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1348_Flow26</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1348_End16" name="Complete">
+        <bpmn:incoming>W1348_Flow27</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1348_Annotation17">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: Fleet Maintenance Supervisor review and approval gate
+Owner: Fleet Maintenance Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1348_Assoc18" sourceRef="W1348_Annotation17" targetRef="W1348_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1348_Flow19" sourceRef="W1348_Start7" targetRef="W1348_Task8" />
+      <bpmn:sequenceFlow id="W1348_Flow20" sourceRef="W1348_Task8" targetRef="W1348_Task9" />
+      <bpmn:sequenceFlow id="W1348_Flow21" sourceRef="W1348_Task9" targetRef="W1348_Task10" />
+      <bpmn:sequenceFlow id="W1348_Flow22" sourceRef="W1348_Task10" targetRef="W1348_Task11" />
+      <bpmn:sequenceFlow id="W1348_Flow23" sourceRef="W1348_Task11" targetRef="W1348_Task12" />
+      <bpmn:sequenceFlow id="W1348_Flow24" sourceRef="W1348_Task12" targetRef="W1348_Task13" />
+      <bpmn:sequenceFlow id="W1348_Flow25" sourceRef="W1348_Task13" targetRef="W1348_Task14" />
+      <bpmn:sequenceFlow id="W1348_Flow26" sourceRef="W1348_Task14" targetRef="W1348_Task15" />
+      <bpmn:sequenceFlow id="W1348_Flow27" sourceRef="W1348_Task15" targetRef="W1348_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1348_diag">
+      <bpmndi:BPMNPlane id="W1348_plane" bpmnElement="W_W1348">
+        <bpmndi:BPMNShape id="W1348_Lane1_di" bpmnElement="W1348_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Lane2_di" bpmnElement="W1348_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Lane3_di" bpmnElement="W1348_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Lane4_di" bpmnElement="W1348_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Lane5_di" bpmnElement="W1348_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task8_di" bpmnElement="W1348_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task9_di" bpmnElement="W1348_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task10_di" bpmnElement="W1348_Task10"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task11_di" bpmnElement="W1348_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task12_di" bpmnElement="W1348_Task12"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task13_di" bpmnElement="W1348_Task13"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task14_di" bpmnElement="W1348_Task14"><dc:Bounds x="1660" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Task15_di" bpmnElement="W1348_Task15"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Start7_di" bpmnElement="W1348_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_End16_di" bpmnElement="W1348_End16"><dc:Bounds x="2100" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1348_Annotation17_di" bpmnElement="W1348_Annotation17"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1348_Flow19_di" bpmnElement="W1348_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow20_di" bpmnElement="W1348_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow21_di" bpmnElement="W1348_Flow21"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow22_di" bpmnElement="W1348_Flow22"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow23_di" bpmnElement="W1348_Flow23"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow24_di" bpmnElement="W1348_Flow24"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow25_di" bpmnElement="W1348_Flow25"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow26_di" bpmnElement="W1348_Flow26"><di:waypoint x="1840" y="845" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Flow27_di" bpmnElement="W1348_Flow27"><di:waypoint x="2050" y="165" /><di:waypoint x="2100" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1348_Assoc18_di" bpmnElement="W1348_Assoc18"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1349" name="W1349. Fleet Tire Lifecycle Management, Tread Monitoring &amp; Replacement Scheduling" isExecutable="false">
+      <bpmn:documentation>Trigger: Tire tread depth reaches minimum threshold (3 mm for steer axles, 2 mm for drive/trailer axles per Philippine LTO regulations); or tire age exceeds 5 years; or tire damage detected during pre-trip inspection
+Frequency: ~40 owned trucks × 10–18 tires per truck = ~400–720 tires under management; average replacement every 60,000–80,000 km or 2–3 years per tire; ~150–200 tire replacements/year
+Volume: ~12–17 tire replacements/month across owned fleet
+Owner: Fleet Maintenance Supervisor
+Participants: Mechanic, Driver (pre-trip inspection), Parts Coordinator, Tire Supplier, Finance (AP)
+Source: workflow W1349 — Fleet Tire Lifecycle Management, Tread Monitoring &amp; Replacement Scheduling</bpmn:documentation>
+      <bpmn:laneSet id="W1349_LaneSet7">
+        <bpmn:lane id="W1349_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W1349_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1349_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1349_Lane2" name="Mechanic">
+        <bpmn:flowNodeRef>W1349_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1349_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1349_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1349_Lane3" name="System">
+        <bpmn:flowNodeRef>W1349_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1349_Lane4" name="Fleet Maintenance Supervisor">
+        <bpmn:flowNodeRef>W1349_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1349_Lane5" name="Parts Coordinator">
+        <bpmn:flowNodeRef>W1349_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1349_Lane6" name="Finance">
+        <bpmn:flowNodeRef>W1349_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1349_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1349_Start8" name="Tire tread depth reaches minimum threshold (3 mm for steer axles, 2 mm for drive/trailer…">
+        <bpmn:outgoing>W1349_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1349_Task9" name="Driver performs pre-trip inspection: visually checks tire condition, notes any…">
+        <bpmn:documentation>Step 1: Driver performs pre-trip inspection: visually checks tire condition, notes any visible damage (cuts, bulges, uneven wear); reports concerns via driver mobile app
+Responsible (R): Driver
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 5 min/pre-trip</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1349_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1349_Task10" name="During scheduled PM (W1348), Mechanic measures tread depth on all tires using…">
+        <bpmn:documentation>Step 2: During scheduled PM (W1348), Mechanic measures tread depth on all tires using calibrated depth gauge; records readings per tire position (steer left, steer right, drive inner, drive outer, trailer positions)
+Responsible (R): Mechanic
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 15 min/truck</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1349_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1349_Task11" name="System logs tread depth readings by tire ID; calculates remaining useful life…">
+        <bpmn:documentation>Step 3: System logs tread depth readings by tire ID; calculates remaining useful life based on wear rate trends; auto-generates replacement alert when tread approaches minimum threshold
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1349_Flow22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1349_Task12" name="Fleet Maintenance Supervisor reviews tire replacement forecast monthly: groups…">
+        <bpmn:documentation>Step 4: Fleet Maintenance Supervisor reviews tire replacement forecast monthly: groups replacement orders by DC to consolidate supplier deliveries; considers retreading for drive/trailer positions where casing integrity is good
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): Logistics Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1349_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1349_Task13" name="Parts Coordinator places tire order with approved tire supplier (Philippine…">
+        <bpmn:documentation>Step 5: Parts Coordinator places tire order with approved tire supplier (Philippine distributors: Yokohama, Goodyear, Continental); arranges delivery to respective DC maintenance bay
+Responsible (R): Parts Coordinator
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 30 min/order</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1349_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1349_Task14" name="Mechanic performs tire replacement or retreading; records old tire condition…">
+        <bpmn:documentation>Step 6: Mechanic performs tire replacement or retreading; records old tire condition (tread depth, damage type, reason for removal) and new tire serial number/position
+Responsible (R): Mechanic
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 1–2 hours/truck (2–4 tires)</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1349_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1349_Task15" name="Old tires evaluated for retreading potential, recycling, or disposal…">
+        <bpmn:documentation>Step 7: Old tires evaluated for retreading potential, recycling, or disposal; serviceable casings sent to retreading partner; unserviceable tires disposed per DENR waste tire guidelines
+Responsible (R): Mechanic / Parts Coordinator
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 15 min/set</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1349_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1349_Task16" name="Finance records tire replacement cost; capitalizes tires above PHP 5,000 per…">
+        <bpmn:documentation>Step 8: Finance records tire replacement cost; capitalizes tires above PHP 5,000 per unit or expenses as maintenance consumable below threshold
+Responsible (R): Finance (AP)
+Accountable (A): Controller
+Duration: Per W7</bpmn:documentation>
+        <bpmn:incoming>W1349_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1349_End17" name="Complete">
+        <bpmn:incoming>W1349_Flow28</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1349_Annotation18">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: records and physical inventory indicate potential theft or unrecorded replacements
+Owner: Fleet Maintenance Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1349_Assoc19" sourceRef="W1349_Annotation18" targetRef="W1349_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1349_Flow20" sourceRef="W1349_Start8" targetRef="W1349_Task9" />
+      <bpmn:sequenceFlow id="W1349_Flow21" sourceRef="W1349_Task9" targetRef="W1349_Task10" />
+      <bpmn:sequenceFlow id="W1349_Flow22" sourceRef="W1349_Task10" targetRef="W1349_Task11" />
+      <bpmn:sequenceFlow id="W1349_Flow23" sourceRef="W1349_Task11" targetRef="W1349_Task12" />
+      <bpmn:sequenceFlow id="W1349_Flow24" sourceRef="W1349_Task12" targetRef="W1349_Task13" />
+      <bpmn:sequenceFlow id="W1349_Flow25" sourceRef="W1349_Task13" targetRef="W1349_Task14" />
+      <bpmn:sequenceFlow id="W1349_Flow26" sourceRef="W1349_Task14" targetRef="W1349_Task15" />
+      <bpmn:sequenceFlow id="W1349_Flow27" sourceRef="W1349_Task15" targetRef="W1349_Task16" />
+      <bpmn:sequenceFlow id="W1349_Flow28" sourceRef="W1349_Task16" targetRef="W1349_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1349_diag">
+      <bpmndi:BPMNPlane id="W1349_plane" bpmnElement="W_W1349">
+        <bpmndi:BPMNShape id="W1349_Lane1_di" bpmnElement="W1349_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Lane2_di" bpmnElement="W1349_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Lane3_di" bpmnElement="W1349_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Lane4_di" bpmnElement="W1349_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Lane5_di" bpmnElement="W1349_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Lane6_di" bpmnElement="W1349_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task9_di" bpmnElement="W1349_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task10_di" bpmnElement="W1349_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task11_di" bpmnElement="W1349_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task12_di" bpmnElement="W1349_Task12"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task13_di" bpmnElement="W1349_Task13"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task14_di" bpmnElement="W1349_Task14"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task15_di" bpmnElement="W1349_Task15"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Task16_di" bpmnElement="W1349_Task16"><dc:Bounds x="1870" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Start8_di" bpmnElement="W1349_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_End17_di" bpmnElement="W1349_End17"><dc:Bounds x="2100" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1349_Annotation18_di" bpmnElement="W1349_Annotation18"><dc:Bounds x="160" y="1140" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1349_Flow20_di" bpmnElement="W1349_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow21_di" bpmnElement="W1349_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow22_di" bpmnElement="W1349_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow23_di" bpmnElement="W1349_Flow23"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow24_di" bpmnElement="W1349_Flow24"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow25_di" bpmnElement="W1349_Flow25"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow26_di" bpmnElement="W1349_Flow26"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow27_di" bpmnElement="W1349_Flow27"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Flow28_di" bpmnElement="W1349_Flow28"><di:waypoint x="2050" y="1015" /><di:waypoint x="2100" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1349_Assoc19_di" bpmnElement="W1349_Assoc19"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W197" name="W197. Driver Performance &amp; Safety Management" isExecutable="false">
+      <bpmn:documentation>Trigger: New driver onboarding; or monthly performance review cycle
+Frequency: Continuous monitoring; Monthly review
+Volume: ~250–300 company drivers
+Owner: Fleet Manager
+Participants: Driver, Fleet Manager, Safety Officer, HR
+Source: workflow W197 — Driver Performance &amp; Safety Management</bpmn:documentation>
+      <bpmn:laneSet id="W197_LaneSet4">
+        <bpmn:lane id="W197_Lane1" name="System">
+        <bpmn:flowNodeRef>W197_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W197_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W197_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W197_Lane2" name="Safety Officer">
+        <bpmn:flowNodeRef>W197_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W197_Lane3" name="Fleet Manager">
+        <bpmn:flowNodeRef>W197_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W197_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W197_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W197_Start5" name="New driver onboarding; or monthly performance review cycle">
+        <bpmn:outgoing>W197_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W197_Task6" name="Licensing &amp; Compliance">
+        <bpmn:documentation>Step 1: Licensing &amp; Compliance: System tracks Driver License expiries and professional certifications (e.g., Hazmat for paint)
+Responsible (R): System
+Accountable (A): Fleet Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W197_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W197_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W197_Task7" name="Safety Monitoring">
+        <bpmn:documentation>Step 2: Safety Monitoring: Telematics system logs events: Harsh braking, over-speeding, idling, and unauthorized stops
+Responsible (R): System
+Accountable (A): —
+Duration: Real-time</bpmn:documentation>
+        <bpmn:incoming>W197_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W197_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W197_Task8" name="Incident Review">
+        <bpmn:documentation>Step 3: Incident Review: Safety Officer reviews telematics alerts daily; conducts &quot;Coaching Session&quot; for frequent offenders
+Responsible (R): Safety Officer
+Accountable (A): —
+Duration: 20 min</bpmn:documentation>
+        <bpmn:incoming>W197_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W197_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W197_Task9" name="Performance Scoring">
+        <bpmn:documentation>Step 4: Performance Scoring: Monthly &quot;Driver Scorecard&quot; based on: On-time delivery %, fuel efficiency (km/L), and safety incidents
+Responsible (R): Fleet Manager
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W197_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W197_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W197_Task10" name="Rewards/Discipline">
+        <bpmn:documentation>Step 5: Rewards/Discipline: High scorers eligible for &quot;Safety Bonus&quot;; low scorers trigger HR counseling (W72)
+Responsible (R): Fleet Manager
+Accountable (A): CHRO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W197_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W197_End11" name="Complete">
+        <bpmn:incoming>W197_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W197_Annotation12">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: Fleet Manager review and approval gate
+Owner: Fleet Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W197_Assoc13" sourceRef="W197_Annotation12" targetRef="W197_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W197_Flow14" sourceRef="W197_Start5" targetRef="W197_Task6" />
+      <bpmn:sequenceFlow id="W197_Flow15" sourceRef="W197_Task6" targetRef="W197_Task7" />
+      <bpmn:sequenceFlow id="W197_Flow16" sourceRef="W197_Task7" targetRef="W197_Task8" />
+      <bpmn:sequenceFlow id="W197_Flow17" sourceRef="W197_Task8" targetRef="W197_Task9" />
+      <bpmn:sequenceFlow id="W197_Flow18" sourceRef="W197_Task9" targetRef="W197_Task10" />
+      <bpmn:sequenceFlow id="W197_Flow19" sourceRef="W197_Task10" targetRef="W197_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W197_diag">
+      <bpmndi:BPMNPlane id="W197_plane" bpmnElement="W_W197">
+        <bpmndi:BPMNShape id="W197_Lane1_di" bpmnElement="W197_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Lane2_di" bpmnElement="W197_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Lane3_di" bpmnElement="W197_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Task6_di" bpmnElement="W197_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Task7_di" bpmnElement="W197_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Task8_di" bpmnElement="W197_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Task9_di" bpmnElement="W197_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Task10_di" bpmnElement="W197_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Start5_di" bpmnElement="W197_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_End11_di" bpmnElement="W197_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W197_Annotation12_di" bpmnElement="W197_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W197_Flow14_di" bpmnElement="W197_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W197_Flow15_di" bpmnElement="W197_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W197_Flow16_di" bpmnElement="W197_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W197_Flow17_di" bpmnElement="W197_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W197_Flow18_di" bpmnElement="W197_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W197_Flow19_di" bpmnElement="W197_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W197_Assoc13_di" bpmnElement="W197_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W198" name="W198. Fuel Management &amp; Consumption Monitoring" isExecutable="false">
+      <bpmn:documentation>Trigger: Fueling event; or end of month
+Frequency: Ongoing
+Volume: ~PHP 10M–15M monthly fuel spend
+Owner: Fleet Accountant
+Participants: Driver, Gas Station (Vendor), Fleet Accountant, Finance
+Source: workflow W198 — Fuel Management &amp; Consumption Monitoring</bpmn:documentation>
+      <bpmn:laneSet id="W198_LaneSet5">
+        <bpmn:lane id="W198_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W198_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W198_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W198_Lane2" name="System">
+        <bpmn:flowNodeRef>W198_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W198_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W198_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W198_Lane3" name="Fleet Manager">
+        <bpmn:flowNodeRef>W198_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W198_Lane4" name="Finance">
+        <bpmn:flowNodeRef>W198_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W198_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W198_Start6" name="Fueling event; or end of month">
+        <bpmn:outgoing>W198_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W198_Task7" name="Fueling">
+        <bpmn:documentation>Step 1: Fueling: Driver uses company Fuel Card; enters odometer reading at pump
+Responsible (R): Driver
+Accountable (A): —
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W198_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W198_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W198_Task8" name="Data Integration">
+        <bpmn:documentation>Step 2: Data Integration: Fuel vendor (Shell/Petron) sends daily electronic file of all transactions
+Responsible (R): System
+Accountable (A): Fleet Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W198_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W198_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W198_Task9" name="Reconciliation">
+        <bpmn:documentation>Step 3: Reconciliation: System matches fuel transaction to vehicle and compares odometer jump vs. fuel volume to calculate actual km/L
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W198_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W198_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W198_Task10" name="Exception Alert">
+        <bpmn:documentation>Step 4: Exception Alert: System flags anomalies: (a) Fuel volume &gt; Tank capacity; (b) Low km/L (potential fuel siphoning); (c) Fueling far from assigned route
+Responsible (R): System
+Accountable (A): Fleet Accountant
+Duration: Real-time</bpmn:documentation>
+        <bpmn:incoming>W198_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W198_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W198_Task11" name="Investigation">
+        <bpmn:documentation>Step 5: Investigation: Fleet Manager investigates flagged transactions; if fraud confirmed, trigger W123 (Fraud Protocol)
+Responsible (R): Fleet Manager
+Accountable (A): —
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W198_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W198_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W198_Task12" name="Payment">
+        <bpmn:documentation>Step 6: Payment: Finance processes monthly fuel invoice; system allocates costs to specific vehicles and cost centers
+Responsible (R): Finance
+Accountable (A): Controller
+Duration: Per W7</bpmn:documentation>
+        <bpmn:incoming>W198_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W198_End13" name="Complete">
+        <bpmn:incoming>W198_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W198_Annotation14">
+        <bpmn:text>Controls: - CTL-178 (ensure fleet compliance &amp; freight-cost integrity.) | - operational: periodic reconciliation against source documents
+Owner: Fleet Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W198_Assoc15" sourceRef="W198_Annotation14" targetRef="W198_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W198_Flow16" sourceRef="W198_Start6" targetRef="W198_Task7" />
+      <bpmn:sequenceFlow id="W198_Flow17" sourceRef="W198_Task7" targetRef="W198_Task8" />
+      <bpmn:sequenceFlow id="W198_Flow18" sourceRef="W198_Task8" targetRef="W198_Task9" />
+      <bpmn:sequenceFlow id="W198_Flow19" sourceRef="W198_Task9" targetRef="W198_Task10" />
+      <bpmn:sequenceFlow id="W198_Flow20" sourceRef="W198_Task10" targetRef="W198_Task11" />
+      <bpmn:sequenceFlow id="W198_Flow21" sourceRef="W198_Task11" targetRef="W198_Task12" />
+      <bpmn:sequenceFlow id="W198_Flow22" sourceRef="W198_Task12" targetRef="W198_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W198_diag">
+      <bpmndi:BPMNPlane id="W198_plane" bpmnElement="W_W198">
+        <bpmndi:BPMNShape id="W198_Lane1_di" bpmnElement="W198_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Lane2_di" bpmnElement="W198_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Lane3_di" bpmnElement="W198_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Lane4_di" bpmnElement="W198_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Task7_di" bpmnElement="W198_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Task8_di" bpmnElement="W198_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Task9_di" bpmnElement="W198_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Task10_di" bpmnElement="W198_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Task11_di" bpmnElement="W198_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Task12_di" bpmnElement="W198_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Start6_di" bpmnElement="W198_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_End13_di" bpmnElement="W198_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W198_Annotation14_di" bpmnElement="W198_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W198_Flow16_di" bpmnElement="W198_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W198_Flow17_di" bpmnElement="W198_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W198_Flow18_di" bpmnElement="W198_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W198_Flow19_di" bpmnElement="W198_Flow19"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W198_Flow20_di" bpmnElement="W198_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W198_Flow21_di" bpmnElement="W198_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W198_Flow22_di" bpmnElement="W198_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W198_Assoc15_di" bpmnElement="W198_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W199" name="W199. Fleet Telematics &amp; Real-Time Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicle starts trip
+Frequency: Real-time
+Volume: Continuous tracking of ~100–150 active delivery vehicles daily
+Owner: DC Dispatch
+Participants: DC Dispatch, Customer Service, Customer
+Source: workflow W199 — Fleet Telematics &amp; Real-Time Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W199_LaneSet3">
+        <bpmn:lane id="W199_Lane1" name="System">
+        <bpmn:flowNodeRef>W199_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W199_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W199_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W199_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W199_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W199_Lane2" name="DC Dispatch">
+        <bpmn:flowNodeRef>W199_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W199_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W199_Start4" name="Vehicle starts trip">
+        <bpmn:outgoing>W199_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W199_Task5" name="GPS Tracking">
+        <bpmn:documentation>Step 1: GPS Tracking: System tracks vehicle location, speed, and status (moving/stopped/idle)
+Responsible (R): System
+Accountable (A): —
+Duration: Real-time</bpmn:documentation>
+        <bpmn:incoming>W199_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W199_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W199_Task6" name="Dynamic ETA">
+        <bpmn:documentation>Step 2: Dynamic ETA: System recalculates Estimated Time of Arrival (ETA) based on live traffic; updates customer via SMS/App
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W199_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W199_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W199_Task7" name="Geofencing">
+        <bpmn:documentation>Step 3: Geofencing: System alerts DC Dispatch when vehicle arrives at or leaves a store/customer site; logs &quot;Time on Site&quot;
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W199_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W199_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W199_Task8" name="Dispatch Dashboard">
+        <bpmn:documentation>Step 4: Dispatch Dashboard: DC Dispatch monitors all active vehicles on map; identifies delays or breakdowns
+Responsible (R): DC Dispatch
+Accountable (A): —
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W199_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W199_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W199_Task9" name="Maintenance Integration">
+        <bpmn:documentation>Step 5: Maintenance Integration: Odometer data from telematics auto-triggers &quot;Preventive Maintenance&quot; in W188 when thresholds reached
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W199_Flow17</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W199_End10" name="Complete">
+        <bpmn:incoming>W199_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W199_Annotation11">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: DC Dispatch continuous monitoring with delay/breakdown alert handling and carrier escalation
+Owner: DC Dispatch</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W199_Assoc12" sourceRef="W199_Annotation11" targetRef="W199_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W199_Flow13" sourceRef="W199_Start4" targetRef="W199_Task5" />
+      <bpmn:sequenceFlow id="W199_Flow14" sourceRef="W199_Task5" targetRef="W199_Task6" />
+      <bpmn:sequenceFlow id="W199_Flow15" sourceRef="W199_Task6" targetRef="W199_Task7" />
+      <bpmn:sequenceFlow id="W199_Flow16" sourceRef="W199_Task7" targetRef="W199_Task8" />
+      <bpmn:sequenceFlow id="W199_Flow17" sourceRef="W199_Task8" targetRef="W199_Task9" />
+      <bpmn:sequenceFlow id="W199_Flow18" sourceRef="W199_Task9" targetRef="W199_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W199_diag">
+      <bpmndi:BPMNPlane id="W199_plane" bpmnElement="W_W199">
+        <bpmndi:BPMNShape id="W199_Lane1_di" bpmnElement="W199_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Lane2_di" bpmnElement="W199_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Task5_di" bpmnElement="W199_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Task6_di" bpmnElement="W199_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Task7_di" bpmnElement="W199_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Task8_di" bpmnElement="W199_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Task9_di" bpmnElement="W199_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Start4_di" bpmnElement="W199_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_End10_di" bpmnElement="W199_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W199_Annotation11_di" bpmnElement="W199_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W199_Flow13_di" bpmnElement="W199_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W199_Flow14_di" bpmnElement="W199_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W199_Flow15_di" bpmnElement="W199_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W199_Flow16_di" bpmnElement="W199_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W199_Flow17_di" bpmnElement="W199_Flow17"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W199_Flow18_di" bpmnElement="W199_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W199_Assoc12_di" bpmnElement="W199_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W653" name="W653. Fleet Accident &amp; Incident Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicle accident, cargo damage incident, or third-party property damage during delivery operations
+Frequency: ~10–15 incidents/month across fleet
+Volume: ~2–4 per week
+Owner: Fleet Safety Officer
+Participants: Driver, Fleet Manager, Insurance Claims Coordinator, LP Analyst, HR Business Partner (if driver injury)
+Source: workflow W653 — Fleet Accident &amp; Incident Management</bpmn:documentation>
+      <bpmn:laneSet id="W653_LaneSet5">
+        <bpmn:lane id="W653_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W653_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W653_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W653_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W653_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W653_Lane2" name="Fleet Safety Officer">
+        <bpmn:flowNodeRef>W653_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W653_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W653_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W653_Lane3" name="Fleet Manager">
+        <bpmn:flowNodeRef>W653_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W653_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W653_Lane4" name="Insurance Claims Coordinator">
+        <bpmn:flowNodeRef>W653_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W653_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W653_Start6" name="Vehicle accident, cargo damage incident, or third-party property damage during delivery…">
+        <bpmn:outgoing>W653_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W653_Task7" name="Driver activates incident protocol: stops vehicle, secures scene, checks for…">
+        <bpmn:documentation>Step 1: Driver activates incident protocol: stops vehicle, secures scene, checks for injuries, calls emergency services if needed, notifies Fleet Manager via mobile app within 15 minutes
+Responsible (R): Driver
+Accountable (A): Fleet Safety Officer
+Duration: Immediate</bpmn:documentation>
+        <bpmn:incoming>W653_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task8" name="Driver collects evidence: photographs of vehicle damage, third-party…">
+        <bpmn:documentation>Step 2: Driver collects evidence: photographs of vehicle damage, third-party vehicle/property damage, road conditions, cargo condition; obtains third-party information (name, contact, vehicle details, insurance); identifies witnesses; does NOT admit fault
+Responsible (R): Driver
+Accountable (A): Fleet Safety Officer
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W653_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task9" name="For accidents with injuries or significant property damage: Driver files police…">
+        <bpmn:documentation>Step 3: For accidents with injuries or significant property damage: Driver files police report at nearest PNP station; obtains police blotter reference number
+Responsible (R): Driver
+Accountable (A): Fleet Safety Officer
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W653_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task10" name="Fleet Safety Officer receives incident report; classifies severity (Minor…">
+        <bpmn:documentation>Step 4: Fleet Safety Officer receives incident report; classifies severity (Minor: cosmetic damage only, Moderate: functional damage, cargo affected, Major: injury, total loss, third-party claim); activates appropriate response level
+Responsible (R): Fleet Safety Officer
+Accountable (A): Fleet Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W653_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task11" name="Fleet Manager arranges: vehicle recovery/towing if undrivable, cargo…">
+        <bpmn:documentation>Step 5: Fleet Manager arranges: vehicle recovery/towing if undrivable, cargo salvage/transfer to backup vehicle for delivery completion, driver medical assessment if injured
+Responsible (R): Fleet Manager
+Accountable (A): Fleet Safety Officer
+Duration: 2–4 hours</bpmn:documentation>
+        <bpmn:incoming>W653_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task12" name="Insurance Claims Coordinator initiates insurance claim per W610: submits…">
+        <bpmn:documentation>Step 6: Insurance Claims Coordinator initiates insurance claim per W610: submits incident report with evidence, obtains repair estimate from accredited shop, tracks claim to settlement
+Responsible (R): Insurance Claims Coordinator
+Accountable (A): Fleet Manager
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W653_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task13" name="Fleet Safety Officer conducts investigation: reviews telematics data (speed…">
+        <bpmn:documentation>Step 7: Fleet Safety Officer conducts investigation: reviews telematics data (speed, braking, location), driver history, route conditions; determines root cause (driver error, vehicle failure, third-party fault, road hazard); classifies preventability
+Responsible (R): Fleet Safety Officer
+Accountable (A): Fleet Manager
+Duration: 3 days</bpmn:documentation>
+        <bpmn:incoming>W653_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task14" name="For preventable accidents: Fleet Manager applies progressive discipline per…">
+        <bpmn:documentation>Step 8: For preventable accidents: Fleet Manager applies progressive discipline per driver safety program (W197); assigns remedial training; adjusts driver safety score
+Responsible (R): Fleet Manager
+Accountable (A): VP Supply Chain
+Duration: Per W197</bpmn:documentation>
+        <bpmn:incoming>W653_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W653_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W653_Task15" name="Monthly: Fleet Safety Officer produces incident analytics: incident rate per…">
+        <bpmn:documentation>Step 9: Monthly: Fleet Safety Officer produces incident analytics: incident rate per 100,000 km, preventability rate, cost per incident, trend by driver/route/vehicle/time; feeds driver performance dashboard (W197)
+Responsible (R): Fleet Safety Officer
+Accountable (A): Fleet Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W653_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W653_End16" name="Complete">
+        <bpmn:incoming>W653_Flow190</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W653_Annotation17">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: Fleet Safety Officer review and approval gate
+Owner: Fleet Safety Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W653_Assoc18" sourceRef="W653_Annotation17" targetRef="W653_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W653_Flow19" sourceRef="W653_Start6" targetRef="W653_Task7" />
+      <bpmn:sequenceFlow id="W653_Flow20" sourceRef="W653_Task7" targetRef="W653_Task8" />
+      <bpmn:sequenceFlow id="W653_Flow21" sourceRef="W653_Task8" targetRef="W653_Task9" />
+      <bpmn:sequenceFlow id="W653_Flow22" sourceRef="W653_Task9" targetRef="W653_Task10" />
+      <bpmn:sequenceFlow id="W653_Flow23" sourceRef="W653_Task10" targetRef="W653_Task11" />
+      <bpmn:sequenceFlow id="W653_Flow24" sourceRef="W653_Task11" targetRef="W653_Task12" />
+      <bpmn:sequenceFlow id="W653_Flow25" sourceRef="W653_Task12" targetRef="W653_Task13" />
+      <bpmn:sequenceFlow id="W653_Flow26" sourceRef="W653_Task13" targetRef="W653_Task14" />
+      <bpmn:sequenceFlow id="W653_Flow27" sourceRef="W653_Task14" targetRef="W653_Task15" />
+      <bpmn:sequenceFlow id="W653_Flow28" sourceRef="W653_Task15" targetRef="W653_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W653_diag">
+      <bpmndi:BPMNPlane id="W653_plane" bpmnElement="W_W653">
+        <bpmndi:BPMNShape id="W653_Lane1_di" bpmnElement="W653_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Lane2_di" bpmnElement="W653_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Lane3_di" bpmnElement="W653_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Lane4_di" bpmnElement="W653_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task7_di" bpmnElement="W653_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task8_di" bpmnElement="W653_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task9_di" bpmnElement="W653_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task10_di" bpmnElement="W653_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task11_di" bpmnElement="W653_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task12_di" bpmnElement="W653_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task13_di" bpmnElement="W653_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task14_di" bpmnElement="W653_Task14"><dc:Bounds x="1870" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Task15_di" bpmnElement="W653_Task15"><dc:Bounds x="2080" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Start6_di" bpmnElement="W653_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_End16_di" bpmnElement="W653_End16"><dc:Bounds x="2310" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W653_Annotation17_di" bpmnElement="W653_Annotation17"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W653_Flow19_di" bpmnElement="W653_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow20_di" bpmnElement="W653_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow21_di" bpmnElement="W653_Flow21"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow22_di" bpmnElement="W653_Flow22"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow23_di" bpmnElement="W653_Flow23"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow24_di" bpmnElement="W653_Flow24"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow25_di" bpmnElement="W653_Flow25"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow26_di" bpmnElement="W653_Flow26"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow27_di" bpmnElement="W653_Flow27"><di:waypoint x="2050" y="505" /><di:waypoint x="2080" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Flow28_di" bpmnElement="W653_Flow28"><di:waypoint x="2260" y="335" /><di:waypoint x="2310" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W653_Assoc18_di" bpmnElement="W653_Assoc18"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W654" name="W654. Driver Onboarding, Training &amp; Certification" isExecutable="false">
+      <bpmn:documentation>Trigger: New driver hire; annual recertification requirement; triggered by safety event requiring retraining
+Frequency: ~20–30 new driver hires/year (turnover replacement); all drivers recertified annually
+Volume: ~30–50 drivers (owned fleet); additional 3PL driver coordination
+Owner: Fleet Safety Officer
+Participants: Fleet Manager, HR Business Partner, Training Facilitator, Driver
+Source: workflow W654 — Driver Onboarding, Training &amp; Certification</bpmn:documentation>
+      <bpmn:laneSet id="W654_LaneSet5">
+        <bpmn:lane id="W654_Lane1" name="HR Business Partner">
+        <bpmn:flowNodeRef>W654_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W654_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W654_Lane2" name="Fleet Safety Officer">
+        <bpmn:flowNodeRef>W654_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W654_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W654_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W654_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W654_Lane3" name="Mentor Driver">
+        <bpmn:flowNodeRef>W654_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W654_Lane4" name="Fleet Manager">
+        <bpmn:flowNodeRef>W654_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W654_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W654_Start6" name="New driver hire; annual recertification requirement; triggered by safety event requiring…">
+        <bpmn:outgoing>W654_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W654_Task7" name="HR Business Partner confirms driver hire per recruitment process (W15)…">
+        <bpmn:documentation>Step 1: HR Business Partner confirms driver hire per recruitment process (W15); verifies professional driver&#x27;s license (restriction code 2 or 3 for trucks), valid medical certificate, NBI clearance, and drug test result (per COM-001)
+Responsible (R): HR Business Partner
+Accountable (A): Fleet Manager
+Duration: Per W15</bpmn:documentation>
+        <bpmn:incoming>W654_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W654_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W654_Task8" name="Fleet Safety Officer conducts 2-day driver onboarding: Day 1 — company…">
+        <bpmn:documentation>Step 2: Fleet Safety Officer conducts 2-day driver onboarding: Day 1 — company orientation, fleet policies, safety culture, incident reporting protocol (W653), drug and alcohol policy, customer service standards; Day 2 — vehicle familiarization, telematics system training (W199), mobile app operation, DC check-in/check-out procedures, fuel card usage (W198)
+Responsible (R): Fleet Safety Officer
+Accountable (A): Fleet Manager
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W654_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W654_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W654_Task9" name="Fleet Manager assigns experienced driver mentor for 1-week ride-along program…">
+        <bpmn:documentation>Step 3: Fleet Manager assigns experienced driver mentor for 1-week ride-along program: route familiarization, LGU truck ban awareness (W431), DC and store delivery point familiarization, customer interaction coaching, live cargo handling practice
+Responsible (R): Mentor Driver
+Accountable (A): Fleet Manager
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W654_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W654_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W654_Task10" name="Fleet Safety Officer conducts supervised driving assessment: pre-trip…">
+        <bpmn:documentation>Step 4: Fleet Safety Officer conducts supervised driving assessment: pre-trip inspection, driving evaluation (city, highway, loading dock maneuvers), post-trip inspection, cargo securing assessment; passes/fails based on scoring rubric (minimum 80%)
+Responsible (R): Fleet Safety Officer
+Accountable (A): Fleet Manager
+Duration: 0.5 day</bpmn:documentation>
+        <bpmn:incoming>W654_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W654_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W654_Task11" name="For passing drivers: Fleet Manager activates driver in dispatch system (W196)…">
+        <bpmn:documentation>Step 5: For passing drivers: Fleet Manager activates driver in dispatch system (W196); assigns initial routes with mentor backup; issues fuel card, mobile device, PPE, and vehicle keys
+Responsible (R): Fleet Manager
+Accountable (A): VP Supply Chain
+Duration: 0.5 day</bpmn:documentation>
+        <bpmn:incoming>W654_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W654_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W654_Task12" name="Annual recertification: Fleet Safety Officer conducts refresher training…">
+        <bpmn:documentation>Step 6: Annual recertification: Fleet Safety Officer conducts refresher training (safety updates, new regulations, accident review from past year); supervised driving re-assessment; license and medical certificate renewal verification
+Responsible (R): Fleet Safety Officer
+Accountable (A): Fleet Manager
+Duration: 1 day/driver</bpmn:documentation>
+        <bpmn:incoming>W654_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W654_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W654_Task13" name="For post-incident retraining: Fleet Safety Officer conducts targeted remedial…">
+        <bpmn:documentation>Step 7: For post-incident retraining: Fleet Safety Officer conducts targeted remedial training based on incident root cause (W653); specialized modules: defensive driving, hazmat transport, load securing, adverse weather driving; re-assessment before return to active duty
+Responsible (R): Fleet Safety Officer
+Accountable (A): Fleet Manager
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W654_Flow23</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W654_End14" name="Complete">
+        <bpmn:incoming>W654_Flow24</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W654_Annotation15">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: Fleet Safety Officer review and approval gate
+Owner: Fleet Safety Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W654_Assoc16" sourceRef="W654_Annotation15" targetRef="W654_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W654_Flow17" sourceRef="W654_Start6" targetRef="W654_Task7" />
+      <bpmn:sequenceFlow id="W654_Flow18" sourceRef="W654_Task7" targetRef="W654_Task8" />
+      <bpmn:sequenceFlow id="W654_Flow19" sourceRef="W654_Task8" targetRef="W654_Task9" />
+      <bpmn:sequenceFlow id="W654_Flow20" sourceRef="W654_Task9" targetRef="W654_Task10" />
+      <bpmn:sequenceFlow id="W654_Flow21" sourceRef="W654_Task10" targetRef="W654_Task11" />
+      <bpmn:sequenceFlow id="W654_Flow22" sourceRef="W654_Task11" targetRef="W654_Task12" />
+      <bpmn:sequenceFlow id="W654_Flow23" sourceRef="W654_Task12" targetRef="W654_Task13" />
+      <bpmn:sequenceFlow id="W654_Flow24" sourceRef="W654_Task13" targetRef="W654_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W654_diag">
+      <bpmndi:BPMNPlane id="W654_plane" bpmnElement="W_W654">
+        <bpmndi:BPMNShape id="W654_Lane1_di" bpmnElement="W654_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Lane2_di" bpmnElement="W654_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Lane3_di" bpmnElement="W654_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Lane4_di" bpmnElement="W654_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Task7_di" bpmnElement="W654_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Task8_di" bpmnElement="W654_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Task9_di" bpmnElement="W654_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Task10_di" bpmnElement="W654_Task10"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Task11_di" bpmnElement="W654_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Task12_di" bpmnElement="W654_Task12"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Task13_di" bpmnElement="W654_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Start6_di" bpmnElement="W654_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_End14_di" bpmnElement="W654_End14"><dc:Bounds x="1890" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W654_Annotation15_di" bpmnElement="W654_Annotation15"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W654_Flow17_di" bpmnElement="W654_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Flow18_di" bpmnElement="W654_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Flow19_di" bpmnElement="W654_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Flow20_di" bpmnElement="W654_Flow20"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Flow21_di" bpmnElement="W654_Flow21"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Flow22_di" bpmnElement="W654_Flow22"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Flow23_di" bpmnElement="W654_Flow23"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Flow24_di" bpmnElement="W654_Flow24"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W654_Assoc16_di" bpmnElement="W654_Assoc16"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W799" name="W799. Vehicle Acquisition, Registration, Insurance &amp; Disposal Lifecycle Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Fleet expansion need (new store openings); vehicle end-of-life (mileage/age threshold); insurance renewal; annual registration
+Frequency: Vehicle acquisition: 5-10 per year; registration: annual per vehicle; insurance: annual renewal; disposal: 3-5 per year
+Volume: ~40 owned vehicles (20% of fleet); mixed fleet of owned and 3PL per model-company profile
+Owner: Fleet Manager
+Participants: VP Supply Chain, Finance, Procurement, Insurance Provider, LTO, External Dealer
+Source: workflow W799 — Vehicle Acquisition, Registration, Insurance &amp; Disposal Lifecycle Management</bpmn:documentation>
+      <bpmn:laneSet id="W799_LaneSet3">
+        <bpmn:lane id="W799_Lane1" name="Fleet Manager">
+        <bpmn:flowNodeRef>W799_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W799_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W799_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W799_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W799_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W799_Lane2" name="Fleet Admin">
+        <bpmn:flowNodeRef>W799_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W799_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W799_Start4" name="Fleet expansion need (new store openings); vehicle end-of-life (mileage/age threshold)…">
+        <bpmn:outgoing>W799_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W799_Task5" name="Vehicle Requirement &amp; Acquisition">
+        <bpmn:documentation>Step 1: Vehicle Requirement &amp; Acquisition: When fleet expansion is needed: (a) Fleet Manager assesses vehicle type needed (6-wheeler, 10-wheeler, wing van) based on route characteristics and volume per W196; (b) Procurement issues RFP per W224 to authorized truck dealers (Isuzu, Hino, Mitsubishi Fuso); (c) evaluate bids on: purchase price, fuel efficiency, after-sales support, parts availability in Philippines, resale value; (d) Finance approves CAPEX per W21; (e) register new vehicle in Fleet Master per W401 with all specifications, purchase date, warranty terms
+Responsible (R): Fleet Manager / Procurement
+Accountable (A): VP Supply Chain
+Duration: 4-6 weeks per vehicle</bpmn:documentation>
+        <bpmn:incoming>W799_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W799_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W799_Task6" name="LTO Registration &amp; Compliance">
+        <bpmn:documentation>Step 2: LTO Registration &amp; Compliance: All owned vehicles must be registered annually with LTO: (a) emission testing per Clean Air Act (RA 8749) at LTO-accredited testing center; (b) vehicle inspection at LTO; (c) compulsory third-party liability (CTPL) insurance; (d) LTO registration fee payment; (e) registration sticker and plate renewal; (f) system tracks registration expiry dates with 60-day advance alerts per W506; (g) vehicle cannot be operated with expired registration per Philippine law
+Responsible (R): Fleet Admin
+Accountable (A): Fleet Manager
+Duration: 1-2 days per vehicle</bpmn:documentation>
+        <bpmn:incoming>W799_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W799_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W799_Task7" name="Insurance Management">
+        <bpmn:documentation>Step 3: Insurance Management: Annual fleet insurance renewal: (a) Fleet Manager reviews current coverage: comprehensive, third-party liability, cargo insurance, acts of God (typhoon, flood); (b) obtain competitive quotes from insurance providers; (c) negotiate fleet discount based on claim history per W610; (d) ensure coverage meets BuildRight cargo liability requirements; (e) register insurance policy in system per W59 with expiry alerts; (f) add new vehicles to policy; remove disposed vehicles
+Responsible (R): Fleet Manager
+Accountable (A): VP Supply Chain / Finance
+Duration: 1-2 weeks annual renewal</bpmn:documentation>
+        <bpmn:incoming>W799_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W799_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W799_Task8" name="Preventive Maintenance Scheduling">
+        <bpmn:documentation>Step 4: Preventive Maintenance Scheduling: Fleet Manager schedules PM per W188 based on: (a) manufacturer-recommended intervals (mileage or time-based); (b) telematics data per W199 (actual odometer vs. PM threshold); (c) seasonal requirements (pre-typhoon inspection, post-typhoon undercarriage check); (d) safety-critical items: brakes, tires, steering, lights inspected every 10,000 km; (e) system auto-generates PM work orders when mileage threshold approaches; (f) vehicle grounded if PM overdue by &gt;10%
+Responsible (R): Fleet Manager / Mechanic
+Accountable (A): VP Supply Chain
+Duration: Per W188 schedule</bpmn:documentation>
+        <bpmn:incoming>W799_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W799_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W799_Task9" name="Vehicle Disposal">
+        <bpmn:documentation>Step 5: Vehicle Disposal: When vehicle reaches end-of-life (typically 8-10 years or 500,000 km): (a) Fleet Manager recommends disposal based on: maintenance cost trend, reliability history, resale value projection, safety risk; (b) Finance approves disposal per W39 fixed asset disposal; (c) remove vehicle registration from LTO; (d) cancel insurance coverage; (e) sell via competitive bid to used truck dealers; (f) or trade-in with dealer for new vehicle acquisition per Step 1; (g) remove from Fleet Master per W401; (h) book gain/loss on disposal per W39
+Responsible (R): Fleet Manager / Finance
+Accountable (A): VP Supply Chain
+Duration: 2-4 weeks per vehicle</bpmn:documentation>
+        <bpmn:incoming>W799_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W799_End10" name="Complete">
+        <bpmn:incoming>W799_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W799_Annotation11">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: Fleet Manager review and approval gate
+Owner: Fleet Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W799_Assoc12" sourceRef="W799_Annotation11" targetRef="W799_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W799_Flow13" sourceRef="W799_Start4" targetRef="W799_Task5" />
+      <bpmn:sequenceFlow id="W799_Flow14" sourceRef="W799_Task5" targetRef="W799_Task6" />
+      <bpmn:sequenceFlow id="W799_Flow15" sourceRef="W799_Task6" targetRef="W799_Task7" />
+      <bpmn:sequenceFlow id="W799_Flow16" sourceRef="W799_Task7" targetRef="W799_Task8" />
+      <bpmn:sequenceFlow id="W799_Flow17" sourceRef="W799_Task8" targetRef="W799_Task9" />
+      <bpmn:sequenceFlow id="W799_Flow18" sourceRef="W799_Task9" targetRef="W799_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W799_diag">
+      <bpmndi:BPMNPlane id="W799_plane" bpmnElement="W_W799">
+        <bpmndi:BPMNShape id="W799_Lane1_di" bpmnElement="W799_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Lane2_di" bpmnElement="W799_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Task5_di" bpmnElement="W799_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Task6_di" bpmnElement="W799_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Task7_di" bpmnElement="W799_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Task8_di" bpmnElement="W799_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Task9_di" bpmnElement="W799_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Start4_di" bpmnElement="W799_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_End10_di" bpmnElement="W799_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W799_Annotation11_di" bpmnElement="W799_Annotation11"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W799_Flow13_di" bpmnElement="W799_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W799_Flow14_di" bpmnElement="W799_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W799_Flow15_di" bpmnElement="W799_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W799_Flow16_di" bpmnElement="W799_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W799_Flow17_di" bpmnElement="W799_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W799_Flow18_di" bpmnElement="W799_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W799_Assoc12_di" bpmnElement="W799_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1207" name="W1207. Third-Party Logistics (3PL) Provider Quarterly Performance Review &amp; Contract Renewal" isExecutable="false">
+      <bpmn:documentation>Trigger: Quarterly (Q1/Q2/Q3/Q4) per contract SLA review schedule; or triggered by persistent service failures exceeding threshold
+Frequency: Quarterly performance reviews; annual contract renewal evaluation
+Volume: ~10–15 active 3PL contracts (80% of fleet is third-party per company profile)
+Owner: Logistics Manager
+Participants: Logistics Manager, 3PL Account Manager, Finance Manager, Procurement Manager, Fleet Supervisor
+Source: workflow W1207 — Third-Party Logistics (3PL) Provider Quarterly Performance Review &amp; Contract Renewal</bpmn:documentation>
+      <bpmn:laneSet id="W1207_LaneSet5">
+        <bpmn:lane id="W1207_Lane1" name="System">
+        <bpmn:flowNodeRef>W1207_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1207_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1207_Lane2" name="Logistics Manager">
+        <bpmn:flowNodeRef>W1207_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1207_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1207_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1207_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1207_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1207_Lane3" name="Finance Manager">
+        <bpmn:flowNodeRef>W1207_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1207_Lane4" name="Procurement Manager">
+        <bpmn:flowNodeRef>W1207_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1207_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1207_Start6" name="Quarterly (Q1/Q2/Q3/Q4) per contract SLA review schedule; or triggered by persistent…">
+        <bpmn:outgoing>W1207_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1207_Task7" name="quarterly 3PL scorecard">
+        <bpmn:documentation>Step 1: System compiles quarterly 3PL scorecard for each active provider: (a) on-time delivery rate (target ≥ 95% for store replenishment; ≥ 90% for customer delivery), (b) delivery damage rate (target &lt; 0.5% of shipments), (c) invoice accuracy rate (target ≥ 98%), (d) vehicle utilization rate, (e) driver compliance with LGU truck ban hours per W431, (f) safety incident count, (g) POD (proof of delivery) return timeliness, (h) cost per delivery vs. contract rate, (i) escalation response time
+Responsible (R): System / Logistics Analyst
+Accountable (A): Logistics Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1207_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1207_Task8" name="Logistics Manager reviews each 3PL scorecard; highlights providers below SLA…">
+        <bpmn:documentation>Step 2: Logistics Manager reviews each 3PL scorecard; highlights providers below SLA thresholds; prepares quarterly review presentation with: scorecard summary, trend analysis (quarter-over-quarter), top issues, and recommended actions (continue, improvement plan, rebid)
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 2–3 hours</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1207_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1207_Task9" name="quarterly business review meeting">
+        <bpmn:documentation>Step 3: Logistics Manager conducts quarterly business review meeting with each 3PL Account Manager: (a) present scorecard results, (b) discuss root causes for below-threshold metrics, (c) agree on corrective actions and timelines, (d) review upcoming volume projections and capacity requirements, (e) discuss rate adjustments if triggered by contract escalation/de-escalation clauses
+Responsible (R): Logistics Manager / 3PL Account Manager
+Accountable (A): VP Supply Chain
+Duration: 1–2 hours per provider</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1207_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1207_Task10" name="Finance Manager reviews 3PL cost performance: (a) actual freight cost per…">
+        <bpmn:documentation>Step 4: Finance Manager reviews 3PL cost performance: (a) actual freight cost per ton-km vs. contract rate, (b) fuel surcharge reconciliation, (c) demurrage and detention charges per W249, (d) invoice discrepancy history; Finance Manager flags cost anomalies for Logistics Manager investigation
+Responsible (R): Finance Manager
+Accountable (A): CFO
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1207_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1207_Task11" name="improvement plan">
+        <bpmn:documentation>Step 5: If 3PL provider fails to meet minimum SLA for 2 consecutive quarters: Logistics Manager initiates improvement plan with: (a) specific corrective actions, (b) 30-day remediation timeline, (c) weekly check-in calls, (d) consequence clause (contract termination if not remediated within 60 days)
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1207_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1207_Task12" name="Annual contract renewal">
+        <bpmn:documentation>Step 6: Annual contract renewal: for contracts expiring within 90 days: (a) Procurement Manager issues RFQ to current provider and 2–3 alternative providers, (b) Logistics Manager provides volume forecast and service requirements, (c) Procurement Manager evaluates bids on: cost (40%), service quality track record (30%), capacity and coverage (20%), safety and compliance (10%), (d) VP Supply Chain approves award or re-award
+Responsible (R): Procurement Manager / Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1207_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1207_Task13" name="System updates 3PL vendor master with renewed contract terms: new rates, SLA…">
+        <bpmn:documentation>Step 7: System updates 3PL vendor master with renewed contract terms: new rates, SLA targets, capacity commitments, effective dates; deactivates expired contracts; Logistics Manager communicates any provider changes to DC Supervisors and Store Managers
+Responsible (R): Logistics Manager / System
+Accountable (A): Procurement Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1207_Flow24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1207_Task14" name="If contract awarded to new provider: Logistics Manager executes 3PL onboarding…">
+        <bpmn:documentation>Step 8: If contract awarded to new provider: Logistics Manager executes 3PL onboarding per W1163: system integration testing, driver badge issuance, route familiarization, and pilot runs before full cutover
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1207_Flow25</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1207_End15" name="Complete">
+        <bpmn:incoming>W1207_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1207_Annotation16">
+        <bpmn:text>Controls: - CTL-178 (ensure fleet compliance &amp; freight-cost integrity.) | - operational: Logistics Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Logistics Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1207_Assoc17" sourceRef="W1207_Annotation16" targetRef="W1207_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1207_Flow18" sourceRef="W1207_Start6" targetRef="W1207_Task7" />
+      <bpmn:sequenceFlow id="W1207_Flow19" sourceRef="W1207_Task7" targetRef="W1207_Task8" />
+      <bpmn:sequenceFlow id="W1207_Flow20" sourceRef="W1207_Task8" targetRef="W1207_Task9" />
+      <bpmn:sequenceFlow id="W1207_Flow21" sourceRef="W1207_Task9" targetRef="W1207_Task10" />
+      <bpmn:sequenceFlow id="W1207_Flow22" sourceRef="W1207_Task10" targetRef="W1207_Task11" />
+      <bpmn:sequenceFlow id="W1207_Flow23" sourceRef="W1207_Task11" targetRef="W1207_Task12" />
+      <bpmn:sequenceFlow id="W1207_Flow24" sourceRef="W1207_Task12" targetRef="W1207_Task13" />
+      <bpmn:sequenceFlow id="W1207_Flow25" sourceRef="W1207_Task13" targetRef="W1207_Task14" />
+      <bpmn:sequenceFlow id="W1207_Flow26" sourceRef="W1207_Task14" targetRef="W1207_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1207_diag">
+      <bpmndi:BPMNPlane id="W1207_plane" bpmnElement="W_W1207">
+        <bpmndi:BPMNShape id="W1207_Lane1_di" bpmnElement="W1207_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Lane2_di" bpmnElement="W1207_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Lane3_di" bpmnElement="W1207_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Lane4_di" bpmnElement="W1207_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task7_di" bpmnElement="W1207_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task8_di" bpmnElement="W1207_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task9_di" bpmnElement="W1207_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task10_di" bpmnElement="W1207_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task11_di" bpmnElement="W1207_Task11"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task12_di" bpmnElement="W1207_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task13_di" bpmnElement="W1207_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Task14_di" bpmnElement="W1207_Task14"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Start6_di" bpmnElement="W1207_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_End15_di" bpmnElement="W1207_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1207_Annotation16_di" bpmnElement="W1207_Annotation16"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1207_Flow18_di" bpmnElement="W1207_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow19_di" bpmnElement="W1207_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow20_di" bpmnElement="W1207_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow21_di" bpmnElement="W1207_Flow21"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow22_di" bpmnElement="W1207_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow23_di" bpmnElement="W1207_Flow23"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow24_di" bpmnElement="W1207_Flow24"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow25_di" bpmnElement="W1207_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Flow26_di" bpmnElement="W1207_Flow26"><di:waypoint x="2050" y="335" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1207_Assoc17_di" bpmnElement="W1207_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1256" name="W1256. Returnable Transport Packaging (RTP) Pool Management, Tracking &amp; Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Scheduled — weekly RTP inventory reconciliation; monthly pool health review; ad-hoc triggered by RTP shortage at DC or store accumulation alert
+Frequency: Weekly reconciliation; monthly pool review; annual procurement cycle for RTP replenishment
+Volume: ~2,000 RTP units (pallets, plastic totes, wire baskets) in circulation across 4 DCs and 200 stores; ~5,000 DC-to-store shipments per month using RTP
+Owner: Logistics Planner / DC Operations Manager
+Participants: Store Manager, Receiving Clerk, 3PL Transport Coordinator, Procurement Specialist, Finance Controller
+Source: workflow W1256 — Returnable Transport Packaging (RTP) Pool Management, Tracking &amp; Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1256_LaneSet5">
+        <bpmn:lane id="W1256_Lane1" name="DC Shift Supervisor">
+        <bpmn:flowNodeRef>W1256_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1256_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1256_Lane2" name="Receiving Clerk">
+        <bpmn:flowNodeRef>W1256_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1256_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1256_Lane3" name="Logistics Planner">
+        <bpmn:flowNodeRef>W1256_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1256_Lane4" name="Procurement Specialist">
+        <bpmn:flowNodeRef>W1256_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1256_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1256_Start6" name="Scheduled — weekly RTP inventory reconciliation; monthly pool health review; ad-hoc…">
+        <bpmn:outgoing>W1256_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1256_Task7" name="Weekly RTP inventory reconciliation">
+        <bpmn:documentation>Step 1: Weekly RTP inventory reconciliation: DC Operations team reconciles RTP pool inventory: (a) count RTP units at each DC (by type: pallets, totes, wire baskets); (b) query store-level RTP on-hand from system (stores scan RTP on receiving and log returns); (c) count RTP on 3PL trucks (in-transit); (d) calculate pool variance: total acquired – (DC on-hand + store on-hand + in-transit) = unaccounted loss; (e) investigate variances &gt; 2% of total pool
+Responsible (R): DC Shift Supervisor
+Accountable (A): DC Operations Manager
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1256_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1256_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1256_Task8" name="Store RTP return enforcement">
+        <bpmn:documentation>Step 2: Store RTP return enforcement: When DC-to-store delivery is made, driver collects empty RTP from previous delivery: (a) driver scans returning RTP units with handheld — system matches to store&#x27;s outstanding RTP balance; (b) store Receiving Clerk confirms RTP return count and condition; (c) system updates store RTP on-hand and DC RTP on-hand; (d) for stores with &gt; 20 outstanding RTP units (accumulation threshold): system alerts Store Manager for mandatory return on next delivery; (e) stores with &gt; 50 outstanding units for &gt; 30 days: flagged to Regional Manager for action
+Responsible (R): Receiving Clerk / Driver
+Accountable (A): Store Manager
+Duration: 10 min per delivery</bpmn:documentation>
+        <bpmn:incoming>W1256_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1256_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1256_Task9" name="Damaged RTP disposition">
+        <bpmn:documentation>Step 3: Damaged RTP disposition: Stores and DCs inspect RTP condition at each return: (a) Grade A (serviceable): clean, no cracks, all features functional — return to pool; (b) Grade B (repairable): cracked but structurally sound — send to DC for repair (plastic welding, wire straightening); (c) Grade C (unserviceable): broken, warped, contaminated — disposition as scrap per W443; (d) system tracks damage rate by store, DC, and 3PL partner; (e) stores with &gt; 10% damage rate receive handling retraining
+Responsible (R): Receiving Clerk / DC Quality Inspector
+Accountable (A): DC Operations Manager
+Duration: 5 min per RTP return</bpmn:documentation>
+        <bpmn:incoming>W1256_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1256_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1256_Task10" name="Monthly pool health review">
+        <bpmn:documentation>Step 4: Monthly pool health review: Logistics Planner reviews RTP pool health: (a) total pool size vs. target (minimum 2,500 units for current volume); (b) utilization rate — % of pool in active circulation vs. idle at stores; (c) loss rate trend — unaccounted losses as % of total pool per month; (d) damage rate trend; (e) average RTP turnaround time (DC → store → DC return); (f) calculate replacement procurement need: estimated losses + estimated damage = new RTP procurement quantity
+Responsible (R): Logistics Planner
+Accountable (A): DC Operations Manager
+Duration: 3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1256_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1256_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1256_Task11" name="Annual RTP procurement">
+        <bpmn:documentation>Step 5: Annual RTP procurement: Procurement Specialist executes annual RTP replenishment purchase: (a) determine procurement quantity based on pool health review; (b) obtain competitive quotes from RTP suppliers (minimum 3 quotes for &gt; PHP 500,000 purchase); (c) submit capex/expense request per approval matrix (W21); (d) manage delivery of new RTP units to DCs; (e) update pool master with new unit count and supplier warranty terms
+Responsible (R): Procurement Specialist
+Accountable (A): Finance Controller
+Duration: 8 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1256_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1256_End12" name="Complete">
+        <bpmn:incoming>W1256_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1256_Annotation13">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: Logistics Planner / DC Operations Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Logistics Planner / DC Operations Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1256_Assoc14" sourceRef="W1256_Annotation13" targetRef="W1256_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1256_Flow15" sourceRef="W1256_Start6" targetRef="W1256_Task7" />
+      <bpmn:sequenceFlow id="W1256_Flow16" sourceRef="W1256_Task7" targetRef="W1256_Task8" />
+      <bpmn:sequenceFlow id="W1256_Flow17" sourceRef="W1256_Task8" targetRef="W1256_Task9" />
+      <bpmn:sequenceFlow id="W1256_Flow18" sourceRef="W1256_Task9" targetRef="W1256_Task10" />
+      <bpmn:sequenceFlow id="W1256_Flow19" sourceRef="W1256_Task10" targetRef="W1256_Task11" />
+      <bpmn:sequenceFlow id="W1256_Flow20" sourceRef="W1256_Task11" targetRef="W1256_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1256_diag">
+      <bpmndi:BPMNPlane id="W1256_plane" bpmnElement="W_W1256">
+        <bpmndi:BPMNShape id="W1256_Lane1_di" bpmnElement="W1256_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Lane2_di" bpmnElement="W1256_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Lane3_di" bpmnElement="W1256_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Lane4_di" bpmnElement="W1256_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Task7_di" bpmnElement="W1256_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Task8_di" bpmnElement="W1256_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Task9_di" bpmnElement="W1256_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Task10_di" bpmnElement="W1256_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Task11_di" bpmnElement="W1256_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Start6_di" bpmnElement="W1256_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_End12_di" bpmnElement="W1256_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1256_Annotation13_di" bpmnElement="W1256_Annotation13"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1256_Flow15_di" bpmnElement="W1256_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1256_Flow16_di" bpmnElement="W1256_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1256_Flow17_di" bpmnElement="W1256_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1256_Flow18_di" bpmnElement="W1256_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1256_Flow19_di" bpmnElement="W1256_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1256_Flow20_di" bpmnElement="W1256_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1256_Assoc14_di" bpmnElement="W1256_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1400" name="W1400. Driver License Expiration Monitoring, LTO Compliance &amp; Renewal Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly compliance review cycle; or LTO license expiration approaching (system alert at 60-day, 30-day, and 7-day thresholds)
+Frequency: Monthly review; continuous system monitoring
+Volume: ~40 owned-fleet drivers + ~15 DC spotter/yard drivers = ~55 drivers requiring valid professional driver&#x27;s licenses (PDL); ~55 licenses tracked, with ~11 expirations/year under the LTO 5-year validity, on rolling monthly monitoring
+Owner: Fleet Maintenance Supervisor
+Participants: Fleet Maintenance Supervisor, HR Assistant, Driver, LTO
+Source: workflow W1400 — Driver License Expiration Monitoring, LTO Compliance &amp; Renewal Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W1400_LaneSet4">
+        <bpmn:lane id="W1400_Lane1" name="Fleet Maintenance Supervisor">
+        <bpmn:flowNodeRef>W1400_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1400_Lane2" name="System">
+        <bpmn:flowNodeRef>W1400_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1400_Lane3" name="Driver">
+        <bpmn:flowNodeRef>W1400_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1400_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1400_Start5" name="Monthly compliance review cycle; or LTO license expiration approaching (system alert at…">
+        <bpmn:outgoing>W1400_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1400_Task6" name="System maintains driver license master record per driver: full name, LTO…">
+        <bpmn:documentation>Step 1: System maintains driver license master record per driver: full name, LTO license number, PDL restriction codes, expiration date, Conduction Stick Number; Fleet Maintenance Supervisor enters new license data upon driver onboarding (W654) and upon renewal
+Responsible (R): Fleet Maintenance Supervisor / System
+Accountable (A): —
+Duration: 10 min/driver</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1400_Task7" name="System automatically checks driver license expiration dates daily; generates…">
+        <bpmn:documentation>Step 2: System automatically checks driver license expiration dates daily; generates alerts at 60-day (yellow), 30-day (orange), and 7-day (red) pre-expiration thresholds; dashboard shows all drivers sorted by days-to-expiration
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1400_Task8" name="At 60-day alert: Fleet Maintenance Supervisor notifies driver verbally and via…">
+        <bpmn:documentation>Step 3: At 60-day alert: Fleet Maintenance Supervisor notifies driver verbally and via SMS/email to begin LTO renewal process; driver instructed to schedule LTO appointment (walk-in or online via LTO portal)
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 5 min/driver</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1400_Task9" name="At 30-day alert: Fleet Maintenance Supervisor sends written reminder to driver…">
+        <bpmn:documentation>Step 4: At 30-day alert: Fleet Maintenance Supervisor sends written reminder to driver with copy to HR; HR verifies driver has not received any LTO notice of suspension or revocation; if driver has pending LTO violations, HR flags for resolution before renewal
+Responsible (R): Fleet Maintenance Supervisor / HR Assistant
+Accountable (A): Logistics Manager
+Duration: 10 min/driver</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1400_Task10" name="Driver completes LTO renewal: (a) medical examination at LTO-accredited clinic…">
+        <bpmn:documentation>Step 5: Driver completes LTO renewal: (a) medical examination at LTO-accredited clinic, (b) written examination (if required per LTO rules), (c) practical driving test (if required), (d) biometrics and photo capture, (e) payment of renewal fee (~PHP 500–800)
+Responsible (R): Driver
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1400_Task11" name="Driver returns with renewed PDL; Fleet Maintenance Supervisor verifies new…">
+        <bpmn:documentation>Step 6: Driver returns with renewed PDL; Fleet Maintenance Supervisor verifies new license: validates restriction codes match assigned vehicle type, confirms new expiration date, scans and uploads front/back of renewed license to driver master record in ERP
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 10 min/driver</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1400_Task12" name="System updates driver master with new license details and resets expiration…">
+        <bpmn:documentation>Step 7: System updates driver master with new license details and resets expiration alert calendar
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1400_Task13" name="If driver fails to renew before expiration: system automatically flags driver…">
+        <bpmn:documentation>Step 8: If driver fails to renew before expiration: system automatically flags driver as &quot;License Expired — Do Not Dispatch&quot;; dispatch system (W196) prevents assignment of any shipment to this driver; Logistics Manager notified for immediate action
+Responsible (R): System / Logistics Planner
+Accountable (A): Logistics Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1400_Flow25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1400_Task14" name="Monthly: Fleet Maintenance Supervisor runs LTO compliance report showing all…">
+        <bpmn:documentation>Step 9: Monthly: Fleet Maintenance Supervisor runs LTO compliance report showing all drivers with licenses expiring within 90 days, drivers with restriction code mismatches, and any drivers currently blocked from dispatch; submits report to Logistics Manager
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): Logistics Manager
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1400_Flow26</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1400_End15" name="Complete">
+        <bpmn:incoming>W1400_Flow180</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1400_Annotation16">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: downtime, long queues, and limited appointment slots
+Owner: Fleet Maintenance Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1400_Assoc17" sourceRef="W1400_Annotation16" targetRef="W1400_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1400_Flow18" sourceRef="W1400_Start5" targetRef="W1400_Task6" />
+      <bpmn:sequenceFlow id="W1400_Flow19" sourceRef="W1400_Task6" targetRef="W1400_Task7" />
+      <bpmn:sequenceFlow id="W1400_Flow20" sourceRef="W1400_Task7" targetRef="W1400_Task8" />
+      <bpmn:sequenceFlow id="W1400_Flow21" sourceRef="W1400_Task8" targetRef="W1400_Task9" />
+      <bpmn:sequenceFlow id="W1400_Flow22" sourceRef="W1400_Task9" targetRef="W1400_Task10" />
+      <bpmn:sequenceFlow id="W1400_Flow23" sourceRef="W1400_Task10" targetRef="W1400_Task11" />
+      <bpmn:sequenceFlow id="W1400_Flow24" sourceRef="W1400_Task11" targetRef="W1400_Task12" />
+      <bpmn:sequenceFlow id="W1400_Flow25" sourceRef="W1400_Task12" targetRef="W1400_Task13" />
+      <bpmn:sequenceFlow id="W1400_Flow26" sourceRef="W1400_Task13" targetRef="W1400_Task14" />
+      <bpmn:sequenceFlow id="W1400_Flow27" sourceRef="W1400_Task14" targetRef="W1400_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1400_diag">
+      <bpmndi:BPMNPlane id="W1400_plane" bpmnElement="W_W1400">
+        <bpmndi:BPMNShape id="W1400_Lane1_di" bpmnElement="W1400_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Lane2_di" bpmnElement="W1400_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Lane3_di" bpmnElement="W1400_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2210" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task6_di" bpmnElement="W1400_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task7_di" bpmnElement="W1400_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task8_di" bpmnElement="W1400_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task9_di" bpmnElement="W1400_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task10_di" bpmnElement="W1400_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task11_di" bpmnElement="W1400_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task12_di" bpmnElement="W1400_Task12"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task13_di" bpmnElement="W1400_Task13"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Task14_di" bpmnElement="W1400_Task14"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Start5_di" bpmnElement="W1400_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_End15_di" bpmnElement="W1400_End15"><dc:Bounds x="2310" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1400_Annotation16_di" bpmnElement="W1400_Annotation16"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1400_Flow18_di" bpmnElement="W1400_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow19_di" bpmnElement="W1400_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow20_di" bpmnElement="W1400_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow21_di" bpmnElement="W1400_Flow21"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow22_di" bpmnElement="W1400_Flow22"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow23_di" bpmnElement="W1400_Flow23"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow24_di" bpmnElement="W1400_Flow24"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow25_di" bpmnElement="W1400_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow26_di" bpmnElement="W1400_Flow26"><di:waypoint x="2050" y="335" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Flow27_di" bpmnElement="W1400_Flow27"><di:waypoint x="2260" y="165" /><di:waypoint x="2310" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1400_Assoc17_di" bpmnElement="W1400_Assoc17"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1401" name="W1401. Fleet Vehicle Annual LTO Registration Renewal &amp; Motor Vehicle Inspection Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual vehicle registration expiration approaching (system alert at 60-day and 30-day thresholds); or new vehicle acquisition requiring initial LTO registration (W799)
+Frequency: Annual per vehicle; ~40 owned trucks; LTO registration is valid for 1 year for commercial vehicles
+Volume: ~40 registrations/year (~3–4 per month); 80% of fleet (160 trucks) is third-party and registered by the 3PL operator (outside BuildRight scope)
+Owner: Fleet Maintenance Supervisor
+Participants: Fleet Maintenance Supervisor, Logistics Planner, Finance (payment), LTO, Motor Vehicle Inspection Center (MVIC)
+Source: workflow W1401 — Fleet Vehicle Annual LTO Registration Renewal &amp; Motor Vehicle Inspection Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W1401_LaneSet4">
+        <bpmn:lane id="W1401_Lane1" name="Fleet Maintenance Supervisor">
+        <bpmn:flowNodeRef>W1401_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1401_Lane2" name="System">
+        <bpmn:flowNodeRef>W1401_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1401_Lane3" name="MVIC Technician">
+        <bpmn:flowNodeRef>W1401_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1401_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1401_Start5" name="Annual vehicle registration expiration approaching (system alert at 60-day and 30-day…">
+        <bpmn:outgoing>W1401_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1401_Task6" name="System maintains vehicle master record per owned truck: plate number…">
+        <bpmn:documentation>Step 1: System maintains vehicle master record per owned truck: plate number, conduction sticker number, MV File Number, current registration expiry date, gross vehicle weight (GVW), body type, engine number, chassis number; Fleet Maintenance Supervisor updates upon acquisition (W799) and upon each renewal
+Responsible (R): Fleet Maintenance Supervisor / System
+Accountable (A): —
+Duration: 10 min/vehicle</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1401_Task7" name="System automatically checks vehicle registration expiration dates; generates…">
+        <bpmn:documentation>Step 2: System automatically checks vehicle registration expiration dates; generates alerts at 60-day (yellow) and 30-day (red) pre-expiration thresholds; dashboard shows all owned vehicles sorted by days-to-expiration
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1401_Task8" name="At 60-day alert: Fleet Maintenance Supervisor schedules PMVIC inspection…">
+        <bpmn:documentation>Step 3: At 60-day alert: Fleet Maintenance Supervisor schedules PMVIC inspection appointment for the vehicle; ensures vehicle is in roadworthy condition per preventive maintenance schedule (W1348)
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 15 min/vehicle</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1401_Task9" name="Vehicle undergoes PMVIC inspection: (a) emission test (opacity/smoke test for…">
+        <bpmn:documentation>Step 4: Vehicle undergoes PMVIC inspection: (a) emission test (opacity/smoke test for diesel vehicles per DENR-EMB standards), (b) headlamp aim and intensity test, (c) brake efficiency test (front, rear, and parking), (d) side slip test, (e) under-chassis visual inspection (steering, suspension, leaks), (f) tire tread depth measurement; test results transmitted electronically from PMVIC to LTO
+Responsible (R): MVIC Technician
+Accountable (A): Fleet Maintenance Supervisor
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1401_Task10" name="passes">
+        <bpmn:documentation>Step 5: If vehicle passes PMVIC inspection: Fleet Maintenance Supervisor proceeds to LTO for registration renewal; LTO system automatically receives electronic inspection results
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 2–4 hours (including LTO queue)</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1401_Task11" name="fails">
+        <bpmn:documentation>Step 6: If vehicle fails PMVIC inspection: Fleet Maintenance Supervisor receives deficiency report listing specific failures; schedules repairs with fleet mechanic or external service provider (W1348); vehicle is repaired and re-inspected within 30 days; vehicle must not be dispatched for commercial use until it passes re-inspection
+Responsible (R): Fleet Maintenance Supervisor / Mechanic
+Accountable (A): Logistics Manager
+Duration: 1–5 days (repair + re-inspection)</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1401_Task12" name="LTO registration renewal: Fleet Maintenance Supervisor presents (a) current…">
+        <bpmn:documentation>Step 7: LTO registration renewal: Fleet Maintenance Supervisor presents (a) current Certificate of Registration (CR), (b) Official Receipt (OR) of previous year&#x27;s registration, (c) PMVIC electronic inspection result, (d) Compulsory Third Party Liability (CTPL) insurance certificate, (e) payment of registration fee and weighing fee (total ~PHP 2,000–5,000 depending on GVW); LTO issues new OR/CR sticker
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 2–4 hours</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1401_Task13" name="Fleet Maintenance Supervisor updates vehicle master record with new…">
+        <bpmn:documentation>Step 8: Fleet Maintenance Supervisor updates vehicle master record with new registration expiry date; scans and uploads new OR/CR; affixes new registration sticker to vehicle windshield
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): —
+Duration: 10 min/vehicle</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1401_Task14" name="System resets registration alert calendar for the vehicle; vehicle remains…">
+        <bpmn:documentation>Step 9: System resets registration alert calendar for the vehicle; vehicle remains eligible for dispatch
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow28</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1401_Task15" name="If vehicle registration expires without renewal: system flags vehicle as…">
+        <bpmn:documentation>Step 10: If vehicle registration expires without renewal: system flags vehicle as &quot;Registration Expired — Do Not Dispatch&quot;; dispatch system (W196) prevents assignment; Logistics Manager notified for immediate action; vehicle physically grounded until renewed
+Responsible (R): System / Logistics Planner
+Accountable (A): Logistics Manager
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow200</bpmn:incoming>
+        <bpmn:outgoing>W1401_Flow200</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1401_Task16" name="Monthly: Fleet Maintenance Supervisor runs LTO vehicle compliance report…">
+        <bpmn:documentation>Step 11: Monthly: Fleet Maintenance Supervisor runs LTO vehicle compliance report showing all vehicles with registrations expiring within 90 days, vehicles currently grounded for registration issues, and any vehicles with pending PMVIC re-inspection
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): Logistics Manager
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1401_Flow201</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1401_End17" name="Complete">
+        <bpmn:incoming>W1401_Flow202</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1401_Annotation18">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: registration/inspection docket with 60/30-day lead alerts; vehicles past due blocked from dispatch
+Owner: Fleet Maintenance Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1401_Assoc19" sourceRef="W1401_Annotation18" targetRef="W1401_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1401_Flow20" sourceRef="W1401_Start5" targetRef="W1401_Task6" />
+      <bpmn:sequenceFlow id="W1401_Flow21" sourceRef="W1401_Task6" targetRef="W1401_Task7" />
+      <bpmn:sequenceFlow id="W1401_Flow22" sourceRef="W1401_Task7" targetRef="W1401_Task8" />
+      <bpmn:sequenceFlow id="W1401_Flow23" sourceRef="W1401_Task8" targetRef="W1401_Task9" />
+      <bpmn:sequenceFlow id="W1401_Flow24" sourceRef="W1401_Task9" targetRef="W1401_Task10" />
+      <bpmn:sequenceFlow id="W1401_Flow25" sourceRef="W1401_Task10" targetRef="W1401_Task11" />
+      <bpmn:sequenceFlow id="W1401_Flow26" sourceRef="W1401_Task11" targetRef="W1401_Task12" />
+      <bpmn:sequenceFlow id="W1401_Flow27" sourceRef="W1401_Task12" targetRef="W1401_Task13" />
+      <bpmn:sequenceFlow id="W1401_Flow28" sourceRef="W1401_Task13" targetRef="W1401_Task14" />
+      <bpmn:sequenceFlow id="W1401_Flow29" sourceRef="W1401_Task14" targetRef="W1401_Task15" />
+      <bpmn:sequenceFlow id="W1401_Flow30" sourceRef="W1401_Task15" targetRef="W1401_Task16" />
+      <bpmn:sequenceFlow id="W1401_Flow31" sourceRef="W1401_Task16" targetRef="W1401_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1401_diag">
+      <bpmndi:BPMNPlane id="W1401_plane" bpmnElement="W_W1401">
+        <bpmndi:BPMNShape id="W1401_Lane1_di" bpmnElement="W1401_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Lane2_di" bpmnElement="W1401_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Lane3_di" bpmnElement="W1401_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2630" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task6_di" bpmnElement="W1401_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task7_di" bpmnElement="W1401_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task8_di" bpmnElement="W1401_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task9_di" bpmnElement="W1401_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task10_di" bpmnElement="W1401_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task11_di" bpmnElement="W1401_Task11"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task12_di" bpmnElement="W1401_Task12"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task13_di" bpmnElement="W1401_Task13"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task14_di" bpmnElement="W1401_Task14"><dc:Bounds x="2080" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task15_di" bpmnElement="W1401_Task15"><dc:Bounds x="2290" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Task16_di" bpmnElement="W1401_Task16"><dc:Bounds x="2500" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Start5_di" bpmnElement="W1401_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_End17_di" bpmnElement="W1401_End17"><dc:Bounds x="2730" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1401_Annotation18_di" bpmnElement="W1401_Annotation18"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1401_Flow20_di" bpmnElement="W1401_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow21_di" bpmnElement="W1401_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow22_di" bpmnElement="W1401_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow23_di" bpmnElement="W1401_Flow23"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow24_di" bpmnElement="W1401_Flow24"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow25_di" bpmnElement="W1401_Flow25"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow26_di" bpmnElement="W1401_Flow26"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow27_di" bpmnElement="W1401_Flow27"><di:waypoint x="1840" y="165" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow28_di" bpmnElement="W1401_Flow28"><di:waypoint x="2050" y="165" /><di:waypoint x="2080" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow29_di" bpmnElement="W1401_Flow29"><di:waypoint x="2260" y="335" /><di:waypoint x="2290" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow30_di" bpmnElement="W1401_Flow30"><di:waypoint x="2470" y="335" /><di:waypoint x="2500" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Flow31_di" bpmnElement="W1401_Flow31"><di:waypoint x="2680" y="165" /><di:waypoint x="2730" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1401_Assoc19_di" bpmnElement="W1401_Assoc19"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1515" name="W1515. Delivery Vehicle Fuel Card Management, Consumption Tracking &amp; Cost Control" isExecutable="false">
+      <bpmn:documentation>Trigger: Ongoing fleet operations; monthly fuel cost review cycle; fuel price increase events
+Frequency: Daily fuel card transactions (~80–120 fuelings/day across fleet); monthly reporting and reconciliation
+Volume: ~40 owned + ~160 contracted 3PL delivery vehicles; ~PHP 3–5M/month fuel spend
+Owner: Fleet Maintenance Supervisor
+Participants: Fleet Maintenance Supervisor, Drivers, Logistics Manager, Finance Controller, Fuel Card Provider
+Source: workflow W1515 — Delivery Vehicle Fuel Card Management, Consumption Tracking &amp; Cost Control</bpmn:documentation>
+      <bpmn:laneSet id="W1515_LaneSet5">
+        <bpmn:lane id="W1515_Lane1" name="Fleet Maintenance Supervisor">
+        <bpmn:flowNodeRef>W1515_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1515_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1515_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1515_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1515_Lane2" name="Driver">
+        <bpmn:flowNodeRef>W1515_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1515_Lane3" name="Finance Controller">
+        <bpmn:flowNodeRef>W1515_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1515_Lane4" name="Logistics Manager">
+        <bpmn:flowNodeRef>W1515_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1515_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1515_Start6" name="Ongoing fleet operations; monthly fuel cost review cycle; fuel price increase events">
+        <bpmn:outgoing>W1515_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1515_Task7" name="Fuel card issuance and setup">
+        <bpmn:documentation>Step 1: Fuel card issuance and setup: (a) Fleet Maintenance Supervisor assigns one fuel card per vehicle (owned fleet) or per driver (3PL fleet); (b) card configured with: (i) fuel type restriction (diesel only), (ii) daily transaction limit (PHP 3,000 for 6-wheeler, PHP 5,000 for 10-wheeler), (iii) allowed fuel station network (Petron, Shell, Caltex — negotiated discount agreement), (iv) odometer reading required at each transaction; (c) driver signs fuel card custody agreement acknowledging replacement fee for lost cards
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): Logistics Manager
+Duration: 20 min/vehicle (initial setup)</bpmn:documentation>
+        <bpmn:incoming>W1515_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1515_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1515_Task8" name="Daily fueling">
+        <bpmn:documentation>Step 2: Daily fueling: (a) driver fuels at approved station within network; (b) taps fuel card at pump; (c) enters current odometer reading at POS; (d) fuel card system validates: vehicle/driver match, daily limit not exceeded, station is in approved network; (e) transaction approved: fuel amount, liters, station ID, odometer, timestamp recorded
+Responsible (R): Driver
+Accountable (A): —
+Duration: 10–15 min/fueling</bpmn:documentation>
+        <bpmn:incoming>W1515_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1515_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1515_Task9" name="Exception monitoring">
+        <bpmn:documentation>Step 3: Exception monitoring (daily): (a) system flags anomalies: (i) fueling amount exceeds expected consumption for distance driven (liters/km &gt; vehicle model average + 15%), (ii) fueling at non-network station, (iii) multiple fuelings in one day, (iv) odometer reading decreased (tampering), (v) fueling outside DC delivery zone; (b) Fleet Maintenance Supervisor reviews daily exception report and investigates: contacts driver, reviews route manifest, checks GPS track vs. fueling location
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): Logistics Manager
+Duration: 30–60 min/day</bpmn:documentation>
+        <bpmn:incoming>W1515_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1515_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1515_Task10" name="Monthly reconciliation">
+        <bpmn:documentation>Step 4: Monthly reconciliation: (a) system calculates per-vehicle: total liters, total cost, average km/L, cost/km, total distance (from odometer delta); (b) Fleet Maintenance Supervisor compares actual km/L vs. vehicle model benchmark (e.g., 10-wheeler: 3.5–4.5 km/L diesel; 6-wheeler: 5–6 km/L); (c) flags vehicles with &gt; 20% deviation from benchmark for maintenance check (fuel system issue) or driver counseling (driving behavior)
+Responsible (R): Fleet Maintenance Supervisor
+Accountable (A): Logistics Manager
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1515_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1515_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1515_Task11" name="Monthly fuel cost reporting">
+        <bpmn:documentation>Step 5: Monthly fuel cost reporting: (a) Finance Controller receives consolidated fuel card statement from provider; (b) reconciles against GL fuel expense postings; (c) calculates: (i) total fleet fuel cost, (ii) cost per DC territory, (iii) cost per delivery (fuel portion), (iv) volume discount earned; (d) Finance Controller and Logistics Manager review monthly fuel cost trends and budget variance
+Responsible (R): Finance Controller / Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1515_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1515_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1515_Task12" name="Quarterly fuel contract negotiation">
+        <bpmn:documentation>Step 6: Quarterly fuel contract negotiation: (a) Fleet Maintenance Supervisor compiles consumption data by station chain; (b) Logistics Manager negotiates volume discount agreement with top 2 fuel companies: (i) target 3–5% discount vs. pump price, (ii) priority lane access at high-traffic stations near DCs, (iii) quarterly rebate based on volume tiers
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 4–6 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1515_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1515_End13" name="Complete">
+        <bpmn:incoming>W1515_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1515_Annotation14">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: daily km/L monitoring with GPS-track and fueling-location correlation
+Owner: Fleet Maintenance Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1515_Assoc15" sourceRef="W1515_Annotation14" targetRef="W1515_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1515_Flow16" sourceRef="W1515_Start6" targetRef="W1515_Task7" />
+      <bpmn:sequenceFlow id="W1515_Flow17" sourceRef="W1515_Task7" targetRef="W1515_Task8" />
+      <bpmn:sequenceFlow id="W1515_Flow18" sourceRef="W1515_Task8" targetRef="W1515_Task9" />
+      <bpmn:sequenceFlow id="W1515_Flow19" sourceRef="W1515_Task9" targetRef="W1515_Task10" />
+      <bpmn:sequenceFlow id="W1515_Flow20" sourceRef="W1515_Task10" targetRef="W1515_Task11" />
+      <bpmn:sequenceFlow id="W1515_Flow21" sourceRef="W1515_Task11" targetRef="W1515_Task12" />
+      <bpmn:sequenceFlow id="W1515_Flow22" sourceRef="W1515_Task12" targetRef="W1515_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1515_diag">
+      <bpmndi:BPMNPlane id="W1515_plane" bpmnElement="W_W1515">
+        <bpmndi:BPMNShape id="W1515_Lane1_di" bpmnElement="W1515_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Lane2_di" bpmnElement="W1515_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Lane3_di" bpmnElement="W1515_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Lane4_di" bpmnElement="W1515_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Task7_di" bpmnElement="W1515_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Task8_di" bpmnElement="W1515_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Task9_di" bpmnElement="W1515_Task9"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Task10_di" bpmnElement="W1515_Task10"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Task11_di" bpmnElement="W1515_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Task12_di" bpmnElement="W1515_Task12"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Start6_di" bpmnElement="W1515_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_End13_di" bpmnElement="W1515_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1515_Annotation14_di" bpmnElement="W1515_Annotation14"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1515_Flow16_di" bpmnElement="W1515_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1515_Flow17_di" bpmnElement="W1515_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1515_Flow18_di" bpmnElement="W1515_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1515_Flow19_di" bpmnElement="W1515_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1515_Flow20_di" bpmnElement="W1515_Flow20"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1515_Flow21_di" bpmnElement="W1515_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1515_Flow22_di" bpmnElement="W1515_Flow22"><di:waypoint x="1630" y="675" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1515_Assoc15_di" bpmnElement="W1515_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1536" name="W1536. Fleet Vehicle Registration Renewal, LTO Compliance &amp; LTFRB Cargo Freight License Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vehicle registration renewal due (annual); or LTFRB freight license renewal (every 3–5 years); or new vehicle acquisition
+Frequency: ~40–60 vehicle registrations/year (owned fleet of ~20% of total truck requirement); ~5–10 LTFRB renewals/year
+Volume: Critical for BuildRight Logistics, Inc. owned fleet operations
+Owner: Fleet Manager
+Participants: Fleet Manager, Fleet Assistant, Logistics Planner, LTO/LTFRB liaison
+Source: workflow W1536 — Fleet Vehicle Registration Renewal, LTO Compliance &amp; LTFRB Cargo Freight License Management</bpmn:documentation>
+      <bpmn:laneSet id="W1536_LaneSet4">
+        <bpmn:lane id="W1536_Lane1" name="System">
+        <bpmn:flowNodeRef>W1536_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1536_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1536_Lane2" name="Fleet Assistant">
+        <bpmn:flowNodeRef>W1536_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1536_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1536_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1536_Lane3" name="Fleet Manager">
+        <bpmn:flowNodeRef>W1536_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1536_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1536_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1536_Start5" name="Vehicle registration renewal due (annual); or LTFRB freight license renewal (every 3–5…">
+        <bpmn:outgoing>W1536_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1536_Task6" name="Renewal calendar management">
+        <bpmn:documentation>Step 1: Renewal calendar management: System maintains vehicle registration master with plate number, renewal month (based on LTO plate ending schedule), LTFRB franchise expiry, and insurance expiry; generates automated alerts at 60 days and 30 days before each renewal due date
+Responsible (R): System / Fleet Assistant
+Accountable (A): Fleet Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1536_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1536_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1536_Task7" name="Pre-inspection preparation">
+        <bpmn:documentation>Step 2: Pre-inspection preparation: Fleet Assistant schedules vehicle for mechanical inspection — brakes, tires, lights, body condition, emission testing (required by LTO); coordinates with maintenance workshop (W188) for any needed repairs before LTO inspection
+Responsible (R): Fleet Assistant
+Accountable (A): Fleet Manager
+Duration: 1–2 days/vehicle</bpmn:documentation>
+        <bpmn:incoming>W1536_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1536_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1536_Task8" name="LTO transaction processing">
+        <bpmn:documentation>Step 3: LTO transaction processing: Fleet Assistant (or authorized liaison) processes registration renewal at LTO — submits required documents (OR/CR, insurance policy, emission test result, stencil of engine/chassis number), pays fees; for vehicles requiring physical inspection, brings vehicle to LTO inspection center
+Responsible (R): Fleet Assistant
+Accountable (A): —
+Duration: 4–8 hours/vehicle</bpmn:documentation>
+        <bpmn:incoming>W1536_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1536_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1536_Task9" name="LTFRB compliance">
+        <bpmn:documentation>Step 4: LTFRB compliance: For vehicles requiring LTFRB franchise renewal, Fleet Manager prepares application — proof of financial capacity, vehicle maintenance records, driver qualifications, insurance coverage; attends LTFRB hearing if required; CPC renewal typically takes 30–60 days
+Responsible (R): Fleet Manager
+Accountable (A): VP Supply Chain
+Duration: 2–3 days/application</bpmn:documentation>
+        <bpmn:incoming>W1536_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1536_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1536_Task10" name="System update &amp; documentation">
+        <bpmn:documentation>Step 5: System update &amp; documentation: Upon successful renewal, Fleet Assistant updates fleet master (W401) with new registration expiry, new OR/CR details, updated insurance policy; uploads scanned copies of all renewed documents to document management system (W255)
+Responsible (R): Fleet Assistant
+Accountable (A): Fleet Manager
+Duration: 15 min/vehicle</bpmn:documentation>
+        <bpmn:incoming>W1536_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1536_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1536_Task11" name="Compliance monitoring">
+        <bpmn:documentation>Step 6: Compliance monitoring: Fleet Manager runs monthly fleet compliance dashboard — vehicles with current vs. expired registration, upcoming renewals, vehicles out of service for non-compliance; any expired vehicle is blocked from dispatch assignment in routing system (W196)
+Responsible (R): Fleet Manager
+Accountable (A): VP Supply Chain
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1536_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1536_End12" name="Complete">
+        <bpmn:incoming>W1536_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1536_Annotation13">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: downtime and processing backlogs
+Owner: Fleet Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1536_Assoc14" sourceRef="W1536_Annotation13" targetRef="W1536_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1536_Flow15" sourceRef="W1536_Start5" targetRef="W1536_Task6" />
+      <bpmn:sequenceFlow id="W1536_Flow16" sourceRef="W1536_Task6" targetRef="W1536_Task7" />
+      <bpmn:sequenceFlow id="W1536_Flow17" sourceRef="W1536_Task7" targetRef="W1536_Task8" />
+      <bpmn:sequenceFlow id="W1536_Flow18" sourceRef="W1536_Task8" targetRef="W1536_Task9" />
+      <bpmn:sequenceFlow id="W1536_Flow19" sourceRef="W1536_Task9" targetRef="W1536_Task10" />
+      <bpmn:sequenceFlow id="W1536_Flow20" sourceRef="W1536_Task10" targetRef="W1536_Task11" />
+      <bpmn:sequenceFlow id="W1536_Flow21" sourceRef="W1536_Task11" targetRef="W1536_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1536_diag">
+      <bpmndi:BPMNPlane id="W1536_plane" bpmnElement="W_W1536">
+        <bpmndi:BPMNShape id="W1536_Lane1_di" bpmnElement="W1536_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Lane2_di" bpmnElement="W1536_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Lane3_di" bpmnElement="W1536_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Task6_di" bpmnElement="W1536_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Task7_di" bpmnElement="W1536_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Task8_di" bpmnElement="W1536_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Task9_di" bpmnElement="W1536_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Task10_di" bpmnElement="W1536_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Task11_di" bpmnElement="W1536_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Start5_di" bpmnElement="W1536_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_End12_di" bpmnElement="W1536_End12"><dc:Bounds x="1680" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1536_Annotation13_di" bpmnElement="W1536_Annotation13"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1536_Flow15_di" bpmnElement="W1536_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1536_Flow16_di" bpmnElement="W1536_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1536_Flow17_di" bpmnElement="W1536_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1536_Flow18_di" bpmnElement="W1536_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1536_Flow19_di" bpmnElement="W1536_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1536_Flow20_di" bpmnElement="W1536_Flow20"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1536_Flow21_di" bpmnElement="W1536_Flow21"><di:waypoint x="1630" y="505" /><di:waypoint x="1680" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1536_Assoc14_di" bpmnElement="W1536_Assoc14"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5554" name="W5554. In-Transit Cargo Hijacking, Armed Truck Robbery &amp; Driver-Safety First Response Protocol" isExecutable="false">
+      <bpmn:documentation>Trigger: Armed hijacking or robbery of a loaded BuildRight delivery truck in transit — own fleet or 3PL carrier under W1207 — where the driver or crew is held up and the tractor, trailer, or cargo is forcibly taken
+Frequency: Rare criminal event: expected in the low single digits or fewer per year across the mixed ~190-truck operation (20% owned / 80% third-party), with readiness exercised through the W197/W653 driver-safety drill rotation rather than live events
+Volume: 1 event × the load at risk (a full multi-stop trailer of power tools, appliances, or copper cable carries a PHP 1.5M–6M wholesale value) × the crew exposed (1 driver + 1 helper on own-fleet routes) × the recovery surface (PNP hot-pursuit window, cargo insurance claim, ORC intelligence feed)
+Owner: Fleet Safety Officer
+Participants: Driver &amp; helper (victims first, per the W197 duty of care), Fleet Manager, Logistics Manager (re-dispatch of stranded store orders), National LP Director (W1337 law-enforcement coordination), Corporate Security / GSOC (VS-159), HR Business Partner and EAP Counselor (W2867 critical-incident support), Insurance Coordinator (W799 fleet policies; VS-26 claims), VP Supply Chain, PNP units with jurisdiction over the route
+Source: workflow W5554 — In-Transit Cargo Hijacking, Armed Truck Robbery &amp; Driver-Safety First Response Protocol</bpmn:documentation>
+      <bpmn:laneSet id="W5554_LaneSet8">
+        <bpmn:lane id="W5554_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W5554_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5554_Start9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5554_Lane2" name="GSOC">
+        <bpmn:flowNodeRef>W5554_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5554_Lane3" name="HR Business Partner">
+        <bpmn:flowNodeRef>W5554_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5554_Lane4" name="Fleet Safety Officer">
+        <bpmn:flowNodeRef>W5554_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5554_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5554_Lane5" name="Logistics Manager">
+        <bpmn:flowNodeRef>W5554_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5554_Lane6" name="Insurance Coordinator">
+        <bpmn:flowNodeRef>W5554_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5554_Lane7" name="National LP Director">
+        <bpmn:flowNodeRef>W5554_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5554_End18</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5554_Start9" name="Armed hijacking or robbery of a loaded BuildRight delivery truck in transit — own fleet…">
+        <bpmn:outgoing>W5554_Flow21</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5554_Task10" name="Comply-first discipline at the event">
+        <bpmn:documentation>Step 1: Comply-first discipline at the event: driver and helper follow the no-resistance, no-pursuit rule — hand over keys/load on demand; trigger the telematics panic alert (W199) at the first safe moment; move the vehicle only if ordered to, and drive away only when safe
+Responsible (R): Driver / Helper
+Accountable (A): Fleet Safety Officer
+Duration: Immediate</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W5554_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5554_Task11" name="Immediate notifications &amp; hot-pursuit window">
+        <bpmn:documentation>Step 2: Immediate notifications &amp; hot-pursuit window: GSOC/Fleet Duty phone escalates to PNP with plate, tractor/trailer numbers, seal numbers, load description, and last GPS position from W199 within the first hour — the recovery probability collapses after the first hours
+Responsible (R): GSOC / Fleet Duty
+Accountable (A): Fleet Manager
+Duration: 15–60 min</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W5554_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5554_Task12" name="Crew welfare &amp; stand-down">
+        <bpmn:documentation>Step 3: Crew welfare &amp; stand-down: medical check per the W501-class first-aid protocol; crew stood down for the shift with same-day family notification; critical-incident stress support initiated per W2867; no same-day formal statement (memory-contamination rule)
+Responsible (R): HR Business Partner / EAP Counselor
+Accountable (A): Fleet Manager
+Duration: Same day</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W5554_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5554_Task13" name="Evidence preservation">
+        <bpmn:documentation>Step 4: Evidence preservation: GPS breadcrumb track exported and locked from the W199 platform before log rotation; last-known-position CCTV canvass list prepared for PNP; seal numbers, dispatch manifest (W196), and driver app timeline preserved as the claim/police pack
+Responsible (R): Fleet Safety Officer / LP Investigator
+Accountable (A): National LP Director
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W5554_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5554_Task14" name="Load &amp; order recovery">
+        <bpmn:documentation>Step 5: Load &amp; order recovery: affected shipments flagged; critical store replenishment re-dispatched per W196 routing; recovery watch on fencing channels for the high-resale SKU mix (power tools, cable) through the W1337 ORC network
+Responsible (R): Logistics Manager / LP Investigator
+Accountable (A): VP Supply Chain
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W5554_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5554_Task15" name="Insurance &amp; carrier liability">
+        <bpmn:documentation>Step 6: Insurance &amp; carrier liability: own-fleet events file the motor-cargo claim per W799/W59-class machinery (police report is a claim prerequisite); 3PL-carrier events pursue carrier liability per W1207 and freight recovery per W90/W191 — never double-claim the same loss
+Responsible (R): Insurance Coordinator
+Accountable (A): CFO (claim sign-off)
+Duration: 2–8 weeks</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W5554_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5554_Task16" name="Prevention hardening">
+        <bpmn:documentation>Step 7: Prevention hardening: post-incident route/lane review (W196), high-value load splitting or scheduling rules, escort decisions for flagged lanes, driver debrief folded into the W197/W654 safety curriculum
+Responsible (R): Fleet Safety Officer / Fleet Manager
+Accountable (A): VP Supply Chain
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W5554_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5554_Task17" name="Chain alert, ORC feed &amp; review board">
+        <bpmn:documentation>Step 8: Chain alert, ORC feed &amp; review board: modus advisory to fleet, DCs, and stores; full case file to the W1337 ORC intelligence network; post-incident review with LP and Corporate Security (VS-159) closing with documented lessons
+Responsible (R): National LP Director / Fleet Safety Officer
+Accountable (A): VP Supply Chain
+Duration: 2–4 weeks</bpmn:documentation>
+        <bpmn:incoming>W5554_Flow28</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5554_End18" name="Complete">
+        <bpmn:incoming>W5554_Flow29</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5554_Annotation19">
+        <bpmn:text>Controls: - CTL-257 (ensure controlled execution — Fleet &amp; Driver Management (PA-06.2).) | - operational: comply-first rule evidenced in W654 training records; GPS and manifest evidence preserved before the vehicle or documents re-enter routine service; no driver disciplinary action for property surrendered under armed duress
+Owner: Fleet Safety Officer</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5554_Assoc20" sourceRef="W5554_Annotation19" targetRef="W5554_Start9" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5554_Flow21" sourceRef="W5554_Start9" targetRef="W5554_Task10" />
+      <bpmn:sequenceFlow id="W5554_Flow22" sourceRef="W5554_Task10" targetRef="W5554_Task11" />
+      <bpmn:sequenceFlow id="W5554_Flow23" sourceRef="W5554_Task11" targetRef="W5554_Task12" />
+      <bpmn:sequenceFlow id="W5554_Flow24" sourceRef="W5554_Task12" targetRef="W5554_Task13" />
+      <bpmn:sequenceFlow id="W5554_Flow25" sourceRef="W5554_Task13" targetRef="W5554_Task14" />
+      <bpmn:sequenceFlow id="W5554_Flow26" sourceRef="W5554_Task14" targetRef="W5554_Task15" />
+      <bpmn:sequenceFlow id="W5554_Flow27" sourceRef="W5554_Task15" targetRef="W5554_Task16" />
+      <bpmn:sequenceFlow id="W5554_Flow28" sourceRef="W5554_Task16" targetRef="W5554_Task17" />
+      <bpmn:sequenceFlow id="W5554_Flow29" sourceRef="W5554_Task17" targetRef="W5554_End18" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5554_diag">
+      <bpmndi:BPMNPlane id="W5554_plane" bpmnElement="W_W5554">
+        <bpmndi:BPMNShape id="W5554_Lane1_di" bpmnElement="W5554_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Lane2_di" bpmnElement="W5554_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Lane3_di" bpmnElement="W5554_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Lane4_di" bpmnElement="W5554_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Lane5_di" bpmnElement="W5554_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Lane6_di" bpmnElement="W5554_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Lane7_di" bpmnElement="W5554_Lane7" isHorizontal="true"><dc:Bounds x="160" y="1100" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task10_di" bpmnElement="W5554_Task10"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task11_di" bpmnElement="W5554_Task11"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task12_di" bpmnElement="W5554_Task12"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task13_di" bpmnElement="W5554_Task13"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task14_di" bpmnElement="W5554_Task14"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task15_di" bpmnElement="W5554_Task15"><dc:Bounds x="1450" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task16_di" bpmnElement="W5554_Task16"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Task17_di" bpmnElement="W5554_Task17"><dc:Bounds x="1870" y="1145" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Start9_di" bpmnElement="W5554_Start9"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_End18_di" bpmnElement="W5554_End18"><dc:Bounds x="2100" y="1167" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5554_Annotation19_di" bpmnElement="W5554_Annotation19"><dc:Bounds x="160" y="1310" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5554_Flow21_di" bpmnElement="W5554_Flow21"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow22_di" bpmnElement="W5554_Flow22"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow23_di" bpmnElement="W5554_Flow23"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow24_di" bpmnElement="W5554_Flow24"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow25_di" bpmnElement="W5554_Flow25"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow26_di" bpmnElement="W5554_Flow26"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow27_di" bpmnElement="W5554_Flow27"><di:waypoint x="1630" y="1015" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow28_di" bpmnElement="W5554_Flow28"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="1185" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Flow29_di" bpmnElement="W5554_Flow29"><di:waypoint x="2050" y="1185" /><di:waypoint x="2100" y="1185" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5554_Assoc20_di" bpmnElement="W5554_Assoc20"><di:waypoint x="340" y="1310" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

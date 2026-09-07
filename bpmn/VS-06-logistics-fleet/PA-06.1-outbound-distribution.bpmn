@@ -1,0 +1,1211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-06.1-outbound-distribution" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W196" name="W196. Route Planning &amp; Dispatch Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: Released Home Delivery orders (W19) or Store Replenishment orders (W4)
+Frequency: Daily (Morning and Evening waves)
+Volume: ~80–90 home deliveries/DC/day (the ~10,000 deliveries/month canon); ~55–60 store replenishments/DC/day (the ~5,000 replenishment orders/month canon)
+Owner: Logistics Planner
+Participants: Logistics Planner, DC Dispatch, Drivers, 3PL Partners
+Source: workflow W196 — Route Planning &amp; Dispatch Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W196_LaneSet4">
+        <bpmn:lane id="W196_Lane1" name="System">
+        <bpmn:flowNodeRef>W196_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W196_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W196_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W196_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W196_Lane2" name="Logistics Planner">
+        <bpmn:flowNodeRef>W196_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W196_Lane3" name="Driver">
+        <bpmn:flowNodeRef>W196_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W196_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W196_Start5" name="Released Home Delivery orders (W19) or Store Replenishment orders (W4)">
+        <bpmn:outgoing>W196_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W196_Task6" name="Batching">
+        <bpmn:documentation>Step 1: Batching: System aggregates all pending deliveries by zone, weight, and volume (CBM)
+Responsible (R): System
+Accountable (A): Logistics Planner
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W196_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W196_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W196_Task7" name="Vehicle Allocation">
+        <bpmn:documentation>Step 2: Vehicle Allocation: System recommends vehicle type (10-wheeler vs. 6-wheeler vs. small van) based on load and delivery access restrictions (e.g., &quot;Truck Ban&quot; zones)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W196_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W196_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W196_Task8" name="Optimization">
+        <bpmn:documentation>Step 3: Optimization: Route optimization engine calculates most efficient sequence to minimize kilometers and fuel; accounts for traffic patterns and delivery windows
+Responsible (R): System
+Accountable (A): Logistics Planner
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W196_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W196_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W196_Task9" name="Manifest Generation">
+        <bpmn:documentation>Step 4: Manifest Generation: Finalize route; system generates Trip Manifest and Load List; assigns to Driver/Vehicle
+Responsible (R): Logistics Planner
+Accountable (A): DC Manager
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W196_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W196_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W196_Task10" name="Driver Briefing">
+        <bpmn:documentation>Step 5: Driver Briefing: Driver receives digital manifest on mobile app; verifies load; starts trip
+Responsible (R): Driver
+Accountable (A): DC Dispatch
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W196_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W196_End11" name="Complete">
+        <bpmn:incoming>W196_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W196_Annotation12">
+        <bpmn:text>Controls: - CTL-178 (ensure fleet compliance &amp; freight-cost integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Logistics Planner</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W196_Assoc13" sourceRef="W196_Annotation12" targetRef="W196_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W196_Flow14" sourceRef="W196_Start5" targetRef="W196_Task6" />
+      <bpmn:sequenceFlow id="W196_Flow15" sourceRef="W196_Task6" targetRef="W196_Task7" />
+      <bpmn:sequenceFlow id="W196_Flow16" sourceRef="W196_Task7" targetRef="W196_Task8" />
+      <bpmn:sequenceFlow id="W196_Flow17" sourceRef="W196_Task8" targetRef="W196_Task9" />
+      <bpmn:sequenceFlow id="W196_Flow18" sourceRef="W196_Task9" targetRef="W196_Task10" />
+      <bpmn:sequenceFlow id="W196_Flow19" sourceRef="W196_Task10" targetRef="W196_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W196_diag">
+      <bpmndi:BPMNPlane id="W196_plane" bpmnElement="W_W196">
+        <bpmndi:BPMNShape id="W196_Lane1_di" bpmnElement="W196_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Lane2_di" bpmnElement="W196_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Lane3_di" bpmnElement="W196_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Task6_di" bpmnElement="W196_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Task7_di" bpmnElement="W196_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Task8_di" bpmnElement="W196_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Task9_di" bpmnElement="W196_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Task10_di" bpmnElement="W196_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Start5_di" bpmnElement="W196_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_End11_di" bpmnElement="W196_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W196_Annotation12_di" bpmnElement="W196_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W196_Flow14_di" bpmnElement="W196_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W196_Flow15_di" bpmnElement="W196_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W196_Flow16_di" bpmnElement="W196_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W196_Flow17_di" bpmnElement="W196_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W196_Flow18_di" bpmnElement="W196_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W196_Flow19_di" bpmnElement="W196_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W196_Assoc13_di" bpmnElement="W196_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W431" name="W431. LGU-Specific &quot;Truck Ban&quot; &amp; Route Governance" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily route planning (W196) for deliveries in Metro Manila or provincial cities with active truck bans
+Frequency: Daily
+Volume: ~150 delivery trips/day (DC to Store and DC to Customer)
+Owner: Logistics Planner
+Participants: DC Dispatch, Driver, Regional Manager, MMDA / LGU Traffic Enforcers
+Source: workflow W431 — LGU-Specific &quot;Truck Ban&quot; &amp; Route Governance</bpmn:documentation>
+      <bpmn:laneSet id="W431_LaneSet6">
+        <bpmn:lane id="W431_Lane1" name="Logistics Planner">
+        <bpmn:flowNodeRef>W431_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W431_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W431_Lane2" name="System">
+        <bpmn:flowNodeRef>W431_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W431_Lane3" name="DC Dispatch">
+        <bpmn:flowNodeRef>W431_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W431_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W431_Lane4" name="Regional Manager">
+        <bpmn:flowNodeRef>W431_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W431_Lane5" name="Driver">
+        <bpmn:flowNodeRef>W431_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W431_End14</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W431_Start7" name="Daily route planning (W196) for deliveries in Metro Manila or provincial cities with…">
+        <bpmn:outgoing>W431_Flow17</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W431_Task8" name="Truck Ban Database Maintenance">
+        <bpmn:documentation>Step 1: Truck Ban Database Maintenance: Logistics Planner updates the ERP &quot;Truck Ban Master&quot; with current ban hours per city, vehicle type (e.g., 6-wheeler vs. 10-wheeler), and exemption status (e.g., refrigerated or essential goods)
+Responsible (R): Logistics Planner
+Accountable (A): —
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W431_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W431_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W431_Task9" name="Route Constraint Input">
+        <bpmn:documentation>Step 2: Route Constraint Input: Route optimization engine (W196) pulls active ban hours from the Master; system blocks delivery windows that fall within ban periods for specific zones
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W431_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W431_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W431_Task10" name="Dispatch Timing">
+        <bpmn:documentation>Step 3: Dispatch Timing: DC Dispatch adjusts the &quot;Release Time&quot; for trucks to ensure they reach their destination before the morning ban starts (typically 6:00 AM) or after the afternoon ban ends
+Responsible (R): DC Dispatch
+Accountable (A): DC Manager
+Duration: 10 min/trip</bpmn:documentation>
+        <bpmn:incoming>W431_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W431_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W431_Task11" name="Exemption Management">
+        <bpmn:documentation>Step 4: Exemption Management: For &quot;Essential Relief&quot; goods (W428), Regional Manager applies for special LGU &quot;Truck Ban Exemptions&quot;; system tags specific vehicles with the exemption permit number
+Responsible (R): Regional Manager
+Accountable (A): Logistics Mgr
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W431_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W431_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W431_Task12" name="Real-Time Diversion">
+        <bpmn:documentation>Step 5: Real-Time Diversion: If a truck is delayed (traffic/accident) and risks being caught in the ban, DC Dispatch sends an &quot;Immediate Stop&quot; alert via the Driver App; Driver parks at a pre-designated &quot;Safe Zone&quot; until the ban lifts
+Responsible (R): DC Dispatch
+Accountable (A): Driver
+Duration: 5 min</bpmn:documentation>
+        <bpmn:incoming>W431_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W431_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W431_Task13" name="Fine &amp; Impound Handling">
+        <bpmn:documentation>Step 6: Fine &amp; Impound Handling: In case of apprehension, Driver logs the incident in the Fleet App; Logistics Manager coordinates with the LGU/MMDA for fine payment and vehicle release
+Responsible (R): Driver / Logistics Mgr
+Accountable (A): —
+Duration: 4–8 hours</bpmn:documentation>
+        <bpmn:incoming>W431_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W431_End14" name="Complete">
+        <bpmn:incoming>W431_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W431_Annotation15">
+        <bpmn:text>Controls: - CTL-178 (ensure fleet compliance &amp; freight-cost integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Logistics Planner</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W431_Assoc16" sourceRef="W431_Annotation15" targetRef="W431_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W431_Flow17" sourceRef="W431_Start7" targetRef="W431_Task8" />
+      <bpmn:sequenceFlow id="W431_Flow18" sourceRef="W431_Task8" targetRef="W431_Task9" />
+      <bpmn:sequenceFlow id="W431_Flow19" sourceRef="W431_Task9" targetRef="W431_Task10" />
+      <bpmn:sequenceFlow id="W431_Flow20" sourceRef="W431_Task10" targetRef="W431_Task11" />
+      <bpmn:sequenceFlow id="W431_Flow21" sourceRef="W431_Task11" targetRef="W431_Task12" />
+      <bpmn:sequenceFlow id="W431_Flow22" sourceRef="W431_Task12" targetRef="W431_Task13" />
+      <bpmn:sequenceFlow id="W431_Flow23" sourceRef="W431_Task13" targetRef="W431_End14" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W431_diag">
+      <bpmndi:BPMNPlane id="W431_plane" bpmnElement="W_W431">
+        <bpmndi:BPMNShape id="W431_Lane1_di" bpmnElement="W431_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Lane2_di" bpmnElement="W431_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Lane3_di" bpmnElement="W431_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Lane4_di" bpmnElement="W431_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Lane5_di" bpmnElement="W431_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Task8_di" bpmnElement="W431_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Task9_di" bpmnElement="W431_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Task10_di" bpmnElement="W431_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Task11_di" bpmnElement="W431_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Task12_di" bpmnElement="W431_Task12"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Task13_di" bpmnElement="W431_Task13"><dc:Bounds x="1450" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Start7_di" bpmnElement="W431_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_End14_di" bpmnElement="W431_End14"><dc:Bounds x="1680" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W431_Annotation15_di" bpmnElement="W431_Annotation15"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W431_Flow17_di" bpmnElement="W431_Flow17"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W431_Flow18_di" bpmnElement="W431_Flow18"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W431_Flow19_di" bpmnElement="W431_Flow19"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W431_Flow20_di" bpmnElement="W431_Flow20"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W431_Flow21_di" bpmnElement="W431_Flow21"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W431_Flow22_di" bpmnElement="W431_Flow22"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W431_Flow23_di" bpmnElement="W431_Flow23"><di:waypoint x="1630" y="845" /><di:waypoint x="1680" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W431_Assoc16_di" bpmnElement="W431_Assoc16"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1167" name="W1167. Reverse Logistics &amp; Vendor Return Shipment Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor return authorization created in W88 (RTV Processing) or product recall per W622; or DC-initiated return for damaged/defective/overstock goods
+Frequency: ~200–300 vendor return shipments/month across all DCs
+Volume: ~50–75 return shipments per DC per month; average 8–12 lines per return
+Owner: DC Returns Coordinator
+Participants: DC Returns Coordinator, Category Manager (return authorization), DC Dispatch, Logistics Planner, AP Clerk
+Source: workflow W1167 — Reverse Logistics &amp; Vendor Return Shipment Management</bpmn:documentation>
+      <bpmn:laneSet id="W1167_LaneSet4">
+        <bpmn:lane id="W1167_Lane1" name="DC Returns Coordinator">
+        <bpmn:flowNodeRef>W1167_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1167_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1167_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1167_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1167_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1167_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1167_Lane2" name="Logistics Planner">
+        <bpmn:flowNodeRef>W1167_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1167_Lane3" name="AP Clerk">
+        <bpmn:flowNodeRef>W1167_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1167_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1167_Start5" name="Vendor return authorization created in W88 (RTV Processing) or product recall per W622…">
+        <bpmn:outgoing>W1167_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1167_Task6" name="Return consolidation at DC">
+        <bpmn:documentation>Step 1: Return consolidation at DC: Store-returned goods (per W91, W12) arrive at DC via backhaul on regular store replenishment trucks; DC Returns Coordinator segregates return items into designated &quot;Return Staging Area&quot; by vendor and return reason; scan each item into return staging location in WMS
+Responsible (R): DC Returns Coordinator
+Accountable (A): DC Supervisor
+Duration: 30 min/truck</bpmn:documentation>
+        <bpmn:incoming>W1167_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1167_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1167_Task7" name="Return shipment planning">
+        <bpmn:documentation>Step 2: Return shipment planning: Weekly, DC Returns Coordinator reviews accumulated return inventory by vendor; group returns into full-pallet or LTL shipments based on volume and vendor location; coordinate with Logistics Planner to schedule pickup during DC dock off-peak hours per W585
+Responsible (R): DC Returns Coordinator
+Accountable (A): DC Manager
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1167_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1167_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1167_Task8" name="Documentation &amp; authorization">
+        <bpmn:documentation>Step 3: Documentation &amp; authorization: For each return shipment: (a) generate Return Shipment Advance Shipping Notice (ASN) with item list, quantities, and return reason codes per W88 authorization; (b) attach vendor Return Merchandise Authorization (RMA) number; (c) for recalled items per W622, include recall reference and safety compliance documentation; (d) for import returns, prepare customs re-export documentation if duty recovery applies
+Responsible (R): DC Returns Coordinator
+Accountable (A): Category Manager
+Duration: 30 min/shipment</bpmn:documentation>
+        <bpmn:incoming>W1167_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1167_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1167_Task9" name="Carrier booking &amp; dispatch">
+        <bpmn:documentation>Step 4: Carrier booking &amp; dispatch: Logistics Planner books carrier for return shipment pickup; for local vendors, arrange vendor&#x27;s own pickup or BuildRight&#x27;s backhaul truck; for import vendors, book freight forwarder for return shipment; generate Return Manifest; DC Dispatch coordinates dock appointment per W585
+Responsible (R): Logistics Planner / DC Dispatch
+Accountable (A): DC Manager
+Duration: 30 min/shipment</bpmn:documentation>
+        <bpmn:incoming>W1167_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1167_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1167_Task10" name="Loading &amp; dispatch">
+        <bpmn:documentation>Step 5: Loading &amp; dispatch: DC loaders stage return pallets on dock; verify items against Return Manifest; photograph pallet condition for proof; carrier signs Bill of Lading; system updates return order status to &quot;Shipped to Vendor&quot;; inventory relieved from DC
+Responsible (R): DC Returns Coordinator / Loader
+Accountable (A): DC Supervisor
+Duration: 30 min/shipment</bpmn:documentation>
+        <bpmn:incoming>W1167_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1167_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1167_Task11" name="Vendor credit follow-up">
+        <bpmn:documentation>Step 6: Vendor credit follow-up: AP Clerk tracks return shipment delivery to vendor; if vendor does not issue credit within 30 days of receipt, escalate to Category Manager per W244 invoice dispute; for recalled items, track vendor reimbursement per W1151 recall cost recovery
+Responsible (R): AP Clerk
+Accountable (A): Category Manager
+Duration: 15 min/return</bpmn:documentation>
+        <bpmn:incoming>W1167_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1167_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1167_Task12" name="Monthly reverse logistics analytics">
+        <bpmn:documentation>Step 7: Monthly reverse logistics analytics: DC Returns Coordinator compiles monthly report: return volume by reason (defective, overstock, recall, consignment), return-to-vendor cycle time, carrier cost per return shipment, DC staging area utilization, vendor credit realization rate
+Responsible (R): DC Returns Coordinator
+Accountable (A): VP Supply Chain
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1167_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1167_End13" name="Complete">
+        <bpmn:incoming>W1167_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1167_Annotation14">
+        <bpmn:text>Controls: - CTL-256 (ensure controlled execution — Outbound Distribution (PA-06.1).) | - operational: DC Returns Coordinator review and approval gate
+Owner: DC Returns Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1167_Assoc15" sourceRef="W1167_Annotation14" targetRef="W1167_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1167_Flow16" sourceRef="W1167_Start5" targetRef="W1167_Task6" />
+      <bpmn:sequenceFlow id="W1167_Flow17" sourceRef="W1167_Task6" targetRef="W1167_Task7" />
+      <bpmn:sequenceFlow id="W1167_Flow18" sourceRef="W1167_Task7" targetRef="W1167_Task8" />
+      <bpmn:sequenceFlow id="W1167_Flow19" sourceRef="W1167_Task8" targetRef="W1167_Task9" />
+      <bpmn:sequenceFlow id="W1167_Flow20" sourceRef="W1167_Task9" targetRef="W1167_Task10" />
+      <bpmn:sequenceFlow id="W1167_Flow21" sourceRef="W1167_Task10" targetRef="W1167_Task11" />
+      <bpmn:sequenceFlow id="W1167_Flow22" sourceRef="W1167_Task11" targetRef="W1167_Task12" />
+      <bpmn:sequenceFlow id="W1167_Flow23" sourceRef="W1167_Task12" targetRef="W1167_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1167_diag">
+      <bpmndi:BPMNPlane id="W1167_plane" bpmnElement="W_W1167">
+        <bpmndi:BPMNShape id="W1167_Lane1_di" bpmnElement="W1167_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Lane2_di" bpmnElement="W1167_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Lane3_di" bpmnElement="W1167_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Task6_di" bpmnElement="W1167_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Task7_di" bpmnElement="W1167_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Task8_di" bpmnElement="W1167_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Task9_di" bpmnElement="W1167_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Task10_di" bpmnElement="W1167_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Task11_di" bpmnElement="W1167_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Task12_di" bpmnElement="W1167_Task12"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Start5_di" bpmnElement="W1167_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_End13_di" bpmnElement="W1167_End13"><dc:Bounds x="1890" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1167_Annotation14_di" bpmnElement="W1167_Annotation14"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1167_Flow16_di" bpmnElement="W1167_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Flow17_di" bpmnElement="W1167_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Flow18_di" bpmnElement="W1167_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Flow19_di" bpmnElement="W1167_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Flow20_di" bpmnElement="W1167_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Flow21_di" bpmnElement="W1167_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Flow22_di" bpmnElement="W1167_Flow22"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Flow23_di" bpmnElement="W1167_Flow23"><di:waypoint x="1840" y="165" /><di:waypoint x="1890" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1167_Assoc15_di" bpmnElement="W1167_Assoc15"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1168" name="W1168. Direct Store Delivery (DSD) Receiving, Verification &amp; Vendor Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: DSD vendor truck arrives at store receiving dock with purchase order delivery
+Frequency: ~500–600 DSD receipts/month across all stores (~2–3 DSD deliveries per store per month)
+Volume: ~3 DSD deliveries/store/month × 200 stores = ~600 receipts/month; higher volume at stores near cement plants and lumber mills
+Owner: Receiving Clerk / Stock Associate
+Participants: Stock Associate (receiving), Department Supervisor, AP Clerk (3-way match), Category Manager (vendor compliance)
+Source: workflow W1168 — Direct Store Delivery (DSD) Receiving, Verification &amp; Vendor Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W1168_LaneSet3">
+        <bpmn:lane id="W1168_Lane1" name="Stock Associate">
+        <bpmn:flowNodeRef>W1168_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1168_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1168_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1168_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1168_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1168_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1168_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1168_Lane2" name="System">
+        <bpmn:flowNodeRef>W1168_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1168_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1168_Start4" name="DSD vendor truck arrives at store receiving dock with purchase order delivery">
+        <bpmn:outgoing>W1168_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1168_Task5" name="Pre-delivery coordination">
+        <bpmn:documentation>Step 1: Pre-delivery coordination: System sends DSD delivery schedule to store 24 hours in advance based on vendor ASN; Stock Associate reviews expected deliveries for the day; confirms dock/receiving area availability; coordinates with Department Supervisor for heavy/bulky items requiring forklift or additional labor
+Responsible (R): Stock Associate / System
+Accountable (A): Department Supervisor
+Duration: 15 min/day</bpmn:documentation>
+        <bpmn:incoming>W1168_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1168_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1168_Task6" name="Vendor arrival &amp; check-in">
+        <bpmn:documentation>Step 2: Vendor arrival &amp; check-in: DSD vendor truck arrives at store receiving dock; Stock Associate verifies: (a) delivery against scheduled DSD PO — vendor name, PO number, expected items; (b) driver identity and vehicle condition; (c) for cement/lumber/sand: verify truck weight ticket matches PO quantity; (d) direct vendor to designated unloading area
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1168_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1168_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1168_Task7" name="Unloading &amp; quantity verification">
+        <bpmn:documentation>Step 3: Unloading &amp; quantity verification: (a) Stock Associate supervises unloading; counts pieces/units as they come off the truck; (b) for bulk items (sand, gravel): verify volume against weight ticket conversion; (c) for lumber: verify board feet per piece against PO specification; (d) for cement: count bags and check for torn/wet bags; (e) for appliances: verify model numbers and serial numbers against PO; (f) flag any quantity discrepancy (&gt; 2% tolerance) immediately
+Responsible (R): Stock Associate / Vendor Driver
+Accountable (A): Department Supervisor
+Duration: 30–60 min</bpmn:documentation>
+        <bpmn:incoming>W1168_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1168_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1168_Task8" name="Quality inspection">
+        <bpmn:documentation>Step 4: Quality inspection: Stock Associate inspects DSD goods: (a) cement bags: check for moisture damage, clumping, or expired manufacturing date (cement has 3-month shelf life from production); (b) lumber: check for warping, cracks, and grade stamps; (c) structural steel: verify dimensions and grade markings; (d) reject non-conforming items — document with photos and note on delivery receipt
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 15–30 min</bpmn:documentation>
+        <bpmn:incoming>W1168_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1168_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1168_Task9" name="Goods receipt processing">
+        <bpmn:documentation>Step 5: Goods receipt processing: Stock Associate processes goods receipt on handheld tablet: (a) scan PO barcode or enter PO number; (b) enter actual received quantities per line; (c) note any discrepancies (short shipment, over-shipment, quality rejects); (d) capture electronic signature from vendor driver acknowledging receipt; (e) system updates store inventory and creates AP voucher for 3-way match per W244
+Responsible (R): Stock Associate / System
+Accountable (A): Department Supervisor
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W1168_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1168_Flow19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1168_Task10" name="Putaway to sales floor">
+        <bpmn:documentation>Step 6: Putaway to sales floor: Stock Associate moves DSD goods directly to sales floor or designated outdoor storage area (lumber yard, cement staging); no backroom storage for DSD items — sell-from-shelf model; update bin location in system
+Responsible (R): Stock Associate
+Accountable (A): Department Supervisor
+Duration: 20–45 min</bpmn:documentation>
+        <bpmn:incoming>W1168_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1168_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1168_Task11" name="DSD vendor compliance tracking">
+        <bpmn:documentation>Step 7: DSD vendor compliance tracking: System captures DSD delivery performance data: (a) on-time delivery % (delivered within scheduled window), (b) quantity accuracy % (shipped vs. ordered), (c) quality rejection rate, (d) documentation completeness; feeds vendor scorecard per W44 and SCP-020; Category Manager reviews DSD vendor compliance monthly
+Responsible (R): System / Category Manager
+Accountable (A): VP Merchandising
+Duration: 15 min/month/vendor</bpmn:documentation>
+        <bpmn:incoming>W1168_Flow21</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1168_End12" name="Complete">
+        <bpmn:incoming>W1168_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1168_Annotation13">
+        <bpmn:text>Controls: - CTL-256 (ensure controlled execution — Outbound Distribution (PA-06.1).) | - operational: Receiving Clerk / Stock Associate review and approval gate
+Owner: Receiving Clerk / Stock Associate</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1168_Assoc14" sourceRef="W1168_Annotation13" targetRef="W1168_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1168_Flow15" sourceRef="W1168_Start4" targetRef="W1168_Task5" />
+      <bpmn:sequenceFlow id="W1168_Flow16" sourceRef="W1168_Task5" targetRef="W1168_Task6" />
+      <bpmn:sequenceFlow id="W1168_Flow17" sourceRef="W1168_Task6" targetRef="W1168_Task7" />
+      <bpmn:sequenceFlow id="W1168_Flow18" sourceRef="W1168_Task7" targetRef="W1168_Task8" />
+      <bpmn:sequenceFlow id="W1168_Flow19" sourceRef="W1168_Task8" targetRef="W1168_Task9" />
+      <bpmn:sequenceFlow id="W1168_Flow20" sourceRef="W1168_Task9" targetRef="W1168_Task10" />
+      <bpmn:sequenceFlow id="W1168_Flow21" sourceRef="W1168_Task10" targetRef="W1168_Task11" />
+      <bpmn:sequenceFlow id="W1168_Flow22" sourceRef="W1168_Task11" targetRef="W1168_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1168_diag">
+      <bpmndi:BPMNPlane id="W1168_plane" bpmnElement="W_W1168">
+        <bpmndi:BPMNShape id="W1168_Lane1_di" bpmnElement="W1168_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Lane2_di" bpmnElement="W1168_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Task5_di" bpmnElement="W1168_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Task6_di" bpmnElement="W1168_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Task7_di" bpmnElement="W1168_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Task8_di" bpmnElement="W1168_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Task9_di" bpmnElement="W1168_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Task10_di" bpmnElement="W1168_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Task11_di" bpmnElement="W1168_Task11"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Start4_di" bpmnElement="W1168_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_End12_di" bpmnElement="W1168_End12"><dc:Bounds x="1890" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1168_Annotation13_di" bpmnElement="W1168_Annotation13"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1168_Flow15_di" bpmnElement="W1168_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Flow16_di" bpmnElement="W1168_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Flow17_di" bpmnElement="W1168_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Flow18_di" bpmnElement="W1168_Flow18"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Flow19_di" bpmnElement="W1168_Flow19"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Flow20_di" bpmnElement="W1168_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Flow21_di" bpmnElement="W1168_Flow21"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Flow22_di" bpmnElement="W1168_Flow22"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1168_Assoc14_di" bpmnElement="W1168_Assoc14"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1169" name="W1169. Import Container Inbound Logistics, Port Drayage &amp; DC Delivery" isExecutable="false">
+      <bpmn:documentation>Trigger: Import container cleared by customs per W464 and released from port/terminal for delivery to DC
+Frequency: ~400–600 TEUs/month; ~20–30 containers per DC per week
+Volume: ~15–25 container drayage moves per DC per week; peak during pre-Ber months (July–August) and pre-summer (February–March) build-ups
+Owner: Inbound Logistics Coordinator
+Participants: Inbound Logistics Coordinator, Customs Broker, Drayage Carrier, DC Receiving Supervisor, Import Coordinator, Finance (duty payment)
+Source: workflow W1169 — Import Container Inbound Logistics, Port Drayage &amp; DC Delivery</bpmn:documentation>
+      <bpmn:laneSet id="W1169_LaneSet7">
+        <bpmn:lane id="W1169_Lane1" name="Customs Broker">
+        <bpmn:flowNodeRef>W1169_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1169_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1169_Lane2" name="Inbound Logistics Coordinator">
+        <bpmn:flowNodeRef>W1169_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1169_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1169_Lane3" name="Drayage Carrier Driver">
+        <bpmn:flowNodeRef>W1169_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1169_Lane4" name="Drayage Carrier">
+        <bpmn:flowNodeRef>W1169_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1169_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1169_Lane5" name="DC Receiving Supervisor">
+        <bpmn:flowNodeRef>W1169_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1169_Lane6" name="System">
+        <bpmn:flowNodeRef>W1169_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1169_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1169_Start8" name="Import container cleared by customs per W464 and released from port/terminal for delivery…">
+        <bpmn:outgoing>W1169_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1169_Task9" name="Container release tracking">
+        <bpmn:documentation>Step 1: Container release tracking: Customs Broker confirms container release from Bureau of Customs per W464; Inbound Logistics Coordinator receives release notification; verifies: (a) container number, (b) bill of lading, (c) free time expiry date (demurrage risk per W249), (d) destination DC; enters container into &quot;Drayage Queue&quot; in ERP with priority based on free time remaining
+Responsible (R): Customs Broker / Inbound Logistics Coordinator
+Accountable (A): Import Coordinator
+Duration: 30 min/container</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1169_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1169_Task10" name="Drayage carrier booking">
+        <bpmn:documentation>Step 2: Drayage carrier booking: Inbound Logistics Coordinator books drayage carrier: (a) select from approved drayage carriers based on port location, chassis availability, and DC destination; (b) confirm truck availability within 24 hours of release for containers with &lt; 3 days free time remaining; (c) provide container details, port pickup location, and DC delivery address; (d) for overweight containers (tiles, cement, steel): ensure carrier has appropriate truck capacity (10-wheeler with 20ft container chassis or 40ft chassis for FCL)
+Responsible (R): Inbound Logistics Coordinator
+Accountable (A): Logistics Manager
+Duration: 30 min/container</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1169_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1169_Task11" name="Port pickup &amp; inspection">
+        <bpmn:documentation>Step 3: Port pickup &amp; inspection: Drayage carrier picks up container from port terminal; driver conducts visual inspection: (a) verify container seal number matches bill of lading; (b) check for visible damage (dents, holes, water intrusion); (c) photograph container condition and seal at port gate; (d) flag discrepancies immediately to Inbound Logistics Coordinator
+Responsible (R): Drayage Carrier Driver
+Accountable (A): Inbound Logistics Coordinator
+Duration: 2–4 hours (port processing)</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1169_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1169_Task12" name="Inland transit &amp; truck ban management">
+        <bpmn:documentation>Step 4: Inland transit &amp; truck ban management: Carrier transports container from port to DC; system tracks via telematics per W199; route planning accounts for: (a) LGU truck ban restrictions per W431; (b) port-to-DC route typically 2–4 hours for Metro Manila ports to Laguna/Clark DCs; (c) Cebu port to Mandaue DC: 1 hour; (d) Davao Sasa Wharf to Davao DC: 30 min; (e) system provides live ETA to DC Receiving Supervisor
+Responsible (R): Drayage Carrier / System
+Accountable (A): DC Dispatch
+Duration: 1–4 hours transit</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1169_Flow23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1169_Task13" name="DC receiving appointment &amp; unloading">
+        <bpmn:documentation>Step 5: DC receiving appointment &amp; unloading: Container arrives at DC; DC Receiving Supervisor verifies: (a) container seal number, (b) external condition; schedules unloading per W585 dock appointment; DC team unloads container: (a) full container load: 2–4 hours for manual unloading of 20ft container; (b) verify item counts and SKUs against import PO and packing list per W3; (c) flag any damage or shortage discovered during unloading; (d) process goods receipt in WMS
+Responsible (R): DC Receiving Supervisor / DC Team
+Accountable (A): DC Manager
+Duration: 4–6 hours/container</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1169_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1169_Task14" name="Empty container return">
+        <bpmn:documentation>Step 6: Empty container return: After unloading, drayage carrier must return empty container to port/depot within carrier&#x27;s free time (typically 48–72 hours); Inbound Logistics Coordinator tracks empty return to avoid per diem charges; confirm return with carrier; close drayage order in system
+Responsible (R): Drayage Carrier / Inbound Logistics Coordinator
+Accountable (A): Logistics Manager
+Duration: 4–8 hours</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1169_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1169_Task15" name="Demurrage &amp; detention monitoring">
+        <bpmn:documentation>Step 7: Demurrage &amp; detention monitoring: System tracks container free time countdown: (a) port demurrage: free time starts at vessel discharge; standard rate PHP 5,000–8,000/day after free time; (b) carrier detention: free time starts at container gate-out; standard rate PHP 2,000–4,000/day; (c) weekly report of containers at risk of demurrage; escalate at-risk containers to VP Supply Chain for expedited drayage; (d) demurrage costs tracked per W249 and reported monthly
+Responsible (R): System / Inbound Logistics Coordinator
+Accountable (A): VP Supply Chain
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1169_Flow26</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1169_Task16" name="Monthly drayage analytics">
+        <bpmn:documentation>Step 8: Monthly drayage analytics: Inbound Logistics Coordinator compiles drayage performance: (a) average port-to-DC cycle time by port, (b) demurrage incidence and cost, (c) carrier on-time pickup rate, (d) container damage rate, (e) cost per TEU by lane; benchmark against prior period
+Responsible (R): Inbound Logistics Coordinator
+Accountable (A): VP Supply Chain
+Duration: 3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1169_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1169_End17" name="Complete">
+        <bpmn:incoming>W1169_Flow28</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1169_Annotation18">
+        <bpmn:text>Controls: - CTL-256 (ensure controlled execution — Outbound Distribution (PA-06.1).) | - operational: Inbound Logistics Coordinator review and approval gate
+Owner: Inbound Logistics Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1169_Assoc19" sourceRef="W1169_Annotation18" targetRef="W1169_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1169_Flow20" sourceRef="W1169_Start8" targetRef="W1169_Task9" />
+      <bpmn:sequenceFlow id="W1169_Flow21" sourceRef="W1169_Task9" targetRef="W1169_Task10" />
+      <bpmn:sequenceFlow id="W1169_Flow22" sourceRef="W1169_Task10" targetRef="W1169_Task11" />
+      <bpmn:sequenceFlow id="W1169_Flow23" sourceRef="W1169_Task11" targetRef="W1169_Task12" />
+      <bpmn:sequenceFlow id="W1169_Flow24" sourceRef="W1169_Task12" targetRef="W1169_Task13" />
+      <bpmn:sequenceFlow id="W1169_Flow25" sourceRef="W1169_Task13" targetRef="W1169_Task14" />
+      <bpmn:sequenceFlow id="W1169_Flow26" sourceRef="W1169_Task14" targetRef="W1169_Task15" />
+      <bpmn:sequenceFlow id="W1169_Flow27" sourceRef="W1169_Task15" targetRef="W1169_Task16" />
+      <bpmn:sequenceFlow id="W1169_Flow28" sourceRef="W1169_Task16" targetRef="W1169_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1169_diag">
+      <bpmndi:BPMNPlane id="W1169_plane" bpmnElement="W_W1169">
+        <bpmndi:BPMNShape id="W1169_Lane1_di" bpmnElement="W1169_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Lane2_di" bpmnElement="W1169_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Lane3_di" bpmnElement="W1169_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Lane4_di" bpmnElement="W1169_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Lane5_di" bpmnElement="W1169_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Lane6_di" bpmnElement="W1169_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task9_di" bpmnElement="W1169_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task10_di" bpmnElement="W1169_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task11_di" bpmnElement="W1169_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task12_di" bpmnElement="W1169_Task12"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task13_di" bpmnElement="W1169_Task13"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task14_di" bpmnElement="W1169_Task14"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task15_di" bpmnElement="W1169_Task15"><dc:Bounds x="1660" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Task16_di" bpmnElement="W1169_Task16"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Start8_di" bpmnElement="W1169_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_End17_di" bpmnElement="W1169_End17"><dc:Bounds x="2100" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1169_Annotation18_di" bpmnElement="W1169_Annotation18"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1169_Flow20_di" bpmnElement="W1169_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow21_di" bpmnElement="W1169_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow22_di" bpmnElement="W1169_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow23_di" bpmnElement="W1169_Flow23"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow24_di" bpmnElement="W1169_Flow24"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow25_di" bpmnElement="W1169_Flow25"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow26_di" bpmnElement="W1169_Flow26"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow27_di" bpmnElement="W1169_Flow27"><di:waypoint x="1840" y="1015" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Flow28_di" bpmnElement="W1169_Flow28"><di:waypoint x="2050" y="335" /><di:waypoint x="2100" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1169_Assoc19_di" bpmnElement="W1169_Assoc19"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1190" name="W1190. Inter-Island DC-to-Store RoRo &amp; Ferry Consolidated Shipment Planning" isExecutable="false">
+      <bpmn:documentation>Trigger: Weekly inter-island shipment planning cycle; or ad-hoc upon vessel schedule change
+Frequency: Weekly planning; ~15–25 inter-island shipments/month (DC2 Cebu → Visayas/Mindanao islands, DC3 Laguna → Visayas via Batangas port)
+Volume: ~30–40% of outbound deliveries involve inter-island routing (Philippine archipelago logistics)
+Owner: Logistics Manager
+Participants: Logistics Manager, DC Dispatch, Shipping Coordinator, 3PL Partner (RoRo/ferry operator), Store Managers (island stores)
+Source: workflow W1190 — Inter-Island DC-to-Store RoRo &amp; Ferry Consolidated Shipment Planning</bpmn:documentation>
+      <bpmn:laneSet id="W1190_LaneSet6">
+        <bpmn:lane id="W1190_Lane1" name="Logistics Manager">
+        <bpmn:flowNodeRef>W1190_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1190_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1190_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1190_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1190_Lane2" name="Shipping Coordinator">
+        <bpmn:flowNodeRef>W1190_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1190_Lane3" name="DC Dispatch">
+        <bpmn:flowNodeRef>W1190_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1190_Lane4" name="3PL Driver">
+        <bpmn:flowNodeRef>W1190_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1190_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1190_Lane5" name="System">
+        <bpmn:flowNodeRef>W1190_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1190_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1190_Start7" name="Weekly inter-island shipment planning cycle; or ad-hoc upon vessel schedule change">
+        <bpmn:outgoing>W1190_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1190_Task8" name="Weekly inter-island shipment plan">
+        <bpmn:documentation>Step 1: Weekly inter-island shipment plan: Every Monday, Logistics Manager reviews the week&#x27;s replenishment orders for island-bound stores; consolidates orders by destination island group (e.g., Panay, Negros, Bohol, Leyte, Samar) to maximize truck utilization per vessel sailing
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1190_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1190_Task9" name="Vessel booking">
+        <bpmn:documentation>Step 2: Vessel booking: Shipping Coordinator books space on scheduled RoRo vessels (e.g., 2GO, Montenegro Lines, Cokaliong) or cargo barges; confirms sailing date, ETD, ETA, and vessel capacity; obtains booking confirmation number; books return passage for empty trucks if 3PL partner operates dedicated vehicles
+Responsible (R): Shipping Coordinator
+Accountable (A): Logistics Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1190_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1190_Task10" name="Load consolidation and dispatch">
+        <bpmn:documentation>Step 3: Load consolidation and dispatch: DC Dispatch consolidates orders for each vessel sailing into truck loads; prioritizes by store urgency (stockout risk) and product category (cement and lumber before tiles to prevent damage); seals trucks with tamper-evident seals; records seal numbers in ERP
+Responsible (R): DC Dispatch
+Accountable (A): Logistics Manager
+Duration: 1 hour/sailing</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1190_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1190_Task11" name="Port check-in and vessel loading">
+        <bpmn:documentation>Step 4: Port check-in and vessel loading: 3PL driver or company driver proceeds to origin port (e.g., Cebu port for DC2, Batangas port for DC3); presents booking confirmation and cargo manifest to port authority; vehicle boards RoRo vessel; system updates shipment status to &quot;At Port — Loaded&quot;
+Responsible (R): 3PL Driver
+Accountable (A): Shipping Coordinator
+Duration: 2–4 hours (port processing)</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1190_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1190_Task12" name="In-transit monitoring">
+        <bpmn:documentation>Step 5: In-transit monitoring: System tracks vessel sailing schedule; Logistics Manager monitors for delays due to weather, port congestion, or mechanical issues; proactively notifies destination store managers of revised ETA
+Responsible (R): Logistics Manager
+Accountable (A): —
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1190_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1190_Task13" name="Port arrival and island delivery">
+        <bpmn:documentation>Step 6: Port arrival and island delivery: Vessel arrives at destination port; truck disembarks; driver proceeds to store(s) for delivery; Goods Receipt processed per standard store receiving (W109); for multi-store island routes, driver follows multi-drop plan
+Responsible (R): 3PL Driver / Store Manager
+Accountable (A): Logistics Manager
+Duration: 4–8 hours (port to stores)</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1190_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1190_Task14" name="Freight cost reconciliation">
+        <bpmn:documentation>Step 7: Freight cost reconciliation: System captures inter-island freight costs (vessel fee, port charges, driver accommodation for overnight sailings); allocates freight cost to delivered orders; AP Clerk reconciles freight invoices from vessel operators and 3PL partners
+Responsible (R): System / AP Clerk
+Accountable (A): Logistics Manager
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1190_Flow25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1190_Task15" name="Monthly inter-island logistics review">
+        <bpmn:documentation>Step 8: Monthly inter-island logistics review: Logistics Manager reviews monthly inter-island KPIs: (a) on-time delivery % (target: ≥ 85%), (b) average transit time by route, (c) freight cost per kg/cbm by route, (d) vessel delay frequency, (e) damage rate during inter-island transit
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1190_Flow26</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1190_End16" name="Complete">
+        <bpmn:incoming>W1190_Flow27</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1190_Annotation17">
+        <bpmn:text>Controls: - CTL-256 (ensure controlled execution — Outbound Distribution (PA-06.1).) | - operational: Logistics Manager review and approval gate on booking buffers and island safety-stock levels; load-securing compliance check before dispatch, sealed trucks, and damage claim process with vessel operator
+Owner: Logistics Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1190_Assoc18" sourceRef="W1190_Annotation17" targetRef="W1190_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1190_Flow19" sourceRef="W1190_Start7" targetRef="W1190_Task8" />
+      <bpmn:sequenceFlow id="W1190_Flow20" sourceRef="W1190_Task8" targetRef="W1190_Task9" />
+      <bpmn:sequenceFlow id="W1190_Flow21" sourceRef="W1190_Task9" targetRef="W1190_Task10" />
+      <bpmn:sequenceFlow id="W1190_Flow22" sourceRef="W1190_Task10" targetRef="W1190_Task11" />
+      <bpmn:sequenceFlow id="W1190_Flow23" sourceRef="W1190_Task11" targetRef="W1190_Task12" />
+      <bpmn:sequenceFlow id="W1190_Flow24" sourceRef="W1190_Task12" targetRef="W1190_Task13" />
+      <bpmn:sequenceFlow id="W1190_Flow25" sourceRef="W1190_Task13" targetRef="W1190_Task14" />
+      <bpmn:sequenceFlow id="W1190_Flow26" sourceRef="W1190_Task14" targetRef="W1190_Task15" />
+      <bpmn:sequenceFlow id="W1190_Flow27" sourceRef="W1190_Task15" targetRef="W1190_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1190_diag">
+      <bpmndi:BPMNPlane id="W1190_plane" bpmnElement="W_W1190">
+        <bpmndi:BPMNShape id="W1190_Lane1_di" bpmnElement="W1190_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Lane2_di" bpmnElement="W1190_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Lane3_di" bpmnElement="W1190_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Lane4_di" bpmnElement="W1190_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Lane5_di" bpmnElement="W1190_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task8_di" bpmnElement="W1190_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task9_di" bpmnElement="W1190_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task10_di" bpmnElement="W1190_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task11_di" bpmnElement="W1190_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task12_di" bpmnElement="W1190_Task12"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task13_di" bpmnElement="W1190_Task13"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task14_di" bpmnElement="W1190_Task14"><dc:Bounds x="1660" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Task15_di" bpmnElement="W1190_Task15"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Start7_di" bpmnElement="W1190_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_End16_di" bpmnElement="W1190_End16"><dc:Bounds x="2100" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1190_Annotation17_di" bpmnElement="W1190_Annotation17"><dc:Bounds x="160" y="970" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1190_Flow19_di" bpmnElement="W1190_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow20_di" bpmnElement="W1190_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow21_di" bpmnElement="W1190_Flow21"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow22_di" bpmnElement="W1190_Flow22"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow23_di" bpmnElement="W1190_Flow23"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow24_di" bpmnElement="W1190_Flow24"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow25_di" bpmnElement="W1190_Flow25"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow26_di" bpmnElement="W1190_Flow26"><di:waypoint x="1840" y="845" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Flow27_di" bpmnElement="W1190_Flow27"><di:waypoint x="2050" y="165" /><di:waypoint x="2100" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1190_Assoc18_di" bpmnElement="W1190_Assoc18"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1228" name="W1228. DC Multi-Stop Route Optimization &amp; Dynamic Load Consolidation for Store Delivery" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily dispatch planning window (morning); store replenishment orders ready for shipment
+Frequency: Daily per DC; ~15–20 outbound loads/day per DC
+Volume: 4 DCs × ~18 loads/day × average 2.5 stops per route = ~180 multi-stop deliveries/day
+Owner: DC Dispatch Planner
+Participants: DC Dispatch Planner, DC Supervisor, Truck Driver, Store Receiving Clerk
+Source: workflow W1228 — DC Multi-Stop Route Optimization &amp; Dynamic Load Consolidation for Store Delivery</bpmn:documentation>
+      <bpmn:laneSet id="W1228_LaneSet4">
+        <bpmn:lane id="W1228_Lane1" name="System">
+        <bpmn:flowNodeRef>W1228_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1228_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1228_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1228_Lane2" name="DC Dispatch Planner">
+        <bpmn:flowNodeRef>W1228_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1228_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1228_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1228_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1228_Lane3" name="Driver">
+        <bpmn:flowNodeRef>W1228_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1228_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1228_Start5" name="Daily dispatch planning window (morning); store replenishment orders ready for shipment">
+        <bpmn:outgoing>W1228_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1228_Task6" name="Order-to-route assignment">
+        <bpmn:documentation>Step 1: Order-to-route assignment: System auto-groups pending store replenishment orders by: (a) destination store location (geographic clustering); (b) delivery priority (urgent vs. standard); (c) order size vs. truck capacity (10-wheeler: ~20 tons; 6-wheeler: ~8 tons); (d) special handling requirements (hazmat per W236, catch-weight lumber, fragile tiles)
+Responsible (R): System / DC Dispatch Planner
+Accountable (A): DC Supervisor
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1228_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1228_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1228_Task7" name="Route optimization">
+        <bpmn:documentation>Step 2: Route optimization: System calculates optimized multi-stop routes: (a) minimize total route distance/time; (b) respect truck ban hours per W431; (c) respect delivery time windows per store; (d) account for Philippine road conditions (bridge weight limits, narrow roads to provincial stores); (e) sequence stops for efficient unloading (heavy/bulky items first)
+Responsible (R): System / DC Dispatch Planner
+Accountable (A): DC Supervisor
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1228_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1228_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1228_Task8" name="Load consolidation">
+        <bpmn:documentation>Step 3: Load consolidation: DC Dispatch Planner consolidates orders into truck loads: (a) match order volume/weight to truck capacity; (b) combine orders for stores on same route; (c) prioritize full-truckload (FTL) over less-than-truckload (LTL); (d) allocate remaining LTL to 3PL partners per W242
+Responsible (R): DC Dispatch Planner
+Accountable (A): DC Supervisor
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1228_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1228_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1228_Task9" name="Truck dispatch &amp; driver assignment">
+        <bpmn:documentation>Step 4: Truck dispatch &amp; driver assignment: (a) assign route to owned or 3PL truck; (b) assign driver per availability and certification per W197; (c) generate load manifest with stop sequence, delivery documents per store; (d) brief driver on route, special instructions, and delivery priorities
+Responsible (R): DC Dispatch Planner
+Accountable (A): DC Supervisor
+Duration: 30 min/day</bpmn:documentation>
+        <bpmn:incoming>W1228_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1228_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1228_Task10" name="In-transit tracking &amp; dynamic rerouting">
+        <bpmn:documentation>Step 5: In-transit tracking &amp; dynamic rerouting: (a) GPS/telematics track truck location per W199; (b) if traffic, road closure, or delay: system suggests alternative route; (c) notify affected stores of updated ETA; (d) for critical delays: DC Dispatch Planner coordinates with Store Manager for adjusted receiving window
+Responsible (R): DC Dispatch Planner / Driver
+Accountable (A): DC Supervisor
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W1228_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1228_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1228_Task11" name="Proof of delivery &amp; route closure">
+        <bpmn:documentation>Step 6: Proof of delivery &amp; route closure: (a) driver obtains store receiving signature per W109; (b) system captures GPS location and timestamp at each delivery stop; (c) all stops completed: route closed in system; (d) exceptions (missed stops, refused deliveries) flagged for resolution
+Responsible (R): Driver / Store Receiving Clerk
+Accountable (A): DC Supervisor
+Duration: 5 min/stop</bpmn:documentation>
+        <bpmn:incoming>W1228_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1228_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1228_Task12" name="Weekly route analytics">
+        <bpmn:documentation>Step 7: Weekly route analytics: DC Dispatch Planner reviews: (a) routes per day, stops per route, utilization rate; (b) on-time delivery % per store; (c) cost per delivery per route; (d) identify routes for consolidation or splitting; (e) benchmark owned vs. 3PL cost per delivery
+Responsible (R): DC Dispatch Planner
+Accountable (A): DC Manager
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1228_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1228_End13" name="Complete">
+        <bpmn:incoming>W1228_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1228_Annotation14">
+        <bpmn:text>Controls: - CTL-256 (ensure controlled execution — Outbound Distribution (PA-06.1).) | - operational: DC Dispatch Planner review and approval gate
+Owner: DC Dispatch Planner</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1228_Assoc15" sourceRef="W1228_Annotation14" targetRef="W1228_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1228_Flow16" sourceRef="W1228_Start5" targetRef="W1228_Task6" />
+      <bpmn:sequenceFlow id="W1228_Flow17" sourceRef="W1228_Task6" targetRef="W1228_Task7" />
+      <bpmn:sequenceFlow id="W1228_Flow18" sourceRef="W1228_Task7" targetRef="W1228_Task8" />
+      <bpmn:sequenceFlow id="W1228_Flow19" sourceRef="W1228_Task8" targetRef="W1228_Task9" />
+      <bpmn:sequenceFlow id="W1228_Flow20" sourceRef="W1228_Task9" targetRef="W1228_Task10" />
+      <bpmn:sequenceFlow id="W1228_Flow21" sourceRef="W1228_Task10" targetRef="W1228_Task11" />
+      <bpmn:sequenceFlow id="W1228_Flow22" sourceRef="W1228_Task11" targetRef="W1228_Task12" />
+      <bpmn:sequenceFlow id="W1228_Flow23" sourceRef="W1228_Task12" targetRef="W1228_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1228_diag">
+      <bpmndi:BPMNPlane id="W1228_plane" bpmnElement="W_W1228">
+        <bpmndi:BPMNShape id="W1228_Lane1_di" bpmnElement="W1228_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Lane2_di" bpmnElement="W1228_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Lane3_di" bpmnElement="W1228_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Task6_di" bpmnElement="W1228_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Task7_di" bpmnElement="W1228_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Task8_di" bpmnElement="W1228_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Task9_di" bpmnElement="W1228_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Task10_di" bpmnElement="W1228_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Task11_di" bpmnElement="W1228_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Task12_di" bpmnElement="W1228_Task12"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Start5_di" bpmnElement="W1228_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_End13_di" bpmnElement="W1228_End13"><dc:Bounds x="1890" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1228_Annotation14_di" bpmnElement="W1228_Annotation14"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1228_Flow16_di" bpmnElement="W1228_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Flow17_di" bpmnElement="W1228_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Flow18_di" bpmnElement="W1228_Flow18"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Flow19_di" bpmnElement="W1228_Flow19"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Flow20_di" bpmnElement="W1228_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Flow21_di" bpmnElement="W1228_Flow21"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Flow22_di" bpmnElement="W1228_Flow22"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Flow23_di" bpmnElement="W1228_Flow23"><di:waypoint x="1840" y="335" /><di:waypoint x="1890" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1228_Assoc15_di" bpmnElement="W1228_Assoc15"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1255" name="W1255. Inter-Island Consolidated Shipping, Vessel Booking &amp; RoRo Space Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: Scheduled — weekly vessel booking cycle; ad-hoc triggered by replenishment order backlog exceeding DC-to-store transit threshold or vessel schedule disruption
+Frequency: Weekly vessel booking for DC2 (Cebu/Visayas) and DC4 (Clark/North Luzon); 2–3 inter-island shipments per week per DC
+Volume: ~8–12 inter-island vessel bookings per month; ~40–60 container/trailer movements per month across all inter-island routes
+Owner: Logistics Planner (Inter-Island)
+Participants: DC Operations Manager, Logistics Planner, Shipping Line Representative, 3PL Transport Coordinator, Finance Controller
+Source: workflow W1255 — Inter-Island Consolidated Shipping, Vessel Booking &amp; RoRo Space Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W1255_LaneSet3">
+        <bpmn:lane id="W1255_Lane1" name="Logistics Planner">
+        <bpmn:flowNodeRef>W1255_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1255_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1255_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1255_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1255_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1255_Lane2" name="DC Shift Supervisor">
+        <bpmn:flowNodeRef>W1255_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1255_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1255_Start4" name="Scheduled — weekly vessel booking cycle; ad-hoc triggered by replenishment order backlog…">
+        <bpmn:outgoing>W1255_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1255_Task5" name="Weekly shipment consolidation planning">
+        <bpmn:documentation>Step 1: Weekly shipment consolidation planning: Logistics Planner reviews all pending store replenishment orders for inter-island destinations: (a) group orders by destination island group (Visayas, Mindanao, North Luzon via RoRo); (b) calculate total cubic volume and weight per destination; (c) determine optimal vessel type: container vessel (for &gt; 15 CBM consolidated loads) or RoRo ferry (for vehicle-mounted loads &lt; 15 CBM); (d) identify consolidation opportunities — combine multiple store orders into single vessel booking to achieve FCL (full container load) rates vs. more expensive LCL (less than container load) rates
+Responsible (R): Logistics Planner
+Accountable (A): DC Operations Manager
+Duration: 3 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1255_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1255_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1255_Task6" name="Vessel space booking">
+        <bpmn:documentation>Step 2: Vessel space booking: Logistics Planner books vessel space with shipping line or RoRo operator: (a) select vessel based on: (i) departure schedule alignment with DC ready-to-ship date, (ii) transit time vs. store replenishment SLA, (iii) rate per CBM or per container; (b) for container vessel: book 20ft or 40ft container based on consolidated volume; (c) for RoRo: book vehicle deck space (trailer, wing van) — confirm maximum weight and height restrictions; (d) obtain booking confirmation with vessel name, voyage number, ETD, ETA; (e) enter booking details into ERP transport planning module
+Responsible (R): Logistics Planner
+Accountable (A): DC Operations Manager
+Duration: 2 hours/week</bpmn:documentation>
+        <bpmn:incoming>W1255_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1255_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1255_Task7" name="Load plan &amp; dispatch">
+        <bpmn:documentation>Step 3: Load plan &amp; dispatch: DC pick/pack team prepares consolidated shipment: (a) generate pick list sorted by destination store for consolidated container; (b) load container or vehicle in reverse delivery sequence (last store delivery loaded first); (c) apply store-specific labels and packing lists; (d) secure cargo — dunnage, strapping, and moisture protection for sea transit; (e) generate bill of lading (B/L) or RoRo manifest with per-store breakdown; (f) dispatch to port for vessel loading
+Responsible (R): DC Shift Supervisor
+Accountable (A): DC Operations Manager
+Duration: 4 hours/shipment</bpmn:documentation>
+        <bpmn:incoming>W1255_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1255_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1255_Task8" name="In-transit monitoring">
+        <bpmn:documentation>Step 4: In-transit monitoring: Track inter-island shipment: (a) monitor vessel position via shipping line tracking API; (b) alert on schedule deviations — vessel delay &gt; 12 hours triggers notification to destination stores; (c) manage port congestion risk — if destination port congested, coordinate with 3PL for alternative discharge port; (d) update ETA in ERP for store receiving teams
+Responsible (R): Logistics Planner
+Accountable (A): DC Operations Manager
+Duration: 30 min/day (continuous monitoring)</bpmn:documentation>
+        <bpmn:incoming>W1255_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1255_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1255_Task9" name="Cost reconciliation &amp; optimization">
+        <bpmn:documentation>Step 5: Cost reconciliation &amp; optimization: Monthly analysis of inter-island shipping costs: (a) calculate cost per CBM and cost per store delivery by route; (b) compare container vessel vs. RoRo cost-effectiveness by volume range; (c) identify opportunities to shift from LCL to FCL by consolidating shipments across additional days; (d) benchmark rates against alternative shipping lines; (e) present cost optimization recommendations to Finance Controller
+Responsible (R): Logistics Planner
+Accountable (A): Finance Controller
+Duration: 4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1255_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1255_End10" name="Complete">
+        <bpmn:incoming>W1255_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1255_Annotation11">
+        <bpmn:text>Controls: - CTL-256 (ensure controlled execution — Outbound Distribution (PA-06.1).) | - operational: Logistics Planner (Inter-Island) review and approval gate; operational: periodic reconciliation against source documents
+Owner: Logistics Planner (Inter-Island)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1255_Assoc12" sourceRef="W1255_Annotation11" targetRef="W1255_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1255_Flow13" sourceRef="W1255_Start4" targetRef="W1255_Task5" />
+      <bpmn:sequenceFlow id="W1255_Flow14" sourceRef="W1255_Task5" targetRef="W1255_Task6" />
+      <bpmn:sequenceFlow id="W1255_Flow15" sourceRef="W1255_Task6" targetRef="W1255_Task7" />
+      <bpmn:sequenceFlow id="W1255_Flow16" sourceRef="W1255_Task7" targetRef="W1255_Task8" />
+      <bpmn:sequenceFlow id="W1255_Flow17" sourceRef="W1255_Task8" targetRef="W1255_Task9" />
+      <bpmn:sequenceFlow id="W1255_Flow18" sourceRef="W1255_Task9" targetRef="W1255_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1255_diag">
+      <bpmndi:BPMNPlane id="W1255_plane" bpmnElement="W_W1255">
+        <bpmndi:BPMNShape id="W1255_Lane1_di" bpmnElement="W1255_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Lane2_di" bpmnElement="W1255_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Task5_di" bpmnElement="W1255_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Task6_di" bpmnElement="W1255_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Task7_di" bpmnElement="W1255_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Task8_di" bpmnElement="W1255_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Task9_di" bpmnElement="W1255_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Start4_di" bpmnElement="W1255_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_End10_di" bpmnElement="W1255_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1255_Annotation11_di" bpmnElement="W1255_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1255_Flow13_di" bpmnElement="W1255_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1255_Flow14_di" bpmnElement="W1255_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1255_Flow15_di" bpmnElement="W1255_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1255_Flow16_di" bpmnElement="W1255_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1255_Flow17_di" bpmnElement="W1255_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1255_Flow18_di" bpmnElement="W1255_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1255_Assoc12_di" bpmnElement="W1255_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1315" name="W1315. Delivery Vehicle Loading Optimization, Weight Compliance &amp; LTFRB Regulation Adherence" isExecutable="false">
+      <bpmn:documentation>Trigger: Outbound delivery truck loading at DC; or LTFRB (Land Transportation Franchising and Regulatory Board) roadside inspection; or vehicle weight monitoring alert
+Frequency: Daily loading optimization at each DC (4 DCs); ongoing weight compliance per trip; LTFRB inspections are random but frequent on Philippine highways
+Volume: ~50–80 outbound delivery trips per DC per day; ~200–320 trips/day chain-wide; vehicle types: 10-wheeler wing vans (max 18T payload), 6-wheeler trucks (max 8T payload)
+Owner: DC Dispatch Coordinator
+Participants: DC Dispatch Coordinator, Truck Driver, Loading Team Lead, Transportation Planner, Third-Party Fleet Manager
+Source: workflow W1315 — Delivery Vehicle Loading Optimization, Weight Compliance &amp; LTFRB Regulation Adherence</bpmn:documentation>
+      <bpmn:laneSet id="W1315_LaneSet5">
+        <bpmn:lane id="W1315_Lane1" name="Transportation Planner">
+        <bpmn:flowNodeRef>W1315_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1315_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1315_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1315_Lane2" name="Loading Team Lead">
+        <bpmn:flowNodeRef>W1315_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1315_Lane3" name="DC Dispatch Coordinator">
+        <bpmn:flowNodeRef>W1315_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1315_Lane4" name="Truck Driver">
+        <bpmn:flowNodeRef>W1315_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1315_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1315_Start6" name="Outbound delivery truck loading at DC; or LTFRB (Land Transportation Franchising and…">
+        <bpmn:outgoing>W1315_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1315_Task7" name="Route-based load planning">
+        <bpmn:documentation>Step 1: Route-based load planning: (a) Transportation Planner creates daily delivery routes per DC: (i) group store replenishment orders into delivery routes (2–3 stores per route for 10-wheeler; 1–2 stores for 6-wheeler) per W15, (ii) sequence stops for optimal driving distance, (iii) consider special handling: heavy items (cement, tiles) on bottom, fragile items on top, hazardous materials (paint, chemicals) separated per W492; (b) DC Dispatch Coordinator plans load for each route: (i) system calculates total order weight per route: sum of all item weights across all stops, (ii) system compares to vehicle payload capacity: flag if &gt; 90% of max payload (margin for weight estimation error), (iii) if overloaded: split route (move one store&#x27;s delivery to another truck) or upgrade vehicle (6-wheeler → 10-wheeler), (iv) system generates load plan: item × quantity × stop sequence × bay position
+Responsible (R): Transportation Planner / DC Dispatch Coordinator
+Accountable (A): DC Operations Manager
+Duration: 30–60 min/route</bpmn:documentation>
+        <bpmn:incoming>W1315_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1315_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1315_Task8" name="Loading execution &amp; weight verification">
+        <bpmn:documentation>Step 2: Loading execution &amp; weight verification: (a) Loading Team Lead loads truck per load plan: (i) load in reverse-stop sequence (last delivery stop loaded first, deepest in the truck), (ii) heavy items loaded first (bottom/front), light items last (top/rear), (iii) secure cargo: strap and block to prevent shifting during transit (critical for Philippine roads with potholes, rough surfaces, and steep inclines in mountainous areas like Bukidnon, Benguet); (b) after loading: (i) drive truck to DC weighbridge (scale) — record actual gross vehicle weight, (ii) compare to legal GVW limit: if GVW exceeds limit by &gt; 500 kg: remove items from load and schedule for next trip; (iii) if within limit: record weight on dispatch manifest, (iii) system records actual weight vs. planned weight for load planning accuracy tracking
+Responsible (R): Loading Team Lead / Truck Driver
+Accountable (A): DC Dispatch Coordinator
+Duration: Per truck: 30–60 min loading + 10 min weighbridge</bpmn:documentation>
+        <bpmn:incoming>W1315_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1315_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1315_Task9" name="LTFRB compliance documentation">
+        <bpmn:documentation>Step 3: LTFRB compliance documentation: (a) each truck carries required documentation: (i) delivery manifest with store names, items, and quantities, (ii) cargo manifest (for LTFRB inspection: proof that goods are for BuildRight&#x27;s own use and not for-hire cargo — BuildRight trucks carry own inventory, not third-party freight), (iii) vehicle registration and LTFRB franchise (for owned trucks) or certificate of public convenience (for third-party trucks), (iv) driver&#x27;s license and medical certificate, (v) insurance certificate; (b) for third-party trucks: Third-Party Fleet Manager ensures compliance: (i) valid LTFRB franchise for the vehicle class, (ii) vehicle roadworthiness (annual LTFRB inspection), (iii) driver qualification (professional driver&#x27;s license with restriction code 8 for heavy vehicles); (c) DC Dispatch Coordinator verifies documentation completeness before truck dispatch
+Responsible (R): DC Dispatch Coordinator / Third-Party Fleet Manager
+Accountable (A): DC Operations Manager
+Duration: 5–10 min/truck</bpmn:documentation>
+        <bpmn:incoming>W1315_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1315_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1315_Task10" name="Roadside weight compliance">
+        <bpmn:documentation>Step 4: Roadside weight compliance: (a) during transit, truck may encounter: (i) LTFRB/DPWH roadside weigh station (common on national highways: NLEX, SLEX, STAR Tollway, CAVITEX), (ii) LGU checkpoint with portable weigh scales (common on provincial roads entering municipalities), (iii) private toll road weight enforcement (e.g., NLEX Corporation enforces strict weight limits); (b) if flagged for overweight: (i) driver presents manifest and cargo documentation, (ii) if overloaded: driver pays fine on-site (PHP 5,000–15,000), (iii) truck may be required to offload excess cargo at the weigh station — driver calls DC Dispatch Coordinator for pickup arrangement, (iv) incident logged in fleet management system for root cause analysis (load planning error, route change adding weight, unauthorized additional pickup)
+Responsible (R): Truck Driver / DC Dispatch Coordinator
+Accountable (A): Transportation Planner
+Duration: Per incident: 1–3 hours</bpmn:documentation>
+        <bpmn:incoming>W1315_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1315_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1315_Task11" name="Loading optimization analytics">
+        <bpmn:documentation>Step 5: Loading optimization analytics: (a) monthly: Transportation Planner analyzes loading metrics: (i) average payload utilization (% of max payload actually used — target: 80–90%), (ii) overweight incidents: frequency, cause, fine cost, (iii) load planning accuracy: actual weight vs. planned weight variance, (iv) vehicle type utilization: are 6-wheelers being used efficiently or should more routes use 10-wheelers?, (v) multi-stop efficiency: average number of stops per route and impact on loading sequence accuracy; (b) recommendations: (i) adjust vehicle assignment for consistently overloaded routes, (ii) split high-weight store deliveries across multiple trips, (iii) negotiate higher-payload vehicles with third-party fleet providers, (iv) optimize product mix per trip (balance heavy and light items)
+Responsible (R): Transportation Planner
+Accountable (A): VP Supply Chain
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1315_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1315_End12" name="Complete">
+        <bpmn:incoming>W1315_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1315_Annotation13">
+        <bpmn:text>Controls: - CTL-178 (ensure fleet compliance &amp; freight-cost integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: DC Dispatch Coordinator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1315_Assoc14" sourceRef="W1315_Annotation13" targetRef="W1315_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1315_Flow15" sourceRef="W1315_Start6" targetRef="W1315_Task7" />
+      <bpmn:sequenceFlow id="W1315_Flow16" sourceRef="W1315_Task7" targetRef="W1315_Task8" />
+      <bpmn:sequenceFlow id="W1315_Flow17" sourceRef="W1315_Task8" targetRef="W1315_Task9" />
+      <bpmn:sequenceFlow id="W1315_Flow18" sourceRef="W1315_Task9" targetRef="W1315_Task10" />
+      <bpmn:sequenceFlow id="W1315_Flow19" sourceRef="W1315_Task10" targetRef="W1315_Task11" />
+      <bpmn:sequenceFlow id="W1315_Flow20" sourceRef="W1315_Task11" targetRef="W1315_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1315_diag">
+      <bpmndi:BPMNPlane id="W1315_plane" bpmnElement="W_W1315">
+        <bpmndi:BPMNShape id="W1315_Lane1_di" bpmnElement="W1315_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Lane2_di" bpmnElement="W1315_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Lane3_di" bpmnElement="W1315_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Lane4_di" bpmnElement="W1315_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Task7_di" bpmnElement="W1315_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Task8_di" bpmnElement="W1315_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Task9_di" bpmnElement="W1315_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Task10_di" bpmnElement="W1315_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Task11_di" bpmnElement="W1315_Task11"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Start6_di" bpmnElement="W1315_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_End12_di" bpmnElement="W1315_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1315_Annotation13_di" bpmnElement="W1315_Annotation13"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1315_Flow15_di" bpmnElement="W1315_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1315_Flow16_di" bpmnElement="W1315_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1315_Flow17_di" bpmnElement="W1315_Flow17"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1315_Flow18_di" bpmnElement="W1315_Flow18"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1315_Flow19_di" bpmnElement="W1315_Flow19"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1315_Flow20_di" bpmnElement="W1315_Flow20"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1315_Assoc14_di" bpmnElement="W1315_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1514" name="W1514. Inter-Island Emergency Cargo Air Freight &amp; Charter Coordination for Critical Stock Replenishment" isExecutable="false">
+      <bpmn:documentation>Trigger: (a) Typhoon or earthquake disrupts regular inter-island RoRo/ferry routes for 3+ days, (b) DC-to-store stockout of critical construction materials with no alternate DC source, (c) VIP project customer deadline requiring emergency material delivery to island store
+Frequency: ~8–12 emergency air freight activations/year (seasonal: 60% during typhoon season Jun–Nov)
+Volume: 1–5 tons per activation; PHP 200K–1.5M per shipment air freight cost
+Owner: Logistics Manager
+Participants: Logistics Manager, Transportation Planner, DC Operations Manager, Category Manager, Finance Controller, 3PL Air Freight Broker
+Source: workflow W1514 — Inter-Island Emergency Cargo Air Freight &amp; Charter Coordination for Critical Stock Replenishment</bpmn:documentation>
+      <bpmn:laneSet id="W1514_LaneSet4">
+        <bpmn:lane id="W1514_Lane1" name="Logistics Manager">
+        <bpmn:flowNodeRef>W1514_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1514_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1514_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1514_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1514_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1514_Lane2" name="Transportation Planner">
+        <bpmn:flowNodeRef>W1514_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1514_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1514_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1514_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1514_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1514_Start5" name="(a) Typhoon or earthquake disrupts regular inter-island RoRo/ferry routes for 3+ days…">
+        <bpmn:outgoing>W1514_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1514_Task6" name="Emergency trigger assessment">
+        <bpmn:documentation>Step 1: Emergency trigger assessment: (a) Logistics Manager receives alert: either typhoon disruption notice from PAGASA/shipping lines, store stockout report from Store Manager, or VIP project escalation from Sales Rep; (b) assess: (i) which stores affected, (ii) which critical SKUs at risk (cement, GI sheets, electrical wire, lumber — typically ~50–100 SKUs classified as &quot;air-freight eligible&quot;), (iii) estimated duration of sea freight disruption, (iv) revenue impact of stockout (PHP/day lost per store per SKU)
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1514_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1514_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1514_Task7" name="Cost-benefit authorization">
+        <bpmn:documentation>Step 2: Cost-benefit authorization: (a) Transportation Planner calculates: air freight cost (PHP/kg × estimated weight) vs. estimated lost revenue from stockout (days of disruption × daily sales per SKU × store count); (b) Logistics Manager presents authorization request to VP Supply Chain: (i) total shipment cost, (ii) revenue protected, (iii) ROI breakeven point; (c) VP Supply Chain approves if: air freight cost &lt; projected lost revenue, OR customer is VIP project account with &gt; PHP 500K contract value at risk
+Responsible (R): Transportation Planner / Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 30–60 min</bpmn:documentation>
+        <bpmn:incoming>W1514_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1514_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1514_Task8" name="Shipment coordination">
+        <bpmn:documentation>Step 3: Shipment coordination: (a) Logistics Manager contacts 3PL air freight broker for cargo space on next available flight (Philippine Airlines Cargo, Cebu Pacific Cargo, or charter if &gt; 3 tons); (b) confirms: flight schedule, cargo cutoff time, weight/volume limits, hazmat restrictions (cement and paint may have air cargo restrictions); (c) DC Operations Manager arranges emergency pick-pack: prioritize air-freight-eligible SKUs, pack on pallets suitable for air cargo ULD loading
+Responsible (R): Logistics Manager / DC Ops Manager
+Accountable (A): —
+Duration: 2–4 hours</bpmn:documentation>
+        <bpmn:incoming>W1514_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1514_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1514_Task9" name="Documentation &amp; compliance">
+        <bpmn:documentation>Step 4: Documentation &amp; compliance: (a) Transportation Planner prepares: airway bill, packing list, CAAP hazmat declaration if applicable, store delivery manifest; (b) for charter flights: coordinate CAAP charter permit, landing rights at destination airport; (c) Finance Controller validates payment terms with air freight broker and approves petty cash / fund transfer for destination-side trucking (airport to store)
+Responsible (R): Transportation Planner / Finance Controller
+Accountable (A): Logistics Manager
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W1514_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1514_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1514_Task10" name="Shipment execution">
+        <bpmn:documentation>Step 5: Shipment execution: (a) DC dispatches cargo to origin airport; (b) air freight broker confirms loading and departure; (c) Logistics Manager notifies destination Store Manager of arrival time and pickup instructions; (d) Store Manager arranges truck pickup from airport to store (typically 10-wheeler or 6-wheeler hire from local transport provider)
+Responsible (R): Logistics Manager / Store Manager
+Accountable (A): —
+Duration: Transit: 2–8 hours flight + 2–4 hours ground</bpmn:documentation>
+        <bpmn:incoming>W1514_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1514_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1514_Task11" name="Receiving &amp; reconciliation">
+        <bpmn:documentation>Step 6: Receiving &amp; reconciliation: (a) Store receives cargo; verifies against airway bill packing list; (b) system receives goods into store inventory with &quot;Emergency Air Freight&quot; receipt type for cost tracking; (c) Logistics Manager confirms delivery completion; (d) Finance Controller records air freight cost against store logistics cost center for monthly review
+Responsible (R): Store Manager / Receiving Clerk
+Accountable (A): Logistics Manager
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W1514_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1514_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1514_Task12" name="Post-event review">
+        <bpmn:documentation>Step 7: Post-event review (monthly): Logistics Manager reviews all emergency air freight activations: (a) total cost vs. revenue protected, (b) average response time (trigger to delivery), (c) recurring routes or SKUs that could justify pre-positioning buffer stock to reduce future air freight dependency
+Responsible (R): Logistics Manager
+Accountable (A): VP Supply Chain
+Duration: 1–2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1514_Flow22</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1514_End13" name="Complete">
+        <bpmn:incoming>W1514_Flow23</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1514_Annotation14">
+        <bpmn:text>Controls: - CTL-256 (ensure controlled execution — Outbound Distribution (PA-06.1).) | - operational: Logistics Manager review and approval gate; operational: periodic reconciliation against source documents
+Owner: Logistics Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1514_Assoc15" sourceRef="W1514_Annotation14" targetRef="W1514_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1514_Flow16" sourceRef="W1514_Start5" targetRef="W1514_Task6" />
+      <bpmn:sequenceFlow id="W1514_Flow17" sourceRef="W1514_Task6" targetRef="W1514_Task7" />
+      <bpmn:sequenceFlow id="W1514_Flow18" sourceRef="W1514_Task7" targetRef="W1514_Task8" />
+      <bpmn:sequenceFlow id="W1514_Flow19" sourceRef="W1514_Task8" targetRef="W1514_Task9" />
+      <bpmn:sequenceFlow id="W1514_Flow20" sourceRef="W1514_Task9" targetRef="W1514_Task10" />
+      <bpmn:sequenceFlow id="W1514_Flow21" sourceRef="W1514_Task10" targetRef="W1514_Task11" />
+      <bpmn:sequenceFlow id="W1514_Flow22" sourceRef="W1514_Task11" targetRef="W1514_Task12" />
+      <bpmn:sequenceFlow id="W1514_Flow23" sourceRef="W1514_Task12" targetRef="W1514_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1514_diag">
+      <bpmndi:BPMNPlane id="W1514_plane" bpmnElement="W_W1514">
+        <bpmndi:BPMNShape id="W1514_Lane1_di" bpmnElement="W1514_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Lane2_di" bpmnElement="W1514_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Lane3_di" bpmnElement="W1514_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1790" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Task6_di" bpmnElement="W1514_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Task7_di" bpmnElement="W1514_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Task8_di" bpmnElement="W1514_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Task9_di" bpmnElement="W1514_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Task10_di" bpmnElement="W1514_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Task11_di" bpmnElement="W1514_Task11"><dc:Bounds x="1450" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Task12_di" bpmnElement="W1514_Task12"><dc:Bounds x="1660" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Start5_di" bpmnElement="W1514_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_End13_di" bpmnElement="W1514_End13"><dc:Bounds x="1890" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1514_Annotation14_di" bpmnElement="W1514_Annotation14"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1514_Flow16_di" bpmnElement="W1514_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Flow17_di" bpmnElement="W1514_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Flow18_di" bpmnElement="W1514_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Flow19_di" bpmnElement="W1514_Flow19"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Flow20_di" bpmnElement="W1514_Flow20"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Flow21_di" bpmnElement="W1514_Flow21"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Flow22_di" bpmnElement="W1514_Flow22"><di:waypoint x="1630" y="505" /><di:waypoint x="1660" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Flow23_di" bpmnElement="W1514_Flow23"><di:waypoint x="1840" y="165" /><di:waypoint x="1890" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1514_Assoc15_di" bpmnElement="W1514_Assoc15"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

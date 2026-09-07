@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-142.2-cod-cash-collection-custody-and-driver-3pl-reconciliation" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W4273" name="W4273. COD Order Handoff, Delivery Note &amp; Amount-Due Computation" isExecutable="false">
+      <bpmn:documentation>Trigger: COD order released for fulfillment (VS-10.2)
+Frequency: Per COD order (~4,000–8,000/month, a ~23–47% COD share of the ~17,200 delivery orders)
+Volume: Each COD order with an amount-due for collection
+Owner: Ecommerce/Order Mgmt (VS-10) / Last-Mile Dispatch (VS-06.3)
+Participants: Payment Ops, Pricing (VS-01.2), Delivery Driver/3PL (VS-56)
+Source: workflow W4273 — COD Order Handoff, Delivery Note &amp; Amount-Due Computation</bpmn:documentation>
+      <bpmn:laneSet id="W4273_LaneSet3">
+        <bpmn:lane id="W4273_Lane1" name="Order Mgmt">
+        <bpmn:flowNodeRef>W4273_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4273_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4273_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4273_Lane2" name="Payment Ops">
+        <bpmn:flowNodeRef>W4273_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4273_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4273_Start4" name="COD order released for fulfillment (VS-10.2)">
+        <bpmn:outgoing>W4273_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4273_Task5" name="Order Mgmt/Payment Ops compute the exact COD amount-due (item total + COD fee…">
+        <bpmn:documentation>Step 1: Order Mgmt/Payment Ops compute the exact COD amount-due (item total + COD fee W4267 − pre-paid deposit − loyalty redemption + delivery fee), apply risk-tier auth (W4266), and freeze the amount on the delivery note
+Responsible (R): Order Mgmt / Payment Ops
+Accountable (A): Head of Payment Ops
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W4273_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4273_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4273_Task6" name="Order Mgmt/Last-Mile generate the COD delivery note (amount-due, item list…">
+        <bpmn:documentation>Step 2: Order Mgmt/Last-Mile generate the COD delivery note (amount-due, item list, customer ID, payment-instruction) and hand off to the driver/3PL via the delivery app (VS-06.3), flagging COD vs pre-paid
+Responsible (R): Order Mgmt / Dispatch
+Accountable (A): Head of Payment Ops
+Duration: Per order</bpmn:documentation>
+        <bpmn:incoming>W4273_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4273_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4273_Task7" name="Payment Ops monitor COD handoff completeness (every COD order has a locked…">
+        <bpmn:documentation>Step 3: Payment Ops monitor COD handoff completeness (every COD order has a locked amount-due + assigned driver), and flag undelivered/COD-released exceptions
+Responsible (R): Payment Ops
+Accountable (A): Head of Payment Ops
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4273_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4273_End8" name="Complete">
+        <bpmn:incoming>W4273_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4273_Annotation9">
+        <bpmn:text>Controls: - CTL-657 (ensure controlled execution — COD Cash Collection, Custody &amp; Driver/3PL Reconciliation (PA-142.2).) | - CTL-657: amount-due system-computed &amp; locked; risk-tier auth applied (W4266); handoff completeness monitored
+Owner: Ecommerce/Order Mgmt (VS-10) / Last-Mile Dispatch (VS-06.3)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4273_Assoc10" sourceRef="W4273_Annotation9" targetRef="W4273_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4273_Flow11" sourceRef="W4273_Start4" targetRef="W4273_Task5" />
+      <bpmn:sequenceFlow id="W4273_Flow12" sourceRef="W4273_Task5" targetRef="W4273_Task6" />
+      <bpmn:sequenceFlow id="W4273_Flow13" sourceRef="W4273_Task6" targetRef="W4273_Task7" />
+      <bpmn:sequenceFlow id="W4273_Flow14" sourceRef="W4273_Task7" targetRef="W4273_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4273_diag">
+      <bpmndi:BPMNPlane id="W4273_plane" bpmnElement="W_W4273">
+        <bpmndi:BPMNShape id="W4273_Lane1_di" bpmnElement="W4273_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4273_Lane2_di" bpmnElement="W4273_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4273_Task5_di" bpmnElement="W4273_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4273_Task6_di" bpmnElement="W4273_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4273_Task7_di" bpmnElement="W4273_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4273_Start4_di" bpmnElement="W4273_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4273_End8_di" bpmnElement="W4273_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4273_Annotation9_di" bpmnElement="W4273_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4273_Flow11_di" bpmnElement="W4273_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4273_Flow12_di" bpmnElement="W4273_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4273_Flow13_di" bpmnElement="W4273_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4273_Flow14_di" bpmnElement="W4273_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4273_Assoc10_di" bpmnElement="W4273_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4274" name="W4274. Doorstep Cash Collection, Receipting &amp; POD Capture" isExecutable="false">
+      <bpmn:documentation>Trigger: Delivery to COD customer
+Frequency: Per COD delivery (~4,000–8,000/month)
+Volume: Each COD cash collection at the doorstep
+Owner: Delivery Driver / 3PL (VS-56) / Last-Mile Ops (VS-06.3)
+Participants: Customer, Driver/3PL, Payment Ops, Fraud (VS-125)
+Source: workflow W4274 — Doorstep Cash Collection, Receipting &amp; POD Capture</bpmn:documentation>
+      <bpmn:laneSet id="W4274_LaneSet3">
+        <bpmn:lane id="W4274_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W4274_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4274_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4274_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4274_Lane2" name="Payment Ops">
+        <bpmn:flowNodeRef>W4274_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4274_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4274_Start4" name="Delivery to COD customer">
+        <bpmn:outgoing>W4274_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4274_Task5" name="Driver deliver the order, state the exact amount-due (per W4273), collect cash…">
+        <bpmn:documentation>Step 1: Driver deliver the order, state the exact amount-due (per W4273), collect cash, verify denomination/authenticity (counterfeit check), and confirm exact amount or process short-pay (W4276)
+Responsible (R): Driver / 3PL
+Accountable (A): Last-Mile Ops
+Duration: Per delivery</bpmn:documentation>
+        <bpmn:incoming>W4274_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4274_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4274_Task6" name="Driver capture proof of delivery + cash collected (digital POD with amount…">
+        <bpmn:documentation>Step 2: Driver capture proof of delivery + cash collected (digital POD with amount, customer signature/photo receipt per W4270 standard), issue customer receipt (BIR-compliant per W4271), and update order cash-status in the app
+Responsible (R): Driver / 3PL
+Accountable (A): Last-Mile Ops
+Duration: Per delivery</bpmn:documentation>
+        <bpmn:incoming>W4274_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4274_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4274_Task7" name="Payment Ops/Fraud monitor collection exceptions (no-cash, short-pay…">
+        <bpmn:documentation>Step 3: Payment Ops/Fraud monitor collection exceptions (no-cash, short-pay, counterfeit flag), trigger refusal/return handling (W4276), and feed data to reconciliation (W4277)
+Responsible (R): Payment Ops / Fraud
+Accountable (A): Head of Payment Ops
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4274_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4274_End8" name="Complete">
+        <bpmn:incoming>W4274_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4274_Annotation9">
+        <bpmn:text>Controls: - CTL-657 (ensure controlled execution — COD Cash Collection, Custody &amp; Driver/3PL Reconciliation (PA-142.2).) | - CTL-657: amount verified vs locked amount-due (W4273); POD/receipt captured (W4270/W4271); exceptions handled (W4276)
+Owner: Delivery Driver / 3PL (VS-56) / Last-Mile Ops (VS-06.3)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4274_Assoc10" sourceRef="W4274_Annotation9" targetRef="W4274_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4274_Flow11" sourceRef="W4274_Start4" targetRef="W4274_Task5" />
+      <bpmn:sequenceFlow id="W4274_Flow12" sourceRef="W4274_Task5" targetRef="W4274_Task6" />
+      <bpmn:sequenceFlow id="W4274_Flow13" sourceRef="W4274_Task6" targetRef="W4274_Task7" />
+      <bpmn:sequenceFlow id="W4274_Flow14" sourceRef="W4274_Task7" targetRef="W4274_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4274_diag">
+      <bpmndi:BPMNPlane id="W4274_plane" bpmnElement="W_W4274">
+        <bpmndi:BPMNShape id="W4274_Lane1_di" bpmnElement="W4274_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4274_Lane2_di" bpmnElement="W4274_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4274_Task5_di" bpmnElement="W4274_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4274_Task6_di" bpmnElement="W4274_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4274_Task7_di" bpmnElement="W4274_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4274_Start4_di" bpmnElement="W4274_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4274_End8_di" bpmnElement="W4274_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4274_Annotation9_di" bpmnElement="W4274_Annotation9"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4274_Flow11_di" bpmnElement="W4274_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4274_Flow12_di" bpmnElement="W4274_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4274_Flow13_di" bpmnElement="W4274_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4274_Flow14_di" bpmnElement="W4274_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4274_Assoc10_di" bpmnElement="W4274_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4275" name="W4275. Driver/3PL Daily Cash Custody, Remittance &amp; Deposit" isExecutable="false">
+      <bpmn:documentation>Trigger: End of driver/3PL shift, daily
+Frequency: Daily per driver/depot
+Volume: Daily cash custody &amp; remittance across the driver/3PL network
+Owner: Last-Mile Ops (VS-06.3) / 3PL (VS-56) / Payment Ops
+Participants: Drivers, 3PL depot/branch, Treasury (VS-18), Bank, Finance (VS-17.4)
+Source: workflow W4275 — Driver/3PL Daily Cash Custody, Remittance &amp; Deposit</bpmn:documentation>
+      <bpmn:laneSet id="W4275_LaneSet4">
+        <bpmn:lane id="W4275_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W4275_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4275_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4275_Lane2" name="3PL">
+        <bpmn:flowNodeRef>W4275_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4275_Lane3" name="Treasury">
+        <bpmn:flowNodeRef>W4275_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4275_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4275_Start5" name="End of driver/3PL shift, daily">
+        <bpmn:outgoing>W4275_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4275_Task6" name="Driver/3PL secure the day&#x27;s collected cash (tamper-evident bag per W4270…">
+        <bpmn:documentation>Step 1: Driver/3PL secure the day&#x27;s collected cash (tamper-evident bag per W4270, no-cash-overnight rule), reconcile to POD records, and remit to the 3PL depot/branch or BuildRight cash office within the SLA
+Responsible (R): Driver / 3PL / Cash Office
+Accountable (A): Last-Mile Ops / Payment Ops
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4275_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4275_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4275_Task7" name="3PL depot/cash office verify &amp; accept the remittance (count, match to POD list…">
+        <bpmn:documentation>Step 2: 3PL depot/cash office verify &amp; accept the remittance (count, match to POD list, sign handoff), deposit to bank (VS-18) or arrange CIT pickup (VS-81), and transmit the cash file to BuildRight (W4278)
+Responsible (R): 3PL / Cash Office / Treasury
+Accountable (A): Head of Payment Ops
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4275_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W4275_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4275_Task8" name="Treasury/Payment Ops confirm bank deposit (deposit slip/bank feed VS-18), track…">
+        <bpmn:documentation>Step 3: Treasury/Payment Ops confirm bank deposit (deposit slip/bank feed VS-18), track unremitted-cash aging (W4269 float), and escalate overdue remittance per SLA
+Responsible (R): Treasury / Payment Ops
+Accountable (A): CFO
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4275_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4275_End9" name="Complete">
+        <bpmn:incoming>W4275_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4275_Annotation10">
+        <bpmn:text>Controls: - CTL-657 (ensure controlled execution — COD Cash Collection, Custody &amp; Driver/3PL Reconciliation (PA-142.2).) | - CTL-657: tamper-evident custody; no-cash-overnight; remittance SLA; deposit verified (VS-18); aging tracked
+Owner: Last-Mile Ops (VS-06.3) / 3PL (VS-56) / Payment Ops</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4275_Assoc11" sourceRef="W4275_Annotation10" targetRef="W4275_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4275_Flow12" sourceRef="W4275_Start5" targetRef="W4275_Task6" />
+      <bpmn:sequenceFlow id="W4275_Flow13" sourceRef="W4275_Task6" targetRef="W4275_Task7" />
+      <bpmn:sequenceFlow id="W4275_Flow14" sourceRef="W4275_Task7" targetRef="W4275_Task8" />
+      <bpmn:sequenceFlow id="W4275_Flow15" sourceRef="W4275_Task8" targetRef="W4275_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4275_diag">
+      <bpmndi:BPMNPlane id="W4275_plane" bpmnElement="W_W4275">
+        <bpmndi:BPMNShape id="W4275_Lane1_di" bpmnElement="W4275_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_Lane2_di" bpmnElement="W4275_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_Lane3_di" bpmnElement="W4275_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_Task6_di" bpmnElement="W4275_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_Task7_di" bpmnElement="W4275_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_Task8_di" bpmnElement="W4275_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_Start5_di" bpmnElement="W4275_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_End9_di" bpmnElement="W4275_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4275_Annotation10_di" bpmnElement="W4275_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4275_Flow12_di" bpmnElement="W4275_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4275_Flow13_di" bpmnElement="W4275_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4275_Flow14_di" bpmnElement="W4275_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4275_Flow15_di" bpmnElement="W4275_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4275_Assoc11_di" bpmnElement="W4275_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4276" name="W4276. COD Refusal, Short-Pay &amp; Failed-Delivery Cash Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer refuses delivery, short-pays, or is unreachable
+Frequency: Daily (~COD refusal rate 5–15% in PH ecommerce)
+Volume: Refused/short-pay/failed COD orders
+Owner: Last-Mile Ops (VS-06.3) / Payment Ops / Returns (VS-32)
+Participants: Driver/3PL, Customer Support (VS-13), Returns (VS-32), Fraud (VS-125), Inventory (VS-05)
+Source: workflow W4276 — COD Refusal, Short-Pay &amp; Failed-Delivery Cash Handling</bpmn:documentation>
+      <bpmn:laneSet id="W4276_LaneSet4">
+        <bpmn:lane id="W4276_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W4276_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4276_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4276_Lane2" name="Payment Ops">
+        <bpmn:flowNodeRef>W4276_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4276_Lane3" name="Customer Support">
+        <bpmn:flowNodeRef>W4276_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4276_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4276_Start5" name="Customer refuses delivery, short-pays, or is unreachable">
+        <bpmn:outgoing>W4276_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4276_Task6" name="Driver/3PL record refusal/short-pay/failed-delivery with reason &amp; evidence…">
+        <bpmn:documentation>Step 1: Driver/3PL record refusal/short-pay/failed-delivery with reason &amp; evidence (photo/attempt log), collect any partial cash due (with POD per W4274), and return the goods per the RTV process (VS-32)
+Responsible (R): Driver / 3PL / Returns
+Accountable (A): Last-Mile Ops
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W4276_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4276_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4276_Task7" name="Payment Ops/Returns process the order outcome (cancel/return to stock…">
+        <bpmn:documentation>Step 2: Payment Ops/Returns process the order outcome (cancel/return to stock VS-32/VS-05, partial-payment posting, restocking fee per policy), and flag repeat-refusal customers to fraud (VS-125)
+Responsible (R): Payment Ops / Returns / Fraud
+Accountable (A): Head of Payment Ops
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W4276_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W4276_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4276_Task8" name="Customer Support (VS-13) follow up on failed deliveries (reschedule, address…">
+        <bpmn:documentation>Step 3: Customer Support (VS-13) follow up on failed deliveries (reschedule, address correction), and Fraud/Payment Ops analyze refusal patterns (W4287) to tune eligibility (W4266)
+Responsible (R): Customer Support / Fraud / Payment Ops
+Accountable (A): Head of Payment Ops
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W4276_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4276_End9" name="Complete">
+        <bpmn:incoming>W4276_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4276_Annotation10">
+        <bpmn:text>Controls: - CTL-657 (ensure controlled execution — COD Cash Collection, Custody &amp; Driver/3PL Reconciliation (PA-142.2).) | - CTL-657: refusal/short-pay evidenced; partial cash posted; stock returned (VS-32); repeat-refusal flagged (VS-125)
+Owner: Last-Mile Ops (VS-06.3) / Payment Ops / Returns (VS-32)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4276_Assoc11" sourceRef="W4276_Annotation10" targetRef="W4276_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4276_Flow12" sourceRef="W4276_Start5" targetRef="W4276_Task6" />
+      <bpmn:sequenceFlow id="W4276_Flow13" sourceRef="W4276_Task6" targetRef="W4276_Task7" />
+      <bpmn:sequenceFlow id="W4276_Flow14" sourceRef="W4276_Task7" targetRef="W4276_Task8" />
+      <bpmn:sequenceFlow id="W4276_Flow15" sourceRef="W4276_Task8" targetRef="W4276_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4276_diag">
+      <bpmndi:BPMNPlane id="W4276_plane" bpmnElement="W_W4276">
+        <bpmndi:BPMNShape id="W4276_Lane1_di" bpmnElement="W4276_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_Lane2_di" bpmnElement="W4276_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_Lane3_di" bpmnElement="W4276_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_Task6_di" bpmnElement="W4276_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_Task7_di" bpmnElement="W4276_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_Task8_di" bpmnElement="W4276_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_Start5_di" bpmnElement="W4276_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_End9_di" bpmnElement="W4276_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4276_Annotation10_di" bpmnElement="W4276_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4276_Flow12_di" bpmnElement="W4276_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4276_Flow13_di" bpmnElement="W4276_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4276_Flow14_di" bpmnElement="W4276_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4276_Flow15_di" bpmnElement="W4276_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4276_Assoc11_di" bpmnElement="W4276_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4277" name="W4277. Daily COD Cash-vs-Order Reconciliation &amp; Exception Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily close (VS-17.1); receipt of remittance/3PL file
+Frequency: Daily
+Volume: All COD orders dispatched/collected that day (~thousands/day)
+Owner: Finance / Payment Ops / Cash Applications (VS-16)
+Participants: Finance (VS-17.4), GL (VS-17.1), AR/Cash App (VS-16), Last-Mile (VS-06.3), Fraud (VS-125)
+Source: workflow W4277 — Daily COD Cash-vs-Order Reconciliation &amp; Exception Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W4277_LaneSet2">
+        <bpmn:lane id="W4277_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W4277_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4277_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4277_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4277_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4277_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4277_Start3" name="Daily close (VS-17.1); receipt of remittance/3PL file">
+        <bpmn:outgoing>W4277_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4277_Task4" name="Finance/Cash App reconcile cash collected (POD W4274 + 3PL remittance W4275 +…">
+        <bpmn:documentation>Step 1: Finance/Cash App reconcile cash collected (POD W4274 + 3PL remittance W4275 + bank deposit W4279) against each COD order&#x27;s amount-due (W4273), at order level, daily
+Responsible (R): Finance / Cash App
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4277_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W4277_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4277_Task5" name="Finance/Payment Ops investigate exceptions (over/short, unmatched cash, missing…">
+        <bpmn:documentation>Step 2: Finance/Payment Ops investigate exceptions (over/short, unmatched cash, missing POD, duplicate), route to driver/3PL/Fraud, and resolve within SLA
+Responsible (R): Finance / Payment Ops / Fraud
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4277_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4277_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4277_Task6" name="Finance post the reconciled cash to the GL/revenue (W4279), provision…">
+        <bpmn:documentation>Step 3: Finance post the reconciled cash to the GL/revenue (W4279), provision unremitted/unreconciled balances (W4269), and report reconciliation health (W4287)
+Responsible (R): Finance / GL
+Accountable (A): CFO
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4277_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4277_End7" name="Complete">
+        <bpmn:incoming>W4277_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4277_Annotation8">
+        <bpmn:text>Controls: - CTL-110 (ensure COD cash-chain integrity.) | - CTL-657: daily order-level reconciliation; exceptions resolved within SLA; unreconciled provisioned (W4269); SoD (W4270)
+Owner: Finance / Payment Ops / Cash Applications (VS-16)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4277_Assoc9" sourceRef="W4277_Annotation8" targetRef="W4277_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4277_Flow10" sourceRef="W4277_Start3" targetRef="W4277_Task4" />
+      <bpmn:sequenceFlow id="W4277_Flow11" sourceRef="W4277_Task4" targetRef="W4277_Task5" />
+      <bpmn:sequenceFlow id="W4277_Flow12" sourceRef="W4277_Task5" targetRef="W4277_Task6" />
+      <bpmn:sequenceFlow id="W4277_Flow13" sourceRef="W4277_Task6" targetRef="W4277_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4277_diag">
+      <bpmndi:BPMNPlane id="W4277_plane" bpmnElement="W_W4277">
+        <bpmndi:BPMNShape id="W4277_Lane1_di" bpmnElement="W4277_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4277_Task4_di" bpmnElement="W4277_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4277_Task5_di" bpmnElement="W4277_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4277_Task6_di" bpmnElement="W4277_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4277_Start3_di" bpmnElement="W4277_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4277_End7_di" bpmnElement="W4277_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4277_Annotation8_di" bpmnElement="W4277_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4277_Flow10_di" bpmnElement="W4277_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4277_Flow11_di" bpmnElement="W4277_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4277_Flow12_di" bpmnElement="W4277_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4277_Flow13_di" bpmnElement="W4277_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4277_Assoc9_di" bpmnElement="W4277_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4278" name="W4278. 3PL COD Cash File Ingest, Match &amp; Discrepancy Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: 3PL daily cash-file transmission
+Frequency: Daily per 3PL
+Volume: Cash files per 3PL partner (VS-56)
+Owner: Payment Ops / IT (VS-27) / Finance (VS-17.4)
+Participants: 3PL (VS-56), IT (VS-27), Finance, Last-Mile (VS-06.3)
+Source: workflow W4278 — 3PL COD Cash File Ingest, Match &amp; Discrepancy Handling</bpmn:documentation>
+      <bpmn:laneSet id="W4278_LaneSet3">
+        <bpmn:lane id="W4278_Lane1" name="IT">
+        <bpmn:flowNodeRef>W4278_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4278_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4278_Lane2" name="Payment Ops">
+        <bpmn:flowNodeRef>W4278_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4278_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4278_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4278_Start4" name="3PL daily cash-file transmission">
+        <bpmn:outgoing>W4278_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4278_Task5" name="IT/Payment Ops ingest the 3PL daily cash file (per-order collected amount…">
+        <bpmn:documentation>Step 1: IT/Payment Ops ingest the 3PL daily cash file (per-order collected amount, remittance, deposit reference) via the agreed format/exchange (W4272), validate structure &amp; completeness
+Responsible (R): IT / Payment Ops
+Accountable (A): Head of Payment Ops
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4278_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W4278_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4278_Task6" name="Payment Ops/Finance match the 3PL file to BuildRight POD/orders (W4273/W4274)…">
+        <bpmn:documentation>Step 2: Payment Ops/Finance match the 3PL file to BuildRight POD/orders (W4273/W4274), flag discrepancies (missing orders, amount mismatch, missing deposit), and raise to the 3PL per contract (W4268)
+Responsible (R): Payment Ops / Finance
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4278_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4278_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4278_Task7" name="Payment Ops track discrepancy resolution/SLA, apply contract holdback/penalty…">
+        <bpmn:documentation>Step 3: Payment Ops track discrepancy resolution/SLA, apply contract holdback/penalty (W4268), and feed 3PL performance to scorecard (VS-67) and reconciliation (W4277)
+Responsible (R): Payment Ops / Finance
+Accountable (A): CFO
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4278_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4278_End8" name="Complete">
+        <bpmn:incoming>W4278_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4278_Annotation9">
+        <bpmn:text>Controls: - CTL-657 (ensure controlled execution — COD Cash Collection, Custody &amp; Driver/3PL Reconciliation (PA-142.2).) | - CTL-657: 3PL file validated &amp; matched; discrepancies raised/SLA-tracked; holdback applied (W4268)
+Owner: Payment Ops / IT (VS-27) / Finance (VS-17.4)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4278_Assoc10" sourceRef="W4278_Annotation9" targetRef="W4278_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4278_Flow11" sourceRef="W4278_Start4" targetRef="W4278_Task5" />
+      <bpmn:sequenceFlow id="W4278_Flow12" sourceRef="W4278_Task5" targetRef="W4278_Task6" />
+      <bpmn:sequenceFlow id="W4278_Flow13" sourceRef="W4278_Task6" targetRef="W4278_Task7" />
+      <bpmn:sequenceFlow id="W4278_Flow14" sourceRef="W4278_Task7" targetRef="W4278_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4278_diag">
+      <bpmndi:BPMNPlane id="W4278_plane" bpmnElement="W_W4278">
+        <bpmndi:BPMNShape id="W4278_Lane1_di" bpmnElement="W4278_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4278_Lane2_di" bpmnElement="W4278_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4278_Task5_di" bpmnElement="W4278_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4278_Task6_di" bpmnElement="W4278_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4278_Task7_di" bpmnElement="W4278_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4278_Start4_di" bpmnElement="W4278_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4278_End8_di" bpmnElement="W4278_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4278_Annotation9_di" bpmnElement="W4278_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4278_Flow11_di" bpmnElement="W4278_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4278_Flow12_di" bpmnElement="W4278_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4278_Flow13_di" bpmnElement="W4278_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4278_Flow14_di" bpmnElement="W4278_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4278_Assoc10_di" bpmnElement="W4278_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4279" name="W4279. COD Bank Deposit Verification &amp; GL Cash Posting" isExecutable="false">
+      <bpmn:documentation>Trigger: Bank deposit (VS-18); daily close (VS-17.1)
+Frequency: Daily
+Volume: Bank deposits of COD cash across accounts
+Owner: Treasury (VS-18) / GL (VS-17.1) / Finance
+Participants: Treasury (VS-18), GL (VS-17.1), Cash App (VS-16), Bank, Payment Ops
+Source: workflow W4279 — COD Bank Deposit Verification &amp; GL Cash Posting</bpmn:documentation>
+      <bpmn:laneSet id="W4279_LaneSet4">
+        <bpmn:lane id="W4279_Lane1" name="Treasury">
+        <bpmn:flowNodeRef>W4279_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4279_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4279_Lane2" name="GL">
+        <bpmn:flowNodeRef>W4279_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4279_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W4279_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4279_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4279_Start5" name="Bank deposit (VS-18); daily close (VS-17.1)">
+        <bpmn:outgoing>W4279_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4279_Task6" name="Treasury/GL verify the bank deposit (deposit slip vs bank statement/feed VS-18)…">
+        <bpmn:documentation>Step 1: Treasury/GL verify the bank deposit (deposit slip vs bank statement/feed VS-18) against the remittance/cash file (W4275/W4278), confirming cash reached the bank
+Responsible (R): Treasury / GL
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4279_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4279_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4279_Task7" name="GL post the reconciled COD cash to revenue/AR (recognize at delivery per…">
+        <bpmn:documentation>Step 2: GL post the reconciled COD cash to revenue/AR (recognize at delivery per W4271), clear the COD receivable/float, and post COD fee/handling revenue (W4267)
+Responsible (R): GL / Finance
+Accountable (A): CFO
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W4279_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W4279_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4279_Task8" name="Finance reconcile GL cash to bank (VS-17.1 bank rec), investigate variances…">
+        <bpmn:documentation>Step 3: Finance reconcile GL cash to bank (VS-17.1 bank rec), investigate variances, and ensure VAT/tax coding per VS-79
+Responsible (R): Finance / GL / Tax
+Accountable (A): Finance Controller
+Duration: Daily/Monthly</bpmn:documentation>
+        <bpmn:incoming>W4279_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4279_End9" name="Complete">
+        <bpmn:incoming>W4279_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4279_Annotation10">
+        <bpmn:text>Controls: - CTL-110 (ensure COD cash-chain integrity.) | - CTL-657: deposit verified vs remittance; revenue recognized at delivery (W4271); VAT-coded (VS-79); bank rec closed
+Owner: Treasury (VS-18) / GL (VS-17.1) / Finance</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4279_Assoc11" sourceRef="W4279_Annotation10" targetRef="W4279_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4279_Flow12" sourceRef="W4279_Start5" targetRef="W4279_Task6" />
+      <bpmn:sequenceFlow id="W4279_Flow13" sourceRef="W4279_Task6" targetRef="W4279_Task7" />
+      <bpmn:sequenceFlow id="W4279_Flow14" sourceRef="W4279_Task7" targetRef="W4279_Task8" />
+      <bpmn:sequenceFlow id="W4279_Flow15" sourceRef="W4279_Task8" targetRef="W4279_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4279_diag">
+      <bpmndi:BPMNPlane id="W4279_plane" bpmnElement="W_W4279">
+        <bpmndi:BPMNShape id="W4279_Lane1_di" bpmnElement="W4279_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_Lane2_di" bpmnElement="W4279_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_Lane3_di" bpmnElement="W4279_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_Task6_di" bpmnElement="W4279_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_Task7_di" bpmnElement="W4279_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_Task8_di" bpmnElement="W4279_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_Start5_di" bpmnElement="W4279_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_End9_di" bpmnElement="W4279_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4279_Annotation10_di" bpmnElement="W4279_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4279_Flow12_di" bpmnElement="W4279_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4279_Flow13_di" bpmnElement="W4279_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4279_Flow14_di" bpmnElement="W4279_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4279_Flow15_di" bpmnElement="W4279_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4279_Assoc11_di" bpmnElement="W4279_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W4280" name="W4280. COD Physical Cash Security, Robbery/Loss Response &amp; Recovery" isExecutable="false">
+      <bpmn:documentation>Trigger: Robbery/loss/security incident involving COD cash
+Frequency: Incident-driven
+Volume: Security incidents across the COD cash chain
+Owner: Security (VS-23) / Payment Ops / Insurance (VS-26) / Loss Prevention
+Participants: Security (VS-23), Insurance (VS-26), Legal (VS-100), Fraud (VS-125), Treasury (VS-18), Police
+Source: workflow W4280 — COD Physical Cash Security, Robbery/Loss Response &amp; Recovery</bpmn:documentation>
+      <bpmn:laneSet id="W4280_LaneSet4">
+        <bpmn:lane id="W4280_Lane1" name="Driver">
+        <bpmn:flowNodeRef>W4280_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4280_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4280_Lane2" name="Security">
+        <bpmn:flowNodeRef>W4280_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W4280_Lane3" name="Insurance">
+        <bpmn:flowNodeRef>W4280_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W4280_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W4280_Start5" name="Robbery/loss/security incident involving COD cash">
+        <bpmn:outgoing>W4280_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W4280_Task6" name="Driver/3PL/Security execute the incident response (safety first, secure scene…">
+        <bpmn:documentation>Step 1: Driver/3PL/Security execute the incident response (safety first, secure scene, notify Security/Payment Ops/police), per the cash-security SOP (W4270)
+Responsible (R): Driver / Security
+Accountable (A): Head of Payment Ops / Security
+Duration: Immediate</bpmn:documentation>
+        <bpmn:incoming>W4280_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W4280_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4280_Task7" name="Security/Fraud investigate (root cause, custody breakdown, internal vs…">
+        <bpmn:documentation>Step 2: Security/Fraud investigate (root cause, custody breakdown, internal vs external), document, and log to the loss/security system (VS-23/VS-125)
+Responsible (R): Security / Fraud
+Accountable (A): Head of Internal Audit &amp; Risk / COO
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W4280_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W4280_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W4280_Task8" name="Insurance/Legal file the claim (VS-26), pursue recovery (3PL contract W4268…">
+        <bpmn:documentation>Step 3: Insurance/Legal file the claim (VS-26), pursue recovery (3PL contract W4268, fidelity bond, police/legal VS-100), provision/write off unrecovered loss (W4269), and apply corrective action
+Responsible (R): Insurance / Legal / Finance
+Accountable (A): CFO / Head of Internal Audit &amp; Risk
+Duration: Per incident</bpmn:documentation>
+        <bpmn:incoming>W4280_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W4280_End9" name="Complete">
+        <bpmn:incoming>W4280_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W4280_Annotation10">
+        <bpmn:text>Controls: - CTL-657 (ensure controlled execution — COD Cash Collection, Custody &amp; Driver/3PL Reconciliation (PA-142.2).) | - CTL-657: cash-security SOP followed; custody controls (W4270); claim/recovery pursued (VS-26); loss provisioned (W4269)
+Owner: Security (VS-23) / Payment Ops / Insurance (VS-26) / Loss Prevention</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W4280_Assoc11" sourceRef="W4280_Annotation10" targetRef="W4280_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W4280_Flow12" sourceRef="W4280_Start5" targetRef="W4280_Task6" />
+      <bpmn:sequenceFlow id="W4280_Flow13" sourceRef="W4280_Task6" targetRef="W4280_Task7" />
+      <bpmn:sequenceFlow id="W4280_Flow14" sourceRef="W4280_Task7" targetRef="W4280_Task8" />
+      <bpmn:sequenceFlow id="W4280_Flow15" sourceRef="W4280_Task8" targetRef="W4280_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W4280_diag">
+      <bpmndi:BPMNPlane id="W4280_plane" bpmnElement="W_W4280">
+        <bpmndi:BPMNShape id="W4280_Lane1_di" bpmnElement="W4280_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_Lane2_di" bpmnElement="W4280_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_Lane3_di" bpmnElement="W4280_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_Task6_di" bpmnElement="W4280_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_Task7_di" bpmnElement="W4280_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_Task8_di" bpmnElement="W4280_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_Start5_di" bpmnElement="W4280_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_End9_di" bpmnElement="W4280_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W4280_Annotation10_di" bpmnElement="W4280_Annotation10"><dc:Bounds x="160" y="630" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W4280_Flow12_di" bpmnElement="W4280_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4280_Flow13_di" bpmnElement="W4280_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4280_Flow14_di" bpmnElement="W4280_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4280_Flow15_di" bpmnElement="W4280_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W4280_Assoc11_di" bpmnElement="W4280_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

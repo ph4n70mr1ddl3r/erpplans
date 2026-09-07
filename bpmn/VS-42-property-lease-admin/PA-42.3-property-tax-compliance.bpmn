@@ -1,0 +1,762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-42.3-property-tax-compliance" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1870" name="W1870. Real Property Tax (RPT) Assessment Review &amp; Payment" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual RPT assessment notice from LGU; quarterly RPT payment due dates
+Frequency: Annual assessment review; quarterly payments (Jan 31, Apr 30, Jul 31, Oct 31)
+Volume: ~205 properties across ~50+ LGUs (municipalities/cities)
+Owner: Tax Accountant
+Participants: Tax Accountant, Lease Administrator, COO, Finance
+Source: workflow W1870 — Real Property Tax (RPT) Assessment Review &amp; Payment</bpmn:documentation>
+      <bpmn:laneSet id="W1870_LaneSet3">
+        <bpmn:lane id="W1870_Lane1" name="LGU">
+        <bpmn:flowNodeRef>W1870_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1870_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1870_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W1870_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1870_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1870_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1870_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1870_Start4" name="Annual RPT assessment notice from LGU; quarterly RPT payment due dates">
+        <bpmn:outgoing>W1870_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1870_Task5" name="LGU issues RPT assessment notice: (a) assessed value of land and improvement…">
+        <bpmn:documentation>Step 1: LGU issues RPT assessment notice: (a) assessed value of land and improvement, (b) tax rate applied (typically 1–2% of assessed value for commercial properties per LGU schedule), (c) annual RPT amount due, (d) payment schedule (quarterly installments; 10% discount for advance annual payment in some LGUs)
+Responsible (R): LGU
+Accountable (A): —
+Duration: External</bpmn:documentation>
+        <bpmn:incoming>W1870_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1870_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1870_Task6" name="Tax Accountant reviews assessment: (a) compare assessed value to previous year…">
+        <bpmn:documentation>Step 2: Tax Accountant reviews assessment: (a) compare assessed value to previous year — flag significant increases (&gt; 10%) for protest evaluation, (b) verify property classification (commercial vs. industrial) — incorrect classification results in higher tax rate, (c) verify property area measurements match lease agreement, (d) if assessment appears excessive: (i) file protest with LGU Assessor&#x27;s Office within 60 days per Local Government Code, (ii) engage appraiser for independent valuation if contested amount is material (&gt; PHP 100K annual difference), (e) determine if RPT is BuildRight or landlord responsibility per lease terms (most leases: landlord responsible for land RPT; BuildRight responsible for improvement RPT if tenant-built improvements)
+Responsible (R): Tax Accountant
+Accountable (A): Finance Manager
+Duration: 1–2 hours/property</bpmn:documentation>
+        <bpmn:incoming>W1870_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1870_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1870_Task7" name="Tax Accountant processes quarterly RPT payments: (a) generate payment schedule…">
+        <bpmn:documentation>Step 3: Tax Accountant processes quarterly RPT payments: (a) generate payment schedule for all properties with LGU, tax declaration number, amount, and due date, (b) process payment per LGU acceptance method: over-the-counter at LGU treasury, online payment (if available), or authorized agent bank, (c) obtain official receipt and update tax payment records, (d) file proof of payment with LGU to maintain good standing
+Responsible (R): Tax Accountant
+Accountable (A): Finance Manager
+Duration: 2–4 days/quarter</bpmn:documentation>
+        <bpmn:incoming>W1870_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1870_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1870_Task8" name="Annual: Tax Accountant reconciles total RPT payments vs. budget and flags…">
+        <bpmn:documentation>Step 4: Annual: Tax Accountant reconciles total RPT payments vs. budget and flags significant variances to COO and CFO
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: 1 day/year</bpmn:documentation>
+        <bpmn:incoming>W1870_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1870_End9" name="Complete">
+        <bpmn:incoming>W1870_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1870_Annotation10">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: Tax Accountant review and approval gate; operational: periodic reconciliation against source documents
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1870_Assoc11" sourceRef="W1870_Annotation10" targetRef="W1870_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1870_Flow12" sourceRef="W1870_Start4" targetRef="W1870_Task5" />
+      <bpmn:sequenceFlow id="W1870_Flow13" sourceRef="W1870_Task5" targetRef="W1870_Task6" />
+      <bpmn:sequenceFlow id="W1870_Flow14" sourceRef="W1870_Task6" targetRef="W1870_Task7" />
+      <bpmn:sequenceFlow id="W1870_Flow15" sourceRef="W1870_Task7" targetRef="W1870_Task8" />
+      <bpmn:sequenceFlow id="W1870_Flow16" sourceRef="W1870_Task8" targetRef="W1870_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1870_diag">
+      <bpmndi:BPMNPlane id="W1870_plane" bpmnElement="W_W1870">
+        <bpmndi:BPMNShape id="W1870_Lane1_di" bpmnElement="W1870_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_Lane2_di" bpmnElement="W1870_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_Task5_di" bpmnElement="W1870_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_Task6_di" bpmnElement="W1870_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_Task7_di" bpmnElement="W1870_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_Task8_di" bpmnElement="W1870_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_Start4_di" bpmnElement="W1870_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_End9_di" bpmnElement="W1870_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1870_Annotation10_di" bpmnElement="W1870_Annotation10"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1870_Flow12_di" bpmnElement="W1870_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1870_Flow13_di" bpmnElement="W1870_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1870_Flow14_di" bpmnElement="W1870_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1870_Flow15_di" bpmnElement="W1870_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1870_Flow16_di" bpmnElement="W1870_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1870_Assoc11_di" bpmnElement="W1870_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1871" name="W1871. Local Business Tax (LBT) &amp; LGU Permit Renewal Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual business permit renewal deadline (typically January 20 per LGU)
+Frequency: Annual renewal per LGU; quarterly LBT payments
+Volume: ~205 locations across ~50+ LGUs
+Owner: Regulatory Officer / Tax Accountant
+Participants: Regulatory Officer, Tax Accountant, Legal Counsel, Store Managers
+Source: workflow W1871 — Local Business Tax (LBT) &amp; LGU Permit Renewal Management</bpmn:documentation>
+      <bpmn:laneSet id="W1871_LaneSet2">
+        <bpmn:lane id="W1871_Lane1" name="Regulatory Officer">
+        <bpmn:flowNodeRef>W1871_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1871_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1871_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1871_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1871_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1871_Start3" name="Annual business permit renewal deadline (typically January 20 per LGU)">
+        <bpmn:outgoing>W1871_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1871_Task4" name="October: Regulatory Officer initiates annual renewal preparation: (a) compile…">
+        <bpmn:documentation>Step 1: October: Regulatory Officer initiates annual renewal preparation: (a) compile list of all business permits expiring December 31, (b) verify required documents per LGU: (i) DTI/SEC registration, (ii) BIR registration certificate, (iii) SSS/PhilHealth/Pag-IBIG employer registration, (iv) barangay clearance, (v) fire safety inspection certificate (BFP), (vi) sanitation permit (city health office), (vii) building occupancy permit, (viii) previous year&#x27;s LBT payment receipts, (ix) lease contract or proof of business address, (c) coordinate with Store Managers to obtain barangay clearances and local inspections
+Responsible (R): Regulatory Officer
+Accountable (A): VP Legal
+Duration: 2–4 weeks</bpmn:documentation>
+        <bpmn:incoming>W1871_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W1871_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1871_Task5" name="January: Regulatory Officer submits renewal applications to LGUs: (a) file…">
+        <bpmn:documentation>Step 2: January: Regulatory Officer submits renewal applications to LGUs: (a) file business permit renewal per LGU schedule (most require submission by January 5–20), (b) pay LBT for the year (based on gross receipts from previous year per LGU tax ordinance), (c) obtain renewed business permit and mayor&#x27;s permit, (d) distribute renewed permits to stores for display per Consumer Act RA 7394 requirement
+Responsible (R): Regulatory Officer
+Accountable (A): VP Legal
+Duration: 2–3 weeks</bpmn:documentation>
+        <bpmn:incoming>W1871_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1871_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1871_Task6" name="Ongoing: Regulatory Officer monitors LGU compliance throughout the year: (a)…">
+        <bpmn:documentation>Step 3: Ongoing: Regulatory Officer monitors LGU compliance throughout the year: (a) new store opening: obtain business permit before store opening per W702, (b) store closure: notify LGU and cancel business permit per W703, (c) LGU inspection responses: coordinate with Store Manager for any LGU inspections (sanitary, fire safety, building, trade and industry) per W22.2, (d) track new LGU ordinances affecting business operations
+Responsible (R): Regulatory Officer
+Accountable (A): VP Legal
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W1871_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1871_End7" name="Complete">
+        <bpmn:incoming>W1871_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1871_Annotation8">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Regulatory Officer / Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1871_Assoc9" sourceRef="W1871_Annotation8" targetRef="W1871_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1871_Flow10" sourceRef="W1871_Start3" targetRef="W1871_Task4" />
+      <bpmn:sequenceFlow id="W1871_Flow11" sourceRef="W1871_Task4" targetRef="W1871_Task5" />
+      <bpmn:sequenceFlow id="W1871_Flow12" sourceRef="W1871_Task5" targetRef="W1871_Task6" />
+      <bpmn:sequenceFlow id="W1871_Flow13" sourceRef="W1871_Task6" targetRef="W1871_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1871_diag">
+      <bpmndi:BPMNPlane id="W1871_plane" bpmnElement="W_W1871">
+        <bpmndi:BPMNShape id="W1871_Lane1_di" bpmnElement="W1871_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1871_Task4_di" bpmnElement="W1871_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1871_Task5_di" bpmnElement="W1871_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1871_Task6_di" bpmnElement="W1871_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1871_Start3_di" bpmnElement="W1871_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1871_End7_di" bpmnElement="W1871_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1871_Annotation8_di" bpmnElement="W1871_Annotation8"><dc:Bounds x="160" y="290" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1871_Flow10_di" bpmnElement="W1871_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1871_Flow11_di" bpmnElement="W1871_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1871_Flow12_di" bpmnElement="W1871_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1871_Flow13_di" bpmnElement="W1871_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1871_Assoc9_di" bpmnElement="W1871_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1872" name="W1872. PFRS 16 Lease Accounting — Month-End Processing &amp; Disclosure" isExecutable="false">
+      <bpmn:documentation>Trigger: Month-end close cycle (W9A)
+Frequency: Monthly
+Volume: ~205 active leases across 5 legal entities
+Owner: Finance (Lease Accounting Specialist)
+Participants: Lease Accounting Specialist, Finance Manager, Controller, External Auditor
+Source: workflow W1872 — PFRS 16 Lease Accounting — Month-End Processing &amp; Disclosure</bpmn:documentation>
+      <bpmn:laneSet id="W1872_LaneSet2">
+        <bpmn:lane id="W1872_Lane1" name="Lease Accounting Specialist">
+        <bpmn:flowNodeRef>W1872_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1872_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1872_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1872_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1872_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1872_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1872_Start3" name="Month-end close cycle (W9A)">
+        <bpmn:outgoing>W1872_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1872_Task4" name="Month-end: Lease Accounting Specialist processes PFRS 16 journal entries: (a)…">
+        <bpmn:documentation>Step 1: Month-end: Lease Accounting Specialist processes PFRS 16 journal entries: (a) lease depreciation: Dr. Depreciation Expense / Cr. Accumulated Depreciation — ROU Assets (straight-line over lease term), (b) lease interest expense: Dr. Interest Expense / Cr. Lease Liability (effective interest method on lease liability balance), (c) variable lease payments (CAM, percentage rent): expensed as incurred — Dr. Rent Expense / Cr. Cash, (d) short-term and low-value leases (≤ 12 months with no purchase option, or low-value &lt; USD 5,000 ≈ PHP 280K, per the VS-148 policy): exempted from PFRS 16 recognition; expensed straight-line — Dr. Rent Expense / Cr. Cash
+Responsible (R): Lease Accounting Specialist
+Accountable (A): Controller
+Duration: 1–2 days/month</bpmn:documentation>
+        <bpmn:incoming>W1872_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1872_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1872_Task5" name="Month-end: process lease modifications, terminations, and new leases: (a) new…">
+        <bpmn:documentation>Step 2: Month-end: process lease modifications, terminations, and new leases: (a) new leases (W1854): recognize ROU asset and lease liability at present value of future lease payments, (b) lease modifications (W1859): remeasure liability using revised discount rate; adjust ROU asset, (c) lease terminations (W1857): derecognize ROU asset and liability; recognize termination gain/loss, (d) rent escalations (W1863): remeasure liability using revised cash flows
+Responsible (R): Lease Accounting Specialist
+Accountable (A): Controller
+Duration: 1–2 days/month</bpmn:documentation>
+        <bpmn:incoming>W1872_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1872_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1872_Task6" name="Quarter-end: prepare PFRS 16 disclosure schedules: (a) reconciliation of…">
+        <bpmn:documentation>Step 3: Quarter-end: prepare PFRS 16 disclosure schedules: (a) reconciliation of opening and closing lease liabilities, (b) ROU asset movements: additions, depreciation, disposals, impairments, (c) maturity analysis of undiscounted lease payments: ≤ 1 year, 1–5 years, &gt; 5 years, (d) total lease expense: depreciation, interest, variable payments, short-term lease expense, (e) weighted-average lease term and discount rate, (f) extension and termination options exercise data, (g) provide to Controller for financial statement note preparation per W9A
+Responsible (R): Lease Accounting Specialist
+Accountable (A): Controller
+Duration: 1 day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1872_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1872_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1872_Task7" name="Year-end: coordinate with External Auditor on PFRS 16 testing: (a) provide…">
+        <bpmn:documentation>Step 4: Year-end: coordinate with External Auditor on PFRS 16 testing: (a) provide lease population and sampling support, (b) support auditor testing of discount rate assumptions, lease term assessments, and modification accounting, (c) resolve auditor queries on complex leases (e.g., options to extend/terminate, variable payment structures)
+Responsible (R): Lease Accounting Specialist / Controller
+Accountable (A): CFO
+Duration: 1–2 weeks/year</bpmn:documentation>
+        <bpmn:incoming>W1872_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1872_End8" name="Complete">
+        <bpmn:incoming>W1872_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1872_Annotation9">
+        <bpmn:text>Controls: - CTL-220 (ensure lease-administration &amp; PFRS 16 integrity.) | - operational: periodic reconciliation against source documents
+Owner: Finance (Lease Accounting Specialist)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1872_Assoc10" sourceRef="W1872_Annotation9" targetRef="W1872_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1872_Flow11" sourceRef="W1872_Start3" targetRef="W1872_Task4" />
+      <bpmn:sequenceFlow id="W1872_Flow12" sourceRef="W1872_Task4" targetRef="W1872_Task5" />
+      <bpmn:sequenceFlow id="W1872_Flow13" sourceRef="W1872_Task5" targetRef="W1872_Task6" />
+      <bpmn:sequenceFlow id="W1872_Flow14" sourceRef="W1872_Task6" targetRef="W1872_Task7" />
+      <bpmn:sequenceFlow id="W1872_Flow15" sourceRef="W1872_Task7" targetRef="W1872_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1872_diag">
+      <bpmndi:BPMNPlane id="W1872_plane" bpmnElement="W_W1872">
+        <bpmndi:BPMNShape id="W1872_Lane1_di" bpmnElement="W1872_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1872_Task4_di" bpmnElement="W1872_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1872_Task5_di" bpmnElement="W1872_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1872_Task6_di" bpmnElement="W1872_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1872_Task7_di" bpmnElement="W1872_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1872_Start3_di" bpmnElement="W1872_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1872_End8_di" bpmnElement="W1872_End8"><dc:Bounds x="1260" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1872_Annotation9_di" bpmnElement="W1872_Annotation9"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1872_Flow11_di" bpmnElement="W1872_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1872_Flow12_di" bpmnElement="W1872_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1872_Flow13_di" bpmnElement="W1872_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1872_Flow14_di" bpmnElement="W1872_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1872_Flow15_di" bpmnElement="W1872_Flow15"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1872_Assoc10_di" bpmnElement="W1872_Assoc10"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1873" name="W1873. Building &amp; Occupancy Permit Compliance Monitoring" isExecutable="false">
+      <bpmn:documentation>Trigger: New store construction completion; annual compliance verification; LGU inspection
+Frequency: Per new store (~10–15/year); annual compliance check for existing stores
+Volume: ~205 locations
+Owner: COO
+Participants: COO, Store Manager, Regulatory Officer, Contractor, LGU Building Official
+Source: workflow W1873 — Building &amp; Occupancy Permit Compliance Monitoring</bpmn:documentation>
+      <bpmn:laneSet id="W1873_LaneSet4">
+        <bpmn:lane id="W1873_Lane1" name="COO">
+        <bpmn:flowNodeRef>W1873_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1873_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1873_Lane2" name="Regulatory Officer">
+        <bpmn:flowNodeRef>W1873_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1873_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1873_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1873_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1873_Start5" name="New store construction completion; annual compliance verification; LGU inspection">
+        <bpmn:outgoing>W1873_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1873_Task6" name="For new stores: COO coordinates building permit and occupancy permit process…">
+        <bpmn:documentation>Step 1: For new stores: COO coordinates building permit and occupancy permit process: (a) building permit: contractor applies to LGU Building Official with architectural plans, structural plans, electrical plans, plumbing plans, fire safety plans per National Building Code (PD 1096), (b) construction inspections: LGU Building Official inspects at key construction milestones, (c) Certificate of Occupancy: upon completion, LGU Building Official issues occupancy permit after final inspection confirming building is safe for intended use, (d) store cannot open without Certificate of Occupancy — critical path for new store timeline per W702
+Responsible (R): COO
+Accountable (A): COO
+Duration: Per W20/W702</bpmn:documentation>
+        <bpmn:incoming>W1873_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1873_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1873_Task7" name="For existing stores: annual compliance verification: (a) Regulatory Officer…">
+        <bpmn:documentation>Step 2: For existing stores: annual compliance verification: (a) Regulatory Officer verifies each store&#x27;s building and occupancy permits are current and on file, (b) if permits require annual renewal (some LGUs): process renewal before deadline, (c) if physical modifications made to store (renovation per W96, expansion): verify building permit obtained for modifications and updated occupancy permit secured, (d) display current permits in store as required by LGU
+Responsible (R): Regulatory Officer
+Accountable (A): COO
+Duration: 1 day/year</bpmn:documentation>
+        <bpmn:incoming>W1873_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1873_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1873_Task8" name="If LGU conducts building safety inspection: (a) Store Manager coordinates…">
+        <bpmn:documentation>Step 3: If LGU conducts building safety inspection: (a) Store Manager coordinates inspection access, (b) COO provides building documentation, (c) if violations found: coordinate corrective action within LGU-specified timeline, (d) if corrective action requires physical modification: initiate facility maintenance per W47 or renovation per W96
+Responsible (R): Store Manager / COO
+Accountable (A): VP Store Operations
+Duration: Per inspection</bpmn:documentation>
+        <bpmn:incoming>W1873_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1873_End9" name="Complete">
+        <bpmn:incoming>W1873_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1873_Annotation10">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: corrections
+Owner: COO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1873_Assoc11" sourceRef="W1873_Annotation10" targetRef="W1873_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1873_Flow12" sourceRef="W1873_Start5" targetRef="W1873_Task6" />
+      <bpmn:sequenceFlow id="W1873_Flow13" sourceRef="W1873_Task6" targetRef="W1873_Task7" />
+      <bpmn:sequenceFlow id="W1873_Flow14" sourceRef="W1873_Task7" targetRef="W1873_Task8" />
+      <bpmn:sequenceFlow id="W1873_Flow15" sourceRef="W1873_Task8" targetRef="W1873_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1873_diag">
+      <bpmndi:BPMNPlane id="W1873_plane" bpmnElement="W_W1873">
+        <bpmndi:BPMNShape id="W1873_Lane1_di" bpmnElement="W1873_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_Lane2_di" bpmnElement="W1873_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_Lane3_di" bpmnElement="W1873_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_Task6_di" bpmnElement="W1873_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_Task7_di" bpmnElement="W1873_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_Task8_di" bpmnElement="W1873_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_Start5_di" bpmnElement="W1873_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_End9_di" bpmnElement="W1873_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1873_Annotation10_di" bpmnElement="W1873_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1873_Flow12_di" bpmnElement="W1873_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1873_Flow13_di" bpmnElement="W1873_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1873_Flow14_di" bpmnElement="W1873_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1873_Flow15_di" bpmnElement="W1873_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1873_Assoc11_di" bpmnElement="W1873_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1874" name="W1874. Property Insurance Portfolio Management &amp; Annual Renewal" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual insurance renewal cycle; new property addition; claim event
+Frequency: Annual renewal; claims per event
+Volume: ~205 properties insured; annual premium ~PHP 50–100M
+Owner: Finance (Insurance Administrator)
+Participants: Finance, COO, Insurance Broker, Insurance Companies, Legal Counsel
+Source: workflow W1874 — Property Insurance Portfolio Management &amp; Annual Renewal</bpmn:documentation>
+      <bpmn:laneSet id="W1874_LaneSet3">
+        <bpmn:lane id="W1874_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W1874_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1874_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1874_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1874_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1874_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W1874_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1874_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1874_Start4" name="Annual insurance renewal cycle; new property addition; claim event">
+        <bpmn:outgoing>W1874_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1874_Task5" name="Annual renewal preparation (90 days before policy expiry): (a) Finance compiles…">
+        <bpmn:documentation>Step 1: Annual renewal preparation (90 days before policy expiry): (a) Finance compiles property schedule: all 205 locations with building specifications, replacement values, contents values, location details (flood zone, earthquake zone, typhoon exposure), (b) Insurance Broker obtains quotes from 3–5 insurance companies, (c) Finance evaluates: coverage adequacy, premium competitiveness, deductible levels, policy terms and exclusions, insurer financial strength rating, (d) negotiate policy terms: (i) blanket coverage vs. scheduled per-location coverage, (ii) business interruption coverage (rent loss during building repair), (iii) natural catastrophe coverage (typhoon, earthquake, flood — critical in Philippines), (iv) deductible optimization: higher deductible = lower premium but higher retained risk
+Responsible (R): Finance / Insurance Broker
+Accountable (A): CFO
+Duration: 4–6 weeks</bpmn:documentation>
+        <bpmn:incoming>W1874_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1874_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1874_Task6" name="CFO approves insurance program: (a) total annual premium vs. budget, (b)…">
+        <bpmn:documentation>Step 2: CFO approves insurance program: (a) total annual premium vs. budget, (b) coverage adequacy: are all properties adequately insured to replacement value? (c) deductible levels appropriate for BuildRight&#x27;s risk appetite?, (d) execute policies; Finance pays annual premium
+Responsible (R): CFO
+Accountable (A): CEO
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W1874_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1874_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1874_Task7" name="Ongoing property schedule management: (a) new stores: add to insurance schedule…">
+        <bpmn:documentation>Step 3: Ongoing property schedule management: (a) new stores: add to insurance schedule within 30 days of lease commencement or property acquisition, (b) store closures: remove from schedule upon lease termination, (c) renovations: update replacement value after significant improvements, (d) Finance provides updated property schedule to insurer quarterly
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W1874_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1874_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1874_Task8" name="Claims management: (a) if property damage event (typhoon, fire, flood): (i)…">
+        <bpmn:documentation>Step 4: Claims management: (a) if property damage event (typhoon, fire, flood): (i) Finance notifies insurer within 24 hours, (ii) COO coordinates damage assessment and emergency repairs per W26 (crisis response), (iii) Finance compiles claim documentation: damage photos, repair estimates, inventory loss, business interruption calculation, (iv) negotiate claim settlement with insurer adjuster, (v) Finance processes claim payment and repair reimbursement, (b) track claim history by location for underwriting analysis
+Responsible (R): Finance / COO
+Accountable (A): CFO
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W1874_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1874_End9" name="Complete">
+        <bpmn:incoming>W1874_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1874_Annotation10">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: annual insurance-coverage adequacy review vs reconstruction cost; policy schedule reconciled to the ~205-lease portfolio quarterly
+Owner: Finance (Insurance Administrator)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1874_Assoc11" sourceRef="W1874_Annotation10" targetRef="W1874_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1874_Flow12" sourceRef="W1874_Start4" targetRef="W1874_Task5" />
+      <bpmn:sequenceFlow id="W1874_Flow13" sourceRef="W1874_Task5" targetRef="W1874_Task6" />
+      <bpmn:sequenceFlow id="W1874_Flow14" sourceRef="W1874_Task6" targetRef="W1874_Task7" />
+      <bpmn:sequenceFlow id="W1874_Flow15" sourceRef="W1874_Task7" targetRef="W1874_Task8" />
+      <bpmn:sequenceFlow id="W1874_Flow16" sourceRef="W1874_Task8" targetRef="W1874_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1874_diag">
+      <bpmndi:BPMNPlane id="W1874_plane" bpmnElement="W_W1874">
+        <bpmndi:BPMNShape id="W1874_Lane1_di" bpmnElement="W1874_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_Lane2_di" bpmnElement="W1874_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_Task5_di" bpmnElement="W1874_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_Task6_di" bpmnElement="W1874_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_Task7_di" bpmnElement="W1874_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_Task8_di" bpmnElement="W1874_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_Start4_di" bpmnElement="W1874_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_End9_di" bpmnElement="W1874_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1874_Annotation10_di" bpmnElement="W1874_Annotation10"><dc:Bounds x="160" y="460" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1874_Flow12_di" bpmnElement="W1874_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1874_Flow13_di" bpmnElement="W1874_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1874_Flow14_di" bpmnElement="W1874_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1874_Flow15_di" bpmnElement="W1874_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1874_Flow16_di" bpmnElement="W1874_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1874_Assoc11_di" bpmnElement="W1874_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1875" name="W1875. Lease Accounting Policy Review &amp; IFRS Update Assessment" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual policy review; IFRS amendment or new interpretation
+Frequency: Annual policy review; ad-hoc for IFRS updates
+Volume: 1 comprehensive review per year; ad-hoc assessments for regulatory changes
+Owner: Controller
+Participants: Controller, CFO, External Auditor, Lease Accounting Specialist
+Source: workflow W1875 — Lease Accounting Policy Review &amp; IFRS Update Assessment</bpmn:documentation>
+      <bpmn:laneSet id="W1875_LaneSet2">
+        <bpmn:lane id="W1875_Lane1" name="Controller">
+        <bpmn:flowNodeRef>W1875_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1875_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1875_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1875_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1875_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1875_Start3" name="Annual policy review; IFRS amendment or new interpretation">
+        <bpmn:outgoing>W1875_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1875_Task4" name="Annual: Controller reviews lease accounting policy: (a) discount rate…">
+        <bpmn:documentation>Step 1: Annual: Controller reviews lease accounting policy: (a) discount rate methodology: is the incremental borrowing rate (IBR) calculation methodology still appropriate? Update for changes in BuildRight&#x27;s credit rating, borrowing costs, or market conditions, (b) lease term assessment policy: criteria for assessing &quot;reasonably certain&quot; exercise of extension/termination options — update for any changes in store strategy, (c) impairment assessment: are any ROU assets impaired? (stores with significant sales decline where lease liability exceeds recoverable amount from store operations), (d) low-value and short-term lease thresholds: are thresholds still appropriate given inflation?, (e) sublease accounting policy: ensure classification (operating vs. finance) is correct for any active subleases per W1860
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1875_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W1875_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1875_Task5" name="Ad-hoc: Controller assesses impact of IFRS amendments on lease accounting: (a)…">
+        <bpmn:documentation>Step 2: Ad-hoc: Controller assesses impact of IFRS amendments on lease accounting: (a) monitor IFRS amendments and interpretations from IASB, (b) assess applicability to BuildRight&#x27;s lease portfolio, (c) quantify financial statement impact of any required changes, (d) implement changes with External Auditor concurrence, (e) update accounting policies and train Lease Accounting Specialist
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: 1–2 days per assessment</bpmn:documentation>
+        <bpmn:incoming>W1875_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1875_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1875_Task6" name="Annual: Controller documents lease accounting policies in financial statement…">
+        <bpmn:documentation>Step 3: Annual: Controller documents lease accounting policies in financial statement notes: (a) significant judgments and estimates (discount rate, lease term), (b) accounting policy for leases per PFRS 16, (c) impact of any new IFRS amendments adopted during the year
+Responsible (R): Controller
+Accountable (A): CFO
+Duration: Per W9B (year-end close)</bpmn:documentation>
+        <bpmn:incoming>W1875_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1875_End7" name="Complete">
+        <bpmn:incoming>W1875_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1875_Annotation8">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: Controller review and approval gate
+Owner: Controller</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1875_Assoc9" sourceRef="W1875_Annotation8" targetRef="W1875_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1875_Flow10" sourceRef="W1875_Start3" targetRef="W1875_Task4" />
+      <bpmn:sequenceFlow id="W1875_Flow11" sourceRef="W1875_Task4" targetRef="W1875_Task5" />
+      <bpmn:sequenceFlow id="W1875_Flow12" sourceRef="W1875_Task5" targetRef="W1875_Task6" />
+      <bpmn:sequenceFlow id="W1875_Flow13" sourceRef="W1875_Task6" targetRef="W1875_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1875_diag">
+      <bpmndi:BPMNPlane id="W1875_plane" bpmnElement="W_W1875">
+        <bpmndi:BPMNShape id="W1875_Lane1_di" bpmnElement="W1875_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1875_Task4_di" bpmnElement="W1875_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1875_Task5_di" bpmnElement="W1875_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1875_Task6_di" bpmnElement="W1875_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1875_Start3_di" bpmnElement="W1875_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1875_End7_di" bpmnElement="W1875_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1875_Annotation8_di" bpmnElement="W1875_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1875_Flow10_di" bpmnElement="W1875_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1875_Flow11_di" bpmnElement="W1875_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1875_Flow12_di" bpmnElement="W1875_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1875_Flow13_di" bpmnElement="W1875_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1875_Assoc9_di" bpmnElement="W1875_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1876" name="W1876. Fire Safety Inspection &amp; Bureau of Fire Protection (BFP) Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual BFP fire safety inspection; new store fire safety permit application
+Frequency: Annual inspection per location; new store permit per W702
+Volume: ~205 locations
+Owner: Store Manager
+Participants: Store Manager, COO, Safety Officer, BFP Inspector
+Source: workflow W1876 — Fire Safety Inspection &amp; Bureau of Fire Protection (BFP) Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W1876_LaneSet3">
+        <bpmn:lane id="W1876_Lane1" name="Store Manager">
+        <bpmn:flowNodeRef>W1876_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1876_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1876_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1876_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1876_Lane2" name="BFP Inspector">
+        <bpmn:flowNodeRef>W1876_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1876_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1876_Start4" name="Annual BFP fire safety inspection; new store fire safety permit application">
+        <bpmn:outgoing>W1876_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1876_Task5" name="Store Manager prepares for annual BFP inspection: (a) verify fire extinguishers…">
+        <bpmn:documentation>Step 1: Store Manager prepares for annual BFP inspection: (a) verify fire extinguishers are serviced and tagged (per W1051 monthly inspection + annual recharge), (b) verify fire exits are unobstructed and properly marked, (c) verify fire alarm system is functional (test monthly, document), (d) verify sprinkler system (if installed) is serviced and pressure-tested, (e) verify emergency lighting is functional, (f) verify fire safety signage is visible and current, (g) verify storage practices comply with fire code (no combustible materials near electrical panels, proper storage of paint and chemicals per W24.3 hazmat management)
+Responsible (R): Store Manager
+Accountable (A): VP Store Operations
+Duration: 1 day/year per store</bpmn:documentation>
+        <bpmn:incoming>W1876_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1876_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1876_Task6" name="BFP conducts fire safety inspection: (a) Store Manager provides access and…">
+        <bpmn:documentation>Step 2: BFP conducts fire safety inspection: (a) Store Manager provides access and accompanies inspector, (b) inspector checks: fire exits, fire extinguishers, fire alarm, emergency lighting, electrical safety, storage practices, occupancy load compliance, (c) inspector issues Fire Safety Inspection Certificate (FSIC) if compliant, or notice of violation with required corrective actions and deadline
+Responsible (R): BFP Inspector / Store Manager
+Accountable (A): VP Store Operations
+Duration: 2–4 hours per store</bpmn:documentation>
+        <bpmn:incoming>W1876_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1876_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1876_Task7" name="If violations found: (a) Store Manager implements corrective actions within BFP…">
+        <bpmn:documentation>Step 3: If violations found: (a) Store Manager implements corrective actions within BFP deadline (typically 15–30 days), (b) if corrective action requires physical modification: coordinate with COO for facility maintenance per W47, (c) request BFP re-inspection after corrections completed, (d) obtain FSIC
+Responsible (R): Store Manager / COO
+Accountable (A): VP Store Operations
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1876_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1876_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1876_Task8" name="FSIC is prerequisite for business permit renewal per W1871; Store Manager…">
+        <bpmn:documentation>Step 4: FSIC is prerequisite for business permit renewal per W1871; Store Manager provides FSIC to Regulatory Officer for renewal application
+Responsible (R): Store Manager
+Accountable (A): Regulatory Officer
+Duration: Per W1871</bpmn:documentation>
+        <bpmn:incoming>W1876_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1876_End9" name="Complete">
+        <bpmn:incoming>W1876_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1876_Annotation10">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1876_Assoc11" sourceRef="W1876_Annotation10" targetRef="W1876_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1876_Flow12" sourceRef="W1876_Start4" targetRef="W1876_Task5" />
+      <bpmn:sequenceFlow id="W1876_Flow13" sourceRef="W1876_Task5" targetRef="W1876_Task6" />
+      <bpmn:sequenceFlow id="W1876_Flow14" sourceRef="W1876_Task6" targetRef="W1876_Task7" />
+      <bpmn:sequenceFlow id="W1876_Flow15" sourceRef="W1876_Task7" targetRef="W1876_Task8" />
+      <bpmn:sequenceFlow id="W1876_Flow16" sourceRef="W1876_Task8" targetRef="W1876_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1876_diag">
+      <bpmndi:BPMNPlane id="W1876_plane" bpmnElement="W_W1876">
+        <bpmndi:BPMNShape id="W1876_Lane1_di" bpmnElement="W1876_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_Lane2_di" bpmnElement="W1876_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_Task5_di" bpmnElement="W1876_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_Task6_di" bpmnElement="W1876_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_Task7_di" bpmnElement="W1876_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_Task8_di" bpmnElement="W1876_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_Start4_di" bpmnElement="W1876_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_End9_di" bpmnElement="W1876_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1876_Annotation10_di" bpmnElement="W1876_Annotation10"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1876_Flow12_di" bpmnElement="W1876_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1876_Flow13_di" bpmnElement="W1876_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1876_Flow14_di" bpmnElement="W1876_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1876_Flow15_di" bpmnElement="W1876_Flow15"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1876_Flow16_di" bpmnElement="W1876_Flow16"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1876_Assoc11_di" bpmnElement="W1876_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1877" name="W1877. Property Utility Account Management &amp; Meter Reading Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly utility billing cycle; new store utility connection
+Frequency: Monthly verification per location
+Volume: ~205 locations × 2–3 utility accounts each (electric, water, gas if applicable)
+Owner: Store Manager
+Participants: Store Manager, Finance, Utility Companies (Meralco, Davao Light, VECO, local water districts)
+Source: workflow W1877 — Property Utility Account Management &amp; Meter Reading Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1877_LaneSet5">
+        <bpmn:lane id="W1877_Lane1" name="Utility Company">
+        <bpmn:flowNodeRef>W1877_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1877_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1877_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W1877_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1877_Lane3" name="AP Clerk">
+        <bpmn:flowNodeRef>W1877_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1877_Lane4" name="COO">
+        <bpmn:flowNodeRef>W1877_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1877_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1877_Start6" name="Monthly utility billing cycle; new store utility connection">
+        <bpmn:outgoing>W1877_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1877_Task7" name="Monthly: utility company issues bill to each location: (a) electricity: kWH…">
+        <bpmn:documentation>Step 1: Monthly: utility company issues bill to each location: (a) electricity: kWH consumption × rate + demand charges + VAT + local franchise tax, (b) water: cubic meters × rate + sewerage charge, (c) some locations: natural gas or LPG delivery billing
+Responsible (R): Utility Company
+Accountable (A): —
+Duration: External</bpmn:documentation>
+        <bpmn:incoming>W1877_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1877_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1877_Task8" name="Store Manager or Finance verifies utility bill: (a) compare consumption to…">
+        <bpmn:documentation>Step 2: Store Manager or Finance verifies utility bill: (a) compare consumption to prior month and same month previous year — flag unusual spikes (&gt; 20% increase without operational explanation), (b) verify meter reading matches actual meter (some utility companies estimate readings; estimated readings can be inaccurate), (c) verify rate applied matches current tariff schedule (DLPC/Meralco rate changes), (d) if discrepancy: dispute with utility company per their dispute process; pay undisputed amount on time to avoid disconnection
+Responsible (R): Store Manager / Finance
+Accountable (A): Finance Manager
+Duration: 15–30 min/location</bpmn:documentation>
+        <bpmn:incoming>W1877_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1877_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1877_Task9" name="Finance processes utility payment: (a) utility bills typically have short…">
+        <bpmn:documentation>Step 3: Finance processes utility payment: (a) utility bills typically have short payment windows (7–15 days) and severe penalties for late payment (disconnection after 2 months), (b) AP Clerk processes utility payments in weekly payment run per W7, (c) Dr. Utilities Expense / Cr. Cash (entity: BuildRight Property Management or Depot per lease terms), (d) IC settlement if Property Management pays and recharges to Depot
+Responsible (R): AP Clerk / Finance
+Accountable (A): Finance Manager
+Duration: Per W7</bpmn:documentation>
+        <bpmn:incoming>W1877_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1877_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1877_Task10" name="New store utility connection: (a) COO applies for utility connection with…">
+        <bpmn:documentation>Step 4: New store utility connection: (a) COO applies for utility connection with Building Permit as supporting document, (b) utility company installs meter and activates service, (c) Store Manager verifies meter installation and initial reading, (d) connection costs (deposit, installation fee) processed per W40 (capex if material) or expensed
+Responsible (R): COO / Store Manager
+Accountable (A): COO
+Duration: Per W702</bpmn:documentation>
+        <bpmn:incoming>W1877_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1877_End11" name="Complete">
+        <bpmn:incoming>W1877_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1877_Annotation12">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1877_Assoc13" sourceRef="W1877_Annotation12" targetRef="W1877_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1877_Flow14" sourceRef="W1877_Start6" targetRef="W1877_Task7" />
+      <bpmn:sequenceFlow id="W1877_Flow15" sourceRef="W1877_Task7" targetRef="W1877_Task8" />
+      <bpmn:sequenceFlow id="W1877_Flow16" sourceRef="W1877_Task8" targetRef="W1877_Task9" />
+      <bpmn:sequenceFlow id="W1877_Flow17" sourceRef="W1877_Task9" targetRef="W1877_Task10" />
+      <bpmn:sequenceFlow id="W1877_Flow18" sourceRef="W1877_Task10" targetRef="W1877_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1877_diag">
+      <bpmndi:BPMNPlane id="W1877_plane" bpmnElement="W_W1877">
+        <bpmndi:BPMNShape id="W1877_Lane1_di" bpmnElement="W1877_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Lane2_di" bpmnElement="W1877_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Lane3_di" bpmnElement="W1877_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Lane4_di" bpmnElement="W1877_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Task7_di" bpmnElement="W1877_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Task8_di" bpmnElement="W1877_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Task9_di" bpmnElement="W1877_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Task10_di" bpmnElement="W1877_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Start6_di" bpmnElement="W1877_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_End11_di" bpmnElement="W1877_End11"><dc:Bounds x="1260" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1877_Annotation12_di" bpmnElement="W1877_Annotation12"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1877_Flow14_di" bpmnElement="W1877_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1877_Flow15_di" bpmnElement="W1877_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1877_Flow16_di" bpmnElement="W1877_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1877_Flow17_di" bpmnElement="W1877_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1877_Flow18_di" bpmnElement="W1877_Flow18"><di:waypoint x="1210" y="675" /><di:waypoint x="1260" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1877_Assoc13_di" bpmnElement="W1877_Assoc13"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5529" name="W5529. Utility, Telecommunications &amp; Site Deposits Paid — Register, Interest Reconciliation, Surety Replacement &amp; Recovery-on-Closure" isExecutable="false">
+      <bpmn:documentation>Trigger: A new utility or telecommunications service connection requiring a deposit (store opening per W16/W702, DC/HQ changes) or a provider deposit-billing notice; the annual deposit-interest credit cycle or a provider tariff change; a store/DC closure or service disconnection (W703/W807/W1857); or the annual deposit-portfolio review
+Frequency: Per-connection/per-provider event; annual interest-credit reconciliation; annual portfolio review; per-closure recovery
+Volume: ≈ 450–700 active deposits (electricity, water, and telecom/internet accounts across 200 stores, 4 DCs and HQ, plus entity-level deposits); electric-cooperative deposits of PHP 50K–200K per store and Meralco-class commercial deposits of ~1–3 months&#x27; average bill put total locked capital at PHP 10M–40M (the W1877 pain-point canon); ~15–25 deposit opening/closure events/year; ~205 annual interest-credit verifications
+Owner: Treasury Manager
+Participants: Lease Administrator, Facilities Coordinator, Energy Manager, AP Clerk, Controller, Legal Counsel (guarantee documentation), CFO (surety-replacement decisions), External bank/surety (guarantee issuance via W232/W325), Utility/telecom providers
+Source: workflow W5529 — Utility, Telecommunications &amp; Site Deposits Paid — Register, Interest Reconciliation, Surety Replacement &amp; Recovery-on-Closure</bpmn:documentation>
+      <bpmn:laneSet id="W5529_LaneSet2">
+        <bpmn:lane id="W5529_Lane1" name="Treasury Manager">
+        <bpmn:flowNodeRef>W5529_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5529_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5529_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5529_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5529_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5529_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5529_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5529_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5529_Start3" name="A new utility or telecommunications service connection requiring a deposit (store opening…">
+        <bpmn:outgoing>W5529_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5529_Task4" name="Deposit register &amp; policy custody">
+        <bpmn:documentation>Step 1: Deposit register &amp; policy custody: maintain the deposits-paid register per provider account — provider, site, service type, amount, terms, interest entitlement, renewal/expiry dates, and GL account mapping; deposit approvals above PHP 1M require CFO sign-off; reconcile the register to the GL deposits-receivable accounts quarterly within the W636 balance-sheet reconciliation cycle
+Responsible (R): Treasury Manager
+Accountable (A): Controller
+Duration: 20 min/month register upkeep + quarterly reconciliation</bpmn:documentation>
+        <bpmn:incoming>W5529_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W5529_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5529_Task5" name="Onboarding &amp; adequacy">
+        <bpmn:documentation>Step 2: Onboarding &amp; adequacy: process connection deposits for new sites and deposit top-ups where consumption growth or tariff escalation drops a deposit below the provider requirement; cross-check adequacy against the consumption data captured per W1877/W1687/W1563 before approving top-up or renegotiation
+Responsible (R): Treasury Manager / Facilities Coordinator
+Accountable (A): Controller
+Duration: ~2 hours per opening/top-up event</bpmn:documentation>
+        <bpmn:incoming>W5529_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5529_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5529_Task6" name="Interest-credit reconciliation">
+        <bpmn:documentation>Step 3: Interest-credit reconciliation: verify each distribution-utility and telecom provider&#x27;s annual deposit-interest credit against the register entitlement (EPIRA IRR customer-deposit interest rules for DUs); chase missing or short credits with the provider; post verified credits to GL
+Responsible (R): Treasury Manager / AP Clerk
+Accountable (A): Controller
+Duration: 15 min per deposit per year</bpmn:documentation>
+        <bpmn:incoming>W5529_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5529_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5529_Task7" name="Surety-replacement review">
+        <bpmn:documentation>Step 4: Surety-replacement review: annually evaluate replacing cash deposits with bank/surety guarantees where the provider accepts them (issuance routed through the W232 bank-guarantee / W325 corporate-guarantee machinery); CFO decides cash release vs guarantee fee per account
+Responsible (R): Treasury Manager
+Accountable (A): CFO
+Duration: ~1 hour per major account per year</bpmn:documentation>
+        <bpmn:incoming>W5529_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5529_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5529_Task8" name="Recovery-on-closure">
+        <bpmn:documentation>Step 5: Recovery-on-closure: on disconnection or site closure, obtain final meter billing, offset deposits against final bills, and pursue refunds within the provider SLA; escalate overdue refunds to the provider relationship owner; attach the deposit-recovery checklist to the W703/W807 store-closure and W1857 lease-termination workflows
+Responsible (R): Treasury Manager / AP Clerk
+Accountable (A): Treasury Manager
+Duration: ~4 hours per closure event</bpmn:documentation>
+        <bpmn:incoming>W5529_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5529_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5529_Task9" name="Portfolio reporting">
+        <bpmn:documentation>Step 6: Portfolio reporting: annual deposits-portfolio report to the CFO — locked capital, interest credited vs entitled, guarantee fees avoided/incurred, recovery aging and open disputes; feeds the W326 treasury month-end close and the annual W636 reconciliation evidence pack
+Responsible (R): Treasury Manager
+Accountable (A): CFO
+Duration: 8 hours/year</bpmn:documentation>
+        <bpmn:incoming>W5529_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5529_End10" name="Complete">
+        <bpmn:incoming>W5529_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5529_Annotation11">
+        <bpmn:text>Controls: - CTL-369 (ensure controlled execution — Property Tax, LGU Compliance &amp; Lease Accounting (PA-42.3).) | - operational: deposits above PHP 1M require CFO approval before payment | - operational: quarterly register-to-GL reconciliation with Controller sign-off | - operational: no closure checklist completes with an unresolved deposit-recovery item
+Owner: Treasury Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5529_Assoc12" sourceRef="W5529_Annotation11" targetRef="W5529_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5529_Flow13" sourceRef="W5529_Start3" targetRef="W5529_Task4" />
+      <bpmn:sequenceFlow id="W5529_Flow14" sourceRef="W5529_Task4" targetRef="W5529_Task5" />
+      <bpmn:sequenceFlow id="W5529_Flow15" sourceRef="W5529_Task5" targetRef="W5529_Task6" />
+      <bpmn:sequenceFlow id="W5529_Flow16" sourceRef="W5529_Task6" targetRef="W5529_Task7" />
+      <bpmn:sequenceFlow id="W5529_Flow17" sourceRef="W5529_Task7" targetRef="W5529_Task8" />
+      <bpmn:sequenceFlow id="W5529_Flow18" sourceRef="W5529_Task8" targetRef="W5529_Task9" />
+      <bpmn:sequenceFlow id="W5529_Flow19" sourceRef="W5529_Task9" targetRef="W5529_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5529_diag">
+      <bpmndi:BPMNPlane id="W5529_plane" bpmnElement="W_W5529">
+        <bpmndi:BPMNShape id="W5529_Lane1_di" bpmnElement="W5529_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Task4_di" bpmnElement="W5529_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Task5_di" bpmnElement="W5529_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Task6_di" bpmnElement="W5529_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Task7_di" bpmnElement="W5529_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Task8_di" bpmnElement="W5529_Task8"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Task9_di" bpmnElement="W5529_Task9"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Start3_di" bpmnElement="W5529_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_End10_di" bpmnElement="W5529_End10"><dc:Bounds x="1680" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5529_Annotation11_di" bpmnElement="W5529_Annotation11"><dc:Bounds x="160" y="290" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5529_Flow13_di" bpmnElement="W5529_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5529_Flow14_di" bpmnElement="W5529_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5529_Flow15_di" bpmnElement="W5529_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5529_Flow16_di" bpmnElement="W5529_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5529_Flow17_di" bpmnElement="W5529_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5529_Flow18_di" bpmnElement="W5529_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5529_Flow19_di" bpmnElement="W5529_Flow19"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5529_Assoc12_di" bpmnElement="W5529_Assoc12"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

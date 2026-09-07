@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-39.3-rebate-settlement-analytics" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1803" name="W1803. Rebate Settlement Processing (Credit Note &amp; Cash)" isExecutable="false">
+      <bpmn:documentation>Trigger: Vendor approves rebate claim (W1793) or co-op reimbursement (W1799)
+Frequency: ~100–200 settlements/quarter
+Volume: ~PHP 800M–1.8B in annual rebate settlements
+Owner: AP Manager
+Participants: AP Manager, Treasury, Vendor
+Source: workflow W1803 — Rebate Settlement Processing (Credit Note &amp; Cash)</bpmn:documentation>
+      <bpmn:laneSet id="W1803_LaneSet4">
+        <bpmn:lane id="W1803_Lane1" name="Vendor → System">
+        <bpmn:flowNodeRef>W1803_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1803_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1803_Lane2" name="AP Manager">
+        <bpmn:flowNodeRef>W1803_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1803_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1803_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1803_Lane3" name="Treasury">
+        <bpmn:flowNodeRef>W1803_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1803_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1803_Start5" name="Vendor approves rebate claim (W1793) or co-op reimbursement (W1799)">
+        <bpmn:outgoing>W1803_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1803_Task6" name="credit note">
+        <bpmn:documentation>Step 1: Vendor settlement received in one of two forms: (a) credit note: vendor issues credit note against outstanding AP; reduces amount owed to vendor on next payment cycle, (b) cash payment: vendor wires payment to BuildRight bank account
+Responsible (R): Vendor → System
+Accountable (A): AP Manager
+Duration: Per settlement</bpmn:documentation>
+        <bpmn:incoming>W1803_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1803_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1803_Task7" name="For credit note settlement: (a) AP Manager verifies credit note matches…">
+        <bpmn:documentation>Step 2: For credit note settlement: (a) AP Manager verifies credit note matches approved claim amount (or documents variance), (b) credit note entered in AP system against vendor account, (c) next payment to vendor reduced by credit note amount, (d) system posts: debit AP, credit rebate income
+Responsible (R): AP Manager / System
+Accountable (A): Accounting Manager
+Duration: 10 min/credit note</bpmn:documentation>
+        <bpmn:incoming>W1803_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1803_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1803_Task8" name="For cash settlement: (a) Treasury confirms receipt in bank account, (b)…">
+        <bpmn:documentation>Step 3: For cash settlement: (a) Treasury confirms receipt in bank account, (b) Treasury applies payment to rebate receivable in system, (c) system posts: debit cash, credit rebate receivable, (d) rebate income already recognized at accrual — no additional P&amp;L impact
+Responsible (R): Treasury / System
+Accountable (A): AP Manager
+Duration: 10 min/payment</bpmn:documentation>
+        <bpmn:incoming>W1803_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1803_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1803_Task9" name="Partial settlement handling: (a) if vendor settles less than claimed amount: AP…">
+        <bpmn:documentation>Step 4: Partial settlement handling: (a) if vendor settles less than claimed amount: AP Manager investigates reason (documentation gap, calculation dispute, vendor policy limit), (b) unresolved variance escalated to Category Manager for vendor negotiation, (c) any unrecoverable portion reversed from rebate income
+Responsible (R): AP Manager
+Accountable (A): Accounting Manager
+Duration: As needed</bpmn:documentation>
+        <bpmn:incoming>W1803_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1803_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1803_Task10" name="Monthly: AP Manager reconciles all rebate settlements to claims and accruals…">
+        <bpmn:documentation>Step 5: Monthly: AP Manager reconciles all rebate settlements to claims and accruals; unresolved items &gt; 90 days escalated to CFO
+Responsible (R): AP Manager
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1803_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1803_End11" name="Complete">
+        <bpmn:incoming>W1803_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1803_Annotation12">
+        <bpmn:text>Controls: - CTL-360 (ensure controlled execution — Rebate Settlement &amp; Analytics (PA-39.3).) | - operational: AP Manager review and approval gate; periodic reconciliation against source documents
+Owner: AP Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1803_Assoc13" sourceRef="W1803_Annotation12" targetRef="W1803_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1803_Flow14" sourceRef="W1803_Start5" targetRef="W1803_Task6" />
+      <bpmn:sequenceFlow id="W1803_Flow15" sourceRef="W1803_Task6" targetRef="W1803_Task7" />
+      <bpmn:sequenceFlow id="W1803_Flow16" sourceRef="W1803_Task7" targetRef="W1803_Task8" />
+      <bpmn:sequenceFlow id="W1803_Flow17" sourceRef="W1803_Task8" targetRef="W1803_Task9" />
+      <bpmn:sequenceFlow id="W1803_Flow18" sourceRef="W1803_Task9" targetRef="W1803_Task10" />
+      <bpmn:sequenceFlow id="W1803_Flow19" sourceRef="W1803_Task10" targetRef="W1803_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1803_diag">
+      <bpmndi:BPMNPlane id="W1803_plane" bpmnElement="W_W1803">
+        <bpmndi:BPMNShape id="W1803_Lane1_di" bpmnElement="W1803_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Lane2_di" bpmnElement="W1803_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Lane3_di" bpmnElement="W1803_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Task6_di" bpmnElement="W1803_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Task7_di" bpmnElement="W1803_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Task8_di" bpmnElement="W1803_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Task9_di" bpmnElement="W1803_Task9"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Task10_di" bpmnElement="W1803_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Start5_di" bpmnElement="W1803_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_End11_di" bpmnElement="W1803_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1803_Annotation12_di" bpmnElement="W1803_Annotation12"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1803_Flow14_di" bpmnElement="W1803_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1803_Flow15_di" bpmnElement="W1803_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1803_Flow16_di" bpmnElement="W1803_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1803_Flow17_di" bpmnElement="W1803_Flow17"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1803_Flow18_di" bpmnElement="W1803_Flow18"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1803_Flow19_di" bpmnElement="W1803_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1803_Assoc13_di" bpmnElement="W1803_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1804" name="W1804. Rebate Income Recognition &amp; GL Posting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly close; rebate accrual or settlement processing
+Frequency: Monthly
+Volume: ~100–200 active agreements
+Owner: Accounting Manager
+Participants: Accounting Manager, AP Manager, CFO
+Source: workflow W1804 — Rebate Income Recognition &amp; GL Posting</bpmn:documentation>
+      <bpmn:laneSet id="W1804_LaneSet3">
+        <bpmn:lane id="W1804_Lane1" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1804_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1804_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1804_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1804_Lane2" name="AP Manager">
+        <bpmn:flowNodeRef>W1804_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1804_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1804_Start4" name="Monthly close; rebate accrual or settlement processing">
+        <bpmn:outgoing>W1804_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1804_Task5" name="reduction of COGS">
+        <bpmn:documentation>Step 1: Rebate income recognition method (BuildRight policy): (a) rebates treated as reduction of COGS (IAS 2 / PAS 2 treatment — most common for retail), (b) alternative: treat as other income (IAS 18 / PAS 18) — less preferred as it inflates gross margin, (c) consistently applied across all rebate types, (d) accrued on a systematic basis (monthly) to match purchase period, (e) recognized when: (i) amount can be measured reliably, (ii) receipt is probable (vendor financial health assessed)
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: Policy-level</bpmn:documentation>
+        <bpmn:incoming>W1804_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1804_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1804_Task6" name="accrual">
+        <bpmn:documentation>Step 2: Monthly journal entries: (a) accrual: debit rebate receivable, credit COGS reduction (contra-COGS), (b) settlement: debit AP (credit note) or cash (cash payment), credit rebate receivable, (c) adjustment: debit/credit COGS reduction for accrual variances, (d) entries posted per vendor agreement for traceability
+Responsible (R): AP Manager / System
+Accountable (A): Accounting Manager
+Duration: Automated after review</bpmn:documentation>
+        <bpmn:incoming>W1804_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1804_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1804_Task7" name="Financial statement presentation: (a) rebate income shown as reduction of COGS…">
+        <bpmn:documentation>Step 3: Financial statement presentation: (a) rebate income shown as reduction of COGS in P&amp;L (net presentation), (b) rebate receivable shown as current asset in balance sheet (if material), (c) note disclosure: rebate income policy, significant agreements, and contingent rebates
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: At reporting date</bpmn:documentation>
+        <bpmn:incoming>W1804_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1804_End8" name="Complete">
+        <bpmn:incoming>W1804_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1804_Annotation9">
+        <bpmn:text>Controls: - CTL-209 (ensure vendor rebate accuracy &amp; recognition.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Accounting Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1804_Assoc10" sourceRef="W1804_Annotation9" targetRef="W1804_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1804_Flow11" sourceRef="W1804_Start4" targetRef="W1804_Task5" />
+      <bpmn:sequenceFlow id="W1804_Flow12" sourceRef="W1804_Task5" targetRef="W1804_Task6" />
+      <bpmn:sequenceFlow id="W1804_Flow13" sourceRef="W1804_Task6" targetRef="W1804_Task7" />
+      <bpmn:sequenceFlow id="W1804_Flow14" sourceRef="W1804_Task7" targetRef="W1804_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1804_diag">
+      <bpmndi:BPMNPlane id="W1804_plane" bpmnElement="W_W1804">
+        <bpmndi:BPMNShape id="W1804_Lane1_di" bpmnElement="W1804_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1804_Lane2_di" bpmnElement="W1804_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1804_Task5_di" bpmnElement="W1804_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1804_Task6_di" bpmnElement="W1804_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1804_Task7_di" bpmnElement="W1804_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1804_Start4_di" bpmnElement="W1804_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1804_End8_di" bpmnElement="W1804_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1804_Annotation9_di" bpmnElement="W1804_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1804_Flow11_di" bpmnElement="W1804_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1804_Flow12_di" bpmnElement="W1804_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1804_Flow13_di" bpmnElement="W1804_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1804_Flow14_di" bpmnElement="W1804_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1804_Assoc10_di" bpmnElement="W1804_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1805" name="W1805. Rebate Vendor Scorecard &amp; Partnership Tiering" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual vendor scorecard review (Q4)
+Frequency: Annual
+Volume: Top 100 vendors by rebate value
+Owner: VP Merchandising
+Participants: VP Merchandising, Category Managers, CFO, VP Supply Chain
+Source: workflow W1805 — Rebate Vendor Scorecard &amp; Partnership Tiering</bpmn:documentation>
+      <bpmn:laneSet id="W1805_LaneSet3">
+        <bpmn:lane id="W1805_Lane1" name="VP Merchandising">
+        <bpmn:flowNodeRef>W1805_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1805_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1805_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1805_Lane2" name="Category Managers">
+        <bpmn:flowNodeRef>W1805_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1805_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1805_Start4" name="Annual vendor scorecard review (Q4)">
+        <bpmn:outgoing>W1805_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1805_Task5" name="Platinum">
+        <bpmn:documentation>Step 1: VP Merchandising develops vendor partnership tiering based on rebate and overall vendor performance: (a) Platinum (top 10 vendors — ~45% of COGS): highest rebate rates, co-op budgets, strategic collaboration, annual business planning together, (b) Gold (next 20 vendors): good rebate terms, regular co-op marketing, quarterly business reviews, (c) Silver (next 30 vendors): standard rebate terms, semi-annual reviews, (d) Standard (remaining vendors): basic rebate or no rebate, transactional relationship
+Responsible (R): VP Merchandising
+Accountable (A): CFO
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W1805_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1805_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1805_Task6" name="Vendor rebate scorecard metrics: (a) total rebate income earned, (b) rebate as…">
+        <bpmn:documentation>Step 2: Vendor rebate scorecard metrics: (a) total rebate income earned, (b) rebate as % of purchases (effective margin improvement), (c) claim settlement rate (% of claimed amount actually received), (d) settlement speed (days from claim to payment), (e) co-op marketing funds utilized, (f) dispute rate (% of claims disputed by vendor), (g) year-over-year trend
+Responsible (R): Category Managers / FP&amp;A
+Accountable (A): VP Merchandising
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1805_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1805_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1805_Task7" name="Tiering used for: (a) next year&#x27;s negotiation leverage (higher tiers get more…">
+        <bpmn:documentation>Step 3: Tiering used for: (a) next year&#x27;s negotiation leverage (higher tiers get more favorable terms), (b) allocation of limited shelf space, (c) new store opening rebate solicitation, (d) co-op marketing budget allocation
+Responsible (R): VP Merchandising
+Accountable (A): —
+Duration: Annual</bpmn:documentation>
+        <bpmn:incoming>W1805_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1805_End8" name="Complete">
+        <bpmn:incoming>W1805_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1805_Annotation9">
+        <bpmn:text>Controls: - CTL-360 (ensure controlled execution — Rebate Settlement &amp; Analytics (PA-39.3).) | - operational: VP Merchandising review and approval gate
+Owner: VP Merchandising</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1805_Assoc10" sourceRef="W1805_Annotation9" targetRef="W1805_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1805_Flow11" sourceRef="W1805_Start4" targetRef="W1805_Task5" />
+      <bpmn:sequenceFlow id="W1805_Flow12" sourceRef="W1805_Task5" targetRef="W1805_Task6" />
+      <bpmn:sequenceFlow id="W1805_Flow13" sourceRef="W1805_Task6" targetRef="W1805_Task7" />
+      <bpmn:sequenceFlow id="W1805_Flow14" sourceRef="W1805_Task7" targetRef="W1805_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1805_diag">
+      <bpmndi:BPMNPlane id="W1805_plane" bpmnElement="W_W1805">
+        <bpmndi:BPMNShape id="W1805_Lane1_di" bpmnElement="W1805_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1805_Lane2_di" bpmnElement="W1805_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1805_Task5_di" bpmnElement="W1805_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1805_Task6_di" bpmnElement="W1805_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1805_Task7_di" bpmnElement="W1805_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1805_Start4_di" bpmnElement="W1805_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1805_End8_di" bpmnElement="W1805_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1805_Annotation9_di" bpmnElement="W1805_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1805_Flow11_di" bpmnElement="W1805_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1805_Flow12_di" bpmnElement="W1805_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1805_Flow13_di" bpmnElement="W1805_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1805_Flow14_di" bpmnElement="W1805_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1805_Assoc10_di" bpmnElement="W1805_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1806" name="W1806. Rebate Analytics &amp; Margin Impact Dashboard" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly analytics cycle
+Frequency: Monthly dashboard; weekly during peak promotional periods
+Volume: Continuous analytics
+Owner: FP&amp;A
+Participants: FP&amp;A, VP Merchandising, Category Managers, CFO
+Source: workflow W1806 — Rebate Analytics &amp; Margin Impact Dashboard</bpmn:documentation>
+      <bpmn:laneSet id="W1806_LaneSet3">
+        <bpmn:lane id="W1806_Lane1" name="FP&amp;A">
+        <bpmn:flowNodeRef>W1806_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1806_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1806_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1806_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W1806_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1806_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1806_Start4" name="Monthly analytics cycle">
+        <bpmn:outgoing>W1806_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1806_Task5" name="Monthly rebate analytics dashboard: (a) total rebate income (accrued) by month…">
+        <bpmn:documentation>Step 1: Monthly rebate analytics dashboard: (a) total rebate income (accrued) by month, quarter, YTD, (b) rebate as % of COGS (effective gross margin improvement), (c) rebate by category and vendor, (d) rebate claim success rate (% claimed vs. % received), (e) co-op marketing income and utilization, (f) markdown allowances recovered from vendors, (g) new store opening rebates collected, (h) rebate income vs. budget, (i) top 20 vendors by rebate income, (j) vendors with declining rebate income (risk of loss)
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1806_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1806_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1806_Task6" name="Margin impact analysis: (a) gross margin before rebates vs. gross margin after…">
+        <bpmn:documentation>Step 2: Margin impact analysis: (a) gross margin before rebates vs. gross margin after rebates by category, (b) rebate income contribution to EBITDA, (c) effective vendor margin improvement by category, (d) promotional margin impact (rebate + co-op − markdown cost = net promotional margin)
+Responsible (R): FP&amp;A
+Accountable (A): VP Merchandising
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1806_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1806_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1806_Task7" name="CFO uses rebate analytics in Board reporting: (a) rebate income as % of revenue…">
+        <bpmn:documentation>Step 3: CFO uses rebate analytics in Board reporting: (a) rebate income as % of revenue (benchmark: 2–4% of COGS for large retailers), (b) trend analysis: is BuildRight capturing all available vendor incentives? (c) comparison to industry benchmarks
+Responsible (R): CFO
+Accountable (A): Board
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W1806_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1806_End8" name="Complete">
+        <bpmn:incoming>W1806_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1806_Annotation9">
+        <bpmn:text>Controls: - CTL-360 (ensure controlled execution — Rebate Settlement &amp; Analytics (PA-39.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1806_Assoc10" sourceRef="W1806_Annotation9" targetRef="W1806_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1806_Flow11" sourceRef="W1806_Start4" targetRef="W1806_Task5" />
+      <bpmn:sequenceFlow id="W1806_Flow12" sourceRef="W1806_Task5" targetRef="W1806_Task6" />
+      <bpmn:sequenceFlow id="W1806_Flow13" sourceRef="W1806_Task6" targetRef="W1806_Task7" />
+      <bpmn:sequenceFlow id="W1806_Flow14" sourceRef="W1806_Task7" targetRef="W1806_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1806_diag">
+      <bpmndi:BPMNPlane id="W1806_plane" bpmnElement="W_W1806">
+        <bpmndi:BPMNShape id="W1806_Lane1_di" bpmnElement="W1806_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1806_Lane2_di" bpmnElement="W1806_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1806_Task5_di" bpmnElement="W1806_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1806_Task6_di" bpmnElement="W1806_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1806_Task7_di" bpmnElement="W1806_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1806_Start4_di" bpmnElement="W1806_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1806_End8_di" bpmnElement="W1806_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1806_Annotation9_di" bpmnElement="W1806_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1806_Flow11_di" bpmnElement="W1806_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1806_Flow12_di" bpmnElement="W1806_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1806_Flow13_di" bpmnElement="W1806_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1806_Flow14_di" bpmnElement="W1806_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1806_Assoc10_di" bpmnElement="W1806_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1807" name="W1807. Rebate Forecasting &amp; Annual Income Projection" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual budget process (W1646); quarterly forecast update
+Frequency: Annual + quarterly updates
+Volume: 1 annual projection + 3 quarterly updates
+Owner: FP&amp;A
+Participants: FP&amp;A, VP Merchandising, Category Managers, CFO
+Source: workflow W1807 — Rebate Forecasting &amp; Annual Income Projection</bpmn:documentation>
+      <bpmn:laneSet id="W1807_LaneSet2">
+        <bpmn:lane id="W1807_Lane1" name="FP&amp;A">
+        <bpmn:flowNodeRef>W1807_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1807_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1807_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1807_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1807_End7</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1807_Start3" name="Annual budget process (W1646); quarterly forecast update">
+        <bpmn:outgoing>W1807_Flow10</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1807_Task4" name="Annual rebate income projection: (a) per agreement: project annual purchase…">
+        <bpmn:documentation>Step 1: Annual rebate income projection: (a) per agreement: project annual purchase volume × applicable rebate rate = projected rebate income, (b) aggregate by vendor, category, and total, (c) include co-op marketing income projection, (d) include markdown allowance recovery projection, (e) apply historical realization rate (% of accrued rebates actually received): typically 85–95%, (f) net projected rebate income = gross projection × realization rate
+Responsible (R): FP&amp;A
+Accountable (A): VP Merchandising
+Duration: 1 week</bpmn:documentation>
+        <bpmn:incoming>W1807_Flow10</bpmn:incoming>
+        <bpmn:outgoing>W1807_Flow10</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1807_Task5" name="Impact on gross margin budget: (a) category gross margin target includes rebate…">
+        <bpmn:documentation>Step 2: Impact on gross margin budget: (a) category gross margin target includes rebate income, (b) FP&amp;A ensures rebate projection is realistic and not double-counted (rebate reduces COGS, which improves gross margin — but must not be counted as revenue), (c) sensitivity analysis: what if top 5 vendors reduce rebate rates by 1%?
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1807_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1807_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1807_Task6" name="Quarterly forecast update: (a) update projection based on actual YTD purchases…">
+        <bpmn:documentation>Step 3: Quarterly forecast update: (a) update projection based on actual YTD purchases and settlements, (b) adjust for new agreements, terminated agreements, rate changes, (c) compare forecast to accrual — adjust accrual rates if forecast changes significantly
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1 day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1807_Flow12</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1807_End7" name="Complete">
+        <bpmn:incoming>W1807_Flow13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1807_Annotation8">
+        <bpmn:text>Controls: - CTL-360 (ensure controlled execution — Rebate Settlement &amp; Analytics (PA-39.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1807_Assoc9" sourceRef="W1807_Annotation8" targetRef="W1807_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1807_Flow10" sourceRef="W1807_Start3" targetRef="W1807_Task4" />
+      <bpmn:sequenceFlow id="W1807_Flow11" sourceRef="W1807_Task4" targetRef="W1807_Task5" />
+      <bpmn:sequenceFlow id="W1807_Flow12" sourceRef="W1807_Task5" targetRef="W1807_Task6" />
+      <bpmn:sequenceFlow id="W1807_Flow13" sourceRef="W1807_Task6" targetRef="W1807_End7" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1807_diag">
+      <bpmndi:BPMNPlane id="W1807_plane" bpmnElement="W_W1807">
+        <bpmndi:BPMNShape id="W1807_Lane1_di" bpmnElement="W1807_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1807_Task4_di" bpmnElement="W1807_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1807_Task5_di" bpmnElement="W1807_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1807_Task6_di" bpmnElement="W1807_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1807_Start3_di" bpmnElement="W1807_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1807_End7_di" bpmnElement="W1807_End7"><dc:Bounds x="1050" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1807_Annotation8_di" bpmnElement="W1807_Annotation8"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1807_Flow10_di" bpmnElement="W1807_Flow10"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1807_Flow11_di" bpmnElement="W1807_Flow11"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1807_Flow12_di" bpmnElement="W1807_Flow12"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1807_Flow13_di" bpmnElement="W1807_Flow13"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1807_Assoc9_di" bpmnElement="W1807_Assoc9"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1808" name="W1808. Rebate Audit &amp; Compliance Review" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual internal audit plan; external audit
+Frequency: Annual internal audit; external audit annually
+Volume: 1 comprehensive audit/year
+Owner: Internal Audit
+Participants: Internal Audit, AP Manager, VP Merchandising, External Auditor
+Source: workflow W1808 — Rebate Audit &amp; Compliance Review</bpmn:documentation>
+      <bpmn:laneSet id="W1808_LaneSet4">
+        <bpmn:lane id="W1808_Lane1" name="Internal Audit">
+        <bpmn:flowNodeRef>W1808_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1808_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1808_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1808_Lane2" name="External Auditor">
+        <bpmn:flowNodeRef>W1808_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1808_Lane3" name="AP Manager">
+        <bpmn:flowNodeRef>W1808_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1808_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1808_Start5" name="Annual internal audit plan; external audit">
+        <bpmn:outgoing>W1808_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1808_Task6" name="Internal audit scope for rebates: (a) verify rebate accrual methodology is…">
+        <bpmn:documentation>Step 1: Internal audit scope for rebates: (a) verify rebate accrual methodology is appropriate and consistently applied, (b) sample 20–30 rebate agreements: verify terms, accrual calculation accuracy, claim documentation, settlement recording, (c) test for unclaimed rebates (vendors with agreements but no claims filed), (d) verify co-op marketing fund utilization and documentation, (e) check for fictitious rebate claims (fraud risk: claiming rebates for purchases not made)
+Responsible (R): Internal Audit
+Accountable (A): Head of Internal Audit
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1808_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1808_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1808_Task7" name="Key audit findings typically addressed: (a) missed claims: vendor agreements…">
+        <bpmn:documentation>Step 2: Key audit findings typically addressed: (a) missed claims: vendor agreements exist but claims not submitted (direct margin leakage), (b) accrual accuracy: over/under accrual due to incorrect threshold assumptions, (c) documentation gaps: claims denied by vendor due to insufficient proof, (d) process inefficiency: manual claim process causes delays and errors
+Responsible (R): Internal Audit
+Accountable (A): Head of Internal Audit
+Duration: Report within 2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1808_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1808_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1808_Task8" name="External auditor review: (a) rebate income is material (PHP 800M–1.8B…">
+        <bpmn:documentation>Step 3: External auditor review: (a) rebate income is material (PHP 800M–1.8B annually); receives significant audit attention, (b) test accrual estimation methodology (management judgment area), (c) confirm settlements with vendors (sample of top vendors), (d) assess collectibility of rebate receivables at year-end
+Responsible (R): External Auditor
+Accountable (A): CFO
+Duration: During annual audit</bpmn:documentation>
+        <bpmn:incoming>W1808_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1808_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1808_Task9" name="Management response: AP Manager and VP Merchandising address audit findings…">
+        <bpmn:documentation>Step 4: Management response: AP Manager and VP Merchandising address audit findings; implement process improvements per W1810
+Responsible (R): AP Manager / VP Merchandising
+Accountable (A): CFO
+Duration: Within 30 days</bpmn:documentation>
+        <bpmn:incoming>W1808_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1808_End10" name="Complete">
+        <bpmn:incoming>W1808_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1808_Annotation11">
+        <bpmn:text>Controls: - CTL-360 (ensure controlled execution — Rebate Settlement &amp; Analytics (PA-39.3).) | - operational: Internal Audit review and approval gate
+Owner: Internal Audit</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1808_Assoc12" sourceRef="W1808_Annotation11" targetRef="W1808_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1808_Flow13" sourceRef="W1808_Start5" targetRef="W1808_Task6" />
+      <bpmn:sequenceFlow id="W1808_Flow14" sourceRef="W1808_Task6" targetRef="W1808_Task7" />
+      <bpmn:sequenceFlow id="W1808_Flow15" sourceRef="W1808_Task7" targetRef="W1808_Task8" />
+      <bpmn:sequenceFlow id="W1808_Flow16" sourceRef="W1808_Task8" targetRef="W1808_Task9" />
+      <bpmn:sequenceFlow id="W1808_Flow17" sourceRef="W1808_Task9" targetRef="W1808_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1808_diag">
+      <bpmndi:BPMNPlane id="W1808_plane" bpmnElement="W_W1808">
+        <bpmndi:BPMNShape id="W1808_Lane1_di" bpmnElement="W1808_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Lane2_di" bpmnElement="W1808_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Lane3_di" bpmnElement="W1808_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Task6_di" bpmnElement="W1808_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Task7_di" bpmnElement="W1808_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Task8_di" bpmnElement="W1808_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Task9_di" bpmnElement="W1808_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Start5_di" bpmnElement="W1808_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_End10_di" bpmnElement="W1808_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1808_Annotation11_di" bpmnElement="W1808_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1808_Flow13_di" bpmnElement="W1808_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1808_Flow14_di" bpmnElement="W1808_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1808_Flow15_di" bpmnElement="W1808_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1808_Flow16_di" bpmnElement="W1808_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1808_Flow17_di" bpmnElement="W1808_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1808_Assoc12_di" bpmnElement="W1808_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1809" name="W1809. Vendor Rebate Agreement Renewal &amp; Optimization" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual vendor negotiation cycle (Q4)
+Frequency: Annual
+Volume: ~100–200 agreements reviewed
+Owner: VP Merchandising
+Participants: VP Merchandising, Category Managers, Buyers, CFO
+Source: workflow W1809 — Vendor Rebate Agreement Renewal &amp; Optimization</bpmn:documentation>
+      <bpmn:laneSet id="W1809_LaneSet4">
+        <bpmn:lane id="W1809_Lane1" name="Category Managers">
+        <bpmn:flowNodeRef>W1809_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1809_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1809_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1809_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W1809_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1809_Lane3" name="Buyers">
+        <bpmn:flowNodeRef>W1809_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1809_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1809_Start5" name="Annual vendor negotiation cycle (Q4)">
+        <bpmn:outgoing>W1809_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1809_Task6" name="Category Managers review each vendor&#x27;s rebate performance for the year: (a)…">
+        <bpmn:documentation>Step 1: Category Managers review each vendor&#x27;s rebate performance for the year: (a) actual rebate income earned vs. agreement potential, (b) claim realization rate, (c) vendor cooperation in claim processing, (d) comparison to competitive vendor rebate offers (benchmarking)
+Responsible (R): Category Managers
+Accountable (A): VP Merchandising
+Duration: 2–3 weeks</bpmn:documentation>
+        <bpmn:incoming>W1809_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1809_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1809_Task7" name="Optimization opportunities identified: (a) increase rebate rate: if…">
+        <bpmn:documentation>Step 2: Optimization opportunities identified: (a) increase rebate rate: if BuildRight&#x27;s volume grew significantly, negotiate higher rate for next year, (b) lower thresholds: if current thresholds are consistently exceeded, negotiate lower threshold for same or higher rate, (c) consolidate vendor agreements: if purchasing from multiple vendors in same category, consolidate to fewer vendors for higher volume and better rates, (d) add new rebate types: co-op marketing funds, new store opening incentives, digital marketing support
+Responsible (R): Category Managers / Buyers
+Accountable (A): VP Merchandising
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1809_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1809_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1809_Task8" name="CFO sets rebate income target for next year based on optimization opportunities…">
+        <bpmn:documentation>Step 3: CFO sets rebate income target for next year based on optimization opportunities and purchase volume projections; Category Managers incorporate into vendor negotiations
+Responsible (R): CFO
+Accountable (A): CEO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W1809_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1809_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1809_Task9" name="Negotiated agreements updated in system per W1787; accrual parameters updated…">
+        <bpmn:documentation>Step 4: Negotiated agreements updated in system per W1787; accrual parameters updated for new rates and thresholds
+Responsible (R): Buyers / AP Manager
+Accountable (A): VP Merchandising
+Duration: 1–2 weeks</bpmn:documentation>
+        <bpmn:incoming>W1809_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1809_End10" name="Complete">
+        <bpmn:incoming>W1809_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1809_Annotation11">
+        <bpmn:text>Controls: - CTL-360 (ensure controlled execution — Rebate Settlement &amp; Analytics (PA-39.3).) | - operational: VP Merchandising review and approval gate
+Owner: VP Merchandising</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1809_Assoc12" sourceRef="W1809_Annotation11" targetRef="W1809_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1809_Flow13" sourceRef="W1809_Start5" targetRef="W1809_Task6" />
+      <bpmn:sequenceFlow id="W1809_Flow14" sourceRef="W1809_Task6" targetRef="W1809_Task7" />
+      <bpmn:sequenceFlow id="W1809_Flow15" sourceRef="W1809_Task7" targetRef="W1809_Task8" />
+      <bpmn:sequenceFlow id="W1809_Flow16" sourceRef="W1809_Task8" targetRef="W1809_Task9" />
+      <bpmn:sequenceFlow id="W1809_Flow17" sourceRef="W1809_Task9" targetRef="W1809_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1809_diag">
+      <bpmndi:BPMNPlane id="W1809_plane" bpmnElement="W_W1809">
+        <bpmndi:BPMNShape id="W1809_Lane1_di" bpmnElement="W1809_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Lane2_di" bpmnElement="W1809_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Lane3_di" bpmnElement="W1809_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Task6_di" bpmnElement="W1809_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Task7_di" bpmnElement="W1809_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Task8_di" bpmnElement="W1809_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Task9_di" bpmnElement="W1809_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Start5_di" bpmnElement="W1809_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_End10_di" bpmnElement="W1809_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1809_Annotation11_di" bpmnElement="W1809_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1809_Flow13_di" bpmnElement="W1809_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1809_Flow14_di" bpmnElement="W1809_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1809_Flow15_di" bpmnElement="W1809_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1809_Flow16_di" bpmnElement="W1809_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1809_Flow17_di" bpmnElement="W1809_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1809_Assoc12_di" bpmnElement="W1809_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1810" name="W1810. Rebate Process Automation &amp; System Enhancement" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual process improvement cycle; internal audit recommendation
+Frequency: Continuous improvement
+Volume: Ongoing
+Owner: VP Merchandising
+Participants: VP Merchandising, IT, AP Manager, CIO
+Source: workflow W1810 — Rebate Process Automation &amp; System Enhancement</bpmn:documentation>
+      <bpmn:laneSet id="W1810_LaneSet3">
+        <bpmn:lane id="W1810_Lane1" name="VP Merchandising">
+        <bpmn:flowNodeRef>W1810_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1810_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1810_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1810_Lane2" name="IT">
+        <bpmn:flowNodeRef>W1810_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1810_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1810_Start4" name="Annual process improvement cycle; internal audit recommendation">
+        <bpmn:outgoing>W1810_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1810_Task5" name="Identify automation opportunities: (a) auto-accrual: system calculates rebate…">
+        <bpmn:documentation>Step 1: Identify automation opportunities: (a) auto-accrual: system calculates rebate accrual directly from purchase data without manual intervention (currently semi-automated; target: fully automated for standard agreements), (b) auto-claim generation: system generates rebate claim worksheets automatically at period end, (c) vendor portal integration: claims submitted electronically via vendor portal with auto-populated data, (d) settlement matching: auto-match vendor credit notes to claims using AI/ML pattern matching, (e) alerts: automatic notification when vendor crosses volume threshold, when claim is overdue, when accrual rate changes
+Responsible (R): VP Merchandising / IT
+Accountable (A): CIO
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W1810_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1810_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1810_Task6" name="Prioritize automation based on: (a) volume of manual effort saved (high…">
+        <bpmn:documentation>Step 2: Prioritize automation based on: (a) volume of manual effort saved (high: auto-accrual for 200 agreements), (b) error reduction (high: manual calculation errors on tier thresholds), (c) margin leakage prevention (high: missed claims due to manual process gaps), (d) implementation complexity (medium: vendor portal integration requires vendor cooperation)
+Responsible (R): VP Merchandising / CIO
+Accountable (A): CFO
+Duration: Quarterly</bpmn:documentation>
+        <bpmn:incoming>W1810_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1810_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1810_Task7" name="Implement in phases: (a) Phase 1: auto-accrual and auto-claim generation (3–6…">
+        <bpmn:documentation>Step 3: Implement in phases: (a) Phase 1: auto-accrual and auto-claim generation (3–6 months), (b) Phase 2: vendor portal integration for claim submission (6–12 months), (c) Phase 3: AI-powered settlement matching and anomaly detection (12–18 months)
+Responsible (R): IT
+Accountable (A): CIO
+Duration: 18 months</bpmn:documentation>
+        <bpmn:incoming>W1810_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1810_End8" name="Complete">
+        <bpmn:incoming>W1810_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1810_Annotation9">
+        <bpmn:text>Controls: - CTL-360 (ensure controlled execution — Rebate Settlement &amp; Analytics (PA-39.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: VP Merchandising</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1810_Assoc10" sourceRef="W1810_Annotation9" targetRef="W1810_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1810_Flow11" sourceRef="W1810_Start4" targetRef="W1810_Task5" />
+      <bpmn:sequenceFlow id="W1810_Flow12" sourceRef="W1810_Task5" targetRef="W1810_Task6" />
+      <bpmn:sequenceFlow id="W1810_Flow13" sourceRef="W1810_Task6" targetRef="W1810_Task7" />
+      <bpmn:sequenceFlow id="W1810_Flow14" sourceRef="W1810_Task7" targetRef="W1810_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1810_diag">
+      <bpmndi:BPMNPlane id="W1810_plane" bpmnElement="W_W1810">
+        <bpmndi:BPMNShape id="W1810_Lane1_di" bpmnElement="W1810_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1810_Lane2_di" bpmnElement="W1810_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1810_Task5_di" bpmnElement="W1810_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1810_Task6_di" bpmnElement="W1810_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1810_Task7_di" bpmnElement="W1810_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1810_Start4_di" bpmnElement="W1810_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1810_End8_di" bpmnElement="W1810_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1810_Annotation9_di" bpmnElement="W1810_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1810_Flow11_di" bpmnElement="W1810_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1810_Flow12_di" bpmnElement="W1810_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1810_Flow13_di" bpmnElement="W1810_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1810_Flow14_di" bpmnElement="W1810_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1810_Assoc10_di" bpmnElement="W1810_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

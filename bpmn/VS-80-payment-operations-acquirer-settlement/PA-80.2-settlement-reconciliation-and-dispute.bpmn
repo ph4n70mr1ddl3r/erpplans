@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-80.2-settlement-reconciliation-and-dispute" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W2785" name="W2785. Daily Card/E-Wallet Settlement File Ingestion &amp; GL Posting" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily settlement file from acquirer/e-wallet/gateway (T+1)
+Frequency: Daily per partner
+Volume: ~10 settlement files/day; ~PHP 2.9B/month non-cash tender
+Owner: AR Settlement Accountant
+Participants: AR Settlement Accountant, IT, Finance
+Source: workflow W2785 — Daily Card/E-Wallet Settlement File Ingestion &amp; GL Posting</bpmn:documentation>
+      <bpmn:laneSet id="W2785_LaneSet4">
+        <bpmn:lane id="W2785_Lane1" name="IT">
+        <bpmn:flowNodeRef>W2785_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2785_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2785_Lane2" name="AR Settlement Accountant">
+        <bpmn:flowNodeRef>W2785_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2785_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W2785_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2785_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2785_Start5" name="Daily settlement file from acquirer/e-wallet/gateway (T+1)">
+        <bpmn:outgoing>W2785_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2785_Task6" name="IT ingests daily settlement files (EDI/CSV/API) from each acquirer and e-wallet…">
+        <bpmn:documentation>Step 1: IT ingests daily settlement files (EDI/CSV/API) from each acquirer and e-wallet into ERP settlement staging; validates file integrity and partner authentication
+Responsible (R): IT
+Accountable (A): AR Settlement Accountant
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2785_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2785_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2785_Task7" name="AR Settlement Accountant posts settlement to clearing GL: gross captured, fees…">
+        <bpmn:documentation>Step 2: AR Settlement Accountant posts settlement to clearing GL: gross captured, fees deducted, net bank credit; maps each batch by MID/entity/store
+Responsible (R): AR Settlement Accountant
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2785_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2785_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2785_Task8" name="Finance validates net settlement matches bank statement credit; investigates…">
+        <bpmn:documentation>Step 3: Finance validates net settlement matches bank statement credit; investigates timing differences (T+1 vs. T+2) and currency (USD card settlements)
+Responsible (R): Finance
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2785_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2785_End9" name="Complete">
+        <bpmn:incoming>W2785_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2785_Annotation10">
+        <bpmn:text>Controls: - CTL-215 (ensure card/e-wallet settlement &amp; chargeback control.) | - operational: schema validation and partner pre-notification
+Owner: AR Settlement Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2785_Assoc11" sourceRef="W2785_Annotation10" targetRef="W2785_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2785_Flow12" sourceRef="W2785_Start5" targetRef="W2785_Task6" />
+      <bpmn:sequenceFlow id="W2785_Flow13" sourceRef="W2785_Task6" targetRef="W2785_Task7" />
+      <bpmn:sequenceFlow id="W2785_Flow14" sourceRef="W2785_Task7" targetRef="W2785_Task8" />
+      <bpmn:sequenceFlow id="W2785_Flow15" sourceRef="W2785_Task8" targetRef="W2785_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2785_diag">
+      <bpmndi:BPMNPlane id="W2785_plane" bpmnElement="W_W2785">
+        <bpmndi:BPMNShape id="W2785_Lane1_di" bpmnElement="W2785_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_Lane2_di" bpmnElement="W2785_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_Lane3_di" bpmnElement="W2785_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_Task6_di" bpmnElement="W2785_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_Task7_di" bpmnElement="W2785_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_Task8_di" bpmnElement="W2785_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_Start5_di" bpmnElement="W2785_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_End9_di" bpmnElement="W2785_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2785_Annotation10_di" bpmnElement="W2785_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2785_Flow12_di" bpmnElement="W2785_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2785_Flow13_di" bpmnElement="W2785_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2785_Flow14_di" bpmnElement="W2785_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2785_Flow15_di" bpmnElement="W2785_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2785_Assoc11_di" bpmnElement="W2785_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2786" name="W2786. Settlement-to-POS Capture Reconciliation &amp; Exception Triage" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily settlement posting
+Frequency: Daily
+Volume: ~2.8M POS txns/month; ~1.4M non-cash lines/month
+Owner: AR Settlement Accountant
+Participants: AR Settlement Accountant, Store Ops, IT
+Source: workflow W2786 — Settlement-to-POS Capture Reconciliation &amp; Exception Triage</bpmn:documentation>
+      <bpmn:laneSet id="W2786_LaneSet4">
+        <bpmn:lane id="W2786_Lane1" name="ERP automation">
+        <bpmn:flowNodeRef>W2786_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2786_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2786_Lane2" name="AR Settlement Accountant">
+        <bpmn:flowNodeRef>W2786_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2786_Lane3" name="Store Ops">
+        <bpmn:flowNodeRef>W2786_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2786_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2786_Start5" name="Daily settlement posting">
+        <bpmn:outgoing>W2786_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2786_Task6" name="ERP auto-matches settlement records to POS capture by reference (RRN/auth…">
+        <bpmn:documentation>Step 1: ERP auto-matches settlement records to POS capture by reference (RRN/auth code/QR ref); flags unmatched captures and unmatched settlements
+Responsible (R): ERP automation
+Accountable (A): AR Settlement Accountant
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2786_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2786_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2786_Task7" name="AR Settlement Accountant triages exceptions: terminal batch not closed…">
+        <bpmn:documentation>Step 2: AR Settlement Accountant triages exceptions: terminal batch not closed, declined-but-captured, duplicate capture, missing settlement; assigns owner
+Responsible (R): AR Settlement Accountant
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2786_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2786_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2786_Task8" name="Store Ops/IT resolves terminal-level issues (resend batch, manual settlement…">
+        <bpmn:documentation>Step 3: Store Ops/IT resolves terminal-level issues (resend batch, manual settlement, RFI to acquirer); AR Settlement Accountant clears exception queue
+Responsible (R): Store Ops / IT / AR Settlement Accountant
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2786_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2786_End9" name="Complete">
+        <bpmn:incoming>W2786_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2786_Annotation10">
+        <bpmn:text>Controls: - CTL-215 (ensure card/e-wallet settlement &amp; chargeback control.) | - operational: daily SLA-bound triage
+Owner: AR Settlement Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2786_Assoc11" sourceRef="W2786_Annotation10" targetRef="W2786_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2786_Flow12" sourceRef="W2786_Start5" targetRef="W2786_Task6" />
+      <bpmn:sequenceFlow id="W2786_Flow13" sourceRef="W2786_Task6" targetRef="W2786_Task7" />
+      <bpmn:sequenceFlow id="W2786_Flow14" sourceRef="W2786_Task7" targetRef="W2786_Task8" />
+      <bpmn:sequenceFlow id="W2786_Flow15" sourceRef="W2786_Task8" targetRef="W2786_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2786_diag">
+      <bpmndi:BPMNPlane id="W2786_plane" bpmnElement="W_W2786">
+        <bpmndi:BPMNShape id="W2786_Lane1_di" bpmnElement="W2786_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_Lane2_di" bpmnElement="W2786_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_Lane3_di" bpmnElement="W2786_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_Task6_di" bpmnElement="W2786_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_Task7_di" bpmnElement="W2786_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_Task8_di" bpmnElement="W2786_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_Start5_di" bpmnElement="W2786_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_End9_di" bpmnElement="W2786_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2786_Annotation10_di" bpmnElement="W2786_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2786_Flow12_di" bpmnElement="W2786_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2786_Flow13_di" bpmnElement="W2786_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2786_Flow14_di" bpmnElement="W2786_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2786_Flow15_di" bpmnElement="W2786_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2786_Assoc11_di" bpmnElement="W2786_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2787" name="W2787. Mid-Batch / End-of-Day Terminal Close &amp; Capture Totals Validation" isExecutable="false">
+      <bpmn:documentation>Trigger: Shift change and end-of-day per terminal
+Frequency: 2–3× per day per terminal
+Volume: 600 POS terminals × ~3 batches
+Owner: Store Cashier Lead
+Participants: Cashier, Store Manager, Payment Ops Manager
+Source: workflow W2787 — Mid-Batch / End-of-Day Terminal Close &amp; Capture Totals Validation</bpmn:documentation>
+      <bpmn:laneSet id="W2787_LaneSet4">
+        <bpmn:lane id="W2787_Lane1" name="Cashier">
+        <bpmn:flowNodeRef>W2787_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2787_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2787_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W2787_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2787_Lane3" name="Payment Ops Manager">
+        <bpmn:flowNodeRef>W2787_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2787_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2787_Start5" name="Shift change and end-of-day per terminal">
+        <bpmn:outgoing>W2787_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2787_Task6" name="Cashier initiates terminal batch close (settlement) at shift/day end; prints…">
+        <bpmn:documentation>Step 1: Cashier initiates terminal batch close (settlement) at shift/day end; prints batch totals per tender; reconciles to POS Z-report
+Responsible (R): Cashier
+Accountable (A): Store Manager
+Duration: 10–15 min/terminal</bpmn:documentation>
+        <bpmn:incoming>W2787_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2787_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2787_Task7" name="Store Manager validates capture totals vs. physical evidence (signed charge…">
+        <bpmn:documentation>Step 2: Store Manager validates capture totals vs. physical evidence (signed charge slips, e-wallet confirmation); investigates variances; re-batches if needed
+Responsible (R): Store Manager
+Accountable (A): Store Manager
+Duration: 15–30 min</bpmn:documentation>
+        <bpmn:incoming>W2787_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2787_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2787_Task8" name="Payment Ops Manager monitors chain-wide batch-close completion rate; escalates…">
+        <bpmn:documentation>Step 3: Payment Ops Manager monitors chain-wide batch-close completion rate; escalates terminals with unclosed batches beyond SLA to prevent settlement delay
+Responsible (R): Payment Ops Manager
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2787_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2787_End9" name="Complete">
+        <bpmn:incoming>W2787_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2787_Annotation10">
+        <bpmn:text>Controls: - CTL-215 (ensure card/e-wallet settlement &amp; chargeback control.) | - operational: SLA monitoring and manager escalation
+Owner: Store Cashier Lead</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2787_Assoc11" sourceRef="W2787_Annotation10" targetRef="W2787_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2787_Flow12" sourceRef="W2787_Start5" targetRef="W2787_Task6" />
+      <bpmn:sequenceFlow id="W2787_Flow13" sourceRef="W2787_Task6" targetRef="W2787_Task7" />
+      <bpmn:sequenceFlow id="W2787_Flow14" sourceRef="W2787_Task7" targetRef="W2787_Task8" />
+      <bpmn:sequenceFlow id="W2787_Flow15" sourceRef="W2787_Task8" targetRef="W2787_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2787_diag">
+      <bpmndi:BPMNPlane id="W2787_plane" bpmnElement="W_W2787">
+        <bpmndi:BPMNShape id="W2787_Lane1_di" bpmnElement="W2787_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_Lane2_di" bpmnElement="W2787_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_Lane3_di" bpmnElement="W2787_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_Task6_di" bpmnElement="W2787_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_Task7_di" bpmnElement="W2787_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_Task8_di" bpmnElement="W2787_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_Start5_di" bpmnElement="W2787_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_End9_di" bpmnElement="W2787_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2787_Annotation10_di" bpmnElement="W2787_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2787_Flow12_di" bpmnElement="W2787_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2787_Flow13_di" bpmnElement="W2787_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2787_Flow14_di" bpmnElement="W2787_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2787_Flow15_di" bpmnElement="W2787_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2787_Assoc11_di" bpmnElement="W2787_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2788" name="W2788. Chargeback Notification, Evidence Compilation &amp; Representment" isExecutable="false">
+      <bpmn:documentation>Trigger: Chargeback notification from acquirer (issuer dispute)
+Frequency: Event-driven; ~300–500 chargebacks/year (~0.003% of card txns, per the ~30–40/month Volume)
+Volume: ~30–40/month
+Owner: Chargeback Analyst
+Participants: Chargeback Analyst, Store Ops, LP, AR Settlement
+Source: workflow W2788 — Chargeback Notification, Evidence Compilation &amp; Representment</bpmn:documentation>
+      <bpmn:laneSet id="W2788_LaneSet3">
+        <bpmn:lane id="W2788_Lane1" name="Chargeback Analyst">
+        <bpmn:flowNodeRef>W2788_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2788_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2788_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2788_Lane2" name="Store Ops">
+        <bpmn:flowNodeRef>W2788_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2788_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2788_Start4" name="Chargeback notification from acquirer (issuer dispute)">
+        <bpmn:outgoing>W2788_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2788_Task5" name="Chargeback Analyst receives chargeback (fraud, friendly fraud, product not…">
+        <bpmn:documentation>Step 1: Chargeback Analyst receives chargeback (fraud, friendly fraud, product not received, duplicate); logs in dispute tracker; pulls POS transaction evidence
+Responsible (R): Chargeback Analyst
+Accountable (A): Payment Operations Manager
+Duration: Per dispute</bpmn:documentation>
+        <bpmn:incoming>W2788_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W2788_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2788_Task6" name="Store Ops/LP compiles compendium: signed charge slip, ID presented, CCTV…">
+        <bpmn:documentation>Step 2: Store Ops/LP compiles compendium: signed charge slip, ID presented, CCTV timestamp, delivery proof/POD, BIR invoice, customer communication; assembles representment package
+Responsible (R): Store Ops / LP
+Accountable (A): Chargeback Analyst
+Duration: 1–3 days</bpmn:documentation>
+        <bpmn:incoming>W2788_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2788_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2788_Task7" name="Chargeback Analyst submits representment via acquirer portal within scheme…">
+        <bpmn:documentation>Step 3: Chargeback Analyst submits representment via acquirer portal within scheme deadline (typically 7–45 days); tracks outcome; books chargeback loss or reversal
+Responsible (R): Chargeback Analyst
+Accountable (A): Finance Controller
+Duration: Per dispute</bpmn:documentation>
+        <bpmn:incoming>W2788_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2788_End8" name="Complete">
+        <bpmn:incoming>W2788_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2788_Annotation9">
+        <bpmn:text>Controls: - CTL-215 (ensure card/e-wallet settlement &amp; chargeback control.) | - operational: SLA-bounded tracker and reminder workflow
+Owner: Chargeback Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2788_Assoc10" sourceRef="W2788_Annotation9" targetRef="W2788_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2788_Flow11" sourceRef="W2788_Start4" targetRef="W2788_Task5" />
+      <bpmn:sequenceFlow id="W2788_Flow12" sourceRef="W2788_Task5" targetRef="W2788_Task6" />
+      <bpmn:sequenceFlow id="W2788_Flow13" sourceRef="W2788_Task6" targetRef="W2788_Task7" />
+      <bpmn:sequenceFlow id="W2788_Flow14" sourceRef="W2788_Task7" targetRef="W2788_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2788_diag">
+      <bpmndi:BPMNPlane id="W2788_plane" bpmnElement="W_W2788">
+        <bpmndi:BPMNShape id="W2788_Lane1_di" bpmnElement="W2788_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2788_Lane2_di" bpmnElement="W2788_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2788_Task5_di" bpmnElement="W2788_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2788_Task6_di" bpmnElement="W2788_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2788_Task7_di" bpmnElement="W2788_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2788_Start4_di" bpmnElement="W2788_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2788_End8_di" bpmnElement="W2788_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2788_Annotation9_di" bpmnElement="W2788_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2788_Flow11_di" bpmnElement="W2788_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2788_Flow12_di" bpmnElement="W2788_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2788_Flow13_di" bpmnElement="W2788_Flow13"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2788_Flow14_di" bpmnElement="W2788_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2788_Assoc10_di" bpmnElement="W2788_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2789" name="W2789. Retrieval Request, Fraud Alert &amp; Pre-Arbitration Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Issuer retrieval request or fraud alert from scheme
+Frequency: Event-driven; ~100–200 events/year
+Volume: ~10–15/month
+Owner: Chargeback Analyst
+Participants: Chargeback Analyst, LP, Legal, Payment Ops Manager
+Source: workflow W2789 — Retrieval Request, Fraud Alert &amp; Pre-Arbitration Handling</bpmn:documentation>
+      <bpmn:laneSet id="W2789_LaneSet4">
+        <bpmn:lane id="W2789_Lane1" name="Chargeback Analyst">
+        <bpmn:flowNodeRef>W2789_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2789_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2789_Lane2" name="LP">
+        <bpmn:flowNodeRef>W2789_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2789_Lane3" name="Payment Ops Manager">
+        <bpmn:flowNodeRef>W2789_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2789_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2789_Start5" name="Issuer retrieval request or fraud alert from scheme">
+        <bpmn:outgoing>W2789_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2789_Task6" name="Chargeback Analyst responds to retrieval request with transaction documentation…">
+        <bpmn:documentation>Step 1: Chargeback Analyst responds to retrieval request with transaction documentation within scheme SLA; preserves records for potential chargeback
+Responsible (R): Chargeback Analyst
+Accountable (A): Payment Operations Manager
+Duration: Per request</bpmn:documentation>
+        <bpmn:incoming>W2789_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2789_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2789_Task7" name="LP investigates fraud alerts ( counterfeit card, account takeover, card…">
+        <bpmn:documentation>Step 2: LP investigates fraud alerts ( counterfeit card, account takeover, card testing); blocks terminals/merchants if compromise suspected
+Responsible (R): LP
+Accountable (A): LP Manager
+Duration: Per alert</bpmn:documentation>
+        <bpmn:incoming>W2789_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2789_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2789_Task8" name="Payment Ops Manager escalates pre-arbitration cases to acquirer legal…">
+        <bpmn:documentation>Step 3: Payment Ops Manager escalates pre-arbitration cases to acquirer legal; coordinates scheme dispute resolution; books arbitration loss if unfavorable
+Responsible (R): Payment Ops Manager / Legal
+Accountable (A): Finance Controller
+Duration: Per case</bpmn:documentation>
+        <bpmn:incoming>W2789_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2789_End9" name="Complete">
+        <bpmn:incoming>W2789_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2789_Annotation10">
+        <bpmn:text>Controls: - CTL-470 (ensure controlled execution — Settlement Reconciliation &amp; Chargeback/Dispute Management (PA-80.2).) | - operational: 24-hour SLA and LP-Payment Ops joint protocol
+Owner: Chargeback Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2789_Assoc11" sourceRef="W2789_Annotation10" targetRef="W2789_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2789_Flow12" sourceRef="W2789_Start5" targetRef="W2789_Task6" />
+      <bpmn:sequenceFlow id="W2789_Flow13" sourceRef="W2789_Task6" targetRef="W2789_Task7" />
+      <bpmn:sequenceFlow id="W2789_Flow14" sourceRef="W2789_Task7" targetRef="W2789_Task8" />
+      <bpmn:sequenceFlow id="W2789_Flow15" sourceRef="W2789_Task8" targetRef="W2789_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2789_diag">
+      <bpmndi:BPMNPlane id="W2789_plane" bpmnElement="W_W2789">
+        <bpmndi:BPMNShape id="W2789_Lane1_di" bpmnElement="W2789_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_Lane2_di" bpmnElement="W2789_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_Lane3_di" bpmnElement="W2789_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_Task6_di" bpmnElement="W2789_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_Task7_di" bpmnElement="W2789_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_Task8_di" bpmnElement="W2789_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_Start5_di" bpmnElement="W2789_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_End9_di" bpmnElement="W2789_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2789_Annotation10_di" bpmnElement="W2789_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2789_Flow12_di" bpmnElement="W2789_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2789_Flow13_di" bpmnElement="W2789_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2789_Flow14_di" bpmnElement="W2789_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2789_Flow15_di" bpmnElement="W2789_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2789_Assoc11_di" bpmnElement="W2789_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2790" name="W2790. Refund, Void &amp; Partial-Reversal Settlement Matching" isExecutable="false">
+      <bpmn:documentation>Trigger: Customer refund or transaction void
+Frequency: ~2% of transactions (returns); ~56K/month
+Volume: ~56,000 refund/void events/month
+Owner: AR Settlement Accountant
+Participants: AR Settlement Accountant, Customer Service, Store Ops
+Source: workflow W2790 — Refund, Void &amp; Partial-Reversal Settlement Matching</bpmn:documentation>
+      <bpmn:laneSet id="W2790_LaneSet4">
+        <bpmn:lane id="W2790_Lane1" name="Customer Service">
+        <bpmn:flowNodeRef>W2790_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2790_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2790_Lane2" name="ERP automation">
+        <bpmn:flowNodeRef>W2790_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2790_Lane3" name="AR Settlement Accountant">
+        <bpmn:flowNodeRef>W2790_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2790_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2790_Start5" name="Customer refund or transaction void">
+        <bpmn:outgoing>W2790_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2790_Task6" name="Customer Service processes refund to original tender in POS/ecommerce…">
+        <bpmn:documentation>Step 1: Customer Service processes refund to original tender in POS/ecommerce; generates reversal reference; ensures within scheme refund window
+Responsible (R): Customer Service
+Accountable (A): Store Manager
+Duration: Per refund</bpmn:documentation>
+        <bpmn:incoming>W2790_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2790_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2790_Task7" name="ERP auto-matches reversal to original capture; ensures settlement deduction…">
+        <bpmn:documentation>Step 2: ERP auto-matches reversal to original capture; ensures settlement deduction equals refund; flags unmatched reversals for investigation
+Responsible (R): ERP automation
+Accountable (A): AR Settlement Accountant
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2790_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2790_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2790_Task8" name="AR Settlement Accountant reconciles reversal settlement to bank debit; books…">
+        <bpmn:documentation>Step 3: AR Settlement Accountant reconciles reversal settlement to bank debit; books refund liability and clears customer receivable; resolves timing differences
+Responsible (R): AR Settlement Accountant
+Accountable (A): Finance Controller
+Duration: Daily</bpmn:documentation>
+        <bpmn:incoming>W2790_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2790_End9" name="Complete">
+        <bpmn:incoming>W2790_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2790_Annotation10">
+        <bpmn:text>Controls: - CTL-470 (ensure controlled execution — Settlement Reconciliation &amp; Chargeback/Dispute Management (PA-80.2).) | - operational: auto-match and daily reconciliation
+Owner: AR Settlement Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2790_Assoc11" sourceRef="W2790_Annotation10" targetRef="W2790_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2790_Flow12" sourceRef="W2790_Start5" targetRef="W2790_Task6" />
+      <bpmn:sequenceFlow id="W2790_Flow13" sourceRef="W2790_Task6" targetRef="W2790_Task7" />
+      <bpmn:sequenceFlow id="W2790_Flow14" sourceRef="W2790_Task7" targetRef="W2790_Task8" />
+      <bpmn:sequenceFlow id="W2790_Flow15" sourceRef="W2790_Task8" targetRef="W2790_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2790_diag">
+      <bpmndi:BPMNPlane id="W2790_plane" bpmnElement="W_W2790">
+        <bpmndi:BPMNShape id="W2790_Lane1_di" bpmnElement="W2790_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_Lane2_di" bpmnElement="W2790_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_Lane3_di" bpmnElement="W2790_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_Task6_di" bpmnElement="W2790_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_Task7_di" bpmnElement="W2790_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_Task8_di" bpmnElement="W2790_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_Start5_di" bpmnElement="W2790_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_End9_di" bpmnElement="W2790_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2790_Annotation10_di" bpmnElement="W2790_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2790_Flow12_di" bpmnElement="W2790_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2790_Flow13_di" bpmnElement="W2790_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2790_Flow14_di" bpmnElement="W2790_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2790_Flow15_di" bpmnElement="W2790_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2790_Assoc11_di" bpmnElement="W2790_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2791" name="W2791. Payment Fee &amp; Interchange Cost Allocation to Store/Channel" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly close / cost allocation run
+Frequency: Monthly
+Volume: ~200 stores + ecommerce channel
+Owner: Finance Analyst
+Participants: Finance Analyst, Payment Ops Manager, FP&amp;A
+Source: workflow W2791 — Payment Fee &amp; Interchange Cost Allocation to Store/Channel</bpmn:documentation>
+      <bpmn:laneSet id="W2791_LaneSet4">
+        <bpmn:lane id="W2791_Lane1" name="Finance Analyst">
+        <bpmn:flowNodeRef>W2791_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2791_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2791_Lane2" name="FP&amp;A">
+        <bpmn:flowNodeRef>W2791_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2791_Lane3" name="Payment Ops Manager">
+        <bpmn:flowNodeRef>W2791_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2791_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2791_Start5" name="Monthly close / cost allocation run">
+        <bpmn:outgoing>W2791_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2791_Task6" name="Finance Analyst allocates payment fees (MDR, e-wallet fee, BNPL fee, chargeback…">
+        <bpmn:documentation>Step 1: Finance Analyst allocates payment fees (MDR, e-wallet fee, BNPL fee, chargeback loss) to originating store/channel based on transaction-level capture data
+Responsible (R): Finance Analyst
+Accountable (A): FP&amp;A Manager
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2791_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2791_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2791_Task7" name="FP&amp;A incorporates net payment cost into store P&amp;L and category gross margin…">
+        <bpmn:documentation>Step 2: FP&amp;A incorporates net payment cost into store P&amp;L and category gross margin analysis; benchmarks cost-to-serve by tender/channel
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2791_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2791_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2791_Task8" name="Payment Ops Manager reports tender mix trend and cost-per-transaction to…">
+        <bpmn:documentation>Step 3: Payment Ops Manager reports tender mix trend and cost-per-transaction to management; recommends migration incentives (e.g., e-wallet promo to reduce cash handling)
+Responsible (R): Payment Ops Manager
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2791_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2791_End9" name="Complete">
+        <bpmn:incoming>W2791_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2791_Annotation10">
+        <bpmn:text>Controls: - CTL-470 (ensure controlled execution — Settlement Reconciliation &amp; Chargeback/Dispute Management (PA-80.2).) | - operational: tender-mix optimization incentives
+Owner: Finance Analyst</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2791_Assoc11" sourceRef="W2791_Annotation10" targetRef="W2791_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2791_Flow12" sourceRef="W2791_Start5" targetRef="W2791_Task6" />
+      <bpmn:sequenceFlow id="W2791_Flow13" sourceRef="W2791_Task6" targetRef="W2791_Task7" />
+      <bpmn:sequenceFlow id="W2791_Flow14" sourceRef="W2791_Task7" targetRef="W2791_Task8" />
+      <bpmn:sequenceFlow id="W2791_Flow15" sourceRef="W2791_Task8" targetRef="W2791_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2791_diag">
+      <bpmndi:BPMNPlane id="W2791_plane" bpmnElement="W_W2791">
+        <bpmndi:BPMNShape id="W2791_Lane1_di" bpmnElement="W2791_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_Lane2_di" bpmnElement="W2791_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_Lane3_di" bpmnElement="W2791_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_Task6_di" bpmnElement="W2791_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_Task7_di" bpmnElement="W2791_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_Task8_di" bpmnElement="W2791_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_Start5_di" bpmnElement="W2791_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_End9_di" bpmnElement="W2791_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2791_Annotation10_di" bpmnElement="W2791_Annotation10"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2791_Flow12_di" bpmnElement="W2791_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2791_Flow13_di" bpmnElement="W2791_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2791_Flow14_di" bpmnElement="W2791_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2791_Flow15_di" bpmnElement="W2791_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2791_Assoc11_di" bpmnElement="W2791_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W2792" name="W2792. Aged Unreconciled Settlement &amp; Suspense GL Clearing" isExecutable="false">
+      <bpmn:documentation>Trigger: Items aged &gt; 30 days in settlement suspense
+Frequency: Weekly review + monthly close
+Volume: ~200–400 aged items/month
+Owner: AR Settlement Accountant
+Participants: AR Settlement Accountant, Finance, Payment Ops Manager
+Source: workflow W2792 — Aged Unreconciled Settlement &amp; Suspense GL Clearing</bpmn:documentation>
+      <bpmn:laneSet id="W2792_LaneSet4">
+        <bpmn:lane id="W2792_Lane1" name="AR Settlement Accountant">
+        <bpmn:flowNodeRef>W2792_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2792_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2792_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W2792_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W2792_Lane3" name="Payment Ops Manager">
+        <bpmn:flowNodeRef>W2792_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W2792_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W2792_Start5" name="Items aged &gt; 30 days in settlement suspense">
+        <bpmn:outgoing>W2792_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W2792_Task6" name="AR Settlement Accountant reviews aged settlement suspense weekly; classifies…">
+        <bpmn:documentation>Step 1: AR Settlement Accountant reviews aged settlement suspense weekly; classifies (acquirer error, timing, write-off candidate); assigns resolution owner
+Responsible (R): AR Settlement Accountant
+Accountable (A): Finance Controller
+Duration: Weekly</bpmn:documentation>
+        <bpmn:incoming>W2792_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W2792_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2792_Task7" name="Finance investigates root cause with acquirer/partner; recovers where possible…">
+        <bpmn:documentation>Step 2: Finance investigates root cause with acquirer/partner; recovers where possible; provisions write-off for unrecoverable items &gt; 90 days
+Responsible (R): Finance
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2792_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W2792_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W2792_Task8" name="Payment Ops Manager closes suspense items; reports aged suspense trend and…">
+        <bpmn:documentation>Step 3: Payment Ops Manager closes suspense items; reports aged suspense trend and root-cause themes to management for systemic remediation
+Responsible (R): Payment Ops Manager
+Accountable (A): Finance Controller
+Duration: Monthly</bpmn:documentation>
+        <bpmn:incoming>W2792_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W2792_End9" name="Complete">
+        <bpmn:incoming>W2792_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W2792_Annotation10">
+        <bpmn:text>Controls: - CTL-470 (ensure controlled execution — Settlement Reconciliation &amp; Chargeback/Dispute Management (PA-80.2).) | - operational: 30/60/90 aging discipline and write-off governance
+Owner: AR Settlement Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W2792_Assoc11" sourceRef="W2792_Annotation10" targetRef="W2792_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W2792_Flow12" sourceRef="W2792_Start5" targetRef="W2792_Task6" />
+      <bpmn:sequenceFlow id="W2792_Flow13" sourceRef="W2792_Task6" targetRef="W2792_Task7" />
+      <bpmn:sequenceFlow id="W2792_Flow14" sourceRef="W2792_Task7" targetRef="W2792_Task8" />
+      <bpmn:sequenceFlow id="W2792_Flow15" sourceRef="W2792_Task8" targetRef="W2792_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W2792_diag">
+      <bpmndi:BPMNPlane id="W2792_plane" bpmnElement="W_W2792">
+        <bpmndi:BPMNShape id="W2792_Lane1_di" bpmnElement="W2792_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_Lane2_di" bpmnElement="W2792_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_Lane3_di" bpmnElement="W2792_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_Task6_di" bpmnElement="W2792_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_Task7_di" bpmnElement="W2792_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_Task8_di" bpmnElement="W2792_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_Start5_di" bpmnElement="W2792_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_End9_di" bpmnElement="W2792_End9"><dc:Bounds x="1050" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W2792_Annotation10_di" bpmnElement="W2792_Annotation10"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W2792_Flow12_di" bpmnElement="W2792_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2792_Flow13_di" bpmnElement="W2792_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2792_Flow14_di" bpmnElement="W2792_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2792_Flow15_di" bpmnElement="W2792_Flow15"><di:waypoint x="1000" y="505" /><di:waypoint x="1050" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W2792_Assoc11_di" bpmnElement="W2792_Assoc11"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

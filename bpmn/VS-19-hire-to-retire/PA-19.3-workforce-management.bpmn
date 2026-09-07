@@ -1,0 +1,1758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-19.3-workforce-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W34" name="W34. Store Shift Scheduling" isExecutable="false">
+      <bpmn:documentation>Trigger: Weekly schedule creation cycle
+Frequency: Weekly per store; published 1 week in advance
+Volume: ~29 staff × 200 stores = ~5,800 weekly shift assignments (per profile §4); 2–3 shifts per day (opening: 7 AM–2 PM, mid: 10 AM–6 PM, closing: 2 PM–10 PM)
+Owner: Store Manager
+Participants: Store Manager, Assistant Store Manager, Department Supervisors, HR Assistant
+Source: workflow W34 — Store Shift Scheduling</bpmn:documentation>
+      <bpmn:laneSet id="W34_LaneSet6">
+        <bpmn:lane id="W34_Lane1" name="System">
+        <bpmn:flowNodeRef>W34_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W34_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W34_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W34_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W34_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W34_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W34_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W34_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W34_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W34_Lane3" name="Dept. Supervisor">
+        <bpmn:flowNodeRef>W34_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W34_Lane4" name="Employee">
+        <bpmn:flowNodeRef>W34_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W34_Lane5" name="Regional Manager">
+        <bpmn:flowNodeRef>W34_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W34_End18</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W34_Start7" name="Weekly schedule creation cycle">
+        <bpmn:outgoing>W34_Flow21</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W34_Task8" name="System generates draft schedule based on: (a) store operating hours, (b)…">
+        <bpmn:documentation>Step 1: System generates draft schedule based on: (a) store operating hours, (b) staffing model per shift (min cashiers, floor associates, receiving), (c) historical sales volume by day and hour, (d) approved leave requests, (e) labor budget (max hours per employee per week)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W34_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W34_Task9" name="Store Manager reviews draft schedule; adjusts for: expected delivery days (DSD…">
+        <bpmn:documentation>Step 2: Store Manager reviews draft schedule; adjusts for: expected delivery days (DSD receiving), upcoming promotions, special events, employee skill mix per shift
+Responsible (R): Store Manager
+Accountable (A): VP Store Operations
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W34_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W34_Task10" name="Department Supervisors review shift assignments for their departments; flag…">
+        <bpmn:documentation>Step 3: Department Supervisors review shift assignments for their departments; flag conflicts or coverage gaps
+Responsible (R): Dept. Supervisor
+Accountable (A): Store Manager
+Duration: 30 min/week</bpmn:documentation>
+        <bpmn:incoming>W34_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W34_Task11" name="Store Manager finalizes and publishes schedule in system; employees receive…">
+        <bpmn:documentation>Step 4: Store Manager finalizes and publishes schedule in system; employees receive notification (mobile app, SMS, or bulletin board)
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W34_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W34_Task12" name="Employee views schedule; submits swap requests to Store Manager if needed">
+        <bpmn:documentation>Step 5: Employee views schedule; submits swap requests to Store Manager if needed
+Responsible (R): Employee
+Accountable (A): —
+Duration: Self-service</bpmn:documentation>
+        <bpmn:incoming>W34_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W34_Task13" name="Store Manager approves or denies shift swap requests; updates schedule">
+        <bpmn:documentation>Step 6: Store Manager approves or denies shift swap requests; updates schedule
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W34_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W34_Task14" name="During the week: if unplanned absence (sick leave, emergency): Store Manager…">
+        <bpmn:documentation>Step 7: During the week: if unplanned absence (sick leave, emergency): Store Manager activates contingency (call in off-duty employee, redistribute floor staff, cover cashier shift personally)
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: Ad hoc</bpmn:documentation>
+        <bpmn:incoming>W34_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W34_Task15" name="System tracks actual hours worked (biometric/RFID clock-in/out) vs. scheduled…">
+        <bpmn:documentation>Step 8: System tracks actual hours worked (biometric/RFID clock-in/out) vs. scheduled hours; flags overtime and undertime
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W34_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow28</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W34_Task16" name="Weekly: Store Manager reviews schedule adherence report; adjusts next week&#x27;s…">
+        <bpmn:documentation>Step 9: Weekly: Store Manager reviews schedule adherence report; adjusts next week&#x27;s plan based on actuals
+Responsible (R): Store Manager
+Accountable (A): Regional Manager
+Duration: 15 min/week</bpmn:documentation>
+        <bpmn:incoming>W34_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W34_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W34_Task17" name="Monthly: Regional Manager reviews overtime hours per store vs. labor budget…">
+        <bpmn:documentation>Step 10: Monthly: Regional Manager reviews overtime hours per store vs. labor budget; flags stores consistently exceeding targets
+Responsible (R): Regional Manager
+Accountable (A): VP Store Operations
+Duration: 2 hours/month (across 50 stores)</bpmn:documentation>
+        <bpmn:incoming>W34_Flow210</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W34_End18" name="Complete">
+        <bpmn:incoming>W34_Flow211</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W34_Annotation19">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).)
+Owner: Store Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W34_Assoc20" sourceRef="W34_Annotation19" targetRef="W34_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W34_Flow21" sourceRef="W34_Start7" targetRef="W34_Task8" />
+      <bpmn:sequenceFlow id="W34_Flow22" sourceRef="W34_Task8" targetRef="W34_Task9" />
+      <bpmn:sequenceFlow id="W34_Flow23" sourceRef="W34_Task9" targetRef="W34_Task10" />
+      <bpmn:sequenceFlow id="W34_Flow24" sourceRef="W34_Task10" targetRef="W34_Task11" />
+      <bpmn:sequenceFlow id="W34_Flow25" sourceRef="W34_Task11" targetRef="W34_Task12" />
+      <bpmn:sequenceFlow id="W34_Flow26" sourceRef="W34_Task12" targetRef="W34_Task13" />
+      <bpmn:sequenceFlow id="W34_Flow27" sourceRef="W34_Task13" targetRef="W34_Task14" />
+      <bpmn:sequenceFlow id="W34_Flow28" sourceRef="W34_Task14" targetRef="W34_Task15" />
+      <bpmn:sequenceFlow id="W34_Flow29" sourceRef="W34_Task15" targetRef="W34_Task16" />
+      <bpmn:sequenceFlow id="W34_Flow30" sourceRef="W34_Task16" targetRef="W34_Task17" />
+      <bpmn:sequenceFlow id="W34_Flow31" sourceRef="W34_Task17" targetRef="W34_End18" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W34_diag">
+      <bpmndi:BPMNPlane id="W34_plane" bpmnElement="W_W34">
+        <bpmndi:BPMNShape id="W34_Lane1_di" bpmnElement="W34_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Lane2_di" bpmnElement="W34_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Lane3_di" bpmnElement="W34_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Lane4_di" bpmnElement="W34_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Lane5_di" bpmnElement="W34_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task8_di" bpmnElement="W34_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task9_di" bpmnElement="W34_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task10_di" bpmnElement="W34_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task11_di" bpmnElement="W34_Task11"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task12_di" bpmnElement="W34_Task12"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task13_di" bpmnElement="W34_Task13"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task14_di" bpmnElement="W34_Task14"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task15_di" bpmnElement="W34_Task15"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task16_di" bpmnElement="W34_Task16"><dc:Bounds x="2080" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Task17_di" bpmnElement="W34_Task17"><dc:Bounds x="2290" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Start7_di" bpmnElement="W34_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_End18_di" bpmnElement="W34_End18"><dc:Bounds x="2520" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W34_Annotation19_di" bpmnElement="W34_Annotation19"><dc:Bounds x="160" y="970" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W34_Flow21_di" bpmnElement="W34_Flow21"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow22_di" bpmnElement="W34_Flow22"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow23_di" bpmnElement="W34_Flow23"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow24_di" bpmnElement="W34_Flow24"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow25_di" bpmnElement="W34_Flow25"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow26_di" bpmnElement="W34_Flow26"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow27_di" bpmnElement="W34_Flow27"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow28_di" bpmnElement="W34_Flow28"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow29_di" bpmnElement="W34_Flow29"><di:waypoint x="2050" y="165" /><di:waypoint x="2080" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow30_di" bpmnElement="W34_Flow30"><di:waypoint x="2260" y="335" /><di:waypoint x="2290" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Flow31_di" bpmnElement="W34_Flow31"><di:waypoint x="2470" y="845" /><di:waypoint x="2520" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W34_Assoc20_di" bpmnElement="W34_Assoc20"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W561" name="W561. Employee Attendance Exception Management" isExecutable="false">
+      <bpmn:documentation>Trigger: Biometric/attendance system generates exception (late arrival, unauthorized absence, undertime, biometric failure, missing punch, overtime without approval)
+Frequency: ~800–1,200 exceptions per day across 200 stores + 4 DCs + HQ (6,762 employees, ~12–18% exception rate)
+Volume: Higher on Mondays (+25%), after holidays (+40%), during rainy season/typhoons (+30%, Metro Manila and low-lying areas), during MRT/LRT service disruptions
+Owner: HR Supervisor / Store Manager (store-level)
+Participants: Employee (R for self-service), Department Supervisor (R for approval), HR Supervisor, Payroll Specialist (I), Store Manager (A for store-level)
+Source: workflow W561 — Employee Attendance Exception Management</bpmn:documentation>
+      <bpmn:laneSet id="W561_LaneSet6">
+        <bpmn:lane id="W561_Lane1" name="System">
+        <bpmn:flowNodeRef>W561_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W561_Lane2" name="HR Supervisor">
+        <bpmn:flowNodeRef>W561_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Task15</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_Task19</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W561_Lane3" name="Department Supervisor">
+        <bpmn:flowNodeRef>W561_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W561_Lane4" name="Employee">
+        <bpmn:flowNodeRef>W561_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W561_Lane5" name="CHRO">
+        <bpmn:flowNodeRef>W561_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W561_End20</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W561_Start7" name="Biometric/attendance system generates exception (late arrival, unauthorized absence…">
+        <bpmn:outgoing>W561_Flow23</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W561_Task8" name="System generates daily exception report from biometric/attendance system…">
+        <bpmn:documentation>Step 1: System generates daily exception report from biometric/attendance system, categorized by type: (a) late arrival (punch-in after shift start + grace period); (b) unauthorized absence (no punch for full shift, no pre-filed leave); (c) undertime (punch-out before shift end); (d) missing punch (only in-punch or out-punch recorded); (e) biometric failure (system unable to read fingerprint/face); (f) unauthorized overtime (punch-out after shift end without pre-approved OT)
+Responsible (R): System
+Accountable (A): —
+Duration: Automated (daily batch at 06:00)</bpmn:documentation>
+        <bpmn:incoming>W561_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W561_Task9" name="HR Supervisor reviews exception dashboard prioritized by severity: unauthorized…">
+        <bpmn:documentation>Step 2: HR Supervisor reviews exception dashboard prioritized by severity: unauthorized absence (critical) &gt; missing punch (high) &gt; late arrival (medium) &gt; undertime (low); dashboard shows exception count by store, department, and category with trend comparison to previous period
+Responsible (R): HR Supervisor
+Accountable (A): Store Manager
+Duration: 30–45 min/day</bpmn:documentation>
+        <bpmn:incoming>W561_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task10" name="For biometric failures: HR Supervisor verifies employee identity against…">
+        <bpmn:documentation>Step 3: For biometric failures: HR Supervisor verifies employee identity against employee photo in HR master, creates manual punch entry with reason code &quot;biometric failure,&quot; obtains Department Supervisor confirmation that employee was present; submits IT ticket per W48 for biometric reader repair/maintenance; recurring biometric failures (&gt;3/month for same employee) trigger re-enrollment with alternate biometric (e.g., switch from fingerprint to face recognition)
+Responsible (R): HR Supervisor
+Accountable (A): Store Manager
+Duration: 5 min/exception</bpmn:documentation>
+        <bpmn:incoming>W561_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task11" name="For late arrivals: Department Supervisor confirms whether late arrival was…">
+        <bpmn:documentation>Step 4: For late arrivals: Department Supervisor confirms whether late arrival was communicated in advance (SMS, call, team messaging app); system auto-calculates deduction per company policy — grace period: 15 minutes (no deduction); 16–60 minutes late: 1-hour deduction; &gt;60 minutes late: half-day deduction; if late was due to verified force majeure (MRT breakdown, flooding), HR Supervisor applies excused tardiness with no deduction
+Responsible (R): Department Supervisor / HR Supervisor
+Accountable (A): Store Manager
+Duration: 3 min/exception</bpmn:documentation>
+        <bpmn:incoming>W561_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task12" name="For absences: system checks if leave was pre-filed per HR-007 leave management…">
+        <bpmn:documentation>Step 5: For absences: system checks if leave was pre-filed per HR-007 leave management; if leave filed and approved → no exception (system auto-clears); if leave not filed → classify as absent without pay; if absence due to force majeure (typhoon signal, declared calamity) → classify per company policy as excused with pay (up to 5 days/year) or special emergency leave per DOLE advisory
+Responsible (R): HR Supervisor
+Accountable (A): Store Manager
+Duration: 5 min/exception</bpmn:documentation>
+        <bpmn:incoming>W561_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task13" name="For undertime: verify if early departure was authorized by Department…">
+        <bpmn:documentation>Step 6: For undertime: verify if early departure was authorized by Department Supervisor (system checks for approved early departure request); if authorized → no deduction, update timesheet; if unauthorized → system deducts proportional hours from daily pay; pattern detection: employee with &gt;3 unauthorized undertime incidents in 30 days flagged for Store Manager counseling
+Responsible (R): HR Supervisor
+Accountable (A): Store Manager
+Duration: 3 min/exception</bpmn:documentation>
+        <bpmn:incoming>W561_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task14" name="For missing punches: employee submits self-service correction request via HR…">
+        <bpmn:documentation>Step 7: For missing punches: employee submits self-service correction request via HR portal or mobile app with reason (forgot to punch, system down, was at other location for task); Department Supervisor approves or denies within 2 business days; if approved → system creates corrected punch entry with audit trail; if denied → exception remains and standard deduction applies
+Responsible (R): Employee / Department Supervisor
+Accountable (A): HR Supervisor
+Duration: 2 min/exception (system); 5 min if manual</bpmn:documentation>
+        <bpmn:incoming>W561_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task15" name="For unauthorized overtime: system verifies against pre-approved overtime per…">
+        <bpmn:documentation>Step 8: For unauthorized overtime: system verifies against pre-approved overtime per W34 shift schedule; if OT was pre-approved → clear exception, system calculates OT pay (125% regular, 130% rest day, per Labor Code); if unapproved → flag for Store Manager review — Store Manager decides whether to approve retroactively (with justification) or deny (OT hours not compensated); pattern detection: employee with repeated unapproved OT flagged for counseling
+Responsible (R): HR Supervisor / Store Manager
+Accountable (A): Store Manager
+Duration: 5 min/exception</bpmn:documentation>
+        <bpmn:incoming>W561_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task16" name="Mass exception handling (typhoon, transportation strike, widespread flooding)…">
+        <bpmn:documentation>Step 9: Mass exception handling (typhoon, transportation strike, widespread flooding): CHRO issues blanket excused attendance directive per DOLE advisory — specifies affected areas, dates, and pay treatment (excused with pay, offset against leave credits, or no-pay); system applies mass exception clearance for all affected employees in specified locations; no individual review required for covered exceptions
+Responsible (R): CHRO
+Accountable (A): CHRO
+Duration: 1–2 hours/event</bpmn:documentation>
+        <bpmn:incoming>W561_Flow31</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow31</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W561_Task17" name="Approved exceptions update payroll input file for W10: system generates…">
+        <bpmn:documentation>Step 10: Approved exceptions update payroll input file for W10: system generates corrected attendance file with all resolved exceptions reflected; unresolved exceptions (pending supervisor approval) carry forward to next payroll cutoff with default deduction applied; exceptions resolved after payroll run trigger retroactive adjustment in next payroll period
+Responsible (R): System
+Accountable (A): —
+Duration: Automated (daily sync)</bpmn:documentation>
+        <bpmn:incoming>W561_Flow230</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow230</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W561_Task18" name="Weekly exception trend analysis: HR Supervisor generates exception trend report…">
+        <bpmn:documentation>Step 11: Weekly exception trend analysis: HR Supervisor generates exception trend report by store, department, and category; identifies: stores with exception rates &gt;20% (above company average), repeat offenders (&gt;5 exceptions/month), exception categories trending upward; report shared with Store Manager and HR Business Partner for corrective action
+Responsible (R): HR Supervisor
+Accountable (A): HR Business Partner
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W561_Flow231</bpmn:incoming>
+        <bpmn:outgoing>W561_Flow231</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W561_Task19" name="Monthly attendance compliance report: aggregated exception data feeds into W72…">
+        <bpmn:documentation>Step 12: Monthly attendance compliance report: aggregated exception data feeds into W72 (employee performance — attendance scorecard component) and W67 (store performance — labor compliance metric); stores with exception rates &gt;20% for 2 consecutive months flagged for HR Business Partner intervention; annual attendance compliance data supports DOLE labor standards audit documentation
+Responsible (R): HR Supervisor
+Accountable (A): CHRO
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W561_Flow232</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W561_End20" name="Complete">
+        <bpmn:incoming>W561_Flow233</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W561_Annotation21">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: IT preventive maintenance schedule per W48 and alternative punch methods (RFID badge backup); operational: automated mass exception clearance (step 9); operational: mobile app simplification and associate training
+Owner: HR Supervisor / Store Manager (store-level)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W561_Assoc22" sourceRef="W561_Annotation21" targetRef="W561_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W561_Flow23" sourceRef="W561_Start7" targetRef="W561_Task8" />
+      <bpmn:sequenceFlow id="W561_Flow24" sourceRef="W561_Task8" targetRef="W561_Task9" />
+      <bpmn:sequenceFlow id="W561_Flow25" sourceRef="W561_Task9" targetRef="W561_Task10" />
+      <bpmn:sequenceFlow id="W561_Flow26" sourceRef="W561_Task10" targetRef="W561_Task11" />
+      <bpmn:sequenceFlow id="W561_Flow27" sourceRef="W561_Task11" targetRef="W561_Task12" />
+      <bpmn:sequenceFlow id="W561_Flow28" sourceRef="W561_Task12" targetRef="W561_Task13" />
+      <bpmn:sequenceFlow id="W561_Flow29" sourceRef="W561_Task13" targetRef="W561_Task14" />
+      <bpmn:sequenceFlow id="W561_Flow30" sourceRef="W561_Task14" targetRef="W561_Task15" />
+      <bpmn:sequenceFlow id="W561_Flow31" sourceRef="W561_Task15" targetRef="W561_Task16" />
+      <bpmn:sequenceFlow id="W561_Flow32" sourceRef="W561_Task16" targetRef="W561_Task17" />
+      <bpmn:sequenceFlow id="W561_Flow33" sourceRef="W561_Task17" targetRef="W561_Task18" />
+      <bpmn:sequenceFlow id="W561_Flow34" sourceRef="W561_Task18" targetRef="W561_Task19" />
+      <bpmn:sequenceFlow id="W561_Flow35" sourceRef="W561_Task19" targetRef="W561_End20" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W561_diag">
+      <bpmndi:BPMNPlane id="W561_plane" bpmnElement="W_W561">
+        <bpmndi:BPMNShape id="W561_Lane1_di" bpmnElement="W561_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Lane2_di" bpmnElement="W561_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Lane3_di" bpmnElement="W561_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Lane4_di" bpmnElement="W561_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Lane5_di" bpmnElement="W561_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task8_di" bpmnElement="W561_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task9_di" bpmnElement="W561_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task10_di" bpmnElement="W561_Task10"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task11_di" bpmnElement="W561_Task11"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task12_di" bpmnElement="W561_Task12"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task13_di" bpmnElement="W561_Task13"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task14_di" bpmnElement="W561_Task14"><dc:Bounds x="1660" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task15_di" bpmnElement="W561_Task15"><dc:Bounds x="1870" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task16_di" bpmnElement="W561_Task16"><dc:Bounds x="2080" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task17_di" bpmnElement="W561_Task17"><dc:Bounds x="2290" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task18_di" bpmnElement="W561_Task18"><dc:Bounds x="2500" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Task19_di" bpmnElement="W561_Task19"><dc:Bounds x="2710" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Start7_di" bpmnElement="W561_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_End20_di" bpmnElement="W561_End20"><dc:Bounds x="2940" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W561_Annotation21_di" bpmnElement="W561_Annotation21"><dc:Bounds x="160" y="970" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W561_Flow23_di" bpmnElement="W561_Flow23"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow24_di" bpmnElement="W561_Flow24"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow25_di" bpmnElement="W561_Flow25"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow26_di" bpmnElement="W561_Flow26"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow27_di" bpmnElement="W561_Flow27"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow28_di" bpmnElement="W561_Flow28"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow29_di" bpmnElement="W561_Flow29"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow30_di" bpmnElement="W561_Flow30"><di:waypoint x="1840" y="675" /><di:waypoint x="1870" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow31_di" bpmnElement="W561_Flow31"><di:waypoint x="2050" y="335" /><di:waypoint x="2080" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow32_di" bpmnElement="W561_Flow32"><di:waypoint x="2260" y="845" /><di:waypoint x="2290" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow33_di" bpmnElement="W561_Flow33"><di:waypoint x="2470" y="165" /><di:waypoint x="2500" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow34_di" bpmnElement="W561_Flow34"><di:waypoint x="2680" y="335" /><di:waypoint x="2710" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Flow35_di" bpmnElement="W561_Flow35"><di:waypoint x="2890" y="335" /><di:waypoint x="2940" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W561_Assoc22_di" bpmnElement="W561_Assoc22"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W594" name="W594. Store-Level Employee Daily Attendance Verification &amp; Exception Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: Daily attendance data pull from biometric/RFID system (automated at 06:00); schedule-vs-actual comparison triggers exception flags
+Frequency: Daily at all 200 stores; exceptions processed throughout the day
+Volume: ~5,800 store-level employees across 200 stores (avg 29 per store); ~700–1,100 daily attendance exceptions (~12–18% exception rate); exception types: no-show (~15%), tardiness (~40%), unauthorized overtime (~10%), missing punch (~25%), undertime (~10%)
+Owner: Department Supervisor / Store Manager (store-level); HR Supervisor (oversight)
+Participants: Department Supervisor, Store Manager (A for escalation), HR Supervisor (R for payroll feed), Employee (R for self-service correction), HR Business Partner (I for trend analysis)
+Source: workflow W594 — Store-Level Employee Daily Attendance Verification &amp; Exception Processing</bpmn:documentation>
+      <bpmn:laneSet id="W594_LaneSet6">
+        <bpmn:lane id="W594_Lane1" name="System">
+        <bpmn:flowNodeRef>W594_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W594_Lane2" name="Department Supervisor">
+        <bpmn:flowNodeRef>W594_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W594_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W594_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Task17</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W594_Lane4" name="Employee">
+        <bpmn:flowNodeRef>W594_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W594_Lane5" name="HR Supervisor">
+        <bpmn:flowNodeRef>W594_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_Task19</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W594_End20</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W594_Start7" name="Daily attendance data pull from biometric/RFID system (automated at 06:00)…">
+        <bpmn:outgoing>W594_Flow23</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W594_Task8" name="Overnight attendance data pull">
+        <bpmn:documentation>Step 1: Overnight attendance data pull: system pulls biometric/RFID punch data from all 200 stores via automated batch at 06:00; data includes: employee ID, store code, punch-in time, punch-out time (if applicable), biometric device ID; system cross-references punch data against published shift schedule per W34 for each store
+Responsible (R): System
+Accountable (A): —
+Duration: Automated (06:00 batch, ~15 min)</bpmn:documentation>
+        <bpmn:incoming>W594_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W594_Task9" name="Schedule-vs-actual comparison">
+        <bpmn:documentation>Step 2: Schedule-vs-actual comparison: system generates store-level attendance comparison report — for each scheduled employee: (a) matched: punched in within grace period of shift start; (b) late: punched in after grace period (15 min per company policy) but within 60 minutes; (c) no-show: no punch recorded by 60 minutes after shift start; (d) missing punch: punch-in recorded but no punch-out (or vice versa) from previous day; (e) early arrival: punched in &gt;30 min before shift start (potential unauthorized OT risk); report distributed to Store Manager and Department Supervisors via mobile app notification by 06:30
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W594_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W594_Task10" name="No-show identification and manager notification">
+        <bpmn:documentation>Step 3: No-show identification and manager notification: for each no-show, system sends immediate mobile notification to: (a) the no-show employee&#x27;s Department Supervisor (primary), (b) Store Manager (informational); notification includes: employee name, department, shift start time, elapsed time since shift start, employee contact number; Department Supervisor attempts to contact employee by phone within 15 minutes of notification — (a) if employee answers and provides valid reason (illness, family emergency, transportation issue): Supervisor logs reason code in system, proceeds to coverage decision (step 5); (b) if employee unreachable after 2 attempts within 30 minutes: classify as unexcused absence, proceed to step 4
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 15 min per no-show</bpmn:documentation>
+        <bpmn:incoming>W594_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W594_Task11" name="Absence documentation">
+        <bpmn:documentation>Step 4: Absence documentation: for confirmed absences — (a) excused absence (employee contacted, valid reason): system logs absence reason, checks leave balance per HR-007, applies against leave credits if applicable (sick leave, emergency leave, VL); if leave credits exhausted: absence without pay; (b) unexcused absence (employee unreachable or no valid reason): system logs unexcused absence without pay, flags for Store Manager counseling; (c) system auto-generates absence notification to employee&#x27;s registered email/SMS with absence status and pay impact; (d) pattern detection trigger: system flags employee with 3+ unexcused absences in rolling 30-day period for HR Business Partner review
+Responsible (R): Department Supervisor / System
+Accountable (A): Store Manager
+Duration: 5 min per absence</bpmn:documentation>
+        <bpmn:incoming>W594_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow26</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W594_Task12" name="Tardiness logging">
+        <bpmn:documentation>Step 5: Tardiness logging: for late arrivals — (a) system auto-calculates tardiness duration: punch-in time minus shift start minus grace period; (b) tardiness categories: 1–15 min (late but within tolerance, logged but no deduction), 16–60 min (late, 1-hour pay deduction), &gt;60 min (very late, half-day deduction); (c) Department Supervisor confirms tardiness classification; (d) if employee provides verified force majeure reason (MRT/LRT breakdown, flooding, PAGASA-declared weather advisory): Supervisor applies excused tardiness with no deduction per company policy; (e) pattern detection: employee with 5+ tardiness incidents in rolling 30-day period flagged for Store Manager counseling and HR Business Partner notification
+Responsible (R): Department Supervisor
+Accountable (A): Store Manager
+Duration: 3 min per tardy employee</bpmn:documentation>
+        <bpmn:incoming>W594_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W594_Task13" name="Overtime pre-approval verification">
+        <bpmn:documentation>Step 6: Overtime pre-approval verification: system identifies employees who punched out after shift end — (a) cross-reference against pre-approved overtime requests per W34/HR-010; (b) if OT was pre-approved: system clears flag, calculates OT hours and OT pay rate (125% regular day, 130% rest day per Labor Code Article 87); (c) if OT was not pre-approved: flag for Store Manager review — Store Manager decides within 2 business days: (i) approve retroactively with documented justification (e.g., customer rush, unexpected delivery, emergency restocking), or (ii) deny (OT hours not compensated); (d) pattern detection: employee with 3+ unapproved OT incidents in 30 days flagged for Store Manager counseling — may indicate poor shift scheduling or workload imbalance
+Responsible (R): Department Supervisor / Store Manager
+Accountable (A): Store Manager
+Duration: 3 min per unapproved OT</bpmn:documentation>
+        <bpmn:incoming>W594_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W594_Task14" name="Coverage decision for no-shows and absences">
+        <bpmn:documentation>Step 7: Coverage decision for no-shows and absences: for each confirmed absence that leaves a department understaffed (below minimum coverage threshold per W34), Store Manager executes coverage plan — (a) check cross-trained associates per W567 skill matrix for inter-department coverage; (b) check off-duty associates available for call-in (maintain call-in availability list per store); (c) if coverage gap persists: redistribute floor staff from lower-traffic departments; (d) if critical gap (e.g., no cashier available): Department Supervisor covers register or Store Manager opens &quot;Manager Register&quot; with override credentials; (e) document coverage decision in system for payroll (overtime if applicable) and W34 schedule adjustment
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 10–15 min per coverage gap</bpmn:documentation>
+        <bpmn:incoming>W594_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W594_Task15" name="Exception resolution for missing punches">
+        <bpmn:documentation>Step 8: Exception resolution for missing punches: for employees with missing punch records from previous day — (a) system generates self-service correction notification to employee via mobile app; (b) employee submits correction request with reason (forgot to punch, biometric failure, was at other location for task); (c) Department Supervisor approves or denies within 2 business days; (d) if approved: system creates corrected punch entry with audit trail; (e) if employee does not submit correction within 3 business days: Supervisor creates manual entry based on documented observation (subject to HR audit)
+Responsible (R): Employee / Department Supervisor
+Accountable (A): HR Supervisor
+Duration: 2 min per correction (system)</bpmn:documentation>
+        <bpmn:incoming>W594_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W594_Task16" name="Payroll feed">
+        <bpmn:documentation>Step 9: Payroll feed: resolved and unresolved exceptions feed into W10 payroll processing — (a) approved exceptions update the daily attendance file with corrected punch data, absence codes, tardiness deductions, and OT hours; (b) unresolved exceptions (pending supervisor approval) carry forward to next payroll cutoff with default deduction applied; (c) exceptions resolved after payroll run trigger retroactive adjustment in next payroll period; (d) daily sync between attendance system and payroll module at 22:00; (e) HR Supervisor receives daily exception resolution summary: total exceptions, resolved count, unresolved count, resolution rate by store
+Responsible (R): System / HR Supervisor
+Accountable (A): HR Supervisor
+Duration: Automated (daily sync)</bpmn:documentation>
+        <bpmn:incoming>W594_Flow31</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow31</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W594_Task17" name="Daily store-level attendance summary">
+        <bpmn:documentation>Step 10: Daily store-level attendance summary: by 08:00 each day, Store Manager reviews attendance summary for their store — (a) present count vs. scheduled count by department; (b) open exceptions requiring resolution; (c) coverage status: departments at/above/below minimum staffing; (d) week-to-date attendance trend; Store Manager signs off on daily summary via mobile app; unresolved items carry forward to next day with escalation priority
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 10–15 min/day</bpmn:documentation>
+        <bpmn:incoming>W594_Flow230</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow230</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W594_Task18" name="Weekly store-level exception trend review">
+        <bpmn:documentation>Step 11: Weekly store-level exception trend review: HR Supervisor generates weekly exception trend report per store — (a) exception rate by store (target: &lt;15%); (b) exception category breakdown (no-show, tardiness, OT, missing punch); (c) stores with exception rates &gt;20% for 2 consecutive weeks flagged for HR Business Partner intervention; (d) Store Manager receives weekly exception summary with comparison to regional and company averages; (e) data feeds into W72 (employee performance — attendance component) and W67 (store performance — labor compliance metric)
+Responsible (R): HR Supervisor
+Accountable (A): HR Business Partner
+Duration: 1 hour/week</bpmn:documentation>
+        <bpmn:incoming>W594_Flow231</bpmn:incoming>
+        <bpmn:outgoing>W594_Flow231</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W594_Task19" name="Monthly attendance compliance report for DOLE readiness">
+        <bpmn:documentation>Step 12: Monthly attendance compliance report for DOLE readiness: HR Supervisor compiles monthly attendance compliance documentation per store — (a) attendance rate (days present / days scheduled); (b) overtime compliance (all OT hours with documented pre-approval or retroactive approval); (c) rest day compliance (mandatory 24-hour rest day per week per Labor Code); (d) holiday pay compliance (correct calculation per Labor Code rules — 200% for unworked regular holiday, 300% for worked regular holiday, etc.); (e) stored per store as DOLE inspection-ready documentation per Labor Code Article 108 and DOLE Department Order No. 174
+Responsible (R): HR Supervisor
+Accountable (A): CHRO
+Duration: 2–3 hours/month</bpmn:documentation>
+        <bpmn:incoming>W594_Flow232</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W594_End20" name="Complete">
+        <bpmn:incoming>W594_Flow233</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W594_Annotation21">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: RFID badge backup, scheduled biometric maintenance per W48, and manual Supervisor override for confirmed device failures; operational: W561 step 9 mass exception handling (CHRO blanket excused attendance directive) and store-level force majeure tardiness exemption (step 5d); operational: automated notification (step 3) and streamlined mobile app workflow
+Owner: Department Supervisor / Store Manager (store-level); HR Supervisor (oversight)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W594_Assoc22" sourceRef="W594_Annotation21" targetRef="W594_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W594_Flow23" sourceRef="W594_Start7" targetRef="W594_Task8" />
+      <bpmn:sequenceFlow id="W594_Flow24" sourceRef="W594_Task8" targetRef="W594_Task9" />
+      <bpmn:sequenceFlow id="W594_Flow25" sourceRef="W594_Task9" targetRef="W594_Task10" />
+      <bpmn:sequenceFlow id="W594_Flow26" sourceRef="W594_Task10" targetRef="W594_Task11" />
+      <bpmn:sequenceFlow id="W594_Flow27" sourceRef="W594_Task11" targetRef="W594_Task12" />
+      <bpmn:sequenceFlow id="W594_Flow28" sourceRef="W594_Task12" targetRef="W594_Task13" />
+      <bpmn:sequenceFlow id="W594_Flow29" sourceRef="W594_Task13" targetRef="W594_Task14" />
+      <bpmn:sequenceFlow id="W594_Flow30" sourceRef="W594_Task14" targetRef="W594_Task15" />
+      <bpmn:sequenceFlow id="W594_Flow31" sourceRef="W594_Task15" targetRef="W594_Task16" />
+      <bpmn:sequenceFlow id="W594_Flow32" sourceRef="W594_Task16" targetRef="W594_Task17" />
+      <bpmn:sequenceFlow id="W594_Flow33" sourceRef="W594_Task17" targetRef="W594_Task18" />
+      <bpmn:sequenceFlow id="W594_Flow34" sourceRef="W594_Task18" targetRef="W594_Task19" />
+      <bpmn:sequenceFlow id="W594_Flow35" sourceRef="W594_Task19" targetRef="W594_End20" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W594_diag">
+      <bpmndi:BPMNPlane id="W594_plane" bpmnElement="W_W594">
+        <bpmndi:BPMNShape id="W594_Lane1_di" bpmnElement="W594_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Lane2_di" bpmnElement="W594_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Lane3_di" bpmnElement="W594_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Lane4_di" bpmnElement="W594_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Lane5_di" bpmnElement="W594_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2840" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task8_di" bpmnElement="W594_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task9_di" bpmnElement="W594_Task9"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task10_di" bpmnElement="W594_Task10"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task11_di" bpmnElement="W594_Task11"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task12_di" bpmnElement="W594_Task12"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task13_di" bpmnElement="W594_Task13"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task14_di" bpmnElement="W594_Task14"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task15_di" bpmnElement="W594_Task15"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task16_di" bpmnElement="W594_Task16"><dc:Bounds x="2080" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task17_di" bpmnElement="W594_Task17"><dc:Bounds x="2290" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task18_di" bpmnElement="W594_Task18"><dc:Bounds x="2500" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Task19_di" bpmnElement="W594_Task19"><dc:Bounds x="2710" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Start7_di" bpmnElement="W594_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_End20_di" bpmnElement="W594_End20"><dc:Bounds x="2940" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W594_Annotation21_di" bpmnElement="W594_Annotation21"><dc:Bounds x="160" y="970" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W594_Flow23_di" bpmnElement="W594_Flow23"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow24_di" bpmnElement="W594_Flow24"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow25_di" bpmnElement="W594_Flow25"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow26_di" bpmnElement="W594_Flow26"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow27_di" bpmnElement="W594_Flow27"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow28_di" bpmnElement="W594_Flow28"><di:waypoint x="1420" y="335" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow29_di" bpmnElement="W594_Flow29"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow30_di" bpmnElement="W594_Flow30"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow31_di" bpmnElement="W594_Flow31"><di:waypoint x="2050" y="675" /><di:waypoint x="2080" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow32_di" bpmnElement="W594_Flow32"><di:waypoint x="2260" y="165" /><di:waypoint x="2290" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow33_di" bpmnElement="W594_Flow33"><di:waypoint x="2470" y="505" /><di:waypoint x="2500" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow34_di" bpmnElement="W594_Flow34"><di:waypoint x="2680" y="845" /><di:waypoint x="2710" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Flow35_di" bpmnElement="W594_Flow35"><di:waypoint x="2890" y="845" /><di:waypoint x="2940" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W594_Assoc22_di" bpmnElement="W594_Assoc22"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W645" name="W645. Strategic Workforce Planning" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual planning cycle aligned with budget (W26); triggered by new store opening plan (10–15/year) or significant business change
+Frequency: Annual comprehensive plan; quarterly progress review; monthly headcount tracking
+Volume: 6,762 current headcount; ~10–15 new stores/year requiring ~290–435 net new hires; ~1,200–1,600 turnover replacements/year
+Owner: HR Manager (Workforce Planning)
+Participants: CHRO, VP Store Operations, VP Supply Chain, FP&amp;A Manager, Regional Managers
+Source: workflow W645 — Strategic Workforce Planning</bpmn:documentation>
+      <bpmn:laneSet id="W645_LaneSet6">
+        <bpmn:lane id="W645_Lane1" name="FP&amp;A Manager">
+        <bpmn:flowNodeRef>W645_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W645_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W645_Lane2" name="VP Store Operations">
+        <bpmn:flowNodeRef>W645_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W645_Lane3" name="VP Supply Chain">
+        <bpmn:flowNodeRef>W645_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W645_Lane4" name="HR Manager">
+        <bpmn:flowNodeRef>W645_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W645_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W645_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W645_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W645_Lane5" name="CHRO">
+        <bpmn:flowNodeRef>W645_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W645_End16</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W645_Start7" name="Annual planning cycle aligned with budget (W26); triggered by new store opening plan…">
+        <bpmn:outgoing>W645_Flow19</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W645_Task8" name="FP&amp;A Manager provides business growth plan: new store openings by quarter…">
+        <bpmn:documentation>Step 1: FP&amp;A Manager provides business growth plan: new store openings by quarter, revenue targets by region, capex plan for new locations, and projected channel mix shifts
+Responsible (R): FP&amp;A Manager
+Accountable (A): CFO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W645_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W645_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W645_Task9" name="VP Store Operations provides new store staffing requirements: 29 positions per…">
+        <bpmn:documentation>Step 2: VP Store Operations provides new store staffing requirements: 29 positions per new store (per company profile); ramp curve (Month 1: 80% staffing, Month 3: 100%); geographic distribution of new stores
+Responsible (R): VP Store Operations
+Accountable (A): COO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W645_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W645_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W645_Task10" name="VP Supply Chain provides DC and logistics headcount requirements: new DC…">
+        <bpmn:documentation>Step 3: VP Supply Chain provides DC and logistics headcount requirements: new DC activation plans, DC expansion staffing, fleet expansion requirements
+Responsible (R): VP Supply Chain
+Accountable (A): COO
+Duration: 0.5 day</bpmn:documentation>
+        <bpmn:incoming>W645_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W645_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W645_Task11" name="HR Manager analyzes current workforce supply: headcount by entity, location…">
+        <bpmn:documentation>Step 4: HR Manager analyzes current workforce supply: headcount by entity, location, department, job family, and employment type; identifies retirement eligibility within 12 months; analyzes turnover trends by location and department (W628 data); assesses internal pipeline from succession plans (W178) and cadetship (W179)
+Responsible (R): HR Manager
+Accountable (A): CHRO
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W645_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W645_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W645_Task12" name="HR Manager performs gap analysis: demand (steps 1–3) minus supply (step 4) =…">
+        <bpmn:documentation>Step 5: HR Manager performs gap analysis: demand (steps 1–3) minus supply (step 4) = hiring gap by role, location, and quarter; identifies critical roles with longest time-to-fill; quantifies headcount shortfall by entity
+Responsible (R): HR Manager
+Accountable (A): CHRO
+Duration: 1 day</bpmn:documentation>
+        <bpmn:incoming>W645_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W645_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W645_Task13" name="HR Manager develops hiring plan: recruitment volume by role and quarter…">
+        <bpmn:documentation>Step 6: HR Manager develops hiring plan: recruitment volume by role and quarter; identifies sourcing channels (campus, referral, agency, direct); estimates recruitment budget (job board fees, agency fees, relocation costs, training costs per W51); proposes seasonal staffing plan (W555)
+Responsible (R): HR Manager
+Accountable (A): CHRO
+Duration: 2 days</bpmn:documentation>
+        <bpmn:incoming>W645_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W645_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W645_Task14" name="CHRO presents workforce plan and budget to CEO and CFO for approval; integrates…">
+        <bpmn:documentation>Step 7: CHRO presents workforce plan and budget to CEO and CFO for approval; integrates with annual operating budget (W26) and capex plan (W21)
+Responsible (R): CHRO
+Accountable (A): CEO
+Duration: 0.5 day</bpmn:documentation>
+        <bpmn:incoming>W645_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W645_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W645_Task15" name="Monthly: HR Manager tracks actual hiring vs. plan; flags gaps to CHRO with…">
+        <bpmn:documentation>Step 8: Monthly: HR Manager tracks actual hiring vs. plan; flags gaps to CHRO with corrective action recommendations (accelerate recruitment, redeploy from other locations, adjust new store timeline)
+Responsible (R): HR Manager
+Accountable (A): CHRO
+Duration: 0.5 day/month</bpmn:documentation>
+        <bpmn:incoming>W645_Flow26</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W645_End16" name="Complete">
+        <bpmn:incoming>W645_Flow27</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W645_Annotation17">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: CHRO annual workforce-plan approval gate; monthly actual-vs-plan review by HR Manager; integration with annual operating budget (W26) for headcount-cost consistency | ---
+Owner: HR Manager (Workforce Planning)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W645_Assoc18" sourceRef="W645_Annotation17" targetRef="W645_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W645_Flow19" sourceRef="W645_Start7" targetRef="W645_Task8" />
+      <bpmn:sequenceFlow id="W645_Flow20" sourceRef="W645_Task8" targetRef="W645_Task9" />
+      <bpmn:sequenceFlow id="W645_Flow21" sourceRef="W645_Task9" targetRef="W645_Task10" />
+      <bpmn:sequenceFlow id="W645_Flow22" sourceRef="W645_Task10" targetRef="W645_Task11" />
+      <bpmn:sequenceFlow id="W645_Flow23" sourceRef="W645_Task11" targetRef="W645_Task12" />
+      <bpmn:sequenceFlow id="W645_Flow24" sourceRef="W645_Task12" targetRef="W645_Task13" />
+      <bpmn:sequenceFlow id="W645_Flow25" sourceRef="W645_Task13" targetRef="W645_Task14" />
+      <bpmn:sequenceFlow id="W645_Flow26" sourceRef="W645_Task14" targetRef="W645_Task15" />
+      <bpmn:sequenceFlow id="W645_Flow27" sourceRef="W645_Task15" targetRef="W645_End16" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W645_diag">
+      <bpmndi:BPMNPlane id="W645_plane" bpmnElement="W_W645">
+        <bpmndi:BPMNShape id="W645_Lane1_di" bpmnElement="W645_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Lane2_di" bpmnElement="W645_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Lane3_di" bpmnElement="W645_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Lane4_di" bpmnElement="W645_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Lane5_di" bpmnElement="W645_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task8_di" bpmnElement="W645_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task9_di" bpmnElement="W645_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task10_di" bpmnElement="W645_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task11_di" bpmnElement="W645_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task12_di" bpmnElement="W645_Task12"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task13_di" bpmnElement="W645_Task13"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task14_di" bpmnElement="W645_Task14"><dc:Bounds x="1660" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Task15_di" bpmnElement="W645_Task15"><dc:Bounds x="1870" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Start7_di" bpmnElement="W645_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_End16_di" bpmnElement="W645_End16"><dc:Bounds x="2100" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W645_Annotation17_di" bpmnElement="W645_Annotation17"><dc:Bounds x="160" y="970" width="360" height="86" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W645_Flow19_di" bpmnElement="W645_Flow19"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow20_di" bpmnElement="W645_Flow20"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow21_di" bpmnElement="W645_Flow21"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow22_di" bpmnElement="W645_Flow22"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow23_di" bpmnElement="W645_Flow23"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow24_di" bpmnElement="W645_Flow24"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow25_di" bpmnElement="W645_Flow25"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow26_di" bpmnElement="W645_Flow26"><di:waypoint x="1840" y="845" /><di:waypoint x="1870" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Flow27_di" bpmnElement="W645_Flow27"><di:waypoint x="2050" y="675" /><di:waypoint x="2100" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W645_Assoc18_di" bpmnElement="W645_Assoc18"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W753" name="W753. Store-Level Employee Meal Break &amp; Rest Period Scheduling &amp; DOLE Compliance" isExecutable="false">
+      <bpmn:documentation>Trigger: Shift start (W34); mid-shift meal break window
+Frequency: Daily per employee; ~29 employees per store × 2 shifts
+Volume: 200 stores × ~29 employees/day × 1 meal break + 2 rest breaks = ~17,400 break events/day chain-wide
+Owner: Store Manager / Department Supervisor
+Participants: Floor Associates, Department Supervisor, Store Manager, HR (compliance)
+Source: workflow W753 — Store-Level Employee Meal Break &amp; Rest Period Scheduling &amp; DOLE Compliance</bpmn:documentation>
+      <bpmn:laneSet id="W753_LaneSet5">
+        <bpmn:lane id="W753_Lane1" name="System">
+        <bpmn:flowNodeRef>W753_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W753_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W753_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W753_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W753_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W753_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W753_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W753_Lane3" name="Employee">
+        <bpmn:flowNodeRef>W753_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W753_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W753_Lane4" name="Department Supervisor">
+        <bpmn:flowNodeRef>W753_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W753_End15</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W753_Start6" name="Shift start (W34); mid-shift meal break window">
+        <bpmn:outgoing>W753_Flow18</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W753_Task7" name="Break schedule generation — System auto-generates break schedule based on shift…">
+        <bpmn:documentation>Step 1: Break schedule generation — System auto-generates break schedule based on shift roster (W34): staggers breaks to maintain minimum staffing per department; ensures no more than 30% of department staff on break simultaneously
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W753_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W753_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W753_Task8" name="Pre-shift break schedule communication — During morning huddle (W739), Store…">
+        <bpmn:documentation>Step 2: Pre-shift break schedule communication — During morning huddle (W739), Store Manager confirms break schedule; Department Supervisors receive their zone&#x27;s break schedule on handheld device
+Responsible (R): Store Manager
+Accountable (A): Store Manager
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W753_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W753_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W753_Task9" name="Meal break execution — Employee clocks out for 60-minute meal break at…">
+        <bpmn:documentation>Step 3: Meal break execution — Employee clocks out for 60-minute meal break at scheduled time; system monitors break start time; employee must clock back in within 65 minutes (5-minute grace period)
+Responsible (R): Employee
+Accountable (A): Department Supervisor
+Duration: 60 min</bpmn:documentation>
+        <bpmn:incoming>W753_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W753_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W753_Task10" name="Rest break execution — Two paid 5-minute rest breaks per 8-hour shift; employee…">
+        <bpmn:documentation>Step 4: Rest break execution — Two paid 5-minute rest breaks per 8-hour shift; employee takes break at designated time; no clock-out required (paid break); Department Supervisor tracks completion
+Responsible (R): Employee
+Accountable (A): Department Supervisor
+Duration: 5 min each</bpmn:documentation>
+        <bpmn:incoming>W753_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W753_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W753_Task11" name="Break coverage verification — Department Supervisor confirms replacement…">
+        <bpmn:documentation>Step 5: Break coverage verification — Department Supervisor confirms replacement coverage before releasing employee for break; if coverage unavailable, reschedules break within compliance window
+Responsible (R): Department Supervisor
+Accountable (A): Department Supervisor
+Duration: 2 min</bpmn:documentation>
+        <bpmn:incoming>W753_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W753_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W753_Task12" name="Compliance monitoring — System flags: (a) missed meal break (no clock-out…">
+        <bpmn:documentation>Step 6: Compliance monitoring — System flags: (a) missed meal break (no clock-out within 5 hours of shift start), (b) shortened meal break (&lt; 45 minutes), (c) late meal break (&gt; 6 hours after shift start), (d) missed rest break
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W753_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W753_Flow23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W753_Task13" name="Non-compliance escalation — System sends compliance alert to Store Manager for…">
+        <bpmn:documentation>Step 7: Non-compliance escalation — System sends compliance alert to Store Manager for any flagged violations; Store Manager investigates and documents corrective action; repeat violations escalated to HR
+Responsible (R): Store Manager
+Accountable (A): HR
+Duration: 10 min</bpmn:documentation>
+        <bpmn:incoming>W753_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W753_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W753_Task14" name="Monthly compliance report — System generates monthly break compliance report…">
+        <bpmn:documentation>Step 8: Monthly compliance report — System generates monthly break compliance report per store: compliance rate, violation count by type, repeat offenders; HR reviews for DOLE inspection preparation (W505)
+Responsible (R): System / HR
+Accountable (A): HR
+Duration: Automated + 30 min review</bpmn:documentation>
+        <bpmn:incoming>W753_Flow25</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W753_End15" name="Complete">
+        <bpmn:incoming>W753_Flow26</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W753_Annotation16">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: Store Manager / Department Supervisor review and approval gate
+Owner: Store Manager / Department Supervisor</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W753_Assoc17" sourceRef="W753_Annotation16" targetRef="W753_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W753_Flow18" sourceRef="W753_Start6" targetRef="W753_Task7" />
+      <bpmn:sequenceFlow id="W753_Flow19" sourceRef="W753_Task7" targetRef="W753_Task8" />
+      <bpmn:sequenceFlow id="W753_Flow20" sourceRef="W753_Task8" targetRef="W753_Task9" />
+      <bpmn:sequenceFlow id="W753_Flow21" sourceRef="W753_Task9" targetRef="W753_Task10" />
+      <bpmn:sequenceFlow id="W753_Flow22" sourceRef="W753_Task10" targetRef="W753_Task11" />
+      <bpmn:sequenceFlow id="W753_Flow23" sourceRef="W753_Task11" targetRef="W753_Task12" />
+      <bpmn:sequenceFlow id="W753_Flow24" sourceRef="W753_Task12" targetRef="W753_Task13" />
+      <bpmn:sequenceFlow id="W753_Flow25" sourceRef="W753_Task13" targetRef="W753_Task14" />
+      <bpmn:sequenceFlow id="W753_Flow26" sourceRef="W753_Task14" targetRef="W753_End15" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W753_diag">
+      <bpmndi:BPMNPlane id="W753_plane" bpmnElement="W_W753">
+        <bpmndi:BPMNShape id="W753_Lane1_di" bpmnElement="W753_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Lane2_di" bpmnElement="W753_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Lane3_di" bpmnElement="W753_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Lane4_di" bpmnElement="W753_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task7_di" bpmnElement="W753_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task8_di" bpmnElement="W753_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task9_di" bpmnElement="W753_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task10_di" bpmnElement="W753_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task11_di" bpmnElement="W753_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task12_di" bpmnElement="W753_Task12"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task13_di" bpmnElement="W753_Task13"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Task14_di" bpmnElement="W753_Task14"><dc:Bounds x="1870" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Start6_di" bpmnElement="W753_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_End15_di" bpmnElement="W753_End15"><dc:Bounds x="2100" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W753_Annotation16_di" bpmnElement="W753_Annotation16"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W753_Flow18_di" bpmnElement="W753_Flow18"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow19_di" bpmnElement="W753_Flow19"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow20_di" bpmnElement="W753_Flow20"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow21_di" bpmnElement="W753_Flow21"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow22_di" bpmnElement="W753_Flow22"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow23_di" bpmnElement="W753_Flow23"><di:waypoint x="1420" y="675" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow24_di" bpmnElement="W753_Flow24"><di:waypoint x="1630" y="165" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow25_di" bpmnElement="W753_Flow25"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Flow26_di" bpmnElement="W753_Flow26"><di:waypoint x="2050" y="165" /><di:waypoint x="2100" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W753_Assoc17_di" bpmnElement="W753_Assoc17"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1032" name="W1032. Employee Overtime Pre-Approval, Monitoring &amp; DOLE Weekly Cap Enforcement" isExecutable="false">
+      <bpmn:documentation>Trigger: Employee schedule extends beyond 8 hours/day; department overtime budget threshold reached; weekly overtime limit approaching
+Frequency: Daily monitoring across 6,762 employees; weekly reporting
+Volume: ~15–25% of store employees work overtime weekly (particularly during peak: payday weekends, bi-monthly sales, holiday season)
+Owner: Store Manager (store-level); HR Business Partner (HQ)
+Participants: Department Supervisor, Employee, HR Payroll Specialist, DOLE Compliance Officer
+Source: workflow W1032 — Employee Overtime Pre-Approval, Monitoring &amp; DOLE Weekly Cap Enforcement</bpmn:documentation>
+      <bpmn:laneSet id="W1032_LaneSet6">
+        <bpmn:lane id="W1032_Lane1" name="Store Manager">
+        <bpmn:flowNodeRef>W1032_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1032_Start7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1032_Lane2" name="Department Supervisors">
+        <bpmn:flowNodeRef>W1032_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1032_Lane3" name="System">
+        <bpmn:flowNodeRef>W1032_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1032_Lane4" name="Payroll Specialist">
+        <bpmn:flowNodeRef>W1032_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1032_Lane5" name="HR Business Partner">
+        <bpmn:flowNodeRef>W1032_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1032_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1032_Start7" name="Employee schedule extends beyond 8 hours/day; department overtime budget threshold…">
+        <bpmn:outgoing>W1032_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1032_Task8" name="Weekly Overtime Budget Allocation">
+        <bpmn:documentation>Step 1: Weekly Overtime Budget Allocation: Weekly (Monday): (a) Store Manager reviews upcoming week&#x27;s overtime demand forecast based on: promotional events per W83 (bi-monthly sale → higher foot traffic → more cashiers and floor staff), delivery schedule per W109 (2–3 trucks/week → receiving clerk overtime), inventory events per W6 (cycle count schedule), and seasonal peaks per W577 (ber-months) and W578 (payday weekends); (b) Store Manager allocates overtime budget per department in hours: total weekly overtime budget = store labor budget (5% of weekly payroll as guideline) distributed across departments based on expected need; (c) Department Supervisors submit overtime requests for their teams: employee name, date, hours needed, reason; (d) Store Manager approves, reduces, or denies overtime requests; (e) system records approved overtime hours per employee per week with running total
+Responsible (R): Store Manager / Department Supervisors
+Accountable (A): Store Manager
+Duration: 20–30 min/week</bpmn:documentation>
+        <bpmn:incoming>W1032_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1032_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1032_Task9" name="Daily Pre-Approval &amp; Real-Time Monitoring">
+        <bpmn:documentation>Step 2: Daily Pre-Approval &amp; Real-Time Monitoring: On the day: (a) if overtime is pre-planned (approved in step 1): employee works beyond shift end per approved schedule; system tracks actual hours vs. approved hours; (b) if unplanned overtime is needed (emergency situation: late truck arrival, unexpected customer volume): Department Supervisor requests overtime approval from Store Manager via mobile app with reason code; Store Manager approves or denies in real-time; (c) system monitors real-time overtime accumulation: (i) daily tracker: employee has worked X hours today (8-hour regular + Y overtime); system alerts at 10 hours (approaching 12-hour daily cap) and blocks at 12 hours (cannot clock additional time); (ii) weekly tracker: employee has accumulated X overtime hours this week; system alerts at 6 hours (approaching 8-hour weekly soft cap) and flags at 8 hours (requires Store Manager justification and HR Business Partner notification); (d) biometric system enforces: employee cannot clock in earlier than scheduled shift start or clock out later than approved overtime end without manager override
+Responsible (R): Department Supervisors / System
+Accountable (A): Store Manager
+Duration: 5–10 min/day (monitoring)</bpmn:documentation>
+        <bpmn:incoming>W1032_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1032_Flow17</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1032_Task10" name="Overtime Cost Tracking &amp; Labor Budget Control">
+        <bpmn:documentation>Step 3: Overtime Cost Tracking &amp; Labor Budget Control: Daily/weekly: (a) system calculates overtime cost per employee: (regular hourly rate × overtime hours × premium factor based on day type: 125% regular-day OT, 169% rest-day OT, 260% regular-holiday OT); (b) system aggregates: daily overtime cost per department, per store, and cumulative weekly overtime cost vs. budget; (c) Store Manager receives daily overtime cost flash report: total overtime hours, cost, % of weekly budget consumed; (d) if overtime exceeds 80% of weekly budget by mid-week (Wednesday): Store Manager must take corrective action: reduce Thursday–Friday overtime, redeploy staff from low-traffic to high-traffic departments, or request overtime budget increase from District Manager per W1030 with justification; (e) Finance Analyst monitors overtime as % of total labor cost per store per W602 (Store-Level Labor Cost Monitoring); target: overtime ≤ 5% of total store payroll
+Responsible (R): System / Store Manager
+Accountable (A): Store Manager
+Duration: 10–15 min/day (report review)</bpmn:documentation>
+        <bpmn:incoming>W1032_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1032_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1032_Task11" name="DOLE Compliance Reporting &amp; Audit Trail">
+        <bpmn:documentation>Step 4: DOLE Compliance Reporting &amp; Audit Trail: Monthly: (a) HR Payroll Specialist generates overtime compliance report per store: (i) total overtime hours per employee, (ii) overtime premium paid, (iii) any instances of &gt; 8 hours overtime/week per employee, (iv) any instances of &gt; 12 hours work in a single day, (v) any employee who refused overtime (consent documentation); (b) exceptions (employees exceeding 8 hours overtime/week) must have documented justification: business reason, Store Manager approval, and employee consent acknowledgment; (c) HR Business Partner reviews exception reports and coaches Store Managers who consistently exceed overtime targets; (d) DOLE inspection readiness: overtime records (timesheets, approval forms, premium payment proof) maintained for 3 years per DOLE record retention requirement; (e) system maintains audit trail: overtime request → approval → actual hours worked → premium calculation → payroll payment → DOLE report
+Responsible (R): Payroll Specialist / HR Business Partner
+Accountable (A): CHRO
+Duration: 2–4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1032_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1032_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1032_Task12" name="Overtime Reduction &amp; Workforce Optimization">
+        <bpmn:documentation>Step 5: Overtime Reduction &amp; Workforce Optimization: Quarterly: (a) HR Business Partner and Store Manager analyze overtime patterns: (i) which departments consistently exceed overtime budget? (ii) which days/shifts generate the most overtime? (iii) is overtime caused by understaffing, poor scheduling, or operational inefficiency? (b) corrective strategies: (i) Understaffing: adjust headcount per store staffing model (29 per store); evaluate if store needs additional part-time or seasonal staff per W555; (ii) Poor scheduling: optimize shift start/end times to align with customer traffic patterns per W34; (iii) Operational inefficiency: identify process bottlenecks (slow receiving, inefficient cycle counting) and improve via cross-training per W1042 or process redesign; (c) benchmark overtime across 200 stores: identify best-practice stores with lowest overtime and highest productivity; share learnings via DM network per W1030
+Responsible (R): HR Business Partner / Store Manager
+Accountable (A): CHRO
+Duration: 2–3 hours/quarter per store</bpmn:documentation>
+        <bpmn:incoming>W1032_Flow20</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1032_End13" name="Complete">
+        <bpmn:incoming>W1032_Flow21</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1032_Annotation14">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: must be the sole time-tracking mechanism; operational: must flag managers whose stores consistently exceed overtime budgets for HR review; operational: should flag employees working &gt; 6 consecutive days without rest day
+Owner: Store Manager (store-level); HR Business Partner (HQ)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1032_Assoc15" sourceRef="W1032_Annotation14" targetRef="W1032_Start7" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1032_Flow16" sourceRef="W1032_Start7" targetRef="W1032_Task8" />
+      <bpmn:sequenceFlow id="W1032_Flow17" sourceRef="W1032_Task8" targetRef="W1032_Task9" />
+      <bpmn:sequenceFlow id="W1032_Flow18" sourceRef="W1032_Task9" targetRef="W1032_Task10" />
+      <bpmn:sequenceFlow id="W1032_Flow19" sourceRef="W1032_Task10" targetRef="W1032_Task11" />
+      <bpmn:sequenceFlow id="W1032_Flow20" sourceRef="W1032_Task11" targetRef="W1032_Task12" />
+      <bpmn:sequenceFlow id="W1032_Flow21" sourceRef="W1032_Task12" targetRef="W1032_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1032_diag">
+      <bpmndi:BPMNPlane id="W1032_plane" bpmnElement="W_W1032">
+        <bpmndi:BPMNShape id="W1032_Lane1_di" bpmnElement="W1032_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Lane2_di" bpmnElement="W1032_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Lane3_di" bpmnElement="W1032_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Lane4_di" bpmnElement="W1032_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Lane5_di" bpmnElement="W1032_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Task8_di" bpmnElement="W1032_Task8"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Task9_di" bpmnElement="W1032_Task9"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Task10_di" bpmnElement="W1032_Task10"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Task11_di" bpmnElement="W1032_Task11"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Task12_di" bpmnElement="W1032_Task12"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Start7_di" bpmnElement="W1032_Start7"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_End13_di" bpmnElement="W1032_End13"><dc:Bounds x="1470" y="827" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1032_Annotation14_di" bpmnElement="W1032_Annotation14"><dc:Bounds x="160" y="970" width="360" height="100" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1032_Flow16_di" bpmnElement="W1032_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1032_Flow17_di" bpmnElement="W1032_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1032_Flow18_di" bpmnElement="W1032_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1032_Flow19_di" bpmnElement="W1032_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1032_Flow20_di" bpmnElement="W1032_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1032_Flow21_di" bpmnElement="W1032_Flow21"><di:waypoint x="1420" y="845" /><di:waypoint x="1470" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1032_Assoc15_di" bpmnElement="W1032_Assoc15"><di:waypoint x="340" y="970" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1182" name="W1182. Multi-Entity Cross-Company Workforce Scheduling &amp; Labor Cost Allocation" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly payroll processing cycle; or employee transfer between entities; or management re-allocation of shared services headcount
+Frequency: Monthly during payroll; as-needed for intercompany transfers
+Volume: 6,762 employees across 5 legal entities; ~50–80 intercompany cost allocations/month
+Owner: HR Operations Manager / Finance Controller
+Participants: HR Operations Manager, Finance Controller, Department Heads, Payroll Administrator, Tax Accountant
+Source: workflow W1182 — Multi-Entity Cross-Company Workforce Scheduling &amp; Labor Cost Allocation</bpmn:documentation>
+      <bpmn:laneSet id="W1182_LaneSet4">
+        <bpmn:lane id="W1182_Lane1" name="HR Operations Manager">
+        <bpmn:flowNodeRef>W1182_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1182_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1182_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1182_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1182_Lane2" name="Finance Controller">
+        <bpmn:flowNodeRef>W1182_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1182_Lane3" name="Payroll Administrator">
+        <bpmn:flowNodeRef>W1182_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1182_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1182_Start5" name="Monthly payroll processing cycle; or employee transfer between entities; or management…">
+        <bpmn:outgoing>W1182_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1182_Task6" name="Entity assignment at hire">
+        <bpmn:documentation>Step 1: Entity assignment at hire: HR Operations Manager assigns new hire to employing entity per offer letter: (a) store employees → BuildRight Depot, Inc.; (b) DC employees → BuildRight Logistics, Inc.; (c) ecommerce employees → BuildRight Digital Commerce, Inc.; (d) property/facility employees → BuildRight Property Management, Inc.; (e) HQ shared services → BuildRight Holdings, Inc.; (f) system records employing entity for payroll, tax, and benefits administration per W15 onboarding
+Responsible (R): HR Operations Manager
+Accountable (A): Department Head
+Duration: Per W15</bpmn:documentation>
+        <bpmn:incoming>W1182_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1182_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1182_Task7" name="Shared services cost allocation">
+        <bpmn:documentation>Step 2: Shared services cost allocation: Monthly, Finance Controller allocates shared services headcount costs across benefiting entities: (a) determine allocation basis: (i) IT: system users per entity, (ii) HR: employee count per entity, (iii) Finance: transaction volume per entity, (iv) Legal: hours per entity; (b) calculate monthly intercompany service fee = employee salary + benefits + overhead × allocation percentage; (c) book intercompany journal entries per W87 intercompany elimination; (d) shared services employees remain employed by Holdings; intercompany charges are service fees, not employment costs
+Responsible (R): Finance Controller
+Accountable (A): CFO
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1182_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1182_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1182_Task8" name="Cross-entity temporary deployment">
+        <bpmn:documentation>Step 3: Cross-entity temporary deployment: When employees temporarily support another entity (e.g., DC surge labor from store staff during Ber months): (a) originating entity retains employer status — employee remains on originating entity&#x27;s payroll; (b) Finance charges receiving entity for temporary labor at cost + 10% administration fee (arm&#x27;s length); (c) track hours worked per entity via timekeeping system; (d) ensure total hours comply with DOLE maximum hours per week per W1032; (e) temporary deployment limited to 3 months; longer assignments require formal transfer per Step 4
+Responsible (R): HR Operations Manager / Finance
+Accountable (A): CFO
+Duration: 2 hours/deployment</bpmn:documentation>
+        <bpmn:incoming>W1182_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1182_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1182_Task9" name="Formal intercompany transfer">
+        <bpmn:documentation>Step 4: Formal intercompany transfer: When employee permanently moves between entities: (a) HR processes termination from originating entity and re-hire by receiving entity (Philippine labor law treats this as new employment); (b) process final pay from originating entity: unused leave, 13th-month pro-rata, tax clearance; (c) clear SSS/PhilHealth/Pag-IBIG transfers — employee retains same numbers but employer changes; (d) re-onboard employee at receiving entity per W15 (simplified, as internal transfer); (e) Finance processes asset transfer for any company property (laptop, phone, vehicle); (f) update org chart and reporting structure in HR system
+Responsible (R): HR Operations Manager
+Accountable (A): CHRO
+Duration: Per transfer</bpmn:documentation>
+        <bpmn:incoming>W1182_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1182_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1182_Task10" name="Payroll reconciliation across entities">
+        <bpmn:documentation>Step 5: Payroll reconciliation across entities: Monthly payroll reconciliation per W40 payroll cycle: (a) each entity processes payroll independently (separate BIR TIN registrations, separate SSS/PhilHealth/Pag-IBIG employer numbers); (b) Finance consolidates total company payroll cost for management reporting; (c) verify intercompany labor charges net to zero on consolidation per W87; (d) total SSS/PhilHealth/Pag-IBIG contributions verified per entity; (e) BIR withholding tax per entity reconciled to monthly remittance per W90
+Responsible (R): Payroll Administrator / Finance
+Accountable (A): Finance Controller
+Duration: 2 days/month</bpmn:documentation>
+        <bpmn:incoming>W1182_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1182_End11" name="Complete">
+        <bpmn:incoming>W1182_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1182_Annotation12">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: to maintain employee morale
+Owner: HR Operations Manager / Finance Controller</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1182_Assoc13" sourceRef="W1182_Annotation12" targetRef="W1182_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1182_Flow14" sourceRef="W1182_Start5" targetRef="W1182_Task6" />
+      <bpmn:sequenceFlow id="W1182_Flow15" sourceRef="W1182_Task6" targetRef="W1182_Task7" />
+      <bpmn:sequenceFlow id="W1182_Flow16" sourceRef="W1182_Task7" targetRef="W1182_Task8" />
+      <bpmn:sequenceFlow id="W1182_Flow17" sourceRef="W1182_Task8" targetRef="W1182_Task9" />
+      <bpmn:sequenceFlow id="W1182_Flow18" sourceRef="W1182_Task9" targetRef="W1182_Task10" />
+      <bpmn:sequenceFlow id="W1182_Flow19" sourceRef="W1182_Task10" targetRef="W1182_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1182_diag">
+      <bpmndi:BPMNPlane id="W1182_plane" bpmnElement="W_W1182">
+        <bpmndi:BPMNShape id="W1182_Lane1_di" bpmnElement="W1182_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Lane2_di" bpmnElement="W1182_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Lane3_di" bpmnElement="W1182_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Task6_di" bpmnElement="W1182_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Task7_di" bpmnElement="W1182_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Task8_di" bpmnElement="W1182_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Task9_di" bpmnElement="W1182_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Task10_di" bpmnElement="W1182_Task10"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Start5_di" bpmnElement="W1182_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_End11_di" bpmnElement="W1182_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1182_Annotation12_di" bpmnElement="W1182_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1182_Flow14_di" bpmnElement="W1182_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1182_Flow15_di" bpmnElement="W1182_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1182_Flow16_di" bpmnElement="W1182_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1182_Flow17_di" bpmnElement="W1182_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1182_Flow18_di" bpmnElement="W1182_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1182_Flow19_di" bpmnElement="W1182_Flow19"><di:waypoint x="1420" y="505" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1182_Assoc13_di" bpmnElement="W1182_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1357" name="W1357. Store Shift Optimization Based on Foot Traffic Analytics &amp; Sales Pattern Analysis" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly shift optimization review cycle; or significant change in store traffic pattern (new competitor, road construction affecting access, residential development nearby)
+Frequency: Monthly review per store; quarterly deep analysis across all 200 stores
+Volume: 200 stores × monthly review; each store has 2–3 shifts/day × 29 employees
+Owner: Regional Manager
+Participants: Store Manager, Regional Manager, HR Workforce Analyst, VP Store Operations
+Source: workflow W1357 — Store Shift Optimization Based on Foot Traffic Analytics &amp; Sales Pattern Analysis</bpmn:documentation>
+      <bpmn:laneSet id="W1357_LaneSet5">
+        <bpmn:lane id="W1357_Lane1" name="System">
+        <bpmn:flowNodeRef>W1357_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1357_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1357_Lane2" name="HR Workforce Analyst">
+        <bpmn:flowNodeRef>W1357_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1357_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1357_Lane3" name="Store Manager">
+        <bpmn:flowNodeRef>W1357_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1357_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1357_Lane4" name="Regional Manager">
+        <bpmn:flowNodeRef>W1357_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1357_End13</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1357_Start6" name="Monthly shift optimization review cycle; or significant change in store traffic pattern…">
+        <bpmn:outgoing>W1357_Flow16</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1357_Task7" name="System generates monthly foot traffic heat map per store using POS transaction…">
+        <bpmn:documentation>Step 1: System generates monthly foot traffic heat map per store using POS transaction timestamps (proxy for traffic), CCTV analytics (where available), and loyalty card scan data
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1357_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1357_Flow16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1357_Task8" name="HR Workforce Analyst produces shift coverage vs. traffic overlay: compares…">
+        <bpmn:documentation>Step 2: HR Workforce Analyst produces shift coverage vs. traffic overlay: compares current shift schedule against traffic pattern to identify understaffed peak hours and overstaffed troughs
+Responsible (R): HR Workforce Analyst
+Accountable (A): Regional Manager
+Duration: 2 hours/month per region</bpmn:documentation>
+        <bpmn:incoming>W1357_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1357_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1357_Task9" name="Store Manager provides qualitative input on local factors: school schedules…">
+        <bpmn:documentation>Step 3: Store Manager provides qualitative input on local factors: school schedules, market day patterns, construction project timelines, fiesta dates, and road conditions affecting customer arrival times
+Responsible (R): Store Manager
+Accountable (A): —
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1357_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1357_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1357_Task10" name="Regional Manager reviews shift coverage analysis for all stores in region…">
+        <bpmn:documentation>Step 4: Regional Manager reviews shift coverage analysis for all stores in region (Mindanao: 60 stores, Visayas: 40, Luzon regions: 20–50 each); approves schedule adjustments
+Responsible (R): Regional Manager
+Accountable (A): VP Store Operations
+Duration: 4–6 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1357_Flow19</bpmn:incoming>
+        <bpmn:outgoing>W1357_Flow19</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1357_Task11" name="Store Manager implements approved shift adjustments in scheduling system…">
+        <bpmn:documentation>Step 5: Store Manager implements approved shift adjustments in scheduling system; reassigns Sales Associates and Cashiers to match optimized coverage
+Responsible (R): Store Manager
+Accountable (A): Regional Manager
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1357_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1357_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1357_Task12" name="Quarterly deep analysis: HR Workforce Analyst measures impact of shift changes…">
+        <bpmn:documentation>Step 6: Quarterly deep analysis: HR Workforce Analyst measures impact of shift changes on sales per labor hour, customer satisfaction scores, and overtime hours; recommends further adjustments
+Responsible (R): HR Workforce Analyst
+Accountable (A): VP Store Operations
+Duration: 8 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1357_Flow21</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1357_End13" name="Complete">
+        <bpmn:incoming>W1357_Flow22</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1357_Annotation14">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: rest day (1 per 6 consecutive days) constrains how shifts can be stacked during peak periods
+Owner: Regional Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1357_Assoc15" sourceRef="W1357_Annotation14" targetRef="W1357_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1357_Flow16" sourceRef="W1357_Start6" targetRef="W1357_Task7" />
+      <bpmn:sequenceFlow id="W1357_Flow17" sourceRef="W1357_Task7" targetRef="W1357_Task8" />
+      <bpmn:sequenceFlow id="W1357_Flow18" sourceRef="W1357_Task8" targetRef="W1357_Task9" />
+      <bpmn:sequenceFlow id="W1357_Flow19" sourceRef="W1357_Task9" targetRef="W1357_Task10" />
+      <bpmn:sequenceFlow id="W1357_Flow20" sourceRef="W1357_Task10" targetRef="W1357_Task11" />
+      <bpmn:sequenceFlow id="W1357_Flow21" sourceRef="W1357_Task11" targetRef="W1357_Task12" />
+      <bpmn:sequenceFlow id="W1357_Flow22" sourceRef="W1357_Task12" targetRef="W1357_End13" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1357_diag">
+      <bpmndi:BPMNPlane id="W1357_plane" bpmnElement="W_W1357">
+        <bpmndi:BPMNShape id="W1357_Lane1_di" bpmnElement="W1357_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Lane2_di" bpmnElement="W1357_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Lane3_di" bpmnElement="W1357_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Lane4_di" bpmnElement="W1357_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Task7_di" bpmnElement="W1357_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Task8_di" bpmnElement="W1357_Task8"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Task9_di" bpmnElement="W1357_Task9"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Task10_di" bpmnElement="W1357_Task10"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Task11_di" bpmnElement="W1357_Task11"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Task12_di" bpmnElement="W1357_Task12"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Start6_di" bpmnElement="W1357_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_End13_di" bpmnElement="W1357_End13"><dc:Bounds x="1680" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1357_Annotation14_di" bpmnElement="W1357_Annotation14"><dc:Bounds x="160" y="800" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1357_Flow16_di" bpmnElement="W1357_Flow16"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1357_Flow17_di" bpmnElement="W1357_Flow17"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1357_Flow18_di" bpmnElement="W1357_Flow18"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1357_Flow19_di" bpmnElement="W1357_Flow19"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1357_Flow20_di" bpmnElement="W1357_Flow20"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1357_Flow21_di" bpmnElement="W1357_Flow21"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1357_Flow22_di" bpmnElement="W1357_Flow22"><di:waypoint x="1630" y="335" /><di:waypoint x="1680" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1357_Assoc15_di" bpmnElement="W1357_Assoc15"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1358" name="W1358. Seasonal Workforce Scaling, Temporary Hiring Ramp &amp; Post-Season Right-Sizing" isExecutable="false">
+      <bpmn:documentation>Trigger: Seasonal demand forecast indicating &gt; 20% sales uplift during a defined period (e.g., Q4 ber-months Oct–Dec, summer Mar–May, back-to-school May–Jun)
+Frequency: 3 major seasonal ramps per year; each lasting 2–3 months
+Volume: ~10–15% temporary workforce increase = ~670–1,000 seasonal workers across 200 stores and 4 DCs; primarily Sales Associates (stores) and Pickers/Packers (DCs)
+Owner: HR Manager
+Participants: HR Manager, Store Manager (demand estimate), DC Operations Manager (DC demand), Recruitment Specialist, Training Coordinator, Payroll Specialist
+Source: workflow W1358 — Seasonal Workforce Scaling, Temporary Hiring Ramp &amp; Post-Season Right-Sizing</bpmn:documentation>
+      <bpmn:laneSet id="W1358_LaneSet7">
+        <bpmn:lane id="W1358_Lane1" name="Supply Planning Manager">
+        <bpmn:flowNodeRef>W1358_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1358_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1358_Lane2" name="HR Manager">
+        <bpmn:flowNodeRef>W1358_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1358_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1358_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1358_Lane3" name="Recruitment Specialist">
+        <bpmn:flowNodeRef>W1358_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1358_Lane4" name="Training Coordinator">
+        <bpmn:flowNodeRef>W1358_Task12</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1358_Lane5" name="Payroll Specialist">
+        <bpmn:flowNodeRef>W1358_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1358_Lane6" name="Finance">
+        <bpmn:flowNodeRef>W1358_Task16</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1358_End17</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1358_Start8" name="Seasonal demand forecast indicating &gt; 20% sales uplift during a defined period (e.g., Q4…">
+        <bpmn:outgoing>W1358_Flow20</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1358_Task9" name="Supply Planning Manager and VP Store Operations agree on seasonal demand…">
+        <bpmn:documentation>Step 1: Supply Planning Manager and VP Store Operations agree on seasonal demand forecast; translate sales uplift into incremental FTE needs by store and DC (e.g., +2 Sales Associates per high-volume store, +1 per standard store, +20 pickers per DC)
+Responsible (R): Supply Planning Manager / VP Store Operations
+Accountable (A): COO
+Duration: 4–6 hours/season</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow20</bpmn:incoming>
+        <bpmn:outgoing>W1358_Flow20</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1358_Task10" name="HR Manager develops seasonal staffing plan: headcount by role, location, and…">
+        <bpmn:documentation>Step 2: HR Manager develops seasonal staffing plan: headcount by role, location, and duration (start/end dates); determines mix of fixed-term vs. agency-provided workers
+Responsible (R): HR Manager
+Accountable (A): CHRO
+Duration: 4–6 hours/season</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow21</bpmn:incoming>
+        <bpmn:outgoing>W1358_Flow21</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1358_Task11" name="Recruitment Specialist executes hiring campaign: job postings, walk-in…">
+        <bpmn:documentation>Step 3: Recruitment Specialist executes hiring campaign: job postings, walk-in interview days at stores, coordination with manpower agencies for DC roles; target: fill 80% of positions 2 weeks before season start
+Responsible (R): Recruitment Specialist
+Accountable (A): HR Manager
+Duration: 20–30 hours/season</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W1358_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1358_Task12" name="Training Coordinator delivers accelerated orientation: 1-day store onboarding…">
+        <bpmn:documentation>Step 4: Training Coordinator delivers accelerated orientation: 1-day store onboarding (POS basics, safety, product knowledge for top 100 seasonal SKUs) vs. 2–3-day standard onboarding (W15); issues temporary employee ID
+Responsible (R): Training Coordinator
+Accountable (A): HR Manager
+Duration: 1 day/temporary employee cohort</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1358_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1358_Task13" name="Payroll Specialist configures fixed-term employment contracts with correct wage…">
+        <bpmn:documentation>Step 5: Payroll Specialist configures fixed-term employment contracts with correct wage rates (regional minimum wage varies), statutory benefit enrollment (SSS, PhilHealth, Pag-IBIG pro-rated), and 13th month pay computation for contract duration
+Responsible (R): Payroll Specialist
+Accountable (A): HR Manager
+Duration: 2–3 hours/season setup</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1358_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1358_Task14" name="During season: HR monitors temporary employee performance and attendance…">
+        <bpmn:documentation>Step 6: During season: HR monitors temporary employee performance and attendance; replaces underperformers within the season window
+Responsible (R): HR Manager / Store Manager
+Accountable (A): HR Manager
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1358_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1358_Task15" name="Post-season: HR Manager executes right-sizing plan — non-renewal of fixed-term…">
+        <bpmn:documentation>Step 7: Post-season: HR Manager executes right-sizing plan — non-renewal of fixed-term contracts per DOLE regulations (no termination required for end-of-contract); agency workers returned to agency; retained high-performers offered permanent positions if vacancies exist
+Responsible (R): HR Manager
+Accountable (A): CHRO
+Duration: 4–6 hours/season</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1358_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1358_Task16" name="Finance calculates seasonal labor cost vs. incremental revenue contribution…">
+        <bpmn:documentation>Step 8: Finance calculates seasonal labor cost vs. incremental revenue contribution; produces ROI analysis for seasonal staffing program
+Responsible (R): Finance (FP&amp;A)
+Accountable (A): CFO
+Duration: 2–3 hours/season</bpmn:documentation>
+        <bpmn:incoming>W1358_Flow27</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1358_End17" name="Complete">
+        <bpmn:incoming>W1358_Flow28</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1358_Annotation18">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: HR Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1358_Assoc19" sourceRef="W1358_Annotation18" targetRef="W1358_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1358_Flow20" sourceRef="W1358_Start8" targetRef="W1358_Task9" />
+      <bpmn:sequenceFlow id="W1358_Flow21" sourceRef="W1358_Task9" targetRef="W1358_Task10" />
+      <bpmn:sequenceFlow id="W1358_Flow22" sourceRef="W1358_Task10" targetRef="W1358_Task11" />
+      <bpmn:sequenceFlow id="W1358_Flow23" sourceRef="W1358_Task11" targetRef="W1358_Task12" />
+      <bpmn:sequenceFlow id="W1358_Flow24" sourceRef="W1358_Task12" targetRef="W1358_Task13" />
+      <bpmn:sequenceFlow id="W1358_Flow25" sourceRef="W1358_Task13" targetRef="W1358_Task14" />
+      <bpmn:sequenceFlow id="W1358_Flow26" sourceRef="W1358_Task14" targetRef="W1358_Task15" />
+      <bpmn:sequenceFlow id="W1358_Flow27" sourceRef="W1358_Task15" targetRef="W1358_Task16" />
+      <bpmn:sequenceFlow id="W1358_Flow28" sourceRef="W1358_Task16" targetRef="W1358_End17" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1358_diag">
+      <bpmndi:BPMNPlane id="W1358_plane" bpmnElement="W_W1358">
+        <bpmndi:BPMNShape id="W1358_Lane1_di" bpmnElement="W1358_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Lane2_di" bpmnElement="W1358_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Lane3_di" bpmnElement="W1358_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Lane4_di" bpmnElement="W1358_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Lane5_di" bpmnElement="W1358_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Lane6_di" bpmnElement="W1358_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2000" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task9_di" bpmnElement="W1358_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task10_di" bpmnElement="W1358_Task10"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task11_di" bpmnElement="W1358_Task11"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task12_di" bpmnElement="W1358_Task12"><dc:Bounds x="1030" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task13_di" bpmnElement="W1358_Task13"><dc:Bounds x="1240" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task14_di" bpmnElement="W1358_Task14"><dc:Bounds x="1450" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task15_di" bpmnElement="W1358_Task15"><dc:Bounds x="1660" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Task16_di" bpmnElement="W1358_Task16"><dc:Bounds x="1870" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Start8_di" bpmnElement="W1358_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_End17_di" bpmnElement="W1358_End17"><dc:Bounds x="2100" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1358_Annotation18_di" bpmnElement="W1358_Annotation18"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1358_Flow20_di" bpmnElement="W1358_Flow20"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow21_di" bpmnElement="W1358_Flow21"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow22_di" bpmnElement="W1358_Flow22"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow23_di" bpmnElement="W1358_Flow23"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow24_di" bpmnElement="W1358_Flow24"><di:waypoint x="1210" y="675" /><di:waypoint x="1240" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow25_di" bpmnElement="W1358_Flow25"><di:waypoint x="1420" y="845" /><di:waypoint x="1450" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow26_di" bpmnElement="W1358_Flow26"><di:waypoint x="1630" y="335" /><di:waypoint x="1660" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow27_di" bpmnElement="W1358_Flow27"><di:waypoint x="1840" y="335" /><di:waypoint x="1870" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Flow28_di" bpmnElement="W1358_Flow28"><di:waypoint x="2050" y="1015" /><di:waypoint x="2100" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1358_Assoc19_di" bpmnElement="W1358_Assoc19"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1410" name="W1410. Store Employee Inter-Location Transfer Processing, Labor Cost Reallocation &amp; Benefit Continuity" isExecutable="false">
+      <bpmn:documentation>Trigger: Employee transfer request (employee-initiated or management-initiated); or operational need (new store opening staffed from existing stores, underperforming store excess headcount redistributed, regional manager restructuring)
+Frequency: ~100–200 transfers/year (driven by 10–15 new store openings/year each requiring 5–8 transfers from nearby stores + ad-hoc transfers for performance, personal, or operational reasons)
+Volume: ~10–15 transfers/month chain-wide; spikes to ~50–75/month during new store opening periods
+Owner: HR Manager
+Participants: HR Manager, HR Assistant, Sending Store Manager, Receiving Store Manager, Regional Manager, Payroll Officer, IT Helpdesk
+Source: workflow W1410 — Store Employee Inter-Location Transfer Processing, Labor Cost Reallocation &amp; Benefit Continuity</bpmn:documentation>
+      <bpmn:laneSet id="W1410_LaneSet8">
+        <bpmn:lane id="W1410_Lane1" name="Employee">
+        <bpmn:flowNodeRef>W1410_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1410_Start9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1410_Lane2" name="HR Manager">
+        <bpmn:flowNodeRef>W1410_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1410_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1410_Task13</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1410_Lane3" name="HR Assistant">
+        <bpmn:flowNodeRef>W1410_Task14</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1410_Task19</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1410_Lane4" name="Payroll Officer">
+        <bpmn:flowNodeRef>W1410_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1410_Lane5" name="IT Helpdesk">
+        <bpmn:flowNodeRef>W1410_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1410_Lane6" name="Receiving Store Manager">
+        <bpmn:flowNodeRef>W1410_Task17</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1410_Lane7" name="Sending Store Manager">
+        <bpmn:flowNodeRef>W1410_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1410_End20</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1410_Start9" name="Employee transfer request (employee-initiated or management-initiated); or operational…">
+        <bpmn:outgoing>W1410_Flow23</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1410_Task10" name="Employee-initiated">
+        <bpmn:documentation>Step 1: Transfer request initiated: (a) Employee-initiated: employee submits transfer request via HR portal stating desired location and reason; (b) Management-initiated: Regional Manager or HR identifies need for transfer (new store staffing, performance management, headcount rebalancing); request documented in HR system with justification
+Responsible (R): Employee / Regional Manager
+Accountable (A): HR Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task11" name="HR Manager reviews transfer request: (a) verifies employee is in good standing…">
+        <bpmn:documentation>Step 2: HR Manager reviews transfer request: (a) verifies employee is in good standing (no active disciplinary actions, no pending investigation per W37), (b) confirms receiving store has headcount budget availability (within 29 FTE per store), (c) confirms receiving store has a vacant position matching the employee&#x27;s current role or a comparable role, (d) assesses impact on sending store (minimum staffing levels per W34 must be maintained), (e) for management-initiated transfers: verifies compliance with DOLE rules on transfer without diminution
+Responsible (R): HR Manager
+Accountable (A): Regional Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task12" name="If same-entity transfer (BuildRight Depot Inc. → BuildRight Depot Inc.): HR…">
+        <bpmn:documentation>Step 3: If same-entity transfer (BuildRight Depot Inc. → BuildRight Depot Inc.): HR Manager sends transfer approval to both Store Managers; Sending Store Manager prepares handover checklist (assigned tasks, open issues, department-specific knowledge); Receiving Store Manager prepares onboarding plan for the new location
+Responsible (R): HR Manager
+Accountable (A): —
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task13" name="If cross-entity transfer (e.g., BuildRight Depot Inc. → BuildRight Logistics…">
+        <bpmn:documentation>Step 4: If cross-entity transfer (e.g., BuildRight Depot Inc. → BuildRight Logistics Inc.): HR processes as separation from original entity (W43) and rehire at new entity (W15); employee receives final pay from original entity with prorated 13th month pay (W644); new entity hires employee with fresh contract and seniority reset (or negotiated carryover per management discretion); statutory benefits (SSS, PhilHealth, Pag-IBIG) continue under same member number but employer ID changes
+Responsible (R): HR Manager / Payroll Officer
+Accountable (A): CHRO
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task14" name="HR Assistant updates employee master record (W292): (a) same-entity transfer —…">
+        <bpmn:documentation>Step 5: HR Assistant updates employee master record (W292): (a) same-entity transfer — change location assignment, update cost center from sending store to receiving store, update direct report line from sending Store Manager to receiving Store Manager, update shift schedule assignment per W34; (b) cross-entity — create new employee record in receiving entity, close original employee record with transfer reason code
+Responsible (R): HR Assistant
+Accountable (A): HR Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task15" name="Payroll Officer updates payroll allocation: employee&#x27;s labor cost transfers…">
+        <bpmn:documentation>Step 6: Payroll Officer updates payroll allocation: employee&#x27;s labor cost transfers from sending store&#x27;s cost center to receiving store&#x27;s cost center effective the transfer date; if mid-pay-period: prorate labor cost between stores for that semi-monthly run
+Responsible (R): Payroll Officer
+Accountable (A): HR Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task16" name="IT Helpdesk updates system access per W152: (a) revoke sending store-specific…">
+        <bpmn:documentation>Step 7: IT Helpdesk updates system access per W152: (a) revoke sending store-specific access (receiving dock system access, sending store shift schedule), (b) grant receiving store-specific access, (c) retain role-based ERP access (POS operator, stock associate, etc.), (d) update email distribution lists and store communication groups
+Responsible (R): IT Helpdesk
+Accountable (A): IT Security Manager
+Duration: 15 min</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task17" name="Employee reports to receiving store; Receiving Store Manager conducts…">
+        <bpmn:documentation>Step 8: Employee reports to receiving store; Receiving Store Manager conducts orientation: store layout, local procedures, team introductions, assigned department, shift schedule confirmation; employee retains existing role, rank, and pay rate (no diminution per DOLE rules)
+Responsible (R): Receiving Store Manager
+Accountable (A): —
+Duration: 4 hours</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task18" name="Sending Store Manager backfills the vacated position: (a) if transfer creates a…">
+        <bpmn:documentation>Step 9: Sending Store Manager backfills the vacated position: (a) if transfer creates a vacancy, initiates recruitment per W15 (internal posting first, then external), (b) if temporary, arranges cross-training coverage from existing staff, (c) updates shift schedule per W34 to maintain coverage during vacancy
+Responsible (R): Sending Store Manager
+Accountable (A): Regional Manager
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow31</bpmn:incoming>
+        <bpmn:outgoing>W1410_Flow31</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1410_Task19" name="30-day post-transfer check-in">
+        <bpmn:documentation>Step 10: 30-day post-transfer check-in: HR Assistant contacts transferred employee and receiving Store Manager to assess transfer success; documents any issues (role mismatch, cultural fit, commute challenges); if issues identified, HR Manager mediates resolution
+Responsible (R): HR Assistant / HR Manager
+Accountable (A): Regional Manager
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1410_Flow230</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1410_End20" name="Complete">
+        <bpmn:incoming>W1410_Flow231</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1410_Annotation21">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: HR Manager review and approval gate
+Owner: HR Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1410_Assoc22" sourceRef="W1410_Annotation21" targetRef="W1410_Start9" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1410_Flow23" sourceRef="W1410_Start9" targetRef="W1410_Task10" />
+      <bpmn:sequenceFlow id="W1410_Flow24" sourceRef="W1410_Task10" targetRef="W1410_Task11" />
+      <bpmn:sequenceFlow id="W1410_Flow25" sourceRef="W1410_Task11" targetRef="W1410_Task12" />
+      <bpmn:sequenceFlow id="W1410_Flow26" sourceRef="W1410_Task12" targetRef="W1410_Task13" />
+      <bpmn:sequenceFlow id="W1410_Flow27" sourceRef="W1410_Task13" targetRef="W1410_Task14" />
+      <bpmn:sequenceFlow id="W1410_Flow28" sourceRef="W1410_Task14" targetRef="W1410_Task15" />
+      <bpmn:sequenceFlow id="W1410_Flow29" sourceRef="W1410_Task15" targetRef="W1410_Task16" />
+      <bpmn:sequenceFlow id="W1410_Flow30" sourceRef="W1410_Task16" targetRef="W1410_Task17" />
+      <bpmn:sequenceFlow id="W1410_Flow31" sourceRef="W1410_Task17" targetRef="W1410_Task18" />
+      <bpmn:sequenceFlow id="W1410_Flow32" sourceRef="W1410_Task18" targetRef="W1410_Task19" />
+      <bpmn:sequenceFlow id="W1410_Flow33" sourceRef="W1410_Task19" targetRef="W1410_End20" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1410_diag">
+      <bpmndi:BPMNPlane id="W1410_plane" bpmnElement="W_W1410">
+        <bpmndi:BPMNShape id="W1410_Lane1_di" bpmnElement="W1410_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Lane2_di" bpmnElement="W1410_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Lane3_di" bpmnElement="W1410_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Lane4_di" bpmnElement="W1410_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Lane5_di" bpmnElement="W1410_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Lane6_di" bpmnElement="W1410_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Lane7_di" bpmnElement="W1410_Lane7" isHorizontal="true"><dc:Bounds x="160" y="1100" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task10_di" bpmnElement="W1410_Task10"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task11_di" bpmnElement="W1410_Task11"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task12_di" bpmnElement="W1410_Task12"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task13_di" bpmnElement="W1410_Task13"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task14_di" bpmnElement="W1410_Task14"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task15_di" bpmnElement="W1410_Task15"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task16_di" bpmnElement="W1410_Task16"><dc:Bounds x="1660" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task17_di" bpmnElement="W1410_Task17"><dc:Bounds x="1870" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task18_di" bpmnElement="W1410_Task18"><dc:Bounds x="2080" y="1145" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Task19_di" bpmnElement="W1410_Task19"><dc:Bounds x="2290" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Start9_di" bpmnElement="W1410_Start9"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_End20_di" bpmnElement="W1410_End20"><dc:Bounds x="2520" y="1167" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1410_Annotation21_di" bpmnElement="W1410_Annotation21"><dc:Bounds x="160" y="1310" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1410_Flow23_di" bpmnElement="W1410_Flow23"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow24_di" bpmnElement="W1410_Flow24"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow25_di" bpmnElement="W1410_Flow25"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow26_di" bpmnElement="W1410_Flow26"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow27_di" bpmnElement="W1410_Flow27"><di:waypoint x="1210" y="335" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow28_di" bpmnElement="W1410_Flow28"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow29_di" bpmnElement="W1410_Flow29"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow30_di" bpmnElement="W1410_Flow30"><di:waypoint x="1840" y="845" /><di:waypoint x="1870" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow31_di" bpmnElement="W1410_Flow31"><di:waypoint x="2050" y="1015" /><di:waypoint x="2080" y="1185" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow32_di" bpmnElement="W1410_Flow32"><di:waypoint x="2260" y="1185" /><di:waypoint x="2290" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Flow33_di" bpmnElement="W1410_Flow33"><di:waypoint x="2470" y="505" /><di:waypoint x="2520" y="1185" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1410_Assoc22_di" bpmnElement="W1410_Assoc22"><di:waypoint x="340" y="1310" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5498" name="W5498. Telecommuting &amp; Flexible / Hybrid Work Arrangement Program (RA 11165)" isExecutable="false">
+      <bpmn:documentation>Trigger: (a) Employee/department application for a telecommuting or hybrid arrangement; (b) program design and annual review cycle; (c) agreement expiry
+Frequency: Continuous arrangement administration; eligibility windows 2×/year; agreement renewals annual
+Volume: Eligible population ≈ 400–500 roles (HQ corporate functions (~362 staff, profile §3.3/§11.1) plus portable regional-office and analytics roles); target participation 50–150 active arrangements (~1–2% of 6,762 employees — store, DC, field, and customer-facing roles are structurally ineligible, which the program must communicate to preserve frontline equity)
+Owner: HR Manager
+Participants: Employee, Department Head, IT (equipment/VPN/MDM — VS-27/VS-99), OSH Officer (home workstation — VS-24), Payroll (VS-19.2), Legal, Facilities (desk-sharing — VS-138)
+Source: workflow W5498 — Telecommuting &amp; Flexible / Hybrid Work Arrangement Program (RA 11165)</bpmn:documentation>
+      <bpmn:laneSet id="W5498_LaneSet7">
+        <bpmn:lane id="W5498_Lane1" name="HR Manager">
+        <bpmn:flowNodeRef>W5498_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5498_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5498_Task18</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5498_Start8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5498_Lane2" name="IT">
+        <bpmn:flowNodeRef>W5498_Task11</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5498_Lane3" name="Employee">
+        <bpmn:flowNodeRef>W5498_Task12</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5498_Task13</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5498_Task15</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5498_Lane4" name="Dept Head">
+        <bpmn:flowNodeRef>W5498_Task14</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5498_Lane5" name="Payroll">
+        <bpmn:flowNodeRef>W5498_Task16</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5498_Lane6" name="OSH Officer">
+        <bpmn:flowNodeRef>W5498_Task17</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5498_End19</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5498_Start8" name="(a) Employee/department application for a telecommuting or hybrid arrangement; (b)…">
+        <bpmn:outgoing>W5498_Flow22</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5498_Task9" name="Program framework per RA 11165 + IRR: eligibility criteria (role portability…">
+        <bpmn:documentation>Step 1: Program framework per RA 11165 + IRR: eligibility criteria (role portability, completed probation, performance standing), arrangement menu (full-remote, hybrid with fixed on-site days, flexi-hours around core hours), the no-less-favorable-treatment principle (pay, benefits, training, promotion), and frontline-equity rationale; CHRO approval
+Responsible (R): HR Manager / Legal
+Accountable (A): CHRO
+Duration: 10–15 days (initial); 2–3 days/annual refresh</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow22</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow22</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task10" name="Written telecommuting agreement per the Act: schedule and core hours, duties…">
+        <bpmn:documentation>Step 2: Written telecommuting agreement per the Act: schedule and core hours, duties and deliverables, probationary arrangement period, equipment/allowance terms, OSH and data-protection obligations, duration, and termination/return-to-office conditions; generated from template and executed with e-signature in the HRIS (records per VS-88)
+Responsible (R): HR Manager / Employee / Dept Head
+Accountable (A): HR Manager
+Duration: 1–2 hrs/arrangement</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow23</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow23</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task11" name="Equipment &amp; connectivity setup: IT issues laptop with VPN/MDM enrollment and…">
+        <bpmn:documentation>Step 3: Equipment &amp; connectivity setup: IT issues laptop with VPN/MDM enrollment and multi-factor authentication (VS-27.2), updates the IT asset register (VS-99), and confirms bandwidth minimums; allowance treatment confirmed against VS-102 benefit design
+Responsible (R): IT / Employee
+Accountable (A): IT Manager
+Duration: 1–3 days/arrangement</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow24</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow24</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task12" name="Home-workstation OSH assessment: employee completes the ergonomic/electrical…">
+        <bpmn:documentation>Step 4: Home-workstation OSH assessment: employee completes the ergonomic/electrical self-assessment checklist; OSH Officer reviews virtually and addresses deficiencies (chair, lighting, outlets, escape path) — the employer&#x27;s RA 11165 OSH duty at the telework site; recorded in the OSH file (VS-24)
+Responsible (R): Employee / OSH Officer
+Accountable (A): OSH Officer
+Duration: 1–2 hrs/arrangement</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow25</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow25</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task13" name="Attendance &amp; timekeeping integration: remote clock-in/clock-out via ESS with…">
+        <bpmn:documentation>Step 5: Attendance &amp; timekeeping integration: remote clock-in/clock-out via ESS with the same exception handling as on-site staff (W594/W561); overtime requires the same prior approval and DOLE weekly-cap enforcement as on-site roles (W1032); schedule changes flow to the shift plan (W34)
+Responsible (R): Employee / Dept Head
+Accountable (A): HR Manager
+Duration: 15 min/month/arrangement</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow26</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow26</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task14" name="Performance management on outputs: KPIs and deliverables recorded in the…">
+        <bpmn:documentation>Step 6: Performance management on outputs: KPIs and deliverables recorded in the performance system (W72 pattern); weekly manager 1:1 cadence; hybrid team norms (meeting equity for remote participants) documented at department level
+Responsible (R): Dept Head / Employee
+Accountable (A): Dept Head&#x27;s VP
+Duration: Continuous</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow27</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow27</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task15" name="Data protection &amp; security compliance: clean-desk and no-shared-device rules…">
+        <bpmn:documentation>Step 7: Data protection &amp; security compliance: clean-desk and no-shared-device rules, VPN-only system access, printing restrictions, screen-privacy practice, and prompt incident reporting (VS-91/W53 pattern); annual security-awareness completion tracked (VS-27)
+Responsible (R): Employee / IT Security
+Accountable (A): IT Manager
+Duration: 30 min/year/arrangement + continuous</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow28</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow28</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task16" name="Allowance &amp; payroll treatment: telecommuting allowance posted as the configured…">
+        <bpmn:documentation>Step 8: Allowance &amp; payroll treatment: telecommuting allowance posted as the configured payroll wage type with BIR tax treatment per VS-19.2 statutory rules; de-minimis assessment documented with Finance
+Responsible (R): Payroll / HR Manager
+Accountable (A): Payroll Manager
+Duration: 30 min/arrangement + annual review</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow29</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow29</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task17" name="Telework accident handling: injuries in the course of telework are documented…">
+        <bpmn:documentation>Step 9: Telework accident handling: injuries in the course of telework are documented and filed as EC claims under PD 626 like on-site injuries (W805); OSH Officer maintains the telework incident log
+Responsible (R): OSH Officer / HR
+Accountable (A): OSH Officer
+Duration: Per event</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow30</bpmn:incoming>
+        <bpmn:outgoing>W5498_Flow30</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5498_Task18" name="Program review &amp; compliance readiness: annual policy review; DOLE…">
+        <bpmn:documentation>Step 10: Program review &amp; compliance readiness: annual policy review; DOLE labor-standards inspection readiness (agreements, payslips, OSH records — VS-22.2); participation/attrition/productivity analytics; agreement renewals and terminations; desk-ratio and workplace feedback to Facilities (VS-138)
+Responsible (R): HR Manager / Legal
+Accountable (A): CHRO
+Duration: 3–5 days/year</bpmn:documentation>
+        <bpmn:incoming>W5498_Flow220</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5498_End19" name="Complete">
+        <bpmn:incoming>W5498_Flow221</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5498_Annotation20">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).)
+Owner: HR Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5498_Assoc21" sourceRef="W5498_Annotation20" targetRef="W5498_Start8" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5498_Flow22" sourceRef="W5498_Start8" targetRef="W5498_Task9" />
+      <bpmn:sequenceFlow id="W5498_Flow23" sourceRef="W5498_Task9" targetRef="W5498_Task10" />
+      <bpmn:sequenceFlow id="W5498_Flow24" sourceRef="W5498_Task10" targetRef="W5498_Task11" />
+      <bpmn:sequenceFlow id="W5498_Flow25" sourceRef="W5498_Task11" targetRef="W5498_Task12" />
+      <bpmn:sequenceFlow id="W5498_Flow26" sourceRef="W5498_Task12" targetRef="W5498_Task13" />
+      <bpmn:sequenceFlow id="W5498_Flow27" sourceRef="W5498_Task13" targetRef="W5498_Task14" />
+      <bpmn:sequenceFlow id="W5498_Flow28" sourceRef="W5498_Task14" targetRef="W5498_Task15" />
+      <bpmn:sequenceFlow id="W5498_Flow29" sourceRef="W5498_Task15" targetRef="W5498_Task16" />
+      <bpmn:sequenceFlow id="W5498_Flow30" sourceRef="W5498_Task16" targetRef="W5498_Task17" />
+      <bpmn:sequenceFlow id="W5498_Flow31" sourceRef="W5498_Task17" targetRef="W5498_Task18" />
+      <bpmn:sequenceFlow id="W5498_Flow32" sourceRef="W5498_Task18" targetRef="W5498_End19" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5498_diag">
+      <bpmndi:BPMNPlane id="W5498_plane" bpmnElement="W_W5498">
+        <bpmndi:BPMNShape id="W5498_Lane1_di" bpmnElement="W5498_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Lane2_di" bpmnElement="W5498_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Lane3_di" bpmnElement="W5498_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Lane4_di" bpmnElement="W5498_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Lane5_di" bpmnElement="W5498_Lane5" isHorizontal="true"><dc:Bounds x="160" y="760" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Lane6_di" bpmnElement="W5498_Lane6" isHorizontal="true"><dc:Bounds x="160" y="930" width="2420" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task9_di" bpmnElement="W5498_Task9"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task10_di" bpmnElement="W5498_Task10"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task11_di" bpmnElement="W5498_Task11"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task12_di" bpmnElement="W5498_Task12"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task13_di" bpmnElement="W5498_Task13"><dc:Bounds x="1240" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task14_di" bpmnElement="W5498_Task14"><dc:Bounds x="1450" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task15_di" bpmnElement="W5498_Task15"><dc:Bounds x="1660" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task16_di" bpmnElement="W5498_Task16"><dc:Bounds x="1870" y="805" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task17_di" bpmnElement="W5498_Task17"><dc:Bounds x="2080" y="975" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Task18_di" bpmnElement="W5498_Task18"><dc:Bounds x="2290" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Start8_di" bpmnElement="W5498_Start8"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_End19_di" bpmnElement="W5498_End19"><dc:Bounds x="2520" y="997" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5498_Annotation20_di" bpmnElement="W5498_Annotation20"><dc:Bounds x="160" y="1140" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5498_Flow22_di" bpmnElement="W5498_Flow22"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow23_di" bpmnElement="W5498_Flow23"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow24_di" bpmnElement="W5498_Flow24"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow25_di" bpmnElement="W5498_Flow25"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow26_di" bpmnElement="W5498_Flow26"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow27_di" bpmnElement="W5498_Flow27"><di:waypoint x="1420" y="505" /><di:waypoint x="1450" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow28_di" bpmnElement="W5498_Flow28"><di:waypoint x="1630" y="675" /><di:waypoint x="1660" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow29_di" bpmnElement="W5498_Flow29"><di:waypoint x="1840" y="505" /><di:waypoint x="1870" y="845" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow30_di" bpmnElement="W5498_Flow30"><di:waypoint x="2050" y="845" /><di:waypoint x="2080" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow31_di" bpmnElement="W5498_Flow31"><di:waypoint x="2260" y="1015" /><di:waypoint x="2290" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Flow32_di" bpmnElement="W5498_Flow32"><di:waypoint x="2470" y="165" /><di:waypoint x="2520" y="1015" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5498_Assoc21_di" bpmnElement="W5498_Assoc21"><di:waypoint x="340" y="1140" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W5532" name="W5532. Workforce Time &amp; Attendance (Biometric/Time-Clock) Platform Estate &amp; Punch-Data Operations" isExecutable="false">
+      <bpmn:documentation>Trigger: Shift start/end generating punch events at ~205 stores, 4 DCs and HQ; a device-offline alert or punch-interface failure; a new-store/DC opening or closure requiring device provisioning or decommissioning (W16/W703); a payroll cut-off requiring the final punch-data interface run (W10/W816); or the periodic device-health and data-retention review
+Frequency: Continuous event collection; scheduled interface runs ahead of every payroll cut-off; monthly device-health review; event-driven provisioning/decommissioning
+Volume: ~6,762 employees × ~2 punches × ~250 workdays ≈ 3.2–3.6M punch events/year across a fleet of ~420–450 biometric/RFID time-clock devices (2 per store average, DC gate banks, HQ terminals); ~800–1,200 attendance exceptions/day already processed in W561&#x27;s queues; ~26 payroll interfaces/year (bi-monthly per entity across 5 entities, W816 consolidation scope); ~10–15 store openings/closures/year with provisioning events
+Owner: HR Technology Manager
+Participants: HR Supervisor, Payroll Specialist, Store Manager, DC Supervisor, IT Service Desk (device break/fix), IT Network Operations (connectivity), VS-103.3 people-data integration (W3350/W3351), External T&amp;A/biometric vendor (maintenance contract)
+Source: workflow W5532 — Workforce Time &amp; Attendance (Biometric/Time-Clock) Platform Estate &amp; Punch-Data Operations</bpmn:documentation>
+      <bpmn:laneSet id="W5532_LaneSet3">
+        <bpmn:lane id="W5532_Lane1" name="HR Technology Manager">
+        <bpmn:flowNodeRef>W5532_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5532_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5532_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5532_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5532_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5532_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W5532_Lane2" name="Store Manager">
+        <bpmn:flowNodeRef>W5532_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W5532_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W5532_Start4" name="Shift start/end generating punch events at ~205 stores, 4 DCs and HQ; a device-offline…">
+        <bpmn:outgoing>W5532_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W5532_Task5" name="Device-fleet registry &amp; health monitoring">
+        <bpmn:documentation>Step 1: Device-fleet registry &amp; health monitoring: maintain the T&amp;A device registry (site, device ID, firmware, last successful sync, maintenance-contract and warranty status) for all ~420–450 devices; monitor daily sync-heartbeat dashboards; dispatch failed devices to the IT service desk with vendor field-service escalation; draw from the spare-device pool so no site waits on repair turnaround
+Responsible (R): HR Technology Manager / IT Service Desk
+Accountable (A): CHRO
+Duration: 30–45 min/day monitoring; ~20–40 device incidents/month at 30–60 min each</bpmn:documentation>
+        <bpmn:incoming>W5532_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W5532_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5532_Task6" name="Punch-data collection &amp; payroll interface operations">
+        <bpmn:documentation>Step 2: Punch-data collection &amp; payroll interface operations: run the punch-collection interfaces (real-time store feeds plus scheduled batch pulls); deduplicate retries and missing-punch artifacts; validate and land punch files in the payroll staging area ahead of each W10/W816 cut-off; reconcile interface counts (devices reporting vs punches received vs employees scheduled per W34) and rerun on variance
+Responsible (R): HR Technology Manager
+Accountable (A): Payroll Specialist
+Duration: 45–60 min/interface run; reruns add ~30 min on failure</bpmn:documentation>
+        <bpmn:incoming>W5532_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W5532_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5532_Task7" name="Offline &amp; outage fallback management">
+        <bpmn:documentation>Step 3: Offline &amp; outage fallback management: during device, network or power outages (market-wide power interruptions, typhoon events per W1386), activate the manual-punch fallback with supervisor logs; backfill captured punches when systems restore with supervisor confirmation feeding W561&#x27;s exception queue; track outage-affected sites to closure
+Responsible (R): Store Manager / DC Supervisor
+Accountable (A): HR Supervisor
+Duration: event-driven; ~15–30 min/site per outage day</bpmn:documentation>
+        <bpmn:incoming>W5532_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W5532_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5532_Task8" name="Provisioning &amp; decommissioning on the site and employee lifecycle">
+        <bpmn:documentation>Step 4: Provisioning &amp; decommissioning on the site and employee lifecycle: provision or decommission devices, employee biometric/RFID templates and user-to-device mappings on hire (W15), transfer (W511/W1410), separation (W43) and store opening/closure (W16/W703); enforce template re-enrollment after hand injuries (a hardware-retail frequency event) and template deletion on separation per the RA 10173 retention schedule
+Responsible (R): HR Technology Manager
+Accountable (A): HR Supervisor
+Duration: ~1.5–2 h per store opening/closure event; ~15 min per separation cleanup</bpmn:documentation>
+        <bpmn:incoming>W5532_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W5532_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5532_Task9" name="Downstream integration quality">
+        <bpmn:documentation>Step 5: Downstream integration quality: reconcile device punches against W34/W1357 shift plans and W1032-approved overtime before payroll posting; maintain pay-code/premium mappings (night differential, holiday, rest-day) with the W10 payroll rules and the W2764 tax-table treatment; feed unresolved discrepancies into W594/W561 exception queues
+Responsible (R): HR Technology Manager / Payroll Specialist
+Accountable (A): HR Technology Manager
+Duration: 2–3 h per payroll cycle</bpmn:documentation>
+        <bpmn:incoming>W5532_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W5532_Flow18</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W5532_Task10" name="Governance, retention &amp; audit support">
+        <bpmn:documentation>Step 6: Governance, retention &amp; audit support: enforce punch-data retention per the W256/W2977 labor-records schedule with RA 10173 minimization; produce DOLE labor-standards evidence packs (hours worked, overtime authorizations, premium payments) for inspections and payroll-dispute defense; report quarterly device-health, interface-reliability and exception-rate KPIs to HR Operations
+Responsible (R): HR Technology Manager
+Accountable (A): CHRO
+Duration: ~10–12 h/quarter</bpmn:documentation>
+        <bpmn:incoming>W5532_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W5532_End11" name="Complete">
+        <bpmn:incoming>W5532_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W5532_Annotation12">
+        <bpmn:text>Controls: - CTL-298 (ensure controlled execution — Workforce Management (PA-19.3).) | - operational: a payroll cut-off cannot close while punch-interface reconciliation shows unresolved variances (Payroll Specialist + HR Technology Manager dual sign-off) | - operational: biometric-template enrollment and deletion events are logged and reviewed monthly against hire/separation records
+Owner: HR Technology Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W5532_Assoc13" sourceRef="W5532_Annotation12" targetRef="W5532_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W5532_Flow14" sourceRef="W5532_Start4" targetRef="W5532_Task5" />
+      <bpmn:sequenceFlow id="W5532_Flow15" sourceRef="W5532_Task5" targetRef="W5532_Task6" />
+      <bpmn:sequenceFlow id="W5532_Flow16" sourceRef="W5532_Task6" targetRef="W5532_Task7" />
+      <bpmn:sequenceFlow id="W5532_Flow17" sourceRef="W5532_Task7" targetRef="W5532_Task8" />
+      <bpmn:sequenceFlow id="W5532_Flow18" sourceRef="W5532_Task8" targetRef="W5532_Task9" />
+      <bpmn:sequenceFlow id="W5532_Flow19" sourceRef="W5532_Task9" targetRef="W5532_Task10" />
+      <bpmn:sequenceFlow id="W5532_Flow20" sourceRef="W5532_Task10" targetRef="W5532_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W5532_diag">
+      <bpmndi:BPMNPlane id="W5532_plane" bpmnElement="W_W5532">
+        <bpmndi:BPMNShape id="W5532_Lane1_di" bpmnElement="W5532_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Lane2_di" bpmnElement="W5532_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1580" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Task5_di" bpmnElement="W5532_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Task6_di" bpmnElement="W5532_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Task7_di" bpmnElement="W5532_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Task8_di" bpmnElement="W5532_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Task9_di" bpmnElement="W5532_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Task10_di" bpmnElement="W5532_Task10"><dc:Bounds x="1450" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Start4_di" bpmnElement="W5532_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_End11_di" bpmnElement="W5532_End11"><dc:Bounds x="1680" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W5532_Annotation12_di" bpmnElement="W5532_Annotation12"><dc:Bounds x="160" y="460" width="360" height="114" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W5532_Flow14_di" bpmnElement="W5532_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5532_Flow15_di" bpmnElement="W5532_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5532_Flow16_di" bpmnElement="W5532_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5532_Flow17_di" bpmnElement="W5532_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5532_Flow18_di" bpmnElement="W5532_Flow18"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5532_Flow19_di" bpmnElement="W5532_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1450" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5532_Flow20_di" bpmnElement="W5532_Flow20"><di:waypoint x="1630" y="165" /><di:waypoint x="1680" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W5532_Assoc13_di" bpmnElement="W5532_Assoc13"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

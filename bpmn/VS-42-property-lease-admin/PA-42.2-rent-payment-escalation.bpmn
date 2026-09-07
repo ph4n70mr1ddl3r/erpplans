@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-42.2-rent-payment-escalation" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1862" name="W1862. Monthly Rent Payment Processing &amp; Scheduling" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly rent due date per lease agreement (typically 1st or 5th of month)
+Frequency: ~205 rent payments/month
+Volume: ~205 active leases × 12 months = ~2,460 payments/year
+Owner: AP Clerk
+Participants: AP Clerk, Lease Administrator, Finance
+Source: workflow W1862 — Monthly Rent Payment Processing &amp; Scheduling</bpmn:documentation>
+      <bpmn:laneSet id="W1862_LaneSet4">
+        <bpmn:lane id="W1862_Lane1" name="System">
+        <bpmn:flowNodeRef>W1862_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1862_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1862_Lane2" name="AP Clerk">
+        <bpmn:flowNodeRef>W1862_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1862_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1862_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W1862_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1862_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1862_Start5" name="Monthly rent due date per lease agreement (typically 1st or 5th of month)">
+        <bpmn:outgoing>W1862_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1862_Task6" name="System generates monthly rent payment schedule: (a) list of all active leases…">
+        <bpmn:documentation>Step 1: System generates monthly rent payment schedule: (a) list of all active leases with rent amount due, payment due date, landlord payment details, (b) system compares rent amount to lease schedule (verifies no missed escalations), (c) AP Clerk reviews payment schedule for accuracy
+Responsible (R): System / AP Clerk
+Accountable (A): Finance Manager
+Duration: 1–2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1862_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1862_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1862_Task7" name="Landlord issues billing/invoice: (a) some landlords send monthly invoices…">
+        <bpmn:documentation>Step 2: Landlord issues billing/invoice: (a) some landlords send monthly invoices; others rely on auto-payment per lease terms, (b) AP Clerk matches landlord invoice to lease schedule: (i) base rent matches scheduled amount (including current escalation), (ii) CAM charges match agreed rates or reconciliation, (iii) no unauthorized charges, (c) if discrepancy: AP Clerk flags to Lease Administrator for investigation
+Responsible (R): AP Clerk
+Accountable (A): Lease Administrator
+Duration: 5–10 min/lease</bpmn:documentation>
+        <bpmn:incoming>W1862_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1862_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1862_Task8" name="AP Clerk processes rent payment: (a) payment method per lease: post-dated check…">
+        <bpmn:documentation>Step 3: AP Clerk processes rent payment: (a) payment method per lease: post-dated check (PDC), bank transfer, or auto-debit, (b) for PDC: AP Clerk issues check per W424 (PDC management); PDCs may be issued in batches quarterly or annually, (c) for bank transfer: AP Clerk creates payment in payment run per W7.9, (d) Finance approves payment batch, (e) system posts payment: Dr. Rent Expense (BuildRight Property Management, Inc.) / Cr. Cash
+Responsible (R): AP Clerk / Finance
+Accountable (A): Finance Manager
+Duration: Per W7 payment run</bpmn:documentation>
+        <bpmn:incoming>W1862_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1862_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1862_Task9" name="Monthly: Finance reconciles rent payments against lease schedule: (a) total…">
+        <bpmn:documentation>Step 4: Monthly: Finance reconciles rent payments against lease schedule: (a) total rent paid vs. total rent scheduled, (b) identify any missed payments (risk of late fees or lease default), (c) verify PDC clearing per W1380 (AR PDC) / W424 (AP PDC)
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: 2–4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1862_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1862_End10" name="Complete">
+        <bpmn:incoming>W1862_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1862_Annotation11">
+        <bpmn:text>Controls: - CTL-220 (ensure lease-administration &amp; PFRS 16 integrity.) | - operational: AP Clerk review and approval gate; operational: periodic reconciliation against source documents
+Owner: AP Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1862_Assoc12" sourceRef="W1862_Annotation11" targetRef="W1862_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1862_Flow13" sourceRef="W1862_Start5" targetRef="W1862_Task6" />
+      <bpmn:sequenceFlow id="W1862_Flow14" sourceRef="W1862_Task6" targetRef="W1862_Task7" />
+      <bpmn:sequenceFlow id="W1862_Flow15" sourceRef="W1862_Task7" targetRef="W1862_Task8" />
+      <bpmn:sequenceFlow id="W1862_Flow16" sourceRef="W1862_Task8" targetRef="W1862_Task9" />
+      <bpmn:sequenceFlow id="W1862_Flow17" sourceRef="W1862_Task9" targetRef="W1862_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1862_diag">
+      <bpmndi:BPMNPlane id="W1862_plane" bpmnElement="W_W1862">
+        <bpmndi:BPMNShape id="W1862_Lane1_di" bpmnElement="W1862_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Lane2_di" bpmnElement="W1862_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Lane3_di" bpmnElement="W1862_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Task6_di" bpmnElement="W1862_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Task7_di" bpmnElement="W1862_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Task8_di" bpmnElement="W1862_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Task9_di" bpmnElement="W1862_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Start5_di" bpmnElement="W1862_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_End10_di" bpmnElement="W1862_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1862_Annotation11_di" bpmnElement="W1862_Annotation11"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1862_Flow13_di" bpmnElement="W1862_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1862_Flow14_di" bpmnElement="W1862_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1862_Flow15_di" bpmnElement="W1862_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1862_Flow16_di" bpmnElement="W1862_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1862_Flow17_di" bpmnElement="W1862_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1862_Assoc12_di" bpmnElement="W1862_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1863" name="W1863. Annual Rent Escalation Execution &amp; Verification" isExecutable="false">
+      <bpmn:documentation>Trigger: Rent escalation effective date per lease (typically anniversary of lease commencement)
+Frequency: ~150–180 escalations/year (most leases have annual escalation; some biennial)
+Volume: 1 escalation per lease per occurrence
+Owner: Lease Administrator
+Participants: Lease Administrator, AP Clerk, Finance
+Source: workflow W1863 — Annual Rent Escalation Execution &amp; Verification</bpmn:documentation>
+      <bpmn:laneSet id="W1863_LaneSet4">
+        <bpmn:lane id="W1863_Lane1" name="Lease Administrator">
+        <bpmn:flowNodeRef>W1863_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1863_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1863_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1863_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W1863_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1863_Lane3" name="AP Clerk">
+        <bpmn:flowNodeRef>W1863_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1863_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1863_Start5" name="Rent escalation effective date per lease (typically anniversary of lease commencement)">
+        <bpmn:outgoing>W1863_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1863_Task6" name="System alerts Lease Administrator 90 days before escalation effective date: (a)…">
+        <bpmn:documentation>Step 1: System alerts Lease Administrator 90 days before escalation effective date: (a) lease number, current rent, escalation method (fixed %, CPI-linked, or fixed amount), new rent amount (system-calculated per escalation formula in lease), (b) Lease Administrator verifies system calculation against lease agreement: (i) fixed % escalation: verify percentage matches lease, (ii) CPI-linked: verify CPI index used (Philippine Statistics Authority PSA CPI), base period, and calculation, (iii) fixed amount: verify step-up schedule, (c) if system calculation matches lease: approve escalation in system
+Responsible (R): Lease Administrator
+Accountable (A): Finance Manager
+Duration: 15–30 min/escalation</bpmn:documentation>
+        <bpmn:incoming>W1863_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1863_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1863_Task7" name="If landlord disputes escalation amount: (a) Lease Administrator reviews lease…">
+        <bpmn:documentation>Step 2: If landlord disputes escalation amount: (a) Lease Administrator reviews lease escalation clause with Legal Counsel, (b) if CPI-linked escalation: provide landlord with PSA CPI documentation supporting BuildRight&#x27;s calculation, (c) if fixed % escalation: reference lease agreement, (d) if discrepancy from landlord error: formally dispute in writing per W1858, (e) escalate to Legal Counsel if unresolved within 30 days
+Responsible (R): Lease Administrator / Legal
+Accountable (A): COO
+Duration: 1–2 hours/dispute</bpmn:documentation>
+        <bpmn:incoming>W1863_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1863_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1863_Task8" name="Finance updates PFRS 16 lease liability for revised rent schedule: (a)…">
+        <bpmn:documentation>Step 3: Finance updates PFRS 16 lease liability for revised rent schedule: (a) remeasure lease liability using revised cash flows and current discount rate, (b) adjust ROU asset for difference, (c) post journal entry for PFRS 16 remeasurement
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: Per lease remeasurement</bpmn:documentation>
+        <bpmn:incoming>W1863_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1863_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1863_Task9" name="AP Clerk updates monthly rent payment schedule with new escalated amount…">
+        <bpmn:documentation>Step 4: AP Clerk updates monthly rent payment schedule with new escalated amount effective from escalation date
+Responsible (R): AP Clerk
+Accountable (A): Finance Manager
+Duration: 5 min/escalation</bpmn:documentation>
+        <bpmn:incoming>W1863_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1863_End10" name="Complete">
+        <bpmn:incoming>W1863_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1863_Annotation11">
+        <bpmn:text>Controls: - CTL-368 (ensure controlled execution — Rent Payment, Escalation &amp; CAM Reconciliation (PA-42.2).) | - operational: Lease Administrator review and approval gate
+Owner: Lease Administrator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1863_Assoc12" sourceRef="W1863_Annotation11" targetRef="W1863_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1863_Flow13" sourceRef="W1863_Start5" targetRef="W1863_Task6" />
+      <bpmn:sequenceFlow id="W1863_Flow14" sourceRef="W1863_Task6" targetRef="W1863_Task7" />
+      <bpmn:sequenceFlow id="W1863_Flow15" sourceRef="W1863_Task7" targetRef="W1863_Task8" />
+      <bpmn:sequenceFlow id="W1863_Flow16" sourceRef="W1863_Task8" targetRef="W1863_Task9" />
+      <bpmn:sequenceFlow id="W1863_Flow17" sourceRef="W1863_Task9" targetRef="W1863_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1863_diag">
+      <bpmndi:BPMNPlane id="W1863_plane" bpmnElement="W_W1863">
+        <bpmndi:BPMNShape id="W1863_Lane1_di" bpmnElement="W1863_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Lane2_di" bpmnElement="W1863_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Lane3_di" bpmnElement="W1863_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Task6_di" bpmnElement="W1863_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Task7_di" bpmnElement="W1863_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Task8_di" bpmnElement="W1863_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Task9_di" bpmnElement="W1863_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Start5_di" bpmnElement="W1863_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_End10_di" bpmnElement="W1863_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1863_Annotation11_di" bpmnElement="W1863_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1863_Flow13_di" bpmnElement="W1863_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1863_Flow14_di" bpmnElement="W1863_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1863_Flow15_di" bpmnElement="W1863_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1863_Flow16_di" bpmnElement="W1863_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1863_Flow17_di" bpmnElement="W1863_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1863_Assoc12_di" bpmnElement="W1863_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1864" name="W1864. Common Area Maintenance (CAM) Charge Reconciliation &amp; Dispute Resolution" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual CAM reconciliation statement received from landlord; monthly CAM charges in rent invoice
+Frequency: Annual reconciliation per lease; monthly CAM charges in ~100–150 leases (properties in multi-tenant developments)
+Volume: ~100–150 annual CAM reconciliation reviews
+Owner: Lease Administrator
+Participants: Lease Administrator, Finance, COO, Legal Counsel
+Source: workflow W1864 — Common Area Maintenance (CAM) Charge Reconciliation &amp; Dispute Resolution</bpmn:documentation>
+      <bpmn:laneSet id="W1864_LaneSet4">
+        <bpmn:lane id="W1864_Lane1" name="AP Clerk">
+        <bpmn:flowNodeRef>W1864_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1864_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1864_Lane2" name="Landlord">
+        <bpmn:flowNodeRef>W1864_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1864_Lane3" name="Lease Administrator">
+        <bpmn:flowNodeRef>W1864_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1864_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1864_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1864_Start5" name="Annual CAM reconciliation statement received from landlord; monthly CAM charges in rent…">
+        <bpmn:outgoing>W1864_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1864_Task6" name="Monthly: AP Clerk pays CAM charges as billed by landlord: (a) monthly CAM…">
+        <bpmn:documentation>Step 1: Monthly: AP Clerk pays CAM charges as billed by landlord: (a) monthly CAM charges are typically estimated amounts based on pro-rata share of common area costs, (b) AP Clerk verifies monthly charge matches lease terms: (i) pro-rata share percentage, (ii) agreed cap on annual CAM increase (if negotiated), (iii) excluded charges (capital improvements, landlord&#x27;s own administrative overhead)
+Responsible (R): AP Clerk
+Accountable (A): Lease Administrator
+Duration: 5 min/lease</bpmn:documentation>
+        <bpmn:incoming>W1864_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1864_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1864_Task7" name="Annual: Landlord provides CAM reconciliation statement: (a) actual CAM expenses…">
+        <bpmn:documentation>Step 2: Annual: Landlord provides CAM reconciliation statement: (a) actual CAM expenses for the year vs. estimated charges billed monthly, (b) pro-rata allocation to each tenant based on leased area, (c) supporting documentation: invoices for common area expenses (electricity, water, cleaning, security, elevator maintenance, parking maintenance, property management fee), (d) reconciliation result: (i) if actual &lt; estimated: landlord refunds overpayment or credits against future rent, (ii) if actual &gt; estimated: tenant pays shortfall
+Responsible (R): Landlord / Lease Administrator
+Accountable (A): COO
+Duration: 1–2 hours/lease</bpmn:documentation>
+        <bpmn:incoming>W1864_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1864_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1864_Task8" name="Lease Administrator reviews CAM reconciliation: (a) verify pro-rata share…">
+        <bpmn:documentation>Step 3: Lease Administrator reviews CAM reconciliation: (a) verify pro-rata share calculation against lease terms and actual leased area, (b) review expense categories: are all charges covered under the lease definition of &quot;common area maintenance&quot;? Flag any capital improvement charges that should be excluded (landlord&#x27;s responsibility, not tenants&#x27;), (c) compare CAM cost per sqm to market benchmarks: is the landlord overcharging relative to comparable properties? (d) verify landlord&#x27;s property management fee is within lease-specified cap (typically 5–10% of CAM costs), (e) if reconciliation appears reasonable: approve for payment/credit, (f) if discrepancies found: document and dispute per step 4
+Responsible (R): Lease Administrator
+Accountable (A): COO
+Duration: 1–2 hours/lease</bpmn:documentation>
+        <bpmn:incoming>W1864_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1864_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1864_Task9" name="CAM dispute resolution: (a) Lease Administrator submits written dispute to…">
+        <bpmn:documentation>Step 4: CAM dispute resolution: (a) Lease Administrator submits written dispute to landlord with specific line-item objections and supporting documentation, (b) negotiate resolution: landlord may agree to adjust, provide additional documentation, or maintain original charges, (c) if dispute unresolved within 30 days: escalate to Legal Counsel for formal demand letter, (d) if landlord refuses reasonable adjustment: COO considers at lease renewal (W1856) — unresolved CAM disputes are leverage for rent negotiation
+Responsible (R): Lease Administrator / Legal
+Accountable (A): COO
+Duration: 2–8 hours/dispute</bpmn:documentation>
+        <bpmn:incoming>W1864_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1864_End10" name="Complete">
+        <bpmn:incoming>W1864_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1864_Annotation11">
+        <bpmn:text>Controls: - CTL-220 (ensure lease-administration &amp; PFRS 16 integrity.) | - operational: Lease Administrator review and approval gate; operational: periodic reconciliation against source documents
+Owner: Lease Administrator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1864_Assoc12" sourceRef="W1864_Annotation11" targetRef="W1864_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1864_Flow13" sourceRef="W1864_Start5" targetRef="W1864_Task6" />
+      <bpmn:sequenceFlow id="W1864_Flow14" sourceRef="W1864_Task6" targetRef="W1864_Task7" />
+      <bpmn:sequenceFlow id="W1864_Flow15" sourceRef="W1864_Task7" targetRef="W1864_Task8" />
+      <bpmn:sequenceFlow id="W1864_Flow16" sourceRef="W1864_Task8" targetRef="W1864_Task9" />
+      <bpmn:sequenceFlow id="W1864_Flow17" sourceRef="W1864_Task9" targetRef="W1864_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1864_diag">
+      <bpmndi:BPMNPlane id="W1864_plane" bpmnElement="W_W1864">
+        <bpmndi:BPMNShape id="W1864_Lane1_di" bpmnElement="W1864_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Lane2_di" bpmnElement="W1864_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Lane3_di" bpmnElement="W1864_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Task6_di" bpmnElement="W1864_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Task7_di" bpmnElement="W1864_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Task8_di" bpmnElement="W1864_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Task9_di" bpmnElement="W1864_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Start5_di" bpmnElement="W1864_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_End10_di" bpmnElement="W1864_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1864_Annotation11_di" bpmnElement="W1864_Annotation11"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1864_Flow13_di" bpmnElement="W1864_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1864_Flow14_di" bpmnElement="W1864_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1864_Flow15_di" bpmnElement="W1864_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1864_Flow16_di" bpmnElement="W1864_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1864_Flow17_di" bpmnElement="W1864_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1864_Assoc12_di" bpmnElement="W1864_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1865" name="W1865. Percentage Rent Calculation &amp; Payment" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual sales threshold exceeded per percentage rent clause in lease agreement
+Frequency: Annual calculation per lease with percentage rent clause
+Volume: ~50–80 leases include percentage rent clauses (common in mall-based and mixed-use developments)
+Owner: FP&amp;A
+Participants: FP&amp;A, Lease Administrator, Finance, COO
+Source: workflow W1865 — Percentage Rent Calculation &amp; Payment</bpmn:documentation>
+      <bpmn:laneSet id="W1865_LaneSet4">
+        <bpmn:lane id="W1865_Lane1" name="FP&amp;A">
+        <bpmn:flowNodeRef>W1865_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1865_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1865_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1865_Lane2" name="Lease Administrator">
+        <bpmn:flowNodeRef>W1865_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1865_Lane3" name="Finance">
+        <bpmn:flowNodeRef>W1865_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1865_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1865_Start5" name="Annual sales threshold exceeded per percentage rent clause in lease agreement">
+        <bpmn:outgoing>W1865_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1865_Task6" name="FP&amp;A calculates annual store sales per location: (a) total gross sales from POS…">
+        <bpmn:documentation>Step 1: FP&amp;A calculates annual store sales per location: (a) total gross sales from POS and ecommerce data for the store location, (b) apply exclusions per lease: (i) sales tax (VAT) excluded, (ii) returns and refunds excluded, (iii) employee discount sales may be excluded (per lease terms), (iv) gift card sales excluded until redemption, (c) calculate adjusted gross sales for percentage rent purposes
+Responsible (R): FP&amp;A
+Accountable (A): Finance Manager
+Duration: 30 min/store</bpmn:documentation>
+        <bpmn:incoming>W1865_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1865_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1865_Task7" name="FP&amp;A calculates percentage rent liability per lease: (a) compare adjusted gross…">
+        <bpmn:documentation>Step 2: FP&amp;A calculates percentage rent liability per lease: (a) compare adjusted gross sales to breakpoint (sales threshold above which percentage rent applies): natural breakpoint (where % rent = base rent) or artificial breakpoint (specified dollar amount), (b) if sales exceed breakpoint: percentage rent = (adjusted gross sales − breakpoint) × percentage rate (typically 2–6% for retail leases), (c) if sales below breakpoint: no additional percentage rent owed, (d) FP&amp;A prepares percentage rent calculation with supporting sales data for each applicable lease
+Responsible (R): FP&amp;A
+Accountable (A): CFO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1865_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1865_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1865_Task8" name="Lease Administrator submits sales certification to landlord: (a) some leases…">
+        <bpmn:documentation>Step 3: Lease Administrator submits sales certification to landlord: (a) some leases require BuildRight to certify annual sales to landlord, (b) if percentage rent owed: Lease Administrator coordinates payment with Finance, (c) if landlord disputes sales figure: provide detailed POS transaction data as supporting documentation
+Responsible (R): Lease Administrator
+Accountable (A): COO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1865_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1865_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1865_Task9" name="Finance processes percentage rent payment: (a) accrue percentage rent liability…">
+        <bpmn:documentation>Step 4: Finance processes percentage rent payment: (a) accrue percentage rent liability monthly based on sales-to-date trend (avoid large year-end surprise), (b) actual payment made after annual calculation completed, (c) Dr. Rent Expense / Cr. Cash
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: Per AP process</bpmn:documentation>
+        <bpmn:incoming>W1865_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1865_End10" name="Complete">
+        <bpmn:incoming>W1865_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1865_Annotation11">
+        <bpmn:text>Controls: - CTL-220 (ensure lease-administration &amp; PFRS 16 integrity.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: FP&amp;A</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1865_Assoc12" sourceRef="W1865_Annotation11" targetRef="W1865_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1865_Flow13" sourceRef="W1865_Start5" targetRef="W1865_Task6" />
+      <bpmn:sequenceFlow id="W1865_Flow14" sourceRef="W1865_Task6" targetRef="W1865_Task7" />
+      <bpmn:sequenceFlow id="W1865_Flow15" sourceRef="W1865_Task7" targetRef="W1865_Task8" />
+      <bpmn:sequenceFlow id="W1865_Flow16" sourceRef="W1865_Task8" targetRef="W1865_Task9" />
+      <bpmn:sequenceFlow id="W1865_Flow17" sourceRef="W1865_Task9" targetRef="W1865_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1865_diag">
+      <bpmndi:BPMNPlane id="W1865_plane" bpmnElement="W_W1865">
+        <bpmndi:BPMNShape id="W1865_Lane1_di" bpmnElement="W1865_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Lane2_di" bpmnElement="W1865_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Lane3_di" bpmnElement="W1865_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Task6_di" bpmnElement="W1865_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Task7_di" bpmnElement="W1865_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Task8_di" bpmnElement="W1865_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Task9_di" bpmnElement="W1865_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Start5_di" bpmnElement="W1865_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_End10_di" bpmnElement="W1865_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1865_Annotation11_di" bpmnElement="W1865_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1865_Flow13_di" bpmnElement="W1865_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1865_Flow14_di" bpmnElement="W1865_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1865_Flow15_di" bpmnElement="W1865_Flow15"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1865_Flow16_di" bpmnElement="W1865_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1865_Flow17_di" bpmnElement="W1865_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1865_Assoc12_di" bpmnElement="W1865_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1866" name="W1866. Rent Abatement &amp; Concession Tracking" isExecutable="false">
+      <bpmn:documentation>Trigger: Lease clause providing rent abatement (e.g., first 3 months rent-free during fit-out); force majeure event (typhoon damage); negotiated concession
+Frequency: Occasional — ~5–10 abatement events/year
+Volume: Per lease
+Owner: Lease Administrator
+Participants: Lease Administrator, COO, Finance, Legal Counsel
+Source: workflow W1866 — Rent Abatement &amp; Concession Tracking</bpmn:documentation>
+      <bpmn:laneSet id="W1866_LaneSet3">
+        <bpmn:lane id="W1866_Lane1" name="Lease Administrator">
+        <bpmn:flowNodeRef>W1866_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1866_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1866_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1866_Lane2" name="Finance">
+        <bpmn:flowNodeRef>W1866_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1866_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1866_Start4" name="Lease clause providing rent abatement (e.g., first 3 months rent-free during fit-out)…">
+        <bpmn:outgoing>W1866_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1866_Task5" name="Lease Administrator identifies abatement eligibility: (a) rent-free period…">
+        <bpmn:documentation>Step 1: Lease Administrator identifies abatement eligibility: (a) rent-free period during tenant fit-out (typically 3–6 months for new leases), (b) rent reduction during building damage or landlord-caused disruption (e.g., roof repair blocking sales floor), (c) force majeure abatement per lease clause (typhoon, earthquake rendering premises unusable), (d) negotiated concession (e.g., rent reduction agreed during COVID-19 or economic downturn)
+Responsible (R): Lease Administrator
+Accountable (A): COO
+Duration: 1–2 hours</bpmn:documentation>
+        <bpmn:incoming>W1866_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1866_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1866_Task6" name="Lease Administrator confirms abatement with landlord in writing: (a) specify…">
+        <bpmn:documentation>Step 2: Lease Administrator confirms abatement with landlord in writing: (a) specify abatement period, amount, and conditions, (b) obtain landlord written acknowledgment, (c) if force majeure: document event impact with photographs, insurance claims, and store closure records
+Responsible (R): Lease Administrator
+Accountable (A): Legal Counsel
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1866_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1866_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1866_Task7" name="Finance processes abatement: (a) skip or reduce rent payment for abatement…">
+        <bpmn:documentation>Step 3: Finance processes abatement: (a) skip or reduce rent payment for abatement period, (b) if already paid: process rent credit from landlord against future rent, (c) PFRS 16 impact: remeasure lease liability if abatement changes lease cash flows, (d) track abatement value for lease negotiation leverage at renewal
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: Per accounting process</bpmn:documentation>
+        <bpmn:incoming>W1866_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1866_End8" name="Complete">
+        <bpmn:incoming>W1866_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1866_Annotation9">
+        <bpmn:text>Controls: - CTL-368 (ensure controlled execution — Rent Payment, Escalation &amp; CAM Reconciliation (PA-42.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: Lease Administrator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1866_Assoc10" sourceRef="W1866_Annotation9" targetRef="W1866_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1866_Flow11" sourceRef="W1866_Start4" targetRef="W1866_Task5" />
+      <bpmn:sequenceFlow id="W1866_Flow12" sourceRef="W1866_Task5" targetRef="W1866_Task6" />
+      <bpmn:sequenceFlow id="W1866_Flow13" sourceRef="W1866_Task6" targetRef="W1866_Task7" />
+      <bpmn:sequenceFlow id="W1866_Flow14" sourceRef="W1866_Task7" targetRef="W1866_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1866_diag">
+      <bpmndi:BPMNPlane id="W1866_plane" bpmnElement="W_W1866">
+        <bpmndi:BPMNShape id="W1866_Lane1_di" bpmnElement="W1866_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1866_Lane2_di" bpmnElement="W1866_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1866_Task5_di" bpmnElement="W1866_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1866_Task6_di" bpmnElement="W1866_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1866_Task7_di" bpmnElement="W1866_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1866_Start4_di" bpmnElement="W1866_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1866_End8_di" bpmnElement="W1866_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1866_Annotation9_di" bpmnElement="W1866_Annotation9"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1866_Flow11_di" bpmnElement="W1866_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1866_Flow12_di" bpmnElement="W1866_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1866_Flow13_di" bpmnElement="W1866_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1866_Flow14_di" bpmnElement="W1866_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1866_Assoc10_di" bpmnElement="W1866_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1867" name="W1867. Security Deposit Management &amp; Return Processing" isExecutable="false">
+      <bpmn:documentation>Trigger: New lease execution (deposit collection); lease termination (deposit return)
+Frequency: ~10–15 new deposits/year; ~2–5 deposit returns/year
+Volume: ~205 active security deposits on file
+Owner: Lease Administrator
+Participants: Lease Administrator, Finance, Legal Counsel, Landlord
+Source: workflow W1867 — Security Deposit Management &amp; Return Processing</bpmn:documentation>
+      <bpmn:laneSet id="W1867_LaneSet4">
+        <bpmn:lane id="W1867_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W1867_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1867_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1867_Lane2" name="Lease Administrator">
+        <bpmn:flowNodeRef>W1867_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1867_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1867_Lane3" name="Legal Counsel">
+        <bpmn:flowNodeRef>W1867_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1867_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1867_Start5" name="New lease execution (deposit collection); lease termination (deposit return)">
+        <bpmn:outgoing>W1867_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1867_Task6" name="At lease execution: Finance processes security deposit payment to landlord: (a)…">
+        <bpmn:documentation>Step 1: At lease execution: Finance processes security deposit payment to landlord: (a) amount per lease terms (typically 2–3 months&#x27; rent), (b) payment method: cash, check, or bank guarantee, (c) record deposit in security deposit tracking module: lease number, amount, payment date, expected return conditions
+Responsible (R): Finance
+Accountable (A): CFO
+Duration: Per payment process</bpmn:documentation>
+        <bpmn:incoming>W1867_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1867_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1867_Task7" name="Ongoing: Lease Administrator monitors security deposit adequacy: (a) some…">
+        <bpmn:documentation>Step 2: Ongoing: Lease Administrator monitors security deposit adequacy: (a) some leases require deposit top-up if rent escalates and deposit is expressed as months&#x27; rent (deposit = 3 months&#x27; rent; after escalation, deposit should increase to reflect new rent level), (b) if top-up required: Lease Administrator coordinates with Finance
+Responsible (R): Lease Administrator
+Accountable (A): Finance
+Duration: Annual review</bpmn:documentation>
+        <bpmn:incoming>W1867_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1867_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1867_Task8" name="At lease termination: (a) COO coordinates property handover with landlord per…">
+        <bpmn:documentation>Step 3: At lease termination: (a) COO coordinates property handover with landlord per W1857; document property condition with photographs, (b) Lease Administrator formally requests security deposit return from landlord within 30 days of lease termination per lease terms, (c) landlord may deduct: (i) unpaid rent or CAM charges, (ii) property restoration costs beyond fair wear and tear, (iii) other lease violations, (d) Lease Administrator reviews landlord&#x27;s deduction claim: (i) verify each deduction against lease terms, (ii) if deductions are excessive or unjustified: dispute per W1858 landlord communication, (e) Finance processes returned deposit: Dr. Cash / Cr. Security Deposit Receivable
+Responsible (R): Lease Administrator / Finance
+Accountable (A): COO
+Duration: 2–4 weeks</bpmn:documentation>
+        <bpmn:incoming>W1867_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1867_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1867_Task9" name="If landlord fails to return deposit within agreed period (typically 30–60 days…">
+        <bpmn:documentation>Step 4: If landlord fails to return deposit within agreed period (typically 30–60 days post-termination): (a) Lease Administrator sends formal demand letter, (b) if no response: Legal Counsel issues legal demand, (c) legal action as last resort for significant deposit amounts
+Responsible (R): Legal Counsel
+Accountable (A): VP Legal
+Duration: Variable</bpmn:documentation>
+        <bpmn:incoming>W1867_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1867_End10" name="Complete">
+        <bpmn:incoming>W1867_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1867_Annotation11">
+        <bpmn:text>Controls: - CTL-368 (ensure controlled execution — Rent Payment, Escalation &amp; CAM Reconciliation (PA-42.2).) | - operational: Lease Administrator review and approval gate
+Owner: Lease Administrator</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1867_Assoc12" sourceRef="W1867_Annotation11" targetRef="W1867_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1867_Flow13" sourceRef="W1867_Start5" targetRef="W1867_Task6" />
+      <bpmn:sequenceFlow id="W1867_Flow14" sourceRef="W1867_Task6" targetRef="W1867_Task7" />
+      <bpmn:sequenceFlow id="W1867_Flow15" sourceRef="W1867_Task7" targetRef="W1867_Task8" />
+      <bpmn:sequenceFlow id="W1867_Flow16" sourceRef="W1867_Task8" targetRef="W1867_Task9" />
+      <bpmn:sequenceFlow id="W1867_Flow17" sourceRef="W1867_Task9" targetRef="W1867_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1867_diag">
+      <bpmndi:BPMNPlane id="W1867_plane" bpmnElement="W_W1867">
+        <bpmndi:BPMNShape id="W1867_Lane1_di" bpmnElement="W1867_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Lane2_di" bpmnElement="W1867_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Lane3_di" bpmnElement="W1867_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Task6_di" bpmnElement="W1867_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Task7_di" bpmnElement="W1867_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Task8_di" bpmnElement="W1867_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Task9_di" bpmnElement="W1867_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Start5_di" bpmnElement="W1867_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_End10_di" bpmnElement="W1867_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1867_Annotation11_di" bpmnElement="W1867_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1867_Flow13_di" bpmnElement="W1867_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1867_Flow14_di" bpmnElement="W1867_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1867_Flow15_di" bpmnElement="W1867_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1867_Flow16_di" bpmnElement="W1867_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1867_Flow17_di" bpmnElement="W1867_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1867_Assoc12_di" bpmnElement="W1867_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1868" name="W1868. Multi-Entity Rent Settlement &amp; Intercompany Billing" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly rent payment cycle; intercompany settlement per IC agreement
+Frequency: Monthly
+Volume: ~205 leases paid by BuildRight Property Management, Inc.; recharged to BuildRight Depot, Inc.
+Owner: Finance
+Participants: Finance (Property Management entity), Finance (Depot entity), Lease Administrator
+Source: workflow W1868 — Multi-Entity Rent Settlement &amp; Intercompany Billing</bpmn:documentation>
+      <bpmn:laneSet id="W1868_LaneSet2">
+        <bpmn:lane id="W1868_Lane1" name="Finance">
+        <bpmn:flowNodeRef>W1868_Task4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1868_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1868_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1868_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1868_Start3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1868_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1868_Start3" name="Monthly rent payment cycle; intercompany settlement per IC agreement">
+        <bpmn:outgoing>W1868_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1868_Task4" name="BuildRight Property Management, Inc. pays rent to landlords per W1862: (a) all…">
+        <bpmn:documentation>Step 1: BuildRight Property Management, Inc. pays rent to landlords per W1862: (a) all lease payments flow through Property Management entity&#x27;s bank accounts, (b) Property Management entity records rent expense and cash outflow
+Responsible (R): Finance (Property Mgmt)
+Accountable (A): CFO (Property Mgmt)
+Duration: Per W1862</bpmn:documentation>
+        <bpmn:incoming>W1868_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1868_Flow11</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1868_Task5" name="Monthly: Finance generates intercompany rent recharge invoice: (a) total rent…">
+        <bpmn:documentation>Step 2: Monthly: Finance generates intercompany rent recharge invoice: (a) total rent paid by Property Management entity on behalf of Depot entity: base rent + CAM + percentage rent + other lease costs, (b) apply management fee markup per intercompany agreement (if applicable — arm&#x27;s-length transfer pricing per W235), (c) generate IC invoice from Property Management to Depot, (d) Depot records IC rent expense; Property Management records IC revenue
+Responsible (R): Finance
+Accountable (A): Controller
+Duration: 1 day/month</bpmn:documentation>
+        <bpmn:incoming>W1868_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1868_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1868_Task6" name="IC settlement: (a) Property Management and Depot net IC balances monthly per…">
+        <bpmn:documentation>Step 3: IC settlement: (a) Property Management and Depot net IC balances monthly per W14 (IC settlement), (b) any markup charged by Property Management is eliminated in consolidation per W9A (month-end close), (c) consolidated financial statements reflect actual rent expense without intercompany margin
+Responsible (R): Finance
+Accountable (A): Controller
+Duration: Per W14 + W9A</bpmn:documentation>
+        <bpmn:incoming>W1868_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1868_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1868_Task7" name="Quarterly: Finance reviews IC rent recharge pricing: (a) ensure transfer…">
+        <bpmn:documentation>Step 4: Quarterly: Finance reviews IC rent recharge pricing: (a) ensure transfer pricing methodology is documented and defensible per W235, (b) verify markup (if any) is at arm&#x27;s length and consistent with transfer pricing policy, (c) adjust if BIR audit risk identified
+Responsible (R): Finance / Tax
+Accountable (A): CFO
+Duration: 1 day/quarter</bpmn:documentation>
+        <bpmn:incoming>W1868_Flow14</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1868_End8" name="Complete">
+        <bpmn:incoming>W1868_Flow15</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1868_Annotation9">
+        <bpmn:text>Controls: - CTL-368 (ensure controlled execution — Rent Payment, Escalation &amp; CAM Reconciliation (PA-42.2).) | - operational: Finance review and approval gate
+Owner: Finance</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1868_Assoc10" sourceRef="W1868_Annotation9" targetRef="W1868_Start3" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1868_Flow11" sourceRef="W1868_Start3" targetRef="W1868_Task4" />
+      <bpmn:sequenceFlow id="W1868_Flow12" sourceRef="W1868_Task4" targetRef="W1868_Task5" />
+      <bpmn:sequenceFlow id="W1868_Flow13" sourceRef="W1868_Task5" targetRef="W1868_Task6" />
+      <bpmn:sequenceFlow id="W1868_Flow14" sourceRef="W1868_Task6" targetRef="W1868_Task7" />
+      <bpmn:sequenceFlow id="W1868_Flow15" sourceRef="W1868_Task7" targetRef="W1868_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1868_diag">
+      <bpmndi:BPMNPlane id="W1868_plane" bpmnElement="W_W1868">
+        <bpmndi:BPMNShape id="W1868_Lane1_di" bpmnElement="W1868_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1868_Task4_di" bpmnElement="W1868_Task4"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1868_Task5_di" bpmnElement="W1868_Task5"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1868_Task6_di" bpmnElement="W1868_Task6"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1868_Task7_di" bpmnElement="W1868_Task7"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1868_Start3_di" bpmnElement="W1868_Start3"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1868_End8_di" bpmnElement="W1868_End8"><dc:Bounds x="1260" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1868_Annotation9_di" bpmnElement="W1868_Annotation9"><dc:Bounds x="160" y="290" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1868_Flow11_di" bpmnElement="W1868_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1868_Flow12_di" bpmnElement="W1868_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1868_Flow13_di" bpmnElement="W1868_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1868_Flow14_di" bpmnElement="W1868_Flow14"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1868_Flow15_di" bpmnElement="W1868_Flow15"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1868_Assoc10_di" bpmnElement="W1868_Assoc10"><di:waypoint x="340" y="290" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1869" name="W1869. Landlord Invoice Verification &amp; Payment Exception Handling" isExecutable="false">
+      <bpmn:documentation>Trigger: Landlord invoice received with amount different from expected rent schedule
+Frequency: ~20–30 invoice exceptions/month
+Volume: Exceptions include: unauthorized charges, incorrect escalation amounts, duplicate billing, late fees
+Owner: AP Clerk
+Participants: AP Clerk, Lease Administrator, COO, Legal Counsel
+Source: workflow W1869 — Landlord Invoice Verification &amp; Payment Exception Handling</bpmn:documentation>
+      <bpmn:laneSet id="W1869_LaneSet3">
+        <bpmn:lane id="W1869_Lane1" name="AP Clerk">
+        <bpmn:flowNodeRef>W1869_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1869_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1869_Lane2" name="Lease Administrator">
+        <bpmn:flowNodeRef>W1869_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1869_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1869_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1869_End9</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1869_Start4" name="Landlord invoice received with amount different from expected rent schedule">
+        <bpmn:outgoing>W1869_Flow12</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1869_Task5" name="AP Clerk identifies invoice exception during rent payment processing: (a) total…">
+        <bpmn:documentation>Step 1: AP Clerk identifies invoice exception during rent payment processing: (a) total amount exceeds expected rent schedule by &gt; PHP 1,000 or 2%, (b) new charge line items not in previous months, (c) duplicate invoice for same period, (d) late fee or penalty charge
+Responsible (R): AP Clerk
+Accountable (A): Lease Administrator
+Duration: 5 min/exception</bpmn:documentation>
+        <bpmn:incoming>W1869_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1869_Flow12</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1869_Task6" name="Lease Administrator investigates exception: (a) compare invoice to lease…">
+        <bpmn:documentation>Step 2: Lease Administrator investigates exception: (a) compare invoice to lease agreement: is the charge authorized?, (b) common unauthorized charges: (i) capital improvement levy, (ii) marketing fund contribution, (iii) property insurance premium increase without notice, (iv) late fee for previously disputed charges, (c) if charge is authorized per lease: approve for payment, (d) if charge is unauthorized: dispute per step 3
+Responsible (R): Lease Administrator
+Accountable (A): COO
+Duration: 15–30 min/exception</bpmn:documentation>
+        <bpmn:incoming>W1869_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1869_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1869_Task7" name="Dispute resolution: (a) Lease Administrator sends written dispute to landlord…">
+        <bpmn:documentation>Step 3: Dispute resolution: (a) Lease Administrator sends written dispute to landlord referencing specific lease clause that does not authorize the charge, (b) pay only undisputed portion of invoice on time (avoid late fees on undisputed rent), (c) if landlord insists on payment: escalate to COO for negotiation, (d) Legal Counsel involved if landlord threatens lease default over disputed charges
+Responsible (R): Lease Administrator / Legal
+Accountable (A): COO
+Duration: 1–2 hours/dispute</bpmn:documentation>
+        <bpmn:incoming>W1869_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1869_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1869_Task8" name="Monthly: Lease Administrator reports exception and dispute summary to COO: (a)…">
+        <bpmn:documentation>Step 4: Monthly: Lease Administrator reports exception and dispute summary to COO: (a) exception frequency by landlord, (b) total disputed amount, (c) resolution rate and average resolution time, (d) chronic offenders flagged for lease renegotiation consideration
+Responsible (R): Lease Administrator
+Accountable (A): COO
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1869_Flow15</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1869_End9" name="Complete">
+        <bpmn:incoming>W1869_Flow16</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1869_Annotation10">
+        <bpmn:text>Controls: - CTL-368 (ensure controlled execution — Rent Payment, Escalation &amp; CAM Reconciliation (PA-42.2).) | - operational: AP Clerk review and approval gate
+Owner: AP Clerk</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1869_Assoc11" sourceRef="W1869_Annotation10" targetRef="W1869_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1869_Flow12" sourceRef="W1869_Start4" targetRef="W1869_Task5" />
+      <bpmn:sequenceFlow id="W1869_Flow13" sourceRef="W1869_Task5" targetRef="W1869_Task6" />
+      <bpmn:sequenceFlow id="W1869_Flow14" sourceRef="W1869_Task6" targetRef="W1869_Task7" />
+      <bpmn:sequenceFlow id="W1869_Flow15" sourceRef="W1869_Task7" targetRef="W1869_Task8" />
+      <bpmn:sequenceFlow id="W1869_Flow16" sourceRef="W1869_Task8" targetRef="W1869_End9" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1869_diag">
+      <bpmndi:BPMNPlane id="W1869_plane" bpmnElement="W_W1869">
+        <bpmndi:BPMNShape id="W1869_Lane1_di" bpmnElement="W1869_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_Lane2_di" bpmnElement="W1869_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_Task5_di" bpmnElement="W1869_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_Task6_di" bpmnElement="W1869_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_Task7_di" bpmnElement="W1869_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_Task8_di" bpmnElement="W1869_Task8"><dc:Bounds x="1030" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_Start4_di" bpmnElement="W1869_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_End9_di" bpmnElement="W1869_End9"><dc:Bounds x="1260" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1869_Annotation10_di" bpmnElement="W1869_Annotation10"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1869_Flow12_di" bpmnElement="W1869_Flow12"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1869_Flow13_di" bpmnElement="W1869_Flow13"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1869_Flow14_di" bpmnElement="W1869_Flow14"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1869_Flow15_di" bpmnElement="W1869_Flow15"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1869_Flow16_di" bpmnElement="W1869_Flow16"><di:waypoint x="1210" y="335" /><di:waypoint x="1260" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1869_Assoc11_di" bpmnElement="W1869_Assoc11"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

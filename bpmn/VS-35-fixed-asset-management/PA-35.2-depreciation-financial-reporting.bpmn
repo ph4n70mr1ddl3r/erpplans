@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-35.2-depreciation-financial-reporting" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+    <bpmn:process id="W_W1698" name="W1698. Monthly Depreciation Run &amp; Journal Posting" isExecutable="false">
+      <bpmn:documentation>Trigger: Month-end close process (Day 1 of following month)
+Frequency: Monthly (5 entities × 12 months = 60 runs/year)
+Volume: ~15,000–20,000 active assets depreciated per month
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, GL Accountant, Accounting Manager
+Source: workflow W1698 — Monthly Depreciation Run &amp; Journal Posting</bpmn:documentation>
+      <bpmn:laneSet id="W1698_LaneSet4">
+        <bpmn:lane id="W1698_Lane1" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1698_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1698_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1698_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1698_Lane2" name="System">
+        <bpmn:flowNodeRef>W1698_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1698_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1698_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1698_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1698_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1698_Start5" name="Month-end close process (Day 1 of following month)">
+        <bpmn:outgoing>W1698_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1698_Task6" name="Before depreciation run: Fixed Asset Accountant verifies all new assets from…">
+        <bpmn:documentation>Step 1: Before depreciation run: Fixed Asset Accountant verifies all new assets from the month have been registered per W1690 and all disposals/retirements processed per W1708; system flags assets with missing classification or useful life
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1698_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1698_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1698_Task7" name="System executes depreciation calculation for all active assets: (a)…">
+        <bpmn:documentation>Step 2: System executes depreciation calculation for all active assets: (a) straight-line depreciation for most categories: monthly expense = (cost − residual value) ÷ useful life in months, (b) declining balance for vehicles: monthly expense = net book value × (rate ÷ 12), (c) depreciation starts from ready-for-use date — partial month calculated pro-rata, (d) fully depreciated assets (net book value = residual value or zero) are skipped, (e) assets on hold or pending disposal continue depreciating until formal disposal date
+Responsible (R): System
+Accountable (A): —
+Duration: ~5 min computation</bpmn:documentation>
+        <bpmn:incoming>W1698_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1698_Flow15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1698_Task8" name="Fixed Asset Accountant reviews depreciation run results: (a) total depreciation…">
+        <bpmn:documentation>Step 3: Fixed Asset Accountant reviews depreciation run results: (a) total depreciation expense by entity vs. prior month (material variance investigation), (b) new assets added this month — verify depreciation amounts, (c) assets reaching end of useful life this month — flag for disposal review per W1708, (d) any errors or exceptions (negative depreciation, missing parameters)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1–2 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1698_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1698_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1698_Task9" name="Accounting Manager approves depreciation run; system posts journal entries: (a)…">
+        <bpmn:documentation>Step 4: Accounting Manager approves depreciation run; system posts journal entries: (a) debit: depreciation expense by cost center (store/DC/HQ/department), (b) credit: accumulated depreciation by asset category, (c) entries posted to each entity&#x27;s GL separately, (d) consolidation elimination not needed (depreciation is entity-specific)
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1698_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1698_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1698_Task10" name="System updates each asset&#x27;s net book value; generates depreciation schedule…">
+        <bpmn:documentation>Step 5: System updates each asset&#x27;s net book value; generates depreciation schedule report for the month showing: cost, accumulated depreciation, net book value by asset, category, location, and entity
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1698_Flow18</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="W1698_End11" name="Complete">
+        <bpmn:incoming>W1698_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1698_Annotation12">
+        <bpmn:text>Controls: - CTL-347 (ensure controlled execution — Depreciation &amp; Financial Reporting (PA-35.2).) | - operational: Fixed Asset Accountant review and approval gate
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1698_Assoc13" sourceRef="W1698_Annotation12" targetRef="W1698_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1698_Flow14" sourceRef="W1698_Start5" targetRef="W1698_Task6" />
+      <bpmn:sequenceFlow id="W1698_Flow15" sourceRef="W1698_Task6" targetRef="W1698_Task7" />
+      <bpmn:sequenceFlow id="W1698_Flow16" sourceRef="W1698_Task7" targetRef="W1698_Task8" />
+      <bpmn:sequenceFlow id="W1698_Flow17" sourceRef="W1698_Task8" targetRef="W1698_Task9" />
+      <bpmn:sequenceFlow id="W1698_Flow18" sourceRef="W1698_Task9" targetRef="W1698_Task10" />
+      <bpmn:sequenceFlow id="W1698_Flow19" sourceRef="W1698_Task10" targetRef="W1698_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1698_diag">
+      <bpmndi:BPMNPlane id="W1698_plane" bpmnElement="W_W1698">
+        <bpmndi:BPMNShape id="W1698_Lane1_di" bpmnElement="W1698_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Lane2_di" bpmnElement="W1698_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Lane3_di" bpmnElement="W1698_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Task6_di" bpmnElement="W1698_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Task7_di" bpmnElement="W1698_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Task8_di" bpmnElement="W1698_Task8"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Task9_di" bpmnElement="W1698_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Task10_di" bpmnElement="W1698_Task10"><dc:Bounds x="1240" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Start5_di" bpmnElement="W1698_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_End11_di" bpmnElement="W1698_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1698_Annotation12_di" bpmnElement="W1698_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1698_Flow14_di" bpmnElement="W1698_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1698_Flow15_di" bpmnElement="W1698_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1698_Flow16_di" bpmnElement="W1698_Flow16"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1698_Flow17_di" bpmnElement="W1698_Flow17"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1698_Flow18_di" bpmnElement="W1698_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1698_Flow19_di" bpmnElement="W1698_Flow19"><di:waypoint x="1420" y="335" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1698_Assoc13_di" bpmnElement="W1698_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1699" name="W1699. Depreciation Method Review &amp; Useful Life Adjustment" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual review, physical verification findings (W1706), or significant change in asset usage pattern
+Frequency: Annual review (Q4); ad-hoc as needed
+Volume: ~50–100 useful life adjustments/year
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Accounting Manager, External Auditor
+Source: workflow W1699 — Depreciation Method Review &amp; Useful Life Adjustment</bpmn:documentation>
+      <bpmn:laneSet id="W1699_LaneSet5">
+        <bpmn:lane id="W1699_Lane1" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1699_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1699_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1699_Start6</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1699_Lane2" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1699_Task9</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1699_Lane3" name="System">
+        <bpmn:flowNodeRef>W1699_Task10</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1699_Lane4" name="External Auditor">
+        <bpmn:flowNodeRef>W1699_Task11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1699_End12</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1699_Start6" name="Annual review, physical verification findings (W1706), or significant change in asset…">
+        <bpmn:outgoing>W1699_Flow15</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1699_Task7" name="Triggers for useful life review: (a) physical verification reveals asset in…">
+        <bpmn:documentation>Step 1: Triggers for useful life review: (a) physical verification reveals asset in worse/better condition than expected, (b) technology change (e.g., POS system upgrade makes existing terminals obsolete sooner), (c) regulatory change (e.g., new emission standards require fleet replacement), (d) change in usage pattern (store open longer hours → fixtures wear faster), (e) external auditor recommendation
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: Event-driven</bpmn:documentation>
+        <bpmn:incoming>W1699_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1699_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1699_Task8" name="Fixed Asset Accountant prepares useful life adjustment proposal: (a) asset(s)…">
+        <bpmn:documentation>Step 2: Fixed Asset Accountant prepares useful life adjustment proposal: (a) asset(s) affected, (b) current useful life and remaining useful life, (c) proposed new useful life with justification, (d) impact on future depreciation expense (increase/decrease per month), (e) catch-up adjustment needed for prior periods (prospectively per PFRS — no restatement)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1–2 hours/batch</bpmn:documentation>
+        <bpmn:incoming>W1699_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1699_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1699_Task9" name="Accounting Manager reviews and approves adjustment; for material changes…">
+        <bpmn:documentation>Step 3: Accounting Manager reviews and approves adjustment; for material changes (aggregate impact &gt; PHP 1M/year): CFO approval required
+Responsible (R): Accounting Manager / CFO
+Accountable (A): CFO
+Duration: 30 min</bpmn:documentation>
+        <bpmn:incoming>W1699_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1699_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1699_Task10" name="System updates useful life on affected assets; recalculates remaining…">
+        <bpmn:documentation>Step 4: System updates useful life on affected assets; recalculates remaining depreciation schedule: (a) net book value at adjustment date ÷ remaining new useful life = new monthly depreciation, (b) adjustment applied prospectively from next depreciation run, (c) change documented in asset history with approval reference
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1699_Flow18</bpmn:incoming>
+        <bpmn:outgoing>W1699_Flow18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1699_Task11" name="External auditor reviews useful life changes during annual audit; confirms PFRS…">
+        <bpmn:documentation>Step 5: External auditor reviews useful life changes during annual audit; confirms PFRS compliance and consistency of application
+Responsible (R): External Auditor
+Accountable (A): —
+Duration: During annual audit</bpmn:documentation>
+        <bpmn:incoming>W1699_Flow19</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1699_End12" name="Complete">
+        <bpmn:incoming>W1699_Flow20</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1699_Annotation13">
+        <bpmn:text>Controls: - CTL-347 (ensure controlled execution — Depreciation &amp; Financial Reporting (PA-35.2).) | - operational: Fixed Asset Accountant review and approval gate
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1699_Assoc14" sourceRef="W1699_Annotation13" targetRef="W1699_Start6" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1699_Flow15" sourceRef="W1699_Start6" targetRef="W1699_Task7" />
+      <bpmn:sequenceFlow id="W1699_Flow16" sourceRef="W1699_Task7" targetRef="W1699_Task8" />
+      <bpmn:sequenceFlow id="W1699_Flow17" sourceRef="W1699_Task8" targetRef="W1699_Task9" />
+      <bpmn:sequenceFlow id="W1699_Flow18" sourceRef="W1699_Task9" targetRef="W1699_Task10" />
+      <bpmn:sequenceFlow id="W1699_Flow19" sourceRef="W1699_Task10" targetRef="W1699_Task11" />
+      <bpmn:sequenceFlow id="W1699_Flow20" sourceRef="W1699_Task11" targetRef="W1699_End12" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1699_diag">
+      <bpmndi:BPMNPlane id="W1699_plane" bpmnElement="W_W1699">
+        <bpmndi:BPMNShape id="W1699_Lane1_di" bpmnElement="W1699_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Lane2_di" bpmnElement="W1699_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Lane3_di" bpmnElement="W1699_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Lane4_di" bpmnElement="W1699_Lane4" isHorizontal="true"><dc:Bounds x="160" y="590" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Task7_di" bpmnElement="W1699_Task7"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Task8_di" bpmnElement="W1699_Task8"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Task9_di" bpmnElement="W1699_Task9"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Task10_di" bpmnElement="W1699_Task10"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Task11_di" bpmnElement="W1699_Task11"><dc:Bounds x="1240" y="635" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Start6_di" bpmnElement="W1699_Start6"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_End12_di" bpmnElement="W1699_End12"><dc:Bounds x="1470" y="657" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1699_Annotation13_di" bpmnElement="W1699_Annotation13"><dc:Bounds x="160" y="800" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1699_Flow15_di" bpmnElement="W1699_Flow15"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1699_Flow16_di" bpmnElement="W1699_Flow16"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1699_Flow17_di" bpmnElement="W1699_Flow17"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1699_Flow18_di" bpmnElement="W1699_Flow18"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1699_Flow19_di" bpmnElement="W1699_Flow19"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1699_Flow20_di" bpmnElement="W1699_Flow20"><di:waypoint x="1420" y="675" /><di:waypoint x="1470" y="675" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1699_Assoc14_di" bpmnElement="W1699_Assoc14"><di:waypoint x="340" y="800" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1700" name="W1700. Impairment Assessment &amp; Testing" isExecutable="false">
+      <bpmn:documentation>Trigger: Indicators of impairment: store closure plan, significant decline in asset market value, physical damage, change in use, or annual testing for goodwill/certain intangibles
+Frequency: Event-driven; annual review for stores with consistent losses
+Volume: ~5–15 impairment assessments/year
+Owner: FP&amp;A Manager
+Participants: FP&amp;A Manager, Fixed Asset Accountant, Accounting Manager, CFO, External Auditor
+Source: workflow W1700 — Impairment Assessment &amp; Testing</bpmn:documentation>
+      <bpmn:laneSet id="W1700_LaneSet4">
+        <bpmn:lane id="W1700_Lane1" name="FP&amp;A Manager">
+        <bpmn:flowNodeRef>W1700_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1700_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1700_Task10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1700_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1700_Lane2" name="CFO">
+        <bpmn:flowNodeRef>W1700_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1700_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1700_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1700_End11</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1700_Start5" name="Indicators of impairment: store closure plan, significant decline in asset market value…">
+        <bpmn:outgoing>W1700_Flow14</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1700_Task6" name="Identify impairment indicators: (a) store-level P&amp;L shows 4+ consecutive…">
+        <bpmn:documentation>Step 1: Identify impairment indicators: (a) store-level P&amp;L shows 4+ consecutive quarters of operating loss, (b) store identified for closure or downsizing, (c) natural disaster damage (typhoon, flood), (d) technology obsolescence (old POS system), (e) significant decline in asset replacement cost, (f) regulatory change making asset use illegal or restricted
+Responsible (R): FP&amp;A Manager
+Accountable (A): CFO
+Duration: Event-driven</bpmn:documentation>
+        <bpmn:incoming>W1700_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1700_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1700_Task7" name="For identified stores/assets, FP&amp;A performs recoverable amount test per PAS 36…">
+        <bpmn:documentation>Step 2: For identified stores/assets, FP&amp;A performs recoverable amount test per PAS 36: (a) value in use: discounted future cash flows from store operations (revenue projections, cost projections, remaining useful life), (b) fair value less cost of disposal: market comparable or appraisal for real estate, (c) recoverable amount = higher of (a) and (b), (d) if recoverable amount &lt; carrying amount (net book value) → impairment loss = difference
+Responsible (R): FP&amp;A Manager
+Accountable (A): CFO
+Duration: 4–8 hours/store</bpmn:documentation>
+        <bpmn:incoming>W1700_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1700_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1700_Task8" name="CFO reviews impairment assessment; if impairment confirmed: (a) Fixed Asset…">
+        <bpmn:documentation>Step 3: CFO reviews impairment assessment; if impairment confirmed: (a) Fixed Asset Accountant records impairment loss in GL: debit impairment expense, credit accumulated impairment, (b) asset&#x27;s carrying amount reduced to recoverable amount, (c) revised carrying amount becomes new basis for future depreciation (over remaining revised useful life)
+Responsible (R): CFO
+Accountable (A): CEO / Board (if material)
+Duration: 1 hour</bpmn:documentation>
+        <bpmn:incoming>W1700_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1700_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1700_Task9" name="Disclosures: Accounting Manager ensures impairment loss is properly disclosed…">
+        <bpmn:documentation>Step 4: Disclosures: Accounting Manager ensures impairment loss is properly disclosed in financial statement notes per PAS 36 — description of asset, nature of impairment, amount, method of determining recoverable amount
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 2 hours</bpmn:documentation>
+        <bpmn:incoming>W1700_Flow17</bpmn:incoming>
+        <bpmn:outgoing>W1700_Flow17</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1700_Task10" name="Annual review: FP&amp;A reassesses impaired assets for possible reversal (PFRS…">
+        <bpmn:documentation>Step 5: Annual review: FP&amp;A reassesses impaired assets for possible reversal (PFRS allows reversal for non-goodwill impairments if conditions improve)
+Responsible (R): FP&amp;A Manager
+Accountable (A): CFO
+Duration: 2 hours/year</bpmn:documentation>
+        <bpmn:incoming>W1700_Flow18</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1700_End11" name="Complete">
+        <bpmn:incoming>W1700_Flow19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1700_Annotation12">
+        <bpmn:text>Controls: - CTL-347 (ensure controlled execution — Depreciation &amp; Financial Reporting (PA-35.2).) | - operational: FP&amp;A Manager review and approval gate
+Owner: FP&amp;A Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1700_Assoc13" sourceRef="W1700_Annotation12" targetRef="W1700_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1700_Flow14" sourceRef="W1700_Start5" targetRef="W1700_Task6" />
+      <bpmn:sequenceFlow id="W1700_Flow15" sourceRef="W1700_Task6" targetRef="W1700_Task7" />
+      <bpmn:sequenceFlow id="W1700_Flow16" sourceRef="W1700_Task7" targetRef="W1700_Task8" />
+      <bpmn:sequenceFlow id="W1700_Flow17" sourceRef="W1700_Task8" targetRef="W1700_Task9" />
+      <bpmn:sequenceFlow id="W1700_Flow18" sourceRef="W1700_Task9" targetRef="W1700_Task10" />
+      <bpmn:sequenceFlow id="W1700_Flow19" sourceRef="W1700_Task10" targetRef="W1700_End11" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1700_diag">
+      <bpmndi:BPMNPlane id="W1700_plane" bpmnElement="W_W1700">
+        <bpmndi:BPMNShape id="W1700_Lane1_di" bpmnElement="W1700_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Lane2_di" bpmnElement="W1700_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Lane3_di" bpmnElement="W1700_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Task6_di" bpmnElement="W1700_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Task7_di" bpmnElement="W1700_Task7"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Task8_di" bpmnElement="W1700_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Task9_di" bpmnElement="W1700_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Task10_di" bpmnElement="W1700_Task10"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Start5_di" bpmnElement="W1700_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_End11_di" bpmnElement="W1700_End11"><dc:Bounds x="1470" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1700_Annotation12_di" bpmnElement="W1700_Annotation12"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1700_Flow14_di" bpmnElement="W1700_Flow14"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1700_Flow15_di" bpmnElement="W1700_Flow15"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1700_Flow16_di" bpmnElement="W1700_Flow16"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1700_Flow17_di" bpmnElement="W1700_Flow17"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1700_Flow18_di" bpmnElement="W1700_Flow18"><di:waypoint x="1210" y="505" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1700_Flow19_di" bpmnElement="W1700_Flow19"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1700_Assoc13_di" bpmnElement="W1700_Assoc13"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1701" name="W1701. Revaluation of Fixed Assets" isExecutable="false">
+      <bpmn:documentation>Trigger: Management decision to adopt revaluation model (vs. cost model) for a class of assets; or significant and sustained change in fair value
+Frequency: Event-driven; if revaluation model adopted, typically every 3–5 years or when material change occurs
+Volume: Rare — only if BuildRight elects revaluation model for land or buildings
+Owner: CFO
+Participants: CFO, Fixed Asset Accountant, External Appraiser, External Auditor
+Source: workflow W1701 — Revaluation of Fixed Assets</bpmn:documentation>
+      <bpmn:laneSet id="W1701_LaneSet4">
+        <bpmn:lane id="W1701_Lane1" name="CFO">
+        <bpmn:flowNodeRef>W1701_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1701_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1701_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1701_Lane2" name="External Appraiser">
+        <bpmn:flowNodeRef>W1701_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1701_Lane3" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1701_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1701_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1701_Start5" name="Management decision to adopt revaluation model (vs. cost model) for a class of assets; or…">
+        <bpmn:outgoing>W1701_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1701_Task6" name="CFO determines if revaluation model is appropriate: (a) typically applied to…">
+        <bpmn:documentation>Step 1: CFO determines if revaluation model is appropriate: (a) typically applied to land and buildings where fair value is reliably measurable, (b) revaluation model requires regular revaluation of entire asset class (not individual assets), (c) cost model (most common in Philippine retail) is default — no revaluation needed
+Responsible (R): CFO
+Accountable (A): Board
+Duration: Strategic decision</bpmn:documentation>
+        <bpmn:incoming>W1701_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1701_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1701_Task7" name="If revaluation adopted: engage accredited external appraiser to determine fair…">
+        <bpmn:documentation>Step 2: If revaluation adopted: engage accredited external appraiser to determine fair value of asset class (e.g., all store properties, all land); appraiser provides valuation report with methodology, assumptions, and fair value conclusions
+Responsible (R): External Appraiser
+Accountable (A): CFO
+Duration: 2–4 weeks</bpmn:documentation>
+        <bpmn:incoming>W1701_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1701_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1701_Task8" name="Fixed Asset Accountant records revaluation adjustment: (a) if fair value &gt;…">
+        <bpmn:documentation>Step 3: Fixed Asset Accountant records revaluation adjustment: (a) if fair value &gt; carrying amount: credit revaluation surplus (equity, other comprehensive income), (b) if fair value &lt; carrying amount: debit revaluation loss (P&amp;L, to extent of prior surplus), (c) depreciation recalculated on revalued amount over remaining useful life
+Responsible (R): Fixed Asset Accountant
+Accountable (A): CFO
+Duration: 1–2 days</bpmn:documentation>
+        <bpmn:incoming>W1701_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1701_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1701_Task9" name="Ongoing: revaluation must be kept sufficiently current; if asset class is…">
+        <bpmn:documentation>Step 4: Ongoing: revaluation must be kept sufficiently current; if asset class is revalued, all assets in that class must be revalued simultaneously
+Responsible (R): CFO
+Accountable (A): Board
+Duration: Every 3–5 years</bpmn:documentation>
+        <bpmn:incoming>W1701_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1701_End10" name="Complete">
+        <bpmn:incoming>W1701_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1701_Annotation11">
+        <bpmn:text>Controls: - CTL-347 (ensure controlled execution — Depreciation &amp; Financial Reporting (PA-35.2).) | - operational: standard operating procedures; system-enforced validation rules
+Owner: CFO</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1701_Assoc12" sourceRef="W1701_Annotation11" targetRef="W1701_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1701_Flow13" sourceRef="W1701_Start5" targetRef="W1701_Task6" />
+      <bpmn:sequenceFlow id="W1701_Flow14" sourceRef="W1701_Task6" targetRef="W1701_Task7" />
+      <bpmn:sequenceFlow id="W1701_Flow15" sourceRef="W1701_Task7" targetRef="W1701_Task8" />
+      <bpmn:sequenceFlow id="W1701_Flow16" sourceRef="W1701_Task8" targetRef="W1701_Task9" />
+      <bpmn:sequenceFlow id="W1701_Flow17" sourceRef="W1701_Task9" targetRef="W1701_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1701_diag">
+      <bpmndi:BPMNPlane id="W1701_plane" bpmnElement="W_W1701">
+        <bpmndi:BPMNShape id="W1701_Lane1_di" bpmnElement="W1701_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Lane2_di" bpmnElement="W1701_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Lane3_di" bpmnElement="W1701_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Task6_di" bpmnElement="W1701_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Task7_di" bpmnElement="W1701_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Task8_di" bpmnElement="W1701_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Task9_di" bpmnElement="W1701_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Start5_di" bpmnElement="W1701_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_End10_di" bpmnElement="W1701_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1701_Annotation11_di" bpmnElement="W1701_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1701_Flow13_di" bpmnElement="W1701_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1701_Flow14_di" bpmnElement="W1701_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1701_Flow15_di" bpmnElement="W1701_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1701_Flow16_di" bpmnElement="W1701_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1701_Flow17_di" bpmnElement="W1701_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1701_Assoc12_di" bpmnElement="W1701_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1702" name="W1702. Fixed Asset Register Reconciliation &amp; Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Month-end close; annual audit preparation
+Frequency: Monthly reconciliation; quarterly detailed review
+Volume: 5 entity registers + 1 consolidated register
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, GL Accountant, Accounting Manager
+Source: workflow W1702 — Fixed Asset Register Reconciliation &amp; Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W1702_LaneSet4">
+        <bpmn:lane id="W1702_Lane1" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1702_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1702_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1702_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1702_Lane2" name="System">
+        <bpmn:flowNodeRef>W1702_Task7</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1702_Lane3" name="Accounting Manager">
+        <bpmn:flowNodeRef>W1702_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1702_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1702_Start5" name="Month-end close; annual audit preparation">
+        <bpmn:outgoing>W1702_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1702_Task6" name="Monthly: Fixed Asset Accountant reconciles fixed asset sub-ledger to GL: (a)…">
+        <bpmn:documentation>Step 1: Monthly: Fixed Asset Accountant reconciles fixed asset sub-ledger to GL: (a) total gross asset value in sub-ledger = GL fixed asset control accounts, (b) total accumulated depreciation in sub-ledger = GL accumulated depreciation accounts, (c) net book value reconciliation: gross − accumulated depreciation = net book value per GL, (d) identify and resolve discrepancies (timing differences, unposted entries, manual adjustments)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 4–6 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1702_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1702_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:serviceTask id="W1702_Task7" name="System generates monthly fixed asset roll-forward report: (a) opening balance…">
+        <bpmn:documentation>Step 2: System generates monthly fixed asset roll-forward report: (a) opening balance (gross and accumulated depreciation), (b) additions (new assets), (c) disposals (retired assets), (d) depreciation expense for the month, (e) impairment losses, (f) transfers (inter-entity/inter-location), (g) foreign currency translation adjustments (if any), (h) closing balance (gross and accumulated depreciation)
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1702_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1702_Flow14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1702_Task8" name="Accounting Manager reviews roll-forward for unusual movements: (a) large…">
+        <bpmn:documentation>Step 3: Accounting Manager reviews roll-forward for unusual movements: (a) large additions not matching approved capex list, (b) disposals without proper authorization, (c) depreciation spikes from useful life changes, (d) inter-entity transfer imbalances
+Responsible (R): Accounting Manager
+Accountable (A): CFO
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1702_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1702_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1702_Task9" name="Quarterly: Fixed Asset Accountant prepares fixed asset summary for CFO: (a) net…">
+        <bpmn:documentation>Step 4: Quarterly: Fixed Asset Accountant prepares fixed asset summary for CFO: (a) net book value by entity and asset category, (b) capital expenditure vs. budget, (c) depreciation expense vs. budget, (d) disposals and gains/losses on disposal, (e) key metrics: average age of assets by category, asset turnover ratio (revenue ÷ net fixed assets)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): CFO
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1702_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1702_End10" name="Complete">
+        <bpmn:incoming>W1702_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1702_Annotation11">
+        <bpmn:text>Controls: - CTL-347 (ensure controlled execution — Depreciation &amp; Financial Reporting (PA-35.2).) | - operational: Fixed Asset Accountant review and approval gate; periodic reconciliation against source documents
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1702_Assoc12" sourceRef="W1702_Annotation11" targetRef="W1702_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1702_Flow13" sourceRef="W1702_Start5" targetRef="W1702_Task6" />
+      <bpmn:sequenceFlow id="W1702_Flow14" sourceRef="W1702_Task6" targetRef="W1702_Task7" />
+      <bpmn:sequenceFlow id="W1702_Flow15" sourceRef="W1702_Task7" targetRef="W1702_Task8" />
+      <bpmn:sequenceFlow id="W1702_Flow16" sourceRef="W1702_Task8" targetRef="W1702_Task9" />
+      <bpmn:sequenceFlow id="W1702_Flow17" sourceRef="W1702_Task9" targetRef="W1702_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1702_diag">
+      <bpmndi:BPMNPlane id="W1702_plane" bpmnElement="W_W1702">
+        <bpmndi:BPMNShape id="W1702_Lane1_di" bpmnElement="W1702_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Lane2_di" bpmnElement="W1702_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Lane3_di" bpmnElement="W1702_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Task6_di" bpmnElement="W1702_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Task7_di" bpmnElement="W1702_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Task8_di" bpmnElement="W1702_Task8"><dc:Bounds x="820" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Task9_di" bpmnElement="W1702_Task9"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Start5_di" bpmnElement="W1702_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_End10_di" bpmnElement="W1702_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1702_Annotation11_di" bpmnElement="W1702_Annotation11"><dc:Bounds x="160" y="630" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1702_Flow13_di" bpmnElement="W1702_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1702_Flow14_di" bpmnElement="W1702_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1702_Flow15_di" bpmnElement="W1702_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1702_Flow16_di" bpmnElement="W1702_Flow16"><di:waypoint x="1000" y="505" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1702_Flow17_di" bpmnElement="W1702_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1702_Assoc12_di" bpmnElement="W1702_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1703" name="W1703. Entity-Level &amp; Consolidated Asset Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Monthly management reporting; quarterly Board reporting; annual financial statements
+Frequency: Monthly / Quarterly / Annual
+Volume: 5 entity reports + 1 consolidated report per period
+Owner: FP&amp;A Manager
+Participants: FP&amp;A Manager, Fixed Asset Accountant, CFO
+Source: workflow W1703 — Entity-Level &amp; Consolidated Asset Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W1703_LaneSet3">
+        <bpmn:lane id="W1703_Lane1" name="System">
+        <bpmn:flowNodeRef>W1703_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1703_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1703_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1703_Lane2" name="FP&amp;A Manager">
+        <bpmn:flowNodeRef>W1703_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1703_End8</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1703_Start4" name="Monthly management reporting; quarterly Board reporting; annual financial statements">
+        <bpmn:outgoing>W1703_Flow11</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1703_Task5" name="System generates entity-level fixed asset reports for each of the 5 entities…">
+        <bpmn:documentation>Step 1: System generates entity-level fixed asset reports for each of the 5 entities: (a) BuildRight Holdings Inc. — HQ assets, investments, (b) BuildRight Depot Inc. — stores, POS, fixtures, merchandise-related equipment, (c) BuildRight Logistics Inc. — DC equipment, forklifts, warehouse racking, (d) BuildRight Digital Commerce Inc. — IT servers, development equipment, (e) BuildRight Property Management Inc. — land, buildings, leased property improvements
+Responsible (R): System
+Accountable (A): —
+Duration: Automated</bpmn:documentation>
+        <bpmn:incoming>W1703_Flow11</bpmn:incoming>
+        <bpmn:outgoing>W1703_Flow11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="W1703_Task6" name="Consolidated fixed asset report: (a) sum of all entity registers, (b)…">
+        <bpmn:documentation>Step 2: Consolidated fixed asset report: (a) sum of all entity registers, (b) elimination of intercompany asset transfers (selling entity removes, buying entity adds — net zero at group level), (c) elimination of intercompany gains/losses on asset transfers, (d) unified depreciation schedule for group reporting
+Responsible (R): System
+Accountable (A): Fixed Asset Accountant
+Duration: 30 min/month</bpmn:documentation>
+        <bpmn:incoming>W1703_Flow12</bpmn:incoming>
+        <bpmn:outgoing>W1703_Flow12</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1703_Task7" name="FP&amp;A prepares Board-level capital asset summary: (a) total net book value and…">
+        <bpmn:documentation>Step 3: FP&amp;A prepares Board-level capital asset summary: (a) total net book value and trend, (b) capital intensity ratio (net fixed assets ÷ total assets), (c) asset utilization (revenue ÷ average net fixed assets), (d) capex to depreciation ratio (indicates whether asset base is growing or aging), (e) planned vs. actual capex, (f) store-level asset intensity (net assets per store)
+Responsible (R): FP&amp;A Manager
+Accountable (A): CFO
+Duration: 2 hours/quarter</bpmn:documentation>
+        <bpmn:incoming>W1703_Flow13</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1703_End8" name="Complete">
+        <bpmn:incoming>W1703_Flow14</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1703_Annotation9">
+        <bpmn:text>Controls: - CTL-219 (ensure fixed-asset register accuracy.) | - operational: standard operating procedures; system-enforced validation rules
+Owner: FP&amp;A Manager</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1703_Assoc10" sourceRef="W1703_Annotation9" targetRef="W1703_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1703_Flow11" sourceRef="W1703_Start4" targetRef="W1703_Task5" />
+      <bpmn:sequenceFlow id="W1703_Flow12" sourceRef="W1703_Task5" targetRef="W1703_Task6" />
+      <bpmn:sequenceFlow id="W1703_Flow13" sourceRef="W1703_Task6" targetRef="W1703_Task7" />
+      <bpmn:sequenceFlow id="W1703_Flow14" sourceRef="W1703_Task7" targetRef="W1703_End8" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1703_diag">
+      <bpmndi:BPMNPlane id="W1703_plane" bpmnElement="W_W1703">
+        <bpmndi:BPMNShape id="W1703_Lane1_di" bpmnElement="W1703_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1703_Lane2_di" bpmnElement="W1703_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="950" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1703_Task5_di" bpmnElement="W1703_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1703_Task6_di" bpmnElement="W1703_Task6"><dc:Bounds x="610" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1703_Task7_di" bpmnElement="W1703_Task7"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1703_Start4_di" bpmnElement="W1703_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1703_End8_di" bpmnElement="W1703_End8"><dc:Bounds x="1050" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1703_Annotation9_di" bpmnElement="W1703_Annotation9"><dc:Bounds x="160" y="460" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1703_Flow11_di" bpmnElement="W1703_Flow11"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1703_Flow12_di" bpmnElement="W1703_Flow12"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1703_Flow13_di" bpmnElement="W1703_Flow13"><di:waypoint x="790" y="165" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1703_Flow14_di" bpmnElement="W1703_Flow14"><di:waypoint x="1000" y="335" /><di:waypoint x="1050" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1703_Assoc10_di" bpmnElement="W1703_Assoc10"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1704" name="W1704. Tax Depreciation &amp; BIR Compliance Reporting" isExecutable="false">
+      <bpmn:documentation>Trigger: Annual income tax return preparation (Q1)
+Frequency: Annual (with quarterly estimates)
+Volume: 5 entity tax returns
+Owner: Tax Accountant
+Participants: Tax Accountant, Fixed Asset Accountant, External Tax Advisor
+Source: workflow W1704 — Tax Depreciation &amp; BIR Compliance Reporting</bpmn:documentation>
+      <bpmn:laneSet id="W1704_LaneSet4">
+        <bpmn:lane id="W1704_Lane1" name="System">
+        <bpmn:flowNodeRef>W1704_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1704_Start5</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1704_Lane2" name="Tax Accountant">
+        <bpmn:flowNodeRef>W1704_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1704_Task8</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1704_Lane3" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1704_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1704_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1704_Start5" name="Annual income tax return preparation (Q1)">
+        <bpmn:outgoing>W1704_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="W1704_Task6" name="System maintains parallel tax depreciation schedule per BIR-prescribed rates…">
+        <bpmn:documentation>Step 1: System maintains parallel tax depreciation schedule per BIR-prescribed rates: (a) buildings: 5% declining balance or straight-line (taxpayer choice), (b) machinery and equipment: varies by type per BIR schedule, (c) vehicles: 20% declining balance (5-year useful life), (d) computers/IT equipment: 20–33.3% per BIR schedule, (e) furniture and fixtures: 10% declining balance (10-year useful life)
+Responsible (R): System
+Accountable (A): Tax Accountant
+Duration: Configured annually</bpmn:documentation>
+        <bpmn:incoming>W1704_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1704_Flow13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="W1704_Task7" name="Annual: Tax Accountant generates tax depreciation schedule per entity; compares…">
+        <bpmn:documentation>Step 2: Annual: Tax Accountant generates tax depreciation schedule per entity; compares with book depreciation per W1698; calculates book-tax difference (temporary difference → deferred tax asset or liability per PFRS 112)
+Responsible (R): Tax Accountant
+Accountable (A): Tax Manager
+Duration: 1–2 days/year</bpmn:documentation>
+        <bpmn:incoming>W1704_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1704_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1704_Task8" name="Tax depreciation amounts used in annual income tax computation (BIR Form…">
+        <bpmn:documentation>Step 3: Tax depreciation amounts used in annual income tax computation (BIR Form 1702RT); included in tax return supporting schedules; tax depreciation reduces taxable income
+Responsible (R): Tax Accountant
+Accountable (A): CFO
+Duration: Part of annual tax return</bpmn:documentation>
+        <bpmn:incoming>W1704_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1704_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1704_Task9" name="BIR audit readiness: Fixed asset register and depreciation schedules maintained…">
+        <bpmn:documentation>Step 4: BIR audit readiness: Fixed asset register and depreciation schedules maintained for 10-year retention period per BIR requirement; supporting documents (POs, delivery receipts, board resolutions for capex approval) archived and indexed
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: Ongoing</bpmn:documentation>
+        <bpmn:incoming>W1704_Flow16</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1704_End10" name="Complete">
+        <bpmn:incoming>W1704_Flow17</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1704_Annotation11">
+        <bpmn:text>Controls: - CTL-347 (ensure controlled execution — Depreciation &amp; Financial Reporting (PA-35.2).) | - operational: Tax Accountant review and approval gate
+Owner: Tax Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1704_Assoc12" sourceRef="W1704_Annotation11" targetRef="W1704_Start5" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1704_Flow13" sourceRef="W1704_Start5" targetRef="W1704_Task6" />
+      <bpmn:sequenceFlow id="W1704_Flow14" sourceRef="W1704_Task6" targetRef="W1704_Task7" />
+      <bpmn:sequenceFlow id="W1704_Flow15" sourceRef="W1704_Task7" targetRef="W1704_Task8" />
+      <bpmn:sequenceFlow id="W1704_Flow16" sourceRef="W1704_Task8" targetRef="W1704_Task9" />
+      <bpmn:sequenceFlow id="W1704_Flow17" sourceRef="W1704_Task9" targetRef="W1704_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1704_diag">
+      <bpmndi:BPMNPlane id="W1704_plane" bpmnElement="W_W1704">
+        <bpmndi:BPMNShape id="W1704_Lane1_di" bpmnElement="W1704_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Lane2_di" bpmnElement="W1704_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Lane3_di" bpmnElement="W1704_Lane3" isHorizontal="true"><dc:Bounds x="160" y="420" width="1160" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Task6_di" bpmnElement="W1704_Task6"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Task7_di" bpmnElement="W1704_Task7"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Task8_di" bpmnElement="W1704_Task8"><dc:Bounds x="820" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Task9_di" bpmnElement="W1704_Task9"><dc:Bounds x="1030" y="465" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Start5_di" bpmnElement="W1704_Start5"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_End10_di" bpmnElement="W1704_End10"><dc:Bounds x="1260" y="487" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1704_Annotation11_di" bpmnElement="W1704_Annotation11"><dc:Bounds x="160" y="630" width="360" height="60" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1704_Flow13_di" bpmnElement="W1704_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1704_Flow14_di" bpmnElement="W1704_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1704_Flow15_di" bpmnElement="W1704_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1704_Flow16_di" bpmnElement="W1704_Flow16"><di:waypoint x="1000" y="335" /><di:waypoint x="1030" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1704_Flow17_di" bpmnElement="W1704_Flow17"><di:waypoint x="1210" y="505" /><di:waypoint x="1260" y="505" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1704_Assoc12_di" bpmnElement="W1704_Assoc12"><di:waypoint x="340" y="630" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+    <bpmn:process id="W_W1705" name="W1705. Capital Work-in-Progress Reconciliation" isExecutable="false">
+      <bpmn:documentation>Trigger: Month-end close; project milestone completion
+Frequency: Monthly reconciliation
+Volume: ~10–20 active CIP projects at any time (new stores, DC expansion, IT projects)
+Owner: Fixed Asset Accountant
+Participants: Fixed Asset Accountant, Project Manager, FP&amp;A, Accounting Manager
+Source: workflow W1705 — Capital Work-in-Progress Reconciliation</bpmn:documentation>
+      <bpmn:laneSet id="W1705_LaneSet3">
+        <bpmn:lane id="W1705_Lane1" name="Fixed Asset Accountant">
+        <bpmn:flowNodeRef>W1705_Task5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1705_Task7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1705_Task8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1705_Task9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1705_Start4</bpmn:flowNodeRef>
+        </bpmn:lane>
+        <bpmn:lane id="W1705_Lane2" name="Project Manager">
+        <bpmn:flowNodeRef>W1705_Task6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>W1705_End10</bpmn:flowNodeRef>
+        </bpmn:lane>
+      </bpmn:laneSet>
+      <bpmn:startEvent id="W1705_Start4" name="Month-end close; project milestone completion">
+        <bpmn:outgoing>W1705_Flow13</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="W1705_Task5" name="Monthly: Fixed Asset Accountant reviews all active CIP accounts: (a) costs…">
+        <bpmn:documentation>Step 1: Monthly: Fixed Asset Accountant reviews all active CIP accounts: (a) costs accumulated to date per project, (b) budget vs. actual cost, (c) project status (on-track, delayed, on-hold), (d) estimated completion date, (e) aging of CIP — projects in CIP &gt; 12 months flagged for review (potential abandoned or stalled projects)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 2–4 hours/month</bpmn:documentation>
+        <bpmn:incoming>W1705_Flow13</bpmn:incoming>
+        <bpmn:outgoing>W1705_Flow13</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1705_Task6" name="Project Manager confirms project status; provides: (a) % completion estimate…">
+        <bpmn:documentation>Step 2: Project Manager confirms project status; provides: (a) % completion estimate, (b) costs incurred but not yet invoiced (accruals needed), (c) remaining budget to complete, (d) expected completion date
+Responsible (R): Project Manager
+Accountable (A): COO / CIO
+Duration: 30 min/project</bpmn:documentation>
+        <bpmn:incoming>W1705_Flow14</bpmn:incoming>
+        <bpmn:outgoing>W1705_Flow14</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1705_Task7" name="Fixed Asset Accountant posts month-end CIP accruals for costs incurred but not…">
+        <bpmn:documentation>Step 3: Fixed Asset Accountant posts month-end CIP accruals for costs incurred but not yet invoiced (contractor progress billing lag)
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 1 hour/month</bpmn:documentation>
+        <bpmn:incoming>W1705_Flow15</bpmn:incoming>
+        <bpmn:outgoing>W1705_Flow15</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1705_Task8" name="When project completes: Fixed Asset Accountant reconciles total CIP costs…">
+        <bpmn:documentation>Step 4: When project completes: Fixed Asset Accountant reconciles total CIP costs, performs final review, and triggers asset turnover per W40.3 — converting CIP to completed fixed assets
+Responsible (R): Fixed Asset Accountant
+Accountable (A): Accounting Manager
+Duration: 2–4 hours/project</bpmn:documentation>
+        <bpmn:incoming>W1705_Flow16</bpmn:incoming>
+        <bpmn:outgoing>W1705_Flow16</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="W1705_Task9" name="Abandoned or cancelled projects: CIP costs written off to expense (not…">
+        <bpmn:documentation>Step 5: Abandoned or cancelled projects: CIP costs written off to expense (not capitalized); requires CFO approval; documented with reason for abandonment
+Responsible (R): Fixed Asset Accountant
+Accountable (A): CFO
+Duration: 1 hour/project</bpmn:documentation>
+        <bpmn:incoming>W1705_Flow17</bpmn:incoming>
+      </bpmn:userTask>
+      <bpmn:endEvent id="W1705_End10" name="Complete">
+        <bpmn:incoming>W1705_Flow18</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:textAnnotation id="W1705_Annotation11">
+        <bpmn:text>Controls: - CTL-347 (ensure controlled execution — Depreciation &amp; Financial Reporting (PA-35.2).) | - operational: Fixed Asset Accountant review and approval gate; periodic reconciliation against source documents
+Owner: Fixed Asset Accountant</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="W1705_Assoc12" sourceRef="W1705_Annotation11" targetRef="W1705_Start4" associationDirection="None" />
+      <bpmn:sequenceFlow id="W1705_Flow13" sourceRef="W1705_Start4" targetRef="W1705_Task5" />
+      <bpmn:sequenceFlow id="W1705_Flow14" sourceRef="W1705_Task5" targetRef="W1705_Task6" />
+      <bpmn:sequenceFlow id="W1705_Flow15" sourceRef="W1705_Task6" targetRef="W1705_Task7" />
+      <bpmn:sequenceFlow id="W1705_Flow16" sourceRef="W1705_Task7" targetRef="W1705_Task8" />
+      <bpmn:sequenceFlow id="W1705_Flow17" sourceRef="W1705_Task8" targetRef="W1705_Task9" />
+      <bpmn:sequenceFlow id="W1705_Flow18" sourceRef="W1705_Task9" targetRef="W1705_End10" />
+    </bpmn:process>
+    <bpmndi:BPMNDiagram id="W1705_diag">
+      <bpmndi:BPMNPlane id="W1705_plane" bpmnElement="W_W1705">
+        <bpmndi:BPMNShape id="W1705_Lane1_di" bpmnElement="W1705_Lane1" isHorizontal="true"><dc:Bounds x="160" y="80" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Lane2_di" bpmnElement="W1705_Lane2" isHorizontal="true"><dc:Bounds x="160" y="250" width="1370" height="170" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Task5_di" bpmnElement="W1705_Task5"><dc:Bounds x="400" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Task6_di" bpmnElement="W1705_Task6"><dc:Bounds x="610" y="295" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Task7_di" bpmnElement="W1705_Task7"><dc:Bounds x="820" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Task8_di" bpmnElement="W1705_Task8"><dc:Bounds x="1030" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Task9_di" bpmnElement="W1705_Task9"><dc:Bounds x="1240" y="125" width="180" height="80" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Start4_di" bpmnElement="W1705_Start4"><dc:Bounds x="290" y="147" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_End10_di" bpmnElement="W1705_End10"><dc:Bounds x="1470" y="317" width="36" height="36" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNShape id="W1705_Annotation11_di" bpmnElement="W1705_Annotation11"><dc:Bounds x="160" y="460" width="360" height="72" /></bpmndi:BPMNShape>
+        <bpmndi:BPMNEdge id="W1705_Flow13_di" bpmnElement="W1705_Flow13"><di:waypoint x="326" y="165" /><di:waypoint x="400" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1705_Flow14_di" bpmnElement="W1705_Flow14"><di:waypoint x="580" y="165" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1705_Flow15_di" bpmnElement="W1705_Flow15"><di:waypoint x="790" y="335" /><di:waypoint x="820" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1705_Flow16_di" bpmnElement="W1705_Flow16"><di:waypoint x="1000" y="165" /><di:waypoint x="1030" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1705_Flow17_di" bpmnElement="W1705_Flow17"><di:waypoint x="1210" y="165" /><di:waypoint x="1240" y="165" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1705_Flow18_di" bpmnElement="W1705_Flow18"><di:waypoint x="1420" y="165" /><di:waypoint x="1470" y="335" /></bpmndi:BPMNEdge>
+        <bpmndi:BPMNEdge id="W1705_Assoc12_di" bpmnElement="W1705_Assoc12"><di:waypoint x="340" y="460" /><di:waypoint x="308" y="183" /></bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>
