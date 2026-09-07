@@ -123,6 +123,19 @@ dmn/ trees, now added to the summary with a 2026-09-07 footer clause), and
 reality_check_hits (the headcount reality-check §3.1 AP bullet's retired '~450/day'
 parenthetical — 450/day implies ~13,500/month, matching no licensed convention; the
 corrected '~300/day' form is anchored).
+2026-09-07 ninth-wave consistency review: the reverse-direction companion-pin family
+— the mirror images of the live_pin_hits surfaces, read by no rule — found live and
+closed: the sourcing model's header 'Companion to' OM pin stranded at v3.3 since
+batch-19 (the batch-20 cascade's 'header/§13 OM pins re-pointed' claim re-pointed
+only the §13 row), its §13 Related-Documents OM row frozen at v3.4, its footer
+companion-pin chain broken by the sixth-wave OM v3.8 bump (the sourcing model stayed
+at v2.7 — every batch-16→23 OM bump had produced a sourcing companion bump), and the
+OM's own §13 doc-map self-pin 'this vN.M model' still at the v2.4 of the 2026-09-03
+pin pass through six subsequent OM bumps. Repairs: the three sourcing pins re-pointed
+to v3.8 and the sourcing model bumped to v2.8 so the newest footer clause reads true
+(the OM Downstream pointer re-pointed v2.7 → v2.8; the OM self-pin trued in place per
+the description-trueness convention — the OM itself stays v3.8). New structural rule
+companion_pin_hits pins all four surfaces to the pinned doc's live footer every run.
 """
 
 def _doc_versions():
@@ -952,6 +965,86 @@ def exec_tree_hits():
     return hits
 
 
+def companion_pin_hits():
+    """2026-09-07 ninth-wave consistency review — the reverse-direction companion
+    pins, the mirror images of the surfaces live_pin_hits already guards, which no
+    rule read: (a) the sourcing model's header 'Companion to' pin, (b) its §13
+    Related-Documents OM-row pin, (c) its footer's newest 'companion OM pin moves
+    to' clause (the live end of the version-history chain — Prior clauses stand as
+    written), and (d) the OM's own §13 doc-map self-pin 'this vN.M model'. All four
+    must equal the pinned doc's current '*Document Version:' footer. Found live:
+    the header pin stranded at v3.3 since batch-19 (the batch-20 cascade's
+    'header/§13 OM pins re-pointed' claim re-pointed only the §13 row), the §13 row
+    frozen at v3.4, the footer chain broken by the sixth-wave OM v3.8 bump (sourcing
+    stayed at v2.7), and the OM self-pin still at the v2.4 of the 2026-09-03 pin
+    pass through six subsequent OM bumps."""
+    hits = []
+    versions = _doc_versions()
+    om_v = versions.get("it-product-operating-model.md")
+    src_v = versions.get("capability-sourcing-and-engineering-model.md")
+    om = open(os.path.join(REPO, "07-methodology",
+                           "it-product-operating-model.md"), encoding="utf-8").read()
+    src = open(os.path.join(REPO, "07-methodology",
+                            "capability-sourcing-and-engineering-model.md"),
+               encoding="utf-8").read()
+    if om_v is None or src_v is None:
+        return [("audit-model-docs", 0, "companion_pin_hits: unparseable doc footer")]
+    # (a) sourcing header companion pin
+    m = re.search(r"Companion to \[`it-product-operating-model\.md`\]\(it-product-"
+                  r"operating-model\.md\) \(v(\d+\.\d+)\)", src)
+    if not m:
+        hits.append(("capability-sourcing-and-engineering-model.md", 0,
+                     "header 'Companion to' OM pin not found"))
+    elif m.group(1) != om_v:
+        hits.append(("capability-sourcing-and-engineering-model.md",
+                     src[:m.start()].count("\n") + 1,
+                     f"header companion pin v{m.group(1)} but the OM footer says "
+                     f"v{om_v}"))
+    # (b) sourcing §13 Related-Documents OM-row pin
+    for ln, l in enumerate(src.splitlines(), 1):
+        if "it-product-operating-model.md" in l and "reshapes (v" in l:
+            m = re.search(r"reshapes \(v(\d+\.\d+)", l)
+            if not m:
+                hits.append(("capability-sourcing-and-engineering-model.md", ln,
+                             "§13 OM row carries no version pin"))
+            elif m.group(1) != om_v:
+                hits.append(("capability-sourcing-and-engineering-model.md", ln,
+                             f"§13 OM-row pin v{m.group(1)} but the OM footer says "
+                             f"v{om_v}"))
+            break
+    else:
+        hits.append(("capability-sourcing-and-engineering-model.md", 0,
+                     "§13 Related-Documents OM row not found"))
+    # (c) sourcing footer: the NEWEST (first) 'companion OM pin moves to' clause
+    m = re.search(r"companion OM pin moves to v(\d+\.\d+)", src)
+    if not m:
+        hits.append(("capability-sourcing-and-engineering-model.md", 0,
+                     "footer 'companion OM pin moves to' clause not found"))
+    elif m.group(1) != om_v:
+        hits.append(("capability-sourcing-and-engineering-model.md",
+                     src[:m.start()].count("\n") + 1,
+                     f"newest footer OM-pin clause says v{m.group(1)} but the OM "
+                     f"footer says v{om_v} (the companion-pin chain is broken — "
+                     f"bump this model with a clause re-pointing it)"))
+    # (d) OM §13 doc-map self-pin 'this vN.M model'
+    for ln, l in enumerate(om.splitlines(), 1):
+        if "capability-sourcing-and-engineering-model.md" in l and "this v" in l \
+                and "model is built on" in l:
+            m = re.search(r"this v(\d+\.\d+) model", l)
+            if not m:
+                hits.append(("it-product-operating-model.md", ln,
+                             "§13 sourcing row self-pin unparsable"))
+            elif m.group(1) != om_v:
+                hits.append(("it-product-operating-model.md", ln,
+                             f"§13 self-pin 'this v{m.group(1)} model' but the OM "
+                             f"footer says v{om_v}"))
+            break
+    else:
+        hits.append(("it-product-operating-model.md", 0,
+                     "§13 sourcing doc-map row not found"))
+    return hits
+
+
 def reality_check_hits():
     """2026-09-07 eighth-wave consistency review — in-place arithmetic repair guard
     for the headcount reality-check §3.1 AP workload bullet: it carried '(~450/day)'
@@ -1056,6 +1149,8 @@ def main():
     hits.extend(dv_volume_hits())
     hits.extend(exec_tree_hits())
     hits.extend(reality_check_hits())
+    # 2026-09-07 ninth-wave consistency review addition
+    hits.extend(companion_pin_hits())
     for doc, line, detail in hits:
         print(f"model-doc: {doc}:{line}: {detail}")
     print(f"audit-model-docs: {len(hits)} hit(s) across {len(DOCS)} documents")
