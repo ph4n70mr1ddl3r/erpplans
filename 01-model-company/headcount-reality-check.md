@@ -57,7 +57,7 @@ The 6,757 total company headcount is **plausible overall**, but the **HQ allocat
 
 ### 3.1 Finance & Accounting — stated 37, need 58–68
 **Workload evidence from workflows:**
-- **~8,500–9,500 AP invoices/month** (~450/day) — VS-17 / PA-17
+- **~8,500–9,500 AP invoices/month** (~300/day) — VS-17 / PA-17
 - **~3,500 AR invoices/month** + 5,200 active AR accounts + collections — W8
 - 5 legal entities, each filing **monthly VAT (BIR 2550M)** — VS-79
 - Withholding tax / 2307 management across 5 entities

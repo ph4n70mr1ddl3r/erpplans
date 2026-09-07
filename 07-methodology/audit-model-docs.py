@@ -106,6 +106,23 @@ the 03235a5 cascade re-pointed the index/root-README/dependency-map but missed b
 README tables; now validator Check 67). Three stale live-body version pins in the
 guarded docs also trued in place (sourcing-model header '(v2.0+)' and §13 row '(v2.1:'
 re-pinned to OM v2.4; OM §13 row 'this v2.0 model' re-pinned to v2.4).
+2026-09-07 eighth-wave consistency review: data-volumes-and-integrations.md joins DOCS
+— it had shipped with zero validator coverage (not in this list, not read by any other
+check), the sourcing-model/ai-guide precedent. Generic checks verified clean on dry-run
+after two repairs: the §1.1 Customer-Registrations row carried a bare '—' peak factor
+beside its ~450 peak (now stated as 3.0x sale-event basis; doc bumped to v4.5), and the
+literal 6,715 needs a doc-scoped exemption — there it is the canonical AP
+merchandise-invoice count (profile §10.2/§15.1), not the retired 6,715 HQ headcount
+total. load_registers now also admits the 23 ###/#### sub-workflow ids (W7C is cited by
+this doc). Three structural rules join the guard: dv_volume_hits (every §1.1 row
+stating a peak must declare its factor and peak = daily × factor within 5%; the §1.2
+size column must sum to the stated annual increment and the retention row to ~10× it),
+exec_tree_hits (the executive summary's Repository Structure mini-tree must list
+exactly the top-level directories on disk — the two-row tree predated the bpmn/ and
+dmn/ trees, now added to the summary with a 2026-09-07 footer clause), and
+reality_check_hits (the headcount reality-check §3.1 AP bullet's retired '~450/day'
+parenthetical — 450/day implies ~13,500/month, matching no licensed convention; the
+corrected '~300/day' form is anchored).
 """
 
 def _doc_versions():
@@ -226,6 +243,14 @@ MC = os.path.join(REPO, "01-model-company")
 DOCS = ["mobile-app-strategy.md", "data-migration-mapping.md",
         "assumptions-and-design-decisions.md",
         "optimal-table-of-organization.md",
+        # 2026-09-07 eighth-wave consistency review: data-volumes-and-integrations.md
+        # joins the doc set — it had shipped with zero validator coverage (not in this
+        # list, not read by any other check), the sourcing-model/ai-guide precedent
+        # that the quantitative doc outside the guard is the one that drifts. Generic
+        # checks verified clean on dry-run (tokens W7/W7C, §10.2, no retired totals
+        # beyond the scoped 6,715 exemption below); the guard gains the dv_volume_hits
+        # structural rule for its §1.1/§1.2 arithmetic.
+        "data-volumes-and-integrations.md",
         "../07-methodology/it-product-operating-model.md",
         "../07-methodology/capability-sourcing-and-engineering-model.md",
         "../07-methodology/technical-guidelines.md",
@@ -234,6 +259,13 @@ DOCS = ["mobile-app-strategy.md", "data-migration-mapping.md",
         "../07-methodology/ai-first-operating-guide.md"]
 RETIRED_FIGURES = ["6,757", "6,715", "5,357", "5,362", "5,349", "5,341",
                    "80,000 SKU", "1,000 POS terminal"]
+
+# 2026-09-07 eighth-wave review — per-doc retired-figure exemptions. In
+# data-volumes-and-integrations.md the literal 6,715 is the canonical AP
+# merchandise-invoice count (~6,715/month, 3-way match per W7 — profile §10.2/§15.1),
+# not the retired 6,715 HQ headcount total: the one surface where the digits
+# legitimately recur.
+RETIRED_FIGURE_EXEMPT = {"data-volumes-and-integrations.md": {"6,715"}}
 
 # Consistency review #68 — doc-scoped retired literals (the exact defect forms
 # the review repaired; matches on version-history footer lines are exempt) and
@@ -300,6 +332,13 @@ ANCHORS = {
         "**504 + 7 = 511**",
         "× 4 DCs = **600**",
     ],
+    # 2026-09-07 eighth-wave review — the corrected forms the data-volumes doc's own
+    # v4.3/v4.4 repair chain produced must stay present (they are the anchors the new
+    # dv_volume_hits rule reasons about).
+    "data-volumes-and-integrations.md": [
+        "10-Year Retention",
+        "~300/day is the midpoint",
+    ],
 }
 
 # Consistency review #60: BIR Forms 1601-E/1601-F were discontinued by RR 11-2018
@@ -329,6 +368,12 @@ def load_registers():
     for f in glob.glob(os.path.join(MC, "workflows", "VS-*", "PA-*.md")):
         text = open(f, encoding="utf-8").read()
         wids |= set(re.findall(r"^## (W\d+[A-Z]?)\.", text, re.M))
+        # 2026-09-07 eighth-wave review: the 23 ###/#### sub-workflows (W7C, W5A, …)
+        # are defined workflows — register rows 5,449 = 5,426 ## + 23 ###/#### — so
+        # their ids belong in the token-resolution register (a strict superset; only
+        # makes more tokens resolve, e.g. W7C cited by data-volumes-and-integrations.md).
+        wids |= set(re.findall(r"^### (W\d+[A-Z]?)\.", text, re.M))
+        wids |= set(re.findall(r"^#### (W\d+[A-Z]?)\.", text, re.M))
         m = re.match(r"(PA-\d+\.\d+)", os.path.basename(f))
         if m:
             paids.add(m.group(1))
@@ -813,6 +858,121 @@ def om_reconciliation_hits():
     return hits
 
 
+def dv_volume_hits():
+    """2026-09-07 eighth-wave consistency review — structural guard for the
+    data-volumes doc's volume arithmetic (the doc joined DOCS this pass after shipping
+    with zero validator coverage — the sourcing-model/ai-guide precedent). (a) Every
+    §1.1 row that states a peak-daily figure must declare its peak factor, and each
+    numeric peak endpoint must equal daily × factor within 5% rounding tolerance (the
+    review found the Customer-Registrations row carrying a bare '—' factor beside a
+    ~450 peak — the implied 3.0x sale-event factor is now stated). (b) The §1.2 size
+    column must sum to the stated annual increment, and the retention row to ~10× it."""
+    rel = "data-volumes-and-integrations.md"
+    hits = []
+    text = open(os.path.join(MC, rel), encoding="utf-8").read()
+    m11 = re.search(r"### 1\.1 .*?(?=### 1\.2)", text, re.S)
+    m12 = re.search(r"### 1\.2 .*?(?=\n## )", text, re.S)
+    if not m11 or not m12:
+        return [(rel, 0, "§1.1/§1.2 volume tables not found")]
+
+    def num(s):
+        return float(s.replace("~", "").replace(",", "").strip())
+
+    for ln, l in enumerate(m11.group(0).splitlines(),
+                           text[:m11.start()].count("\n") + 1):
+        if not l.strip().startswith("|"):
+            continue
+        cells = [c.strip() for c in l.strip().strip("|").split("|")]
+        if len(cells) != 4 or not re.search(r"\d", cells[3]):
+            continue
+        name, daily, factor, peak = cells
+        fm = re.match(r"~?(\d+(?:\.\d+)?)x", factor)
+        if not fm:
+            hits.append((rel, ln, f"§1.1 row '{name}' states a peak-daily figure "
+                                  f"('{peak}') with no peak factor (cell '{factor}')"))
+            continue
+        f = float(fm.group(1))
+        d_parts = [num(x) for x in re.split(r"[–-]", daily) if re.search(r"\d", x)]
+        p_parts = [num(x) for x in re.split(r"[–-]", peak) if re.search(r"\d", x)]
+        for d, p in zip(d_parts, p_parts):
+            if abs(d * f - p) > max(1.0, 0.05 * p):
+                hits.append((rel, ln, f"§1.1 row '{name}': peak {p:g} != daily {d:g} × "
+                                      f"factor {f:g} (= {d * f:g})"))
+
+    sizes, total_declared, retention_declared = [], None, None
+    for l in m12.group(0).splitlines():
+        if not l.strip().startswith("|"):
+            continue
+        cells = [c.strip() for c in l.strip().strip("|").split("|")]
+        if len(cells) < 3:
+            continue
+        mm = re.search(r"([\d,]+(?:\.\d+)?)\s*GB", cells[2])
+        if not mm:
+            continue
+        if cells[0].startswith("**Total Annual Increment**"):
+            total_declared = float(mm.group(1).replace(",", ""))
+        elif cells[0].startswith("**10-Year Retention**"):
+            retention_declared = float(mm.group(1).replace(",", ""))
+        else:
+            sizes.append(float(mm.group(1).replace(",", "")))
+    if not sizes or total_declared is None:
+        hits.append((rel, 0, "§1.2 storage size rows / total row not parseable"))
+    else:
+        ssum = sum(sizes)
+        if abs(ssum - total_declared) > max(2.0, 0.05 * total_declared):
+            hits.append((rel, 0, f"§1.2 size column sums to {ssum:g} GB but the total "
+                                 f"row says ~{total_declared:g} GB"))
+        if retention_declared is not None and \
+                abs(retention_declared - 10 * total_declared) > 0.05 * 10 * total_declared:
+            hits.append((rel, 0, f"§1.2 retention row ~{retention_declared:g} GB != "
+                                 f"10 × the ~{total_declared:g} GB annual increment"))
+    return hits
+
+
+def exec_tree_hits():
+    """2026-09-07 eighth-wave consistency review — the executive summary's
+    'Repository Structure' mini-tree must name exactly the top-level directories that
+    exist on disk. (The two-row tree predated the generated bpmn/ and dmn/ trees,
+    which shipped 2026-09-05 as first-class artifacts; the summary is the C-suite's
+    map of the repo, so a missing top-level directory is exactly the sibling-surface
+    drift class the batch re-point cascades keep repairing.)"""
+    rel = "executive-summary.md"
+    hits = []
+    text = open(os.path.join(MC, rel), encoding="utf-8").read()
+    m = re.search(r"## Repository Structure\s*```(.*?)```", text, re.S)
+    if not m:
+        return [(rel, 0, "Repository Structure block not found")]
+    listed = set(re.findall(r"(?:├──|└──)\s*([A-Za-z0-9._-]+)/", m.group(1)))
+    on_disk = {n for n in os.listdir(REPO)
+               if os.path.isdir(os.path.join(REPO, n)) and not n.startswith(".")}
+    if listed != on_disk:
+        hits.append((rel, text[:m.start()].count("\n") + 1,
+                     f"Repository Structure tree lists {sorted(listed)} but the repo "
+                     f"top level holds {sorted(on_disk)}"))
+    return hits
+
+
+def reality_check_hits():
+    """2026-09-07 eighth-wave consistency review — in-place arithmetic repair guard
+    for the headcount reality-check §3.1 AP workload bullet: it carried '(~450/day)'
+    beside the canonical '~8,500–9,500/month' — 450/day implies ~13,500/month and
+    matches no licensed convention (the corpus-wide 30-operating-day convention gives
+    ~300/day, the data-volumes v4.3+ / profile §15.1 reconciliation the repair
+    followed). The corrected parenthetical is required present; the retired one must
+    not reappear."""
+    rel = "headcount-reality-check.md"
+    hits = []
+    text = open(os.path.join(MC, rel), encoding="utf-8").read()
+    if "(~450/day)" in text:
+        hits.append((rel, text[:text.find("(~450/day)")].count("\n") + 1,
+                     'retired AP parenthetical "(~450/day)" (canonical midpoint is '
+                     "~300/day at the 30-operating-days/month convention)"))
+    anchor = "- **~8,500–9,500 AP invoices/month** (~300/day) — VS-17 / PA-17"
+    if anchor not in text:
+        hits.append((rel, 0, f'required corrected AP anchor missing: "{anchor}"'))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true",
@@ -876,6 +1036,8 @@ def main():
             if anc not in body:
                 hits.append((doc, 0, f'missing required anchor "{anc}"'))
         for lit in RETIRED_FIGURES:
+            if lit in RETIRED_FIGURE_EXEMPT.get(doc, set()):
+                continue
             for m in re.finditer(re.escape(lit), body):
                 hits.append((doc, body[:m.start()].count("\n") + 1,
                              f"retired figure {lit}"))
@@ -890,6 +1052,10 @@ def main():
     hits.extend(register_heading_hits())
     hits.extend(methodology_index_hits())
     hits.extend(live_pin_hits())
+    # 2026-09-07 eighth-wave consistency review additions
+    hits.extend(dv_volume_hits())
+    hits.extend(exec_tree_hits())
+    hits.extend(reality_check_hits())
     for doc, line, detail in hits:
         print(f"model-doc: {doc}:{line}: {detail}")
     print(f"audit-model-docs: {len(hits)} hit(s) across {len(DOCS)} documents")
