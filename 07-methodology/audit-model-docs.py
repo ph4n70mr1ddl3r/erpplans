@@ -275,7 +275,20 @@ ANCHORS = {
         "10 external integration clusters",
         "§13.2 seasonal calendar",
         "**171 + 17 = 188**",
-        "**4,911 + 511 = 5,422**",
+        # 2026-09-05 sixth-wave review: re-pinned from the stale '4,911 + 511 = 5,422'.
+        # The batch-23 pass updated §4.9's per-team rows and the version footer but not
+        # the Total row — and this anchor kept passing because the stale literal survived
+        # verbatim inside the Prior-v3.6 footer text, i.e. the anchor was satisfying
+        # itself off history. The Total row is now guarded structurally below by
+        # om_reconciliation_hits (re-derived from the index Grand Total every run), so
+        # this anchor can never again be the only line of defense.
+        "**4,913 + 513 = 5,426**",
+        # §3.2 portfolio-table subtotal/total rows (trued by the same pass; the workflow
+        # cells are structurally re-derived by om_reconciliation_hits — these pin the
+        # VS-split cells and the corrected forms' presence)
+        "**171** | **4,913**",
+        "**17** | **513**",
+        "**188** | **5,426**",
         # v2.0 hybrid sizing anchor (66 domain + platform/CIO = 115 FTE); v2.1 agentic
         # re-bases it to 122 (66 + 56, AAP +7)
         "**66 + 56 = 122**",
@@ -724,6 +737,82 @@ def register_heading_hits():
     return hits
 
 
+def om_reconciliation_hits():
+    """2026-09-05 sixth-wave consistency review — structural guard for the IT operating
+    model's reconciliation surfaces, all found stale in the same pass: the batch re-point
+    cascades trued §4.9's per-team rows and the version footer every pass but never the
+    §3.2 portfolio table (stranded at the batch-18 state, total 5,406, for four passes),
+    the batch-23 pass missed the §4.9 Total row while updating the footer beside it, and
+    the v3.7 clause's split arithmetic put INFRA's +2 on the wrong side. No presence
+    anchor can guard a Total row whose stale literal survives in the Prior-v footer
+    history (the old ANCHOR was satisfying itself off exactly that), so the §3.2 Total
+    row, the §4.9 Total row, and the LIVE (first/newest) footer 'making the
+    reconciliation read **171 + 17 = 188 / X + Y = Z**' clause are re-derived here from
+    the value-stream-index Grand Total on every run."""
+    rel = "it-product-operating-model.md"
+    hits = []
+    idx = open(os.path.join(MC, "workflows", "value-stream-index.md"),
+               encoding="utf-8").read()
+    m = re.search(r"\*\*Grand Total\*\* \| \*\*[\d,]+\*\* \| \*\*([\d,]+)\*\*", idx)
+    if not m:
+        return [(rel, 0, "value-stream-index Grand Total row not parseable")]
+    total = int(m.group(1).replace(",", ""))
+    om = open(os.path.join(REPO, "07-methodology", rel), encoding="utf-8").read()
+    # §3.2 portfolio table: Domain / Platform+CIO subtotal rows must cross-foot to the
+    # Total row (both the VS split and the workflow split), and the Total row must equal
+    # the canonical grand total
+    sub = {}
+    for pat, label in [
+        (r"\|\s*\*\*Domain subtotal\*\*\s*\|\s*\|\s*\|\s*\|\s*\*\*(\d+)\*\*\s*\|\s*\*\*([\d,]+)\*\*",
+         "Domain"),
+        (r"\|\s*\*\*Platform \+ CIO subtotal\*\*\s*\|\s*\|\s*\|\s*\|\s*\*\*(\d+)\*\*\s*\|\s*\*\*([\d,]+)\*\*",
+         "Platform + CIO"),
+    ]:
+        mm = re.search(pat, om)
+        if not mm:
+            hits.append((rel, 0, f"§3.2 {label} subtotal row not parseable"))
+        else:
+            sub[label] = (int(mm.group(1)), int(mm.group(2).replace(",", "")))
+    mtot = re.search(r"\|\s*\*\*Total\*\*\s*\|\s*\|\s*\|\s*\|\s*\*\*(\d+)\*\*\s*\|\s*\*\*([\d,]+)\*\*", om)
+    if not mtot:
+        hits.append((rel, 0, "§3.2 Total row not parseable"))
+    else:
+        vs_n, wf_n = int(mtot.group(1)), int(mtot.group(2).replace(",", ""))
+        if wf_n != total:
+            hits.append((rel, om[:mtot.start()].count("\n") + 1,
+                         f"§3.2 Total row says {wf_n:,} workflows but the canonical total is {total:,}"))
+        if len(sub) == 2:
+            (d_vs, d_wf), (p_vs, p_wf) = sub["Domain"], sub["Platform + CIO"]
+            if d_vs + p_vs != vs_n:
+                hits.append((rel, om[:mtot.start()].count("\n") + 1,
+                             f"§3.2 subtotal VS cells {d_vs} + {p_vs} != Total row {vs_n}"))
+            if d_wf + p_wf != wf_n:
+                hits.append((rel, om[:mtot.start()].count("\n") + 1,
+                             f"§3.2 subtotal WF cells {d_wf:,} + {p_wf:,} != Total row {wf_n:,}"))
+    # §4.9 mapping-reconciliation Total row
+    m49 = re.search(r"\|\s*\*\*Total\*\*\s*\|\s*\*\*171 \+ 17 = 188\*\*\s*\|\s*\*\*([\d,]+) \+ ([\d,]+) = ([\d,]+)\*\*",
+                    om)
+    if not m49:
+        hits.append((rel, 0, "§4.9 Total row not parseable"))
+    else:
+        x, y, z = (int(m49.group(i).replace(",", "")) for i in (1, 2, 3))
+        if x + y != z or z != total:
+            hits.append((rel, om[:m49.start()].count("\n") + 1,
+                         f"§4.9 Total row declares {x:,} + {y:,} = {z:,} but the canonical total is {total:,}"))
+    # live footer clause = the FIRST 'making the reconciliation read' occurrence
+    # (the version footer is a newest-first Prior-v chain on a single line)
+    mft = re.search(r"making the reconciliation read \*\*171 \+ 17 = 188 / ([\d,]+) \+ ([\d,]+) = ([\d,]+)\*\*",
+                    om)
+    if not mft:
+        hits.append((rel, 0, "live footer reconciliation clause not found"))
+    else:
+        x, y, z = (int(mft.group(i).replace(",", "")) for i in (1, 2, 3))
+        if x + y != z or z != total:
+            hits.append((rel, om[:mft.start()].count("\n") + 1,
+                         f"live footer reconciliation declares {x:,} + {y:,} = {z:,} but the canonical total is {total:,}"))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true",
@@ -797,6 +886,7 @@ def main():
     hits.extend(to_phase_hits())
     hits.extend(sourcing_tier_hits())
     hits.extend(guide_figure_hits())
+    hits.extend(om_reconciliation_hits())
     hits.extend(register_heading_hits())
     hits.extend(methodology_index_hits())
     hits.extend(live_pin_hits())

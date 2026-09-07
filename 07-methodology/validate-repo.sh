@@ -2866,7 +2866,7 @@ C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
-    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py, now 8 docs; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68; sourcing model + technical guidelines brought under the guard with §12.1 tier-count and TO §11 phase-sum structural rules, 2026-09-03 post-AAP pass; methodology-index version pins and the two-state TO-anchor description pinned to the live docs, 2026-09-03 index-trueness pass; the OM 'Downstream:' pointer, the reality-check STATUS banner pins, and the executive-summary top-footer counts pinned to the live docs/registers, 2026-09-03 description-trueness pass; every register '(n Workflows)' heading claim and the Summary per-phase counts re-derived from the register's own rows via register_heading_hits, 2026-09-03 consistency review pass; the AI-first operating guide brought under the guard — verified clean on dry-run — with a guide_figure_hits structural rule re-deriving its catalog triple, Tier-ladder sentence and control/requirement canon-table citations from the primary registers, 2026-09-04 guard-extension pass)"
+    ok "All model-doc tokens resolve, §-refs resolve doc-scoped, and no retired figures appear (guard mode of audit-model-docs.py, now 8 docs; 3 secondary docs verified clean 2026-08-29; TO + IT operating model brought under the guard and verified clean 2026-09-02, review #68; sourcing model + technical guidelines brought under the guard with §12.1 tier-count and TO §11 phase-sum structural rules, 2026-09-03 post-AAP pass; methodology-index version pins and the two-state TO-anchor description pinned to the live docs, 2026-09-03 index-trueness pass; the OM 'Downstream:' pointer, the reality-check STATUS banner pins, and the executive-summary top-footer counts pinned to the live docs/registers, 2026-09-03 description-trueness pass; every register '(n Workflows)' heading claim and the Summary per-phase counts re-derived from the register's own rows via register_heading_hits, 2026-09-03 consistency review pass; the AI-first operating guide brought under the guard — verified clean on dry-run — with a guide_figure_hits structural rule re-deriving its catalog triple, Tier-ladder sentence and control/requirement canon-table citations from the primary registers, 2026-09-04 guard-extension pass; the OM reconciliation surfaces (§3.2 portfolio-table cross-foot, §4.9 Total row, live footer split) brought under the om_reconciliation_hits structural rule re-derived from the index Grand Total — 2026-09-05 sixth-wave review, after the batch-23 pass stranded the §4.9 Total row behind a self-satisfying stale ANCHOR)"
 else
     C59_HITS=$(echo "$C59_OUT" | grep -c "^model-doc:" || true)
     error "$C59_HITS model-doc violation(s) (run 07-methodology/audit-model-docs.py for detail):"
@@ -3449,6 +3449,42 @@ if [ "${C69_BAD:-1}" -eq 0 ]; then
 else
     error "$C69_BAD semantic-audit-registry violation(s):"
     echo "$CHECK69" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 70: Root-README figure annotations vs canonical registers ---
+echo "--- Check 70: Root-README figure annotations vs canonical registers ---"
+# The batch-22→23 re-point cascades updated the root README's tree total, the
+# Criticality-classification coverage row and the cross-reference diagram but
+# stranded three sibling surfaces no check read: the Key-Metrics 'Workflows
+# (total)' row, the Coverage 'Workflows' row's headline and '(all X confirmed-
+# classified)' figures, and the classification tree row's '(N rows)' annotation —
+# each frozen one batch behind (5,422/5,445 vs the 5,426/5,449 canon). This check
+# re-derives the unique-workflow total and the confirmed-register row count from
+# disk on every run and asserts all five README annotations against them, so the
+# whole annotation family is guarded in one place. (The Key-Metrics requirement
+# rows were already guarded by Checks 37/41; the workflows rows were not.)
+README70="$REPO_ROOT/README.md"
+ACTUAL_WF70=$(grep -rhP '^## W\d+[A-Z]?\.' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null | wc -l | tr -d ' ')
+REG_ROWS70=$(grep -cP '^\| W\d+[A-Z]? \|' "$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md)
+C70_BAD=0
+check70() { # $1 declared figure (comma-stripped), $2 expected, $3 label
+    if [ "$1" != "$2" ]; then
+        error "Root-README $3 declares $1 but the canonical figure is $2"
+        C70_BAD=1
+    fi
+}
+D70=$(grep -oP '├── workflows/ +\K[\d,]+(?= workflows organized by value stream)' "$README70" | tr -d ',')
+if [ -n "$D70" ]; then check70 "$D70" "$ACTUAL_WF70" "'workflows/' tree-total line"; else error "Could not locate the workflows/ tree-total annotation in README.md"; C70_BAD=1; fi
+KM70=$(grep -oP '\| Workflows \(total\) \| \*\*\K[\d,]+' "$README70" | tr -d ',')
+if [ -n "$KM70" ]; then check70 "$KM70" "$ACTUAL_WF70" "Key-Metrics 'Workflows (total)' row"; else error "Could not locate the Key-Metrics 'Workflows (total)' row in README.md"; C70_BAD=1; fi
+COV70=$(grep -oP '\| Workflows \| \K[\d,]+(?= fully specified)' "$README70" | tr -d ',')
+if [ -n "$COV70" ]; then check70 "$COV70" "$ACTUAL_WF70" "Coverage-row 'Workflows' headline"; else error "Could not locate the Coverage-row 'Workflows' headline in README.md"; C70_BAD=1; fi
+COVA70=$(grep -oP '\(all \K[\d,]+(?= confirmed-classified)' "$README70" | tr -d ',')
+if [ -n "$COVA70" ]; then check70 "$COVA70" "$ACTUAL_WF70" "Coverage-row '(all X confirmed-classified)' figure"; else error "Could not locate the Coverage-row '(all X confirmed-classified)' figure in README.md"; C70_BAD=1; fi
+TR70=$(grep -oP 'workflow-criticality-classification\.md  Tier 1/2/3 confirmed priorities \(\K[\d,]+(?= rows\))' "$README70" | tr -d ',')
+if [ -n "$TR70" ]; then check70 "$TR70" "$REG_ROWS70" "classification tree-row '(N rows)' annotation"; else error "Could not locate the classification tree-row '(N rows)' annotation in README.md"; C70_BAD=1; fi
+if [ "$C70_BAD" -eq 0 ]; then
+    ok "All 5 root-README figure annotations match the canonical registers ($ACTUAL_WF70 unique workflows / $REG_ROWS70 confirmed-register rows; guard added by the 2026-09-05 sixth-wave review after the batch-23 pass stranded the Key-Metrics row, the Coverage-row headline figures and the classification tree-row annotation one batch behind)"
 fi
 
 echo ""
