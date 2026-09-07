@@ -3684,6 +3684,147 @@ else
     echo "$CHECK72" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 73: Canonical integration-diagram twin-copy byte-identity ---
+echo "--- Check 73: Integration-diagram twin-copy identity ---"
+# The integration-architecture ASCII diagram lives in exactly two maintained copies:
+# the canonical fenced block in data-volumes-and-integrations.md and a declared
+# convenience duplicate in technical-guidelines.md §3.2 (whose own blockquote says:
+# update the canonical version first). Waves 7, 9 and 11 of the consistency reviews
+# each re-verified the two copies byte-identical BY HAND — no check ever read them —
+# so an edit to one copy (or a partial copy-through) would ship silently, exactly the
+# sibling-surface class the eighth and ninth waves closed elsewhere. This check
+# extracts each file's fenced block carrying the 'INTEGRATION ARCHITECTURE' banner,
+# requires exactly one such block per file, and asserts byte-identity every run.
+CHECK73=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+files = ["01-model-company/data-volumes-and-integrations.md",
+         "07-methodology/technical-guidelines.md"]
+blocks = {}
+for rel in files:
+    text = open(os.path.join(ROOT, rel), encoding='utf-8').read()
+    fences = re.findall(r'^```[a-zA-Z]*\n(.*?)^```', text, re.S | re.M)
+    hits = [b for b in fences if 'INTEGRATION ARCHITECTURE' in b]
+    if len(hits) != 1:
+        print(f"BAD|{rel}: expected exactly 1 fenced block carrying the 'INTEGRATION ARCHITECTURE' banner, found {len(hits)}")
+    else:
+        blocks[rel] = hits[0]
+if len(blocks) == 2:
+    a, b = (blocks[files[0]], blocks[files[1]])
+    if a != b:
+        import difflib
+        diff = next(d for d in difflib.unified_diff(a.splitlines(), b.splitlines(), lineterm='') if d.startswith(('+', '-')) and not d.startswith(('+++', '---')))
+        print(f"BAD|integration diagram drifted: canonical ({files[0]}) vs convenience copy ({files[1]}) differ, first differing line: {diff[:120]}")
+    else:
+        print(f"TOTALS lines={len(a.splitlines())} identical=true")
+PY
+)
+C73_BAD=$(echo "$CHECK73" | grep -c '^BAD|' || true)
+if [ "${C73_BAD:-1}" -eq 0 ] && echo "$CHECK73" | grep -q '^TOTALS'; then
+    L73=$(echo "$CHECK73" | sed -n 's/^TOTALS lines=\([0-9]*\) identical=true/\1/p')
+    ok "Canonical integration diagram byte-identical across its two copies (data-volumes §2 ↔ technical-guidelines §3.2, $L73 lines; guard added by the 2026-09-07 twelfth-wave consistency review — waves 7/9/11 each re-verified the twin copies by hand because no check read them)"
+else
+    error "Integration-diagram twin-copy check failed:"
+    echo "$CHECK73" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 74: Generated-tree coverage surfaces (README quick-stats + quoted tree rows) ---
+echo "--- Check 74: Generated-tree coverage surfaces ---"
+# Check 71 validates the bpmn/ and dmn/ XML against the markdown corpus, but the
+# three human-facing coverage surfaces stayed unguarded: the bpmn/README and
+# dmn/README quick-stats tables (waves 8/9/11 each re-derived 569/5,449/23,008/28,457
+# and 40/79/339 BY HAND), and the quoted generated-tree figures on the root-README
+# tree rows (bpmn/ '5,449 processes', dmn/ '79 decisions'), the two generator rows in
+# the methodology tree, and the exec-summary tree rows. This check re-derives the
+# counts from the shipped trees by the generators' own definitions (processes =
+# <bpmn:process elements; tasks = userTask+serviceTask, the generator's task tags;
+# flows = sequenceFlow elements; diagrams = BPMNDiagram elements; decisions/rules =
+# <decision>/<rule> elements) and asserts every quoted figure. The dmn/README's
+# deferred-rule-set count (197) is an extraction-property of the source corpus, not
+# derivable from the XML — it is pinned as a required anchor so any change forces a
+# conscious regeneration re-point.
+CHECK74=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+bad = []
+# --- derive from the trees (generator definitions) ---
+b_files = b_procs = b_tasks = b_flows = b_diags = 0
+for dp, _, fns in os.walk(os.path.join(ROOT, 'bpmn')):
+    for fn in fns:
+        if not fn.endswith('.bpmn'):
+            continue
+        b_files += 1
+        t = open(os.path.join(dp, fn), encoding='utf-8').read()
+        b_procs += len(re.findall(r'<bpmn:process[ >]', t))
+        b_tasks += len(re.findall(r'<bpmn:(?:user|service)Task id=', t))
+        b_flows += len(re.findall(r'<bpmn:sequenceFlow[ >]', t))
+        b_diags += len(re.findall(r'<bpmndi:BPMNDiagram[ >]', t))
+d_files = d_dec = d_rules = 0
+for dp, _, fns in os.walk(os.path.join(ROOT, 'dmn')):
+    for fn in fns:
+        if not fn.endswith('.dmn'):
+            continue
+        d_files += 1
+        t = open(os.path.join(dp, fn), encoding='utf-8').read()
+        d_dec += len(re.findall(r'<decision id=', t))
+        d_rules += len(re.findall(r'<rule id=', t))
+truth = {'BPMN files': b_files, 'BPMN processes': b_procs, 'Tasks': b_tasks,
+         'Sequence flows': b_flows, 'Diagrams (DI)': b_diags,
+         'DMN files': d_files, 'Decisions': d_dec, 'Decision-table rules': d_rules}
+if b_flows != b_tasks + b_procs:
+    bad.append(f"tree invariant broken: sequence flows {b_flows} != tasks {b_tasks} + one task→end flow per process {b_procs}")
+# --- bpmn/README quick-stats rows ---
+bpmn_readme = open(os.path.join(ROOT, 'bpmn/README.md'), encoding='utf-8').read()
+for metric, want in truth.items():
+    if metric not in ('BPMN files', 'BPMN processes', 'Tasks', 'Sequence flows', 'Diagrams (DI)'):
+        continue
+    m = re.search(r'^\| ' + re.escape(metric) + r' \| ([\d,]+)', bpmn_readme, re.M)
+    if not m:
+        bad.append(f"bpmn/README.md: quick-stats row for '{metric}' missing")
+    elif int(m.group(1).replace(',', '')) != want:
+        bad.append(f"bpmn/README.md: '{metric}' says {m.group(1)}, tree holds {want}")
+# --- dmn/README quick-stats rows ---
+dmn_readme = open(os.path.join(ROOT, 'dmn/README.md'), encoding='utf-8').read()
+for metric, want in (('DMN files', d_files), ('Decisions', d_dec), ('Decision-table rules', d_rules)):
+    m = re.search(r'^\| ' + re.escape(metric) + r' \| ([\d,]+)', dmn_readme, re.M)
+    if not m:
+        bad.append(f"dmn/README.md: quick-stats row for '{metric}' missing")
+    elif int(m.group(1).replace(',', '')) != want:
+        bad.append(f"dmn/README.md: '{metric}' says {m.group(1)}, tree holds {want}")
+if not re.search(r'^\| Deferred rule sets \(not faked\) \| 197 step-row rule sets \|$', dmn_readme, re.M):
+    bad.append("dmn/README.md: required deferred-rule-set anchor row '| Deferred rule sets (not faked) | 197 step-row rule sets |' missing or changed — regeneration is the only legitimate way this figure moves")
+# --- quoted tree-row figures: root README, exec summary ---
+root = open(os.path.join(ROOT, 'README.md'), encoding='utf-8').read()
+execs = open(os.path.join(ROOT, '01-model-company/executive-summary.md'), encoding='utf-8').read()
+rowchecks = [
+    (root, r'├── dmn/[^\n]*?(\d[\d,]*) decisions', d_dec, 'README.md dmn/ tree row', 'decisions'),
+    (root, r'├── bpmn/[^\n]*?(\d[\d,]*) processes', b_procs, 'README.md bpmn/ tree row', 'processes'),
+    (root, r'generate-bpmn\.py +BPMN 2\.0 generator[^\n]*?(\d[\d,]*) processes', b_procs, 'README.md generator row', 'processes'),
+    (root, r'generate-dmn\.py +DMN 1\.3 generator[^\n]*?(\d[\d,]*) decisions', d_dec, 'README.md generator row', 'decisions'),
+    (execs, r'├── bpmn/[^\n]*?(\d[\d,]*) processes', b_procs, 'executive-summary.md bpmn/ tree row', 'processes'),
+    (execs, r'├── dmn/[^\n]*?(\d[\d,]*) decisions', d_dec, 'executive-summary.md dmn/ tree row', 'decisions'),
+]
+for text, pat, want, label, unit in rowchecks:
+    m = re.search(pat, text)
+    if not m:
+        bad.append(f"{label}: no '(N {unit})' figure found")
+    elif int(m.group(1).replace(',', '')) != want:
+        bad.append(f"{label}: says {m.group(1)} {unit}, tree holds {want}")
+print(f"TOTALS bpmn={b_files}/{b_procs}/{b_tasks}/{b_flows}/{b_diags} dmn={d_files}/{d_dec}/{d_rules} errors={len(bad)}")
+for b in bad:
+    print('BAD|' + b)
+PY
+)
+C74_BAD=$(echo "$CHECK74" | sed -n 's/^TOTALS .* errors=\([0-9]*\)$/\1/p')
+if [ "${C74_BAD:-1}" -eq 0 ]; then
+    B74=$(echo "$CHECK74" | sed -n 's/^TOTALS bpmn=\([^ ]*\) .*/\1/p')
+    D74=$(echo "$CHECK74" | sed -n 's/^TOTALS .* dmn=\([^ ]*\) errors=.*/\1/p')
+    ok "Generated-tree coverage surfaces match the shipped trees: bpmn/ $(echo $B74 | tr '/' ' / ') (files/processes/tasks/flows/diagrams) and dmn/ $(echo $D74 | tr '/' ' / ') (files/decisions/rules) re-derived and asserted on bpmn/README + dmn/README quick-stats and the root-README, generator-row and exec-summary tree rows; dmn/README deferred anchor (197) pinned (guard added by the 2026-09-07 twelfth-wave consistency review — Check 71 reads the XML, but waves 8/9/11 each re-derived the coverage tables and quoted tree-row figures by hand because no check read them)"
+else
+    error "Generated-tree coverage surfaces disagree with the shipped trees:"
+    echo "$CHECK74" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

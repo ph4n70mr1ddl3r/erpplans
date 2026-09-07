@@ -163,6 +163,25 @@ the chain's end; the index and root-README pins re-pointed; the class is now clo
 repo-wide by validate-repo.sh Check 72 (every versioned footer's Prior chain must be
 strictly decreasing below the live version), which this module deliberately does not
 duplicate — the footer chain is a cross-document invariant, not a per-doc one.
+
+2026-09-07 twelfth-wave consistency review: full re-verification clean (both
+generators byte-identical; canonical registers re-derived exact — 188 VS / 569 PA /
+5,426 ## headers + 23 ### sub-workflows = 5,449 register rows / 808 CTL / 728 Req /
+6,762 HC; version chains, companion pins and retired-figure sweeps all clean; the
+twin integration-diagram copies byte-identical and the bpmn//dmn coverage figures
+correct on every quoted surface). Two guard gaps closed in validate-repo.sh, both
+from surfaces this module's per-doc scope legitimately never read: Check 73 pins
+the canonical integration diagram (data-volumes §2) byte-identical to its declared
+convenience duplicate (technical-guidelines §3.2) — waves 7/9/11 had each re-verified
+the twin copies by hand; Check 74 re-derives the generated-tree coverage figures
+(bpmn 569/5,449/23,008/28,457/5,449 by the generator's own userTask+serviceTask
+task definition; dmn 40/79/339) and asserts them on the bpmn/README and dmn/README
+quick-stats tables and the root-README, generator-row and exec-summary tree rows,
+with the dmn/README deferred-rule-set anchor (197) pinned. This module also gained
+the methodology-README completeness repair — the two generators were the only .py
+files on disk missing from that index's Contents table — and the check-count
+self-descriptions re-pointed 72 → 74 across the guide §8.5 triple, the root-README
+tree row and the methodology-index validate-repo row.
 """
 
 def _doc_versions():

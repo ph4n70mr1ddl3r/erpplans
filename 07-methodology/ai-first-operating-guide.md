@@ -552,7 +552,7 @@ retroactively void (Law 8/9).
 ### 8.5 The consistency engine
 
 The EKB validates itself. A conformance suite (in the reference corpus: the repository
-validator — 72 checks, run in CI and before every publish) enforces, at minimum, these check
+validator — 74 checks, run in CI and before every publish) enforces, at minimum, these check
 classes:
 
 | Check class | Invariant |
@@ -571,7 +571,7 @@ classes:
 The engine is what turns "consistent" from a hope into a property: **a change to the canon
 that would make any two documents disagree is mechanically refused.** Adopters start the suite
 small (referential integrity + completeness) and grow it with every defect class they meet —
-the reference corpus grew it to 72 checks, each one the scar tissue of a real defect.
+the reference corpus grew it to 74 checks, each one the scar tissue of a real defect.
 
 ### 8.6 Agent memory rules
 
@@ -889,7 +889,7 @@ Fourteen of fifteen at any audit is the working bar; item 9 is non-waivable.
 | [`it-product-operating-model.md`](it-product-operating-model.md) | The reference product-team operating model (17 teams, 122 FTE) behind §9–§10 |
 | [`technical-guidelines.md`](technical-guidelines.md) | The reference infrastructure, integration, security, and agentic-runtime architecture behind §3 |
 | [`../01-model-company/workflows/event-custody-and-precedence-register.md`](../01-model-company/workflows/event-custody-and-precedence-register.md) | The event-custody doctrine (§3.5 rule 3, §9.5 disaster rows) |
-| [`validate-repo.sh`](validate-repo.sh) | The reference consistency engine (72 checks) behind §8.5 |
+| [`validate-repo.sh`](validate-repo.sh) | The reference consistency engine (74 checks) behind §8.5 |
 
 ---
 
