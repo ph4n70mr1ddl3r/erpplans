@@ -29,9 +29,11 @@ layout so the files open in dmn-js / Camunda Modeler.
 Validation (built in): every generated file is re-parsed; ids are checked
 unique; every decisionTable has >= 1 input/output/rule; every rule's
 entry counts match the table's; no entry text is empty; all DMNShape
-dmnElementRefs resolve; numeric band inputs are verified pairwise-disjoint
-(a failing band set is demoted to hitPolicy "Collect", never silently
-published as Unique). Exit code 1 on any failure.
+dmnElementRefs resolve and every decision carries a DMNShape (so it
+renders in a DRD; added by the 2026-09-05 seventh-wave consistency
+review); numeric band inputs are verified pairwise-disjoint (a failing
+band set is demoted to hitPolicy "Collect", never silently published as
+Unique). Exit code 1 on any failure.
 """
 
 import html
@@ -565,6 +567,10 @@ def validate_file(path: Path) -> str | None:
         ref = sh.get("dmnElementRef")
         if ref not in ids:
             return f"DMNShape dmnElementRef broken: {ref}"
+    shape_refs = {sh.get("dmnElementRef") for sh in root.iter(f"{{{DMNDI_NS}}}DMNShape")}
+    for dec in decisions:
+        if dec.get("id") not in shape_refs:
+            return f"{dec.get('id')}: decision has no DMNShape (would not render in a DRD)"
     return None
 
 

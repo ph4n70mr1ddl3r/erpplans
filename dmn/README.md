@@ -88,10 +88,14 @@ The generator validates its own output before exiting:
 - ids unique per file; every decision has a `decisionTable` with ≥ 1 input,
   output and rule;
 - every rule's entry counts match the table's inputs/outputs; no empty entries;
-- every `DMNShape` `dmnElementRef` resolves;
+- every `DMNShape` `dmnElementRef` resolves, and every decision carries a
+  `DMNShape` (so it renders in a DRD);
 - numeric band sets published with hit policy `U` re-verified pairwise-disjoint.
 
-A non-zero exit code means a file failed validation.
+A non-zero exit code means a file failed validation. The shipped tree is also
+re-validated structurally on every `validate-repo.sh` run (Check 71), which
+re-derives the canonical counts from the markdown corpus — so drift between a
+stale `dmn/` and the corpus cannot ship silently.
 
 ---
 

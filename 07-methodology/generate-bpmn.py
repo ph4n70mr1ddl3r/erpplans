@@ -22,8 +22,15 @@ Conversion rules (documented in bpmn/README.md):
 Validation (built in): every generated file is re-parsed and all internal
 references (sequenceFlow/association source/target, lane flowNodeRef, DI
 bpmnElement) are checked to resolve, and every node's incoming/outgoing
-wiring is checked to mirror the sequence flows exactly. Exit code 1 on any
-failure.
+wiring is checked to mirror the sequence flows exactly. Since the
+2026-09-05 seventh-wave consistency review the structural invariants its
+independent deep validation probed are enforced here too: exactly one
+start and one end event per process; every flow node covered by >= 1 lane
+with lane refs staying inside their own process; exactly one
+BPMNDiagram/BPMNPlane per process (plane ref = the process id); a DI shape
+for every node/lane/annotation and an edge for every flow/association;
+positive dc:Bounds and >= 1 waypoint per edge; and no unreplaced
+PLACEHOLDER_ residue. Exit code 1 on any failure.
 """
 
 import html
@@ -502,15 +509,61 @@ def validate_file(path: Path) -> str | None:
             return f"{nid}: outgoing {sorted(outs)} != flows leaving it {sorted(wire[nid][1])}"
         if sorted(ins) != sorted(wire[nid][0]):
             return f"{nid}: incoming {sorted(ins)} != flows entering it {sorted(wire[nid][0])}"
-    plane = root.find(f".//{{{NS['bpmndi']}}}BPMNPlane")
-    if plane is None or plane.attrib.get("bpmnElement") not in ids:
-        return "BPMNPlane bpmnElement unresolved"
+    procs = list(root.iter(f"{{{NS['bpmn']}}}process"))
+    if not procs:
+        return "no process elements"
+    proc_ids = {p.attrib["id"] for p in procs}
+    # exactly one BPMNDiagram/BPMNPlane per process, each plane ref = a process id
+    diags = list(root.iter(f"{{{NS['bpmndi']}}}BPMNDiagram"))
+    planes = list(root.iter(f"{{{NS['bpmndi']}}}BPMNPlane"))
+    if len(diags) != len(procs) or len(planes) != len(procs):
+        return (f"{len(procs)} processes but {len(diags)} diagrams / "
+                f"{len(planes)} planes (want 1:1:1)")
+    for pl in planes:
+        if pl.attrib.get("bpmnElement") not in proc_ids:
+            return (f"BPMNPlane {pl.attrib.get('id')} bpmnElement "
+                    f"{pl.attrib.get('bpmnElement')} is not a process id")
+    # structural invariants: start/end cardinality, lane coverage, DI coverage
+    shapes = {el.attrib.get("bpmnElement") for el in root.iter(f"{{{NS['bpmndi']}}}BPMNShape")}
+    edges = {el.attrib.get("bpmnElement") for el in root.iter(f"{{{NS['bpmndi']}}}BPMNEdge")}
+    node_tags = ("startEvent", "endEvent", "userTask", "serviceTask")
+    for p in procs:
+        pn = [el for t in node_tags for el in p.iter(f"{{{NS['bpmn']}}}{t}")]
+        if sum(1 for el in pn if el.tag.endswith("startEvent")) != 1:
+            return f"{p.attrib['id']}: process must carry exactly one startEvent"
+        if sum(1 for el in pn if el.tag.endswith("endEvent")) != 1:
+            return f"{p.attrib['id']}: process must carry exactly one endEvent"
+        node_ids = {el.attrib["id"] for el in pn}
+        covered = set()
+        for lane in p.iter(f"{{{NS['bpmn']}}}lane"):
+            for ref in lane.iter(f"{{{NS['bpmn']}}}flowNodeRef"):
+                rid = (ref.text or "").strip()
+                if rid not in node_ids:
+                    return f"{p.attrib['id']}: lane flowNodeRef {rid} is not a node of this process"
+                covered.add(rid)
+        bare = node_ids - covered
+        if bare:
+            return f"{p.attrib['id']}: nodes not covered by any lane: {sorted(bare)[:3]}"
+        need_shapes = (node_ids
+                       | {el.attrib["id"] for el in p.iter(f"{{{NS['bpmn']}}}lane")}
+                       | {el.attrib["id"] for el in p.iter(f"{{{NS['bpmn']}}}textAnnotation")})
+        missing = need_shapes - shapes
+        if missing:
+            return f"{p.attrib['id']}: no BPMNShape for {sorted(missing)[:3]}"
+        need_edges = ({el.attrib["id"] for el in p.iter(f"{{{NS['bpmn']}}}sequenceFlow")}
+                      | {el.attrib["id"] for el in p.iter(f"{{{NS['bpmn']}}}association")})
+        missing = need_edges - edges
+        if missing:
+            return f"{p.attrib['id']}: no BPMNEdge for {sorted(missing)[:3]}"
     for el in root.iter(f"{{{NS['bpmndi']}}}BPMNShape"):
-        if el.attrib.get("bpmnElement") not in ids:
-            return f"BPMNShape broken: {el.attrib.get('bpmnElement')}"
+        bounds = [c for c in el if c.tag.endswith("}Bounds")]
+        if len(bounds) != 1 or float(bounds[0].attrib["width"]) <= 0 or float(bounds[0].attrib["height"]) <= 0:
+            return f"BPMNShape {el.attrib.get('id')}: missing/invalid dc:Bounds"
     for el in root.iter(f"{{{NS['bpmndi']}}}BPMNEdge"):
-        if el.attrib.get("bpmnElement") not in ids:
-            return f"BPMNEdge broken: {el.attrib.get('bpmnElement')}"
+        if not [c for c in el if c.tag.endswith("}waypoint")]:
+            return f"BPMNEdge {el.attrib.get('id')}: no waypoint"
+    if "PLACEHOLDER_" in path.read_text(encoding="utf-8"):
+        return "unreplaced PLACEHOLDER_ residue in output"
     return None
 
 
@@ -537,7 +590,10 @@ def main() -> int:
         for p, e in failures:
             print(f"  {p}: {e}")
         return 1
-    print("All generated files validate (well-formed XML, all refs resolve).")
+    print("All generated files validate (well-formed XML, all refs resolve, wiring mirrors the "
+          "sequence flows, structural invariants hold: 1 start/1 end per process, full lane "
+          "coverage, 1:1 BPMNDiagram/BPMNPlane per process, complete DI shapes/edges, "
+          "no placeholder residue).")
     return 0
 
 

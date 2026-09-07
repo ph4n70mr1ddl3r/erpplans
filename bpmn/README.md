@@ -58,9 +58,19 @@ The generator validates its own output before exiting:
 - every DI `BPMNShape`/`BPMNEdge`/`BPMNPlane` `bpmnElement` resolves;
 - every node's `incoming`/`outgoing` wiring resolves and exactly mirrors the
   sequence flows (each flow is the outgoing ref of its source and the incoming
-  ref of its target — no off-by-one, no dangling refs).
+  ref of its target — no off-by-one, no dangling refs);
+- every process carries exactly one start event and one end event;
+- every flow node is covered by at least one lane, and every lane ref stays
+  inside its own process;
+- exactly one `BPMNDiagram`/`BPMNPlane` per process (the plane ref is the
+  process id), with a DI shape for every node/lane/annotation, an edge for
+  every flow/association, positive bounds and at least one waypoint per edge;
+- no unreplaced `PLACEHOLDER_` residue in any output file.
 
-A non-zero exit code means a file failed validation.
+A non-zero exit code means a file failed validation. The shipped tree is also
+re-validated structurally on every `validate-repo.sh` run (Check 71), which
+re-derives the canonical counts from the markdown corpus — so drift between a
+stale `bpmn/` and the corpus cannot ship silently.
 
 ---
 

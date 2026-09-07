@@ -3487,6 +3487,141 @@ if [ "$C70_BAD" -eq 0 ]; then
     ok "All 5 root-README figure annotations match the canonical registers ($ACTUAL_WF70 unique workflows / $REG_ROWS70 confirmed-register rows; guard added by the 2026-09-05 sixth-wave review after the batch-23 pass stranded the Key-Metrics row, the Coverage-row headline figures and the classification tree-row annotation one batch behind)"
 fi
 
+# --- Check 71: Generated BPMN/DMN trees vs the markdown corpus ---
+echo "--- Check 71: Generated BPMN/DMN trees vs the markdown corpus ---"
+# The bpmn/ and dmn/ trees are generated artifacts whose only validation was
+# the generators' built-in self-checks — i.e. they ran only when someone
+# remembered to re-run the generators. No check in this script ever read the
+# shipped trees, so a hand-edit or a partial regeneration could strand drift
+# in exactly the defect class the 2026-09-05 seventh-wave consistency review's
+# independent deep validation probed (and the same class as the bpmn/ wiring
+# off-by-one that shipped before the same day's generator fix): well-formed
+# XML, canonical counts (one .bpmn per PA file, one process per
+# confirmed-register row, one decision per extracted rule set), per-process
+# start/end cardinality, lane coverage with in-process lane refs, 1:1
+# BPMNDiagram:BPMNPlane:process, DI shape/edge coverage with positive bounds
+# and waypoints, decision-table structure, and a DRD shape per decision.
+# This check re-derives the canonical counts from the markdown corpus on
+# every run and structurally validates both trees.
+CHECK71=$(python3 - "$REPO_ROOT" <<'PY'
+import re, sys, xml.etree.ElementTree as ET
+from pathlib import Path
+ROOT = Path(sys.argv[1])
+bad = []
+B = "{http://www.omg.org/spec/BPMN/20100524/MODEL}"
+BD = "{http://www.omg.org/spec/BPMN/20100524/DI}"
+D = "{https://www.omg.org/spec/DMN/20191111/MODEL/}"
+DD = "{https://www.omg.org/spec/DMN/20191111/DMNDI/}"
+# canonical counts from the markdown corpus
+pa_files = sorted((ROOT / "01-model-company/workflows").glob("VS-*/PA-*.md"))
+reg_rows = 0
+for line in (ROOT / "01-model-company/workflows/workflow-criticality-classification.md").read_text().splitlines():
+    if re.match(r"^\|\s*W\d+[A-Z]?\s*\|", line):
+        reg_rows += 1
+# ---- BPMN tree ----
+files = sorted((ROOT / "bpmn").rglob("*.bpmn"))
+if len(files) != len(pa_files):
+    bad.append(f"bpmn/ holds {len(files)} .bpmn files but the corpus has {len(pa_files)} PA files")
+tot_procs = 0
+for f in files:
+    try:
+        root = ET.parse(f).getroot()
+    except ET.ParseError as e:
+        bad.append(f"{f}: XML parse error: {e}"); continue
+    procs = list(root.iter(B + "process"))
+    tot_procs += len(procs)
+    diags = list(root.iter(BD + "BPMNDiagram"))
+    planes = list(root.iter(BD + "BPMNPlane"))
+    if not (len(procs) == len(diags) == len(planes)):
+        bad.append(f"{f}: {len(procs)} processes vs {len(diags)} diagrams / {len(planes)} planes (want 1:1:1)")
+    proc_ids = {p.get("id") for p in procs}
+    for pl in planes:
+        if pl.get("bpmnElement") not in proc_ids:
+            bad.append(f"{f}: plane {pl.get('id')} ref {pl.get('bpmnElement')} is not a process id")
+    shapes = {s.get("bpmnElement") for s in root.iter(BD + "BPMNShape")}
+    edges = {e.get("bpmnElement") for e in root.iter(BD + "BPMNEdge")}
+    for p in procs:
+        nodes = [e for t in ("startEvent", "endEvent", "userTask", "serviceTask") for e in p.iter(B + t)]
+        nid = {e.get("id") for e in nodes}
+        if sum(1 for e in nodes if e.tag == B + "startEvent") != 1:
+            bad.append(f"{f}: {p.get('id')} does not carry exactly one startEvent")
+        if sum(1 for e in nodes if e.tag == B + "endEvent") != 1:
+            bad.append(f"{f}: {p.get('id')} does not carry exactly one endEvent")
+        covered = set()
+        for lane in p.iter(B + "lane"):
+            for r in lane.iter(B + "flowNodeRef"):
+                rid = (r.text or "").strip()
+                covered.add(rid)
+                if rid not in nid:
+                    bad.append(f"{f}: {p.get('id')} lane refs non-node {rid}")
+        bare = nid - covered
+        if bare:
+            bad.append(f"{f}: {p.get('id')} nodes without a lane: {sorted(bare)[:3]}")
+        need_s = nid | {e.get("id") for e in p.iter(B + "lane")} | {e.get("id") for e in p.iter(B + "textAnnotation")}
+        miss = need_s - shapes
+        if miss:
+            bad.append(f"{f}: {p.get('id')} missing BPMNShape for {sorted(miss)[:3]}")
+        need_e = {e.get("id") for e in p.iter(B + "sequenceFlow")} | {e.get("id") for e in p.iter(B + "association")}
+        miss = need_e - edges
+        if miss:
+            bad.append(f"{f}: {p.get('id')} missing BPMNEdge for {sorted(miss)[:3]}")
+    for s in root.iter(BD + "BPMNShape"):
+        bnds = [c for c in s if c.tag.endswith("}Bounds")]
+        if len(bnds) != 1 or float(bnds[0].get("width")) <= 0 or float(bnds[0].get("height")) <= 0:
+            bad.append(f"{f}: shape {s.get('id')} missing/invalid Bounds")
+    for e in root.iter(BD + "BPMNEdge"):
+        if not [c for c in e if c.tag.endswith("}waypoint")]:
+            bad.append(f"{f}: edge {e.get('id')} has no waypoint")
+    if "PLACEHOLDER_" in f.read_text(encoding="utf-8"):
+        bad.append(f"{f}: unreplaced PLACEHOLDER_ residue")
+if tot_procs != reg_rows:
+    bad.append(f"bpmn/ carries {tot_procs} processes but the register holds {reg_rows} rows")
+print(f"BPMN_TOTALS files={len(files)} processes={tot_procs}")
+# ---- DMN tree ----
+dfiles = sorted((ROOT / "dmn").rglob("*.dmn"))
+tot_dec = 0
+for f in dfiles:
+    try:
+        root = ET.parse(f).getroot()
+    except ET.ParseError as e:
+        bad.append(f"{f}: XML parse error: {e}"); continue
+    if root.tag != D + "definitions":
+        bad.append(f"{f}: root element {root.tag}"); continue
+    ids = {e.get("id") for e in root.iter() if e.get("id")}
+    decs = list(root.iter(D + "decision"))
+    tot_dec += len(decs)
+    shape_refs = {s.get("dmnElementRef") for s in root.iter(DD + "DMNShape")}
+    for dec in decs:
+        dt = dec.find(D + "decisionTable")
+        if dt is None:
+            bad.append(f"{f}: {dec.get('id')} has no decisionTable"); continue
+        ins = dt.findall(D + "input"); outs = dt.findall(D + "output"); rules = dt.findall(D + "rule")
+        if not ins or not outs or not rules:
+            bad.append(f"{f}: {dec.get('id')} degenerate decisionTable"); continue
+        for r in rules:
+            if len(r.findall(D + "inputEntry")) != len(ins) or len(r.findall(D + "outputEntry")) != len(outs):
+                bad.append(f"{f}: {r.get('id')} entry-count mismatch")
+        if dec.get("id") not in shape_refs:
+            bad.append(f"{f}: decision {dec.get('id')} has no DMNShape (would not render in a DRD)")
+    for s in root.iter(DD + "DMNShape"):
+        if s.get("dmnElementRef") not in ids:
+            bad.append(f"{f}: DMNShape dmnElementRef {s.get('dmnElementRef')} unresolved")
+print(f"DMN_TOTALS files={len(dfiles)} decisions={tot_dec}")
+print(f"TOTALS register_rows={reg_rows} pa_files={len(pa_files)} errors={len(bad)}")
+for b in bad:
+    print("BAD|" + b)
+PY
+)
+C71_BAD=$(echo "$CHECK71" | sed -n 's/^TOTALS .* errors=\([0-9]*\)$/\1/p')
+if [ "${C71_BAD:-1}" -eq 0 ]; then
+    B71=$(echo "$CHECK71" | sed -n 's/^BPMN_TOTALS files=\([0-9]*\) processes=\([0-9]*\)$/\1 \2/p')
+    D71=$(echo "$CHECK71" | sed -n 's/^DMN_TOTALS files=\([0-9]*\) decisions=\([0-9]*\)$/\1 \2/p')
+    ok "Generated trees validate structurally against the markdown corpus: bpmn/ $(echo $B71 | cut -d' ' -f1) files / $(echo $B71 | cut -d' ' -f2) processes (one per confirmed-register row) and dmn/ $(echo $D71 | cut -d' ' -f1) files / $(echo $D71 | cut -d' ' -f2) decisions — well-formed XML, 1 start/1 end per process, full lane coverage, 1:1 diagram:plane, complete DI shapes/edges/bounds/waypoints, decision-table structure, DRD shape per decision (guard added by the 2026-09-05 seventh-wave consistency review — previously these trees were read only by the generators' self-checks on manual regeneration)"
+else
+    error "Generated BPMN/DMN trees failed structural validation:"
+    echo "$CHECK71" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"
