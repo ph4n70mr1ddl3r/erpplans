@@ -230,7 +230,7 @@ erpplans/
 │   ├── executive-summary.md            1-page C-suite overview
 │   ├── assumptions-and-design-decisions.md  Consolidated assumptions & rationale
 │   ├── headcount-reality-check.md     HQ headcount vs. workflow-coverage gap analysis
-│   ├── optimal-table-of-organization.md  Adopted TARGET-STATE TO: HQ 511 / total 6,911 (phased from current 362 / 6,762; revised 2026-09-03 for the hybrid IT sourcing + agentic-AI model)
+│   ├── optimal-table-of-organization.md  OFFICIAL table of organization of record (target state): HQ 511 / total 6,911, every HQ role defined in §5.3 (phased from current 362 / 6,762; official elevation 2026-09-09; revised 2026-09-03 for the hybrid IT sourcing + agentic-AI model)
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
 │   ├── internal-controls-matrix.md     808 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy

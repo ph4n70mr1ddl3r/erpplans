@@ -4,7 +4,10 @@
 > and governance lines, executive structure, department architecture, field organization,
 > spans & layers, mandated roles, and steady-state sizing.
 >
-> **STATUS — ADOPTED AS TARGET STATE 2026-09-02.** The organization recognizes exactly two
+> **STATUS — OFFICIAL TABLE OF ORGANIZATION OF RECORD (elevated 2026-09-09; adopted as target state 2026-09-02).**
+> This document is the single authoritative statement of the enterprise's organization — the
+> design every box, role, reporting line, and governance body is validated against. The
+> two-state discipline is unchanged: the organization recognizes exactly two
 > states. The **current baseline** is the minimum-coverage structure in
 > [`model-company-profile.md`](model-company-profile.md) §3.3/§11.1 (HQ 362; total 6,762).
 > The **target state** is this document: **HQ 511 / total 6,911** at 200 stores (revised
@@ -14,7 +17,9 @@
 > ([`headcount-reality-check.md`](headcount-reality-check.md) need bands;
 > [`it-product-operating-model.md`](../07-methodology/it-product-operating-model.md) §9 —
 > IT = 122 FTE; VS-177 field retail operating model), and each phase's promotion is
-> CHANGELOG-recorded. The 300-store continuation of the target is defined in §12.
+> CHANGELOG-recorded. Every HQ role is now defined at role level in the §5.3 register —
+> role titles are the canonical workflow-RACI vocabulary, so every workflow Owner
+> resolves to exactly one register row. The 300-store continuation of the target is defined in §12.
 
 ---
 
@@ -24,7 +29,8 @@
   minimum structure that closes known gaps (which is what the current baseline implements),
   but the steady-state design the company converges on as volumes, ecommerce ramp, and the
   200 → 300 store growth path materialize. Adopted as the company's target state on
-  2026-09-02.
+  2026-09-02 and elevated to the **official table of organization of record** on 2026-09-09 —
+  the single source of truth for structure, with every HQ role defined in §5.3.
 - **Scope**: the whole group — Board, Executive Office, the 18 HQ departments, the field
   retail layer (regions → districts → stores), the 4 DCs, and the 5 legal entities.
 - **Out of scope**: individual names/grades, compensation bands, implementation Gantt
@@ -253,7 +259,7 @@ e-invoicing) lets clerks process 700–800 invoices/month, so the optimal shape 
 | Technical Accounting & Policy | 4 | PFRS 15 multi-element revenue, IFRS 16, policy memos |
 | GL & Consolidation | 7 | GL accountant per entity (5) + consolidation/elimination (2) |
 | Accounts Payable | 16 | Mgr + 2 sups + 13 clerks ≈ 8,500–9,500 invoices/mo |
-| AR & Credit | 8 | Mgr + collections (3) + credit review/limits (4) for 5,400 accounts |
+| AR & Credit | 8 | Mgr + AR sup/clerks (3) + collections (2) + credit review/limits (2) for 5,400 accounts |
 | Treasury & Banking | 6 | Daily sweeps, FX, LC funding, petty-cash control |
 | Tax | 6 | VAT/WHT/income across 5 entities; BIR eFPS; LGU tax |
 | FP&A | 7 | Annual plan linkage to Strategy; store P&L; S&OP finance partner |
@@ -302,9 +308,12 @@ Central contact center (24: 2 sups + 22 agents, tiered voice/chat/email for 2.8M
 worth of inquiries + returns + BOPIS support), B2B/trade desk (4, aligned to Trade Acct Mgmt),
 QA & workforce management (2), ecommerce fulfillment support (3), Head (1).
 
-**Store Operations (24, unchanged)** = 6 Regional Managers + 13 District Managers + 5-person
-Store Support Center (standards, communications VS-63, facilities coordination, OpEx/continuous
-improvement, store-opening task force VS-37). Full field model per VS-177.
+**Store Operations (24, unchanged)** = VP Store Operations (1) + 6 Regional Managers +
+13 District Managers + 4-person Store Support Center (retail standards & store-opening
+task-force lead, field communications VS-63, facilities coordination, OpEx/continuous
+improvement — the store-opening task force is a led duty of the standards manager with DM
+participation per VS-37, not a fifth box). Full field model per VS-177. (Role-level
+register: §5.3.)
 
 **Regional Loss Prevention (27)** = Director + 20 Regional LP Officers (field) + central
 investigations (3) + exception-reporting analytics (3) — the VS-23 monitoring loop.
@@ -324,6 +333,329 @@ business owners + the two in-house **build** squads OMO and TPS), 7 platform tea
 field services), CIO Office.
 Target = 122 (authoritative steady-state sizing under the hybrid capability-sourcing +
 agentic model, mid-band of the 65–130 hybrid need band).
+
+### 5.3 Enterprise Role Register (every HQ role, defined)
+
+> **Status.** This register is the role-level instantiation of §5.1/§5.2 — the official
+> definition of every HQ role. It is role-level, not incumbent-level (names and grades stay
+> out of scope per §1). Role titles reuse the canonical RACI vocabulary of the workflow
+> catalog (the Owner / Participants columns), so every workflow owner resolves to exactly one
+> row; department totals foot exactly to the §5.1 targets (511 HQ); spans honor §9; the
+> structurally protected roles carry their §10 protections. IT is carried **by reference** to
+> the IT product operating model (§3–§5 team rosters, §9.1 sizing authority) rather than
+> restated — the single-source rule of §5.2.
+
+#### Executive Office (7)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| CEO / President | 1 | Board of Directors | Group P&L and strategy; chairs the Executive Committee; President of BuildRight Depot, Inc. (§6); Board interface |
+| Chief Finance Officer (CFO) | 1 | CEO | Finance, accounting, treasury, tax, FP&A; Treasurer of all five legal entities (§6); Internal Audit administrative line (functional line → Audit Committee) |
+| Chief Operating Officer (COO) | 1 | CEO | End-to-end operations: stores, supply chain, DCs, facilities, quality, LP, customer service, trade; chief-retail-officer de facto of Depot Inc. (§6); chairs Crisis Management/BCP |
+| Chief Information Officer (CIO) | 1 | CEO | Technology & data: IT product portfolio (17 teams), ERP landscape, cyber posture; chairs SIB and IT Product Council; DPO administrative line (§10) |
+| Chief Marketing Officer (CMO) | 1 | CEO | Brand, demand generation, loyalty, retail media; dotted GM, Digital Commerce Inc. (§6) |
+| Chief Human Resources Officer (CHRO) | 1 | CEO | People strategy, talent, labor relations, HSE oversight; people-workflow accountability (People family, §4.2) |
+| VP Legal & Compliance | 1 | CEO | Second line of defense; Corporate Secretary of Holdings (§6); MLRO access line to CEO/Audit Committee; chairs Risk & Compliance Committee |
+| **Total** | **7** | | |
+
+#### Finance & Accounting (62)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| VP Finance & Accounting / Corporate Controller | 1 | CFO | Owns the close (≤ 5 working days), consolidation, and the control environment; runs the Controller org below |
+| Technical Accounting Manager | 1 | Controller | PFRS 15 multi-element revenue, IFRS 16 leases, policy memos, new-standard adoption |
+| Senior Revenue Accountant | 1 | Technical Accounting Mgr | Revenue recognition execution for promo/vendor-funding/multi-element deals (VS-157 interface) |
+| Leases Accountant | 1 | Technical Accounting Mgr | IFRS 16 lease book: ~200 store leases + DCs + HQ (VS-42 interface) |
+| Accounting Policy Analyst | 1 | Technical Accounting Mgr | Policy library, PFRS updates, auditor liaison for technical positions |
+| Manager, GL & Consolidation (Assistant Controller) | 1 | Controller | Per-entity GL hygiene and the consolidation/elimination cycle; Assistant Controller for the transactional cluster below |
+| GL Accountant (one per entity) | 5 | GL & Consolidation Mgr | Entity books: GL, reconciliations, accruals, BIR/SEC filing support per entity |
+| Consolidation & Intercompany Accountant | 1 | GL & Consolidation Mgr | Monthly consolidation and eliminations; ~60–80 IC invoices/mo executed under the RPT Committee's annual pricing approvals (§6, PA-17.2) |
+| AP Manager | 1 | GL & Consolidation Mgr (administrative) | 3-way-match AP operation, ~8,500–9,500 invoices/mo, vendor account hygiene (W7/W7C) |
+| AP Supervisor | 2 | AP Manager | Clerk supervision, exception queue, payment-run release |
+| AP Clerk | 13 | AP Supervisors | Invoice processing at 700–800/clerk/mo (automation-loaded), match exceptions, vendor inquiries |
+| AR & Credit Manager | 1 | GL & Consolidation Mgr (administrative) | ~3,500 AR invoices/mo; 5,400 active accounts; credit policy |
+| AR Supervisor | 1 | AR & Credit Mgr | AR sub-ledger, application, dispute queue |
+| AR Clerk | 2 | AR Supervisor | Invoice issuance, receipts application, 2307 certificates |
+| Collections Specialist | 2 | AR & Credit Mgr | Dunning cadence, aging triage, cash-application escalation |
+| Credit Analyst | 2 | AR & Credit Mgr | Credit review/limits for 5,200 trade + 200 corporate accounts (PA-16.1 scoring) |
+| Treasury Manager | 1 | Controller | Daily sweeps, concentration, FX exposure, LC funding lines |
+| Treasury Analyst | 3 | Treasury Mgr | Cash positioning (PA-18.1), FX settlement, investment tracking (PA-18.3) |
+| Banking & Cash-Management Specialist | 2 | Treasury Mgr | Bank portal admin, petty-cash/custodian control, bank recon oversight (PA-18.2) |
+| Tax Manager | 1 | Controller | VAT/WHT/income-tax posture across 5 entities; BIR audit defense; TP documentation (W235, BIR 1709) |
+| Tax Accountant | 4 | Tax Mgr | Monthly VAT ×5 (2550M), 1601-EQ/1601-FQ remittances, annual returns, LGU fees |
+| Tax Compliance & eFPS Specialist | 1 | Tax Mgr | eFPS filing hygiene, CAS registration, permit renewals, calendar ownership |
+| FP&A Manager | 1 | Controller | Annual plan linkage to Strategy; store P&L analytics; management reporting |
+| Senior FP&A Analyst | 2 | FP&A Mgr | Budget models, variance analytics, capex monitoring (VS-40 interface) |
+| FP&A Analyst | 3 | FP&A Mgr | Monthly packs, ad-hoc decision support, KPI dashboards |
+| S&OP Finance Partner | 1 | FP&A Mgr | Embedded finance seat in the S&OP/IBP consensus (VS-127); supply-plan economics |
+| Revenue Assurance Lead | 1 | Controller | VS-157 leak detection program: promo/POS/pricing error analytics |
+| Revenue Assurance Analyst | 1 | Revenue Assurance Lead | Leak-queue investigation, recovery tracking, control feedback |
+| Logistics & Cost Finance Analyst | 3 | Controller | Landed cost, DC cost-to-serve, intercompany service-fee billing (Depot↔Logistics) |
+| DC Cost-to-Serve Analyst | 1 | Controller | Per-DC unit economics, fleet cost allocation, 3PL invoice audit |
+| Payroll Accounting Liaison | 1 | GL & Consolidation Mgr (administrative) | Semi-monthly payroll-accounting interface, 6,800+ staff, accrual true-ups |
+| **Total** | **62** | | |
+
+> Span note: the transactional cluster (AP, AR & Credit, Payroll Accounting Liaison) reports
+> to the Controller **administratively through the GL & Consolidation Manager (Assistant
+> Controller)** — keeping the Controller's direct span at 7 and the Assistant Controller's at 3,
+> both inside the §9 band.
+
+#### Merchandising & Buying (43)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| VP for Merchandising | 1 | CEO | Category P&L chain-wide; assortment strategy; chairs Merchandising & Promo Council |
+| Category Manager | 5 | VP Merchandising | Own 2–3 categories each; lead a buyer/planner pod; vendor P&L |
+| Buyer (incl. Senior Buyers) | 10 | Category Managers | Vendor negotiation, assortment selection, PO placement (VS-03 interface) |
+| Merchandise Planner / Allocator | 6 | Category Managers (pod); Pricing Mgr (professional) | Demand forecasting, open-to-buy, store/DC allocation |
+| Pricing Manager | 1 | VP Merchandising | Pricing strategy, SRP/margin policy, chairs Pricing Exception Review (with CFO delegate) |
+| Pricing Analyst | 4 | Pricing Mgr | Competitive price tracking (VS-57), promo pricing, markdown analytics |
+| Assortment & Space Analyst | 3 | Pricing Mgr (professional) | Planograms/space, assortment rationalization, 35K-SKU architecture |
+| Direct Sourcing / Import Buyer | 3 | Category Managers | Import vendor management, landed cost, LC/customs coordination (links Imports & Customs) |
+| Private Brand Product Manager | 3 | Category Managers | Own-brand development, private-brand P&L, vendor-QA liaison (VS-41) |
+| Promotions & Vendor-Funding Coordinator | 3 | VP Merchandising | Promo setup, co-op/vendor-funded markdowns, event P&L (6 events/yr) |
+| Merchandising Operations & Master Data Manager | 1 | VP Merchandising | Item-master governance, pricing-system admin, vendor setup |
+| Merchandising Operations Specialist | 3 | Merch Ops & MD Mgr | Item/prix maintenance, vendor portal data, catalog reporting |
+| **Total** | **43** | | |
+
+> Target mix = current canon 40 (profile §13.1) +1 planner, +1 pricing, +1 promotions — the
+> reality-check §7.4 direction (planning/pricing/assortment weight for 35K SKUs), now complete.
+
+#### Supply Chain & Logistics (46)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| VP Supply Chain & Logistics (dual-hat GM, BuildRight Logistics, Inc.) | 1 | COO | Supply-chain P&L; entity GM duties per §6; S&OP/IBP executive sponsor |
+| S&OP/IBP Lead | 1 | VP Supply Chain | Owns VS-127 consensus cycle end-to-end; runs the S&OP working cadence (§8) |
+| Senior Demand Planner | 1 | S&OP/IBP Lead | Statistical baseline, promo uplift modeling, planner QC |
+| Demand Planner | 2 | S&OP/IBP Lead | Category-level forecasts, forecast-value-added tracking |
+| Supply & Allocation Planner | 1 | S&OP/IBP Lead | Supply plan, DC/store allocation balance, constraint resolution |
+| DC Operations Manager | 1 | VP Supply Chain | 4-DC network performance; standards; the two HQ-side coordinators per DC |
+| DC Operations Coordinator | 8 | DC Ops Mgr | 2 per DC: site-level execution liaison, KPI reporting, escalation (§7.3 interface) |
+| DC Operations Analyst | 1 | DC Ops Mgr | Network capacity/labor modeling, cross-dock share analytics |
+| Fleet & Logistics Manager | 1 | VP Supply Chain | Outbound orchestration; 80% 3PL model (VS-06); inter-island freight |
+| Logistics Coordinator | 2 | Fleet & Logistics Mgr | Carrier scheduling, RO handoff, delivery-window adherence |
+| 3PL & Freight Specialist | 2 | Fleet & Logistics Mgr | 3PL contracts execution, freight audit, claims |
+| Fleet Compliance & Safety Specialist | 1 | Fleet & Logistics Mgr | Own-fleet compliance, driver safety program, LTFRB/DOTr requirements |
+| Procurement Manager | 1 | VP Supply Chain | PO-execution operation, ~18,000 PO lines/mo, buying-desk standards |
+| Purchasing / PO Specialist | 6 | Procurement Mgr | PO issue/expedite, order-book hygiene, vendor acknowledgment |
+| Procurement Coordinator | 2 | Procurement Mgr | Catalog/contract coverage, PO automation exceptions |
+| Imports & Customs Manager | 1 | VP Supply Chain | 400–600 TEU/mo program; in-house brokerage; BOC compliance posture |
+| Customs Broker | 2 | Imports & Customs Mgr | Entry filing, classification, duty optimization |
+| Import Coordinator | 2 | Imports & Customs Mgr | Shipment lifecycle door-to-door, demurrage avoidance |
+| Import Documentation Specialist | 1 | Imports & Customs Mgr | LC/documents, permits (DA/FDA where applicable), filing accuracy |
+| Vendor Management Manager | 1 | VP Supply Chain | 800–1K vendor lifecycle, onboarding gate, scorecards (PA-03.1) |
+| Vendor Scorecard & Performance Analyst | 1 | Vendor Mgmt Mgr | OTIF/quality scorecards, quarterly vendor reviews |
+| Vendor Portal & Collaboration Specialist | 2 | Vendor Mgmt Mgr | Supplier-portal administration, ASN compliance, vendor data hygiene |
+| Inventory Planning Manager | 1 | VP Supply Chain | ROP/safety-stock policy; VS-136 multi-echelon direction; DC inventory integrity targets |
+| Inventory Planner | 2 | Inventory Planning Mgr | Replenishment parameters, seasonal builds, DC balance |
+| Replenishment & Allocation Analyst | 2 | Inventory Planning Mgr | Store-level replenishment quality, allocation exceptions, shrink-linked parameters |
+| **Total** | **46** | | |
+
+#### Information Technology (122 — by reference)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| IT product portfolio — 9 domain + 7 platform product teams + CIO Office | 122 | CIO | Defined in [`it-product-operating-model.md`](../07-methodology/it-product-operating-model.md) §3–§5 (team-by-team rosters, including the two in-house build squads OMO and TPS) and §9.1 (sizing authority); deliberately not restated here (single-source rule, §5.2) |
+| **Total** | **122** | | |
+
+#### Human Resources (42)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| VP Human Resources | 1 | CHRO | Runs the HR function; field-partnered model below; CBA negotiation support (VS-84) |
+| Talent Acquisition Manager | 1 | VP HR | ~1,200–1,600 hires/yr engine; store/DC/HQ pipelines (VS-121) |
+| Talent Acquisition Specialist | 5 | TA Mgr | Full-cycle recruitment, store-rush hiring, campus/TVET channels |
+| Sourcing & Screening Coordinator | 1 | TA Mgr | Pipeline building, background-screening coordination (VS-167) |
+| TA Coordinator | 1 | TA Mgr | Scheduling, offers, onboarding handoff to L&D |
+| HR Business Partner (one per region) | 6 | VP HR (professional); Regional Managers (embedded) | Field HR: employee relations, performance, staffing partnership; dotted into the regions per §7.1 |
+| Compensation & Benefits Manager | 1 | VP HR | Grade architecture, pay equity, statutory benefits, CBA economics |
+| Compensation Analyst | 1 | C&B Mgr | Market pricing, merit modeling, incentive calculations |
+| Benefits Specialist | 2 | C&B Mgr | SSS/PhilHealth/Pag-IBIG/HMO administration, claims, wellness interface |
+| Payroll Manager | 1 | VP HR | 5 entities × 2 runs/mo; ~13,430 payslips/mo; statutory remittance integrity |
+| Payroll Supervisor | 1 | Payroll Mgr | Run supervision, variance review, off-cycle control |
+| Payroll Specialist | 4 | Payroll Supervisor | Run execution, deductions/loans, final pay (W15) |
+| Payroll & Statutory Remittance Officer | 1 | Payroll Mgr | SSS/PhilHealth/Pag-IBIG/BIR filings and reconciliation |
+| Timekeeping & Attendance Analyst | 1 | Payroll Mgr | Biometric/RFID feed integrity, shift/overtime data quality (§11.3) |
+| HR Shared Services Lead | 1 | VP HR | Employee-lifecycle service desk; VS-103 people services |
+| HR Services Specialist | 4 | SS Lead | Employment records, certifications, lifecycle transactions, 201-file hygiene |
+| Learning & Development Manager | 1 | VP HR | Store onboarding at scale; POS/safety/product curricula (VS-19.4); leadership pipeline |
+| L&D Specialist / Trainer | 4 | L&D Mgr | Training delivery, e-learning content, store certification tracking |
+| Labor Relations Director | 1 | VP HR | CBA negotiation & administration, grievance machinery, DOLE relations (VS-84) |
+| Labor Relations Specialist | 2 | LR Director | Case handling, discipline due-process, CBA compliance monitoring |
+| HRIS & HR-Technology Administrator | 1 | VP HR | HRIS/Core-HR configuration, org-structure master data, access model (PA-103.3) |
+| People Analytics Analyst | 1 | VP HR | Workforce analytics, turnover/absence reporting, planning inputs |
+| **Total** | **42** | | |
+
+#### Marketing (30)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| VP Marketing | 1 | CMO | Brand & demand strategy; retail-media build-out; dotted support to Digital Commerce GM |
+| Brand & Communications Manager | 1 | VP Marketing | Brand architecture, campaign governance, Marketing Comms function (press, crisis comms support) |
+| Brand Manager | 1 | Brand & Comms Mgr | Brand health tracking, guideline enforcement, co-op calendar |
+| Content & Creative Specialist | 2 | Brand & Comms Mgr | Creative production, store signage cycles, digital asset library |
+| Marketing Comms Specialist | 1 | Brand & Comms Mgr | PR, social voice, internal-launch comms |
+| Promotions & Campaigns Manager | 1 | VP Marketing | The 6 promo events/yr; campaign calendar; promo P&L with Merchandising |
+| Campaign Manager | 2 | Promotions & Campaigns Mgr | Event execution, offer mechanics, post-event review |
+| Promotions Specialist | 2 | Promotions & Campaigns Mgr | Promo setup/IO maintenance, vendor coordination, winner/redemption ops |
+| Loyalty & CRM Manager | 1 | VP Marketing | 600K-member loyalty program; CRM strategy; personalization roadmap |
+| CRM Manager | 1 | Loyalty & CRM Mgr | Lifecycle campaigns, segmentation, offer targeting |
+| CRM Data Steward | 2 | Loyalty & CRM Mgr | Loyalty/CDP data hygiene, consent states, DPA-aligned handling (VS-91 interface) |
+| Digital Marketing Manager | 3 | VP Marketing | Ecommerce/omnichannel demand; site & app marketing; marketplace demand (VS-95) |
+| Performance-Marketing Specialist | 2 | Digital Mktg Mgr | Paid search/social, SEO, conversion optimization |
+| Ecommerce Marketing Specialist | 2 | Digital Mktg Mgr | On-site merchandising of demand, launch calendars, content ops |
+| Retail Media & Marketplace Manager | 1 | VP Marketing | Retail-media network build (VS-48); marketplace seller programs |
+| Marketplace Manager | 2 | Retail Media & Marketplace Mgr | Seller onboarding, catalog/commission ops, campaign packages |
+| Retail Media Operations Specialist | 1 | Retail Media & Marketplace Mgr | Media inventory, insertion orders, delivery/campaign reporting |
+| Consumer Insights Manager | 1 | VP Marketing | Shopper research, category insights, test-and-learn agenda |
+| Insights Analyst | 2 | Insights Mgr | Survey/social-listening analytics, loyalty-data insight packs |
+| Marketing Operations Manager | 1 | VP Marketing | Marketing-tech stack, budgets, agency/roster governance |
+| **Total** | **30** | | |
+
+#### Store Operations (24)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| VP Store Operations (Director Field Retail Operations) | 1 | COO | Field operating model owner (VS-177); standards; store P&L partnership with RMs |
+| Regional Manager | 6 | VP Store Ops | 2–3 DMs each (25–40 stores); regional P&L; VS-177 cadence |
+| District Manager | 13 | Regional Managers | ~15 stores each; visit cadence, coaching, standards execution (PA-177.2) |
+| Retail Standards & Store-Opening Manager (Store Support Center lead) | 1 | VP Store Ops | Operations-standards canon; leads the store-opening task force (VS-37) with DM participation; store-hotline escalation model (PA-177.3) |
+| Field Communications Manager | 1 | Retail Standards Mgr | Field comms & best-practice sharing (VS-63); cascade integrity to 200 stores |
+| Facilities Coordination Specialist | 1 | Retail Standards Mgr | Store facilities issue routing (links Facilities & RE); maintenance vendor scheduling |
+| OpEx / Continuous-Improvement Process Lead | 1 | Retail Standards Mgr | Lean/CI program for store operations; OpEx CoE liaison |
+| **Total** | **24** | | |
+
+> The VP Store Operations box is now explicit inside the fixed 24 (previously the 19 field
+> managers + 5-person support center left the department head unaccounted); the support center
+> is correspondingly 4 — net zero, §5.2 conformed.
+
+#### Legal & Compliance (20)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| VP Legal & Compliance | 1 | CEO | Department head; second-line ownership; Board/Committee support (§3) |
+| Corporate Secretary | 1 | VP Legal | Statutory organ of the entities (§6); SEC reportorial (W124/W481/ASHM W482); Board minutes; §10 protection: not subordinate to CFO |
+| Corporate Secretary Analyst | 1 | CorpSec | Filings calendar, records, GIS/AFS submissions |
+| Government Affairs Manager | 1 | VP Legal | Multi-LGU permit strategy (VS-22/76/104); LGU/regulator relationships |
+| Regulatory Affairs Specialist | 3 | Gov Affairs Mgr | Permit renewals across 200 stores, inspections liaison, calendars |
+| Customs & Trade Compliance Specialist | 1 | Gov Affairs Mgr | Customs/trade regulatory interface (VS-87); BOC accreditation hygiene |
+| Contracts & Commercial Manager (Senior Counsel) | 1 | VP Legal | Contract framework, negotiation standards, W230 gate |
+| Legal Counsel — Contracts | 2 | Contracts Mgr | Contract review/approval, commercial support, templates |
+| Paralegal / Contracts Specialist | 2 | Contracts Mgr | Contract administration, obligations register, signature workflow |
+| Compliance Manager / MLRO | 1 | VP Legal | AML program ownership (VS-86); §10 protection: direct access to CEO and Audit Committee |
+| AML / ABC Officer | 1 | Compliance Mgr | KYC/CDD/sanctions screening, STR filing support; anti-bribery program (VS-86.3) |
+| Compliance Analyst | 1 | Compliance Mgr | Compliance monitoring/testing, COI & gifts register, training records |
+| Data Privacy Officer (DPO) | 1 | VP Legal (functional); CIO (administrative) | RA 10173 program: NPC registration, breach response (VS-91); §10 protection |
+| Privacy Officer | 1 | DPO | Privacy impact assessments, rights-request handling, 25-employee privacy training |
+| Litigation & IP Counsel | 2 | VP Legal | Litigation management (W125), IP portfolio (W126), anti-counterfeit (VS-71) |
+| **Total** | **20** | | |
+
+#### Internal Audit & Risk (9)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Head of Internal Audit & Risk | 1 | Board Audit Committee (functional); CEO (administrative) | Third line of defense; 5-entity audit universe; §10 protection: appointment/removal by the Committee |
+| Audit Manager | 1 | Head of IA | Audit plan execution, financial/operational audits, IC testing coordination |
+| Senior Internal Auditor | 1 | Audit Mgr | Lead audits, workpaper review |
+| Internal Auditor | 2 | Audit Mgr | Audit execution, controls testing against the 808-control register |
+| IT / ERP Auditor | 2 | Head of IA | ITGC/ERP controls, cyber-audit support, systems implementations review |
+| ERM & TPRM Analyst | 1 | Head of IA | Enterprise-risk register, key-risk-indicator dashboard, third-party risk tiering |
+| Forensic / Fraud Investigator | 1 | Head of IA | Fraud & special investigations, case files, loss-recovery referrals |
+| **Total** | **9** | | |
+
+#### Customer Service (34)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Head of Customer Service | 1 | COO | Hybrid service model owner (central + store CSR network); CS quality & SLAs |
+| Contact Center Supervisor | 2 | Head of CS | Tiered voice/chat/email floors; schedule adherence |
+| Customer Service Representative | 22 | Contact Center Supervisors | 2.8M-transaction inquiry volume: orders, returns, BOPIS support, escalations |
+| B2B Support Representative | 4 | Head of CS | Trade-account service desk (aligned to Trade & Account Management); B2B order/return handling |
+| Quality & Workforce Analyst | 2 | Head of CS | QA scoring, WFM forecasting/scheduling, telephony analytics |
+| Ecommerce Support Specialist | 3 | Head of CS | Online-order fulfillment support: marketplace/dotcom claims, SLA recovery |
+| **Total** | **34** | | |
+
+#### Regional Loss Prevention (27)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Director, Regional Loss Prevention | 1 | COO | Shrink strategy (< 1.5% target); VS-23 monitoring loop owner |
+| Regional LP Officer | 20 | Director (professional; regional embedding per §7.1) | 1 per ~10 stores: exception resolution, store LP coaching, investigations support |
+| Senior LP Investigator | 1 | Director | Investigations queue lead, case-quality review |
+| LP Investigator | 2 | Senior LP Investigator | Internal/external theft cases, ORC coordination with law enforcement |
+| Senior LP Analytics Analyst | 1 | Director | Exception-analytics models, POS-journal mining, shrink attribution |
+| LP Analytics Analyst | 2 | Senior LP Analytics Analyst | Exception triage, Refund/void/markdown anomaly review (PA-23.1 interface) |
+| **Total** | **27** | | |
+
+#### Health, Safety & Environment (13)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Head of HSE | 1 | CHRO | OSH program owner (RA 11058 / DO 198-18); accident prevention; DOLE interface |
+| Safety Officer (HSE Officer, DOLE-accredited SO2) | 10 | Head of HSE (professional); regional embedding | Regional coverage model (§5.2): inspections, incident investigation, contractor safety, training |
+| Company Nurse | 1 | Head of HSE | Occupational health, medical surveillance, first-aid program (first-aiders per store, §10) |
+| Wellness Coordinator | 1 | Head of HSE | Wellness programs, drug-free workplace (VS-150), PPE/uniform program (VS-169) |
+| **Total** | **13** | | |
+
+#### Quality Management (5)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Head of Quality Management | 1 | COO | Incoming-inspection standard (VS-31), vendor QA, recall readiness |
+| Quality Inspector (Incoming Inspection) | 2 | Head of Quality | DC-arrival inspection execution & sampling plans (dotted program to the 4 DC checkers, §7.3) |
+| Supplier-Quality (Vendor QA) Auditor | 1 | Head of Quality | Vendor facility audits, quality scorecards with Vendor Management, CAPA follow-up |
+| Metrology & Weights-Measures Specialist | 1 | Head of Quality | Measuring-equipment calibration program; catch-weight/lumber/wire compliance (reality-check named-role gap closed) |
+| **Total** | **5** | | |
+
+#### Facilities & Real Estate (12)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Director, Facilities & Real Estate (dual-hat GM, BuildRight Property Mgmt, Inc.) | 1 | COO | Property/facilities strategy; entity GM duties per §6 (arm's-length leasing to Depot Inc.) |
+| Facilities Manager | 2 | Director | HQ + DC facilities engineering; field facilities standards (links Store Ops Facilities Coordination) |
+| Energy Manager | 1 | Director | Utility benchmarking across 200+ sites (reality-check named-role gap; 42 workflow mentions), energy programs |
+| Lease Administrator | 1 | Director | Lease abstractions, rent escalations, CAM reconciliation (VS-42) |
+| Surety Program Manager | 1 | Director | Bonds/sureties portfolio, collateral optimization (VS-96 interface) |
+| Facilities Coordinator | 3 | Facilities Mgrs | Store/DC maintenance coordination, small-works execution, vendor supervision |
+| Maintenance & Projects Coordinator | 2 | Facilities Mgrs | Preventive-maintenance scheduling, remodel/fit-out coordination (VS-109 interface) |
+| Real-Estate & Site-Selection Analyst | 1 | Director | New-site pipeline analytics, lease-vs-buy models, network planning (§12 triggers) |
+| **Total** | **12** | | |
+
+#### Sustainability / ESG (4)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Head of Sustainability / ESG (Sustainability/ESG Manager) | 1 | VP Legal & Compliance | ESG strategy & reporting cadence; VS-25 owner |
+| Sustainability Coordinator | 1 | Head of ESG | Program execution, store/DC engagement, supplier ESG questionnaires |
+| ESG Reporting & Data Analyst | 1 | Head of ESG | Metrics pipeline, disclosure drafting, assurance support |
+| Environmental Compliance Specialist | 1 | Head of ESG | DENR permits & reporting (VS-73 interface), hazardous-waste compliance overlay |
+| **Total** | **4** | | |
+
+#### Strategy / Corporate Planning (4)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Head of Strategy & Corporate Planning | 1 | CEO (office) | Annual business plan orchestration (VS-33 with CFO/FP&A); CPM framework |
+| CPM (Corporate Performance Management) Analyst | 1 | Head of Strategy | Strategy-execution tracking, initiative portfolio, Board-deck analytics |
+| Competitive Intelligence Manager | 1 | Head of Strategy | Competitor/market intelligence cycle; pricing/market-scan inputs (reality-check named-role gap closed) |
+| Strategy Analyst | 1 | Head of Strategy | Growth studies, M&A screening support (VS-130 interface), special projects |
+| **Total** | **4** | | |
+
+#### Trade / Account Management (7)
+
+| Role | HC | Reports to | Mandate |
+|---|---|---|---|
+| Head of Trade & Account Management | 1 | COO | B2B channel P&L; trade program owner |
+| Trade Account Manager | 2 | Head of Trade | 5,200 trade-account relationships, terms & program compliance (VS-11) |
+| Key Account Manager | 2 | Head of Trade | VS-107 key-account plans, contractor/developer programs, project pipelines |
+| Trade Professional Program Coordinator | 1 | Head of Trade | VS-43 Trade Pro program: tiers, benefits, events |
+| Trade Operations & Analytics Specialist | 1 | Head of Trade | B2B desk analytics, credit-liaison with AR & Credit, program reporting |
+| **Total** | **7** | | |
+
+> Register total: 7 + 62 + 43 + 46 + 122 + 42 + 30 + 24 + 20 + 9 + 34 + 27 + 13 + 5 + 12 +
+> 4 + 4 + 7 = **511** — the §5.1 HQ target, every role named. Field roles (200 store rosters
+> × 29, §7.2; 4 DC rosters × 150, §7.3) are defined in their own sections and unchanged.
 
 ---
 
@@ -358,7 +690,7 @@ COO → VP Store Operations
       │             └── Store Manager ×200  (29 staff each — §7.2)
       ├── Regional LP Officers ×20     (dotted to Director, Regional Loss Prevention)
       ├── HRBP ×6                      (dotted to VP HR; embedded in regions)
-      └── Store Support Center (5)
+      └── Store Support Center (4)
 ```
 
 - **Spans**: RM → 2–3 DMs; DM → ~15 stores; SM → 8 direct (below).
@@ -557,7 +889,7 @@ Each phase promotion is recorded in [CHANGELOG.md](../CHANGELOG.md) and flips th
 
 ---
 
-*Document Version: 1.5 | Date: 2026-09-03 | **Consistency repair (§11 phase-delta true-up):**
+*Document Version: 2.0 | Date: 2026-09-09 | **Official TO of record + every-role register.** The target-state TO is elevated to the company's **official table of organization of record** — the single authoritative statement of the enterprise's org design; the two-state discipline (§1) is unchanged and no sizing figure moves. New **§5.3 Enterprise Role Register**: every one of the 511 HQ roles is defined at role level (HC, reporting line, mandate) across 18 department tables + the Executive Office, footing exactly to §5.1 (7+62+43+46+122+42+30+24+20+9+34+27+13+5+12+4+4+7 = 511), with role titles drawn from the workflow catalog's canonical RACI vocabulary (≈150 distinct roles), IT carried by reference to the operating model per the single-source rule, spans held inside the §9 bands (Finance's transactional cluster administratively routed through a dual-hat Assistant Controller to keep the Controller at 7 directs), and the §5.1 merchandising target mix (43) conformed to the reality-check §7.4 direction (+1 planner, +1 pricing, +1 promotions vs the current-40 canon). One latent-arithmetic repair: §5.2's Store Operations line summed to 24 without a department-head box (6 RM + 13 DM + 5 SSC); the register makes the **VP Store Operations box explicit inside the fixed 24** and sizes the Store Support Center at **4** (store-opening task force = a led duty of the standards manager, VS-37, not a fifth box) — net zero; §7.1's tree trued to 'Store Support Center (4)'; the §5.2 AR & Credit mix cell is detailed (mgr + AR sup/clerks 3 + collections 2 + credit 2) to match the register. Companion pins re-pointed (reality-check STATUS banner TO pin → v2.0; root-README tree annotation). Prior v1.5 (2026-09-03): **Consistency repair (§11 phase-delta true-up):**
 each phase row's HC-delta cell now equals the sum of its own named moves — Phase 1
 +18 → **+11** (Legal +6, HSE +3, IA +2), Phase 2 +26 → **+20** (Finance +16, CS +4),
 Phase 3 +105 → **+118** with the ESG/Strategy/Trade top-ups made explicit (ESG 3→4,
