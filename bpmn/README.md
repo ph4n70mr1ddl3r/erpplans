@@ -47,6 +47,12 @@ The directory structure mirrors the source: `bpmn/VS-<NN>-<slug>/PA-<VS>.<n>-<sl
   (5,449 judgment calls), not something to fake mechanically.
 - The markdown remains the **source of truth**; these models are a projection of it. Edit the
   `PA-*.md` files and regenerate.
+- **DI namespaces** are the OMG BPMN 2.0 canonical ones (`bpmndi` =
+  `http://www.omg.org/spec/BPMN/20100524/DI`; bounds/waypoints =
+  `http://www.omg.org/spec/DD/20100524/DC` and `.../DI` — the namespaces the BPMN 2.0
+  spec's own XSDs import). Some tooling exports the `DD/20100924` variants instead
+  (bpmn.io's historical export default); conformant readers (bpmn-js, Camunda Modeler)
+  accept both spellings, so the files open either way.
 
 ## Validation
 
