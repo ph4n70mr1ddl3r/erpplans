@@ -9,7 +9,7 @@ registers and internal cross-reference integrity. Findings: fully clean —
 
   * figures: 6,762 employees, ~800–1,000 vendors (§6.5), 35,000 active + 20,000
     inactive items, ~600,000 loyalty members, 29 per store, 200 stores + 4 DCs,
-    14,000 POS/store/month (2.8M ÷ 200), ~PHP 9.22M revenue/employee, and the
+    14,000 POS/store/month (2.8M ÷ 200), ~PHP 9.21M revenue/employee, and the
     5,200+200 trade/corporate price records all match the registers;
   * cross-references: every W/VS-/CTL-/PA-/requirement-ID token resolves
     (5,363 W, 190 VS, 569 PA, 808 CTL, 728 requirement registers); the §-refs
@@ -123,6 +123,25 @@ dmn/ trees, now added to the summary with a 2026-09-07 footer clause), and
 reality_check_hits (the headcount reality-check §3.1 AP bullet's retired '~450/day'
 parenthetical — 450/day implies ~13,500/month, matching no licensed convention; the
 corrected '~300/day' form is anchored).
+
+2026-09-09 sixteenth-wave consistency review: three stranded-derived-figure classes
+found live and closed — all of them 'the canonical table moved, the derived quote
+stayed'. (1) Revenue-per-employee: the v2.22 rebalance bumped the §4 note's division
+denominator 6,757 → 6,762 but the quotient stayed '~PHP 9.22M' (correct only at 6,757;
+62.3B ÷ 6,762 = ~9.21M) — stranded on the profile's own §4 note (whose parenthetical
+division contradicted its quotient), assumptions A2.6, PA-133.3's Volume row, and this
+module's own #41 self-description above, which had verified the stale figure as
+matching the registers. (2) The B2B account scheme: the v2.23 canonicalization moved
+§9.2/§10.3 to trade ~5,200 / corporate ~200 / AR ~5,400 but §15.2's Master-Data row
+kept the retired '5,000', and PA-11.2's live prose quoted '(5,000 accounts, ~30% of
+revenue)'. (3) The DC-catchment range/average — closed over in
+reconcile-staffing-claims.py (Check 51), which already owns profile-table-vs-PA-prose
+claims. New structural rule profile_derived_figure_hits re-derives the quotient and
+the account counts from the profile's own §9.4/§4/§9.2 rows every run, requires the
+corrected anchors (the §4 quotient line and the §15.2 Master-Data rows), and sweeps
+the live corpus (PA files, the workflows support docs, the root/methodology docs;
+CHANGELOG, the generated trees, version-history footers, and the gap-analysis scenario
+table's authoring-time rows exempt) for citations that disagree with the derivation.
 2026-09-07 ninth-wave consistency review: the reverse-direction companion-pin family
 — the mirror images of the live_pin_hits surfaces, read by no rule — found live and
 closed: the sourcing model's header 'Companion to' OM pin stranded at v3.3 since
@@ -1393,6 +1412,145 @@ def reality_check_hits():
     return hits
 
 
+def profile_derived_figure_hits():
+    """2026-09-09 sixteenth-wave consistency review — derived-figure guard for the
+    model-company profile's quotient/count claims and every live citation of them.
+    Re-derives, from the profile's own canonical rows every run:
+      * the revenue-per-employee quotient (§9.4 Annual Gross Revenue ÷ §4 Total
+        Company Headcount) — the §4 note must quote the live division and the live
+        2-dp quotient, and every live 'revenue per employee ~PHP N.NM' citation in
+        the corpus must equal the derivation (found live: 9.22M stranded at the
+        retired 6,757 denominator on the profile §4 note, assumptions A2.6 and
+        PA-133.3's Volume row while the division read ÷ 6,762);
+      * the B2B account counts (§9.2 trade/corporate) — the §10.3 AR row must
+        cross-foot to them and the §15.2 Master-Data rows must equal them (found
+        live: §15.2 trade stranded at the retired 5,000), and the retired
+        '5,000-account' trade scheme must not reappear in live prose.
+    Sweep scope: PA files, the workflows support docs, the root/methodology docs.
+    Exempt: CHANGELOG, the generated trees, version-history footers (strip_footer),
+    and the gap-analysis scenario table's authoring-time rows ('| N |' rows — the
+    same dated-record status as the gap-history batch notes, whose own 6,757-era
+    figures every wave has left standing)."""
+    rel = "model-company-profile.md"
+    hits = []
+    prof_raw = open(os.path.join(MC, rel), encoding="utf-8").read()
+    prof = strip_footer(prof_raw)
+
+    m = re.search(r"\|\s*\*\*Total Company Headcount\*\*\s*\|\s*\*{0,2}~?([\d,]+)", prof)
+    hc = int(m.group(1).replace(",", "")) if m else None
+    m = re.search(r"\|\s*\*\*Annual Gross Revenue\*\*\s*\|\s*~PHP\s*([\d.]+)\s*Billion", prof)
+    rev_b = float(m.group(1)) if m else None
+    m = re.search(r"\|\s*\*\*Trade Account Customers\*\*\s*\|\s*~?([\d,]+)", prof)
+    trade = int(m.group(1).replace(",", "")) if m else None
+    m = re.search(r"\|\s*\*\*Corporate Account Customers\*\*\s*\|\s*~?([\d,]+)", prof)
+    corp = int(m.group(1).replace(",", "")) if m else None
+    if None in (hc, rev_b, trade, corp):
+        return [(rel, 0, f"profile_derived_figure_hits: canonical inputs unparseable "
+                         f"(HC={hc}, revenue={rev_b}, trade={trade}, corporate={corp})")]
+
+    # (1) revenue-per-employee quotient, re-derived
+    quot = round(rev_b * 1e9 / hc / 1e6, 2)
+    quot_s = f"{quot:.2f}"
+    anchor = f"~PHP {quot_s}M/year (~PHP {rev_b:g}B \u00f7 {hc:,})"
+    if anchor not in prof:
+        hits.append((rel, 0, f'required corrected revenue-per-employee anchor missing: '
+                             f'"{anchor}" (re-derived: PHP {rev_b:g}B \u00f7 {hc:,} = '
+                             f'~PHP {quot_s}M)'))
+
+    # (2) B2B account counts: §15.2 Master-Data rows and the §10.3 AR row must
+    # equal the §9.2 canon
+    m = re.search(r"\|\s*Customers \(B2B Trade\)\s*\|\s*~?([\d,]+)\s*\|", prof)
+    md_trade = int(m.group(1).replace(",", "")) if m else None
+    m = re.search(r"\|\s*Customers \(B2B Corporate\)\s*\|\s*~?([\d,]+)\s*\|", prof)
+    md_corp = int(m.group(1).replace(",", "")) if m else None
+    if md_trade != trade:
+        hits.append((rel, 0, f"\u00a715.2 Master-Data trade-customer row ({md_trade}) "
+                             f"disagrees with the \u00a79.2 canon (~{trade:,})"))
+    if md_corp != corp:
+        hits.append((rel, 0, f"\u00a715.2 Master-Data corporate-customer row ({md_corp}) "
+                             f"disagrees with the \u00a79.2 canon (~{corp:,})"))
+    m = re.search(r"\|\s*\*\*Active AR Accounts\*\*\s*\|\s*~?([\d,]+)\s*"
+                  r"\(([\d,]+) trade \+ ([\d,]+) corporate\)", prof)
+    if not m:
+        hits.append((rel, 0, "\u00a710.3 Active-AR-accounts row not in the "
+                             "'~N (T trade + C corporate)' form"))
+    else:
+        ar, t2, c2 = (int(x.replace(",", "")) for x in m.groups())
+        if ar != t2 + c2 or t2 != trade or c2 != corp:
+            hits.append((rel, 0, f"\u00a710.3 AR row ({ar} = {t2} + {c2}) does not "
+                                 f"cross-foot to the \u00a79.2 canon "
+                                 f"({trade} + {corp} = {trade + corp})"))
+
+    # (3) live-corpus citation sweep
+    paths = sorted(glob.glob(os.path.join(MC, "workflows", "VS-*", "PA-*.md")))
+    paths += sorted(glob.glob(os.path.join(MC, "workflows", "VS-*", "README.md")))
+    paths += sorted(glob.glob(os.path.join(MC, "workflows", "*.md")))
+    paths += sorted(glob.glob(os.path.join(MC, "*.md")))
+    paths += sorted(glob.glob(os.path.join(REPO, "07-methodology", "*.md")))
+    paths.append(os.path.join(REPO, "README.md"))
+    rev_re = re.compile(r"[Rr]evenue[\s/\-]*(?:per[\s/\-]*)?"
+                        r"employee[^\n]{0,120}?"
+                        r"([\u2265>]?\s*)PHP\s*~?(\d+(?:\.\d+)?)\s*M")
+    # the TO's §5.1 two-state total row carries the target denominator (6,911);
+    # its 'Revenue/employee ≈ PHP 9.01M' note and the sizing row's '≥ PHP 9M
+    # preserved' are target-state claims, both derived from rev ÷ target-HC
+    to_raw = open(os.path.join(MC, "optimal-table-of-organization.md"),
+                  encoding="utf-8").read()
+    m = re.search(r"\*\*Total company\*\*\s*\|\s*\*\*~?([\d,]+)\*\*\s*\|\s*\|?\s*\*\*~?([\d,]+)\*\*", to_raw)
+    target_hc = int(m.group(2).replace(",", "")) if m else None
+    target_quot = round(rev_b * 1e9 / target_hc / 1e6, 2) if target_hc else None
+    retired_acct = [
+        # the census-complete retired-scheme forms: the trade base is the only
+        # 5,000-account population in the corpus, so the bare adjacency is
+        # unambiguous ('5,000 trade-relevant SKUs' does not match)
+        "5,000 accounts", "5,000-account", "accounts (~5,000",
+    ]
+    for path in paths:
+        raw = open(path, encoding="utf-8").read()
+        body = strip_footer(raw)
+        prel = os.path.relpath(path, REPO)
+        if os.path.basename(path) == "workflow-gap-analysis.md":
+            # scenario-table rows are the authoring-time record (dated by their
+            # Pass number, like the batch notes) — exempt
+            body = "\n".join(l for l in body.splitlines()
+                             if not re.match(r"\|\s*\d+\s*\|", l))
+        for m in rev_re.finditer(body):
+            cited = float(m.group(2))
+            threshold = bool(m.group(1).strip())
+            if threshold:
+                # '≥ PHP 9M' — a floor claim: it must be satisfiable at the
+                # target denominator (9.0117… ≥ 9 ✓); an unsatisfiable floor
+                # (> target quotient) is the drift
+                if target_quot is None:
+                    hits.append((prel, body[:m.start()].count("\n") + 1,
+                                 f"revenue-per-employee floor '≥ PHP {m.group(2)}M' but "
+                                 f"the TO two-state total row is unparseable"))
+                elif cited > target_quot + 0.005:
+                    hits.append((prel, body[:m.start()].count("\n") + 1,
+                                 f"revenue-per-employee floor '≥ PHP {m.group(2)}M' is "
+                                 f"unsatisfiable at the target denominator "
+                                 f"(PHP {rev_b:g}B \u00f7 {target_hc:,} = ~PHP "
+                                 f"{target_quot}M)"))
+            elif abs(cited - quot) <= 0.005:
+                pass  # current-state citation — canonical
+            elif target_quot is not None and abs(cited - target_quot) <= 0.005:
+                pass  # target-state citation (~9.01M at 6,911) — canonical
+            else:
+                bases = f"~PHP {quot_s}M (PHP {rev_b:g}B \u00f7 {hc:,})"
+                if target_quot is not None:
+                    bases += f" or ~PHP {target_quot}M at target (\u00f7 {target_hc:,})"
+                hits.append((prel, body[:m.start()].count("\n") + 1,
+                             f"revenue-per-employee citation ~PHP {m.group(2)}M matches "
+                             f"neither derived canon: {bases}"))
+        for lit in retired_acct:
+            for m in re.finditer(re.escape(lit), body, re.I):
+                hits.append((prel, body[:m.start()].count("\n") + 1,
+                             f"retired B2B account-count literal \"{lit}\" "
+                             f"(canonical scheme: trade ~{trade:,} + corporate ~{corp:,} "
+                             f"= AR ~{trade + corp:,})"))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true",
@@ -1480,6 +1638,8 @@ def main():
     hits.extend(reality_check_hits())
     # 2026-09-07 ninth-wave consistency review addition
     hits.extend(companion_pin_hits())
+    # 2026-09-09 sixteenth-wave consistency review addition
+    hits.extend(profile_derived_figure_hits())
     for doc, line, detail in hits:
         print(f"model-doc: {doc}:{line}: {detail}")
     print(f"audit-model-docs: {len(hits)} hit(s) across {len(DOCS)} documents")

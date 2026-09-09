@@ -98,7 +98,7 @@ The company operates through **5 legal entities** organized as follows:
 - Cross-dock capable for fast-moving items
 - Full warehouse management (pick/pack/ship) for slower movers
 - Vendor managed inventory (VMI) for select suppliers
-- Each DC serves ~40 stores on average (range: 20–60)
+- Each DC serves ~50 stores on average (range: 20–80)
 - Replenishment cycles: 2–3x per week per store
 - DC headcount: ~150 per DC (~600 total)
 - Special handling areas: lumber, tiles, paint/chemicals
@@ -184,7 +184,7 @@ The company operates through **5 legal entities** organized as follows:
 | Corporate HQ Personnel | 362 (rebalanced to minimum workflow-coverage levels — see §3.3 and `headcount-reality-check.md`) |
 | **Total Company Headcount** | **6,762** |
 
-> **Revenue per employee**: ~PHP 9.22M/year (~PHP 62.3B ÷ 6,762) — driven by BuildRight's optimized store staffing model (29 per store). The headcount per store was increased from 28 to 29 to implement the recommendation for an additional Stock Associate (4 total per store) to ensure adequate coverage for continuous replenishment, cycle counting, and omnichannel fulfillment. HQ headcount was rebalanced from 315 to 357 (2026-06-20), then to 362 (2026-06-25) to stand up a dedicated S&OP/IBP sub-team in Supply Chain & Logistics — closing the previously-unowned VS-127 consensus cycle and the “S&OP Lead” gap in `headcount-reality-check.md` §4: the six functions previously rolled into an un-enumerated bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and Finance, IT, HR, and Legal were increased to the minimum required to cover the roles and transaction volumes referenced across the workflow catalog (e.g., dedicated DPO W53, Regulatory Officer W54, Tax Accountant W90, Logistics Finance Analyst W277, IT Helpdesk W48, AML/MLRO, and Regional Loss Prevention's 20 Officers for variance investigation across the 200-store chain).
+> **Revenue per employee**: ~PHP 9.21M/year (~PHP 62.3B ÷ 6,762) — driven by BuildRight's optimized store staffing model (29 per store). The headcount per store was increased from 28 to 29 to implement the recommendation for an additional Stock Associate (4 total per store) to ensure adequate coverage for continuous replenishment, cycle counting, and omnichannel fulfillment. HQ headcount was rebalanced from 315 to 357 (2026-06-20), then to 362 (2026-06-25) to stand up a dedicated S&OP/IBP sub-team in Supply Chain & Logistics — closing the previously-unowned VS-127 consensus cycle and the “S&OP Lead” gap in `headcount-reality-check.md` §4: the six functions previously rolled into an un-enumerated bucket (HSE, Quality, Facilities & Real Estate, Sustainability/ESG, Strategy, Trade Account Management) are now broken out explicitly, and Finance, IT, HR, and Legal were increased to the minimum required to cover the roles and transaction volumes referenced across the workflow catalog (e.g., dedicated DPO W53, Regulatory Officer W54, Tax Accountant W90, Logistics Finance Analyst W277, IT Helpdesk W48, AML/MLRO, and Regional Loss Prevention's 20 Officers for variance investigation across the 200-store chain).
 
 > **Target-state headcount:** HQ 362 → **511** and total 6,762 → **6,911** per the adopted
 > target-state table of organization ([`optimal-table-of-organization.md`](optimal-table-of-organization.md)
@@ -785,7 +785,7 @@ The following external systems are actively integrated with the core ERP system.
 |---|---|
 | Items / SKUs | 55,000 (35,000 active) |
 | Customers (B2C Loyalty) | 600,000 |
-| Customers (B2B Trade) | 5,000 |
+| Customers (B2B Trade) | 5,200 |
 | Customers (B2B Corporate) | 200 |
 | Vendors / Suppliers | 1,000 |
 | Locations (Stores + DCs + HQ) | 205 |

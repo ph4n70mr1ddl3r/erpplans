@@ -223,7 +223,7 @@
 |---|---|---|---|
 | CRM-001 | Loyalty Points Engine | Must Have | Earn, redeem, expire |
 | CRM-002 | Customer Master (B2C) | Must Have | 600,000 members |
-| CRM-003 | Trade Account Management (B2B) | Must Have | 5,000 accounts with credit limits |
+| CRM-003 | Trade Account Management (B2B) | Must Have | ~5,200 accounts with credit limits |
 | CRM-004 | Corporate Account Management | Must Have | 200 accounts with negotiated pricing |
 | CRM-005 | Tiered Loyalty | Should Have | Bronze, Silver, Gold, Platinum |
 | CRM-006 | Customer Purchase History | Should Have | For personalization and service |

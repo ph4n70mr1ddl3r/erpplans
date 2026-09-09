@@ -22,7 +22,26 @@ Three guards, all tuned to zero false positives on the adjudicated repo:
      canonical HQ department must quote that department's §3.3 total;
   3. Volume-row products — every explicit "A × B = C" (or "× D = E") product
      inside a `| **Volume** |` / `| **Frequency** |` field row must compute
-     elementwise (ranges low×low / high×high).
+     elementwise (ranges low×low / high×high);
+  4. DC-catchment claims (2026-09-09 sixteenth-wave consistency review) — the
+     per-DC catchment average is re-derived from the profile's §3.1 Total-Stores
+     and §3.2 DC-table rows (200 ÷ 4 = 50) and every 'each DC serves ~N stores
+     on average' / 'DCs each serving ~N stores' claim must equal it; the range
+     canon is 20–80 (the §3.2 region/DC-role tables: Mindanao 60, Visayas 40,
+     South-Luzon+NCR 80, North/Central 20) and the retired '~40 on average' /
+     '(range: 20–60)' / '~40–50 stores' forms must not reappear. The review
+     found the profile's own §3.2 operations bullet contradicting its DC3 row
+     ('~40 on average (range: 20–60)' vs South-Luzon+NCR = 80), PA-26.1 citing
+     the profile with the correct range but the stale ~40 average, and PA-04.2
+     carrying '~40' and '~40–50' forms.
+
+The same review armed the validator's use of this script (Check 51 now passes
+--guard; previously the error branch was dead code, which is how two latent
+volume-product checker false positives printed invisibly for months) and fixed
+both false-positive classes: '+'-sum rows are now skipped by whole-row scan (the
+PA-08.2 row carried its '+' before the product span), and parenthetical unit
+annotations are stripped before factor extraction (the PA-28.3 row's 200 × 13 =
+2,600 had been read as × 40 = 104,000).
 
 Usage:  python3 reconcile-staffing-claims.py [--guard]     (exit 1 on any hit)
 """
@@ -30,6 +49,7 @@ import argparse, glob, os, re, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORKFLOWS = os.path.join(REPO, "01-model-company", "workflows")
+PROFILE = os.path.join(REPO, "01-model-company", "model-company-profile.md")
 
 # canonical §3.3 HQ department totals (spot anchors used by prose claims)
 DEPT_TOTALS = {
@@ -136,9 +156,16 @@ def check_file(path, hits):
         line = text[:m.start()].count("\n") + 1
         for pm in PRODUCT_RE.finditer(row):
             span = pm.group(0)
-            if "+" in row[row.find(span):row.find(span) + len(span) + 60]:
+            if "+" in row:
                 continue  # '+'-sum rows are outside the product checker's scope
-            quants = [parse_range(q) for q in QUANT.findall(span)]
+                          # (whole-row skip per the sixteenth wave: the PA-08.2
+                          # class carried its '+' BEFORE the product span, so the
+                          # span-windowed skip missed it and read the sum's total
+                          # as the product's claimed value)
+            quants = [parse_range(q) for q in QUANT.findall(
+                re.sub(r"\([^)]*\)", "", span))]  # parentheticals are unit
+            # annotations ('(~40 categories)'), not factors — sixteenth-wave fix,
+            # the PA-28.3 class had 200 × 13 = 2,600 read as × 40 = 104,000
             factors, claimed = quants[:-1], quants[-1]
             if not factors or any(q is None for q in quants):
                 continue
@@ -159,6 +186,59 @@ def check_file(path, hits):
                              f"vs claimed {clo:g}–{chi:g}"))
 
 
+def dc_catchment_hits():
+    """2026-09-09 sixteenth-wave consistency review — the DC-catchment claims.
+    The profile's own §3.2 tables give the catchments (Mindanao 60, Visayas 40,
+    South-Luzon+NCR 80, North/Central 20 — the five region rows foot to the
+    §3.1 store total), so the true average is stores ÷ DCs and the true range is
+    20–80; the operations bullet nonetheless said '~40 stores on average
+    (range: 20–60)', contradicting its own DC3 row, and PA-26.1 cited the profile
+    with the correct range but the same stale ~40 average while PA-04.2 carried
+    '~40' and '~40–50' forms. Re-derives the average from the §3.1 Total-Stores
+    and §3.2 DC-table rows every run, requires the corrected anchor (average
+    derived; the 20–80 range pinned as the hand-derived region-table truth),
+    re-derives every 'each DC serves ~N stores on average' / 'DCs each serving
+    ~N stores' claim in the profile and the PA files, and retires the stale
+    range/average literals."""
+    hits = []
+    prof = open(PROFILE, encoding="utf-8").read()
+    m = re.search(r"\|\s*\*\*Total Stores\*\*\s*\|\s*\*{0,2}~?([\d,]+)", prof)
+    stores = int(m.group(1).replace(",", "")) if m else None
+    dcs = len(re.findall(r"^\|\s*\*\*DC\d\s*[—-]", prof, re.M))
+    if stores is None or dcs == 0:
+        return [("dc-catchment", "model-company-profile.md", 0,
+                 f"canonical inputs unparseable (stores={stores}, DCs={dcs})")]
+    avg = stores // dcs
+    anchor = f"Each DC serves ~{avg} stores on average (range: 20\u201380)"
+    if anchor not in prof:
+        hits.append(("dc-catchment", "model-company-profile.md", 0,
+                     f'required corrected DC-catchment anchor missing: "{anchor}" '
+                     f'(re-derived: {stores} stores \u00f7 {dcs} DCs = ~{avg}; range '
+                     f'20\u201380 per the \u00a73.2 region/DC-role tables)'))
+    retired = [
+        "(range: 20\u201360)", "range: 20\u201360", "range 20\u201360",
+        "~40 stores on average", "each serving ~40 stores",
+        "serves ~40\u201350 stores",
+    ]
+    avg_re = re.compile(r"each DC serves ~(\d+) stores on average"
+                        r"|DCs each serving ~(\d+) stores", re.I)
+    for path in [PROFILE] + sorted(glob.glob(os.path.join(WORKFLOWS, "VS-*", "PA-*.md"))):
+        text = open(path, encoding="utf-8").read()
+        rel = os.path.relpath(path, REPO)
+        for lit in retired:
+            for m in re.finditer(re.escape(lit), text, re.I):
+                hits.append(("dc-catchment", rel, text[:m.start()].count("\n") + 1,
+                             f"retired catchment literal \"{lit}\" (canonical: "
+                             f"~{avg} average, range 20\u201380)"))
+        for m in avg_re.finditer(text):
+            n = int(m.group(1) or m.group(2))
+            if n != avg:
+                hits.append(("dc-catchment", rel, text[:m.start()].count("\n") + 1,
+                             f"'{m.group(0)}' — derived {stores} stores \u00f7 {dcs} "
+                             f"DCs = ~{avg} (range 20\u201380)"))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--guard", action="store_true",
@@ -168,6 +248,8 @@ def main():
     files = sorted(glob.glob(os.path.join(WORKFLOWS, "VS-*", "PA-*.md")))
     for f in files:
         check_file(f, hits)
+    # 2026-09-09 sixteenth-wave addition: the DC-catchment class (profile + PAs)
+    hits.extend(dc_catchment_hits())
     for kind, rel, line, detail in hits:
         print(f"{kind}: {rel}:{line}: {detail}")
     print(f"reconcile-staffing-claims: {len(hits)} hit(s) across {len(files)} PA files")

@@ -39,7 +39,7 @@ Finance)** which is supplier-side — this is customer-side.
 BuildRight's exposure is structural: home building/renovation is capital-constrained — many B2C
 homeowners and small contractors cannot start or complete projects without financing — and
 BuildRight's "Home Building Partner" positioning, its customer project/design capability (VS-66),
-installation (VS-12), and B2B trade base (~5,000 accounts) make a financing-brokerage offering a
+installation (VS-12), and B2B trade base (~5,200 accounts) make a financing-brokerage offering a
 natural adjacency that lifts basket size, conversion, and project completion; referral economics
 (commission 0.5–2% of loan value) on a PHP multi-billion financing flow is meaningful. The gap
 analysis (§6) explicitly flagged "customer construction-loan brokerage" as a future capability to

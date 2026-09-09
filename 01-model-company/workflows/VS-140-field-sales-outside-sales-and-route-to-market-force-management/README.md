@@ -41,7 +41,7 @@ B2B transaction processing, and general enablement.
 BuildRight's exposure is structural: ~40% of revenue (~PHP 25B/yr) is B2B and project-driven,
 won or lost at the job site/architect's office/developer's procurement — a field force that is
 mis-sized, mis-routed, under-enabled, or mis-incented directly forfeits B2B revenue and share to
-competitors, and a force without disciplined coverage lets the ~5,000-account base churn
+competitors, and a force without disciplined coverage lets the ~5,200-account base churn
 unnoticed.
 
 ---
