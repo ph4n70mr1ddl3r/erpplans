@@ -1115,7 +1115,28 @@ DEP = os.path.join(ROOT, '01-model-company', 'workflows', 'workflow-dependency-m
 dep = open(DEP, encoding='utf-8', errors='replace').read()
 for i, ln in enumerate(dep.split('\n'), 1):
     if 'remains unclassified' in ln or 'pending criticality review' in ln:
-        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,370 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510; 2026-09-03 W5511; 2026-09-03 W5512–W5514; 2026-09-03 W5515–W5517)")
+        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,426 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510; 2026-09-03 W5511; 2026-09-03 W5512–W5514; 2026-09-03 W5515–W5517)")
+# ---- Part C: PA-corpus live-total guard (2026-09-09 fourteenth-wave review) ----
+# The gap-fill batches re-pointed every navigation surface each time the unique total
+# moved, but one surface family no check read was the PA files' own field rows: at ship
+# time PA-128.3's W5512 Volume row still quoted the '5,370-workflow Automation Opportunity
+# inventory' although batches 15–23 had since grown the corpus to 5,426. Every interim
+# unique-workflow total (the retired 5,320–5,425 band) must not appear workflow-adjacent
+# in any PA file; the canon 'workflow' figure in live PA prose is 5,426 (the '~5,400
+# accounts' trade/corporate canon never matches — the rule requires workflow adjacency;
+# '*Date:' footer lines are the historical record and stay).
+TOTAL_PAT = re.compile(r'\b5,(3[2-9]\d|4[01]\d|42[0-5])\b(?=(?:-\s*|\s+)workflows?\b)', re.I)
+for pa in sorted(os.path.join(ROOT, '01-model-company', 'workflows', d, f)
+                 for d in os.listdir(os.path.join(ROOT, '01-model-company', 'workflows'))
+                 if d.startswith('VS-')
+                 for f in os.listdir(os.path.join(ROOT, '01-model-company', 'workflows', d))
+                 if f.startswith('PA-') and f.endswith('.md')):
+    for i, ln in enumerate(open(pa, encoding='utf-8', errors='replace'), 1):
+        if ln.lstrip().startswith('*Date:'):
+            continue
+        m = TOTAL_PAT.search(ln)
+        if m:
+            errs.append(f"{os.path.relpath(pa, ROOT)}:{i} quotes retired corpus total '{m.group(0)}' workflow-adjacent in live prose (canonical unique total: 5,426 since batch 23 / W5573)")
 print(f"A_STALE={len(stale)}")
 for s in stale[:12]: print(f"A_STALE|{s}")
 print(f"B_ERRS={len(errs)}")
@@ -1131,9 +1152,9 @@ else
     echo "$CHECK27" | grep '^A_STALE|' | sed 's/^A_STALE|/    /'
 fi
 if [ "$C27_ERRS" -eq 0 ]; then
-    ok "No unclassified-workflow claims in workflow-dependency-map.md (all 5,370 workflows classified since 2026-06-28)"
+    ok "No unclassified-workflow claims in workflow-dependency-map.md and no retired corpus-total literal (5,320–5,425 band) workflow-adjacent in any PA file's live prose (canon: 5,426 unique; Part C added by the 2026-09-09 fourteenth-wave review after PA-128.3's W5512 Volume row shipped '5,370-workflow inventory' through batches 15–23 on a surface no check read)"
 else
-    error "workflow-dependency-map.md carries unclassified-workflow claims that the 2026-06-28 Full-Coverage Confirmation Pass superseded ($C27_ERRS):"
+    error "Stale unclassified-workflow claims / retired corpus-total literals in live prose ($C27_ERRS):"
     echo "$CHECK27" | grep '^B_ERR|' | sed 's/^B_ERR|/    /'
 fi
 
@@ -3796,6 +3817,11 @@ if not re.search(r'^\| Deferred rule sets \(not faked\) \| 197 step-row rule set
 # --- quoted tree-row figures: root README, exec summary ---
 root = open(os.path.join(ROOT, 'README.md'), encoding='utf-8').read()
 execs = open(os.path.join(ROOT, '01-model-company/executive-summary.md'), encoding='utf-8').read()
+# fourteenth wave: the methodology-index generator rows are a fourth sibling surface
+# quoting the same tree figures (569 files / 5,449 processes; 40 files / 79 decisions /
+# 339 rules; 197 deferred) — waves 8–12 re-derived the root/exec/README-tree spots by
+# hand but no check read the index rows
+meth = open(os.path.join(ROOT, '07-methodology/README.md'), encoding='utf-8').read()
 rowchecks = [
     (root, r'├── dmn/[^\n]*?(\d[\d,]*) decisions', d_dec, 'README.md dmn/ tree row', 'decisions'),
     (root, r'├── bpmn/[^\n]*?(\d[\d,]*) processes', b_procs, 'README.md bpmn/ tree row', 'processes'),
@@ -3803,13 +3829,21 @@ rowchecks = [
     (root, r'generate-dmn\.py +DMN 1\.3 generator[^\n]*?(\d[\d,]*) decisions', d_dec, 'README.md generator row', 'decisions'),
     (execs, r'├── bpmn/[^\n]*?(\d[\d,]*) processes', b_procs, 'executive-summary.md bpmn/ tree row', 'processes'),
     (execs, r'├── dmn/[^\n]*?(\d[\d,]*) decisions', d_dec, 'executive-summary.md dmn/ tree row', 'decisions'),
+    (meth, r'generate-bpmn\.py[^\n]*?\((\d[\d,]*) files / (\d[\d,]*) processes', (b_files, b_procs), 'methodology-index generate-bpmn row', 'files/processes'),
+    (meth, r'generate-dmn\.py[^\n]*?\((\d[\d,]*) files / (\d[\d,]*) decisions / (\d[\d,]*) rules', (d_files, d_dec, d_rules), 'methodology-index generate-dmn row', 'files/decisions/rules'),
 ]
-for text, pat, want, label, unit in rowchecks:
+for rc in rowchecks:
+    text, pat, want, label, unit = rc
     m = re.search(pat, text)
     if not m:
         bad.append(f"{label}: no '(N {unit})' figure found")
-    elif int(m.group(1).replace(',', '')) != want:
-        bad.append(f"{label}: says {m.group(1)} {unit}, tree holds {want}")
+    else:
+        wants = want if isinstance(want, tuple) else (want,)
+        got = tuple(int(g.replace(',', '')) for g in m.groups())
+        if got != wants:
+            bad.append(f"{label}: says {'/'.join(str(g) for g in got)} {unit}, tree holds {'/'.join(str(w) for w in wants)}")
+if not re.search(r'generate-dmn\.py[^\n]*?197 ambiguous rule sets deferred', meth):
+    bad.append("methodology-index generate-dmn row: required deferred-rule-set anchor ('197 ambiguous rule sets deferred') missing or changed — regeneration is the only legitimate way this figure moves")
 print(f"TOTALS bpmn={b_files}/{b_procs}/{b_tasks}/{b_flows}/{b_diags} dmn={d_files}/{d_dec}/{d_rules} errors={len(bad)}")
 for b in bad:
     print('BAD|' + b)
@@ -3819,10 +3853,67 @@ C74_BAD=$(echo "$CHECK74" | sed -n 's/^TOTALS .* errors=\([0-9]*\)$/\1/p')
 if [ "${C74_BAD:-1}" -eq 0 ]; then
     B74=$(echo "$CHECK74" | sed -n 's/^TOTALS bpmn=\([^ ]*\) .*/\1/p')
     D74=$(echo "$CHECK74" | sed -n 's/^TOTALS .* dmn=\([^ ]*\) errors=.*/\1/p')
-    ok "Generated-tree coverage surfaces match the shipped trees: bpmn/ $(echo $B74 | tr '/' ' / ') (files/processes/tasks/flows/diagrams) and dmn/ $(echo $D74 | tr '/' ' / ') (files/decisions/rules) re-derived and asserted on bpmn/README + dmn/README quick-stats and the root-README, generator-row and exec-summary tree rows; dmn/README deferred anchor (197) pinned (guard added by the 2026-09-07 twelfth-wave consistency review — Check 71 reads the XML, but waves 8/9/11 each re-derived the coverage tables and quoted tree-row figures by hand because no check read them)"
+    ok "Generated-tree coverage surfaces match the shipped trees: bpmn/ $(echo $B74 | tr '/' ' / ') (files/processes/tasks/flows/diagrams) and dmn/ $(echo $D74 | tr '/' ' / ') (files/decisions/rules) re-derived and asserted on bpmn/README + dmn/README quick-stats and the root-README, generator-row and exec-summary tree rows and — since the 2026-09-09 fourteenth-wave review — the methodology-index generator rows (incl. the 197 deferred anchor); dmn/README deferred anchor (197) pinned (guard added by the 2026-09-07 twelfth-wave consistency review — Check 71 reads the XML, but waves 8/9/11 each re-derived the coverage tables and quoted tree-row figures by hand because no check read them)"
 else
     error "Generated-tree coverage surfaces disagree with the shipped trees:"
     echo "$CHECK74" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
+# --- Check 75: Methodology-index Contents completeness vs disk ---
+echo "--- Check 75: Methodology-index Contents completeness ---"
+# The twelfth wave completed the methodology index by hand (adding the generate-bpmn.py /
+# generate-dmn.py rows the table had predated) and recorded on the record that no check
+# read the table's completeness vs disk (Check 63 guards the root-README tree only).
+# This check closes that gap: every tool (.py) and document (.md, the index itself
+# excluded) on disk under 07-methodology/ must carry a Contents row in
+# 07-methodology/README.md, and every Contents-row link must resolve to a file on disk.
+# The six .txt data artifacts (batch17/18/23-deferred-candidates.txt,
+# placeholder-field-census.txt, semantic-audit-coverage.txt,
+# unit-less-time-estimate-census.txt) are deliberately out of scope: raw worklist/census
+# data, not tools or docs — the root-README tree lists them (Check 63 enforces that).
+# A future script or doc cannot ship unlisted (the twelfth-wave defect class), and a
+# renamed/deleted file cannot strand its index row.
+CHECK75=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys
+ROOT = sys.argv[1]
+meth_dir = os.path.join(ROOT, '07-methodology')
+disk = set()
+for dirpath, dirs, files in os.walk(meth_dir):
+    dirs[:] = [d for d in dirs if d != '__pycache__']
+    for fn in files:
+        if fn.endswith(('.py', '.md')) and fn != 'README.md':
+            disk.add(fn)
+readme_full = open(os.path.join(meth_dir, 'README.md'), encoding='utf-8').read()
+# scope to the Contents table proper (links stop before the Future Additions section;
+# the dated history footer below it is frozen narrative and must not satisfy completeness)
+cut = readme_full.find('## Future Additions')
+readme = readme_full[:cut] if cut != -1 else readme_full
+# link targets in the Contents table (all file links in the table are same-dir relative)
+linked = set()
+for m in re.finditer(r'\[[^\]]+\]\(([^)]+)\)', readme):
+    target = m.group(1).strip()
+    if target.startswith(('http://', 'https://', '#')):
+        continue
+    linked.add(os.path.basename(target.split('#')[0]))
+bad = []
+for f in sorted(disk - linked):
+    bad.append(f"on-disk file 07-methodology/{f} has no Contents row in 07-methodology/README.md (ship the row with the file — the twelfth-wave completeness-defect class)")
+for f in sorted(linked - disk - {'CHANGELOG.md'})[:20]:
+    tgt = os.path.join(meth_dir, f)
+    if not os.path.exists(tgt):
+        bad.append(f"Contents row links to 07-methodology/{f}, which does not exist on disk")
+print(f"C75_BAD={len(bad)} disk={len(disk)} linked={len(linked)}")
+for b in bad:
+    print('BAD|' + b)
+PY
+)
+C75_BAD=$(echo "$CHECK75" | sed -n 's/^C75_BAD=\([0-9]*\).*/\1/p')
+if [ "${C75_BAD:-1}" -eq 0 ]; then
+    D75=$(echo "$CHECK75" | sed -n 's/^C75_BAD=.* disk=\([0-9]*\).*/\1/p')
+    ok "Methodology-index completeness: all $D75 on-disk 07-methodology/ tools (.py) and docs (.md) carry Contents rows in 07-methodology/README.md and every Contents-row link resolves (guard added by the 2026-09-09 fourteenth-wave consistency review, closing the gap the twelfth wave documented when it completed the table by hand — no check read its completeness vs disk; the six .txt worklist/census data artifacts are out of scope, listed only in the root-README tree per Check 63)"
+else
+    error "Methodology-index Contents table disagrees with disk ($C75_BAD):"
+    echo "$CHECK75" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
 echo ""
