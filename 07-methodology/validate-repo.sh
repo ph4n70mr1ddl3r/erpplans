@@ -3916,6 +3916,221 @@ else
     echo "$CHECK75" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
 fi
 
+# --- Check 76: Domain gap-analysis companion figures vs canonical registers ---
+echo "--- Check 76: Domain gap-analysis companion figures ---"
+# The four domain gap-analysis companions (workflow-gap-analysis-finance/it/operations/people.md,
+# shipped with gap-fill batches 8–11) are live navigation surfaces — referenced from
+# workflow-gap-analysis.md, the classification register, the touchpoint map, the executive
+# summary, the IT operating model and the sourcing model — yet no check ever read them. The
+# 2026-09-09 fifteenth-wave consistency review found the whole family stranded at their
+# authoring-time snapshots: every later gap-fill batch re-pointed each guarded surface it moved
+# but nothing read the companions, so the finance §1 roster carried the pre-batch-10 per-VS
+# counts behind a '30 dedicated value streams / 775 workflows' header (canonical: 29 / 785) and
+# listed dedicated members VS-72/VS-158 as 'adjacent' besides, the IT doc scoped 'the Technology
+# & Data family' at 9 value streams / 284 workflows where the canonical family is 13 / 390
+# (family member VS-151 called 'adjacent', VS-115/VS-126/VS-137 omitted outright), the operations
+# doc's five family buckets sat 1–12 below canon behind a 'four workflow-level families' slip
+# (its own §2 said five) with bucket rosters crossing canonical family boundaries, and every
+# 'now stands at' clause quoted the batch-8/9/10/11 totals. This check re-derives every quoted
+# family figure from the canonical family tables (workflows/README.md, the Check-24-guarded
+# source), every 'now stands at' / per-PA figure from the PA files' own ## W headers, re-derives
+# family membership in both directions (a dedicated roster must equal the canonical member set;
+# an adjacent VS must not be a member), resolves every W-token against the live header universe
+# (## and ###), and requires each expected clause shape to be present — a deleted clause fails
+# loudly rather than silently unguarding the surface.
+CHECK76=$(python3 - "$REPO_ROOT" <<'PY'
+import os, re, sys, glob
+ROOT = sys.argv[1]
+wf = os.path.join(ROOT, '01-model-company', 'workflows')
+errs = []
+
+# Canonical family tables from workflows/README.md (Check 24 guards these vs the register).
+rtext = open(os.path.join(wf, 'README.md'), encoding='utf-8').read()
+fams = {}
+for m in re.finditer(r'### ([\w\'&\-, ]+?) \(([-\d,]+) workflows\)\n\| VS \| Value Stream \| Workflows \|\n\|---\|---\|---\|\n(.*?)(?=\n\n)', rtext, re.S):
+    name, total, table = m.group(1), int(m.group(2).replace(',', '')), m.group(3)
+    members = {int(v): int(c.replace(',', '')) for v, c in re.findall(r'\[VS-(\d+)\]\(VS-\d+[^)]*\)\s*\|[^|]+\|\s*([\d,]+)\s*\|', table)}
+    fams[name] = {'total': total, 'members': members}
+    if sum(members.values()) != total:
+        errs.append(f"canonical family table '{name}' sums to {sum(members.values())} but declares {total}")
+vs_total = {}
+for f in fams.values():
+    for v, c in f['members'].items():
+        vs_total[v] = c
+
+# Live header universe (## and ###) and per-PA distinct-## counts.
+uni = set()
+pa_counts = {}
+for f in glob.glob(os.path.join(wf, 'VS-*', 'PA-*.md')):
+    txt = open(f, encoding='utf-8').read()
+    uni |= set(re.findall(r'^#{2,3} (W\d+[A-Z]?)\.', txt, re.M))
+    pa_counts[re.search(r'(PA-[\d.]+)', os.path.basename(f)).group(1)] = len(set(re.findall(r'^## (W\d+[A-Z]?)\.', txt, re.M)))
+
+def Wtok(doc, text):
+    # \\bW\\d\\w* captures every W-prefixed word-token, well-formed or not — a token that
+    # merely fails the strict pattern (e.g. a 5-digit W18777) must be flagged as malformed,
+    # not silently skipped by the strict regex (the rule-caught-its-own-author lesson).
+    for m in re.finditer(r'\bW\d\w*', text):
+        tok = m.group(0)
+        mm = re.fullmatch(r'W(\d{1,4}[A-Z]?)(?:\.\d+[a-z]?)?', tok)
+        if not mm:
+            errs.append(f"{doc}: malformed W-token '{tok}' (does not match the W<id>[.step] form)")
+        elif f'W{mm.group(1)}' not in uni:
+            errs.append(f"{doc}: W-token {tok} does not resolve to any ##/### workflow header")
+
+def check_now_stands(doc, text):
+    n = 0
+    for pat in (r'VS-(\d+)\s+now\s+stands\s+at\s+\*\*([\d,]+) workflows\*\*\s*\(([^)]+)\)',
+                r'VS-(\d+)\s+at\s+\*\*([\d,]+) workflows\*\*\s*\(([^)]+)\)',
+                r'VS-(\d+)\s+at\s+\*\*([\d,]+)\*\*\s*\(([^)]+)\)'):
+        for m in re.finditer(pat, text):
+            vs, tot, paren = int(m.group(1)), int(m.group(2).replace(',', '')), m.group(3)
+            if 'PA-' not in paren:
+                continue
+            n += 1
+            if vs not in vs_total:
+                errs.append(f"{doc}: 'now stands at' clause names VS-{vs}, which is not in any canonical family")
+            elif tot != vs_total[vs]:
+                errs.append(f"{doc}: VS-{vs} 'now stands at' {tot:,} but the canonical register holds {vs_total[vs]:,}")
+            for pa, cnt in re.findall(r'(PA-[\d.]+): ([\d,]+)', paren):
+                if pa not in pa_counts:
+                    errs.append(f"{doc}: 'now stands at' clause cites {pa}, which is not an on-disk PA file")
+                elif int(cnt.replace(',', '')) != pa_counts[pa]:
+                    errs.append(f"{doc}: {pa} declared at {cnt} but its PA file holds {pa_counts[pa]} ## W headers")
+    return n
+
+def roster(doc, text, fam_name, clause_pat, entry_pat):
+    m = re.search(clause_pat, text, re.S)
+    if not m:
+        errs.append(f"{doc}: family-scoping clause for '{fam_name}' not found (clause shape is guard-anchored; do not delete or reword it without re-pinning Check 76)")
+        return
+    decl_vs, decl_tot, body = int(m.group(1)), int(m.group(2).replace(',', '')), m.group(3)
+    canon = fams[fam_name]
+    if decl_vs != len(canon['members']):
+        errs.append(f"{doc}: '{fam_name} family' declares {decl_vs} dedicated value streams but the canonical family has {len(canon['members'])}")
+    if decl_tot != canon['total']:
+        errs.append(f"{doc}: '{fam_name} family' declares {decl_tot:,} workflows but the canonical family total is {canon['total']:,}")
+    quoted = {int(v): int(c) for v, c in re.findall(entry_pat, body)}
+    if quoted != canon['members']:
+        for v in sorted(set(quoted) - set(canon['members'])):
+            errs.append(f"{doc}: roster lists VS-{v} as a '{fam_name}' member but it is not in the canonical family")
+        for v in sorted(set(canon['members']) - set(quoted)):
+            errs.append(f"{doc}: canonical '{fam_name}' member VS-{v} is missing from the roster")
+        for v in sorted(set(quoted) & set(canon['members'])):
+            if quoted[v] != canon['members'][v]:
+                errs.append(f"{doc}: roster counts VS-{v} at {quoted[v]} but the canonical register holds {canon['members'][v]}")
+
+def adjacent(doc, text, label, fam_name):
+    m = re.search(r'\*\*Adjacent [^*]*\*\*: (.*?)(?=\n\n)', text, re.S)
+    if not m:
+        errs.append(f"{doc}: adjacent-value-streams clause not found (clause shape is guard-anchored)")
+        return
+    body = m.group(1)
+    ids = {int(v) for v in re.findall(r'VS-(\d+)(?!\.\d)', body)}
+    for v in sorted(ids & set(fams[fam_name]['members'])):
+        errs.append(f"{doc}: adjacent list names VS-{v}, a dedicated '{fam_name}' family member (members cannot be adjacent)")
+    for v, _g, cnt in re.findall(r'VS-(\d+)\s+\(([^)]+?),\s*([\d,]+)\)', body):
+        v, cnt = int(v), int(cnt.replace(',', ''))
+        if v not in vs_total:
+            errs.append(f"{doc}: adjacent entry VS-{v} is not in any canonical family")
+        elif cnt != vs_total[v]:
+            errs.append(f"{doc}: adjacent entry counts VS-{v} at {cnt:,} but the canonical register holds {vs_total[v]:,}")
+
+# --- Finance ---
+doc = 'workflow-gap-analysis-finance.md'
+text = open(os.path.join(wf, doc), encoding='utf-8').read()
+roster(doc, text, 'Finance', r'The \*\*Finance family\*\* — (\d+) dedicated value streams, \*\*([\d,]+) workflows\*\*:\s*(.*?)(?=\n- \*\*Adjacent)', r'VS-(\d+) \((\d+)\)')
+adjacent(doc, text, 'finance-facing', 'Finance')
+m = re.search(r'in the (\d+) Finance value streams \(([,\d]+) workflows\)', text)
+if not m:
+    errs.append(f"{doc}: §2 inventory clause not found (guard-anchored)")
+elif int(m.group(1)) != len(fams['Finance']['members']) or int(m.group(2).replace(',', '')) != fams['Finance']['total']:
+    errs.append(f"{doc}: §2 inventory clause declares {m.group(1)} value streams / {m.group(2)} workflows; canonical: {len(fams['Finance']['members'])} / {fams['Finance']['total']:,}")
+if check_now_stands(doc, text) < 2:
+    errs.append(f"{doc}: expected ≥2 'stands at' clauses quoting VS totals, found fewer (guard-anchored)")
+Wtok(doc, text)
+
+# --- IT ---
+doc = 'workflow-gap-analysis-it.md'
+text = open(os.path.join(wf, doc), encoding='utf-8').read()
+roster(doc, text, 'Technology & Data', r'The \*\*Technology & Data family\*\* — (\d+) dedicated value streams, \*\*([\d,]+) workflows\*\*:\s*(.*?)(?=\n- \*\*Adjacent)', r'VS-(\d+) \((\d+)\)')
+adjacent(doc, text, 'IT-facing', 'Technology & Data')
+m = re.search(r'in the (\d+) Technology & Data value streams \(([,\d]+) workflows\)', text)
+if not m:
+    errs.append(f"{doc}: §2 inventory clause not found (guard-anchored)")
+elif int(m.group(1)) != len(fams['Technology & Data']['members']) or int(m.group(2).replace(',', '')) != fams['Technology & Data']['total']:
+    errs.append(f"{doc}: §2 inventory clause declares {m.group(1)} value streams / {m.group(2)} workflows; canonical: {len(fams['Technology & Data']['members'])} / {fams['Technology & Data']['total']:,}")
+m = re.search(r'With ([,\d]+) Technology & Data workflows', text)
+if not m:
+    errs.append(f"{doc}: G2 'With N Technology & Data workflows' clause not found (guard-anchored)")
+elif int(m.group(1).replace(',', '')) != fams['Technology & Data']['total']:
+    errs.append(f"{doc}: G2 quotes {m.group(1)} Technology & Data workflows; canonical family total is {fams['Technology & Data']['total']:,}")
+if check_now_stands(doc, text) < 1:
+    errs.append(f"{doc}: expected a 'stands at' clause quoting the VS-27 total, found none (guard-anchored)")
+Wtok(doc, text)
+
+# --- People ---
+doc = 'workflow-gap-analysis-people.md'
+text = open(os.path.join(wf, doc), encoding='utf-8').read()
+roster(doc, text, 'People', r'The \*\*People family\*\* — (\d+) dedicated value streams, \*\*([\d,]+) workflows\*\*:\s*(.*?)(?=\n- \*\*Adjacent)', r'VS-(\d+) [^(\n]*\((\d+)\)')
+adjacent(doc, text, 'people-capability', 'People')
+m = re.search(r'in the People family \(([,\d]+) workflows\)', text)
+if not m:
+    errs.append(f"{doc}: §2 inventory clause not found (guard-anchored)")
+elif int(m.group(1).replace(',', '')) != fams['People']['total']:
+    errs.append(f"{doc}: §2 inventory clause declares {m.group(1)} workflows; canonical family total is {fams['People']['total']:,}")
+if check_now_stands(doc, text) < 2:
+    errs.append(f"{doc}: expected ≥2 'stands at' clauses quoting VS totals, found fewer (guard-anchored)")
+Wtok(doc, text)
+
+# --- Operations (five canonical buckets) ---
+doc = 'workflow-gap-analysis-operations.md'
+text = open(os.path.join(wf, doc), encoding='utf-8').read()
+ops_fams = ['Plan & Source', 'Make & Move', 'Sell & Serve', 'Asset & Infrastructure', 'Governance & Assurance']
+for fam in ops_fams:
+    pat = (r'\*\*' + re.escape(fam) + r'\*\* — ([,\d]+) workflows in (\d+) value streams( incl\. \*\*VS-23 Loss Prevention & Asset Protection\*\*)? \(([^)]*)\)\.')
+    m = re.search(pat, text)
+    if not m:
+        errs.append(f"{doc}: bucket clause for '{fam}' not found or reshaped (clause shape is guard-anchored)")
+        continue
+    tot, nv, body = int(m.group(1).replace(',', '')), int(m.group(2)), m.group(4)
+    canon = fams[fam]
+    if tot != canon['total']:
+        errs.append(f"{doc}: '{fam}' bucket declares {tot:,} workflows but the canonical family total is {canon['total']:,}")
+    if nv != len(canon['members']):
+        errs.append(f"{doc}: '{fam}' bucket declares {nv} value streams but the canonical family has {len(canon['members'])}")
+    quoted = set()
+    for tok in re.findall(r'VS-(\d+(?:/\d+)*)', body):
+        quoted |= {int(x) for x in tok.split('/')}
+    if quoted != set(canon['members']):
+        for v in sorted(quoted - set(canon['members'])):
+            errs.append(f"{doc}: '{fam}' bucket lists VS-{v} but it is not a canonical family member")
+        for v in sorted(set(canon['members']) - quoted):
+            errs.append(f"{doc}: canonical '{fam}' member VS-{v} is missing from the bucket")
+msum = re.search(r'in the five families \(≈([,\d]+) workflows\)', text)
+canon_sum = sum(fams[f]['total'] for f in ops_fams)
+if not msum:
+    errs.append(f"{doc}: §2 five-families inventory clause not found (guard-anchored)")
+elif int(msum.group(1).replace(',', '')) != canon_sum:
+    errs.append(f"{doc}: §2 inventory clause declares ≈{msum.group(1)} workflows; the five canonical families sum to {canon_sum:,}")
+if check_now_stands(doc, text) < 3:
+    errs.append(f"{doc}: expected ≥3 'stands at' clauses quoting VS totals, found fewer (guard-anchored)")
+Wtok(doc, text)
+
+print(f"C76_BAD={len(errs)} fams={len(fams)} universe={len(uni)}")
+for e in errs:
+    print('BAD|' + e)
+PY
+)
+C76_BAD=$(echo "$CHECK76" | sed -n 's/^C76_BAD=\([0-9]*\).*/\1/p')
+if [ "${C76_BAD:-1}" -eq 0 ]; then
+    U76=$(echo "$CHECK76" | sed -n 's/^C76_BAD=.* universe=\([0-9]*\).*/\1/p')
+    ok "Domain gap-analysis companions (finance/IT/operations/people) re-derived clean: every family roster, bucket total, inventory clause and 'now stands at' figure matches the canonical registers (${U76}-header W universe; guard added by the 2026-09-09 fifteenth-wave consistency review — the four companions were live navigation surfaces no check read, and every gap-fill batch after their batches 8–11 had re-pointed the guarded surfaces while stranding the companions' authoring-time snapshots)"
+else
+    error "Domain gap-analysis companion figures disagree with the canonical registers ($C76_BAD):"
+    echo "$CHECK76" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+fi
+
 echo ""
 echo "=== Validation Complete ==="
 echo "Errors: $ERRORS, Warnings: $WARNINGS"

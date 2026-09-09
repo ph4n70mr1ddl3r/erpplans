@@ -17,22 +17,21 @@
 
 ## 1. Scope
 
-All workflows in the four workflow-level families not yet covered by a dedicated domain pass
+All workflows in the five workflow-level families not yet covered by a dedicated domain pass
 (IT = batch 8, People = batch 9, Finance = batch 10), across:
 
-- **Plan & Source** — 461 workflows in 15 value streams (VS-01/02/03/41/45/57/64/67/94/101/106/122/127/131/182).
-- **Make & Move** — 499 workflows in 19 value streams (VS-04/05/06/32/56/61/74/81/90/92/93/110/111/136/143/155/180/191/192).
-- **Sell & Serve** — 1,535 workflows (VS-07–VS-13, VS-59, VS-84, VS-85, VS-98/99, VS-103-adjacent
-  retail fronts, VS-124/125/126/129/130/132, VS-139–VS-155, VS-162–VS-177, VS-185/186).
-- **Asset & Infrastructure** — 321 workflows (VS-20/35/37/42/59/73/76/77/97/99/108/109/120/138/144/151/163/164/175/176/186/192-adjacent).
-- **Governance & Assurance** — 964 workflows incl. **VS-23 Loss Prevention & Asset Protection** (VS-21/22/23/24/25/26/28/30/33/36/46/47/66/69/70/71/78/82/83/84/86/87/88/91/98/100/102/104/112/115/117/119/121/123/128/131/132/133/134/140/141/146/147/149/150/151/152/157/158/160/161/166/167/168/169/172/179/183/184/187/188/189/190/191; rises to 965 with this pass's W5534).
+- **Plan & Source** — 462 workflows in 15 value streams (VS-01/02/03/41/45/57/64/67/94/101/106/122/127/131/182).
+- **Make & Move** — 500 workflows in 19 value streams (VS-04/05/06/32/56/61/74/81/90/92/93/110/111/136/143/155/180/191/192).
+- **Sell & Serve** — 1,545 workflows in 46 value streams (VS-07/08/09/10/11/12/13/14/37/43/44/46/47/48/53/55/58/60/62/63/65/66/70/75/77/78/82/95/107/124/139/140/145/149/156/162/164/168/171/172/174/175/176/177/185/186).
+- **Asset & Infrastructure** — 323 workflows in 13 value streams (VS-20/35/42/59/97/108/109/112/120/138/163/178/184).
+- **Governance & Assurance** — 976 workflows in 37 value streams incl. **VS-23 Loss Prevention & Asset Protection** (VS-21/22/23/24/25/26/31/33/36/69/71/73/76/85/86/87/88/89/91/100/104/114/117/119/129/130/132/133/146/147/152/159/161/165/166/179/187; includes this pass's W5534).
 - **Cross-family hosts touched by the gaps**: VS-19.3 (People — workforce management) and
   VS-79.2 (Finance — withholding tax), because the capabilities the gaps describe are executed
   inside operations but owned on those PA boundaries.
 
 ## 2. Method
 
-1. **Inventory** every `## W` header in the five families (≈3,780 workflows) plus the
+1. **Inventory** every `## W` header in the five families (≈3,806 workflows) plus the
    cross-family hosts above.
 2. **Map** each capability of a reference retail operating model — merchandising & sourcing,
    supply chain & logistics, store & DC operations, loss prevention & safety, facilities & asset
@@ -178,9 +177,9 @@ same three residual classes batches 8–10 found elsewhere: a **platform operate
 (G1 — the attendance estate every exception workflow reads from), a **statutory layer generated
 around** (G2 — the 2316 furnishing inside W90's two-hour monthly step), and a **control lifecycle
 with no owner** (G3 — the property gate pass PA-09.1 expects as a system integration). Filling the
-three gaps added **3 workflows (~0.06% growth to the covered families)** and closed every unowned
-capability surfaced by this analysis. VS-19 now stands at **79 workflows** (PA-19.3: 12), VS-79 at
-**26** (PA-79.2: 10) and VS-23 at **29** (PA-23.2: 10).
+three gaps added **3 workflows (~0.08% growth to the covered families)** and closed every unowned
+capability surfaced by this analysis. VS-19 now stands at **81 workflows** (PA-19.3: 12), VS-79 at
+**28** (PA-79.2: 10) and VS-23 at **29** (PA-23.2: 10).
 
 ---
 

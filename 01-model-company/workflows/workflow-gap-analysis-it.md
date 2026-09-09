@@ -18,17 +18,17 @@ All workflows governing the **information-technology function** of the model com
 4 DCs, HQ; ~6,762 employees; ~1,500 ERP users; ~2,500+ endpoints; 600 POS terminals; hybrid cloud
 ERP + best-of-breed edge + 2 in-house built products), across:
 
-- The **Technology & Data family** — 9 dedicated value streams, **284 workflows**:
-  VS-27 (62), VS-28 (24), VS-29 (43), VS-30 (29), VS-99 (24), VS-113 (27), VS-128 (27),
-  VS-135 (24), VS-190 (24).
+- The **Technology & Data family** — 13 dedicated value streams, **390 workflows**:
+  VS-27 (71), VS-28 (24), VS-29 (43), VS-30 (29), VS-99 (24), VS-113 (28), VS-115 (24),
+  VS-126 (24), VS-128 (27), VS-135 (24), VS-137 (24), VS-151 (24), VS-190 (24).
 - **Adjacent value streams with IT-facing scope**: VS-91 (consumer data privacy, 24), VS-26
-  (BCP/IT-DR design, 30), VS-21 (internal audit/ITGC, 49), VS-161 (TPRM cyber attestations, 24),
-  VS-149 (SCO/unattended tech ops, 24), VS-151 (Auto-ID/RFID/EAS ops, 24), VS-125 (fraud, 24),
+  (BCP/IT-DR design, 31), VS-21 (internal audit/ITGC, 49), VS-161 (TPRM cyber attestations, 24),
+  VS-149 (SCO/unattended tech ops, 24), VS-125 (fraud, 24),
   VS-112 (PMO), VS-134 (OCM/digital adoption), VS-88 (records/legal hold).
 
 ## 2. Method
 
-1. **Inventory** every `## W` header in the 9 Technology & Data value streams (284 workflows) plus
+1. **Inventory** every `## W` header in the 13 Technology & Data value streams (390 workflows) plus
    IT-scoped workflows hosted elsewhere (e.g., W434 NPC registration, W1205 PCI-DSS).
 2. **Map** each capability of a reference full-stack IT operating model — ITIL 4 service/value
    stream practices, COBIT 2019 governance/management objectives, ISO/IEC 27001:2022 Annex A
@@ -104,7 +104,7 @@ workflow anywhere in the inventory**.
   hierarchy lifecycle (W372 owns awareness *training*, not the policy set itself).
 - **Why it matters:** the closest analogs the company will face (NPC orders, cyber-insurance
   underwriting in VS-26, enterprise B2B customers' security reviews in VS-107/VS-46) increasingly
-  demand a certified or attestable ISMS. With 284 IT workflows, the *certification/management-
+  demand a certified or attestable ISMS. With 390 Technology & Data workflows, the *certification/management-
   system layer* is the missing capstone.
 - **Proposed disposition:** 1 workflow in **PA-27.3** — *"ISMS Program, Security Certification &
   Security-Policy Lifecycle (ISO/IEC 27001)"* (risk-assessment cadence, SoA, statement of
@@ -183,7 +183,7 @@ boundaries (e.g., VS-99 vs. VS-27 vs. VS-35 vs. VS-34). The residual exposure co
 G4)** — the capabilities that sit *above* operations (certify, attest, adversarially validate,
 govern the change calendar) rather than *within* them. Filling the six gaps added **7 workflows
 (W5518–W5524, ~2% growth to the IT family)** and closed every unowned capability surfaced by this
-analysis. VS-27 now stands at **69 workflows** (PA-27.1: 30 · PA-27.2: 23 · PA-27.3: 16).
+analysis. VS-27 now stands at **71 workflows** (PA-27.1: 30 · PA-27.2: 24 · PA-27.3: 17).
 
 ---
 

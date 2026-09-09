@@ -17,20 +17,19 @@ All workflows governing the **finance function** of the model company (PHP 62.3B
 entities, ~210 bank accounts, ~800–1,000 vendors, ~5,400 trade accounts, ~450–700 utility/telecom
 deposit accounts), across:
 
-- The **Finance family** — 30 dedicated value streams, **775 workflows**: VS-15 (43), VS-16 (31),
-  VS-17 (68), VS-18 (33), VS-34 (22), VS-38 (24), VS-39 (24), VS-40 (24), VS-54 (25), VS-68 (24),
-  VS-72 (24), VS-79 (25), VS-80 (24), VS-96 (24), VS-105 (24), VS-116 (24), VS-118 (24),
+- The **Finance family** — 29 dedicated value streams, **785 workflows**: VS-15 (43), VS-16 (31),
+  VS-17 (70), VS-18 (35), VS-34 (22), VS-38 (24), VS-39 (24), VS-40 (24), VS-54 (26), VS-68 (24),
+  VS-72 (24), VS-79 (28), VS-80 (24), VS-96 (24), VS-105 (25), VS-116 (24), VS-118 (25),
   VS-125 (24), VS-142 (24), VS-148 (24), VS-153 (24), VS-154 (24), VS-157 (24), VS-158 (24),
   VS-170 (24), VS-173 (24), VS-181 (24), VS-188 (24), VS-189 (24).
 - **Adjacent value streams with finance-facing scope**: VS-19 (payroll processing & consolidation),
   VS-42 (property & lease administration — landlord deposits, utility accounts, PFRS 16), VS-97
   (corporate property portfolio), VS-21 (internal audit), VS-22 (BIR/regulatory response),
-  VS-29 (financial master data), VS-33 (strategic planning & budgeting), VS-72 (shared-services
-  chargeback), VS-120 (energy program), VS-158 (cost accounting).
+  VS-29 (financial master data), VS-33 (strategic planning & budgeting), VS-120 (energy program).
 
 ## 2. Method
 
-1. **Inventory** every `## W` header in the 30 Finance value streams (775 workflows) plus
+1. **Inventory** every `## W` header in the 29 Finance value streams (785 workflows) plus
    finance-scoped workflows hosted elsewhere (payroll accounting in VS-19.2, landlord deposits in
    VS-42.2, BIR response in VS-22.2).
 2. **Map** each capability of a reference corporate-finance operating model for a Philippine

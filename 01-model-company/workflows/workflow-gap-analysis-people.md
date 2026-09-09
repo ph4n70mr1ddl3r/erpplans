@@ -17,12 +17,13 @@
 All workflows governing the **people/organization function** of the model company (200 stores,
 4 DCs, HQ; ~6,762 employees; ~1,200–1,600 new hires/year; ~230 succession-critical roles), across:
 
-- The **People family** — dedicated value streams, **437 → 440 workflows**:
-  VS-19 Hire-to-Retire (75 → 78), VS-83 occupational health (25), VS-84 labor relations (25),
+- The **People family** — 16 dedicated value streams, **445 workflows**:
+  VS-19 Hire-to-Retire (81), VS-83 occupational health (25), VS-84 labor relations (25),
   VS-98 contingent workforce (24), VS-102 total rewards (24), VS-103 HR shared services (24),
-  VS-121 talent acquisition (24), VS-123 apprenticeship (24), VS-134 OCM (24),
-  VS-141 employee transport (24), VS-144 staff housing (24), VS-150 drug-free workplace (24),
-  VS-160 global mobility (24), VS-167/VS-169 (EHS-adjacent people streams).
+  VS-121 talent acquisition (25), VS-123 apprenticeship (24), VS-134 OCM (24),
+  VS-141 employee transport (25), VS-144 staff housing (24), VS-150 drug-free workplace (24),
+  VS-160 global mobility (24), VS-167 workforce background screening (24),
+  VS-169 uniform & PPE issuance (24), VS-183 DTS & TESDA partnership (24).
 - **Adjacent streams with people-capability scope**: VS-30.3 document/knowledge (W1484 onboarding
   knowledge path), VS-36 corporate governance (W1721 board committees, W1732 DoA),
   VS-17.4 record-to-report (W9 close, W637 controls testing, W639 rolling forecast),
@@ -31,7 +32,7 @@ All workflows governing the **people/organization function** of the model compan
 
 ## 2. Method
 
-1. **Inventory** every `## W` header in the People family (437 workflows at analysis time) plus
+1. **Inventory** every `## W` header in the People family (445 workflows) plus
    people-scoped workflows hosted elsewhere (W1484, W3340 town halls, W1721 committee mechanics).
 2. **Map** each capability of a reference full-lifecycle people operating model — learning &
    development platform/content/program layers, talent/succession pipeline development,
@@ -193,8 +194,8 @@ concentrated in the **learning platform/content supply chain (G1, G2)** and the 
 development + reporting-policy layers above operations (G3, G4)** — the platform that everyone
 consumes and the layers that sit *above* execution (develop, certify, adopt) rather than
 *within* it. Filling the four gaps added **4 workflows (~1% growth to the People family)** and
-closed every unowned capability surfaced by this analysis. VS-19 now stands at **78 workflows**
-(PA-19.4: 14); VS-17 at **68** (PA-17.4: 18).
+closed every unowned capability surfaced by this analysis. VS-19 now stands at **81 workflows**
+(PA-19.4: 14); VS-17 at **70** (PA-17.4: 19).
 
 ---
 
