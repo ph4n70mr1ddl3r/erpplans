@@ -182,6 +182,40 @@ the methodology-README completeness repair — the two generators were the only 
 files on disk missing from that index's Contents table — and the check-count
 self-descriptions re-pointed 72 → 74 across the guide §8.5 triple, the root-README
 tree row and the methodology-index validate-repo row.
+
+2026-09-09 thirteenth-wave consistency review: the official TO's v2.0 register issuance
+(machine-verified at commit, but with no rule re-deriving it) trued and brought under
+the guard. Three self-description defects repaired in optimal-table-of-organization.md:
+the v2.0 footer's '≈150 distinct roles' (the register holds 188 rows / 187 distinct
+titles); the §5.3 span note's 'the Controller's direct span at 7 and the Assistant
+Controller's at 3' (7 is the §5.2 sub-team-line count — the register's two Logistics &
+Cost Finance analyst rows give 8 reporting rows, in-band; and the 'at 3' counted only
+the 3 administrative cluster lines, not the Assistant Controller's own 6-person GL &
+consolidation team); and one §5.2 mix-cell conformance miss of the class the v2.0 pass
+itself had repaired for Store Operations and AR & Credit — GL & Consolidation still
+read the pre-register 'GL accountant per entity (5) + consolidation/elimination (2)'
+blend with no head box where the register rows are the dual-hat manager + 5 GL
+accountants + 1 consolidation & intercompany accountant. TO bumped to v2.1 with the
+repairs described in a live clause; the v2.0 clause stands below as written, corrected
+by this clause. New structural rule to_register_hits re-derives §5.1's 18-department
+current/target columns and two-state total rows (incl. store/DC cross-foot to
+6,762/6,911), the three §5.2 sub-team tables (headers may sit up to six prose lines
+above their table — the Finance header's own '(3-way match,' parenthetical wraps — but
+a following '**bold**' header terminates the scan so a header can never adopt the next
+department's table), every §5.3 department-table HC foot (IT exempt as by-reference),
+the §5.1↔§5.3 per-department pairing, the register-total footer line, the quoted
+'N rows / M distinct role titles' and the span note's 'N register reporting rows'.
+Teeth verified by twelve synthetic injections (HC cell, §5.1 target/current cell,
+all three §5.2 tables, §5.3 declaration/pairing, both footer figures, span-note count,
+register-total line; fixtures restored byte-identical sha256-verified) — and the
+teeth suite caught its own author twice pre-ship (the §5.2 cell regex's '(?!Sub-team|
+[- ])' lookahead rejected every normal '| ' row since rows begin with a space; the
+first header→table adjacency pattern required the table to start on the line after a
+header whose own parenthetical prose wraps). The twelfth wave's claim that the two
+generators were the only .py files missing from the methodology README's Contents
+table was itself wrong — fix-ghost-titles-batch14.py (the batch-14 ghost-title charter
+sweep, listed in the root-README tree and cited by workflow-gap-analysis.md) was also
+absent; a Contents row now ships with this wave.
 """
 
 def _doc_versions():
@@ -610,6 +644,163 @@ def to_phase_hits():
             hits.append((rel, 0, f"§11 total row range {total_range[0]} → {total_range[1]} "
                                  f"implies +{total_range[1] - total_range[0]}, not "
                                  f"+{total_declared}"))
+    return hits
+
+
+def to_register_hits():
+    """2026-09-09 thirteenth-wave consistency review — structural guard for the official
+    TO's §5.1 sizing summary, §5.2 sub-team tables and §5.3 Enterprise Role Register.
+    The v2.0 'official TO of record' commit machine-verified the register foots at
+    issuance, but no rule re-derived them: the wave found the register's own
+    self-descriptions already drifting (footer claimed '≈150 distinct roles' vs the true
+    188 rows / 187 distinct titles; the span note claimed 'the Controller's direct span
+    at 7' vs the register's 8 reporting rows; the §5.2 GL & Consolidation mix cell still
+    pre-register). Rules: (a) §5.1's 18 numbered department rows must sum to the stated
+    current (362) and target (511) columns, with the Total-HQ / store / DC / Total-company
+    rows present and cross-footing (6,762 = 362 + 5,800 + 600; 6,911 = 511 + 5,800 + 600);
+    (b) each §5.2 sub-team table's HC column must foot to its own declared department
+    total, which must be a §5.1 target cell; (c) every §5.3 '#### <Department> (N)' table
+    must foot to its own N (the IT table is by-reference and exempt), the 18 declarations
+    must pair one-to-one with §5.1's target cells, and the register-total footer line's
+    numbers must equal the declarations and sum to 511; (d) the live footer clause's
+    quoted 'N rows / M distinct role titles' and the span note's 'N register reporting
+    rows' at the Controller must equal the register-derived values."""
+    rel = "optimal-table-of-organization.md"
+    path = os.path.join(MC, rel)
+    hits = []
+    text = open(path, encoding="utf-8").read()
+
+    def region(a, b):
+        i = text.index(a)
+        return text[i:text.index(b, i)]
+
+    # --- (a) §5.1 sizing summary ---
+    s51 = region("### 5.1", "### 5.2")
+    rows = re.findall(r"^\| \d+ \| (.+?) \| (\d+) \| [^|]* \| \*\*(\d+)\*\* \|", s51, re.M)
+    if len(rows) != 18:
+        hits.append((rel, 0, f"§5.1 expects 18 numbered department rows, found {len(rows)}"))
+    cur = [int(r[1]) for r in rows]
+    tgt = [int(r[2]) for r in rows]
+    if sum(cur) != 362:
+        hits.append((rel, 0, f"§5.1 current column sums to {sum(cur)}, canonical 362"))
+    if sum(tgt) != 511:
+        hits.append((rel, 0, f"§5.1 target column sums to {sum(tgt)}, canonical 511"))
+
+    def total_row(label):
+        m = re.search(rf"^\|\s*\|\s*\*\*{label}\*\*\s*\|\s*\*\*([\d,]+)\*\*\s*\|[^|]*\|\s*\*\*([\d,]+)\*\*\s*\|",
+                      s51, re.M)
+        if not m:
+            hits.append((rel, 0, f"§5.1 '{label}' total row not found"))
+            return None
+        return (int(m.group(1).replace(",", "")), int(m.group(2).replace(",", "")))
+
+    hq = total_row("Total HQ")
+    if hq and hq != (362, 511):
+        hits.append((rel, 0, f"§5.1 Total HQ row reads {hq}, canonical (362, 511)"))
+    comp = total_row("Total company")
+    if comp and comp != (6762, 6911):
+        hits.append((rel, 0, f"§5.1 Total company row reads {comp}, canonical (6,762, 6,911)"))
+    for label, want in (("Store personnel", 5800), ("DC personnel", 600)):
+        m = re.search(rf"^\| \| {label} \| ([\d,]+) \| [^|]* \| \*\*([\d,]+)\*\* \|", s51, re.M)
+        if not m or int(m.group(1).replace(",", "")) != want \
+                or int(m.group(2).replace(",", "")) != want:
+            hits.append((rel, 0, f"§5.1 '{label}' row must read {want} in both states"))
+    if hq and comp:
+        if comp[0] != hq[0] + 5800 + 600:
+            hits.append((rel, 0, "§5.1 current company total ≠ HQ + store + DC rows"))
+        if comp[1] != hq[1] + 5800 + 600:
+            hits.append((rel, 0, "§5.1 target company total ≠ HQ + store + DC rows"))
+
+    # --- (b) §5.2 sub-team tables (the three HC-column tables) ---
+    s52 = region("### 5.2", "### 5.3")
+    # a department header may be separated from its table by up to 6 prose/blank
+    # lines (the Finance header's own '(3-way match,' parenthetical wraps) — but a
+    # following '**bold**' header terminates the search so a header can never
+    # adopt the next department's table
+    for m in re.finditer(r"\*\*([^*\n]+?) \((\d+)[^)]*\)\*\*[^\n]*\n"
+                         r"(?:[^\n*][^\n]*\n|\*[^\n*][^\n]*\n|\n){0,6}?"
+                         r"((?:\|[^\n]*\n)+)", s52):
+        name, claim, table = m.group(1).strip(), int(m.group(2)), m.group(3)
+        vals = []
+        for cells in re.findall(r"^\| (?!Sub-team)([^|]*)\|([^|]*)\|", table, re.M):
+            hc = cells[1]
+            nums = re.findall(r"(\d[\d,]*)\s*→\s*(\d[\d,]*)", hc)
+            if nums:
+                vals.append(int(nums[0][1].replace(",", "")))
+            else:
+                mm = re.match(r"\s*(\d[\d,]*)\s*$", hc)
+                if mm:
+                    vals.append(int(mm.group(1).replace(",", "")))
+        if not vals:
+            continue  # bold header followed by prose, not a sub-team table
+        s = sum(vals)
+        if s != claim:
+            hits.append((rel, 0, f"§5.2 {name} sub-team table sums to {s}, declared {claim}"))
+        if claim not in tgt:
+            hits.append((rel, 0, f"§5.2 {name} declared total {claim} is not a §5.1 target cell"))
+
+    # --- (c) §5.3 Enterprise Role Register ---
+    s53 = region("### 5.3", "## 6.")
+    secs = re.findall(r"^#### (.+?) \((\d+)[^)]*\)\n(.*?)(?=^#### |\Z)", s53, re.M | re.S)
+    if len(secs) != 18:
+        hits.append((rel, 0, f"§5.3 expects 18 department tables, found {len(secs)}"))
+    declared = []
+    all_titles = []
+    ctrl_rows = 0
+    for name, claim, body in secs:
+        n = int(claim)
+        declared.append((name.strip(), n))
+        if "by reference" in name or "by reference" in body[:200]:
+            continue  # IT: carried by the IT operating model (single-source rule)
+        rws = re.findall(r"^\| ([^*\n][^|]*?) \| (\d+) \| ([^|]*) \|", body, re.M)
+        all_titles.extend(t.strip() for t, _, _ in rws)
+        s = sum(int(h) for _, h, _ in rws)
+        if s != n:
+            hits.append((rel, 0, f"§5.3 {name} table foots to {s}, declared {n}"))
+        for _, _, rt in rws:
+            if rt.strip() == "Controller":
+                ctrl_rows += 1
+    if len(rows) == len(secs) == 18:
+        for (n51, _c, t), (n53name, d) in zip(rows, declared):
+            w51 = re.sub(r"[^A-Za-z].*", "", n51).lower()
+            w53 = re.sub(r"[^A-Za-z].*", "", n53name).lower()
+            if w51 != w53 or int(t) != d:
+                hits.append((rel, 0, f"§5.3 '{n53name}' ({d}) does not pair with "
+                                     f"§5.1 '{n51}' ({t})"))
+    m = re.search(r"Register total:(.*?)= \*\*(\d+)\*\*", text, re.S)
+    if not m:
+        hits.append((rel, 0, "register-total footer line not found"))
+    else:
+        nums = [int(x) for x in re.findall(r"\d+", m.group(1))]
+        if nums != [d for _, d in declared]:
+            hits.append((rel, 0, "register-total footer line does not match the "
+                                 "§5.3 department declarations"))
+        if sum(nums) != int(m.group(2)):
+            hits.append((rel, 0, f"register-total footer sums to {sum(nums)}, "
+                                 f"claims {m.group(2)}"))
+
+    # --- (d) quoted self-description figures vs the register ---
+    foot_i = text.index("*Document Version:")
+    live = text[foot_i:text.index(" Prior ", foot_i)]
+    norm = re.compile(r"\s+")
+    distinct = {norm.sub(" ", re.sub(r"\(.*?\)", "", t)).strip().lower() for t in all_titles}
+    mm = re.search(r"(\d+) rows / (\d+) distinct role titles", live)
+    if not mm:
+        hits.append((rel, 0, "live footer clause must quote 'N rows / M distinct role titles'"))
+    else:
+        if int(mm.group(1)) != len(all_titles):
+            hits.append((rel, 0, f"live footer claims {mm.group(1)} register rows, "
+                                 f"register holds {len(all_titles)}"))
+        if int(mm.group(2)) != len(distinct):
+            hits.append((rel, 0, f"live footer claims {mm.group(2)} distinct role titles, "
+                                 f"register holds {len(distinct)}"))
+    mm = re.search(r"(\d+) register reporting rows", s53)
+    if not mm:
+        hits.append((rel, 0, "§5.3 span note must quote its 'N register reporting rows' "
+                             "at the Controller"))
+    elif int(mm.group(1)) != ctrl_rows:
+        hits.append((rel, 0, f"span note claims {mm.group(1)} Controller reporting rows, "
+                             f"register holds {ctrl_rows}"))
     return hits
 
 
@@ -1275,6 +1466,8 @@ def main():
             hits.append((d, line, detail))
     hits.extend(dc_roster_hits(os.path.join(MC, "optimal-table-of-organization.md")))
     hits.extend(to_phase_hits())
+    # 2026-09-09 thirteenth-wave consistency review addition
+    hits.extend(to_register_hits())
     hits.extend(sourcing_tier_hits())
     hits.extend(guide_figure_hits())
     hits.extend(om_reconciliation_hits())
