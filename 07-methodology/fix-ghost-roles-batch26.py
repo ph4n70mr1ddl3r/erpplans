@@ -29,10 +29,21 @@ Families and targets (each measured corpus-wide before the sweep):
 
 Post-sweep hand-trues (same-cell CFO duplications and ladder collapses) are listed
 in the batch-26 notes and applied separately.
+
+SUNSET GUARD (2026-09-10 eighteenth consistency review, found when the
+post-repair portability sweep ran this script in a sandbox): the sweep predates the
+official table of organization of record (optimal-table-of-organization.md
+v2.0/v2.1, 2026-09-09), which deliberately CHARTS 'VP Finance & Accounting /
+Corporate Controller' under the CFO and 'VP HR' under the CHRO as sub-seat rows
+(§7.1 tree; §5.1 'CFO | 2 + Controller org' / 'CHRO | 2'). Re-running the
+batch-26 rules against today's corpus would therefore corrupt the official chart
+(the other eleven rules are inert — the family is closed). The script refuses to
+run while those seats are charted; re-adjudicate and remove the guard only as a
+conscious act.
 """
 import glob, os, re
 
-REPO = "/home/riddler/erpplans/01-model-company"
+REPO = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "01-model-company")
 
 RULES = [
     (re.compile(r"\bVP Finance\b"), "CFO"),
@@ -49,6 +60,22 @@ RULES = [
     (re.compile(r"\bSupply Chain Mgr\b"), "VP Supply Chain"),
 ]
 
+# Sunset precondition (see docstring): the official TO of record charts the exact
+# seats the batch-26 rules would rewrite ('VP Finance & Accounting', 'VP HR'). If
+# they are present the sweep's mandate (unify UNCHARTED ghost titles) does not
+# apply and running would corrupt the official chart — refuse.
+_TO = os.path.join(REPO, "optimal-table-of-organization.md")
+if os.path.exists(_TO):
+    _to_text = open(_TO, encoding="utf-8").read()
+    _charted = [s for s in ("VP Finance & Accounting", "VP HR") if s in _to_text]
+    if _charted:
+        print(f"REFUSING TO RUN: the official table of organization of record charts "
+              f"{_charted} as deliberate sub-CFO / sub-CHRO seats (v2.0/v2.1 §7.1/§5.1); "
+              f"the batch-26 rules predate the chart and would corrupt it. The batch-26 "
+              f"ghost-title family is closed corpus-wide. Re-adjudicate and remove this "
+              f"guard only as a conscious re-application.")
+        raise SystemExit(1)
+
 total = 0
 per_rule = {r.pattern: 0 for r, _ in RULES}
 for path in sorted(glob.glob(os.path.join(REPO, "**", "*.md"), recursive=True)):
@@ -64,5 +91,5 @@ for path in sorted(glob.glob(os.path.join(REPO, "**", "*.md"), recursive=True)):
             f.write(text)
 
 print(f"lines changed: {total}")
-for rx, n in per_rule.items():
-    print(f"{n:5d}  {rx.pattern}")
+for pattern, n in per_rule.items():
+    print(f"{n:5d}  {pattern}")

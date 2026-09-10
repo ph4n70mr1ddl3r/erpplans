@@ -10,7 +10,7 @@ Read-only: prints a classification table for the repair pass; changes nothing.
 import glob, os, re
 from collections import Counter
 
-REPO = "/home/riddler/erpplans/01-model-company"
+REPO = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "01-model-company")
 STOP = set("the a an and or of to for in on with by ensure ensure controlled execution "
            "process area operating control derived from this pa s workflow steps routine "
            "verifications inspections documented outcomes exception monitoring alert "

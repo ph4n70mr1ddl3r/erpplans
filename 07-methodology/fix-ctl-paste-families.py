@@ -13,7 +13,7 @@ carries the workflow-specific sign-off/gate content).
 import glob, os, re
 from collections import defaultdict, Counter
 
-REPO = "/home/riddler/erpplans/01-model-company"
+REPO = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "01-model-company")
 own = {}
 for line in open(f"{REPO}/internal-controls-matrix.md", encoding="utf-8"):
     m = re.match(r"\| (CTL-\d+) \| Ensure controlled execution — (.+?) \((PA-[\d.]+)\) \|", line)

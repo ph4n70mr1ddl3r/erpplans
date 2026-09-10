@@ -7,9 +7,10 @@ Pain Points / Risks → Automation Opportunity → Controls → (Staffing Implic
 Time Estimate → (Cross-references). Chunks are moved verbatim; a block's section set
 is asserted identical before/after.
 """
-import re
+import os, re
 
-P = "/home/riddler/erpplans/01-model-company/workflows/VS-21-internal-audit-risk/PA-21.1-audit-planning-and-execution.md"
+P = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "01-model-company", "workflows",
+  "VS-21-internal-audit-risk", "PA-21.1-audit-planning-and-execution.md")
 AFFECTED = {"W342","W343","W345","W347","W349","W350","W351","W361","W362","W363","W466"}
 ORDER = ["### Steps", "### System Touchpoints", "### Pain Points / Risks", "### Automation Opportunity",
          "### Controls", "### Staffing Implication", "### Time Estimate", "### Cross-references"]

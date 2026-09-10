@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""fix-ghost-titles-batch14.py — batch-14 ghost-title charter sweep (item A closure).
+"""fix-ghost-titles-batch14.py — batch-14 ghost-title charter sweep (item A closure;
+sunset-guarded 2026-09-10, see end of docstring).
 
 Closes the last open family on the batch-26 worklist (batch23-deferred-candidates.txt
 item A): uncharted executive/director titles cited in workflow Owner/Participants/step
@@ -69,10 +70,19 @@ Families and targets (each measured corpus-wide before the sweep):
        trade org's executive (COO owns Trade/Account Mgmt per TO §3), preserving the
        3-tier ladder Sales Manager < 5% → Head of Trade / Account Management < 10% →
        COO beyond.
+SUNSET GUARD (2026-09-10 eighteenth consistency review, found when the
+post-repair portability sweep ran this script in a sandbox): the batch-14 family is
+closed corpus-wide and the sweep's own record lives in workflow-gap-analysis.md's
+batch-14 note — whose prose still matches these rules, so a re-run rewrites the
+frozen change-note instead of a no-op (sandbox-verified: the note's ghost/owner
+enumerations get re-substituted, corrupting the historical record). The script
+refuses to run while that closure note exists; re-adjudicate and remove the guard
+only as a conscious re-application.
+
 """
 import glob, os, re
 
-REPO = "/home/alden/erpplans/01-model-company"
+REPO = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "01-model-company")
 
 RULES = [
     (re.compile(r"VP Innovation & Digital Transformation"), "CIO"),
@@ -113,6 +123,21 @@ RULES = [
     (re.compile(r"VP of Store Operations"), "VP Store Operations"),
 ]
 
+# Sunset precondition (see docstring): the batch-14 closure note in the gap history
+# both proves the family closed and would itself be rewritten by these rules (its
+# prose matches them). Refuse while it exists.
+_GAP = os.path.join(REPO, "workflows", "workflow-gap-analysis.md")
+if os.path.exists(_GAP):
+    _gap_text = open(_GAP, encoding="utf-8").read()
+    if "two-sided test (charted seat AND remit coverage)" in _gap_text:
+        print("REFUSING TO RUN: workflow-gap-analysis.md already carries the batch-14 "
+              "closure note ('two-sided test (charted seat AND remit coverage)…') and "
+              "that note's own prose matches these rules — a re-run would rewrite the "
+              "frozen gap-history record rather than repair live content. The batch-14 "
+              "ghost-title family is closed corpus-wide. Re-adjudicate and remove this "
+              "guard only as a conscious re-application.")
+        raise SystemExit(1)
+
 total_lines = 0
 files_changed = 0
 per_rule = {r.pattern: 0 for r, _ in RULES}
@@ -130,7 +155,7 @@ for path in sorted(glob.glob(os.path.join(REPO, "**", "*.md"), recursive=True)):
             f.write(text)
 
 # companion true-up outside the REPO glob: the IT model's SSP partner label
-it_model = "/home/alden/erpplans/07-methodology/it-product-operating-model.md"
+it_model = os.path.join(os.path.dirname(os.path.abspath(__file__)), "it-product-operating-model.md")
 with open(it_model, encoding="utf-8") as f:
     t = f.read()
 t2, n = re.subn(r"Store Operations Director", "VP Store Operations", t)

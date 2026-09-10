@@ -124,6 +124,36 @@ reality_check_hits (the headcount reality-check §3.1 AP bullet's retired '~450/
 parenthetical — 450/day implies ~13,500/month, matching no licensed convention; the
 corrected '~300/day' form is anchored).
 
+2026-09-10 eighteenth-wave consistency review: the shipped-tooling portability class
+— ten 07-methodology scripts (audit-misdirected-ctl, classify-isolated-ctl,
+fix-ctl-paste-families, fix-ghost-roles-batch26, fix-ghost-titles-batch14,
+fix-pa211-order, draw-batch26–29)
+carried a hardcoded '/home/riddler' absolute repo path and had therefore been
+unrunnable on any other checkout since authoring; all re-pointed to
+repo-relative resolution (dirname(dirname(abspath(__file__)))) and verified: the
+four draw-batch samplers and both CTL-family measurers exit 0 against the live
+corpus (the measurer's 170-citation isolated colon-form census re-derived exactly
+as batch 13 hand-adjudicated it — no live defect), fix-ctl-paste-families re-runs
+clean at 0 candidates, fix-pa211-order is idempotent (byte-identical output). One
+genuine hazard surfaced by the sandbox runs: fix-ghost-roles-batch26 still rewrote
+the official TO of record ('VP Finance & Accounting' / 'VP HR' → 'CFO' / 'CHRO') —
+its rules predate the v2.0/v2.1 chart, which deliberately carries those strings as
+sub-CFO / sub-CHRO seats — and its summary print carried a latent AttributeError
+(per_rule is keyed by pattern strings; the loop unpacked them as compiled regexes).
+The script now refuses to run while the TO charts those seats (documented sunset
+guard; the eleven other rules are inert — the family is closed) and the summary bug
+is fixed, and the same sweep caught fix-ghost-titles-batch14 (initially missed —
+its '/home/alden' path happened to match this checkout) rewriting its own frozen
+batch-14 closure note in workflow-gap-analysis.md on re-run; it now carries the same
+documented sunset refusal. Guard armed: Check 39 Part E runs audit-misdirected-ctl.py --guard (zero
+wrong-PA paren citations; the batch-13-adjudicated 170-citation colon-form census
+pinned at total/per-PA/per-cited-CTL granularity, the Check-74 deferred-anchor
+pattern), giving the repo its first automated read of the misdirected-CTL family.
+Teeth: a synthetic foreign colon-form citation caught at all three violated surfaces
+(total + per-PA + per-CTL), a synthetic wrong-PA paren citation caught at the paren
+class, both fired through the full validator's Check 39 error branch, negative test
+silent, fixtures restored byte-identical sha256-verified.
+
 2026-09-10 seventeenth-wave consistency review: the batch-24 pass's own re-point
 cascade audited — eight stranded spots found on five surface families, all of
 them 'the canonical total moved 5,426 → 5,427, the derived quote stayed'. (1) The

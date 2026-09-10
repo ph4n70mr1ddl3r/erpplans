@@ -12,7 +12,7 @@ Outputs the drawn W-ids grouped by family with their owning PA file paths.
 import glob, os, re, random
 from collections import defaultdict
 
-REPO = "/home/riddler/erpplans"
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WF = os.path.join(REPO, "01-model-company", "workflows")
 README = os.path.join(WF, "README.md")
 COV = os.path.join(REPO, "07-methodology", "semantic-audit-coverage.txt")

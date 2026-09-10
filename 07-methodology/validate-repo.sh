@@ -1938,13 +1938,31 @@ for b in bad:
     print("BAD|" + b)
 PY
 )
+# Part E (2026-09-10 eighteenth consistency review): the misdirected-CTL guard —
+# audit-misdirected-ctl.py --guard. The paste-family class (one foreign core control
+# pasted into every workflow block of a file with fabricated glosses) was re-mapped in
+# batches 26/27; the residual isolated colon-form population was hand-adjudicated
+# citation-by-citation at batch 13 as deliberate cross-references (verbatim-objective
+# restatements / definition-matched paraphrases). The guard re-derives the census every
+# run: zero paren-form citations naming a different PA (the unambiguous wrong-PA defect
+# class), and the adjudicated colon-form population — total 170 with per-PA and
+# per-cited-CTL distributions — unchanged, so any new paste, re-map or deletion forces a
+# conscious re-adjudication with the baseline re-pointed (the Check-74 deferred-anchor
+# pattern). The script itself had also been unrunnable outside its original author's
+# machine since authoring (a hardcoded /home/riddler absolute path) — the eighteenth
+# wave re-pointed it and its nine sibling tools to repo-relative resolution, which is how
+# the guard could be armed at all.
+C39_GUARD_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-misdirected-ctl.py" --guard 2>&1) && C39_GUARD_RC=0 || C39_GUARD_RC=$?
 C39_BAD=$(echo "$CHECK39" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
-if [ "${C39_BAD:-1}" -eq 0 ]; then
+if [ "${C39_BAD:-1}" -eq 0 ] && [ "$C39_GUARD_RC" -eq 0 ]; then
     C39_HDRS=$(echo "$CHECK39" | sed -n 's/^TOTALS headers=\([0-9]*\) .*/\1/p')
-    ok "Namespace integrity: ${C39_HDRS} workflow headers unique; all CTL & PA-N.N citations resolve; all cross-file anchors resolve"
+    ok "Namespace integrity: ${C39_HDRS} workflow headers unique; all CTL & PA-N.N citations resolve; all cross-file anchors resolve; misdirected-CTL guard clean (0 wrong-PA paren citations; batch-13-adjudicated 170-citation colon-form census exact per-PA and per-CTL — guard mode of audit-misdirected-ctl.py, armed by the 2026-09-10 eighteenth-wave review after the script was found unrunnable outside its original author's machine via a hardcoded absolute path, ten shipped tools re-pointed to repo-relative resolution; fix-ghost-titles-batch14 and fix-ghost-roles-batch26 additionally sunset-guarded after sandbox runs showed both would rewrite frozen/official records their aged-out rules still match)"
 else
     error "Namespace/listing integrity violations found:"
     echo "$CHECK39" | grep -E '^BAD\|' | sed 's/^BAD|/    /'
+    if [ "$C39_GUARD_RC" -ne 0 ]; then
+        echo "$C39_GUARD_OUT" | sed 's/^/    /'
+    fi
 fi
 
 # --- Check 40: Validator self-description agreement (quoted check counts vs implemented checks) ---

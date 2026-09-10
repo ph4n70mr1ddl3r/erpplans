@@ -293,8 +293,8 @@ erpplans/
     ├── fix-ctl-pa-names.py           PA-control objective canonicalizer: matrix ↔ index ↔ PA bodies (Check 34 companion)
     ├── fix-vs-wrefs.py               Workflow-reference-in-VS-namespace repairer inside the catalog (Check 35 companion)
     ├── fix-ctl-paste-families.py     One-time re-mapper of the 36 paste-family misdirected CTL citations (batch-26, review #72)
-    ├── fix-ghost-roles-batch26.py    Ghost-role adjudication sweep for the batch-26 families (review #72; batch-24 precedent)
-    ├── fix-ghost-titles-batch14.py   Ghost-title charter sweep closing item A — 25 uncharted-title families mapped to TO-charted seats (~1,090 spots, batch 14)
+    ├── fix-ghost-roles-batch26.py    Ghost-role adjudication sweep for the batch-26 families (review #72; batch-24 precedent; sunset-guarded 2026-09-10 — refuses to run against the official TO's charted VP seats)
+    ├── fix-ghost-titles-batch14.py   Ghost-title charter sweep closing item A — 25 uncharted-title families mapped to TO-charted seats (~1,090 spots, batch 14; sunset-guarded 2026-09-10 — refuses to run against its own frozen history note)
     ├── fix-pa211-order.py            One-time PA-21.1 scrambled-section-order canonicalizer (batch-27, review #73)
     └── fix-controls-bullets.py       Controls-section list-hygiene/paren/bold repairer (Check 43 companion)
 ```
