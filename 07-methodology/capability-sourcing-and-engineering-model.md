@@ -274,7 +274,7 @@ Hard boundaries regardless of tier: no agent owns a statutory filing path (BIR/S
 
 ### 12.2 Agent lifecycle (extends the VS-128 model discipline)
 
-1. **Candidate intake** — the per-workflow Automation Opportunity inventory (5,426 workflows)
+1. **Candidate intake** — the per-workflow Automation Opportunity inventory (5,427 workflows)
    plus VS-133 process mining surface candidates; scored by hours × frequency × error rate ×
    feasibility (derivable from each workflow's Time Estimate / Staffing Implication data).
 2. **Proposal** — the **owning product team** (the team whose workflow it is) proposes with its

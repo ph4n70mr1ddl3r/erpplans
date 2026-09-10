@@ -396,7 +396,7 @@ else
 fi
 
 # --- Check 18: Criticality-classification prose counts vs headings ---
-echo "--- Check 18: Criticality-classification prose counts vs headings ---"
+echo "--- Check 18: Criticality-classification prose counts vs headings & canonical registers ---"
 # validate-repo.sh's table-row checks (Check 1, 9) and the §Summary table proved trustworthy, but
 # the file's free-prose counts drifted: across six 2026-06-20 classification batches (v7.19→v7.25)
 # the per-tier body sentence 'These <N> workflows ...' under each '## Tier N: ... (M Workflows)'
@@ -408,12 +408,52 @@ echo "--- Check 18: Criticality-classification prose counts vs headings ---"
 #   (b) the intro-banner arithmetic 'X unclassified = grand_total − classified' is self-consistent
 # and matches the §Summary totals. Errors here mean a future classification batch updated the
 # Summary table but forgot the surrounding prose — the exact v7.19→v7.25 regression.
+# 2026-09-10 seventeenth-wave extension: internal consistency is not enough — the batch-24
+# pass updated the Confirmed-Total row and the sub-workflow note while stranding four OTHER
+# live spots quoting the retired totals (intro headline '5,426 unique … 5,449 rows', the
+# Coverage table's 'Confirmed (hand-reviewed)' row, the Grand Total row, and the §Domain
+# Breakdown prose), every one self-consistent with its neighbours and therefore invisible
+# to (a)+(b). The unique/register-row canon is now re-derived from the PA files' own ##/###
+# W headers every run and pinned on all six figure surfaces (intro headline ×2, Coverage
+# row ×2, Grand Total row, Domain prose ×3, sub-workflow note, Confirmed Total row).
 CLASS_FILE="$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md
-PROSE_DRIFT=$(python3 - "$CLASS_FILE" <<'PY'
-import re,sys
-f=open(sys.argv[1]).read()
+PROSE_DRIFT=$(python3 - "$REPO_ROOT" <<'PY'
+import os,re,sys
+ROOT=sys.argv[1]
+WFR=os.path.join(ROOT,"01-model-company","workflows")
+f=open(os.path.join(WFR,"workflow-criticality-classification.md"),encoding="utf-8").read()
 lines=f.split("\n")
 errs=[]
+# ---- (c) canon re-derivation from the PA corpus: unique ## W ids + ### sub-workflow rows ----
+_ids=set(); _sub=0
+for _d in os.listdir(WFR):
+    if not _d.startswith("VS-"): continue
+    _dd=os.path.join(WFR,_d)
+    if not os.path.isdir(_dd): continue
+    for _fn in os.listdir(_dd):
+        if _fn.startswith("PA-") and _fn.endswith(".md"):
+            _t=open(os.path.join(_dd,_fn),encoding="utf-8").read()
+            _ids.update(re.findall(r"^## (W\d+[A-Z]?)\.",_t,re.M))
+            _sub+=len(re.findall(r"^### W\d+[A-Z]?\.",_t,re.M))
+CU=len(_ids); CR=CU+_sub
+def _fig(pat,label,want,flags=re.M):
+    m=re.search(pat,f,flags)
+    if not m:
+        errs.append("cannot find the classification "+label+" surface")
+        return
+    got=int(m.group(1).replace(",",""))
+    if got!=want:
+        errs.append(f"classification {label} says {got:,} but the PA corpus re-derives {want:,} (unique ## headers {CU:,} + {_sub} ### sub-workflow rows = {CR:,} register rows)")
+_fig(r"^> Classifies all ([0-9,]+) unique operational workflows","intro headline unique-workflow figure",CU)
+_fig(r"^> register holds ([0-9,]+) rows","intro headline register-row figure",CR)
+_fig(r"^\| Confirmed \(hand-reviewed\) \| ([0-9,]+) rows","Coverage confirmed-row figure",CR)
+_fig(r"^\| Confirmed \(hand-reviewed\) \| [0-9,]+ rows \(([0-9,]+) unique","Coverage confirmed-unique figure",CU)
+_fig(r"^\| \*\*Confirmed Total\*\* \| \| \*\*([0-9,]+)\*\* \| 100% \|","Summary Confirmed-Total row",CR)
+_fig(r"^\| \*\*Grand Total\*\* \| \*\*([0-9,]+)\*\* unique","Summary Grand-Total row",CU)
+_fig(r"the remaining ([0-9,]+) are canonical `##` workflows","sub-workflow-note unique figure",CU)
+_fig(r"breakdown of the ([0-9,]+) classified register rows","Domain-Breakdown register-row figure",CR)
+_fig(r"breakdown of the [0-9,]+ classified register rows \(([0-9,]+) unique workflows\)","Domain-Breakdown unique figure",CU)
+_fig(r"breakdown of all ([0-9,]+) workflows","Domain-Breakdown all-workflows figure",CU)
 # (a) heading count vs 'These N workflows' body sentence
 for i,ln in enumerate(lines):
     m=re.match(r'^## Tier [123]: .*\(([0-9,]+) Workflows\)', ln)
@@ -464,7 +504,7 @@ PY
 )
 PROSE_DRIFT_COUNT=$(echo -n "$PROSE_DRIFT" | grep -cP '.' || true)
 if [ "$PROSE_DRIFT_COUNT" -eq 0 ]; then
-    ok "Criticality-classification prose counts (tier bodies + intro arithmetic) match headings/Summary"
+    ok "Criticality-classification prose counts (tier bodies + intro arithmetic) match headings/Summary, and all six canonical figure surfaces (intro headline, Coverage row, Grand Total, Domain prose, sub-workflow note, Confirmed Total) match the PA corpus re-derivation (5,427 unique / 5,450 rows; canon-pin extension added by the 2026-09-10 seventeenth-wave review after the batch-24 pass stranded four live spots at the retired totals while every one stayed self-consistent)"
 else
     error "$PROSE_DRIFT_COUNT criticality-classification prose count(s) disagree with their heading or the Summary table:"
     echo "$PROSE_DRIFT" | sed 's/^/    /'
@@ -995,6 +1035,36 @@ vs_nums = {int(n) for n in re.findall(r'\[VS-(\d+)\]\(', idx)}
 max_vs = max(vs_nums) if vs_nums else 0
 dep = open(f"{WF}/workflow-dependency-map.md", encoding='utf-8').read()
 
+# ---- E: intro coverage parenthetical vs the PA corpus (2026-09-10 seventeenth-wave) ----
+# The batch-24 pass updated the intro's unique-workflow figure but stranded the adjacent
+# parenthetical at the retired 5,449-row total — the §8 guards (A–D) read only the §8
+# block, and no rule re-derived the intro's register canon. Re-derive unique ## W ids and
+# ### sub-workflow rows from the PA files every run and pin the intro's three figures.
+_ids = set(); _sub = 0
+for _d in os.listdir(WF):
+    if not _d.startswith('VS-'): continue
+    _dd = os.path.join(WF, _d)
+    if not os.path.isdir(_dd): continue
+    for _fn in os.listdir(_dd):
+        if _fn.startswith('PA-') and _fn.endswith('.md'):
+            _t = open(os.path.join(_dd, _fn), encoding='utf-8', errors='replace').read()
+            _ids.update(re.findall(r'^## (W\d+[A-Z]?)\.', _t, re.M))
+            _sub += len(re.findall(r'^### W\d+[A-Z]?\.', _t, re.M))
+CU, CR = len(_ids), len(_ids) + _sub
+m = re.search(r'All ([\d,]+) workflows are classified', dep)
+if not m:
+    errors.append("cannot find the dependency-map intro 'All N workflows are classified' figure")
+elif int(m.group(1).replace(',', '')) != CU:
+    errors.append(f"dependency-map intro says {m.group(1)} workflows are classified but the PA corpus re-derives {CU:,} unique ## headers")
+m = re.search(r'register holds ([\d,]+) rows, incl\. ([\d,]+) `###` parent/summary', dep)
+if not m:
+    errors.append("cannot find the dependency-map intro 'register holds N rows, incl. K ### parent/summary' parenthetical")
+else:
+    if int(m.group(1).replace(',', '')) != CR:
+        errors.append(f"dependency-map intro parenthetical says {m.group(1)} register rows but the PA corpus re-derives {CR:,} ({CU:,} unique + {_sub} ### sub-workflow rows)")
+    if int(m.group(2).replace(',', '')) != _sub:
+        errors.append(f"dependency-map intro parenthetical says {m.group(2)} ### sub-workflow rows but the PA corpus re-derives {_sub}")
+
 # ---- A: §8 heading range end == index max active VS ----
 hm = re.search(r'^## 8\. Cross-Cutting Program Dependencies \(VS-79\u2013VS-(\d+)\)', dep, re.M)
 if not hm:
@@ -1066,7 +1136,7 @@ C26_MAXVS=$(echo "$CHECK26" | sed -n 's/^MAX_VS=//p')
 C26_VS=$(echo "$CHECK26" | sed -n 's/^BLOCK_VS=//p')
 C26_WF=$(echo "$CHECK26" | sed -n 's/^BLOCK_WF=//p')
 if [ "$C26_ERRS" -eq 0 ]; then
-    ok "Dependency-map §8 block reconciliation: heading/§8.4 end at VS-$C26_MAXVS, intro block size ($C26_VS value streams / $C26_WF workflows) matches disk, and the §8.1 anchor table equals the live top-10 (freshly recomputed from PA+README reference mining)"
+    ok "Dependency-map §8 block reconciliation: heading/§8.4 end at VS-$C26_MAXVS, intro block size ($C26_VS value streams / $C26_WF workflows) matches disk, the §8.1 anchor table equals the live top-10 (freshly recomputed from PA+README reference mining), and the intro coverage figures (5,427 unique / 5,450 rows / 23 sub-workflows) match the PA corpus re-derivation (intro pins added by the 2026-09-10 seventeenth-wave review after batch-24 stranded the parenthetical at the retired 5,449-row total)"
 else
     error "Dependency-map §8 self-declared coverage does not reconcile ($C26_ERRS mismatch(es)) — the block tables must be re-mined/recomputed:"
     echo "$CHECK26" | grep '^A_ERR|' | sed 's/^A_ERR|/    /'
@@ -1121,11 +1191,26 @@ for i, ln in enumerate(dep.split('\n'), 1):
 # moved, but one surface family no check read was the PA files' own field rows: at ship
 # time PA-128.3's W5512 Volume row still quoted the '5,370-workflow Automation Opportunity
 # inventory' although batches 15–23 had since grown the corpus to 5,426. Every interim
-# unique-workflow total (the retired 5,320–5,425 band) must not appear workflow-adjacent
-# in any PA file; the canon 'workflow' figure in live PA prose is 5,426 (the '~5,400
-# accounts' trade/corporate canon never matches — the rule requires workflow adjacency;
-# '*Date:' footer lines are the historical record and stay).
-TOTAL_PAT = re.compile(r'\b5,(3[2-9]\d|4[01]\d|42[0-5])\b(?=(?:-\s*|\s+)workflows?\b)', re.I)
+# unique-workflow total must not appear workflow-adjacent in any PA file's live prose.
+# 2026-09-10 seventeenth-wave extension: the static band (5,320–5,425) aged out the moment
+# batch-24 made 5,427 canonical — PA-128.3's own Volume row stranded at the retired 5,426
+# and nothing fired. The band now re-derives from the corpus every run: any integer in
+# [5,320, canon-unique) that is workflow-adjacent in live PA prose is an error, so the
+# guard re-arms itself at every future batch (the '*Date:' footer lines remain exempt as
+# the historical record; the '~5,400 accounts' trade/corporate canon never matches — the
+# rule requires workflow adjacency).
+_idsC = set()
+WFR = os.path.join(ROOT, '01-model-company', 'workflows')
+for _d in os.listdir(WFR):
+    if not _d.startswith('VS-'): continue
+    _dd = os.path.join(WFR, _d)
+    if not os.path.isdir(_dd): continue
+    for _fn in os.listdir(_dd):
+        if _fn.startswith('PA-') and _fn.endswith('.md'):
+            _idsC.update(re.findall(r'^## (W\d+[A-Z]?)\.',
+                open(os.path.join(_dd, _fn), encoding='utf-8', errors='replace').read(), re.M))
+CANON = len(_idsC)
+TOTAL_PAT = re.compile(r'\b([0-9][0-9,]*)\b(?=(?:-\s*|\s+)workflows?\b)', re.I)
 for pa in sorted(os.path.join(ROOT, '01-model-company', 'workflows', d, f)
                  for d in os.listdir(os.path.join(ROOT, '01-model-company', 'workflows'))
                  if d.startswith('VS-')
@@ -1134,9 +1219,11 @@ for pa in sorted(os.path.join(ROOT, '01-model-company', 'workflows', d, f)
     for i, ln in enumerate(open(pa, encoding='utf-8', errors='replace'), 1):
         if ln.lstrip().startswith('*Date:'):
             continue
-        m = TOTAL_PAT.search(ln)
-        if m:
-            errs.append(f"{os.path.relpath(pa, ROOT)}:{i} quotes retired corpus total '{m.group(0)}' workflow-adjacent in live prose (canonical unique total: 5,427 since batch 24 / W5574)")
+        for m in TOTAL_PAT.finditer(ln):
+            n = int(m.group(1).replace(',', ''))
+            if 5320 <= n < CANON:
+                errs.append(f"{os.path.relpath(pa, ROOT)}:{i} quotes retired corpus total '{m.group(1)}' workflow-adjacent in live prose (canonical unique total: {CANON:,}; the [5,320, canon) band re-derives from the corpus every run)")
+                break
 print(f"A_STALE={len(stale)}")
 for s in stale[:12]: print(f"A_STALE|{s}")
 print(f"B_ERRS={len(errs)}")
@@ -1152,7 +1239,7 @@ else
     echo "$CHECK27" | grep '^A_STALE|' | sed 's/^A_STALE|/    /'
 fi
 if [ "$C27_ERRS" -eq 0 ]; then
-    ok "No unclassified-workflow claims in workflow-dependency-map.md and no retired corpus-total literal (5,320–5,425 band) workflow-adjacent in any PA file's live prose (canon: 5,427 unique; Part C added by the 2026-09-09 fourteenth-wave review after PA-128.3's W5512 Volume row shipped '5,370-workflow inventory' through batches 15–23 on a surface no check read)"
+    ok "No unclassified-workflow claims in workflow-dependency-map.md and no retired corpus-total literal (any workflow-adjacent integer in the self-re-arming [5,320, canon) band) in any PA file's live prose (canon: 5,427 unique; Part C added by the 2026-09-09 fourteenth-wave review after PA-128.3's W5512 Volume row shipped '5,370-workflow inventory' through batches 15–23 on a surface no check read; band made corpus-derived by the 2026-09-10 seventeenth-wave review after the same row stranded at the then-canonical 5,426 with the static band blind to it)"
 else
     error "Stale unclassified-workflow claims / retired corpus-total literals in live prose ($C27_ERRS):"
     echo "$CHECK27" | grep '^B_ERR|' | sed 's/^B_ERR|/    /'
@@ -2638,8 +2725,7 @@ echo "--- Check 50: Time-Estimate & Staffing inline arithmetic ---"
 # chains whose midpoint is off ≥1.6× under NO licensed convention, plus reversed
 # numeric ranges. The 2026-08-29 pass adjudicated the complete hit list and
 # repaired 25 workflows' arithmetic against their own steps/Frequency/Volume.
-C50_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-time-estimate-math.py" --guard 2>&1)
-C50_RC=$?
+C50_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-time-estimate-math.py" --guard 2>&1) && C50_RC=0 || C50_RC=$?
 echo "$C50_OUT" | grep -E "^Guard:" | sed 's/^/    /'
 if [ $C50_RC -eq 0 ]; then
     ok "No inline-arithmetic guard violations in Time Estimate / Staffing Implication sections (guard mode of audit-time-estimate-math.py; 25 defective chains repaired 2026-08-29)"
@@ -2664,8 +2750,7 @@ echo "--- Check 51: Staffing-claim & Volume-product reconciliation ---"
 # reappear; (b) any '<Department> … team of N' claim must equal the §3.3 total
 # (engagement crews 'team of 2–3'/'deploys a team of 2' exempt); (c) Volume-row
 # products must compute ('+'-sum rows and cadence conversions out of scope).
-C51_OUT=$(python3 "$REPO_ROOT/07-methodology/reconcile-staffing-claims.py" --guard 2>&1)
-C51_RC=$?
+C51_OUT=$(python3 "$REPO_ROOT/07-methodology/reconcile-staffing-claims.py" --guard 2>&1) && C51_RC=0 || C51_RC=$?
 C51_N=$(echo -n "$C51_OUT" | tail -1)
 echo "    $C51_N"
 if [ $C51_RC -eq 0 ]; then
@@ -2692,8 +2777,7 @@ echo "--- Check 52: ST vocabulary & duplicate-Trigger guard ---"
 # self-serve→self-service) while deliberately preserving title-canonical forms
 # (W258 Omni-channel, W1238/W1491 Material Take-Off, W3657 Closeout, the
 # paired check-in/check-out noun).
-C52_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-st-touchpoints.py" --guard 2>&1)
-C52_RC=$?
+C52_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-st-touchpoints.py" --guard 2>&1) && C52_RC=0 || C52_RC=$?
 C52_N=$(echo -n "$C52_OUT" | tail -1)
 echo "    $C52_N"
 if [ $C52_RC -eq 0 ]; then
@@ -2719,8 +2803,7 @@ echo "--- Check 53: Automation-keyword & RACI role-title guard ---"
 # ghost 'VP Communications' → Marketing Comms Manager, which §11.1 does not list);
 # legitimately distinct look-alikes (Site Manager in VS-141, Property AR Manager in
 # VS-97, Sourcing Manager, customer's site representative) were adjudicated and kept.
-C53_OUT=$(python3 "$REPO_ROOT/07-methodology/fix-auto-keywords.py" --check 2>&1)
-C53_RC=$?
+C53_OUT=$(python3 "$REPO_ROOT/07-methodology/fix-auto-keywords.py" --check 2>&1) && C53_RC=0 || C53_RC=$?
 C53_N=$(echo -n "$C53_OUT" | tail -1)
 echo "    $C53_N"
 if [ $C53_RC -eq 0 ]; then
@@ -2748,8 +2831,7 @@ echo "--- Check 54: Pain-Points, Frequency & Owner vocabulary ---"
 # PA-07.1 store-opening rows aligned to Compliance Officer in cell and prose; the
 # bare 'Compliance Manager' adjudicated a plausible Legal & Compliance title and
 # kept, as are the qualified Product/EPR/Trade/Tax/HR Compliance Manager roles.
-C54_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-field-vocabulary.py" --guard 2>&1)
-C54_RC=$?
+C54_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-field-vocabulary.py" --guard 2>&1) && C54_RC=0 || C54_RC=$?
 C54_N=$(echo -n "$C54_OUT" | tail -1)
 echo "    $C54_N"
 if [ $C54_RC -eq 0 ]; then
@@ -2774,8 +2856,7 @@ echo "--- Check 55: Participants hygiene & per-unit volume coherence ---"
 # Manager' (68 spots incl. VS READMEs); (c) steps-table Duration unit vocabulary —
 # spell-clean (min/hours/days/weeks dominant; hrs/minutes/sec established variety;
 # apparent 'hors'/'das' hits were substrings of Authors/horsepower/anchors).
-C55_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-participants-units.py" --guard 2>&1)
-C55_RC=$?
+C55_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-participants-units.py" --guard 2>&1) && C55_RC=0 || C55_RC=$?
 C55_N=$(echo -n "$C55_OUT" | tail -1)
 echo "    $C55_N"
 if [ $C55_RC -eq 0 ]; then
@@ -2800,8 +2881,7 @@ echo "--- Check 56: Operational-control prose variants ---"
 # (clean — the hyphenated hits are correct compound modifiers) and the VS-x
 # citation density (44,041 citations across all 569 PAs, median 57, none
 # isolated).
-C56_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-operational-controls.py" --guard 2>&1)
-C56_RC=$?
+C56_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-operational-controls.py" --guard 2>&1) && C56_RC=0 || C56_RC=$?
 C56_N=$(echo -n "$C56_OUT" | tail -1)
 echo "    $C56_N"
 if [ $C56_RC -eq 0 ]; then
@@ -2824,8 +2904,7 @@ echo "--- Check 57: Risk-label punctuation ---"
 # cadence phrases — both documented for per-workflow review. The format guide's
 # example anchors were verified against current state (W2599, VS-88, and the
 # ~72,000 receipts/yr figure matching the canonical DC-only volume).
-C57_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-risk-labels.py" --guard 2>&1)
-C57_RC=$?
+C57_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-risk-labels.py" --guard 2>&1) && C57_RC=0 || C57_RC=$?
 C57_N=$(echo -n "$C57_OUT" | tail -1)
 echo "    $C57_N"
 if [ $C57_RC -eq 0 ]; then
@@ -2848,8 +2927,7 @@ echo "--- Check 58: Mitigation-clause & Trigger-richness completeness ---"
 # title subject ('Monthly analytics cycle — Sales Per Square Meter'). The
 # remaining short triggers ('Breach confirmed', 'Retention expiry'…) were
 # adjudicated already-specific event names.
-C58_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-enrichment-completeness.py" --guard 2>&1)
-C58_RC=$?
+C58_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-enrichment-completeness.py" --guard 2>&1) && C58_RC=0 || C58_RC=$?
 C58_N=$(echo -n "$C58_OUT" | tail -1)
 echo "    $C58_N"
 if [ $C58_RC -eq 0 ]; then
@@ -2882,8 +2960,7 @@ echo "--- Check 59: Model-doc figures & cross-references ---"
 # 4,864+499=5,363 reconciliation sums, the two-state 469/6,869 totals), and a
 # structural rule re-deriving every §7.3 DC-roster group total from its own HC
 # cells — so this check is the permanent regression guard.
-C59_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-model-docs.py" --guard 2>&1)
-C59_RC=$?
+C59_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-model-docs.py" --guard 2>&1) && C59_RC=0 || C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
@@ -2908,8 +2985,7 @@ echo "--- Check 60: Exec-summary anchors & CTL citation scope ---"
 # notes like 'IR governance'/'exercise governance' in VS-184–191) were re-pointed
 # to each workflow's own PA-level execution control in the Check-34 canonical
 # form with the note preserved; spend-related notes remain on the spend controls.
-C60_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-exec-ctl.py" --guard 2>&1)
-C60_RC=$?
+C60_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-exec-ctl.py" --guard 2>&1) && C60_RC=0 || C60_RC=$?
 C60_N=$(echo -n "$C60_OUT" | tail -1)
 echo "    $C60_N"
 if [ $C60_RC -eq 0 ]; then
@@ -2933,8 +3009,7 @@ echo "--- Check 61: Matrix rows, gap-analysis & tech-guidelines anchors ---"
 # historical totals exempt); (c) technical-guidelines.md must carry its verified
 # anchor figures (~362 HQ staff, ~540 Mbps aggregate, >= 8h offline, 933
 # peak-day/store, 10-year retention).
-C61_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-matrix-refs.py" --guard 2>&1)
-C61_RC=$?
+C61_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-matrix-refs.py" --guard 2>&1) && C61_RC=0 || C61_RC=$?
 C61_N=$(echo -n "$C61_OUT" | tail -1)
 echo "    $C61_N"
 if [ $C61_RC -eq 0 ]; then
@@ -2969,8 +3044,7 @@ echo "--- Check 62: Semantic-sample anchors ---"
 # 50 review #45/#47 '-logy' mis-repairs ('technology' where the step word was
 # Metrology/methodology/typology/toxicology/genealogy/apology); 12 adjudicated
 # noun-phrase summary bullets are allowlisted.
-C62_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-semantic-anchors.py" --guard 2>&1)
-C62_RC=$?
+C62_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-semantic-anchors.py" --guard 2>&1) && C62_RC=0 || C62_RC=$?
 C62_N=$(echo -n "$C62_OUT" | tail -1)
 echo "    $C62_N"
 if [ $C62_RC -eq 0 ]; then
@@ -3543,6 +3617,21 @@ for line in (ROOT / "01-model-company/workflows/workflow-criticality-classificat
 files = sorted((ROOT / "bpmn").rglob("*.bpmn"))
 if len(files) != len(pa_files):
     bad.append(f"bpmn/ holds {len(files)} .bpmn files but the corpus has {len(pa_files)} PA files")
+
+# ---- 2026-09-10 seventeenth-wave extension: documentation-text mirror ----
+# Structural validation cannot see CONTENT drift: the batch-24 pass edited the PA-133.1/.3
+# Volume rows (5,426→5,427) but shipped the two generated .bpmn files stale at 5,426 — the
+# commit's 'only PA-07.1's file moved' regeneration claim was false and no check noticed
+# because the trees' processes/flows/counts were all still correct. This extension imports
+# the generator's own parser, re-derives each process's <bpmn:documentation> text, start-
+# event name and controls annotation exactly as generate-bpmn.py would emit them, and
+# requires the shipped XML to match — i.e. any markdown field edit without a regeneration
+# now fails the validator, and a hand-edit of the generated text fails it too.
+import importlib.util
+_spec = importlib.util.spec_from_file_location("_genbpmn", str(ROOT / "07-methodology" / "generate-bpmn.py"))
+_gen = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_gen)
+
 tot_procs = 0
 for f in files:
     try:
@@ -3551,6 +3640,23 @@ for f in files:
         bad.append(f"{f}: XML parse error: {e}"); continue
     procs = list(root.iter(B + "process"))
     tot_procs += len(procs)
+    # ---- build the generator-equivalent expectations from the PA markdown ----
+    exp_doc, exp_start, exp_anno = {}, {}, {}
+    pa_md = ROOT / "01-model-company" / "workflows" / f.relative_to(ROOT / "bpmn").with_suffix(".md")
+    if not pa_md.exists():
+        bad.append(f"{f}: no corresponding PA markdown at {pa_md.relative_to(ROOT)}")
+    else:
+        for wf in _gen.parse_pa_file(pa_md):
+            pid = "W_" + re.sub(r"[^A-Za-z0-9_.-]", "_", wf["id"])
+            fld = wf["fields"]
+            doc_lines = [f"{k}: {fld[k]}" for k in ("Trigger", "Frequency", "Volume", "Owner", "Participants") if k in fld]
+            doc_lines.append(f"Source: workflow {wf['id']} — {wf['name']}")
+            exp_doc[pid] = "\n".join(doc_lines)
+            exp_start[pid] = _gen.truncate(_gen.strip_md(fld.get("Trigger", "Trigger")), 90)
+            ctl = ("Controls: " + " | ".join(_gen.strip_md(b) for b in wf["sections"].get("Controls", []))) if wf["sections"].get("Controls") else "Controls: (none recorded)"
+            if fld.get("Owner"):
+                ctl += f"\nOwner: {fld['Owner']}"
+            exp_anno[pid] = _gen.truncate(ctl, _gen.MAX_ANNOTATION)
     diags = list(root.iter(BD + "BPMNDiagram"))
     planes = list(root.iter(BD + "BPMNPlane"))
     if not (len(procs) == len(diags) == len(planes)):
@@ -3562,6 +3668,22 @@ for f in files:
     shapes = {s.get("bpmnElement") for s in root.iter(BD + "BPMNShape")}
     edges = {e.get("bpmnElement") for e in root.iter(BD + "BPMNEdge")}
     for p in procs:
+        pid = p.get("id")
+        if pid in exp_doc:
+            de = p.find(B + "documentation")
+            got = (de.text or "") if de is not None else None
+            if got != exp_doc[pid]:
+                bad.append(f"{f}: {pid} process documentation is stale vs its markdown source (generator re-derivation mismatch — regenerate the tree)")
+            se = p.find(B + "startEvent")
+            if se is not None and (se.get("name") or "") != exp_start[pid]:
+                bad.append(f"{f}: {pid} start-event name is stale vs its markdown Trigger (generator re-derivation mismatch — regenerate the tree)")
+            an = p.find(B + "textAnnotation")
+            at = an.find(B + "text") if an is not None else None
+            got_a = (at.text or "") if at is not None else None
+            if got_a != exp_anno[pid]:
+                bad.append(f"{f}: {pid} controls annotation is stale vs its markdown source (generator re-derivation mismatch — regenerate the tree)")
+        else:
+            bad.append(f"{f}: process {pid} has no markdown workflow block (id-derivation changed or PA content removed without regeneration)")
         nodes = [e for t in ("startEvent", "endEvent", "userTask", "serviceTask") for e in p.iter(B + t)]
         nid = {e.get("id") for e in nodes}
         if sum(1 for e in nodes if e.tag == B + "startEvent") != 1:
@@ -3637,7 +3759,7 @@ C71_BAD=$(echo "$CHECK71" | sed -n 's/^TOTALS .* errors=\([0-9]*\)$/\1/p')
 if [ "${C71_BAD:-1}" -eq 0 ]; then
     B71=$(echo "$CHECK71" | sed -n 's/^BPMN_TOTALS files=\([0-9]*\) processes=\([0-9]*\)$/\1 \2/p')
     D71=$(echo "$CHECK71" | sed -n 's/^DMN_TOTALS files=\([0-9]*\) decisions=\([0-9]*\)$/\1 \2/p')
-    ok "Generated trees validate structurally against the markdown corpus: bpmn/ $(echo $B71 | cut -d' ' -f1) files / $(echo $B71 | cut -d' ' -f2) processes (one per confirmed-register row) and dmn/ $(echo $D71 | cut -d' ' -f1) files / $(echo $D71 | cut -d' ' -f2) decisions — well-formed XML, 1 start/1 end per process, full lane coverage, 1:1 diagram:plane, complete DI shapes/edges/bounds/waypoints, decision-table structure, DRD shape per decision (guard added by the 2026-09-05 seventh-wave consistency review — previously these trees were read only by the generators' self-checks on manual regeneration)"
+    ok "Generated trees validate structurally against the markdown corpus AND mirror the generator's content derivation: bpmn/ $(echo $B71 | cut -d' ' -f1) files / $(echo $B71 | cut -d' ' -f2) processes (one per confirmed-register row) and dmn/ $(echo $D71 | cut -d' ' -f1) files / $(echo $D71 | cut -d' ' -f2) decisions — well-formed XML, 1 start/1 end per process, full lane coverage, 1:1 diagram:plane, complete DI shapes/edges/bounds/waypoints, decision-table structure, DRD shape per decision, and every process's documentation/start-event-name/controls-annotation byte-equal to the generator's re-derivation from its PA markdown (content mirror added by the 2026-09-10 seventeenth-wave review after batch-24 shipped PA-133.1/.3's generated files stale at the retired 5,426 — structural counts were all still correct, so nothing else could see it)"
 else
     error "Generated BPMN/DMN trees failed structural validation:"
     echo "$CHECK71" | grep -E '^BAD\|' | sed 's/^BAD|/    /'

@@ -1,7 +1,7 @@
 # Workflow Criticality Classification
 
-> Classifies all 5,426 unique operational workflows into criticality tiers (the confirmed
-> register holds 5,449 rows, of which 23 are `###` parent/summary sub-workflows double-counted
+> Classifies all 5,427 unique operational workflows into criticality tiers (the confirmed
+> register holds 5,450 rows, of which 23 are `###` parent/summary sub-workflows double-counted
 > against a `##` parent). Zero workflows remain unclassified: the 2026-06-28 Full-Coverage
 > Confirmation Pass promoted every then-existing keyword-proposed workflow (unclassified
 > 2,596 → 0), the fourteen post-catalog workflows W5497–W5510 (added 2026-08-24/26) were
@@ -827,14 +827,14 @@ whenever new workflows ship unclassified.
 
 | Coverage | Workflows |
 |---|---|
-| Confirmed (hand-reviewed) | 5,449 rows (5,426 unique `##` workflows) |
+| Confirmed (hand-reviewed) | 5,450 rows (5,427 unique `##` workflows) |
 | Proposed (keyword, pending review) | 0 |
 | Without even a proposal | 0 |
-| **Grand Total** | **5,426** unique `##` workflows (5,426 confirmed + 0 unclassified) |
+| **Grand Total** | **5,427** unique `##` workflows (5,427 confirmed + 0 unclassified) |
 
 ### Domain Breakdown
 
-The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,449 classified register rows (5,426 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,426 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
+The per-tier subsection headings above (Core Finance, Extended Store Operations, Internal Audit, etc.) provide the authoritative domain-and-phase breakdown of the 5,450 classified register rows (5,427 unique workflows), and the [value-stream-index.md](./value-stream-index.md) provides the authoritative value-stream/process-area breakdown of all 5,427 workflows. A rolled-up "by domain" summary table was removed during consistency review because it could not be reconciled with the tier totals and presented stale partial counts.
 
 > **2026-09-05 addition (cyber-extortion, payment-diversion, land-occupation & water-continuity gap fill, batch 20):** Four workflow-level gap fills — W5558 (Ransomware & Destructive Cyber-Attack Enterprise Response Protocol; PA-27.3), W5559 (Vendor Payment-Diversion & Business Email Compromise (BEC) Fraud Event Response & Recovery Protocol; PA-18.2), W5560 (Informal-Settler Invasion & Illegal Occupation of Banked Land — Detection, Relocation & Ejection Protocol; PA-178.1), and W5561 (Sustained Water-Service Interruption Response & Store Continuity Protocol; PA-07.2) — were added after the batch-16/17/18/19 edge-case sweeps were re-run across scenario families not yet probed (destructive cyber attack with extortion, disbursement-diversion fraud, vacant-land occupation, utility-service failure beyond power): the ransomware/destructive-attack event ('ransomware'/'extortion demand'/'data-destruction' in zero dedicated headers — only PA-27.2's DR pain point naming the isolate-DR-before-failover trap, W1330's exercise inject, W5529's OT drill; nobody owned the extortion-decision law, the DR-isolation sequencing, chain-wide manual trading mode, the privileged forensics clock, or the insurance/disclosure chain), the payment-diversion/BEC event (BEC named only in PA-18.2 pain points with a one-bullet callback mitigation, and VS-125.2 watching only the customer-side diversion class — nobody owned the after-prevention-fails event: the same-day recall race, the honest-ledger treatment, the insider-vs-mailbox forensics, or the cooling-off retrofit), the informal-settler invasion event ('informal settler'/'squatter'/'illegal occupation'/'adverse possession' in zero PA files — nobody owned the prescription-interruption evidence discipline, the RA 7279 syndicate-vs-settler classification, the no-self-help eviction rule, or the caretaker-fraud variant on parcels held vacant for years), and the sustained water-interruption event ('water interruption'/'water rationing' only as product-selling context in PA-09.2 — nobody owned the sanitation decision law, the live-goods watering priority, emergency trucked-water sourcing, or the flush-and-confirm recovery gate). The same analysis produced the custody register's seventh wave (event-custody-and-precedence-register.md v1.7, events E-34–E-37). W5558 ships **directly confirmed Tier 1** (the enterprise-trading-halt & statutory-continuity class of the W5545/W5546 precedent — the data-privacy core rides the Tier-1 W53 chain, the OT variant rides W5529); W5559/W5560/W5561 ship **directly confirmed Tier 2** (the financial-crime contingency class of W5541/W2814, the landbanking asset-protection class of W5133/W5143, and the facility-continuity class of the W470 power analog).
 >

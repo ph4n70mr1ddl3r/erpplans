@@ -2,7 +2,7 @@
 
 > Directed dependency graph of classified operational workflows, showing prerequisite
 > relationships for system functions. All 5,427 workflows are classified into
-> criticality tiers (the confirmed register holds 5,449 rows, incl. 23 `###` parent/summary
+> criticality tiers (the confirmed register holds 5,450 rows, incl. 23 `###` parent/summary
 > sub-workflows) — the fourteen post-catalog additions W5497–W5510 (added 2026-08-24/26) were
 > confirmed 2026-09-02 by the post-catalog confirmation pass, W5511 (VS-54.3) shipped
 > confirmed 2026-09-03 in the event-custody pass, W5512–W5514 (VS-128.3) and

@@ -124,6 +124,47 @@ reality_check_hits (the headcount reality-check §3.1 AP bullet's retired '~450/
 parenthetical — 450/day implies ~13,500/month, matching no licensed convention; the
 corrected '~300/day' form is anchored).
 
+2026-09-10 seventeenth-wave consistency review: the batch-24 pass's own re-point
+cascade audited — eight stranded spots found on five surface families, all of
+them 'the canonical total moved 5,426 → 5,427, the derived quote stayed'. (1) The
+generated bpmn tree shipped stale for PA-133.1/PA-133.3 (documentation Volume
+'~5,426 workflows' vs the re-pointed markdown) — the batch's 'only PA-07.1's file
+moved' regeneration claim was false, and no check could see it because Check 71
+read only the trees' STRUCTURE. Validator-side closure: Check 71 now imports the
+generator's own parser and requires every process's <bpmn:documentation> text,
+start-event name and controls annotation to equal the generator's re-derivation
+from its PA markdown — any field edit without regeneration, or any hand-edit of
+the generated text, now fails. (2) classification.md stranded FOUR live spots at
+the retired totals (intro headline 5,426/5,449; the Coverage 'Confirmed
+(hand-reviewed)' row; the Summary Grand-Total row; the §Domain-Breakdown prose)
+while Check 18 saw only self-consistency — every stale spot agreed with its stale
+neighbours. Check 18 now re-derives the unique/register-row canon from the PA
+corpus's ##/### headers every run and pins all six figure surfaces. (3)
+workflow-dependency-map.md's intro parenthetical kept 5,449 while its own unique
+figure moved — Check 26 extended with the intro pins (unique / rows / sub-workflow
+count). (4) The sourcing model's §12.2 candidate-intake figure kept 5,426 while
+the doc's own v2.10 footer CLAIMED 'the §12.2 intake figure reads 5,427' —
+sourcing_tier_hits read only §12.1; extended to re-derive the canon and pin the
+intake figure. (5) PA-128.3's W5512 Volume row kept the then-canonical 5,426 with
+Check 27 Part C's static retired band (5,320–5,425) blind to it — the band now
+re-derives from the corpus every run ([5,320, canon-unique)), so the guard
+re-arms itself at every future batch instead of aging out one total at a time.
+Same wave, armed: Check 51's sixteenth-wave '--guard' arming had fixed the
+invisible-print class for reconcile-staffing-claims.py only — the validator's
+thirteen guard-mode invocations (Checks 50–62) all captured the child's exit code
+with 'OUT=$(...); RC=$?' under 'set -e', so any guard FIRING aborted the whole
+script before its own error branch could print (verified live: a §12.2 injection
+made the run die silently at Check 59 with zero output). All thirteen re-armed
+with '&& RC=0 || RC=$?' — a firing guard now prints its violations and the
+validation completes with the error count. Teeth verified by eight synthetic
+injections each caught at the exact violated rule (classification intro/
+Coverage/Grand-Total/Domain; dep-map parenthetical; sourcing §12.2; PA-128.3
+Volume; a hand-corrupted PA-133.1 documentation block), fixtures restored
+byte-identical sha256-verified — and the teeth caught their own author once
+pre-ship (the Grand-Total pin was forgotten in the first draft: injection 2
+passed with the row self-consistent at 5,426, the exact failure mode this wave
+closes; the pin was added and re-verified firing).
+
 2026-09-09 sixteenth-wave consistency review: three stranded-derived-figure classes
 found live and closed — all of them 'the canonical table moved, the derived quote
 stayed'. (1) Revenue-per-employee: the v2.22 rebalance bumped the §4 note's division
@@ -601,6 +642,36 @@ def sourcing_tier_hits():
         if got != want:
             hits.append((rel, 0, f"autonomy ladder quotes {tier} = {got} but the "
                                  f"register Summary says {want}"))
+    # 2026-09-10 seventeenth-wave extension — the §12.2 candidate-intake figure: the
+    # batch-24 pass re-pointed the §12.1 ladder and this doc's own footer (whose clause
+    # CLAIMS 'the §12.2 intake figure reads 5,427 workflows') while stranding the §12.2
+    # body at the retired 5,426 — sourcing_tier_hits read only §12.1. Re-derive the
+    # unique-workflow canon from the PA files' ## headers every run and pin the intake
+    # figure, so the guard can never again satisfy itself off a footer beside a stale body.
+    uniq = set()
+    wf_dir = os.path.join(MC, "workflows")
+    for d in os.listdir(wf_dir):
+        if not d.startswith("VS-"):
+            continue
+        dd = os.path.join(wf_dir, d)
+        if not os.path.isdir(dd):
+            continue
+        for fn in os.listdir(dd):
+            if fn.startswith("PA-") and fn.endswith(".md"):
+                uniq.update(re.findall(r"^## (W\d+[A-Z]?)\.",
+                                       open(os.path.join(dd, fn), encoding="utf-8").read(), re.M))
+    canon_unique = len(uniq)
+    m_intake = re.search(r"Candidate intake.*?Automation Opportunity inventory "
+                         r"\(([\d,]+) workflows\)", body, re.S)
+    if not m_intake:
+        hits.append((rel, 0, "§12.2 candidate-intake figure not found "
+                             "(expected 'Candidate intake … Automation Opportunity inventory (N workflows)')"))
+    else:
+        got = int(m_intake.group(1).replace(",", ""))
+        if got != canon_unique:
+            line = body[:m_intake.start()].count("\n") + 1
+            hits.append((rel, line, f"§12.2 candidate-intake figure says {got:,} workflows "
+                                    f"but the PA corpus re-derives {canon_unique:,} unique ## headers"))
     return hits
 
 
