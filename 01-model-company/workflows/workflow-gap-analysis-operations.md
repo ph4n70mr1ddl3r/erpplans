@@ -22,7 +22,7 @@ All workflows in the five workflow-level families not yet covered by a dedicated
 
 - **Plan & Source** — 462 workflows in 15 value streams (VS-01/02/03/41/45/57/64/67/94/101/106/122/127/131/182).
 - **Make & Move** — 500 workflows in 19 value streams (VS-04/05/06/32/56/61/74/81/90/92/93/110/111/136/143/155/180/191/192).
-- **Sell & Serve** — 1,545 workflows in 46 value streams (VS-07/08/09/10/11/12/13/14/37/43/44/46/47/48/53/55/58/60/62/63/65/66/70/75/77/78/82/95/107/124/139/140/145/149/156/162/164/168/171/172/174/175/176/177/185/186).
+- **Sell & Serve** — 1,546 workflows in 46 value streams (VS-07/08/09/10/11/12/13/14/37/43/44/46/47/48/53/55/58/60/62/63/65/66/70/75/77/78/82/95/107/124/139/140/145/149/156/162/164/168/171/172/174/175/176/177/185/186).
 - **Asset & Infrastructure** — 323 workflows in 13 value streams (VS-20/35/42/59/97/108/109/112/120/138/163/178/184).
 - **Governance & Assurance** — 976 workflows in 37 value streams incl. **VS-23 Loss Prevention & Asset Protection** (VS-21/22/23/24/25/26/31/33/36/69/71/73/76/85/86/87/88/89/91/100/104/114/117/119/129/130/132/133/146/147/152/159/161/165/166/179/187; includes this pass's W5534).
 - **Cross-family hosts touched by the gaps**: VS-19.3 (People — workforce management) and
@@ -31,7 +31,7 @@ All workflows in the five workflow-level families not yet covered by a dedicated
 
 ## 2. Method
 
-1. **Inventory** every `## W` header in the five families (≈3,806 workflows) plus the
+1. **Inventory** every `## W` header in the five families (≈3,807 workflows) plus the
    cross-family hosts above.
 2. **Map** each capability of a reference retail operating model — merchandising & sourcing,
    supply chain & logistics, store & DC operations, loss prevention & safety, facilities & asset

@@ -1115,7 +1115,7 @@ DEP = os.path.join(ROOT, '01-model-company', 'workflows', 'workflow-dependency-m
 dep = open(DEP, encoding='utf-8', errors='replace').read()
 for i, ln in enumerate(dep.split('\n'), 1):
     if 'remains unclassified' in ln or 'pending criticality review' in ln:
-        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,426 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510; 2026-09-03 W5511; 2026-09-03 W5512–W5514; 2026-09-03 W5515–W5517)")
+        errs.append(f"workflow-dependency-map.md:{i} asserts an unclassified/pending state, but all 5,427 workflows have been classified (2026-06-28 Full-Coverage Confirmation Pass; 2026-09-02 post-catalog confirmation of W5497–W5510; 2026-09-03 W5511; 2026-09-03 W5512–W5514; 2026-09-03 W5515–W5517; 2026-09-10 W5574)")
 # ---- Part C: PA-corpus live-total guard (2026-09-09 fourteenth-wave review) ----
 # The gap-fill batches re-pointed every navigation surface each time the unique total
 # moved, but one surface family no check read was the PA files' own field rows: at ship
@@ -1136,7 +1136,7 @@ for pa in sorted(os.path.join(ROOT, '01-model-company', 'workflows', d, f)
             continue
         m = TOTAL_PAT.search(ln)
         if m:
-            errs.append(f"{os.path.relpath(pa, ROOT)}:{i} quotes retired corpus total '{m.group(0)}' workflow-adjacent in live prose (canonical unique total: 5,426 since batch 23 / W5573)")
+            errs.append(f"{os.path.relpath(pa, ROOT)}:{i} quotes retired corpus total '{m.group(0)}' workflow-adjacent in live prose (canonical unique total: 5,427 since batch 24 / W5574)")
 print(f"A_STALE={len(stale)}")
 for s in stale[:12]: print(f"A_STALE|{s}")
 print(f"B_ERRS={len(errs)}")
@@ -1152,7 +1152,7 @@ else
     echo "$CHECK27" | grep '^A_STALE|' | sed 's/^A_STALE|/    /'
 fi
 if [ "$C27_ERRS" -eq 0 ]; then
-    ok "No unclassified-workflow claims in workflow-dependency-map.md and no retired corpus-total literal (5,320–5,425 band) workflow-adjacent in any PA file's live prose (canon: 5,426 unique; Part C added by the 2026-09-09 fourteenth-wave review after PA-128.3's W5512 Volume row shipped '5,370-workflow inventory' through batches 15–23 on a surface no check read)"
+    ok "No unclassified-workflow claims in workflow-dependency-map.md and no retired corpus-total literal (5,320–5,425 band) workflow-adjacent in any PA file's live prose (canon: 5,427 unique; Part C added by the 2026-09-09 fourteenth-wave review after PA-128.3's W5512 Volume row shipped '5,370-workflow inventory' through batches 15–23 on a surface no check read)"
 else
     error "Stale unclassified-workflow claims / retired corpus-total literals in live prose ($C27_ERRS):"
     echo "$CHECK27" | grep '^B_ERR|' | sed 's/^B_ERR|/    /'

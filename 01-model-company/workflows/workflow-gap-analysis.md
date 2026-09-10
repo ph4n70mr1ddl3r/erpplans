@@ -280,6 +280,26 @@ identify capability gaps not addressed by any existing value stream.
 > Canonical totals are now **188 value streams · 569 process areas · 5,426 workflows** (5,449 confirmed register
 > rows; Tier 1 1,394 → 1,396, Tier 2 3,293 → 3,295).
 >
+> **Post-Pass-30 workflow-level additions, batch 24 (2026-09-10) — concessionaire connectivity request,
+> approval & independent-circuit governance gap fill.**
+> A concessionaire operating-model review (the batch-3 concession-catalog lineage) found the connectivity-exception
+> surface unowned: W177 bundles internet into the monthly 'Rent + Utilities + Commission' concessionaire invoice as a
+> BuildRight-provided utility and W111 benchmarks internet as a store utility, W366 manages the store link with its
+> segmented Wi-Fi, and W5520/W5418/W5421 guard the IPAM and device boundaries — but no workflow owned the case where a
+> concessionaire wants its own internet connection ('concessionaire internet'/'independent circuit' appear in zero PA
+> files as owned content): the default-posture rule with the segmented-Wi-Fi alternative evaluated first, the eligibility
+> gate (documented regulatory, banking or capacity need only — never convenience or cost), the isolation envelope
+> (separate conduit, no physical or logical crossing into BuildRight networks, DHCP confined to the concessionaire's own
+> equipment, no BuildRight credentials), the W47 works approval with landlord and LGU consent for exterior terminations,
+> the W117 connectivity addendum with incident demarcation and VS-147 insurance, the commission-integrity clause keeping
+> every concession sale on the BuildRight POS throughput SKU, and the restoration holdback released only on the W62 exit
+> walk-through. **W5574** Concessionaire Connectivity Request, Approval & Independent-Circuit Governance (VS-07.1)
+> fills the surface. Workflow-ID allocation: W5574 (next available). Ships **directly confirmed Tier 2** (the
+> concession-operations governance class of the W5505–W5507 siblings; the network-boundary machinery it invokes is
+> already in place, so nothing is go-live blocking). Absorbed within sized teams (OM stays 122 FTE / 17 teams; TO stays
+> HQ 511 / 6,911). Canonical totals are now **188 value streams · 569 process areas · 5,427 workflows** (5,450
+> confirmed register rows; Tier 1 1,396 unchanged, Tier 2 3,295 → 3,296).
+>
 > **Post-Pass-30 workflow-level additions, batch 22 (2026-09-05) — terminal-tampering, procurement-impersonation,
 > account-takeover & commute-disruption gap fill.**
 > The batch-16/17/18/19/20/21 edge-case sweeps were re-run across scenario families not yet probed (payment-device
