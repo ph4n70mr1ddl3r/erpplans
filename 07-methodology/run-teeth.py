@@ -11,7 +11,8 @@ probe that exact class. This harness makes the suite permanent: one command that
 re-fires every historical fault class against the current validator and fails
 loudly if any of them slips through. When a new generated-tree guard or checker
 joins the validator, add its fault class here as a new tooth (the catalog-
-projection staleness class joined as tooth 13 with the 2026-09-10 catalog pass).
+projection staleness class joined as tooth 13 with the 2026-09-10 catalog pass,
+and the capacity-model staleness class as tooth 14 with the capacity pass).
 
 Protocol (inherited from the fourteenth-wave lesson):
   * copy-based — the live working tree is NEVER touched. The repo is copied once
@@ -217,6 +218,15 @@ TEETH = [
              '"Owner": "Category Manager (Outdoor & Garden)"', '"Owner": "STALE EDIT"'),
         ["stale (differs from regeneration)",
          "catalog/VS-01-merchandise-strategy/PA-01.1-assortment-planning-and-product-lifecycle.json"],
+    ),
+    (
+        "capacity-model-stale",
+        "capacity model report hand-edited (or corpus/register edited without regeneration) — Check 71's --check mirror class",
+        ["01-model-company/workforce-capacity-model.md"],
+        _one("01-model-company/workforce-capacity-model.md",
+             "1,800 h/FTE-year", "1,900 h/FTE-year"),
+        ["stale (differs from regeneration)",
+         "01-model-company/workforce-capacity-model.md"],
     ),
 ]
 

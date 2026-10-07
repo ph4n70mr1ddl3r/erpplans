@@ -234,6 +234,7 @@ erpplans/
 │   ├── requirement-workflow-matrix.md  Cross-reference: requirements ↔ workflows
 │   ├── internal-controls-matrix.md     808 internal controls by objective
 │   ├── mobile-app-strategy.md          Customer & employee mobile app strategy
+│   ├── workforce-capacity-model.md     GENERATED workforce capacity feasibility model (regenerates via 07-methodology/capacity-model.py; Check 71 --check)
 │   └── data-migration-mapping.md       Data migration field mapping templates
 ├── dmn/                         ← Generated DMN 1.3 decision models (79 decisions across 40 process areas; rule tables + tiered PHP authorization thresholds; mirrors the workflows/ tree; regenerates via 07-methodology/generate-dmn.py)
 ├── bpmn/                        ← Generated BPMN 2.0 models (5,450 processes; mirrors the workflows/ tree; regenerates via 07-methodology/generate-bpmn.py)
@@ -248,9 +249,10 @@ erpplans/
     ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds + AI agent platform), roles, RACI, governance, sizing (50 → 122 FTE)
     ├── ai-first-operating-guide.md   The AI-first operating guide — ERP-agnostic doctrine (ten laws, six layers, capability contracts), sourcing neutrality, autonomy ladder, agent factory, the EKB as persistent memory + consistency engine, the no-confusion decision system, and the seven-phase adoption path (v1.10)
     ├── validate-repo.sh              Cross-reference validation (76 checks)
-    ├── run-teeth.py                  Validator teeth harness — the 13-fault injection suite (stale totals, tier drift, ghost headers, missing footers, unregenerated trees, XML corruption, dead links, inverted version chains, dangling W/Req references, broken steps rows, quoted-check-count drift) fired against a throwaway copy with exact-diagnosis assertions and sha256-verified restores; the wave-teeth protocol made permanent and CI-wired
+    ├── run-teeth.py                  Validator teeth harness — the 14-fault injection suite (stale totals, tier drift, ghost headers, missing footers, unregenerated trees, XML corruption, dead links, inverted version chains, dangling W/Req references, broken steps rows, quoted-check-count drift) fired against a throwaway copy with exact-diagnosis assertions and sha256-verified restores; the wave-teeth protocol made permanent and CI-wired
     ├── generate-bpmn.py             BPMN 2.0 generator — converts every workflow block in 01-model-company/workflows into validated .bpmn files under bpmn/ (5,450 processes, lanes, DI)
     ├── generate-dmn.py             DMN 1.3 generator — extracts rule tables and tiered PHP authorization rules from workflow markdown into validated .dmn files under dmn/ (79 decisions, decision tables, DMNDI)
+    ├── capacity-model.py              Workforce capacity feasibility model — aggregates annualizable Time-Estimate effort per role from catalog/ against the official TO §5.3 register (Check 50's annualization conventions; 1,800 net h/FTE-yr as a flagged model assumption); generates 01-model-company/workforce-capacity-model.md; --check mode byte-compares and is invoked by Check 71 every run
     ├── generate-catalog.py           Catalog JSON generator — projects every workflow (5,450 records: fields/steps/sections, tier, CTL/W/requirement references) into catalog/ (569 PA files + index.json); reuses the BPMN generator's parser; --check mode byte-compares and is invoked by Check 71 every run
     ├── classify-workflows.py         Keyword-driven criticality classifier
     ├── confirm-all-workflows.py      One-time full-coverage confirmation pass (2,596 → 0 unclassified)

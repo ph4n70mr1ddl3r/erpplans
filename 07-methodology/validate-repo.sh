@@ -3911,15 +3911,21 @@ C71_BAD=$(echo "$CHECK71" | sed -n 's/^TOTALS .* errors=\([0-9]*\)$/\1/p')
 # ---- catalog/README quick-stats, so a markdown edit without catalog
 # ---- regeneration fails here exactly like the bpmn content mirror above.
 CATCHECK_OUT=$(pyfetch CATCHECK_OUT S "$REPO_ROOT/07-methodology/generate-catalog.py" --check "$REPO_ROOT" 2>&1) && CATCHECK_RC=0 || CATCHECK_RC=$?
-if [ "${C71_BAD:-1}" -eq 0 ] && [ "${CATCHECK_RC:-1}" -eq 0 ]; then
+# ---- 2026-09-10 capacity-model extension: the generated workforce-capacity
+# ---- model report joins the guarded generated artifacts the same way —
+# ---- capacity-model.py --check recomputes the model from catalog/ + the TO
+# ---- register and byte-compares the shipped report.
+MODELCHECK_OUT=$(pyfetch MODELCHECK_OUT S "$REPO_ROOT/07-methodology/capacity-model.py" --check "$REPO_ROOT" 2>&1) && MODELCHECK_RC=0 || MODELCHECK_RC=$?
+if [ "${C71_BAD:-1}" -eq 0 ] && [ "${CATCHECK_RC:-1}" -eq 0 ] && [ "${MODELCHECK_RC:-1}" -eq 0 ]; then
     B71=$(echo "$CHECK71" | sed -n 's/^BPMN_TOTALS files=\([0-9]*\) processes=\([0-9]*\)$/\1 \2/p')
     D71=$(echo "$CHECK71" | sed -n 's/^DMN_TOTALS files=\([0-9]*\) decisions=\([0-9]*\)$/\1 \2/p')
     CAT71=$(echo "$CATCHECK_OUT" | sed -n 's/^CATALOG_TOTALS files=\([0-9]*\) records=\([0-9]*\).*$/\1 \2/p')
-    ok "Generated trees validate structurally against the markdown corpus AND mirror the generator's content derivation: bpmn/ $(echo $B71 | cut -d' ' -f1) files / $(echo $B71 | cut -d' ' -f2) processes (one per confirmed-register row), dmn/ $(echo $D71 | cut -d' ' -f1) files / $(echo $D71 | cut -d' ' -f2) decisions, and catalog/ $(echo $CAT71 | cut -d' ' -f1) files / $(echo $CAT71 | cut -d' ' -f2) records — well-formed XML, 1 start/1 end per process, full lane coverage, 1:1 diagram:plane, complete DI shapes/edges/bounds/waypoints, decision-table structure, DRD shape per decision, every process's documentation/start-event-name/controls-annotation byte-equal to the generator's re-derivation from its PA markdown (content mirror added by the 2026-09-10 seventeenth-wave review), and the catalog/ JSON projection byte-identical to generate-catalog.py --check's re-derivation with its README quick-stats pinned (added by the 2026-09-10 catalog-projection pass — a markdown edit without catalog regeneration now fails here, the same doctrine one projection further)"
+    ok "Generated trees validate structurally against the markdown corpus AND mirror the generator's content derivation: bpmn/ $(echo $B71 | cut -d' ' -f1) files / $(echo $B71 | cut -d' ' -f2) processes (one per confirmed-register row), dmn/ $(echo $D71 | cut -d' ' -f1) files / $(echo $D71 | cut -d' ' -f2) decisions, catalog/ $(echo $CAT71 | cut -d' ' -f1) files / $(echo $CAT71 | cut -d' ' -f2) records — well-formed XML, 1 start/1 end per process, full lane coverage, 1:1 diagram:plane, complete DI shapes/edges/bounds/waypoints, decision-table structure, DRD shape per decision, every process's documentation/start-event-name/controls-annotation byte-equal to the generator's re-derivation from its PA markdown (content mirror added by the 2026-09-10 seventeenth-wave review), and the catalog/ JSON projection byte-identical to generate-catalog.py --check's re-derivation with its README quick-stats pinned (added by the 2026-09-10 catalog-projection pass), and the workforce-capacity model report byte-identical to capacity-model.py --check's recomputation from catalog/ + the TO register (added by the 2026-09-10 capacity-model pass)"
 else
     error "Generated BPMN/DMN trees failed structural validation:"
     echo "$CHECK71" | grep -E '^BAD\|' | sed 's/^BAD|/    /' || true
     echo "$CATCHECK_OUT" | grep -E '^BAD\|' | sed 's/^BAD|/    /' || true
+    echo "$MODELCHECK_OUT" | grep -E '^BAD\|' | sed 's/^BAD|/    /' || true
 fi
 
 # --- Check 72: Document version-chain monotonicity (repo-wide) ---
