@@ -12,7 +12,7 @@ re-fires every historical fault class against the current validator and fails
 loudly if any of them slips through. When a new generated-tree guard or checker
 joins the validator, add its fault class here as a new tooth (the catalog-
 projection staleness class joined as tooth 13 with the 2026-09-10 catalog pass,
-and the capacity-model staleness class as tooth 14 with the capacity pass).
+the capacity-model staleness class as tooth 14 with the capacity pass, and\nthe SoD-register staleness class as tooth 15 with the sod-register pass).
 
 Protocol (inherited from the fourteenth-wave lesson):
   * copy-based — the live working tree is NEVER touched. The repo is copied once
@@ -218,6 +218,15 @@ TEETH = [
              '"Owner": "Category Manager (Outdoor & Garden)"', '"Owner": "STALE EDIT"'),
         ["stale (differs from regeneration)",
          "catalog/VS-01-merchandise-strategy/PA-01.1-assortment-planning-and-product-lifecycle.json"],
+    ),
+    (
+        "sod-register-stale",
+        "SoD conflict-pair register hand-edited (or matrix edited without regeneration) — Check 71's --check mirror class",
+        ["01-model-company/sod-conflict-register.md"],
+        _one("01-model-company/sod-conflict-register.md",
+             "| CTL-09-SOD | purchasing | receiving |", "| CTL-09-SOD | purchasing | RECEIVING-EDITED |"),
+        ["stale (differs from regeneration)",
+         "01-model-company/sod-conflict-register.md"],
     ),
     (
         "capacity-model-stale",
