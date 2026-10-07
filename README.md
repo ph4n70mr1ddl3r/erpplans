@@ -238,6 +238,8 @@ erpplans/
 ├── dmn/                         ← Generated DMN 1.3 decision models (79 decisions across 40 process areas; rule tables + tiered PHP authorization thresholds; mirrors the workflows/ tree; regenerates via 07-methodology/generate-dmn.py)
 ├── bpmn/                        ← Generated BPMN 2.0 models (5,450 processes; mirrors the workflows/ tree; regenerates via 07-methodology/generate-bpmn.py)
 ├── CHANGELOG.md                 ← Revision history
+├── Makefile                     ← Validation & generation entry points (make validate / validate-sync / generate / idempotent / teeth / check)
+├── .github/workflows/validate.yml  ← CI: the make-check loop (validator in both modes + generator idempotency + teeth harness) on every push/PR
 └── 07-methodology/              ← Technical system architecture and guidelines
     ├── README.md                     Methodology index & future document plan
     ├── technical-guidelines.md       POS hardware, infrastructure, integration, security, multi-vendor sourcing architecture
@@ -245,6 +247,7 @@ erpplans/
     ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds + AI agent platform), roles, RACI, governance, sizing (50 → 122 FTE)
     ├── ai-first-operating-guide.md   The AI-first operating guide — ERP-agnostic doctrine (ten laws, six layers, capability contracts), sourcing neutrality, autonomy ladder, agent factory, the EKB as persistent memory + consistency engine, the no-confusion decision system, and the seven-phase adoption path (v1.10)
     ├── validate-repo.sh              Cross-reference validation (76 checks)
+    ├── run-teeth.py                  Validator teeth harness — the 12-fault injection suite (stale totals, tier drift, ghost headers, missing footers, unregenerated trees, XML corruption, dead links, inverted version chains, dangling W/Req references, broken steps rows, quoted-check-count drift) fired against a throwaway copy with exact-diagnosis assertions and sha256-verified restores; the wave-teeth protocol made permanent and CI-wired
     ├── generate-bpmn.py             BPMN 2.0 generator — converts every workflow block in 01-model-company/workflows into validated .bpmn files under bpmn/ (5,450 processes, lanes, DI)
     ├── generate-dmn.py             DMN 1.3 generator — extracts rule tables and tiered PHP authorization rules from workflow markdown into validated .dmn files under dmn/ (79 decisions, decision tables, DMNDI)
     ├── classify-workflows.py         Keyword-driven criticality classifier

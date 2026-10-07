@@ -1,0 +1,48 @@
+# Repository validation.
+#
+# Runs the same loop `make check` runs locally, on every push and PR:
+#   1. the 76-check cross-reference validator, in BOTH execution modes
+#      (prefetch-concurrent is the default; the synchronous baseline is the
+#      byte-identical-output contract the 2026-10-07 runtime rewrite committed to),
+#   2. generator idempotency — regenerating bpmn/ and dmn/ from the markdown
+#      must leave the trees byte-identical (the trees are projections, never
+#      hand-edited), and
+#   3. the teeth harness — the validator's own fault-injection suite, proving
+#      the guards still fire with their exact diagnoses.
+#
+# VALIDATE_JOBS is lowered from the 24 default: hosted runners are small and
+# the prefetch layer's throughput is irrelevant at this repo's size.
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      VALIDATE_JOBS: "8"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate (prefetch mode)
+        run: bash 07-methodology/validate-repo.sh
+
+      - name: Validate (synchronous mode)
+        run: bash 07-methodology/validate-repo.sh
+        env:
+          VALIDATE_NO_PREFETCH: "1"
+
+      - name: Generator idempotency
+        run: |
+          python3 07-methodology/generate-bpmn.py
+          python3 07-methodology/generate-dmn.py
+          git diff --exit-code -- bpmn dmn
+
+      - name: Teeth harness (validator fault-injection suite)
+        run: python3 07-methodology/run-teeth.py
