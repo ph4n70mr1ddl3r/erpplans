@@ -3162,11 +3162,11 @@ C61_OUT=$(pyfetch C61_OUT S "$REPO_ROOT/07-methodology/audit-matrix-refs.py" --g
 C61_N=$(echo -n "$C61_OUT" | tail -1)
 echo "    $C61_N"
 if [ $C61_RC -eq 0 ]; then
-    ok "No ghost-only matrix rows; gap-analysis and technical-guidelines carry their canonical anchor figures (8 rows re-pointed 2026-08-29)"
+    ok "No ghost-only matrix rows; gap-analysis and technical-guidelines carry their canonical anchor figures (8 rows re-pointed 2026-08-29); set-coverage rules green (register→matrix 728 closure, zero-ref rows, distinct-referenced and Tier-1-mapped anchors re-derived from catalog/ — added by the 2026-09-10 coverage pass)"
 else
     C61_HITS=$(echo "$C61_OUT" | grep -cE "^(ghost-only-row|gap-analysis-current-state|tg-anchor):" || true)
     error "$C61_HITS matrix/gap-analysis/tech-guidelines violation(s) (run 07-methodology/audit-matrix-refs.py for detail):"
-    echo "$C61_OUT" | grep -E "^(ghost-only-row|gap-analysis-current-state|tg-anchor):" | sed 's/^/    /' | head -30
+    echo "$C61_OUT" | grep -E "^(ghost-only-row|gap-analysis-current-state|tg-anchor|coverage-anchor-missing|coverage-register-id-unmapped|coverage-zero-ref-row|coverage-unresolvable-wf|coverage-index-unreadable):" | sed 's/^/    /' | head -30
 fi
 
 # --- Check 62: semantic-sample anchor guard ---

@@ -12,7 +12,7 @@ re-fires every historical fault class against the current validator and fails
 loudly if any of them slips through. When a new generated-tree guard or checker
 joins the validator, add its fault class here as a new tooth (the catalog-
 projection staleness class joined as tooth 13 with the 2026-09-10 catalog pass,
-the capacity-model staleness class as tooth 14 with the capacity pass, and\nthe SoD-register staleness class as tooth 15 with the sod-register pass, and\nthe BPMN↔DMN linkage class (a stripped camunda:decisionRef) as tooth 16 with\nthe linkage pass).
+the capacity-model staleness class as tooth 14 with the capacity pass, and\nthe SoD-register staleness class as tooth 15 with the sod-register pass, and\nthe BPMN↔DMN linkage class (a stripped camunda:decisionRef) as tooth 16 with\nthe linkage pass, and the matrix coverage-figure drift class as tooth 17 with\nthe coverage pass).
 
 Protocol (inherited from the fourteenth-wave lesson):
   * copy-based — the live working tree is NEVER touched. The repo is copied once
@@ -227,6 +227,16 @@ TEETH = [
              "| CTL-09-SOD | purchasing | receiving |", "| CTL-09-SOD | purchasing | RECEIVING-EDITED |"),
         ["stale (differs from regeneration)",
          "01-model-company/sod-conflict-register.md"],
+    ),
+    (
+        "matrix-coverage-drift",
+        "requirement-workflow-matrix Coverage Validation figure edited without re-derivation — Check 61's set-coverage class",
+        ["01-model-company/requirement-workflow-matrix.md"],
+        _one("01-model-company/requirement-workflow-matrix.md",
+             "**Distinct workflows referenced**: 920 of 5,427",
+             "**Distinct workflows referenced**: 919 of 5,427"),
+        ["coverage-anchor-missing",
+         "920 of 5,427 (897 primary + 23 sub-workflows)"],
     ),
     (
         "dmn-linkage-stale",

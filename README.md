@@ -251,7 +251,7 @@ erpplans/
     ├── it-product-operating-model.md IT product teams (hybrid: ERP core + BoB edges + in-house builds + AI agent platform), roles, RACI, governance, sizing (50 → 122 FTE)
     ├── ai-first-operating-guide.md   The AI-first operating guide — ERP-agnostic doctrine (ten laws, six layers, capability contracts), sourcing neutrality, autonomy ladder, agent factory, the EKB as persistent memory + consistency engine, the no-confusion decision system, and the seven-phase adoption path (v1.10)
     ├── validate-repo.sh              Cross-reference validation (76 checks)
-    ├── run-teeth.py                  Validator teeth harness — the 16-fault injection suite (stale totals, tier drift, ghost headers, missing footers, unregenerated trees, XML corruption, dead links, inverted version chains, dangling W/Req references, broken steps rows, quoted-check-count drift) fired against a throwaway copy with exact-diagnosis assertions and sha256-verified restores; the wave-teeth protocol made permanent and CI-wired
+    ├── run-teeth.py                  Validator teeth harness — the 17-fault injection suite (stale totals, tier drift, ghost headers, missing footers, unregenerated trees, XML corruption, dead links, inverted version chains, dangling W/Req references, broken steps rows, quoted-check-count drift) fired against a throwaway copy with exact-diagnosis assertions and sha256-verified restores; the wave-teeth protocol made permanent and CI-wired
     ├── generate-bpmn.py             BPMN 2.0 generator — converts every workflow block in 01-model-company/workflows into validated .bpmn files under bpmn/ (5,450 processes, lanes, DI)
     ├── generate-dmn.py             DMN 1.3 generator — extracts rule tables and tiered PHP authorization rules from workflow markdown into validated .dmn files under dmn/ (79 decisions, decision tables, DMNDI)
     ├── sod-register.py                SoD conflict-pair register — extracts the preventive-segregation population from the controls matrix (C2 category in full + dual-authorization/maker-checker/self-approval/independent-review/out-of-band mechanics; HR-separation and waste-segregation false positives excluded) into 01-model-company/sod-conflict-register.{md,json} for ERP GRC configuration; --check mode byte-compares and is invoked by Check 71 every run
@@ -278,7 +278,7 @@ erpplans/
     ├── audit-enrichment-completeness.py  Mitigation-clause & Trigger-richness guard (Check 58)
     ├── audit-model-docs.py           Root model-doc figure & cross-reference guard (Check 59)
     ├── audit-exec-ctl.py             Exec-summary anchors & CTL citation-scope guard (Check 60)
-    ├── audit-matrix-refs.py          Matrix ghost-row & summary-doc anchor guard (Check 61)
+    ├── audit-matrix-refs.py          Matrix ghost-row & summary-doc anchor + set-coverage guard (Check 61)
     ├── audit-semantic-anchors.py    Semantic-sample anchor guard (Check 62)
     ├── audit-misdirected-ctl.py     Misdirected-CTL-citation family measurer (the batch-26/27 paste-family audits)
     ├── classify-isolated-ctl.py     Isolated colon-form CTL-citation classifier (gloss-vs-control overlap scoring, batch-27)

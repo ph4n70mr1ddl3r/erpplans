@@ -28,7 +28,13 @@ Consistency review #43 (2026-08-29) audited the three surfaces:
 Guard mode (--guard, validator Check 61):
   1. no requirement-matrix row may map only to ghost (non-header) W tokens;
   2. the gap-analysis current-state line must quote the canonical totals;
-  3. technical-guidelines must carry its verified anchor figures.
+  3. technical-guidelines must carry its verified anchor figures;
+  4. set-coverage rules (2026-09-10 coverage pass): every erp-requirements.md
+     register ID carries a matrix row, every matrix row references >= 1
+     workflow (the 'All' claim, now guarded), and the Coverage Validation
+     section quotes the re-derived distinct-workflows-referenced count and
+     the Tier-1 mapped share — the workflow-side gap (declared incremental
+     by design, VS-53–VS-192 pending) stays a tracked metric until closed.
 """
 import argparse, glob, os, re, sys
 
@@ -39,6 +45,68 @@ TG_ANCHORS = ["~362 HQ staff (≈325 concurrent users)", "~540 Mbps aggregate",
               "≥ 8 hours", "933 peak-day transactions per store",
               "10 years"]
 GA_ANCHOR = "**188 value streams · 569 process areas · 5,370 workflows**"
+
+
+def coverage_rules():
+    """2026-09-10 coverage pass — set-closure + pinned-coverage metrics for
+    requirement-workflow-matrix.md. Re-derives everything from the register,
+    the matrix, and the catalog index every run; the doc must quote the
+    re-derived figures (change forces a conscious re-point, the Check-74
+    deferred-anchor pattern)."""
+    hits = []
+    matrix = open(os.path.join(MC, "requirement-workflow-matrix.md"),
+                  encoding="utf-8").read()
+    reqs = open(os.path.join(MC, "erp-requirements.md"), encoding="utf-8").read()
+    reg_ids = set(re.findall(r"^\| ([A-Z]{2,4}-\d{1,4}[a-z]?) \|", reqs, re.M))
+    rows = re.findall(
+        r"^\| ([A-Z]{2,4}-\d{1,4}[a-z]?) \|[^|]+\|[^|]+\| (.*?) \| (.*?) \|$",
+        matrix, re.M)
+    matrix_ids = {rid for rid, _, _ in rows}
+    wtok = re.compile(r"\bW\d+[A-Z]?\b")
+    no_wf = [rid for rid, prim, supp in rows
+             if not (wtok.search(prim) or wtok.search(supp))]
+    missing = sorted(reg_ids - matrix_ids)
+    if missing:
+        hits.append(("coverage-register-id-unmapped",
+                     "requirement-workflow-matrix.md", 0,
+                     f"{len(missing)} register ID(s) have no matrix row: "
+                     f"{missing[:6]}"))
+    if no_wf:
+        hits.append(("coverage-zero-ref-row",
+                     "requirement-workflow-matrix.md", 0,
+                     f"{len(no_wf)} matrix row(s) reference no workflow: {no_wf[:6]}"))
+    wfs = set()
+    for _, prim, supp in rows:
+        wfs.update(wtok.findall(prim))
+        wfs.update(wtok.findall(supp))
+    idx_path = os.path.join(REPO, "catalog", "index.json")
+    try:
+        import json
+        idx = json.load(open(idx_path, encoding="utf-8"))
+        live = {r["id"] for r in idx["workflows"]}
+        t1 = {r["id"] for r in idx["workflows"] if r["tier"] == "Tier 1"}
+    except Exception as e:
+        hits.append(("coverage-index-unreadable", "catalog/index.json", 0, str(e)))
+        return hits
+    unres = sorted(wfs - live)
+    if unres:
+        hits.append(("coverage-unresolvable-wf",
+                     "requirement-workflow-matrix.md", 0,
+                     f"{len(unres)} referenced W id(s) are not live workflow "
+                     f"headers: {unres[:6]}"))
+    t1_cov = wfs & t1
+    prim_ids = {r["id"] for r in idx["workflows"] if r["level"] == 2}
+    for anchor in (
+        f"**Distinct workflows referenced**: {len(wfs):,} of {len(prim_ids):,} "
+        f"({len(wfs & prim_ids)} primary + {len(wfs - prim_ids)} sub-workflows)",
+        f"**Tier-1 workflows mapped**: {len(t1_cov):,} of {len(t1):,}",
+    ):
+        if anchor not in matrix:
+            hits.append(("coverage-anchor-missing",
+                         "requirement-workflow-matrix.md", 0,
+                         f"Coverage Validation must quote '{anchor}' — "
+                         "re-derive and re-point (Check-74 deferred-anchor pattern)"))
+    return hits
 
 
 def main():
@@ -74,6 +142,8 @@ def main():
         if a not in tg:
             hits.append(("tg-anchor", "technical-guidelines.md", 0,
                          f"missing anchor '{a}'"))
+    coverage_hits = coverage_rules()
+    hits.extend(coverage_hits)
     for kind, rel, line, detail in hits:
         print(f"{kind}: {rel}:{line}: {detail}")
     print(f"audit-matrix-refs: {len(hits)} hit(s)")
