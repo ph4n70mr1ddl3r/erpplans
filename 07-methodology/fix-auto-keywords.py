@@ -104,6 +104,19 @@ ROLE_VARIANTS = [
 
 RETIRED_KEYWORDS = ["logy", "Logistics Inc.", "Logistics, Inc."]
 
+# Cell-bounded role-variant guard, precompiled ONCE: a single combined scan
+# replaces 41 per-file regex compiles + scans (the dominant cost of validator
+# Check 53: ~20 s -> ~1.5 s). Alternatives are sorted longest-first so
+# overlapping variants ('Dept. Supervisors' vs 'Supervisors') resolve exactly
+# as the per-variant scans did, and hits are still reported
+# first-occurrence-per-variant.
+_ROLE_PAT = re.compile(
+    r"(?:(?<=\| )|(?<=/ ))(?:" +
+    "|".join(re.escape(v) for v in
+             sorted((v for v, _ in ROLE_VARIANTS), key=len, reverse=True)) +
+    r")(?=[ /|])")
+_ROLE_CANON = dict(ROLE_VARIANTS)
+
 
 def check_file(path, hits):
     """Guard mode: retired keyword glitches and cell-bounded role variants."""
@@ -118,13 +131,15 @@ def check_file(path, hits):
         if q != q.strip() or q.rstrip(",;") != q or '"' in q[1:-1]:
             line = text[:m.start()].count("\n") + 1
             hits.append(("glitched-keyword", rel, line, f"'{q[:60]}'"))
-    for var, canon in ROLE_VARIANTS:
-        pat = re.compile(r"(?<=\| )" + re.escape(var) + r"(?=[ /|])|(?<=/ )" +
-                         re.escape(var) + r"(?=[ /|])")
-        for m in pat.finditer(text):
-            line = text[:m.start()].count("\n") + 1
-            hits.append(("role-variant", rel, line, f"'{var}' -> '{canon}'"))
-            break
+    seen_variants = set()
+    for m in _ROLE_PAT.finditer(text):
+        var = m.group(0)
+        if var in seen_variants:
+            continue
+        seen_variants.add(var)
+        line = text[:m.start()].count("\n") + 1
+        hits.append(("role-variant", rel, line,
+                     f"'{var}' -> '{_ROLE_CANON[var]}'"))
 
 
 def main():

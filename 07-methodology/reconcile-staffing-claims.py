@@ -124,13 +124,22 @@ def parse_range(text):
     return (vals[0], vals[-1])
 
 
+# Case-insensitive matching via a single text.lower() per file plus plain
+# case-sensitive substring scans (re.I alternation scans are ~10x slower in
+# the re engine). The original per-literal re.I loop still produces all hits
+# when the prefilter trips, so reported output stays byte-identical.
+_RETIRED_LOWER = [lit.lower() for lit in RETIRED_LITERALS]
+
+
 def check_file(path, hits):
     text = open(path, encoding="utf-8").read()
     rel = os.path.relpath(path, REPO)
-    for lit in RETIRED_LITERALS:
-        for m in re.finditer(re.escape(lit), text, re.I):
-            line = text[:m.start()].count("\n") + 1
-            hits.append(("retired-literal", rel, line, lit))
+    low = text.lower()
+    if any(lit in low for lit in _RETIRED_LOWER):
+        for lit in RETIRED_LITERALS:
+            for m in re.finditer(re.escape(lit), text, re.I):
+                line = text[:m.start()].count("\n") + 1
+                hits.append(("retired-literal", rel, line, lit))
     for m in DEPT_TEAM_RE.finditer(text):
         dept, n = m.group(1).lower(), int(m.group(2))
         canon = DEPT_TOTALS.get(dept)
@@ -220,16 +229,19 @@ def dc_catchment_hits():
         "~40 stores on average", "each serving ~40 stores",
         "serves ~40\u201350 stores",
     ]
+    retired_lower = [lit.lower() for lit in retired]
     avg_re = re.compile(r"each DC serves ~(\d+) stores on average"
                         r"|DCs each serving ~(\d+) stores", re.I)
     for path in [PROFILE] + sorted(glob.glob(os.path.join(WORKFLOWS, "VS-*", "PA-*.md"))):
         text = open(path, encoding="utf-8").read()
         rel = os.path.relpath(path, REPO)
-        for lit in retired:
-            for m in re.finditer(re.escape(lit), text, re.I):
-                hits.append(("dc-catchment", rel, text[:m.start()].count("\n") + 1,
-                             f"retired catchment literal \"{lit}\" (canonical: "
-                             f"~{avg} average, range 20\u201380)"))
+        low = text.lower()
+        if any(lit in low for lit in retired_lower):
+            for lit in retired:
+                for m in re.finditer(re.escape(lit), text, re.I):
+                    hits.append(("dc-catchment", rel, text[:m.start()].count("\n") + 1,
+                                 f"retired catchment literal \"{lit}\" (canonical: "
+                                 f"~{avg} average, range 20\u201380)"))
         for m in avg_re.finditer(text):
             n = int(m.group(1) or m.group(2))
             if n != avg:

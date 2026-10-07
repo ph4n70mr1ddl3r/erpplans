@@ -16,6 +16,90 @@ error() { echo -e "${RED}ERROR${NC}: $1"; ERRORS=$((ERRORS + 1)); }
 warn()  { echo -e "${YELLOW}WARN${NC}: $1"; WARNINGS=$((WARNINGS + 1)); }
 ok()    { echo -e "${GREEN}OK${NC}: $1"; }
 
+# --- Prefetch layer (runtime shortening) -------------------------------------
+# The 59 embedded python checks below used to run strictly one after another
+# (~35 s of wall time for what is mostly independent full-corpus scans). This
+# block extracts every `$(pyfetch ...)` call site's python body/args from this
+# file at startup and launches them in the background (throttled to
+# VALIDATE_JOBS, default 10); each pyfetch call then just waits for its
+# result, so check output and ordering are unchanged. Sites whose args
+# reference variables not yet defined at startup, and sites running with
+# VALIDATE_NO_PREFETCH=1, transparently fall back to the original synchronous
+# execution inside pyfetch.
+PREFETCH_DIR=$(mktemp -d "${TMPDIR:-/tmp}/validate-prefetch.XXXXXX")
+trap 'jobs -p | xargs -r kill 2>/dev/null || true; [ -f "$PREFETCH_DIR/debug.log" ] && cp "$PREFETCH_DIR/debug.log" "${TMPDIR:-/tmp}/validate-prefetch-debug.log"; rm -rf "$PREFETCH_DIR"' EXIT
+
+pyfetch() {
+    local name="$1" kind="$2"; shift 2
+    local tf rc
+    tf=$(mktemp "${TMPDIR:-/tmp}/pyfetch-body.XXXXXX")
+    cat > "$tf"
+    if [ -f "$PREFETCH_DIR/$name.launching" ]; then
+        [ -n "${VALIDATE_PREFETCH_DEBUG:-}" ] && echo "$(date +%s.%N) pyfetch-wait-begin $name" >> "$PREFETCH_DIR/debug.log"
+        while [ ! -f "$PREFETCH_DIR/$name.rc" ]; do sleep 0.02; done
+        [ -n "${VALIDATE_PREFETCH_DEBUG:-}" ] && echo "$(date +%s.%N) pyfetch-wait-end $name" >> "$PREFETCH_DIR/debug.log"
+        cat "$PREFETCH_DIR/$name.out"
+        rc=$(cat "$PREFETCH_DIR/$name.rc")
+        if [ "$kind" = "H" ] && [ "$rc" -ne 0 ]; then
+            cat "$PREFETCH_DIR/$name.err" >&2
+        fi
+        rm -f "$tf"
+        return "$rc"
+    fi
+    # synchronous fallback — identical to the pre-prefetch invocation
+    if [ "$kind" = "H" ]; then
+        eval "python3 $* <'$tf'" || rc=$?
+    else
+        eval "python3 $*" || rc=$?
+    fi
+    rm -f "$tf"
+    return "${rc:-0}"
+}
+
+if [ "${VALIDATE_NO_PREFETCH:-0}" != "1" ]; then
+    # 1) extract every pyfetch site: bodies -> <name>.body, args -> sites.tsv
+    awk -v dir="$PREFETCH_DIR" '
+        match($0, /^([A-Za-z_][A-Za-z0-9_]*)=\$\(pyfetch ([A-Za-z_][A-Za-z0-9_]*) H (.*)<<\x27PY\x27$/, m) {
+            if (m[1] == m[2]) { inh = m[1]; printf "%s\tH\t%s\n", m[1], m[3] > (dir "/sites.tsv") }
+            next
+        }
+        inh != "" {
+            if ($0 == "PY") { close(dir "/" inh ".body"); inh = ""; next }
+            print > (dir "/" inh ".body")
+            next
+        }
+        match($0, /^([A-Za-z_][A-Za-z0-9_]*)_OUT=\$\(pyfetch ([A-Za-z_][A-Za-z0-9_]*)_OUT S (.*)\) && ([A-Za-z_][A-Za-z0-9_]*)_RC=0 \|\| ([A-Za-z_][A-Za-z0-9_]*)_RC=\$\?$/, m) {
+            if (m[1] == m[2] && m[4] == m[1] && m[5] == m[1]) printf "%s\tS\t%s\n", m[1] "_OUT", m[3] > (dir "/sites.tsv")
+        }
+    ' "$0"
+    [ -f "$PREFETCH_DIR/sites.tsv" ] || : > "$PREFETCH_DIR/sites.tsv"
+    # 2) launch in background, throttled; skip sites with args referencing
+    #    variables other than $REPO_ROOT (undefined at startup)
+    MAXJOBS="${VALIDATE_JOBS:-24}"
+    while IFS=$'\t' read -r name kind args; do
+        [ -z "${name:-}" ] && continue
+        stripped="${args//\"\$REPO_ROOT/}"
+        case "$stripped" in *'$'*) continue ;; esac
+        : > "$PREFETCH_DIR/$name.launching"
+        while [ "$(jobs -rp | wc -l)" -ge "$MAXJOBS" ]; do sleep 0.05; done
+        if [ "$kind" = "H" ]; then
+            (
+                set +e
+                eval "python3 ${args} <'$PREFETCH_DIR/$name.body' >'$PREFETCH_DIR/$name.out' 2>'$PREFETCH_DIR/$name.err'"
+                echo $? > "$PREFETCH_DIR/$name.rc"
+            ) &
+        else
+            (
+                set +e
+                eval "exec >'$PREFETCH_DIR/$name.out'; python3 ${args}"
+                echo $? > "$PREFETCH_DIR/$name.rc"
+            ) 2> "$PREFETCH_DIR/$name.err" &
+        fi
+        [ -n "${VALIDATE_PREFETCH_DEBUG:-}" ] && echo "$(date +%s.%N) launched $name" >> "$PREFETCH_DIR/debug.log"
+    done < "$PREFETCH_DIR/sites.tsv"
+fi
+# -----------------------------------------------------------------------------
+
 echo "=== BuildRight Depot ERP Plans — Validation ==="
 echo ""
 
@@ -68,16 +152,55 @@ fi
 
 # --- Check 2: Workflow counts per PA file match value-stream-index ---
 echo "--- Check 2: PA workflow counts ---"
-PA_FILES=$(find "$REPO_ROOT"/01-model-company/workflows -name "PA-*.md" -type f 2>/dev/null)
-while IFS= read -r pafile; do
-    HEADER_COUNT=$(grep -cP '^## W\d+[A-Z]?\.' "$pafile" 2>/dev/null || true)
-    PA_NAME=$(basename "$pafile" .md)
-    VS_NAME=$(basename "$(dirname "$pafile")")
-    INDEX_COUNT=$(grep -P "\\Q$PA_NAME\\E" "$REPO_ROOT"/01-model-company/workflows/value-stream-index.md 2>/dev/null | grep -oP '\d+ workflows' | grep -oP '\d+' || echo "0")
-    if [ "$HEADER_COUNT" != "$INDEX_COUNT" ] && [ "$INDEX_COUNT" != "0" ]; then
-        warn "$VS_NAME/$PA_NAME: file has $HEADER_COUNT workflow headers, index says $INDEX_COUNT"
-    fi
-done <<< "$PA_FILES"
+# Single awk pass (one process) instead of two spawned greps per PA file
+# (~8k processes before). PA names in the index appear verbatim inside the
+# markdown link of each row, so token extraction is equivalent to the old
+# per-name grep; all '\d+ workflows' values on matching lines are compared
+# exactly as the old pipeline joined them.
+INDEX_FILE="$REPO_ROOT"/01-model-company/workflows/value-stream-index.md
+PA_MISMATCH=$(awk '
+    FNR == 1 { fileno++ }
+    fileno == 1 {
+        s = $0; base = 1
+        while (match(s, /PA-[A-Za-z0-9.-]+/)) {
+            pos = RSTART; len = RLENGTH
+            tok = substr(s, pos, len)
+            sub(/\.md$/, "", tok)
+            nums = ""
+            t = $0; tbase = 1
+            while (match(t, /[0-9]+ workflows/)) {
+                tpos = RSTART; tlen = RLENGTH
+                fragment = substr(t, tpos, tlen)
+                while (match(fragment, /[0-9]+/)) {
+                    fpos = RSTART; flen = RLENGTH
+                    nums = nums (nums == "" ? "" : "\n") substr(fragment, fpos, flen)
+                    fragment = substr(fragment, fpos + flen)
+                }
+                t = substr(t, tpos + tlen)
+            }
+            if (nums != "") index_count[tok] = index_count[tok] (index_count[tok] == "" ? "" : "\n") nums
+            s = substr(s, pos + len)
+        }
+        next
+    }
+    FNR == 1 && fileno > 1 { emit_prev() }
+    { if ($0 ~ /^## W[0-9]+[A-Z]?\./) headers[FILENAME]++ ; prevfile = FILENAME }
+    function emit_prev(    name, vs, idx, h, path) {
+        if (prevfile == "") return
+        path = prevfile
+        name = path; sub(/.*\//, "", name); sub(/\.md$/, "", name)
+        vs = path; sub(/\/[^\/]+$/, "", vs); sub(/.*\//, "", vs)
+        idx = (name in index_count) ? index_count[name] : ""
+        if (idx == "") idx = "0"
+        h = (path in headers) ? headers[path] : 0
+        if (h != idx && idx != "0")
+            printf "%s/%s: file has %d workflow headers, index says %s\n", vs, name, h, idx
+    }
+    END { emit_prev() }
+' "$INDEX_FILE" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md)
+while IFS= read -r mis; do
+    [ -n "$mis" ] && warn "$mis"
+done <<< "$PA_MISMATCH"
 ok "PA workflow count checks complete"
 
 # --- Check 3: Cross-reference key figures ---
@@ -339,10 +462,18 @@ echo "--- Check 16: PA file footer format ---"
 # simpler '*Back to [VS-NN README]*' footer and 12 had NO footer at all — and 50 Core-block files
 # (VS-01–VS-31) with duplicate (2–3) mid-file footer lines from a generation artifact. This check
 # flags any PA whose last non-empty line is not the standardized footer, so the format cannot drift.
-BAD_FOOTER=$(for pafile in "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md; do
-  last=$(grep -vE '^[[:space:]]*$' "$pafile" | tail -1)
-  echo "$last" | grep -qP '^\*Workflow Count: \d+ · Back to \*\*\[VS-\d+: .+\]\(\./README\.md\)\*\* · \[Value Stream Index\]\(\.\./value-stream-index\.md\)\*$' || echo "$pafile"
-done)
+# Single awk pass (one process) instead of two spawned greps per PA file
+# (~1.1k processes before); the pattern is exported for ENVIRON because a
+# `VAR=.. \-newline- ASSIGN=$(awk ..)` prefix assignment is parsed as two
+# statements and would NOT be visible to the awk (empty pattern matches
+# everything — the check would silently never fire).
+export FOOTER_PAT='^\*Workflow Count: [0-9]+ · Back to \*\*\[VS-[0-9]+: .+\]\(\./README\.md\)\*\* · \[Value Stream Index\]\(\.\./value-stream-index\.md\)\*$'
+BAD_FOOTER=$(awk '
+    FNR == 1 { if (started++ && prevfile != "" && last !~ ENVIRON["FOOTER_PAT"]) print prevfile; last = ""; prevfile = FILENAME }
+    /^[[:space:]]*$/ { next }
+    { last = $0 }
+    END { if (started && prevfile != "" && last !~ ENVIRON["FOOTER_PAT"]) print prevfile }
+' "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md)
 BAD_FOOTER_COUNT=$(echo -n "$BAD_FOOTER" | grep -cP 'PA-' || true)
 if [ "$BAD_FOOTER_COUNT" -eq 0 ]; then
     ok "All PA files end with the standardized navigation footer"
@@ -364,7 +495,7 @@ echo "--- Check 17: Orphan workflow bodies (ghost workflows) ---"
 # & Scheduling' body). Reported as a WARN (not ERROR): the fix requires allocating a new W-number
 # and updating the 4,980 grand total + index + classification + cross-reference docs — a
 # substantive change with cascading impacts, not a mechanical normalization.
-GHOST=$(python3 - "$REPO_ROOT" <<'PY'
+GHOST=$(pyfetch GHOST H - "$REPO_ROOT"  <<'PY'
 import os,re,sys
 ROOT=sys.argv[1]+"/01-model-company/workflows"
 FIELD={'### Steps','### System Touchpoints','### Pain Points / Risks','### Time Estimate','### Cross-references','### Controls','### Automation Opportunity','### Staffing Implication','### Background'}
@@ -417,7 +548,7 @@ echo "--- Check 18: Criticality-classification prose counts vs headings & canoni
 # W headers every run and pinned on all six figure surfaces (intro headline ×2, Coverage
 # row ×2, Grand Total row, Domain prose ×3, sub-workflow note, Confirmed Total row).
 CLASS_FILE="$REPO_ROOT"/01-model-company/workflows/workflow-criticality-classification.md
-PROSE_DRIFT=$(python3 - "$REPO_ROOT" <<'PY'
+PROSE_DRIFT=$(pyfetch PROSE_DRIFT H - "$REPO_ROOT"  <<'PY'
 import os,re,sys
 ROOT=sys.argv[1]
 WFR=os.path.join(ROOT,"01-model-company","workflows")
@@ -545,7 +676,7 @@ echo "--- Check 20: PA-file relative-link resolution ---"
 # validates workflow-IDs, and Check 19 scopes only the index. This check resolves every
 # relative (./ or ../) intra-repo .md link inside every PA file so the drift cannot recur.
 PA_FILE_COUNT=$(find "$REPO_ROOT"/01-model-company/workflows -name 'PA-*.md' -type f | wc -l | tr -d ' ')
-BROKEN_PA_LINKS=$(python3 - "$REPO_ROOT" <<'PY'
+BROKEN_PA_LINKS=$(pyfetch BROKEN_PA_LINKS H - "$REPO_ROOT"  <<'PY'
 import os,re,sys,glob
 ROOT=sys.argv[1]
 out=[]
@@ -595,7 +726,7 @@ echo "--- Check 21: Automation/Controls content quality ---"
 #   (a) Automation bullets that are broken fragments (auto-X (lowercase fragment, no period)
 #   (b) Controls sections citing >=1 real CTL-XX  (coverage of the controls register)
 #   (c) Controls sections that are pure boilerplate (no CTL-XX AND one of two known strings)
-QUALITY=$(python3 - "$REPO_ROOT" <<'PY'
+QUALITY=$(pyfetch QUALITY H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 files = glob.glob(f"{ROOT}/01-model-company/workflows/VS-*/PA-*.md")
@@ -664,7 +795,7 @@ echo "--- Check 22: Required-field completeness ---"
 #   Time Estimate accepts either form (all 5,349 workflows now use the ### form; 11 of
 #   them also retain a legacy table row — the dual form is harmless and accepted).
 # Each field is counted present if it appears in EITHER form within its workflow block.
-FIELDS=$(python3 - "$REPO_ROOT" <<'PY'
+FIELDS=$(pyfetch FIELDS H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 TABLE = ["Trigger", "Frequency", "Volume", "Owner", "Participants"]
@@ -740,7 +871,7 @@ echo "--- Check 23: Intra-file TOC anchor resolution ---"
 # and reports any '(#anchor)' link that matches no heading. Treated as an ERROR (a
 # broken navigational link), consistent with the file-resolution checks 19/20. Repaired
 # by `07-methodology/fix-toc-anchors.py`; this check guards against regression.
-ANCHORS=$(python3 - "$REPO_ROOT" <<'PY'
+ANCHORS=$(pyfetch ANCHORS H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 def gh_slug(s):
@@ -791,7 +922,7 @@ echo "--- Check 24: workflows/README.md family reconciliation & stale-figure gua
 # ERROR (count reconciliation, same class as Check 2/9); Part B is a WARN (editorial
 # figure consistency) scoped to skip the labelled historical-record docs and any
 # 'X -> Y' change-note. Repair scripts: fix-headcount-6757.py (Part B) + hand-edit (A).
-CHECK24=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK24=$(pyfetch CHECK24 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 errors, stale = [], []
@@ -896,7 +1027,7 @@ echo "--- Check 25: proposed-register mirror & touchpoint-map reconciliation ---
 #      footer 'Reconciled to N workflows across M value streams' equals the index Grand Total
 #      and active-VS count; the §summary heading range ends at the index's max VS; every
 #      VS from 79 through max VS has a primary-module row.
-CHECK25=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK25=$(pyfetch CHECK25 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 errors, stale = [], []
@@ -1025,7 +1156,7 @@ echo "--- Check 26: dependency-map §8 block reconciliation ---"
 #   D: §8.1's anchor table == the live top-10 recomputed from PA+README reference mining
 #      (membership AND counts) — enforcing the table's own 'freshly recomputed' claim, so
 #      any content change that shifts reference counts must refresh the table.
-CHECK26=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK26=$(pyfetch CHECK26 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 WF = f"{ROOT}/01-model-company/workflows"
@@ -1159,7 +1290,7 @@ echo "--- Check 27: stale register-row figures & unclassified-workflow claims --
 #       unclassified-workflow claim in workflow-dependency-map.md is stale by definition (the
 #       register's own dated 2026-06-14 addition notes are the historical record and stay
 #       exempt — this map carries no such dated-note convention).
-CHECK27=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK27=$(pyfetch CHECK27 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 stale = []
@@ -1257,7 +1388,7 @@ echo "--- Check 28: requirements-TOC letter-suffixed IDs & proposed-register des
 #       'remaining unclassified' population (stale current-state prose) and must carry the
 #       'currently empty' marker; if the register ever repopulates (new workflows shipping
 #       unclassified), the guard flips and demands the descriptions stop claiming emptiness.
-CHECK28=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK28=$(pyfetch CHECK28 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 errs = []
@@ -1349,7 +1480,7 @@ echo "--- Check 29: repo-wide table delimiter/data-row column integrity ---"
 # data-row-vs-header mismatches, so neither class can ship silently again. It subsumes
 # Check 13's second half over a wider scope (13 is retained for its leading-whitespace
 # guard and its focused summary-doc reporting).
-CHECK29=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK29=$(pyfetch CHECK29 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 SEP = re.compile(r'^\|[\s:|-]+\|\s*$')
@@ -1406,7 +1537,7 @@ echo "--- Check 30: PA-file TOC completeness & stray-fragment guard ---"
 #       in the file's navigation).
 # Convention (WORKFLOW-FORMAT-GUIDE.md): the TOC indexes '## W…' (h2) workflows only —
 # '### W…' parent/summary sub-workflows are deliberately not TOC-indexed.
-CHECK30=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK30=$(pyfetch CHECK30 H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 WF = os.path.join(ROOT, "01-model-company", "workflows")
@@ -1456,7 +1587,7 @@ echo "--- Check 31: PA-name 3-way consistency ---"
 # Expansion-block shortenings like 'Coupon & Voucher Creation' vs 'Coupon & Voucher
 # Creation & Distribution', 'and'/'&' and ':'/'—' variants) plus one VS README outlier
 # (PA-69.1). Repaired by 07-methodology/fix-pa-names.py; canonical source = index bullet.
-CHECK31=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK31=$(pyfetch CHECK31 H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 WF = os.path.join(ROOT, "01-model-company", "workflows")
@@ -1498,7 +1629,7 @@ fi
 
 # --- Check 32: Dangling requirement-ID citations in workflow/PA and summary docs ---
 echo "--- Check 32: Requirement-ID citation resolution (workflow catalog) ---"
-CHECK32=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK32=$(pyfetch CHECK32 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, collections, sys
 ROOT = os.path.join(sys.argv[1], "01-model-company")
 # Canonical requirement IDs from erp-requirements.md table rows
@@ -1562,7 +1693,7 @@ echo "--- Check 33: Workflow-reference resolution (PA bodies & VS READMEs) ---"
 # headings must resolve to a '##'/'###' workflow header ID defined anywhere in the
 # catalog (sub-step refs like W14.8 and sub-workflow refs like W13.9a reduce to their
 # base id W14/W13 by the \b boundary).
-CHECK33=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK33=$(pyfetch CHECK33 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, collections, sys
 ROOT = os.path.join(sys.argv[1], "01-model-company")
 defined = set()
@@ -1608,7 +1739,7 @@ echo "--- Check 34: PA-control objective canonical-name agreement ---"
 #       canonical index name of its PA;
 #   (b) every PA-body 'CTL-NNN (ensure controlled execution — ...)' parenthetical is
 #       the exact canonical rendering of its register row.
-CHECK34=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK34=$(pyfetch CHECK34 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, collections, sys
 ROOT = os.path.join(sys.argv[1], "01-model-company")
 canon = {}
@@ -1672,7 +1803,7 @@ echo "--- Check 35: Value-stream-number citation resolution ---"
 # (or be a `VS-NN.M` process-area reference, or one of the two sanctioned retired-
 # number forms — the 'VS-49–VS-52' range phrase and the 'former VS-49/VS-52' gap
 # notes; CHANGELOG/workflow-gap-analysis are exempt as labelled historical records).
-CHECK35=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK35=$(pyfetch CHECK35 H - "$REPO_ROOT"  <<'PY'
 import os, re, glob, collections, sys
 ROOT = sys.argv[1]
 WF = os.path.join(ROOT, "01-model-company", "workflows")
@@ -1723,7 +1854,7 @@ echo "--- Check 36: Duplicate requirement titles (erp-requirements.md register) 
 # WHL-001 S vs WMS-009 M, WMS-011 S vs WHL-003 M). All five rows were removed (total
 # 733 -> 728; see erp-requirements.md v24.0 note); this check enforces title uniqueness so
 # a future authoring round cannot re-register an existing capability under a new prefix.
-CHECK36=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK36=$(pyfetch CHECK36 H - "$REPO_ROOT"  <<'PY'
 import collections, re, sys
 path = sys.argv[1] + "/01-model-company/erp-requirements.md"
 titles = collections.defaultdict(list)
@@ -1753,7 +1884,7 @@ echo "--- Check 37: Priority-split figure agreement ---"
 # doc's Classification Rules intro and the root-README Key Metrics table. No prior check
 # compared quoted priority counts against the register itself, so this check derives the
 # canonical split from the register rows and validates every quoted figure against it.
-CHECK37=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK37=$(pyfetch CHECK37 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, sys
 ROOT = sys.argv[1]
 counts = {"Must Have": 0, "Should Have": 0, "Nice to Have": 0}
@@ -1812,7 +1943,7 @@ echo "--- Check 38: Requirements-TOC count-column agreement ---"
 # R4's defined complement 26 -> 23 while its Count cell stayed at 26, so the Count
 # column summed to 731 against the doc's own 'Total: 728' line. No prior check
 # compared the TOC's per-section Counts against the register rows themselves.
-CHECK38=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK38=$(pyfetch CHECK38 H - "$REPO_ROOT"  <<'PY'
 import re, os, sys
 ROOT = sys.argv[1]
 path = os.path.join(ROOT, "01-model-company", "erp-requirements.md")
@@ -1869,7 +2000,7 @@ echo "--- Check 39: Namespace & listing integrity ---"
 # markdown anchor links resolving to a heading. (VS READMEs aggregate workflows by
 # process-area count rather than enumerating W-numbers — that count agreement is
 # already guarded by Checks 2, 24 and 31.)
-CHECK39=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK39=$(pyfetch CHECK39 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, collections, sys
 ROOT = os.path.join(sys.argv[1], "01-model-company")
 bad = []
@@ -1952,7 +2083,7 @@ PY
 # machine since authoring (a hardcoded /home/riddler absolute path) — the eighteenth
 # wave re-pointed it and its nine sibling tools to repo-relative resolution, which is how
 # the guard could be armed at all.
-C39_GUARD_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-misdirected-ctl.py" --guard 2>&1) && C39_GUARD_RC=0 || C39_GUARD_RC=$?
+C39_GUARD_OUT=$(pyfetch C39_GUARD_OUT S "$REPO_ROOT/07-methodology/audit-misdirected-ctl.py" --guard 2>&1) && C39_GUARD_RC=0 || C39_GUARD_RC=$?
 C39_BAD=$(echo "$CHECK39" | sed -n 's/^TOTALS .* problems=\([0-9]*\)/\1/p')
 if [ "${C39_BAD:-1}" -eq 0 ] && [ "$C39_GUARD_RC" -eq 0 ]; then
     C39_HDRS=$(echo "$CHECK39" | sed -n 's/^TOTALS headers=\([0-9]*\) .*/\1/p')
@@ -1977,7 +2108,7 @@ echo "--- Check 40: Validator self-description agreement ---"
 # Per-version history notes (footer '*Date: ...' lines carrying frozen
 # 'across N checks' status records) and CHANGELOG/gap-analysis are exempt.
 IMPLEMENTED_CHECKS=$(grep -c '^# --- Check ' "$REPO_ROOT/07-methodology/validate-repo.sh")
-CHECK40=$(python3 - "$REPO_ROOT" "$IMPLEMENTED_CHECKS" <<'PY'
+CHECK40=$(pyfetch CHECK40 H - "$REPO_ROOT" "$IMPLEMENTED_CHECKS"  <<'PY'
 import re, os, glob, sys
 ROOT, IMPL = sys.argv[1], int(sys.argv[2])
 bad = []
@@ -2027,7 +2158,7 @@ echo "--- Check 41: Requirement-total figure agreement ---"
 # word 'requirements' so workflow-body phrases like 'across 13 categories'
 # for product/vendor categories are not flagged). Historical records
 # (CHANGELOG, gap-analysis, 'Prior v' notes, 'X → Y' transitions) are exempt.
-CHECK41=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK41=$(pyfetch CHECK41 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, sys
 ROOT = sys.argv[1]
 req = {}
@@ -2087,7 +2218,7 @@ echo "--- Check 42: Duplicate workflow-title guard ---"
 # equals 'Store-to-DC Reverse Logistics Consolidation') and grouped by normalized
 # text; three ID groups are adjudicated intentional parallel program templates
 # (same function, different asset domain) and sit on the allowlist below.
-CHECK42=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK42=$(pyfetch CHECK42 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, collections, sys
 ROOT = os.path.join(sys.argv[1], "01-model-company", "workflows")
 # Adjudicated intentional parallel program templates (see check header):
@@ -2140,7 +2271,7 @@ echo "--- Check 43: Controls-section list hygiene + bold/paren balance ---"
 #   C. every paragraph block in the model-company docs has an even '**' count
 #      (code spans stripped first, so glob patterns like `workflows/**/*.md` are exempt)
 # Companion repairer: 07-methodology/fix-controls-bullets.py
-CHECK43=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK43=$(pyfetch CHECK43 H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 bad = 0
@@ -2214,7 +2345,7 @@ echo "--- Check 44: Root-README folder-tree agreement ---"
 # canonical per-VS PA/workflow counts and grand total from value-stream-index.md, the
 # unclassified complement and ID range from workflow-criticality-proposed.md, and
 # validates every tree row against them.
-CHECK44=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK44=$(pyfetch CHECK44 H - "$REPO_ROOT"  <<'PY'
 import re, os, sys
 ROOT = sys.argv[1]
 bad = []
@@ -2305,7 +2436,7 @@ echo "--- Check 45: Anchored current-state total-figure agreement ---"
 # instead validates the anchored claim forms on those exact surfaces against the
 # index grand total, the classification confirmed-row count, and the proposal
 # register's unclassified complement and ID range.
-CHECK45=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK45=$(pyfetch CHECK45 H - "$REPO_ROOT"  <<'PY'
 import re, os, glob, sys
 ROOT = sys.argv[1]
 W = os.path.join(ROOT, "01-model-company", "workflows")
@@ -2455,7 +2586,7 @@ echo "--- Check 46: stale-figure & superseded-citation literal guard ---"
 # literals repo-wide so no surface regresses to them. CHANGELOG.md (frozen history + this
 # repair's own description) and 'X -> Y' change-note contexts (e.g. the
 # classification register's dated version footers) are exempt.
-CHECK46=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK46=$(pyfetch CHECK46 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 SKIP = {'CHANGELOG.md'}
@@ -2541,7 +2672,7 @@ echo "--- Check 47: per-store-rate/chain-total unit coherence & store-multiplica
 #       staff-hours) are skipped — different dimension;
 #   (b) explicit single-multiplier store math ('200 stores × ~N ... = ~M') verified
 #       within 35% (multi-factor chains like '× ~7 ... × 6 promos' are skipped).
-CHECK47=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK47=$(pyfetch CHECK47 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = os.path.join(sys.argv[1], "01-model-company")
 MONTHLY = {"week": 4.33, "month": 1.0, "day": 30.0, "year": 1/12}
@@ -2625,7 +2756,7 @@ echo "--- Check 48: steps-table row integrity & step-ID ordering ---"
 # W9's 16c above 16a/16b). House convention: step IDs ascend (num, letter) with
 # letter variants AFTER their base row (4a/4b/4c per W47, 16a-16e per W9), and
 # each ### section or sub-workflow may restart at 1. This check enforces all three.
-CHECK48=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK48=$(pyfetch CHECK48 H - "$REPO_ROOT"  <<'PY'
 import os, re, glob, sys
 ROOT = os.path.join(sys.argv[1], "01-model-company")
 bad = []
@@ -2693,7 +2824,7 @@ echo "--- Check 49: Time Estimate finalization state ---"
 # presence is asserted per workflow, not by aggregate equality.
 C49_DRAFTS=$(grep -rlF "Draft roll-up from per-step Durations" "$REPO_ROOT"/01-model-company/workflows/VS-*/PA-*.md 2>/dev/null || true)
 C49_DRAFT_N=$(echo -n "$C49_DRAFTS" | grep -cP 'PA-' || true)
-C49_MISSING=$(python3 - "$REPO_ROOT" <<'PY'
+C49_MISSING=$(pyfetch C49_MISSING H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 missing = []
@@ -2743,7 +2874,7 @@ echo "--- Check 50: Time-Estimate & Staffing inline arithmetic ---"
 # chains whose midpoint is off ≥1.6× under NO licensed convention, plus reversed
 # numeric ranges. The 2026-08-29 pass adjudicated the complete hit list and
 # repaired 25 workflows' arithmetic against their own steps/Frequency/Volume.
-C50_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-time-estimate-math.py" --guard 2>&1) && C50_RC=0 || C50_RC=$?
+C50_OUT=$(pyfetch C50_OUT S "$REPO_ROOT/07-methodology/audit-time-estimate-math.py" --guard 2>&1) && C50_RC=0 || C50_RC=$?
 echo "$C50_OUT" | grep -E "^Guard:" | sed 's/^/    /'
 if [ $C50_RC -eq 0 ]; then
     ok "No inline-arithmetic guard violations in Time Estimate / Staffing Implication sections (guard mode of audit-time-estimate-math.py; 25 defective chains repaired 2026-08-29)"
@@ -2768,7 +2899,7 @@ echo "--- Check 51: Staffing-claim & Volume-product reconciliation ---"
 # reappear; (b) any '<Department> … team of N' claim must equal the §3.3 total
 # (engagement crews 'team of 2–3'/'deploys a team of 2' exempt); (c) Volume-row
 # products must compute ('+'-sum rows and cadence conversions out of scope).
-C51_OUT=$(python3 "$REPO_ROOT/07-methodology/reconcile-staffing-claims.py" --guard 2>&1) && C51_RC=0 || C51_RC=$?
+C51_OUT=$(pyfetch C51_OUT S "$REPO_ROOT/07-methodology/reconcile-staffing-claims.py" --guard 2>&1) && C51_RC=0 || C51_RC=$?
 C51_N=$(echo -n "$C51_OUT" | tail -1)
 echo "    $C51_N"
 if [ $C51_RC -eq 0 ]; then
@@ -2795,7 +2926,7 @@ echo "--- Check 52: ST vocabulary & duplicate-Trigger guard ---"
 # self-serve→self-service) while deliberately preserving title-canonical forms
 # (W258 Omni-channel, W1238/W1491 Material Take-Off, W3657 Closeout, the
 # paired check-in/check-out noun).
-C52_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-st-touchpoints.py" --guard 2>&1) && C52_RC=0 || C52_RC=$?
+C52_OUT=$(pyfetch C52_OUT S "$REPO_ROOT/07-methodology/audit-st-touchpoints.py" --guard 2>&1) && C52_RC=0 || C52_RC=$?
 C52_N=$(echo -n "$C52_OUT" | tail -1)
 echo "    $C52_N"
 if [ $C52_RC -eq 0 ]; then
@@ -2821,7 +2952,7 @@ echo "--- Check 53: Automation-keyword & RACI role-title guard ---"
 # ghost 'VP Communications' → Marketing Comms Manager, which §11.1 does not list);
 # legitimately distinct look-alikes (Site Manager in VS-141, Property AR Manager in
 # VS-97, Sourcing Manager, customer's site representative) were adjudicated and kept.
-C53_OUT=$(python3 "$REPO_ROOT/07-methodology/fix-auto-keywords.py" --check 2>&1) && C53_RC=0 || C53_RC=$?
+C53_OUT=$(pyfetch C53_OUT S "$REPO_ROOT/07-methodology/fix-auto-keywords.py" --check 2>&1) && C53_RC=0 || C53_RC=$?
 C53_N=$(echo -n "$C53_OUT" | tail -1)
 echo "    $C53_N"
 if [ $C53_RC -eq 0 ]; then
@@ -2849,7 +2980,7 @@ echo "--- Check 54: Pain-Points, Frequency & Owner vocabulary ---"
 # PA-07.1 store-opening rows aligned to Compliance Officer in cell and prose; the
 # bare 'Compliance Manager' adjudicated a plausible Legal & Compliance title and
 # kept, as are the qualified Product/EPR/Trade/Tax/HR Compliance Manager roles.
-C54_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-field-vocabulary.py" --guard 2>&1) && C54_RC=0 || C54_RC=$?
+C54_OUT=$(pyfetch C54_OUT S "$REPO_ROOT/07-methodology/audit-field-vocabulary.py" --guard 2>&1) && C54_RC=0 || C54_RC=$?
 C54_N=$(echo -n "$C54_OUT" | tail -1)
 echo "    $C54_N"
 if [ $C54_RC -eq 0 ]; then
@@ -2874,7 +3005,7 @@ echo "--- Check 55: Participants hygiene & per-unit volume coherence ---"
 # Manager' (68 spots incl. VS READMEs); (c) steps-table Duration unit vocabulary —
 # spell-clean (min/hours/days/weeks dominant; hrs/minutes/sec established variety;
 # apparent 'hors'/'das' hits were substrings of Authors/horsepower/anchors).
-C55_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-participants-units.py" --guard 2>&1) && C55_RC=0 || C55_RC=$?
+C55_OUT=$(pyfetch C55_OUT S "$REPO_ROOT/07-methodology/audit-participants-units.py" --guard 2>&1) && C55_RC=0 || C55_RC=$?
 C55_N=$(echo -n "$C55_OUT" | tail -1)
 echo "    $C55_N"
 if [ $C55_RC -eq 0 ]; then
@@ -2899,7 +3030,7 @@ echo "--- Check 56: Operational-control prose variants ---"
 # (clean — the hyphenated hits are correct compound modifiers) and the VS-x
 # citation density (44,041 citations across all 569 PAs, median 57, none
 # isolated).
-C56_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-operational-controls.py" --guard 2>&1) && C56_RC=0 || C56_RC=$?
+C56_OUT=$(pyfetch C56_OUT S "$REPO_ROOT/07-methodology/audit-operational-controls.py" --guard 2>&1) && C56_RC=0 || C56_RC=$?
 C56_N=$(echo -n "$C56_OUT" | tail -1)
 echo "    $C56_N"
 if [ $C56_RC -eq 0 ]; then
@@ -2922,7 +3053,7 @@ echo "--- Check 57: Risk-label punctuation ---"
 # cadence phrases — both documented for per-workflow review. The format guide's
 # example anchors were verified against current state (W2599, VS-88, and the
 # ~72,000 receipts/yr figure matching the canonical DC-only volume).
-C57_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-risk-labels.py" --guard 2>&1) && C57_RC=0 || C57_RC=$?
+C57_OUT=$(pyfetch C57_OUT S "$REPO_ROOT/07-methodology/audit-risk-labels.py" --guard 2>&1) && C57_RC=0 || C57_RC=$?
 C57_N=$(echo -n "$C57_OUT" | tail -1)
 echo "    $C57_N"
 if [ $C57_RC -eq 0 ]; then
@@ -2945,7 +3076,7 @@ echo "--- Check 58: Mitigation-clause & Trigger-richness completeness ---"
 # title subject ('Monthly analytics cycle — Sales Per Square Meter'). The
 # remaining short triggers ('Breach confirmed', 'Retention expiry'…) were
 # adjudicated already-specific event names.
-C58_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-enrichment-completeness.py" --guard 2>&1) && C58_RC=0 || C58_RC=$?
+C58_OUT=$(pyfetch C58_OUT S "$REPO_ROOT/07-methodology/audit-enrichment-completeness.py" --guard 2>&1) && C58_RC=0 || C58_RC=$?
 C58_N=$(echo -n "$C58_OUT" | tail -1)
 echo "    $C58_N"
 if [ $C58_RC -eq 0 ]; then
@@ -2978,7 +3109,7 @@ echo "--- Check 59: Model-doc figures & cross-references ---"
 # 4,864+499=5,363 reconciliation sums, the two-state 469/6,869 totals), and a
 # structural rule re-deriving every §7.3 DC-roster group total from its own HC
 # cells — so this check is the permanent regression guard.
-C59_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-model-docs.py" --guard 2>&1) && C59_RC=0 || C59_RC=$?
+C59_OUT=$(pyfetch C59_OUT S "$REPO_ROOT/07-methodology/audit-model-docs.py" --guard 2>&1) && C59_RC=0 || C59_RC=$?
 C59_N=$(echo -n "$C59_OUT" | tail -1)
 echo "    $C59_N"
 if [ $C59_RC -eq 0 ]; then
@@ -3003,7 +3134,7 @@ echo "--- Check 60: Exec-summary anchors & CTL citation scope ---"
 # notes like 'IR governance'/'exercise governance' in VS-184–191) were re-pointed
 # to each workflow's own PA-level execution control in the Check-34 canonical
 # form with the note preserved; spend-related notes remain on the spend controls.
-C60_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-exec-ctl.py" --guard 2>&1) && C60_RC=0 || C60_RC=$?
+C60_OUT=$(pyfetch C60_OUT S "$REPO_ROOT/07-methodology/audit-exec-ctl.py" --guard 2>&1) && C60_RC=0 || C60_RC=$?
 C60_N=$(echo -n "$C60_OUT" | tail -1)
 echo "    $C60_N"
 if [ $C60_RC -eq 0 ]; then
@@ -3027,7 +3158,7 @@ echo "--- Check 61: Matrix rows, gap-analysis & tech-guidelines anchors ---"
 # historical totals exempt); (c) technical-guidelines.md must carry its verified
 # anchor figures (~362 HQ staff, ~540 Mbps aggregate, >= 8h offline, 933
 # peak-day/store, 10-year retention).
-C61_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-matrix-refs.py" --guard 2>&1) && C61_RC=0 || C61_RC=$?
+C61_OUT=$(pyfetch C61_OUT S "$REPO_ROOT/07-methodology/audit-matrix-refs.py" --guard 2>&1) && C61_RC=0 || C61_RC=$?
 C61_N=$(echo -n "$C61_OUT" | tail -1)
 echo "    $C61_N"
 if [ $C61_RC -eq 0 ]; then
@@ -3062,7 +3193,7 @@ echo "--- Check 62: Semantic-sample anchors ---"
 # 50 review #45/#47 '-logy' mis-repairs ('technology' where the step word was
 # Metrology/methodology/typology/toxicology/genealogy/apology); 12 adjudicated
 # noun-phrase summary bullets are allowlisted.
-C62_OUT=$(python3 "$REPO_ROOT/07-methodology/audit-semantic-anchors.py" --guard 2>&1) && C62_RC=0 || C62_RC=$?
+C62_OUT=$(pyfetch C62_OUT S "$REPO_ROOT/07-methodology/audit-semantic-anchors.py" --guard 2>&1) && C62_RC=0 || C62_RC=$?
 C62_N=$(echo -n "$C62_OUT" | tail -1)
 echo "    $C62_N"
 if [ $C62_RC -eq 0 ]; then
@@ -3092,7 +3223,7 @@ echo "--- Check 63: Root-README worklist rows & methodology-tree completeness --
 # (d) requires every file in 07-methodology/ (pycache excluded) to appear in
 # the root-README folder tree, so future worklists/scripts cannot ship
 # unlisted.
-C63_OUT=$(python3 - "$REPO_ROOT" <<'PY'
+C63_OUT=$(pyfetch C63_OUT H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 bad = []
@@ -3159,7 +3290,7 @@ echo "--- Check 64: Event-custody register guards ---"
 #            (`VS-A ↔ VS-B` rows) must cross-reference bidirectionally: at least one file of
 #            VS-A's folder cites `\bVS-B\b` and vice versa, so a declared split can never ship
 #            one-sided again.
-CHECK64=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK64=$(pyfetch CHECK64 H - "$REPO_ROOT"  <<'PY'
 import os, re, glob, sys
 ROOT = sys.argv[1]
 errs = []
@@ -3234,7 +3365,7 @@ echo "--- Check 65: Cross-VS duplicate-event guard ---"
 #            or %, length ≥ 12) in different VS folders (9 clusters adjudicated
 #            legitimate shared enterprise canons: 200-store cadences, new-store
 #            rates, TEU volumes, hire volumes).
-CHECK65=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK65=$(pyfetch CHECK65 H - "$REPO_ROOT"  <<'PY'
 import re, glob, os, collections, sys
 ROOT = sys.argv[1]
 CAD = set("monthly quarterly annual semiannual weekly daily review cycle reporting close monitoring analysis audit program strategy governance maturity ongoing continuous management financial period end event driven ad hoc scheduled per".split())
@@ -3307,7 +3438,7 @@ echo "--- Check 66: Relative-link target resolution outside PA files ---"
 # every relative markdown link target (file part; fragments and externals ignored)
 # in every non-PA .md file so the drift cannot recur. Literal prose examples inside
 # CHANGELOG change-notes ('file.md#anchor') are exempt.
-CHECK66=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK66=$(pyfetch CHECK66 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys, glob
 ROOT = sys.argv[1]
 bad = []
@@ -3352,7 +3483,7 @@ echo "--- Check 67: VS-README process-area counts vs disk ---"
 # README tree and the dependency map — and missed exactly these two README tables
 # (VS-24 stale 8/27, VS-87 stale 8/24). This check re-derives every VS README's
 # per-PA row and Total row from the PA files' own '## W' headers.
-CHECK67=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK67=$(pyfetch CHECK67 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 wf = os.path.join(ROOT, "01-model-company", "workflows")
@@ -3420,7 +3551,7 @@ echo "--- Check 68: Value-stream-index per-VS rows vs disk ---"
 # per-VS workflow counts on both surfaces and per-VS process-area counts on
 # the summary table; missing rows for on-disk VSs and phantom rows for VSs
 # with no directory both error. (The index-side sibling of Check 67.)
-CHECK68=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK68=$(pyfetch CHECK68 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 wf = os.path.join(ROOT, "01-model-company", "workflows")
@@ -3504,7 +3635,7 @@ echo "--- Check 69: Semantic-audit registry integrity ---"
 #       ids, both error. (Standalone prose mentions inside notes — e.g. 'the documented
 #       W5511 transition path', which references the admitted exemplar — are not set
 #       membership; the closure invariant is what pins the note to its real id set.)
-CHECK69=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK69=$(pyfetch CHECK69 H - "$REPO_ROOT"  <<'PY'
 import glob, os, re, sys
 ROOT = sys.argv[1]
 reg = os.path.join(ROOT, "07-methodology", "semantic-audit-coverage.txt")
@@ -3616,7 +3747,7 @@ echo "--- Check 71: Generated BPMN/DMN trees vs the markdown corpus ---"
 # and waypoints, decision-table structure, and a DRD shape per decision.
 # This check re-derives the canonical counts from the markdown corpus on
 # every run and structurally validates both trees.
-CHECK71=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK71=$(pyfetch CHECK71 H - "$REPO_ROOT"  <<'PY'
 import re, sys, xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT = Path(sys.argv[1])
@@ -3800,7 +3931,7 @@ echo "--- Check 72: Version-chain monotonicity ---"
 # generated bpmn//dmn trees are exempt (no versioned footers; the CHANGELOG is a
 # historical record). The footer line only is scanned, so body-narrative 'Prior'
 # mentions can never false-trigger the order rule.
-CHECK72=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK72=$(pyfetch CHECK72 H - "$REPO_ROOT"  <<'PY'
 import re, os, sys
 ROOT = sys.argv[1]
 bad, checked = [], 0
@@ -3856,7 +3987,7 @@ echo "--- Check 73: Integration-diagram twin-copy identity ---"
 # sibling-surface class the eighth and ninth waves closed elsewhere. This check
 # extracts each file's fenced block carrying the 'INTEGRATION ARCHITECTURE' banner,
 # requires exactly one such block per file, and asserts byte-identity every run.
-CHECK73=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK73=$(pyfetch CHECK73 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 files = ["01-model-company/data-volumes-and-integrations.md",
@@ -3904,7 +4035,7 @@ echo "--- Check 74: Generated-tree coverage surfaces ---"
 # deferred-rule-set count (197) is an extraction-property of the source corpus, not
 # derivable from the XML — it is pinned as a required anchor so any change forces a
 # conscious regeneration re-point.
-CHECK74=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK74=$(pyfetch CHECK74 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 bad = []
@@ -4013,7 +4144,7 @@ echo "--- Check 75: Methodology-index Contents completeness ---"
 # data, not tools or docs — the root-README tree lists them (Check 63 enforces that).
 # A future script or doc cannot ship unlisted (the twelfth-wave defect class), and a
 # renamed/deleted file cannot strand its index row.
-CHECK75=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK75=$(pyfetch CHECK75 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys
 ROOT = sys.argv[1]
 meth_dir = os.path.join(ROOT, '07-methodology')
@@ -4078,7 +4209,7 @@ echo "--- Check 76: Domain gap-analysis companion figures ---"
 # an adjacent VS must not be a member), resolves every W-token against the live header universe
 # (## and ###), and requires each expected clause shape to be present — a deleted clause fails
 # loudly rather than silently unguarding the surface.
-CHECK76=$(python3 - "$REPO_ROOT" <<'PY'
+CHECK76=$(pyfetch CHECK76 H - "$REPO_ROOT"  <<'PY'
 import os, re, sys, glob
 ROOT = sys.argv[1]
 wf = os.path.join(ROOT, '01-model-company', 'workflows')
