@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-18.2-banking-and-payments" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-18.2-banking-and-payments" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W232" name="W232. Letter of Credit (LC) &amp; Bank Guarantee Lifecycle" isExecutable="false">
       <bpmn:documentation>Trigger: Approved Import PO (W2B) requiring LC; or contract requirement for Bank Guarantee
 Frequency: 40–60 LCs/month (imports, consistent with W1199); 5–10 Bank Guarantees/year
@@ -335,14 +335,14 @@ Duration: 15–30 min/batch</bpmn:documentation>
         <bpmn:incoming>W320_Flow24</bpmn:incoming>
         <bpmn:outgoing>W320_Flow25</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W320_Task11" name="Second-level approval (Authorizer)">
+      <bpmn:businessRuleTask id="W320_Task11" name="Second-level approval (Authorizer)" camunda:decisionRef="Decision_W320_01">
         <bpmn:documentation>Step 3: Second-level approval (Authorizer): for payments above threshold — (a) ≤ PHP 5M: Treasury Manager or AP Supervisor, (b) PHP 5M–20M: CFO, (c) &gt; PHP 20M: CEO + CFO; authorizer reviews and releases payment batch in bank portal (or ERP-to-bank integration); system records approver ID, timestamp, and authorization level
 Responsible (R): Treasury Mgr / CFO / CEO
 Accountable (A): CFO
 Duration: 10–15 min/batch</bpmn:documentation>
         <bpmn:incoming>W320_Flow25</bpmn:incoming>
         <bpmn:outgoing>W320_Flow26</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W320_Task12" name="Bank portal access control">
         <bpmn:documentation>Step 4: Bank portal access control: Treasury Manager maintains bank portal user access matrix — (a) user roles: inquiry-only (view balances), payment initiator (create payment), payment approver (release payment), admin (manage users); (b) segregation of duties: no single user may both create and approve payments for the same account; (c) user access reviewed quarterly (step 8)
 Responsible (R): Treasury Mgr
@@ -509,14 +509,14 @@ Duration: 10–15 min</bpmn:documentation>
         <bpmn:incoming>W1342_Flow17</bpmn:incoming>
         <bpmn:outgoing>W1342_Flow18</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W1342_Task9" name="Second-level authorization (Authorizer)">
+      <bpmn:businessRuleTask id="W1342_Task9" name="Second-level authorization (Authorizer)" camunda:decisionRef="Decision_W1342_02">
         <bpmn:documentation>Step 3: Second-level authorization (Authorizer): CFO authorizes high-value payment: (a) for payments PHP 5M–20M: CFO reviews and authorizes via bank portal or ERP-to-bank integration, (b) for payments &gt; PHP 20M: CEO and CFO dual authorization per W320.3 — both must authorize independently in bank portal, (c) authorizer reviews: payment summary, beneficiary, amount, supporting documentation reference, (d) system records authorizer ID, timestamp, and authorization level for audit trail
 Responsible (R): CFO / CEO
 Accountable (A): —
 Duration: 10–20 min</bpmn:documentation>
         <bpmn:incoming>W1342_Flow18</bpmn:incoming>
         <bpmn:outgoing>W1342_Flow19</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W1342_Task10" name="RTGS submission">
         <bpmn:documentation>Step 4: RTGS submission: Treasury Analyst submits payment to bank via electronic banking portal: (a) log into bank portal (dual-login for security per W320), (b) enter or confirm payment details in bank RTGS module, (c) bank validates: beneficiary bank is BSP-member, sufficient account balance, cut-off time compliance (BSP PhilPaSS cut-off: 3:30 PM for same-day settlement), (d) bank submits to PhilPaSS for real-time settlement, (e) bank confirms settlement with PhilPaSS reference number
 Responsible (R): Treasury Analyst

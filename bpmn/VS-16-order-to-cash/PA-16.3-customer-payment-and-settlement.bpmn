@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-16.3-customer-payment-and-settlement" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-16.3-customer-payment-and-settlement" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W81" name="W81. Bad Debt Provisioning, Write-Off &amp; Recovery" isExecutable="false">
       <bpmn:documentation>Trigger: Monthly AR aging review; or specific account identified for write-off after collection escalation (W8.8a)
 Frequency: Monthly provision review; write-offs as needed (typically quarterly batch)
@@ -87,14 +87,14 @@ Duration: 1–2 hours/account</bpmn:documentation>
         <bpmn:incoming>W81_Flow30</bpmn:incoming>
         <bpmn:outgoing>W81_Flow31</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W81_Task15" name="Write-off approval">
+      <bpmn:businessRuleTask id="W81_Task15" name="Write-off approval" camunda:decisionRef="Decision_W81_01">
         <bpmn:documentation>Step 7: Write-off approval: tiered by amount — (a) ≤ PHP 50,000: Finance Manager + Controller, (b) PHP 50,001–200,000: CFO, (c) PHP 200,001–1,000,000: CEO + CFO, (d) &gt; PHP 1,000,000: Board resolution
 Responsible (R): Approver(s)
 Accountable (A): CEO / Board
 Duration: 15–30 min/write-off</bpmn:documentation>
         <bpmn:incoming>W81_Flow31</bpmn:incoming>
         <bpmn:outgoing>W81_Flow32</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:serviceTask id="W81_Task16" name="System posting">
         <bpmn:documentation>Step 8: System posting: system posts write-off — Dr. Allowance for Doubtful Accounts / Cr. Accounts Receivable (if provision exists) or Dr. Bad Debt Expense / Cr. Accounts Receivable (direct write-off if no prior provision); AR balance reduced; account status changed to &quot;Written Off&quot;; customer blocked from new credit sales; full transaction history retained for 10-year BIR retention
 Responsible (R): System / AR Clerk
@@ -401,14 +401,14 @@ Duration: 1 hour</bpmn:documentation>
         <bpmn:incoming>W891_Flow19</bpmn:incoming>
         <bpmn:outgoing>W891_Flow20</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W891_Task10" name="Obtain write-off approval — authorization: (a) ≤ PHP 50,000: Finance Manager +…">
+      <bpmn:businessRuleTask id="W891_Task10" name="Obtain write-off approval — authorization: (a) ≤ PHP 50,000: Finance Manager +…" camunda:decisionRef="Decision_W891_02">
         <bpmn:documentation>Step 4: Obtain write-off approval — authorization: (a) ≤ PHP 50,000: Finance Manager + Controller, (b) PHP 50,001–200,000: CFO, (c) PHP 200,001–1,000,000: CEO + CFO, (d) &gt; PHP 1,000,000: Board resolution (aligned to W81&#x27;s write-off authority ladder); each approver reviews proposal and supporting documentation
 Responsible (R): Finance Controller
 Accountable (A): CFO / CEO
 Duration: 30 min per approval level</bpmn:documentation>
         <bpmn:incoming>W891_Flow20</bpmn:incoming>
         <bpmn:outgoing>W891_Flow21</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W891_Task11" name="Execute write-off — (a) post bad debt expense in GL, (b) reverse AR balance…">
         <bpmn:documentation>Step 5: Execute write-off — (a) post bad debt expense in GL, (b) reverse AR balance, (c) update customer status to &quot;Written Off&quot;, (d) apply credit block to prevent future orders, (e) update allowance for doubtful accounts, (f) file BIR documentation for bad debt deduction (requires BIR-permitted evidence of collection efforts)
 Responsible (R): Finance Controller

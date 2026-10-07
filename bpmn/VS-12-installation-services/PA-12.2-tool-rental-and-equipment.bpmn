@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-12.2-tool-rental-and-equipment" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-12.2-tool-rental-and-equipment" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W139" name="W139. Tool &amp; Equipment Rental Operations" isExecutable="false">
       <bpmn:documentation>Trigger: Customer requests rental of professional tools (jackhammers, tile cutters, generators)
 Frequency: Daily; ~5–7 rentals per store per month (~1,000–1,500/month chain-wide per W1319/W1376)
@@ -472,14 +472,14 @@ Duration: 15 min</bpmn:documentation>
         <bpmn:incoming>W1375_Flow22</bpmn:incoming>
         <bpmn:outgoing>W1375_Flow23</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="W1375_Task12" name="If not returned within 10 days of original due date: (a) case escalated to…">
+      <bpmn:businessRuleTask id="W1375_Task12" name="If not returned within 10 days of original due date: (a) case escalated to…" camunda:decisionRef="Decision_W1375_01">
         <bpmn:documentation>Step 6: If not returned within 10 days of original due date: (a) case escalated to Rental Fleet Manager at HQ; (b) Rental Fleet Manager reviews: equipment value, customer history, contact attempts, any dispute or complaint linked to the rental; (c) if equipment value &lt; PHP 20,000: Rental Fleet Manager authorizes write-off as loss per W92; equipment removed from rental fleet; (d) if equipment value ≥ PHP 20,000: case escalated to VP Legal for formal recovery action (demand letter from legal counsel, potential small claims filing)
 Responsible (R): Rental Fleet Manager / VP Legal
 Accountable (A): VP Supply Chain
 Duration: 30 min/case</bpmn:documentation>
         <bpmn:incoming>W1375_Flow23</bpmn:incoming>
         <bpmn:outgoing>W1375_Flow24</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W1375_Task13" name="Customer returns overdue tool at any point: (a) standard W139 inbound…">
         <bpmn:documentation>Step 7: Customer returns overdue tool at any point: (a) standard W139 inbound inspection performed; (b) late fees and any damage fees calculated per W139.6; (c) security deposit applied: (i) if deposit covers late fees + damage: remainder refunded; (ii) if fees exceed deposit: customer pays additional amount at POS; (d) customer loyalty flag removed if case resolved; (e) system closes overdue case
 Responsible (R): CSR / Cashier / Stock Associate

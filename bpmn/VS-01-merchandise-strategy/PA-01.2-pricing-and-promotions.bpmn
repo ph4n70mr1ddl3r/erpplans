@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-01.2-pricing-and-promotions" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-01.2-pricing-and-promotions" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W13" name="W13. Promotions &amp; Pricing Execution" isExecutable="false">
       <bpmn:documentation>Trigger: Promotional calendar (6 bi-monthly events + monthly hot deals)
 Frequency: 6 major promos/year + 12 monthly hot deal cycles
@@ -807,14 +807,14 @@ Duration: 5 min/SKU</bpmn:documentation>
         <bpmn:incoming>W93_Flow18</bpmn:incoming>
         <bpmn:outgoing>W93_Flow19</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W93_Task9" name="Authorization">
+      <bpmn:businessRuleTask id="W93_Task9" name="Authorization" camunda:decisionRef="Decision_W93_02">
         <bpmn:documentation>Step 3: Authorization (tiered by markdown value): (a) ≤ PHP 50,000 total markdown loss per SKU: Category Manager approves; (b) &gt; PHP 50,000 and ≤ PHP 500,000 total markdown loss: VP Merchandising approves; (c) &gt; PHP 500,000 total markdown loss: CFO approves; (d) Below-cost markdown: CFO approval required regardless of amount (loss recognition trigger)
 Responsible (R): Per tier above
 Accountable (A): VP Merchandising / CFO
 Duration: 5–15 min/approval</bpmn:documentation>
         <bpmn:incoming>W93_Flow19</bpmn:incoming>
         <bpmn:outgoing>W93_Flow20</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:serviceTask id="W93_Task10" name="Markdown execution in system">
         <bpmn:documentation>Step 4: Markdown execution in system: (a) Pricing Analyst enters markdown in system with: effective date, markdown price, markdown reason code (seasonal, slow-mover, damaged, overstock, near-expiry), and authorization reference; (b) system updates price in POS (W5B) and ecommerce (W11/W19) — regular SRP preserved as reference; markdown price displayed as &quot;Now&quot; or &quot;Clearance&quot; on shelf label (W63); (c) system posts GL entry: Dr. Markdown Expense (or Dr. COGS-Clearance) / Cr. Inventory — at markdown amount per unit × quantity on hand (if below WAC, recognize loss immediately; if above WAC, no immediate GL impact — margin reduction recognized at sale)
 Responsible (R): Pricing Analyst / System
@@ -1407,14 +1407,14 @@ Duration: 1–2 hours</bpmn:documentation>
         <bpmn:incoming>W329_Flow20</bpmn:incoming>
         <bpmn:outgoing>W329_Flow21</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W329_Task10" name="Decision and approval">
+      <bpmn:businessRuleTask id="W329_Task10" name="Decision and approval" camunda:decisionRef="Decision_W329_03">
         <bpmn:documentation>Step 4: Decision and approval: VP Merchandising selects response strategy; for margin impact &gt; PHP 500K/month or price reduction &gt; 15% on any SKU: CEO approval required; for margin impact ≤ PHP 500K/month: VP Merchandising approves; decision documented with rationale in system
 Responsible (R): VP Merchandising
 Accountable (A): CEO (if threshold exceeded)
 Duration: 30 min</bpmn:documentation>
         <bpmn:incoming>W329_Flow21</bpmn:incoming>
         <bpmn:outgoing>W329_Flow22</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W329_Task11" name="Price execution">
         <bpmn:documentation>Step 5: Price execution: Pricing Analyst executes approved price changes in pricing master (W289); system propagates: (a) updated prices to POS (within 60 seconds per POS-047), (b) updated prices to ecommerce (within 5 minutes per NFR SLA), (c) updated prices to marketplace channels (W180) if affected SKUs are listed, (d) generates updated shelf labels for stores (W63, W181) — stores receive label reprint instruction with next-day printing deadline
 Responsible (R): Pricing Analyst

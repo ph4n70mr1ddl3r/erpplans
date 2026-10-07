@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-16.1-credit-application-and-scoring" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-16.1-credit-application-and-scoring" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W24" name="W24. Trade &amp; Corporate Credit Application" isExecutable="false">
       <bpmn:documentation>Trigger: Customer applies for trade or corporate credit account
 Frequency: ~100–150 new credit applications/month
@@ -947,14 +947,14 @@ Duration: 30 min</bpmn:documentation>
         <bpmn:incoming>W886_Flow19</bpmn:incoming>
         <bpmn:outgoing>W886_Flow20</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W886_Task10" name="Credit approval authorization per W24&#x27;s canonical matrix — (a) ≤ PHP 200,000…">
+      <bpmn:businessRuleTask id="W886_Task10" name="Credit approval authorization per W24&#x27;s canonical matrix — (a) ≤ PHP 200,000…" camunda:decisionRef="Decision_W886_02">
         <bpmn:documentation>Step 5: Credit approval authorization per W24&#x27;s canonical matrix — (a) ≤ PHP 200,000: AR Supervisor, (b) PHP 200,001–1,000,000: Finance Manager, (c) &gt; PHP 1,000,000: Credit Committee (CFO + Finance Manager + AR Supervisor)
 Responsible (R): Credit Manager
 Accountable (A): CFO
 Duration: 15–30 min</bpmn:documentation>
         <bpmn:incoming>W886_Flow20</bpmn:incoming>
         <bpmn:outgoing>W886_Flow21</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W886_Task11" name="Notify customer and Sales Representative — communicate credit decision…">
         <bpmn:documentation>Step 6: Notify customer and Sales Representative — communicate credit decision: approved (with limit, terms, and conditions), conditionally approved (with counter-offer), or declined (with reason and reapplication eligibility); send credit agreement for signature
 Responsible (R): Credit Analyst
@@ -1071,14 +1071,14 @@ Duration: 15 min per account</bpmn:documentation>
         <bpmn:incoming>W887_Flow18</bpmn:incoming>
         <bpmn:outgoing>W887_Flow19</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W887_Task9" name="Obtain approval — per W24&#x27;s canonical matrix (≤ PHP 200K: AR Supervisor; PHP…">
+      <bpmn:businessRuleTask id="W887_Task9" name="Obtain approval — per W24&#x27;s canonical matrix (≤ PHP 200K: AR Supervisor; PHP…" camunda:decisionRef="Decision_W887_03">
         <bpmn:documentation>Step 5: Obtain approval — per W24&#x27;s canonical matrix (≤ PHP 200K: AR Supervisor; PHP 200K–1M: Finance Manager; &gt; PHP 1M: Credit Committee); for limit decreases, Credit Manager can approve all; for suspensions, Finance Controller approval required
 Responsible (R): Credit Manager
 Accountable (A): Finance Controller
 Duration: 15 min</bpmn:documentation>
         <bpmn:incoming>W887_Flow19</bpmn:incoming>
         <bpmn:outgoing>W887_Flow20</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W887_Task10" name="Communicate decision — notify Sales Representative and customer of any limit…">
         <bpmn:documentation>Step 6: Communicate decision — notify Sales Representative and customer of any limit change; for decreases: explain reason and remediation path; for increases: confirm new terms; for suspensions: coordinate transition to cash terms
 Responsible (R): Credit Analyst
@@ -1529,14 +1529,14 @@ Duration: Automated scoring + 5 min review</bpmn:documentation>
         <bpmn:incoming>W1300_Flow15</bpmn:incoming>
         <bpmn:outgoing>W1300_Flow16</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="W1300_Task8" name="Credit limit decision">
+      <bpmn:businessRuleTask id="W1300_Task8" name="Credit limit decision" camunda:decisionRef="Decision_W1300_04">
         <bpmn:documentation>Step 3: Credit limit decision: Credit Analyst reviews score and recommends: (a) maintain current limit and terms, (b) increase limit and/or improve terms (for improving accounts), (c) decrease limit and/or tighten terms (for deteriorating accounts), (d) suspend credit and convert to COD (for severely deteriorating accounts); for limit increases &gt; PHP 1M: Credit &amp; Collections Manager approval required; for limit increases &gt; PHP 3M: CFO approval required; for credit suspension: Credit &amp; Collections Manager approval with Sales Manager notification
 Responsible (R): Credit Analyst
 Accountable (A): Credit &amp; Collections Manager (or CFO for large increases)
 Duration: 5–10 min per account</bpmn:documentation>
         <bpmn:incoming>W1300_Flow16</bpmn:incoming>
         <bpmn:outgoing>W1300_Flow17</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W1300_Task9" name="Customer communication">
         <bpmn:documentation>Step 4: Customer communication: (a) for credit limit increases: system sends notification to customer with new limit and terms — positive engagement opportunity; (b) for credit limit decreases: Credit Analyst calls customer to explain change, discusses remediation path (e.g., &quot;bring all payments current within 60 days and your score will improve&quot;); (c) for credit suspension: Sales Manager and Credit Analyst meet with customer to discuss: is the account salvageable? can customer provide additional guarantees (personal guarantee of company owner, post-dated checks)?; (d) all decisions documented in ERP credit management module
 Responsible (R): Credit Analyst / Sales Manager

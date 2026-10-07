@@ -465,12 +465,14 @@ DEFINITIONS_TMPL = (
 )
 
 
-def convert_file(pa_path: Path, out_path: Path) -> tuple[int, int]:
-    """Returns (decisions_written, deferred_count)."""
+def extract_decisions(pa_path: Path) -> tuple[list, int]:
+    """Pure extraction: (decisions, deferred) for one PA file, in the exact
+    order convert_file emits them. Prose decisions carry wf / step_no /
+    row_text so the BPMN generator can link a workflow step to its decision
+    (2026-09-10 linkage) — keys the DMN emitter ignores, so the .dmn bytes
+    are unchanged."""
     text = pa_path.read_text(encoding="utf-8")
     lines = text.splitlines()
-    def_id = re.sub(r"[^A-Za-z0-9_.-]", "_", pa_path.stem)
-    def_name = truncate(strip_md(pa_path.stem.replace("-", " ")), 80)
 
     decisions = []
     deferred = 0
@@ -483,6 +485,9 @@ def convert_file(pa_path: Path, out_path: Path) -> tuple[int, int]:
             provenance=f"Source: {pa_path.relative_to(SRC)} · section “{strip_md(heading)}” · rule table",
         )
         if dec:
+            dec["wf"] = None
+            dec["step_no"] = None
+            dec["row_text"] = None
             decisions.append(dec)
 
     # 2. tiered money-authorization rules inside workflow step rows
@@ -492,10 +497,10 @@ def convert_file(pa_path: Path, out_path: Path) -> tuple[int, int]:
         if m:
             current_wf = m.group(1)
             continue
-        row_m = re.match(r"^\|\s*\d+\s*\|(.+)\|\s*$", line)
+        row_m = re.match(r"^\|\s*(\d+)\s*\|(.+)\|\s*$", line)
         if not row_m or not current_wf:
             continue
-        row_text = row_m.group(1)
+        row_text = row_m.group(2)
         if not (re.search(AMT, row_text, re.I) and VERB.search(row_text)):
             continue
         prov = (
@@ -504,9 +509,21 @@ def convert_file(pa_path: Path, out_path: Path) -> tuple[int, int]:
         )
         dec = prose_decision(f"Decision_{current_wf}_{len(decisions)+1:02d}", current_wf, row_text, prov)
         if dec:
+            dec["wf"] = current_wf
+            dec["step_no"] = row_m.group(1)
+            dec["row_text"] = row_text
             decisions.append(dec)
         else:
             deferred += 1
+    return decisions, deferred
+
+
+def convert_file(pa_path: Path, out_path: Path) -> tuple[int, int]:
+    """Returns (decisions_written, deferred_count)."""
+    def_id = re.sub(r"[^A-Za-z0-9_.-]", "_", pa_path.stem)
+    def_name = truncate(strip_md(pa_path.stem.replace("-", " ")), 80)
+
+    decisions, deferred = extract_decisions(pa_path)
 
     if not decisions:
         return 0, deferred

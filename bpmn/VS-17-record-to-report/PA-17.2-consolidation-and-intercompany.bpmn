@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-17.2-consolidation-and-intercompany" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-17.2-consolidation-and-intercompany" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W14" name="W14. Intercompany Transactions &amp; Settlement" isExecutable="false">
       <bpmn:documentation>Trigger: Subsidiary requires funding for working capital, capex, or seasonal cash flow needs beyond internal cash generation
 Frequency: As needed; typically 5–10 IC loan events/year
@@ -78,14 +78,14 @@ Duration: 1 hour/month</bpmn:documentation>
         <bpmn:incoming>W14_Flow46</bpmn:incoming>
         <bpmn:outgoing>W14_Flow47</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:serviceTask id="W14_Task14" name="System posts IC AP in buying entity and IC AR in selling entity simultaneously">
+      <bpmn:businessRuleTask id="W14_Task14" name="System posts IC AP in buying entity and IC AR in selling entity simultaneously" camunda:decisionRef="Decision_W14_04">
         <bpmn:documentation>Step 3: System posts IC AP in buying entity and IC AR in selling entity simultaneously
 Responsible (R): System
 Accountable (A): —
 Duration: Automated</bpmn:documentation>
         <bpmn:incoming>W14_Flow47</bpmn:incoming>
         <bpmn:outgoing>W14_Flow48</bpmn:outgoing>
-      </bpmn:serviceTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W14_Task15" name="Monthly: run IC reconciliation report — verify balances match across all entity…">
         <bpmn:documentation>Step 4: Monthly: run IC reconciliation report — verify balances match across all entity pairs
 Responsible (R): Chief Accountant
@@ -150,14 +150,14 @@ Duration: Automated</bpmn:documentation>
         <bpmn:incoming>W14_Flow55</bpmn:incoming>
         <bpmn:outgoing>W14_Flow56</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="W14_Task23" name="If IC value &gt; PHP 50,000: approval required from requesting entity Finance…">
+      <bpmn:businessRuleTask id="W14_Task23" name="If IC value &gt; PHP 50,000: approval required from requesting entity Finance…" camunda:decisionRef="Decision_W14_04">
         <bpmn:documentation>Step 12: If IC value &gt; PHP 50,000: approval required from requesting entity Finance Manager and Depot Inc. Category Manager; if &lt; PHP 50,000: auto-approved within contract parameters
 Responsible (R): Approver(s)
 Accountable (A): CFO
 Duration: 15 min</bpmn:documentation>
         <bpmn:incoming>W14_Flow56</bpmn:incoming>
         <bpmn:outgoing>W14_Flow57</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W14_Task24" name="Depot Inc. DC or store picks goods; scan-confirms shipment; system reduces…">
         <bpmn:documentation>Step 13: Depot Inc. DC or store picks goods; scan-confirms shipment; system reduces Depot Inc. inventory, creates in-transit inventory
 Responsible (R): DC/Store Staff
@@ -206,14 +206,14 @@ Duration: 30 min</bpmn:documentation>
         <bpmn:incoming>W14_Flow62</bpmn:incoming>
         <bpmn:outgoing>W14_Flow63</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W14_Task30" name="If calculation error confirmed: Chief Accountant corrects the IC invoice in…">
+      <bpmn:businessRuleTask id="W14_Task30" name="If calculation error confirmed: Chief Accountant corrects the IC invoice in…" camunda:decisionRef="Decision_W14_04">
         <bpmn:documentation>Step 19: If calculation error confirmed: Chief Accountant corrects the IC invoice in system; system reposts corrected entries in both entities; no further escalation needed
 Responsible (R): Chief Accountant
 Accountable (A): Controller
 Duration: 15 min</bpmn:documentation>
         <bpmn:incoming>W14_Flow63</bpmn:incoming>
         <bpmn:outgoing>W14_Flow64</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W14_Task31" name="If dispute is about pricing rule interpretation (not a calculation error)…">
         <bpmn:documentation>Step 20: If dispute is about pricing rule interpretation (not a calculation error): Chief Accountant escalates to CFO for ruling; CFO interprets the transfer pricing agreement per the documented IC framework (W14)
 Responsible (R): CFO
@@ -254,14 +254,14 @@ Duration: 15 min</bpmn:documentation>
         <bpmn:incoming>W14_Flow68</bpmn:incoming>
         <bpmn:outgoing>W14_Flow69</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W14_Task36" name="Treasury Analyst executes inter-entity bank transfer; system posts IC loan…">
+      <bpmn:businessRuleTask id="W14_Task36" name="Treasury Analyst executes inter-entity bank transfer; system posts IC loan…" camunda:decisionRef="Decision_W14_04">
         <bpmn:documentation>Step 25: Treasury Analyst executes inter-entity bank transfer; system posts IC loan entry (Dr. IC Loan Receivable in lending entity / Cr. Cash; Dr. Cash / Cr. IC Loan Payable in borrowing entity)
 Responsible (R): Treasury Analyst
 Accountable (A): CFO
 Duration: 15 min</bpmn:documentation>
         <bpmn:incoming>W14_Flow69</bpmn:incoming>
         <bpmn:outgoing>W14_Flow70</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:serviceTask id="W14_Task37" name="System calculates monthly interest accrual per loan terms: Dr. IC Interest…">
         <bpmn:documentation>Step 26: System calculates monthly interest accrual per loan terms: Dr. IC Interest Receivable / Cr. IC Interest Income in lending entity; Dr. Interest Expense / Cr. IC Interest Payable in borrowing entity; interest accrual posts automatically at month-end as part of W9A close
 Responsible (R): System

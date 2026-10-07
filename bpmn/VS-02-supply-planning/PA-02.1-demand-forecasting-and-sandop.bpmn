@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-02.1-demand-forecasting-and-sandop" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-02.1-demand-forecasting-and-sandop" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W31" name="W31. Demand Forecasting Cycle" isExecutable="false">
       <bpmn:documentation>Trigger: Weekly forecast recalculation schedule (Sunday batch)
 Frequency: Weekly recalculation; monthly review; quarterly adjustment
@@ -632,14 +632,14 @@ Duration: 5–15 min per exception</bpmn:documentation>
         <bpmn:incoming>W596_Flow16</bpmn:incoming>
         <bpmn:outgoing>W596_Flow17</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W596_Task7" name="Manual override request and approval">
+      <bpmn:businessRuleTask id="W596_Task7" name="Manual override request and approval" camunda:decisionRef="Decision_W596_01">
         <bpmn:documentation>Step 3: Manual override request and approval: based on root cause analysis, Supply Planner prepares override action — (a) quantity override: increase or decrease the suggested order quantity for specific SKU-store combinations; (b) allocation override: redistribute available DC inventory across stores based on strategic priority (high-volume stores first, stores with active promotional commitments first, stores in construction boom areas first); (c) priority override: mark specific replenishment orders as urgent to move to front of DC pick queue; (d) parameter correction: fix incorrect ROP, safety stock, or lead time parameters and regenerate the suggested order; approval requirements: (i) overrides affecting &lt;10 stores and &lt;PHP 100K total value: Supply Planner self-approves with documentation; (ii) overrides affecting 10–50 stores or PHP 100K–500K: Supply Planning Manager approval; (iii) overrides affecting &gt;50 stores or &gt;PHP 500K: Category Manager and Supply Planning Manager joint approval
 Responsible (R): Supply Planner
 Accountable (A): Supply Planning Manager / Category Manager
 Duration: 5–10 min per override (plus approval wait time)</bpmn:documentation>
         <bpmn:incoming>W596_Flow17</bpmn:incoming>
         <bpmn:outgoing>W596_Flow18</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W596_Task8" name="Expedited order creation">
         <bpmn:documentation>Step 4: Expedited order creation: for urgent stock-out situations where the normal replenishment cycle (1–3 days per W4) is too slow — (a) Supply Planner creates expedited replenishment order with &quot;Urgent&quot; priority flag; (b) system routes to DC Supervisor for priority picking — bumps to front of pick queue; (c) Logistics Coordinator arranges next-available truck or LTL shipment per W52 rather than waiting for next scheduled delivery day; (d) expedited orders carry a cost premium (partial truck utilization, possible overtime at DC); (e) Supply Planner tracks expedited order cost for monthly exception cost analysis (step 7)
 Responsible (R): Supply Planner / DC Supervisor

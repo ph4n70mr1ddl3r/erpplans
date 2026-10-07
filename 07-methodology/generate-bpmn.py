@@ -10,6 +10,9 @@ Conversion rules (documented in bpmn/README.md):
   * Trigger                    -> labeled start event (name truncated)
   * Steps table rows           -> sequential tasks, joined by sequence flows
   * Role (R) contains "System" or Duration "Automated" -> serviceTask, else userTask
+  * a step row carrying a tiered money-threshold authorization emits a
+    businessRuleTask with camunda:decisionRef to that workflow's DMN decision
+    (2026-09-10 linkage; decision ids from generate-dmn.py's own extraction)
   * Role (R)                   -> lane per distinct responsible role (first
                                   role when compound "A / B"), in first-seen order
   * Activity full text + R/A/Duration -> task documentation (activity name
@@ -107,6 +110,7 @@ def parse_workflow_block(lines):
                 cells = [c.strip() for c in stripped.strip("|").split("|")]
                 if len(cells) >= 5 and re.fullmatch(r"\d+", cells[0] or ""):
                     steps.append({
+                        "n": cells[0],
                         "activity": cells[1],
                         "r": strip_md(cells[2]) or "Unassigned",
                         "a": strip_md(cells[3]) or "—",
@@ -190,10 +194,31 @@ class Ids:
         return f"{self.wf}_{kind}{self.n}"
 
 
-def build_process(wf) -> str:
+_dmn_gen = None
+
+
+def dmn_links(pa_path: Path) -> dict:
+    """{wf_id: {step_no: [decision_id, …]}} from generate-dmn.py's own
+    extraction — the linkage source of truth, same parse that emits dmn/."""
+    global _dmn_gen
+    if _dmn_gen is None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(
+            "_gendmn", Path(__file__).resolve().parent / "generate-dmn.py")
+        _dmn_gen = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(_dmn_gen)
+    links = {}
+    for dec in _dmn_gen.extract_decisions(pa_path)[0]:
+        if dec.get("wf") and dec.get("step_no"):
+            links.setdefault(dec["wf"], {}).setdefault(dec["step_no"], []).append(dec["id"])
+    return links
+
+
+def build_process(wf, links=None) -> str:
     """Return the <bpmn:process> + <bpmndi:BPMNDiagram> XML for one workflow."""
     ids = Ids(wf["id"])
     p_id = f"W_{ids.wf}"
+    wf_links = (links or {}).get(wf["id"], {})
 
     # -- lanes: first-seen order of responsible roles ----------------------
     lanes = []          # (lane_id, lane_name, [node_ids])
@@ -250,9 +275,15 @@ def build_process(wf) -> str:
             f"Accountable (A): {step['a']}",
             f"Duration: {step['duration']}",
         ])
-        tag = "serviceTask" if is_automated(step) else "userTask"
+        dec_ids = wf_links.get(step.get("n", ""), [])
+        if dec_ids:
+            tag = "businessRuleTask"
+            dec_attr = f' camunda:decisionRef="{esc(dec_ids[0])}"'
+        else:
+            tag = "serviceTask" if is_automated(step) else "userTask"
+            dec_attr = ""
         out.append(
-            f'      <bpmn:{tag} id="{tid}" name="{esc(name)}">'
+            f'      <bpmn:{tag} id="{tid}" name="{esc(name)}"{dec_attr}>'
         )
         out.append(f"        <bpmn:documentation>{esc(doc)}</bpmn:documentation>")
         out.append("        <bpmn:incoming>PLACEHOLDER_IN_%d</bpmn:incoming>" % (i + 1))
@@ -427,6 +458,7 @@ DEFINITIONS_TMPL = (
     'xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" '
     'xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" '
     'xmlns:di="http://www.omg.org/spec/DD/20100524/DI" '
+    'xmlns:camunda="http://camunda.org/schema/1.0/bpmn" '
     'id="Definitions_{def_id}" '
     'targetNamespace="https://erpplans.local/bpmn" '
     'exporter="erpplans generate-bpmn.py" exporterVersion="1.0">\n{procs}\n</bpmn:definitions>\n'
@@ -435,6 +467,7 @@ DEFINITIONS_TMPL = (
 
 def convert_file(pa_path: Path, out_path: Path) -> int:
     workflows = parse_pa_file(pa_path)
+    links = dmn_links(pa_path)
     procs = []
     for wf in workflows:
         if not wf["steps"]:  # guarantee start->task->end even with no table
@@ -444,7 +477,7 @@ def convert_file(pa_path: Path, out_path: Path) -> int:
                 "a": wf["fields"].get("Owner", "Unassigned"),
                 "duration": "—",
             }]
-        procs.append(build_process(wf))
+        procs.append(build_process(wf, links))
     def_id = re.sub(r"[^A-Za-z0-9_.-]", "_", pa_path.stem)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(
@@ -490,7 +523,7 @@ def validate_file(path: Path) -> str | None:
     }
     nodes = {
         el.attrib["id"]: el
-        for tag in ("startEvent", "endEvent", "userTask", "serviceTask")
+        for tag in ("startEvent", "endEvent", "userTask", "serviceTask", "businessRuleTask")
         for el in root.iter(f"{{{NS['bpmn']}}}{tag}")
     }
     wire = {nid: ([], []) for nid in nodes}  # node -> (incoming, outgoing) flow ids
@@ -526,7 +559,7 @@ def validate_file(path: Path) -> str | None:
     # structural invariants: start/end cardinality, lane coverage, DI coverage
     shapes = {el.attrib.get("bpmnElement") for el in root.iter(f"{{{NS['bpmndi']}}}BPMNShape")}
     edges = {el.attrib.get("bpmnElement") for el in root.iter(f"{{{NS['bpmndi']}}}BPMNEdge")}
-    node_tags = ("startEvent", "endEvent", "userTask", "serviceTask")
+    node_tags = ("startEvent", "endEvent", "userTask", "serviceTask", "businessRuleTask")
     for p in procs:
         pn = [el for t in node_tags for el in p.iter(f"{{{NS['bpmn']}}}{t}")]
         if sum(1 for el in pn if el.tag.endswith("startEvent")) != 1:
@@ -582,7 +615,7 @@ def main() -> int:
         if err:
             failures.append((out_path, err))
         total_wf += n
-        total_tasks += len(re.findall(r"<bpmn:(?:user|service)Task id=", out_path.read_text(encoding='utf-8')))
+        total_tasks += len(re.findall(r"<bpmn:(?:user|service|businessRule)Task id=", out_path.read_text(encoding='utf-8')))
         print(f"{rel}  workflows={n}")
     print(f"\n=== {len(pa_files)} BPMN files, {total_wf} processes, {total_tasks} tasks ===")
     if failures:

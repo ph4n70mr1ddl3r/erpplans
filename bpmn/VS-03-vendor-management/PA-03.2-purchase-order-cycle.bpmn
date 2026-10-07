@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-03.2-purchase-order-cycle" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-03.2-purchase-order-cycle" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W2" name="W2. Procurement — Purchase Order Cycle" isExecutable="false">
       <bpmn:documentation>Source: workflow W2 — Procurement — Purchase Order Cycle</bpmn:documentation>
       <bpmn:laneSet id="W2_LaneSet2">
@@ -234,14 +234,14 @@ Duration: 30 min/PO</bpmn:documentation>
         <bpmn:incoming>W2B_Flow27</bpmn:incoming>
         <bpmn:outgoing>W2B_Flow28</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W2B_Task12" name="Route for approval (&gt; PHP 50K → Category Manager; &gt; PHP 500K → VP…">
+      <bpmn:businessRuleTask id="W2B_Task12" name="Route for approval (&gt; PHP 50K → Category Manager; &gt; PHP 500K → VP…" camunda:decisionRef="Decision_W2B_02">
         <bpmn:documentation>Step 2: Route for approval (&gt; PHP 50K → Category Manager; &gt; PHP 500K → VP Merchandising; &gt; PHP 2M → CFO)
 Responsible (R): Category Manager / VP / CFO
 Accountable (A): As per tier
 Duration: 15–30 min/PO</bpmn:documentation>
         <bpmn:incoming>W2B_Flow28</bpmn:incoming>
         <bpmn:outgoing>W2B_Flow29</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W2B_Task13" name="Finance opens Letter of Credit (LC) with bank or arranges TT payment">
         <bpmn:documentation>Step 3: Finance opens Letter of Credit (LC) with bank or arranges TT payment
 Responsible (R): Treasury Analyst
@@ -964,14 +964,14 @@ Duration: 10 min</bpmn:documentation>
         <bpmn:incoming>W60_Flow20</bpmn:incoming>
         <bpmn:outgoing>W60_Flow21</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:serviceTask id="W60_Task11" name="System routes for expedited approval: (a) ≤ PHP 100,000: Store Manager (for…">
+      <bpmn:businessRuleTask id="W60_Task11" name="System routes for expedited approval: (a) ≤ PHP 100,000: Store Manager (for…" camunda:decisionRef="Decision_W60_03">
         <bpmn:documentation>Step 3: System routes for expedited approval: (a) ≤ PHP 100,000: Store Manager (for stores) or Dept. Head (for HQ/DC) + Controller verbal approval, (b) PHP 100,001–500,000: CFO verbal approval required within 2 hours, (c) &gt; PHP 500,000: CEO verbal approval required within 4 hours; system logs verbal approval with timestamp and approver ID
 Responsible (R): System
 Accountable (A): Controller / CFO / CEO
 Duration: 15 min – 4 hours</bpmn:documentation>
         <bpmn:incoming>W60_Flow21</bpmn:incoming>
         <bpmn:outgoing>W60_Flow22</bpmn:outgoing>
-      </bpmn:serviceTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W60_Task12" name="Buyer (or Requestor for store-level purchases) contacts vendor immediately —…">
         <bpmn:documentation>Step 4: Buyer (or Requestor for store-level purchases) contacts vendor immediately — phone call or direct purchase authorized; system allows &quot;confirm vendor later&quot; mode where PO is created with vendor TBD and updated after the fact
 Responsible (R): Buyer / Requestor
@@ -1107,14 +1107,14 @@ Duration: 1–2 hours/contract</bpmn:documentation>
         <bpmn:incoming>W62_Flow22</bpmn:incoming>
         <bpmn:outgoing>W62_Flow23</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W62_Task11" name="Approval per tiered matrix: (a) annual value ≤ PHP 500K: Dept. Head + Finance…">
+      <bpmn:businessRuleTask id="W62_Task11" name="Approval per tiered matrix: (a) annual value ≤ PHP 500K: Dept. Head + Finance…" camunda:decisionRef="Decision_W62_04">
         <bpmn:documentation>Step 4: Approval per tiered matrix: (a) annual value ≤ PHP 500K: Dept. Head + Finance Manager, (b) PHP 500K–2M: VP + CFO, (c) &gt; PHP 2M: CEO
 Responsible (R): Approver
 Accountable (A): Approver
 Duration: 15–30 min</bpmn:documentation>
         <bpmn:incoming>W62_Flow23</bpmn:incoming>
         <bpmn:outgoing>W62_Flow24</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W62_Task12" name="System creates vendor contract record: vendor, contract type, scope, start/end…">
         <bpmn:documentation>Step 5: System creates vendor contract record: vendor, contract type, scope, start/end dates, value, payment terms, SLA terms, auto-renewal flag, document attachments (signed contract, vendor permits, insurance certificates)
 Responsible (R): Buyer / Dept. Head
@@ -1269,14 +1269,14 @@ Duration: 1–2 hours</bpmn:documentation>
         <bpmn:incoming>W62B_Flow22</bpmn:incoming>
         <bpmn:outgoing>W62B_Flow23</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W62B_Task11" name="Approval per W62 tiered matrix (carrier contracts typically annual value ≤ PHP…">
+      <bpmn:businessRuleTask id="W62B_Task11" name="Approval per W62 tiered matrix (carrier contracts typically annual value ≤ PHP…" camunda:decisionRef="Decision_W62B_05">
         <bpmn:documentation>Step 5: Approval per W62 tiered matrix (carrier contracts typically annual value ≤ PHP 2M → VP + CFO; &gt; PHP 2M → CEO)
 Responsible (R): Approver
 Accountable (A): Approver
 Duration: 15–30 min</bpmn:documentation>
         <bpmn:incoming>W62B_Flow23</bpmn:incoming>
         <bpmn:outgoing>W62B_Flow24</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W62B_Task12" name="IT configures API integration in staging environment; conducts integration…">
         <bpmn:documentation>Step 6: IT configures API integration in staging environment; conducts integration testing with carrier test environment; validates order creation, status callbacks, and proof of delivery flow; Fleet Manager and DC Dispatch conduct pilot with limited order volume for 1–2 weeks
 Responsible (R): IT Team / Fleet Manager

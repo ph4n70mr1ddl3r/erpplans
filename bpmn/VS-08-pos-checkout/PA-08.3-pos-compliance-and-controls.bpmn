@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-08.3-pos-compliance-and-controls" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-08.3-pos-compliance-and-controls" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W519" name="W519. POS Suspicious Transaction &amp; AML Compliance Reporting" isExecutable="false">
       <bpmn:documentation>Trigger: Cash transaction ≥ PHP 500,000 (single or cumulative within 24 hours for same customer) OR system detects suspicious structuring pattern OR cashier/manager identifies suspicious customer behavior
 Frequency: Rare — estimated 5–10 flagged transactions per year chain-wide for hardware retail; more likely at stores near construction hubs serving contractors
@@ -536,14 +536,14 @@ Duration: 15 sec</bpmn:documentation>
         <bpmn:incoming>W529_Flow19</bpmn:incoming>
         <bpmn:outgoing>W529_Flow20</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:serviceTask id="W529_Task7" name="Tier 1 — Department Supervisor">
+      <bpmn:businessRuleTask id="W529_Task7" name="Tier 1 — Department Supervisor" camunda:decisionRef="Decision_W529_02">
         <bpmn:documentation>Step 2: System determines authorization tier based on void/refund amount: Tier 1 — Department Supervisor: ≤ PHP 5,000 (covers most common voids — wrong item, duplicate scan, minor pricing error); Tier 2 — Assistant Store Manager: &gt; PHP 5,000 and ≤ PHP 20,000; Tier 3 — Store Manager: &gt; PHP 20,000 and ≤ PHP 100,000; Tier 4 — Regional Manager: &gt; PHP 100,000 (rare — large trade account returns, high-value project material returns)
 Responsible (R): System
 Accountable (A): —
 Duration: Automated</bpmn:documentation>
         <bpmn:incoming>W529_Flow20</bpmn:incoming>
         <bpmn:outgoing>W529_Flow21</bpmn:outgoing>
-      </bpmn:serviceTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W529_Task8" name="System prompts Cashier for void/refund reason code (Wrong Item Scanned /…">
         <bpmn:documentation>Step 3: System prompts Cashier for void/refund reason code (Wrong Item Scanned / Duplicate Scan / Pricing Error / Customer Changed Mind / Customer Dissatisfied / Damaged Item / Other); Cashier selects reason code
 Responsible (R): Cashier

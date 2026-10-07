@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-09.1-custom-fabrication-and-processing" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-09.1-custom-fabrication-and-processing" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W17" name="W17. Customer Loyalty Program Operations" isExecutable="false">
       <bpmn:documentation>Trigger: Customer transaction (earn) or redemption request (redeem)
 Frequency: Continuous at POS; monthly batch processing
@@ -2702,14 +2702,14 @@ Duration: 8–12 hours/event</bpmn:documentation>
         <bpmn:incoming>W960_Flow15</bpmn:incoming>
         <bpmn:outgoing>W960_Flow16</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W960_Task8" name="Working Capital Approval &amp; Procurement">
+      <bpmn:businessRuleTask id="W960_Task8" name="Working Capital Approval &amp; Procurement" camunda:decisionRef="Decision_W960_02">
         <bpmn:documentation>Step 2: Working Capital Approval &amp; Procurement: (a) Finance reviews buffer stock investment: total buffer value, incremental carrying cost, and cash flow impact per W233; (b) tiered approval: (i) buffer value ≤ PHP 20M → VP Supply Chain approves; (ii) PHP 20–50M → COO approves; (iii) &gt; PHP 50M → CEO approves; (c) Procurement executes seasonal buy orders per W2: (i) import orders (45–90 day lead time) placed 3–4 months before season; (ii) local orders placed 4–6 weeks before season; (iii) blanket PO releases (W2C) for guaranteed sellers with vendor volume commitment; (d) vendor delivery scheduled to arrive at DC 2–4 weeks before projected demand start
 Responsible (R): Finance / Procurement
 Accountable (A): COO / CEO
 Duration: 4–8 hours (procurement)</bpmn:documentation>
         <bpmn:incoming>W960_Flow16</bpmn:incoming>
         <bpmn:outgoing>W960_Flow17</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W960_Task9" name="Buffer Stock Receipt &amp; Pre-Positioning">
         <bpmn:documentation>Step 3: Buffer Stock Receipt &amp; Pre-Positioning: (a) DC receives seasonal buffer stock per W3; (b) DC Manager allocates storage: (i) dedicated seasonal buffer zone in DC (physically separated from regular stock for tracking); (ii) for island-region stores (Visayas, Mindanao provincial): Merchandise Planner arranges forward staging — pre-ship buffer to key stores or rented forward warehouse locations 2 weeks before season; (iii) buffer stock tagged in WMS with &quot;SEASONAL BUFFER&quot; status — not available for regular replenishment until season start date; (iv) buffer stock tracked separately in inventory module for cost and sell-through analysis
 Responsible (R): DC Manager / Merchandise Planner

@@ -32,6 +32,7 @@ The directory structure mirrors the source: `bpmn/VS-<NN>-<slug>/PA-<VS>.<n>-<sl
 | **Trigger** | `<bpmn:startEvent>` named with the trigger text (truncated) |
 | Steps table row | One task; tasks chained sequentially start → t1 → … → tN → end |
 | Role (R) contains "System" or Duration "Automated" | `<bpmn:serviceTask>`; otherwise `<bpmn:userTask>` |
+| Step row carries a tiered money-threshold authorization | `<bpmn:businessRuleTask camunda:decisionRef="Decision_<wf>_NN">` — linked to the workflow's DMN decision via generate-dmn.py's own extraction (2026-09-10 linkage); decision ids resolve within the same PA's `.dmn` file |
 | Role (R) | Lane per distinct responsible role (compound `A / B` roles are assigned by the first named role); lanes appear in first-seen order |
 | Step activity full text + R / A / Duration | `<bpmn:documentation>` on the task (name = bold lead phrase, else first words) |
 | Controls section | `<bpmn:textAnnotation>` associated with the start event (also keeps Owner) |

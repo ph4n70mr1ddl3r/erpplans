@@ -3756,6 +3756,7 @@ B = "{http://www.omg.org/spec/BPMN/20100524/MODEL}"
 BD = "{http://www.omg.org/spec/BPMN/20100524/DI}"
 D = "{https://www.omg.org/spec/DMN/20191111/MODEL/}"
 DD = "{https://www.omg.org/spec/DMN/20191111/DMNDI/}"
+CAM = "{http://camunda.org/schema/1.0/bpmn}"
 # canonical counts from the markdown corpus
 pa_files = sorted((ROOT / "01-model-company/workflows").glob("VS-*/PA-*.md"))
 reg_rows = 0
@@ -3790,7 +3791,7 @@ for f in files:
     procs = list(root.iter(B + "process"))
     tot_procs += len(procs)
     # ---- build the generator-equivalent expectations from the PA markdown ----
-    exp_doc, exp_start, exp_anno = {}, {}, {}
+    exp_doc, exp_start, exp_anno, exp_tasks = {}, {}, {}, {}
     pa_md = ROOT / "01-model-company" / "workflows" / f.relative_to(ROOT / "bpmn").with_suffix(".md")
     if not pa_md.exists():
         bad.append(f"{f}: no corresponding PA markdown at {pa_md.relative_to(ROOT)}")
@@ -3806,6 +3807,18 @@ for f in files:
             if fld.get("Owner"):
                 ctl += f"\nOwner: {fld['Owner']}"
             exp_anno[pid] = _gen.truncate(ctl, _gen.MAX_ANNOTATION)
+            # ---- 2026-09-10 DMN-linkage mirror: expected task tags + decisionRefs
+            wl = _gen.dmn_links(pa_md).get(wf["id"], {})
+            steps = wf["steps"] or [{
+                "n": "1", "activity": f"Execute {wf['name']}",
+                "r": wf["fields"].get("Owner", "Unassigned"),
+                "a": wf["fields"].get("Owner", "Unassigned"), "duration": "—",
+            }]
+            exp_tasks[pid] = [
+                (("businessRuleTask", wl[st["n"]][0]) if st.get("n") in wl
+                 else ("serviceTask" if _gen.is_automated(st) else "userTask", None))
+                for st in steps
+            ]
     diags = list(root.iter(BD + "BPMNDiagram"))
     planes = list(root.iter(BD + "BPMNPlane"))
     if not (len(procs) == len(diags) == len(planes)):
@@ -3831,9 +3844,14 @@ for f in files:
             got_a = (at.text or "") if at is not None else None
             if got_a != exp_anno[pid]:
                 bad.append(f"{f}: {pid} controls annotation is stale vs its markdown source (generator re-derivation mismatch — regenerate the tree)")
+            got_tasks = [(e.tag[len(B):], e.get(CAM + "decisionRef"))
+                         for e in p.iter() if e.tag in (B + "userTask", B + "serviceTask", B + "businessRuleTask")]
+            if got_tasks != exp_tasks[pid]:
+                bad.append(f"{f}: {pid} task tags / camunda:decisionRef sequence is stale vs its markdown steps + DMN extraction (generator re-derivation mismatch — regenerate the tree)")
+
         else:
             bad.append(f"{f}: process {pid} has no markdown workflow block (id-derivation changed or PA content removed without regeneration)")
-        nodes = [e for t in ("startEvent", "endEvent", "userTask", "serviceTask") for e in p.iter(B + t)]
+        nodes = [e for t in ("startEvent", "endEvent", "userTask", "serviceTask", "businessRuleTask") for e in p.iter(B + t)]
         nid = {e.get("id") for e in nodes}
         if sum(1 for e in nodes if e.tag == B + "startEvent") != 1:
             bad.append(f"{f}: {p.get('id')} does not carry exactly one startEvent")
@@ -4045,7 +4063,7 @@ echo "--- Check 74: Generated-tree coverage surfaces ---"
 # tree rows (bpmn/ '5,449 processes', dmn/ '79 decisions'), the two generator rows in
 # the methodology tree, and the exec-summary tree rows. This check re-derives the
 # counts from the shipped trees by the generators' own definitions (processes =
-# <bpmn:process elements; tasks = userTask+serviceTask, the generator's task tags;
+# <bpmn:process elements; tasks = userTask+serviceTask+businessRuleTask, the generator's task tags;
 # flows = sequenceFlow elements; diagrams = BPMNDiagram elements; decisions/rules =
 # <decision>/<rule> elements) and asserts every quoted figure. The dmn/README's
 # deferred-rule-set count (197) is an extraction-property of the source corpus, not
@@ -4064,7 +4082,7 @@ for dp, _, fns in os.walk(os.path.join(ROOT, 'bpmn')):
         b_files += 1
         t = open(os.path.join(dp, fn), encoding='utf-8').read()
         b_procs += len(re.findall(r'<bpmn:process[ >]', t))
-        b_tasks += len(re.findall(r'<bpmn:(?:user|service)Task id=', t))
+        b_tasks += len(re.findall(r'<bpmn:(?:user|service|businessRule)Task id=', t))
         b_flows += len(re.findall(r'<bpmn:sequenceFlow[ >]', t))
         b_diags += len(re.findall(r'<bpmndi:BPMNDiagram[ >]', t))
 d_files = d_dec = d_rules = 0

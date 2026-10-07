@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-30.3-document-and-knowledge-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-30.3-document-and-knowledge-management" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W255" name="W255. Electronic Document Storage &amp; Retrieval (ERP-wide)" isExecutable="false">
       <bpmn:documentation>Trigger: A transaction is executed that requires supporting documentation (e.g., Goods Receipt, AP Invoice, Capex Request)
 Frequency: Continuous (thousands of documents attached daily)
@@ -234,14 +234,14 @@ Source: workflow W686 — Document Approval Routing &amp; Digital Signature Mana
       <bpmn:startEvent id="W686_Start6" name="Document requiring multi-level approval is created or received (contracts, purchase…">
         <bpmn:outgoing>W686_Flow18</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:userTask id="W686_Task7" name="Originator submits document">
+      <bpmn:businessRuleTask id="W686_Task7" name="Originator submits document" camunda:decisionRef="Decision_W686_01">
         <bpmn:documentation>Step 1: Originator submits document: user creates or uploads document in ERP (contract, PO, expense report, BIR filing); system auto-classifies document type and identifies required approval chain based on DOA matrix (e.g., PO &lt;PHP 50K: Store Manager approves; PHP 50K-500K: Category Manager + Procurement Manager; &gt;PHP 500K: VP Supply Chain + CFO)
 Responsible (R): Originator
 Accountable (A): Department Head
 Duration: 5 min</bpmn:documentation>
         <bpmn:incoming>W686_Flow18</bpmn:incoming>
         <bpmn:outgoing>W686_Flow19</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:serviceTask id="W686_Task8" name="System routes to first approver">
         <bpmn:documentation>Step 2: System routes to first approver: ERP pushes approval notification to assigned approver via email, mobile app, and in-app alert; includes document preview, amount, requester, and deadline; SLA timer starts (standard: 24 hours for routine, 4 hours for urgent, 1 hour for critical)
 Responsible (R): System
@@ -548,14 +548,14 @@ Duration: 1-14 days</bpmn:documentation>
         <bpmn:incoming>W688_Flow25</bpmn:incoming>
         <bpmn:outgoing>W688_Flow26</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W688_Task13" name="Approval &amp; execution">
+      <bpmn:businessRuleTask id="W688_Task13" name="Approval &amp; execution" camunda:decisionRef="Decision_W688_02">
         <bpmn:documentation>Step 6: Approval &amp; execution: final contract routed for approval per DOA matrix per W686: contract value &lt;PHP 1M: Department Head + Legal Counsel; PHP 1M-10M: VP + CFO; &gt;PHP 10M: CEO + Board resolution per W243; executed via digital signature per W686 or wet-ink notarization if required by law (Philippine notarization required for real property leases &gt;1 year, government contracts above threshold)
 Responsible (R): Legal Counsel
 Accountable (A): VP Legal / CEO
 Duration: 1-3 days</bpmn:documentation>
         <bpmn:incoming>W688_Flow26</bpmn:incoming>
         <bpmn:outgoing>W688_Flow27</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W688_Task14" name="Contract registration &amp; obligation setup">
         <bpmn:documentation>Step 7: Contract registration &amp; obligation setup: executed contract registered in contract management system: key dates (commencement, expiry, renewal notice deadline), financial obligations (payment schedule, rate escalation), SLA metrics, special conditions; system sets up automated reminders for renewal notice deadlines (90, 60, 30 days before expiry)
 Responsible (R): Legal Assistant

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_PA-11.2-project-sales-and-b2b" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_PA-11.2-project-sales-and-b2b" targetNamespace="https://erpplans.local/bpmn" exporter="erpplans generate-bpmn.py" exporterVersion="1.0">
     <bpmn:process id="W_W162" name="W162. Project Quotation &amp; Bid Management" isExecutable="false">
       <bpmn:documentation>Trigger: Customer requests a quote for a specific construction project or bulk purchase
 Frequency: ~300–500 quotes/month
@@ -601,14 +601,14 @@ Duration: 20 min</bpmn:documentation>
         <bpmn:incoming>W229_Flow18</bpmn:incoming>
         <bpmn:outgoing>W229_Flow19</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:serviceTask id="W229_Task10" name="Tiered Routing">
+      <bpmn:businessRuleTask id="W229_Task10" name="Tiered Routing" camunda:decisionRef="Decision_W229_01">
         <bpmn:documentation>Step 4: Tiered Routing: System routes the request based on exception value for digital approval:&lt;br&gt;• Up to PHP 100K: Approved by Credit Manager;&lt;br&gt;• PHP 100K to PHP 1M: Approved by Credit Manager + Head of Trade / Account Management;&lt;br&gt;• Above PHP 1M: Approved by CFO
 Responsible (R): System
 Accountable (A): —
 Duration: Automated</bpmn:documentation>
         <bpmn:incoming>W229_Flow19</bpmn:incoming>
         <bpmn:outgoing>W229_Flow20</bpmn:outgoing>
-      </bpmn:serviceTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W229_Task11" name="Temporary Release">
         <bpmn:documentation>Step 5: Temporary Release: Approver grants exception; Credit Manager enters a &quot;Temporary Credit Override&quot; in ERP with a strict expiry date (typically 7–14 days); system releases blocked order for dispatch
 Responsible (R): B2B Credit Manager / CFO
@@ -2636,14 +2636,14 @@ Duration: 1–2 days</bpmn:documentation>
         <bpmn:incoming>W1225_Flow23</bpmn:incoming>
         <bpmn:outgoing>W1225_Flow24</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:userTask id="W1225_Task12" name="Contract award and execution">
+      <bpmn:businessRuleTask id="W1225_Task12" name="Contract award and execution" camunda:decisionRef="Decision_W1225_02">
         <bpmn:documentation>Step 6: Contract award and execution: (a) BAC issues Notice of Award; (b) Legal Counsel reviews contract terms: delivery schedule, payment terms, warranty, penalties for non-performance, force majeure provisions, (c) COO approves contract (Head of Trade / Account Management for &lt; PHP 10M; COO for PHP 10M–50M; CEO for &gt; PHP 50M), (d) sign contract; post performance security (bank guarantee or surety bond — typically 5% of contract value for supply of goods (10% for infrastructure works) per RA 9184)
 Responsible (R): Legal Counsel / Head of Trade / Account Management / COO
 Accountable (A): COO/CEO
 Duration: 1–2 weeks</bpmn:documentation>
         <bpmn:incoming>W1225_Flow24</bpmn:incoming>
         <bpmn:outgoing>W1225_Flow25</bpmn:outgoing>
-      </bpmn:userTask>
+      </bpmn:businessRuleTask>
       <bpmn:userTask id="W1225_Task13" name="Fulfillment planning">
         <bpmn:documentation>Step 7: Fulfillment planning: Supply Planning Analyst plans fulfillment: (a) confirm inventory availability at nearest DC; if insufficient: place special PO with vendor per W3, (b) schedule deliveries per project timeline (often phased: foundation materials first, then finishing materials), (c) coordinate logistics: dedicated truck or 3PL for project site delivery per W1191, (d) assign dedicated project coordinator at BuildRight for large projects
 Responsible (R): Supply Planning Analyst / Logistics Manager
