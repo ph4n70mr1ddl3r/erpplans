@@ -21,11 +21,13 @@ verifies chains against). Bullets whose cadence is not a plain time unit
 bullet alone — they are counted as uncovered (a volume-join against the
 Frequency/Volume fields is future work), never guessed.
 
-Per-workflow effort rule (no double counting): if the Time Estimate section
-opens with a `Total …` bullet whose cadence annualizes, that bullet IS the
-workflow effort (it is the roll-up of the components); otherwise the
-self-annualizable component bullets are summed; otherwise the workflow is
-counted as not directly annualizable.
+Per-workflow effort rule (no double counting, tiered by derivation):
+Tier A — the `Total …` bullet when its cadence annualizes (it is the
+component roll-up); Tier B — the sum of self-annualizable component bullets
+(last annualizable term in a stated chain); Tier C — per-occurrence bullets
+('~90 min/application') joined to the record's own Frequency/Volume rate
+(single-noun, last-word match; no letter-crossing bridges; stacked per-clauses
+and time-unit nouns excluded). Records nothing can compute are uncovered.
 
 Role attribution per bullet: a parenthetical role ("(AP Supervisor)") first,
 then an "across N–M <Role>s" tail, then the workflow Owner's first segment,
@@ -48,6 +50,7 @@ Modes:
                  identical. Invoked by validate-repo.sh Check 71 every run.
 """
 
+import functools
 import importlib.util
 import re
 import sys
@@ -83,35 +86,101 @@ DUR_CAD = re.compile(
     r"(?P<val>~?[\d,]+(?:\.\d+)?(?:\s*[-–—]\s*~?[\d,]+(?:\.\d+)?)?)\s*"
     r"(?P<unit>hours?|hrs?|h\b|minutes?|mins?|m\b)\s*/\s*"
     r"(?P<cad>[A-Za-z][A-Za-z-]*)", re.I)
+# per-occurrence duration: '~90 min/application' — per-clause of up to three
+# words, joined conservatively on the LAST word (the occurrence unit);
+# stacked forms ('per batch per store') and time-unit nouns are skipped in code
+PER_OCC = re.compile(
+    r"(?P<val>~?[\d,]+(?:\.\d+)?(?:\s*[-–—]\s*~?[\d,]+(?:\.\d+)?)?)\s*"
+    r"(?P<unit>hours?|hrs?|minutes?|mins?)\s*(?:/|\bper\b)\s*"
+    r"(?P<clause>[A-Za-z-]+(?:\s+(?!per\b|for\b|of\b|and\b|the\b|to\b|a\b|each\b|every\b|all\b)[A-Za-z-]+){0,2})",
+    re.I)
+# a rate for that noun in the Frequency/Volume fields: '~100–150 applications/month'
+RATE_TPL = (
+    r"(?P<val>~?[\d,]+(?:\.\d+)?(?:\s*[-–—]\s*~?[\d,]+(?:\.\d+)?)?)\s+"
+    r"(?:[A-Za-z-]+\s+){{0,3}}?\b{noun}s?\b[^.;/A-Za-z]{{0,40}}?/\s*"
+    r"(?P<cad>business-day|business day|day|week|month|quarter|year|yr)s?")
+TIME_CADS = {"day", "workday", "business-day", "week", "month", "quarter",
+             "year", "season", "half-year", "days"}
 PAREN_ROLE = re.compile(r"\(([^)]*)\)\s*$")
 ACROSS = re.compile(r"across\s+([\d,]+\s*(?:[-–—]\s*[\d,]+)?)\s+(.+?)(?:\s*\(|$)", re.I)
 
 
 def num(s):
-    return float(s.replace(",", "").replace("~", ""))
+    v = s.replace(",", "").replace("~", "").strip()
+    if not v or not any(c.isdigit() for c in v):
+        raise ValueError(f"non-numeric: {s!r}")
+    return float(v)
+
+
+def _range(s):
+    v = s.replace("–", "-").replace("—", "-").replace("~", "")
+    if "-" in v:
+        lo, hi = [num(x) for x in v.split("-", 1)]
+        return lo, hi
+    return num(v), num(v)
+
+
+@functools.lru_cache(maxsize=4096)
+def _rate_re(noun):
+    return re.compile(RATE_TPL.format(noun=noun), re.I)
+
+
+def join_occurrence(bullet, freq_text):
+    """Tier C: '~90 min/application' × '~100–150 applications/month' →
+    hours/year. Joins only on the per-clause's LAST word (the occurrence
+    unit), never on time-unit nouns, never on slash-stacked clauses; the rate
+    must appear in the record's own Frequency/Volume fields with a table
+    cadence. Returns (lo, hi) hours/year or None."""
+    m = PER_OCC.search(bullet)
+    if not m:
+        return None
+    noun = m.group("clause").split()[-1].lower()
+    if noun in TIME_CADS:
+        return None
+    rate = _rate_re(re.escape(noun)).search(freq_text)
+    if not rate:
+        return None
+    dlo, dhi = _range(m.group("val"))
+    if m.group("unit").lower().startswith(("min", "m")):
+        dlo, dhi = dlo / 60.0, dhi / 60.0
+    try:
+        rlo, rhi = _range(rate.group("val"))
+    except ValueError:
+        return None
+    cad = rate.group("cad").lower()
+    cad = {"business-day": "workday", "business day": "workday"}.get(cad, cad)
+    per = _math().CADENCE_PER_YEAR[cad]
+    return dlo * rlo * per, dhi * rhi * per
 
 
 def bullet_hours(line):
-    """(low, high) hours/year for a self-annualizable bullet, else None."""
-    m = DUR_CAD.search(line)
-    if not m:
-        return None
+    """(low, high) hours/year for a self-annualizable bullet, else None.
+    Uses the LAST annualizable duration/cadence match in the line: bullets
+    state their own chains ('2–3 hours/supplier × 15–20 suppliers = ~30–60
+    hours/quarter') and the computed result — never the intermediate
+    per-occurrence term — is the bullet's effort."""
     cads = _math().CADENCE_PER_YEAR
-    cad = m.group("cad").lower().rstrip("s")
-    cad = {"business-day": "workday", "businessdays": "workday",
-           "business-day": "workday"}.get(cad, cad)
-    if cad not in cads:
-        return None
-    per = cads[cad]
-    v = m.group("val").replace("–", "-").replace("—", "-")
-    if "-" in v:
-        lo, hi = [num(x) for x in v.split("-", 1)]
-    else:
-        lo = hi = num(v)
-    if m.group("unit").lower().startswith(("min", "m")):
-        lo /= 60.0
-        hi /= 60.0
-    return lo * per, hi * per
+    best = None
+    for m in DUR_CAD.finditer(line):
+        pre = line[max(0, m.start() - 40):m.start()].lower()
+        if re.search(r"sav|automat|offset|freeing|free up|releas", pre):
+            continue  # a stated saving, not effort
+        cad = m.group("cad").lower().rstrip("s")
+        cad = {"business-day": "workday", "businessdays": "workday",
+               "business-day": "workday"}.get(cad, cad)
+        if cad not in cads:
+            continue
+        per = cads[cad]
+        v = m.group("val").replace("–", "-").replace("—", "-")
+        if "-" in v:
+            lo, hi = [num(x) for x in v.split("-", 1)]
+        else:
+            lo = hi = num(v)
+        if m.group("unit").lower().startswith(("min", "m")):
+            lo /= 60.0
+            hi /= 60.0
+        best = (lo * per, hi * per)
+    return best
 
 
 def clean_role(r):
@@ -185,10 +254,11 @@ def load_register():
 # ------------------------------------------------------------------ demand
 
 def workload():
-    """Per-record annualizable effort: [(wf, vs_name, tier, lo, hi, role, fte_claim)]."""
-    index = json_load(CAT / "index.json")
+    """Per-record annualizable effort, tiered by how it was derived:
+    A = stated Total bullet, B = self-annualizable component sum,
+    C = per-occurrence bullet × Frequency/Volume rate join."""
     rows = []
-    n_ann = n_not = 0
+    n = {"A": 0, "B": 0, "C": 0, "none": 0}
     for pa_file in sorted(CAT.glob("VS-*/PA-*.json")):
         doc = json_load(pa_file)
         vs_name = doc["value_stream"]["name"]
@@ -197,37 +267,52 @@ def workload():
                   or next((v for k, v in wf["sections"].items()
                            if k.startswith("Time Estimate")), []))
             if not te:
-                n_not += 1
+                n["none"] += 1
                 continue
             bullets = [re.sub(r"^\s*-\s*", "", x).strip() for x in te if x.strip()]
             total_b = next((b for b in bullets
-                            if re.match(r"Total\b", b, re.I) and bullet_hours(b)), None)
+                            if re.match(r"\*?\*?Total\b", b.strip("* "), re.I) and bullet_hours(b)), None)
             if total_b:
                 eff = [bullet_hours(total_b)]
-                src_bullet = total_b
+                klass = "A"
+                role_src = total_b
             else:
-                eff = [bullet_hours(b) for b in bullets]
-                eff = [e for e in eff if e]
-                src_bullet = None
-            eff = [e for e in eff if e]
+                freq_text = (wf["fields"].get("Frequency", "") + "; "
+                             + wf["fields"].get("Volume", ""))
+                eff = []
+                used_b = used_c = False
+                for b in bullets:
+                    h = bullet_hours(b)
+                    if h:
+                        eff.append(h)
+                        used_b = True
+                        continue
+                    j = join_occurrence(b, freq_text)
+                    if j:
+                        eff.append(j)
+                        used_c = True
+                klass = "B" if used_b else ("C" if used_c else "none")
+                role_src = " ".join(bullets)
             if not eff:
-                n_not += 1
+                n["none"] += 1
                 continue
             lo = sum(e[0] for e in eff)
             hi = sum(e[1] for e in eff)
-            role = bullet_role(src_bullet or " ".join(bullets), wf["fields"].get("Owner"))
-            ctx = bullet_context(src_bullet or " ".join(bullets))
+            role = bullet_role(role_src, wf["fields"].get("Owner"))
+            ctx = bullet_context(role_src)
             if ctx:
                 role = f"[{ctx}] {role}"
-            m = ACROSS.search(src_bullet or "")
+            m = ACROSS.search(role_src)
             fte_claim = m.group(1) if m else ""
-            n_ann += 1
+            n[klass] += 1
             rows.append({
                 "id": wf["id"], "level": wf["level"], "tier": wf["tier"],
-                "vs": doc["value_stream"]["directory"], "vs_name": vs_name, "pa": doc["process_area"]["id"],
+                "vs": doc["value_stream"]["directory"], "vs_name": vs_name,
+                "pa": doc["process_area"]["id"],
                 "lo": lo, "hi": hi, "role": role, "fte_claim": fte_claim,
+                "class": klass,
             })
-    return rows, n_ann, n_not
+    return rows, n
 
 
 def json_load(p):
@@ -251,7 +336,7 @@ def bucket_for(role):
 
 
 def compute():
-    rows, n_ann, n_not = workload()
+    rows, ncov = workload()
     reg, hc_by_title = load_register()
 
     by_role = defaultdict(lambda: [0.0, 0.0, 0])   # lo, hi, workflow count
@@ -292,8 +377,9 @@ def compute():
     enterprise_hi = sum(v[1] for v in by_role.values())
     stats = {
         "records_total": 5450,
-        "annualizable": n_ann,
-        "not_annualizable": n_not,
+        "annualizable": ncov["A"] + ncov["B"] + ncov["C"],
+        "class_a": ncov["A"], "class_b": ncov["B"], "class_c": ncov["C"],
+        "not_annualizable": ncov["none"],
         "enterprise_lo": enterprise_lo,
         "enterprise_hi": enterprise_hi,
         "hq_matched_roles": len(hq_table),
@@ -336,23 +422,26 @@ def render(rows, hq_table, unmatched, reg, stats):
     A("|---|---|---|---|")
     A("| 1 | Effort bullets | `### Time Estimate` bullets from every catalog record | catalog/ (Check 71-guarded) |")
     A("| 2 | Annualization | day 365 · workday/business-day 260 · week 52 · month 12 · quarter 4 · season 6 · year 1 | `CADENCE_PER_YEAR`, audit-time-estimate-math.py (Check 50's licensed table) |")
-    A("| 3 | Effort per workflow | the `Total …` bullet when present and annualizable (it is the component roll-up), else the sum of self-annualizable component bullets | this model |")
+    A("| 3 | Effort per workflow | Tier A: the `Total …` bullet when present and annualizable (it is the component roll-up); Tier B: sum of self-annualizable component bullets (last annualizable term in a stated chain); Tier C: per-occurrence bullet × the record's own Frequency/Volume rate, joined conservatively on the occurrence noun's last word, single level, time-unit nouns excluded | this model |")
     A("| 4 | Net productive hours | **1,800 h/FTE-year** (260 workdays × 8 h = 2,080 gross, minus ~13.5% holidays/leave/training) | **MODEL ASSUMPTION** — corpus-external, flagged here |")
     A("| 5 | Supply side | TO §5.3 role register, HC summed per title across departments (511 HQ roles) | optimal-table-of-organization.md (Check 59-guarded) |")
     A("| 6 | Store / DC supply | aggregate counts only: 200 stores × 29, 4 DCs × 150 | model-company-profile §4 |")
     A("| 7 | Role attribution | bullet's parenthetical role → `across N–M <Role>` tail → workflow Owner (first segment) → Unattributed | this model |")
     A("| 8 | Cadences not annualizable | `per application`, `per pilot`, `per project`, … — counted uncovered, never guessed | this model |")
     A("")
-    A("## 2. Coverage (reported honestly)")
+    A("## 2. Coverage (reported honestly, by derivation tier)")
     A("")
-    A("| Metric | Value |")
-    A("|---|---|")
-    A(f"| Register rows (5,427 primary + 23 sub) | {stats['records_total']:,} |")
-    A(f"| Workflows with directly annualizable effort | {stats['annualizable']:,} "
-      f"({stats['annualizable'] / stats['records_total'] * 100:.1f}%) |")
-    A(f"| Workflows not annualizable from bullets alone | {stats['not_annualizable']:,} "
-      f"({stats['not_annualizable'] / stats['records_total'] * 100:.1f}%) — per-occurrence "
-      "cadences needing a Frequency/Volume join (future work) |")
+    A("| Derivation tier | Workflows | Share | Basis |")
+    A("|---|---|---|---|")
+    A(f"| A — stated `Total …` bullet | {stats['class_a']:,} | "
+      f"{stats['class_a'] / stats['records_total'] * 100:.1f}% | the workflow's own roll-up |")
+    A(f"| B — self-annualizable component sum | {stats['class_b']:,} | "
+      f"{stats['class_b'] / stats['records_total'] * 100:.1f}% | bullets with plain-time cadences |")
+    A(f"| C — per-occurrence × Frequency/Volume join | {stats['class_c']:,} | "
+      f"{stats['class_c'] / stats['records_total'] * 100:.1f}% | single-noun join, rate in the record's own fields |")
+    A(f"| Uncovered | {stats['not_annualizable']:,} | "
+      f"{stats['not_annualizable'] / stats['records_total'] * 100:.1f}% | stacked per-clauses, prose-only, or cycle-times — future work |")
+    A(f"| **Total annualizable (A+B+C)** | **{stats['annualizable']:,}** | **{stats['annualizable'] / stats['records_total'] * 100:.1f}%** | |")
     A("")
     A("The computed workload is therefore a **lower bound**: every uncovered "
       "workflow adds real, unmodeled work. A lower bound already crossing "
@@ -421,17 +510,18 @@ def render(rows, hq_table, unmatched, reg, stats):
     A(f"2. **{len(hot)} role(s) sit in the 70–100% band** — tight but plausible; "
       "the uncovered-workflow remainder lands on them too.")
     A("3. The computed lower bound covers "
-      f"{stats['annualizable'] / stats['records_total'] * 100:.0f}% of the catalog; "
-      "conclusions are directional until the per-occurrence volume join lands.")
+      f"{stats['annualizable'] / stats['records_total'] * 100:.0f}% of the catalog "
+      f"(Tier A {stats['class_a']}, B {stats['class_b']}, C {stats['class_c']}); "
+      "conclusions are directional until the remaining "
+      f"{stats['not_annualizable'] / stats['records_total'] * 100:.0f}% is covered.")
     A("4. Known corroborating signal in the corpus itself: PA-16.1's W24 pain "
       "point already flags the annual credit-review backlog (~433 system-hours "
       "deprioritized) — the class of tension this model surfaces systematically.")
     A("")
     A("## 7. Limitations and future work")
     A("")
-    A("- Per-occurrence bullets (~90 min/application) are not yet joined to the "
-      "Frequency/Volume fields — the single biggest coverage lever (future "
-      "work: noun-cancellation join reusing Check 50's tokenizer).")
+    A("- Per-occurrence bullets with stacked per-clauses (`~30–60 min per price change batch per store`) and prose-only Time Estimates remain uncovered — the next coverage lever (stacked-rate resolution, then step-level attribution).")
+    A("- Tier C joins assume the Frequency/Volume rate's noun is the bullet's occurrence unit (last-word stem match); homonyms could mis-join — every Tier C figure is re-derivable and auditable in the generator.")
     A("- Effort is attributed to one role per bullet (first hit); shared bullets "
       "under-count secondary roles. Approver (A-role) verification time is "
       "where most of the residual hides.")
@@ -476,6 +566,7 @@ def main() -> int:
             bad.append("write verification failed")
 
     print(f"MODEL_TOTALS annualizable={stats['annualizable']} "
+          f"tierA={stats['class_a']} tierB={stats['class_b']} tierC={stats['class_c']} "
           f"not_annualizable={stats['not_annualizable']} "
           f"hours_lo={stats['enterprise_lo']:.0f} hours_hi={stats['enterprise_hi']:.0f} "
           f"hq_roles={stats['hq_matched_roles']} errors={len(bad)}")
